@@ -199,7 +199,13 @@ const sharedViews = [
         await closeFeaturePopovers(page);
         await page.waitForTimeout(300);
     } },
-    { name: '02-syllabus-open', page: 'A', setup: async (page) => {
+    // A3 gate witness (task 07-03-a3-gate-witness) — R4: tight failRatio. This is
+    // the ONLY view that renders the syllabus tree unmasked, so it is the pixel
+    // backstop for a `.app .sidebar` strip that flips a `.syllabus-*` arm
+    // (color/border-left/background ≈ a few hundred px of a 1280×800 frame, well
+    // under the 0.5% default). 0.0005 (0.05%) = 512px; the tree renders
+    // deterministically here so baseline-vs-baseline noise is ~0.
+    { name: '02-syllabus-open', page: 'A', failRatio: 0.0005, setup: async (page) => {
         await ensureSyllabusOpen(page);
         await page.waitForTimeout(400);
     } },
@@ -1094,7 +1100,12 @@ const sharedViews = [
     // strips view 15/16's `.chapter-overview-active*` classes so the underlying
     // lesson layout doesn't bleed in. Reversible cleanup not required — view
     // 21 is the next Page A view and does its own state reset.
-    { name: '20-sidebar-collapsed', page: 'A', setup: async (page) => {
+    // A3 gate witness (task 07-03-a3-gate-witness) — R4: tight failRatio. The
+    // collapsed-sidebar chrome (icons + the FINAL COLLAPSED SIDEBAR GLASS FIX
+    // cluster) is a small fraction of the frame; a single-rule collapse-arm flip
+    // would hide under the 0.5% default. 0.0005 (0.05%) = 512px; this view is
+    // deterministic (class flips + settled) so baseline noise is ~0.
+    { name: '20-sidebar-collapsed', page: 'A', failRatio: 0.0005, setup: async (page) => {
         await resetLessonChromeState(page);
         await page.evaluate(() => {
             document.querySelector('.app')?.classList.add('sidebar-collapsed');

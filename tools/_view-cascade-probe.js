@@ -43,7 +43,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
-const { MASK_CSS, waitForHealth, enterGuestMode, openSubtopic, enterTextbookOverflowState, seedFeedbackFixture, restoreFeedbackBoard, FEEDBACK_FIXTURE_POPULATED_PATH } = require('./test-utils.js');
+const { MASK_CSS, waitForHealth, enterGuestMode, openSubtopic, enterTextbookOverflowState, settleLesson, seedFeedbackFixture, restoreFeedbackBoard, FEEDBACK_FIXTURE_POPULATED_PATH } = require('./test-utils.js');
 
 // A4 S14 witness (task 06-29-a4-s14-tall-witness): the lesson the textbook-overview
 // VIEWs open. Same §1.1-1 the visual-diff harness uses (cache present).
@@ -52,8 +52,9 @@ const S14_SUBTOPIC = { id: '1_1-1', title: '1.1-1 Signal Energy',
 // openSubtopic (~25s) only if the lesson view isn't already visible — the `fill`
 // VIEW inherits the open lesson from `tall`, so it skips the re-open.
 async function s14EnsureLessonOpen(page) {
-  // The sidebar-collapsed VIEW (immediately before these) leaves `.app.sidebar-collapsed`
-  // set, which hides the syllabus → openSubtopic's chapter click fails "not visible".
+  // A prior collapsed sidebar VIEW (sidebar-collapsed / sidebar-collapsed-hide /
+  // sidebar-collapsed-lesson-frame) may leave `.app.sidebar-collapsed` set, which
+  // hides the syllabus → openSubtopic's chapter click fails "not visible".
   // Expand the sidebar first (deterministic: both baseline + check do the same).
   await page.evaluate(() => {
     document.querySelector('.app')?.classList.remove('sidebar-collapsed');
@@ -76,6 +77,84 @@ async function s14ReassertState(page, variant) {
     const w = await page.evaluate(() => window.innerWidth).catch(() => 0);
     if (w >= 1180) throw e;
   }
+}
+
+// A3 gate witness (task 07-03-a3-gate-witness). Force the left-sidebar syllabus
+// tree into a deterministic OPEN + chapter-expanded + one-section-active state
+// WITHOUT firing the app's accordion animation (mirrors the view-15/16/20
+// direct-class-flip philosophy — setAccordionOpen uses a 380ms maxHeight
+// tween + setTimeout that would race the snapshot). renderSyllabus() ran once
+// at startup (app.js:5220) so the `.syllabus-*` nodes already exist; we only
+// flip the visibility classes. `active` is set by class-flip, NOT a real
+// section click, because a click fires openLearnMode and navigates away from
+// the sidebar (syllabus-view.js:78-91).
+async function openSyllabusTreeDirect(page) {
+  await page.evaluate(() => {
+    const openPanel = (el) => {
+      if (!el) return;
+      el.classList.remove('hidden', 'is-animating');
+      el.classList.add('is-open');
+      el.style.maxHeight = 'none';
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.overflow = '';
+      el.style.pointerEvents = '';
+      el.dataset.accordionState = 'open';
+    };
+    // Expand the sidebar (a prior collapsed VIEW may have left it collapsed).
+    document.querySelector('.app')?.classList.remove('sidebar-collapsed');
+    document.getElementById('leftSidebar')?.classList.remove('collapsed');
+    openPanel(document.getElementById('sidebarSyllabusPanel')); // the syllabus accordion
+    openPanel(document.getElementById('syllabus-0'));           // chapter 0's sections
+    // Mark the first section active (drives the L5923-5928 `.active` arm).
+    const secs = document.querySelectorAll('#courseSyllabus .syllabus-section');
+    secs.forEach((b) => b.classList.remove('active'));
+    if (secs[0]) secs[0].classList.add('active');
+  });
+}
+
+// A3 gate witness. Open the syllabus panel (so it is NOT .hidden) and THEN
+// collapse the sidebar — so the ONLY thing holding the panel hidden is the
+// collapse-hide cascade (.app.sidebar-collapsed …{display:none !important},
+// style.css L17324/L17331). A `.app .sidebar` strip that drops that !important
+// would let `.sidebar-syllabus-panel:not(.hidden){display:block !important}`
+// (L17507, lower specificity) win → the panel un-hides → a non-zero rect +
+// display:block here goes RED. If the panel stayed .hidden the strip would be
+// masked by `.hidden{display:none}`, which is exactly the collapsed-tree gate
+// gap this witness closes.
+async function openPanelThenCollapse(page) {
+  await openSyllabusTreeDirect(page);   // panel + chapter open, sidebar expanded
+  await page.evaluate(() => {
+    document.querySelector('.app')?.classList.add('sidebar-collapsed');
+    document.getElementById('leftSidebar')?.classList.add('collapsed');
+  });
+}
+
+// A3 gate witness. Undo openSyllabusTreeDirect's class-flips — close the panel,
+// every chapter's `.syllabus-sections`, and clear `.active`/`.open`. Called
+// before the lesson-frame VIEW opens a lesson, because openSubtopic() TOGGLES
+// the chapter accordion by clicking it: an already-open `#syllabus-0` (left by
+// the two VIEWs above) would be CLOSED by that click → the section click then
+// times out on a display:none row. Resetting to the app's fresh closed state
+// makes openSubtopic's toggle open it cleanly.
+async function resetSyllabusDirect(page) {
+  await page.evaluate(() => {
+    const close = (el) => {
+      if (!el) return;
+      el.classList.add('hidden');
+      el.classList.remove('is-open', 'is-animating');
+      el.style.maxHeight = '';
+      el.style.opacity = '';
+      el.style.transform = '';
+      el.style.overflow = '';
+      el.style.pointerEvents = '';
+      el.dataset.accordionState = 'closed';
+    };
+    close(document.getElementById('sidebarSyllabusPanel'));
+    document.querySelectorAll('#courseSyllabus .syllabus-sections').forEach(close);
+    document.querySelectorAll('#courseSyllabus .syllabus-section.active').forEach((b) => b.classList.remove('active'));
+    document.querySelectorAll('#courseSyllabus .caret.open').forEach((c) => c.classList.remove('open'));
+  });
 }
 
 const PORT = Number(process.env.TUTOR_VIEWPROBE_PORT || 9127);
@@ -101,6 +180,16 @@ const PROP_LIST = [...new Set([
   // layout/visual staples so a reflow's downstream resolved values are pinned too
   'left', 'right', 'bottom', 'padding-left', 'padding-right', 'padding-top', 'padding-bottom',
   'margin-right', 'border-width', 'border-style', 'background-color', 'flex-grow', 'flex-basis',
+  // A3 gate witness (task 07-03-a3-gate-witness): props a `.app .sidebar` !important
+  // strip could flip but that the committed #feedbackView floor list omits — the
+  // collapsed .lesson-page-frame geometry (style.css L18282-90) + the syllabus
+  // :hover/.active arms (L5913-5926). rect already pins width/height/offset; these
+  // pin the rest so the sidebar VIEWs below observe the flip a NOCOMP-misjudged strip
+  // would cause. `display` makes the collapse-hide cascade (L17324/L17331) explicit
+  // as a string, not only via the 0×0 rect.
+  'max-width', 'min-height', 'min-width', 'margin-top', 'margin-bottom', 'margin-left',
+  'border-radius', 'border-left-color', 'border-left-width', 'box-shadow',
+  'background-image', 'color', 'display',
 ])].sort();
 
 const THEMES = ['dawn', 'dusk', 'dark'];
@@ -193,6 +282,95 @@ const VIEWS = [
       { label: 'menu-toggle-hover', hover: '#menuToggleBtn' },
     ],
   },
+  // -------------------------------------------------------------------------
+  // A3 gate witness (task 07-03-a3-gate-witness) — the three coverage gaps a
+  // `.app .sidebar` !important strip needs observed before it can start.
+  // Appended AFTER the two #118 sidebar VIEWs; each sets up its own state in
+  // preNav (so it does NOT depend on inherited chrome the way sidebar-expanded
+  // does) and re-asserts in ensureState after every viewport resize.
+  // -------------------------------------------------------------------------
+  // R1 (expanded side) + R2 — the syllabus tree rendered + VISIBLE, so the
+  // `.sidebar .syllabus-section` base / :hover / .active arms (style.css
+  // L5904-5928, the `!important` ones at L5913-5928) are witnessed. This is
+  // where a NOCOMP-misjudged strip on a tree selector visibly regresses; no
+  // prior harness state rendered the tree with its hover/active arm live.
+  {
+    // root = #sidebarSyllabusPanel (not the whole .app .sidebar): the tree arms
+    // all live inside it, the rest of the sidebar is covered by sidebar-expanded,
+    // and this keeps the (expanded-tree) walk small.
+    id: 'sidebar-syllabus-expanded', root: '#sidebarSyllabusPanel',
+    preNav: async (page) => { await openSyllabusTreeDirect(page); },
+    ensureState: async (page) => { await openSyllabusTreeDirect(page); },
+    ready: () => {
+      const p = document.getElementById('sidebarSyllabusPanel');
+      const s = document.querySelector('#courseSyllabus .syllabus-section.active');
+      return !!p && !p.classList.contains('hidden') && !!s;
+    },
+    interactions: [
+      { label: 'rest' },
+      // Hover a NON-active row so the :hover arm (L5913-5918) and the resting
+      // .active arm (L5923-5928) are both live in the same snapshot.
+      { label: 'section-hover', hover: '#courseSyllabus .syllabus-section:not(.active)' },
+    ],
+  },
+  // R1 (collapsed side) — the collapse-hide cascade (.app.sidebar-collapsed …
+  // .sidebar-syllabus-panel {display:none !important}, L17324/L17331) is the
+  // SOLE hider of an OPENED panel here. A strip that drops that !important lets
+  // `.sidebar-syllabus-panel:not(.hidden){display:block !important}` (L17507,
+  // lower specificity) win → the panel un-hides → non-zero rect + display:block
+  // → RED. (If the panel stayed .hidden the strip would be masked by
+  // `.hidden{display:none}` — exactly the collapsed-tree gap this closes.)
+  {
+    // root = #sidebarSyllabusPanel: the collapse-hide rule hides THIS element, so
+    // its own rect (0×0) + display:none is the witness. Un-hide → non-zero → RED.
+    id: 'sidebar-collapsed-hide', root: '#sidebarSyllabusPanel',
+    preNav: async (page) => { await openPanelThenCollapse(page); },
+    ensureState: async (page) => { await openPanelThenCollapse(page); },
+    ready: () => {
+      const p = document.getElementById('sidebarSyllabusPanel');
+      const app = document.querySelector('.app');
+      return !!p && !p.classList.contains('hidden') && !!app && app.classList.contains('sidebar-collapsed');
+    },
+    interactions: [{ label: 'rest' }],
+  },
+  // R3 — the collapsed `.lesson-page-frame` geometry (#learnView
+  // #learnBody.chat-collapsed .lesson-page-frame under .app.sidebar-collapsed,
+  // style.css L18280-18290 + L12156/L18381 — all !important). A `.app .sidebar`
+  // collapse-arm strip can flip which comma-group arm wins → the frame's
+  // width/max-width/min-height/margin/padding/border/border-radius/background/
+  // box-shadow change. root = `.lesson-page-frame` (focused walk): rect pins
+  // width/height, the A3 PROP_LIST staples pin the rest. Opens the §1.1-1
+  // lesson (reuses the S14 helper); MUST precede the S14 VIEWs which recover
+  // the sidebar/expand + reset chrome in their own s14EnsureLessonOpen.
+  {
+    id: 'sidebar-collapsed-lesson-frame', root: '.lesson-page-frame',
+    preNav: async (page) => {
+      await resetSyllabusDirect(page);   // undo the two VIEWs' class-flips so openSubtopic's toggle is clean
+      await s14EnsureLessonOpen(page);   // opens §1.1-1 (expands the sidebar first)
+      await page.evaluate(() => {
+        const body = document.getElementById('learnBody');
+        if (body) { body.classList.add('chat-collapsed'); body.classList.remove('explain-collapsed'); }
+        document.querySelector('.app')?.classList.add('sidebar-collapsed');
+        document.getElementById('leftSidebar')?.classList.add('collapsed');
+      });
+      await settleLesson(page);  // wait out MathJax typeset so the frame's content height is deterministic
+    },
+    ensureState: async (page) => {
+      await page.evaluate(() => {
+        const body = document.getElementById('learnBody');
+        if (body) body.classList.add('chat-collapsed');
+        document.querySelector('.app')?.classList.add('sidebar-collapsed');
+        document.getElementById('leftSidebar')?.classList.add('collapsed');
+      });
+      await settleLesson(page);  // re-settle after each viewport resize (MathJax may re-typeset)
+    },
+    ready: () => {
+      const b = document.getElementById('learnBody');
+      const f = document.querySelector('#learnView .lesson-page-frame');
+      return !!b && b.classList.contains('chat-collapsed') && !!f;
+    },
+    interactions: [{ label: 'rest' }],
+  },
   // A4 S14 witness (task 06-29-a4-s14-tall-witness): the combined overview+textbook
   // (Band-2) state — the ONLY arbiter coverage of style.css L24575-24609. APPENDED LAST
   // (per the order-dependence warning above): these navigate to a lesson, so nothing
@@ -276,7 +454,20 @@ function makeSnapshotFn() {
 }
 
 async function settle(page) {
-  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  await page.evaluate(async () => {
+    // Wait out any in-flight webfont load BEFORE snapshotting. The body font +
+    // the Phosphor icon font (`i.ph-bold` → font-family "Phosphor-Bold") load
+    // lazily on first use; a snapshot taken mid-load reads fallback-font metrics
+    // (Nunito) whose different glyph widths shift text wrapping → content height
+    // → scrollbar presence → a ~17px content-width flip on unrelated views. The
+    // visual-diff harness gates on this via settleLesson's font.load; the arbiter
+    // never did, so a COLD-cache baseline vs a WARM-cache check disagreed on the
+    // feedback/sidebar views (task 07-03-a3-gate-witness discovery). Awaiting
+    // document.fonts.ready + a reflow makes every snapshot font-deterministic.
+    if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (_) {} }
+    void document.body.offsetHeight;  // force a layout flush with the loaded font
+    await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  });
 }
 
 async function captureView(page, view, snapFn) {
