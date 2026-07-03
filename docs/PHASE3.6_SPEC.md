@@ -38,7 +38,7 @@ percentages as planning-grade, not per-line ground truth.
 > | `#preferenceView` | 243 | **41** | ✅ DONE (#106, full arbiter) |
 > | `#settingsView` | 100 | **66** | ✅ stripped by #106 (−34); 66 ≈ DEFENSIVE floor — a fresh strip is a **NO-OP** |
 > | `#mistakeNotebookView` | 560 | **254** | ✅ stripped by #106 (−211); verify floor |
-> | `#feedbackView` | 651 | **472** | ◐ PARTIAL (#118 −56) — A1 strip not complete |
+> | `#feedbackView` | 651 | **465** | ✅ A1 CLOSED 2026-07-03 — 465 supersedes 472 (#119 −7 + D1 floor guard); floor 100% keep-set-covered, 15 cite-and-keep carve-outs (REFACTOR_DONE §A1) |
 > | `.app .sidebar` | 769 | **620** | ◐ BARELY (#118 −36) — A3 blocked on arbiter overlay mode |
 > | `#learnView` (incl §3d) | 5776 | **3469** | ◐ bulk untouched — A4 composer chain (hardest, last) |
 >
@@ -50,8 +50,8 @@ percentages as planning-grade, not per-line ground truth.
 > (courseTracker/preference, then settings). **Before seeding ANY task from a
 > CSS-collapse plan, reconcile against git** — `git merge-base --is-ancestor` for the
 > cited commit AND a per-view `!important` count (the metric is ground truth; the prose
-> is narration). The genuinely-next strip is **`#feedbackView` completion**
-> (REFACTOR_DONE §A1), not any view in the ✅ rows above.
+> is narration). The genuinely-next strip is **`.app .sidebar` (A3)** — the last open
+> surface — not any view in the ✅ rows above (A1 CLOSED 2026-07-03, REFACTOR_DONE §A1).
 
 ## 0. Problem statement
 

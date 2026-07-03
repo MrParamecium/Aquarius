@@ -26,11 +26,11 @@ triaged backlog.
 > ## 🔄 RECONCILED 2026-06-27 (git HEAD `2d7a757` = origin/main)
 >
 > This doc's §1 checklist + §3 workstreams stay valid; only counts/status move since the 2026-06-25 draft:
-> - **#118** (`2d7a757`) shipped a **partial** feedback+sidebar strip (feedback 528→472, sidebar 656→620) — so **A1 and A3 are STARTED, not complete**; A1 is no longer "the next untouched target."
+> - **#118** (`2d7a757`) shipped a **partial** feedback+sidebar strip (feedback 528→472, sidebar 656→620) — so **A1 and A3 are STARTED, not complete**; A1 is no longer "the next untouched target." *(Since superseded: A1 CLOSED 2026-07-03 — see the last bullet + §A1; only A3 remains.)*
 > - **Workstream B is COMPLETE** — B4 (`app/lesson-render.js`) shipped in **#116**; `app/app.js` = **5,720** lines (marginally above the ~5,100 stretch target; "reasonably split" met). The §1 `app.js` box can be checked.
 > - **Landmine C1** (unclosed `.learn-followup-bar {` brace, §C1) shipped in **#111** (`bd56ef9`). **C2** (panelFocus desync) **MERGED as #120 (`4d7b47b`)** — probe-neutral, baseline unchanged (see §C2). A4's C2 prerequisite is met; the S4–S11 composer-state harness (A4's second gate) **MERGED as #122 (`b3086c6`)** and the S13 `.learn-textbook-active` Band-1 probe **MERGED as #123 (`62ddf06`)** — A4's composer-state matrix is in place (S5 dropped as non-constructible, S1/S8 deferred; **S14 Band-2 dropped = named no-css-probe-witness gap**; see §A0).
 > - Current metrics (supersede §2's 06-25 table): `app/style.css` **32,279** lines / **9,286** `!important`-lines / **402** doubled-IDs (A2 warm-up **#124** `3b4d7d8` de-doubled `.mistake-workspace` ×2, 404→402; N=2 de-doubled / M=10 MN-band proven-DEFENSIVE-kept); `runtime-collapsed.css` **1,523** / **876** / **58**.
-> - §2 per-view dispositions are git-CONFIRMED (per-view trajectory in `PHASE3.6_SPEC.md` top STATUS block): settings & MN were ✅ stripped by #106 — **do not re-seed them**. A1 `#feedbackView` is now DONE (#119 guard + measured floor). **Genuinely-next = close the S14 Band-2 witness gap, then A4** (collapse-and-merge the §3d composer cluster vs `runtime-collapsed.css` — NOT piecemeal de-double).
+> - §2 per-view dispositions are git-CONFIRMED (per-view trajectory in `PHASE3.6_SPEC.md` top STATUS block): settings & MN were ✅ stripped by #106 — **do not re-seed them**. A1 `#feedbackView` is now DONE (#119 guard + measured floor; **A1 CLOSED 2026-07-03** — floor 465, 100% keep-set-covered, §A1). **Genuinely-next = close the S14 Band-2 witness gap, then A4** (collapse-and-merge the §3d composer cluster vs `runtime-collapsed.css` — NOT piecemeal de-double) — *both since done (S14 witness #125; A4 CLOSED 2026-06-29, §A4); as of 2026-07-03 the only remaining CSS surface is **A3 `.app .sidebar`***.
 
 ---
 
@@ -61,7 +61,7 @@ because de-doubling is ~0 net lines by design and the residual `!important`
 floor *is* the load-bearing set we intend to keep.
 
 ### CSS structural collapse (Full Phase 3.6)
-- [ ] **`#feedbackView`** — non-load-bearing `!important` stripped, arbiter-verified against a seeded multi-tone feedback fixture (§A1).
+- [x] **`#feedbackView`** — ✅ CLOSED (A1, 2026-07-03, docs-only): #119 already delivered the criterion — non-load-bearing stripped, arbiter-verified against the seeded multi-tone fixture, permanent D1 css-probe floor guard. Measured floor **465** decls, 100% keep-set-covered; 15 arbiter-unreachable carve-outs accepted cite-and-keep (§A1).
 - [ ] **`.app .sidebar`** — non-load-bearing `!important` stripped, verified under multi-view + sidebar-collapsed-state probe coverage (§A3).
 - [x] **§3d composer chain — verified IRREDUCIBLE-by-design (A4 CLOSED 2026-06-29, docs-only).** A 24-agent adversarial re-derivation proved the doubled-ID repetition IS the load-bearing cross-file specificity-war mechanism, not removable debt — every war-pair is IRREDUCIBLE / NO_BENEFIT in isolation; the only reductions need new witnesses + a high-risk two-file lockstep for ~0 net gain. The invariant *style.css eff-specificity > rcc eff-specificity* is preserved precisely BY the repetition. Proof + re-derived anchors: `docs/A4_COMPOSER_IRREDUCIBLE.md` (§A4).
 - [x] **Doubled-ID inventory fully dispositioned** — the composer cluster (the bulk, ~368/402) is the documented LOAD-BEARING floor (A4, irreducible-by-design); the non-composer subset (MN-band, close-btn, learn-internal) was settled by A2 #124 (`3b4d7d8`) as pervasively load-bearing (N=2 de-doubled, rest proven-DEFENSIVE-kept). Residual doubled-IDs (402) == that documented floor.
@@ -101,7 +101,7 @@ floor *is* the load-bearing set we intend to keep.
 |---|---:|---|---|
 | `#learnView` (core) | ~3,410 | shared (cross-file arms race) | mixed — §3d + doubled-ID tranches |
 | `.app .sidebar` | ~639 | **shared** (syllabus tree + learn-collapsed layout) | **A3 — remaining** |
-| `#feedbackView` | ~503 | isolated | **A1 — remaining (next)** |
+| `#feedbackView` | ~503 | isolated | ✅ A1 CLOSED 2026-07-03 — floor 465, D1-guarded (§A1) |
 | `#mistakeNotebookView` | ~237 | isolated | ✅ stripped −193 (#106) |
 | `#settingsView` | ~64 | isolated | ✅ stripped −21 (#106) |
 | `#courseTrackerView` | ~52 | isolated | ✅ stripped −384 CT+pref (#106) |
@@ -147,7 +147,7 @@ verifies against a `main` baseline. Source of truth: `PHASE3.6_SPEC.md §4`.
 
 | Gate | What | Unblocks |
 |---|---|---|
-| Feedback probe state + fixture | A `css-probe` state that opens `#feedbackView` and reads computed style on a **seeded multi-tone feedback-thread fixture** (tone-0..5, is-left/is-right, reply-context, is-target). Mirror visual-diff view 14b's seeding. | **A1** (`#feedbackView` strip — mandatory, pixel-diff is blind here) |
+| Feedback probe state + fixture | ✅ **SHIPPED (#119, `e2f3431`) — the D1 floor guard.** 5 `S-feedback-*` css-probe states on the seeded multi-tone fixture `tools/fixtures/feedback-board.populated.json` (tone-0..5, is-left/is-right, reply-context); floor frozen in `tools/_view-important.json['#feedbackView']`. | **A1** — gate met; A1 CLOSED 2026-07-03 (§A1) |
 | `css-probe` states S4/S6/S7/S9/S10/S11 | ✅ **SHIPPED (2026-06-28, pending PR; stacked on §C2).** S4 (normal + chat visible), S6 (empty-state not chat-active), S7 (is-chat-active), S9 (explain-collapsed), S10 (chapter-overview-active), S11 (chapter-overview-split-active) — each drives the **real** production fn (`openLearnQaSidebar` / `applyLearnPanelFocusState` / `updateLearnChatEmptyState` / `applyLearnExplainCollapsedState` / `setChapterOverviewLayoutActive`) + fail-closed winner sentinel, sentinels derived empirically. **S5 (`:focus-within`) DROPPED** — focus engages and `:focus-within` matches but every focus-within decl loses to the `!important` wall (no constructible winner → would be fail-open; visual-diff view 09 retains pixel cover). **S1/S8 deferred** (view 06 pixel-covers resting). Empirical finding: the §3d composer chrome is **panel-invariant** at desktop (S4≡S2 values), so the new states pin only the cascade each gates. | **A4** (composer chain) — gate now met |
 | `panelFocus` desync fix (= §C2) | Drive S2/S3 through `applyLearnPanelFocusState()` (app.js:2725) instead of hand-setting `dataset.panelFocus`; have `resetLessonChromeState` also clear `chat-collapsed`/`explain-collapsed`. | **A4** (correct composer-state capture) |
 | Narrow per-selector probes | Extend N0–N4 (currently only 3 learn-chrome selectors on a §1.1-1 DOM) to the home-ask / feedback / login / MN / chapter-overview / settings families; add ≤560px state + an `@container lecture-panel` panel-width driver. | **A2** (narrow tranches) + **A5** (media-gated slice) |
@@ -180,12 +180,33 @@ is **14 occurrences in two cascade bands**.)
 > combined-state fixture**. **Resolution = defer to A4 with a hard precondition (no speculative pre-build);
 > see §A4.**
 
-#### A1 — `#feedbackView` `!important` strip (next target)
+#### A1 — `#feedbackView` `!important` strip — ✅ CLOSED 2026-07-03 (floor reached + guarded; docs-only close)
 
-**Files:** `app/style.css` (feedbackView token blocks), `tools/_view-cascade-probe.js` (add a feedbackView VIEW with the seeded fixture).
-**Shape:** identical to the four shipped isolated-view strips — downgrade only the NOCOMP `!important` decls (no surviving competitor ⇒ render-neutral); keep the load-bearing ones (a base/doubled-ID rule wins once the flag drops). ~503 candidates; strippable fraction unknown until the arbiter runs the fixture (MN came in at 43%, settings 24%, CT/pref ~81%).
-**Gate:** the feedback `css-probe` state from A0 (MANDATORY — pixel-diff blindspot) + visual-diff views 14/14b.
-**Why next:** cross-file isolated (0 refs in runtime-collapsed/ui-friction/inline), arbiter proven, only needs the fixture. Lowest-risk remaining strip.
+> **DONE = arbiter floor reached, D1-guarded, bookkeeping reconciled** (task
+> `06-29-a1-feedbackview-close`, docs-only — no `app/**` change). A 4-agent recon
+> (2026-06-29, measured at HEAD `6180fc0`, brace-aware parse — NOT from docs) confirmed
+> the surface is **already converged at its load-bearing floor**: **465** `!important`
+> decls target `#feedbackView` or descendants (197 selectors); trajectory 651 (pre-#105)
+> → 472 (#118) → **465** (#119). **100% keep-set-covered** — 415 exact-line matches in
+> `tools/_keep-important.json` + 50 multi-line value continuations whose declaration-START
+> line is kept → 0 uncovered; there is no present-but-unstripped decl the arbiter can see.
+>
+> **#119 (`e2f3431`) satisfied the §1 criterion in substance**: it applied the fresh-reset
+> discipline (controlled reset of the 457 arbiter-reachable feedback keep lines, re-derived
+> load-bearing membership, stripped 7 `border-radius` over-keeps from #118) and shipped the
+> permanent **D1 css-probe floor guard** — 5 `S-feedback-*` states on the seeded fixture
+> `tools/fixtures/feedback-board.populated.json` (tone-0..5 / is-left / is-right /
+> reply-context); floor frozen in `tools/_view-important.json['#feedbackView']`, required
+> at `tools/css-probe.js:397`. A1's residual deliverable was this reconciliation only.
+>
+> **Accepted carve-outs (cite-and-keep, 15 decls):** the arbiter-unreachable subset
+> preserved by #119 — headline members incl. submit-btn `:disabled`
+> (`app/style.css` L25244-25247), the `:active` transform (L25240), and the cross-view
+> close-btn border (L24702); NOT an exhaustive enumeration. Arbiter-
+> **unreachable** by nature (synthetic `mouse.down`/`disabled=true` probing produced
+> false-positive cascade flips), so they rest on manual cite-and-keep, the same disposition
+> as the project's other unwitnessable decls (A2/A4 precedent). Witness extension filed as
+> Sev-3 backlog (§4 item 4); expected yield ~0.
 
 #### A2 — Doubled-ID tranches (`PHASE3.6_SPEC.md §6.2` work-list)
 
@@ -387,6 +408,7 @@ Parked deliberately. Triage by the Gated Timebox protocol
    - `complex_plane` / `sinusoid_phasor` / `phasor` demos pixel-unverified (`§1a`).
    - §11 sidebar-drift **Option-B root fix** (a `lessonLayoutStable` sentinel) — today masked, not fixed; restoring sidebar coverage on lesson views needs it.
    - De-duplicate the css-probe/visual-diff shared bridge-spawn/mask/report machinery (`§13a`) to stop drift.
+   - **A1 feedback carve-out witness extension (Sev-3, filed at A1 close 2026-07-03).** The 15 accepted cite-and-keep carve-outs (§A1; incl. submit-btn `:disabled` L25244-25247, `:active` transform L25240, cross-view close-btn border L24702 — not exhaustive) are arbiter-unreachable — synthetic `:disabled`/`:active` probing false-flips. To ever retire them, extend the feedback VIEW/css-probe with real `:disabled` + `is-target`/`data-kind` states. Expected yield **~0** (almost certainly load-bearing); regression-safety only, does not block DONE.
    - **§3d composer fail-open gaps (Sev-3, surfaced by A4 2026-06-29 — see `docs/A4_COMPOSER_IRREDUCIBLE.md`).** Five composer props have NO witness, so any future edit touching them is unsafe until one is built (the S14-witness pattern, #125): (1) `#learnFollowupBar` **width** — add to `FOLLOWUP_PROBES` (css-probe.js) in S2/S3/S4 (the load-bearing gate currently omits it); (2) `#learnModeMenu` **position/right/bottom/z-index** — needs a css-probe state that adds `.show` + a same-file competitor check (later L30860 ties a de-doubled menu); (3) `#learnChatEmptyState` **transform** — add to `CHAT_STATE_PROBES` (freeze animation); (4) the **6 close-btn arms** display/visibility/size — no state asserts the hidden buttons; (5) `#learnChatCol` **background shorthand** (only background-image probed). None block DONE (A4 makes no edit here).
 5. **View-04 dead-JS/markup tidy** (C3 above) — optional cleanup, do not re-enable the buttons.
 

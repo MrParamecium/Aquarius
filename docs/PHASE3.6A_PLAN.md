@@ -10,7 +10,10 @@ shipped). Companion to `docs/phase3_deferred.md` §14 (remaining buckets).
 > `.app .sidebar` 656→620. **Both surfaces remain OPEN** — feedback (A1) is not
 > arbiter-complete; sidebar (A3) is still blocked on the §2.2 arbiter-overlay
 > extension. Authoritative current status: `docs/REFACTOR_DONE.md` §A1/§A3 +
-> `PHASE3.6_SPEC.md` top STATUS block (git HEAD `2d7a757`). NB: the §0 line claiming
+> `PHASE3.6_SPEC.md` top STATUS block (git HEAD `2d7a757`).
+> **UPDATE 2026-07-03: A1 is CLOSED** — #119 reached the arbiter floor (465, D1
+> css-probe floor guard); do NOT re-attack feedback from this plan (REFACTOR_DONE §A1).
+> **A3 `.app .sidebar` is the only surface still open** (task `06-29-a3-sidebar-strip`). NB: the §0 line claiming
 > #106 also covered settings/mistakeNotebook is **CORRECT** (git-confirmed: settings
 > 100→66, MN 465→254) — those two are done; do not re-seed them.
 
