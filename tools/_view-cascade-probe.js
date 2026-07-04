@@ -376,7 +376,24 @@ const VIEWS = [
     ready: () => {
       const b = document.getElementById('learnBody');
       const f = document.querySelector('#learnView .lesson-page-frame');
-      return !!b && b.classList.contains('chat-collapsed') && !!f;
+      const app = document.querySelector('.app');
+      // Assert the VIEW's DEFINING precondition — the sidebar IS collapsed — not
+      // merely that a frame exists, so it fails LOUD at open time if
+      // s14EnsureLessonOpen's sidebar-EXPAND ever out-lived the collapse re-add in
+      // preNav (parity with the sibling sidebar-collapsed-hide VIEW's ready, which
+      // checks app.classList.contains('sidebar-collapsed') for the same reason).
+      // Without this, a frame captured while the sidebar was expanded would witness
+      // the WRONG comma-group arm (the non-.app.sidebar-collapsed arm at
+      // style.css L18278-79) and silently bake a wrong-arm baseline — a decorative
+      // R3 gate. NB: `ready` runs ONCE pre-loop (captureView, before the
+      // theme×viewport sweep); the PER-CELL guard is ensureState's unconditional
+      // re-add on each resize. That re-add is race-free because NO app
+      // resize/matchMedia/ResizeObserver handler clears sidebar-collapsed — the
+      // class is toggled ONLY by the menu-toggle CLICK (app.js
+      // setWorkspaceSidebarCollapsed), so nothing can race it out between the
+      // re-add and the snapshot.
+      return !!b && b.classList.contains('chat-collapsed') && !!f
+        && !!app && app.classList.contains('sidebar-collapsed');
     },
     interactions: [{ label: 'rest' }],
   },
