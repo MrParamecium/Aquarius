@@ -28,7 +28,7 @@ Browser (app/index.html + app/app.js, ~19k lines vanilla JS)
    └─ app/config.js picks apiBase: '' locally, Render URL (aquarius-5ss0.onrender.com) otherwise
 ws-bridge.js (~6.7k lines, single http server, Node BUILT-IN modules only — no Express)
    ├─ /api/ask, /api/section, /api/pregen/section, /api/preference/draft,
-   │  /api/homework, /api/feedback, /api/memory, /api/tutor (legacy), /api/crop
+   │  /api/feedback, /api/memory, /api/tutor (legacy), /api/crop
    ├─ static: /pages, /new-pages, /old-pages, /figures, /generated, app/ files
    ├─ LLM calls via OpenRouter:
    │     Agent A (Planner)  = gpt-5.5            → Rendering Blueprint JSON
@@ -44,7 +44,7 @@ Routes are `if (pathname === ...)` blocks in one request handler in `ws-bridge.j
 
 ### Materials resolution — the most important non-obvious behavior
 
-`ws-bridge.js` resolves its materials dir through a fallback chain: it prefers `workspace/materials/` over root `materials/` (validated by the presence of `new-book-ocr/` or `background-ocr-v3/`). So **which tree the app reads depends on what exists on disk**. Per `docs/sync-policy.md`: root `materials/` is the runtime tree, `workspace/materials/` is the workbench, and changes meant for the app must be synchronized into both (`new-book-figures/`, `new-book-ocr/`, extraction scripts). Experiments stay in `workspace/` or git-ignored `.local/`.
+`ws-bridge.js` resolves its materials dir through a fallback chain (`resolveExistingDir`, `ws-bridge.js:86-91`): it prefers `workspace/materials/` over root `materials/`, validated by the presence of `new-book-ocr/`. In a normal checkout both trees have `new-book-ocr/`, so **`workspace/materials/` always wins** — root `materials/` is selected only if `workspace/materials/` is missing or loses its `new-book-ocr/`. Per `docs/sync-policy.md` (which supersedes older framing): **`workspace/materials/` is the canonical runtime tree; root `materials/` is a legacy one-way backup mirror (workspace → root) that the app never reads while workspace is present.** Changes meant for the app go to `workspace/materials/` (`new-book-figures/`, `new-book-ocr/`, extraction scripts) and are mirrored to root as backup. Experiments stay in `workspace/` or git-ignored `.local/`.
 
 ### Lesson cache
 

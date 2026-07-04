@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Fourier">
-  <path d="M85 10 Q85 22 97 22 Q85 22 85 34 Q85 22 73 22 Q85 22 85 10 Z" fill="#FDE047"/>
-  <path d="M16 80 Q16 88 24 88 Q16 88 16 96 Q16 88 8 88 Q16 88 16 80 Z" fill="#38BDF8" opacity="0.8"/>
-  <path d="M12 40 Q30 15 48 40 T84 40" fill="none" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 65 Q30 40 48 65 T84 65" fill="none" stroke="#FDE047" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

@@ -24,7 +24,7 @@
 
 ## Materials & lesson cache (most non-obvious behavior)
 
-- `ws-bridge.js` resolves its materials dir through a fallback chain: it prefers `workspace/materials/` over root `materials/`, validated by the presence of `new-book-ocr/` or `background-ocr-v3/`. **Which tree the app reads depends on what exists on disk.** Per `docs/sync-policy.md`: root `materials/` is the runtime tree, `workspace/materials/` is the workbench; changes meant for the app must be synced into both.
+- `ws-bridge.js` resolves its materials dir through a fallback chain (`resolveExistingDir`, `ws-bridge.js:86-91`): it prefers `workspace/materials/` over root `materials/`, validated by the presence of `new-book-ocr/`. Both trees have it in a normal checkout, so **`workspace/materials/` always wins**; root is selected only if workspace is missing/loses `new-book-ocr/`. Per `docs/sync-policy.md`: **`workspace/materials/` is the canonical runtime tree; root `materials/` is a legacy one-way backup mirror the app never reads while workspace is present.** Changes go to `workspace/materials/` and are mirrored to root as backup.
 - Pre-generated lessons live at `<materials>/lesson-cache/<sectionId>/<key>.aquarius_visual_latex_v2.en.md`. A cache **miss** returns "This section has not been prepared yet." — it does not generate live. So a missing/misnamed cache file is a user-facing failure.
 - When the owner says "重新生成" (regenerate): locate the file the app **actually hits**, delete it, regenerate. Never patch a stale copy or guess which duplicate is live.
 
