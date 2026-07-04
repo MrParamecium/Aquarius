@@ -10,7 +10,7 @@ Browser (app/index.html + app/app.js, vanilla JS)
   └─ app/config.js picks apiBase: '' locally, Render URL otherwise
 ws-bridge.js (single Node http server, built-in modules only)
   ├─ routes: /api/ask, /api/section, /api/pregen/section, /api/preference/draft,
-  │          /api/homework, /api/feedback, /api/memory, /api/tutor (legacy), /api/crop
+  │          /api/feedback, /api/memory, /api/tutor (legacy), /api/crop
   ├─ static: /pages, /new-pages, /old-pages, /figures, /generated, app/ files
   ├─ LLM calls via OpenRouter:
   │     Agent A (Planner)  = gpt-5.5            → Rendering Blueprint JSON
