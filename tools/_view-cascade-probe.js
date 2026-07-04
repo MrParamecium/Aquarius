@@ -304,7 +304,16 @@ const VIEWS = [
     ready: () => {
       const p = document.getElementById('sidebarSyllabusPanel');
       const s = document.querySelector('#courseSyllabus .syllabus-section.active');
-      return !!p && !p.classList.contains('hidden') && !!s;
+      // Require a NON-active row too. The `section-hover` interaction hovers
+      // `.syllabus-section:not(.active)`, but captureView's present() silently
+      // SKIPS a zero-match hover — so if chapter 0 ever renders with a single
+      // section (all rows .active after openSyllabusTreeDirect), the section-hover
+      // snapshot would degrade to a byte-identical duplicate of `rest`, silently
+      // losing the :hover witness (the same silent-duplicate failure the
+      // sidebar-expanded VIEW hit once, L250-255). Failing `ready` here surfaces
+      // that as a loud timeout instead of a quietly-decorative gate.
+      const other = document.querySelector('#courseSyllabus .syllabus-section:not(.active)');
+      return !!p && !p.classList.contains('hidden') && !!s && !!other;
     },
     interactions: [
       { label: 'rest' },
@@ -464,7 +473,20 @@ async function settle(page) {
     // never did, so a COLD-cache baseline vs a WARM-cache check disagreed on the
     // feedback/sidebar views (task 07-03-a3-gate-witness discovery). Awaiting
     // document.fonts.ready + a reflow makes every snapshot font-deterministic.
-    if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (_) {} }
+    // Bound the wait: the fonts are remote (Google Fonts @import in style.css +
+    // the Phosphor icon <script> from unpkg in index.html). A stalling-egress
+    // environment leaves the FontFaceSet in `loading` forever → fonts.ready never
+    // resolves and this evaluate() would hang the whole probe. Cap at 8000ms to
+    // match the waitForSelector/waitForFunction timeouts in captureView, so a
+    // blocked network degrades the run's font-determinism instead of hanging it.
+    if (document.fonts && document.fonts.ready) {
+      try {
+        await Promise.race([
+          document.fonts.ready,
+          new Promise((r) => setTimeout(r, 8000)),
+        ]);
+      } catch (_) {}
+    }
     void document.body.offsetHeight;  // force a layout flush with the loaded font
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   });

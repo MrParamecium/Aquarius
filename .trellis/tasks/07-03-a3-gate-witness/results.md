@@ -127,3 +127,37 @@ visual-diff (backstop) is the same trust model A4/S14 relied on. A3-proper runs 
 5-gate strip against this arbiter; the gitignored `_view-cascade-baseline.json`
 (~330 states, not committed — the arbiter is not in `package.json`) is regenerated
 on `main` before the strip, exactly as A1/S14 did.
+
+## Review response (PR #127 review — 5 findings addressed)
+
+Harness-hardening only; `app/**` still byte-identical to main; `npm run check` green.
+
+1. **`20-sidebar-collapsed` mid-transition capture (`visual-diff.js`).** Adding
+   `.sidebar-collapsed` fires the `.sidebar` (width/transform) + `.main` (margin)
+   0.4s transitions (style.css L6913/L6921); the old setup relied on `settleLesson`'s
+   waits happening to outlast 400ms (wall-clock luck → load-sensitive at the tight
+   0.05% budget). Fix: setup now calls `document.getAnimations().forEach(a=>a.finish())`
+   to jump the transitions to their settled end state, making the capture
+   timing-independent. **Verified zero-baseline-impact:** a full-run regen with the
+   fix leaves `20-sidebar-collapsed.png` byte-identical to the committed baseline (the
+   full-run settle already reached the end frame), so the fix is pure insurance.
+2. **`02-syllabus-open` unmasked-tree drift (`visual-diff.js`).** The `~1-2px/row`
+   settled-height drift that forced `maskLessonSidebar` on downstream lesson views
+   does not surface here (`ensureSyllabusOpen` gates on `.is-open:not(.is-animating)`;
+   `getAnimations().finish()` added for parity). **Calibrated** 3 baseline-vs-baseline
+   runs each at `0/1024000` (0.000%) — the tight 0.05% floor now has a documented
+   noise floor, not a single-run assertion (matches the views-26/29 discipline).
+3. **`settle()` unbounded `document.fonts.ready` (`_view-cascade-probe.js`).** The
+   fonts are remote (Google Fonts `@import` + Phosphor `<script>` from unpkg); a
+   stalling-egress environment would hang the probe forever. Fix: `Promise.race`
+   the await against an 8000ms cap, matching the `waitForSelector`/`waitForFunction`
+   timeouts already in `captureView`.
+4. **`sidebar-syllabus-expanded` `section-hover` silent-degrade
+   (`_view-cascade-probe.js`).** If chapter 0 ever renders a single section,
+   `:not(.active)` matches nothing and `present()` silently skips the hover → the
+   snapshot would degrade to a byte-identical duplicate of `rest`. Fix: the VIEW's
+   `ready` predicate now also requires a `:not(.active)` row, so the degradation
+   fails loud (ready timeout) instead of quietly. Re-ran the VIEW: 30 states × 795
+   elements, `--check` byte-identical PASS.
+5. **`task.json` bookkeeping.** `pr_url` set to PR #127 so the gated follow-up task
+   `06-29-a3-sidebar-strip` has a queue-visible signal that the gate PR exists.
