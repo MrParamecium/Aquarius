@@ -3,7 +3,7 @@
   "name": "06-29-a3-sidebar-strip",
   "title": "A3 .app .sidebar !important strip",
   "description": "Build the missing A0 gate (combined collapsed+syllabus state, syllabus hover/active coverage, collapsed .lesson-page-frame witness, tight failRatio) then classify+strip 364 !important across 95 .app .sidebar rule blocks under the 5-gate discipline.",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": "refactor",
   "scope": "css",
   "package": null,

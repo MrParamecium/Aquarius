@@ -9615,7 +9615,7 @@ h6,
 }
 
 :root[data-theme="dark"] .sidebar-version-dot {
-  background: #8ec5ff !important;
+  background: #8ec5ff;
 }
 
 :root[data-theme="dark"] .settings-user-avatar {
@@ -17304,7 +17304,7 @@ h6,
 
 .app.sidebar-collapsed .sidebar .menu-toggle,
 .app .sidebar.collapsed .menu-toggle {
-  order: 2 !important;
+  order: 2;
   position: absolute !important;
   margin: 0 !important;
   border-color: #dbe6f6 !important;
@@ -19810,7 +19810,7 @@ body {
     background: transparent !important;
     border: 1px solid transparent !important;
     color: #475569 !important;
-    font-weight: 600 !important;
+    font-weight: 600;
     box-shadow: none !important;
     transition: all 0.2s ease !important;
     border-radius: 12px !important;
@@ -19847,7 +19847,7 @@ body {
 /* 4. 课程大纲 (Syllabus Accordion) */
 .sidebar .syllabus-chapter {
     color: #1E293B !important;
-    font-weight: 800 !important;
+    font-weight: 800;
     background: transparent !important;
     border-radius: 8px !important;
 }
@@ -20073,7 +20073,7 @@ body {
 .app .sidebar .sidebar-link,
 .app .sidebar .sidebar-settings-btn {
     min-width: 0 !important;
-    white-space: nowrap !important;
+    white-space: nowrap;
 }
 
 
@@ -20093,7 +20093,7 @@ body {
 }
 
 .app .sidebar .syllabus-section.active {
-    white-space: nowrap !important;
+    white-space: nowrap;
 }
 
 /* SIDEBAR SYLLABUS MOCKUP PARITY: arrow hugs dotted rail, active item is the white tile. */
@@ -20109,7 +20109,7 @@ body {
     color: #1e293b !important;
     font-family: "Quicksand", sans-serif !important;
     font-size: 14px !important;
-    font-weight: 800 !important;
+    font-weight: 800;
     line-height: 1.2 !important;
     background: transparent !important;
     border: 0 !important;
@@ -20170,7 +20170,7 @@ body {
     color: #94a3b8 !important;
     font-family: "Quicksand", sans-serif !important;
     font-size: 16px !important;
-    font-weight: 800 !important;
+    font-weight: 800;
     line-height: 1 !important;
     transform: translateY(-50%) !important;
 }
@@ -20209,10 +20209,10 @@ body {
     font-size: 13px !important;
     font-weight: 600 !important;
     line-height: 1.16 !important;
-    white-space: normal !important;
+    white-space: normal;
     overflow: visible !important;
-    text-overflow: clip !important;
-    overflow-wrap: anywhere !important;
+    text-overflow: clip;
+    overflow-wrap: anywhere;
 }
 
 .app .sidebar .syllabus-section:hover {
