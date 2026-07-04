@@ -299,8 +299,8 @@ const VIEWS = [
     // all live inside it, the rest of the sidebar is covered by sidebar-expanded,
     // and this keeps the (expanded-tree) walk small.
     id: 'sidebar-syllabus-expanded', root: '#sidebarSyllabusPanel',
-    preNav: async (page) => { await openSyllabusTreeDirect(page); },
-    ensureState: async (page) => { await openSyllabusTreeDirect(page); },
+    preNav: openSyllabusTreeDirect,
+    ensureState: openSyllabusTreeDirect,
     ready: () => {
       const p = document.getElementById('sidebarSyllabusPanel');
       const s = document.querySelector('#courseSyllabus .syllabus-section.active');
@@ -333,8 +333,8 @@ const VIEWS = [
     // root = #sidebarSyllabusPanel: the collapse-hide rule hides THIS element, so
     // its own rect (0×0) + display:none is the witness. Un-hide → non-zero → RED.
     id: 'sidebar-collapsed-hide', root: '#sidebarSyllabusPanel',
-    preNav: async (page) => { await openPanelThenCollapse(page); },
-    ensureState: async (page) => { await openPanelThenCollapse(page); },
+    preNav: openPanelThenCollapse,
+    ensureState: openPanelThenCollapse,
     ready: () => {
       const p = document.getElementById('sidebarSyllabusPanel');
       const app = document.querySelector('.app');

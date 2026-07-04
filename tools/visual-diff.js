@@ -33,6 +33,7 @@ const {
     resetLessonChromeState,
     enterTextbookOverflowState,
     settleLesson,
+    finishAnimations,
     assertOrThrow,
     resolveLessonCachePath,
     closeFeaturePopovers,
@@ -211,7 +212,7 @@ const sharedViews = [
     // CALIBRATED: 3 baseline-vs-baseline runs each measured 0/1024000 (0.000%).
     { name: '02-syllabus-open', page: 'A', failRatio: 0.0005, setup: async (page) => {
         await ensureSyllabusOpen(page);
-        await page.evaluate(() => { document.getAnimations().forEach((a) => { try { a.finish(); } catch (_) {} }); });
+        await finishAnimations(page);
         await page.waitForTimeout(400);
     } },
     // View 03 — Page A — mistake notebook EMPTY landing. Idempotent
@@ -1121,11 +1122,11 @@ const sharedViews = [
         await page.evaluate(() => {
             document.querySelector('.app')?.classList.add('sidebar-collapsed');
             document.getElementById('leftSidebar')?.classList.add('collapsed');
-            // Jump the collapse transitions straight to their settled end state
-            // (see the CALIBRATED note above) so timing/scheduler jitter cannot
-            // land the screenshot mid-slide.
-            document.getAnimations().forEach((a) => { try { a.finish(); } catch (_) {} });
         });
+        // Jump the collapse transitions straight to their settled end state
+        // (see the CALIBRATED note above) so timing/scheduler jitter cannot
+        // land the screenshot mid-slide.
+        await finishAnimations(page);
         await page.evaluate(() => new Promise(r =>
             requestAnimationFrame(() => requestAnimationFrame(r))));
         await page.waitForTimeout(200);
