@@ -1,0 +1,3 @@
+{"file": ".trellis/spec/app/architecture.md", "reason": "Deployment section: Dockerfile -> Render, and the materials resolution / static asset model the change must preserve"}
+{"file": ".trellis/spec/app/conventions.md", "reason": "Materials & lesson-cache (canonical workspace/materials tree) + hard constraints (Chapter-2 protection, no renaming AQUARIUS_CONFIG/aquarius_visual_latex_v2)"}
+{"file": "docs/sync-policy.md", "reason": "Pre-authorizes the root materials/ image reduction (Future Cleanup: 3 gating conditions); must be updated when condition (1) is met"}

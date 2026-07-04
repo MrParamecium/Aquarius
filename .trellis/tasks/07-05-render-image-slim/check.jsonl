@@ -1,0 +1,2 @@
+{"file": ".trellis/spec/app/architecture.md", "reason": "Verify the deploy contract still holds: image builds, container boots on npm start, static routes serve from app/ + workspace/materials/"}
+{"file": ".trellis/spec/app/conventions.md", "reason": "Verify hard constraints intact: workspace/materials canonical tree shipped, Chapter-2 files untouched, no renamed globals"}
