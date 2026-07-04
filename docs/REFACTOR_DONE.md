@@ -30,7 +30,7 @@ triaged backlog.
 > - **Workstream B is COMPLETE** — B4 (`app/lesson-render.js`) shipped in **#116**; `app/app.js` = **5,720** lines (marginally above the ~5,100 stretch target; "reasonably split" met). The §1 `app.js` box can be checked.
 > - **Landmine C1** (unclosed `.learn-followup-bar {` brace, §C1) shipped in **#111** (`bd56ef9`). **C2** (panelFocus desync) **MERGED as #120 (`4d7b47b`)** — probe-neutral, baseline unchanged (see §C2). A4's C2 prerequisite is met; the S4–S11 composer-state harness (A4's second gate) **MERGED as #122 (`b3086c6`)** and the S13 `.learn-textbook-active` Band-1 probe **MERGED as #123 (`62ddf06`)** — A4's composer-state matrix is in place (S5 dropped as non-constructible, S1/S8 deferred; **S14 Band-2 dropped = named no-css-probe-witness gap**; see §A0).
 > - Current metrics (supersede §2's 06-25 table): `app/style.css` **32,279** lines / **9,286** `!important`-lines / **402** doubled-IDs (A2 warm-up **#124** `3b4d7d8` de-doubled `.mistake-workspace` ×2, 404→402; N=2 de-doubled / M=10 MN-band proven-DEFENSIVE-kept); `runtime-collapsed.css` **1,523** / **876** / **58**.
-> - §2 per-view dispositions are git-CONFIRMED (per-view trajectory in `PHASE3.6_SPEC.md` top STATUS block): settings & MN were ✅ stripped by #106 — **do not re-seed them**. A1 `#feedbackView` is now DONE (#119 guard + measured floor; **A1 CLOSED 2026-07-03** — floor 465, 100% keep-set-covered, §A1). **Genuinely-next = close the S14 Band-2 witness gap, then A4** (collapse-and-merge the §3d composer cluster vs `runtime-collapsed.css` — NOT piecemeal de-double) — *both since done (S14 witness #125; A4 CLOSED 2026-06-29, §A4); as of 2026-07-03 the only remaining CSS surface is **A3 `.app .sidebar`***.
+> - §2 per-view dispositions are git-CONFIRMED (per-view trajectory in `PHASE3.6_SPEC.md` top STATUS block): settings & MN were ✅ stripped by #106 — **do not re-seed them**. A1 `#feedbackView` is now DONE (#119 guard + measured floor; **A1 CLOSED 2026-07-03** — floor 465, 100% keep-set-covered, §A1). **Genuinely-next = close the S14 Band-2 witness gap, then A4** (collapse-and-merge the §3d composer cluster vs `runtime-collapsed.css` — NOT piecemeal de-double) — *both since done (S14 witness #125; A4 CLOSED 2026-06-29, §A4); A3 `.app .sidebar` was the last surface — **A3 CLOSED 2026-07-04** (11 stripped / 609 floor, §A3), so the §1 `!important`/doubled-ID collapse is at its load-bearing floor; only the §A5 media-gated dead-redeclaration box remains open per §1's own checklist.*
 
 ---
 
@@ -62,7 +62,7 @@ floor *is* the load-bearing set we intend to keep.
 
 ### CSS structural collapse (Full Phase 3.6)
 - [x] **`#feedbackView`** — ✅ CLOSED (A1, 2026-07-03, docs-only): #119 already delivered the criterion — non-load-bearing stripped, arbiter-verified against the seeded multi-tone fixture, permanent D1 css-probe floor guard. Measured floor **465** decls, 100% keep-set-covered; 15 arbiter-unreachable carve-outs accepted cite-and-keep (§A1).
-- [ ] **`.app .sidebar`** — non-load-bearing `!important` stripped, verified under multi-view + sidebar-collapsed-state probe coverage (§A3). **Gate ✅ built (PR #127); strip pending** = the last open surface (A3-proper, Phase-2-only, NOCOMP-only).
+- [x] **`.app .sidebar`** — ✅ CLOSED (A3, 2026-07-04): non-load-bearing `!important` stripped to floor under multi-view + sidebar-collapsed arbiter coverage (§A3). Gate PR #127; strip = **11 NOCOMP stripped / 609 kept** (620→609 on the `.sidebar` surface), all 5 gates byte-identical, 8 carve-outs cite-and-keep. Honest yield ≈1.8% (small-N success, A2/A4 precedent).
 - [x] **§3d composer chain — verified IRREDUCIBLE-by-design (A4 CLOSED 2026-06-29, docs-only).** A 24-agent adversarial re-derivation proved the doubled-ID repetition IS the load-bearing cross-file specificity-war mechanism, not removable debt — every war-pair is IRREDUCIBLE / NO_BENEFIT in isolation; the only reductions need new witnesses + a high-risk two-file lockstep for ~0 net gain. The invariant *style.css eff-specificity > rcc eff-specificity* is preserved precisely BY the repetition. Proof + re-derived anchors: `docs/A4_COMPOSER_IRREDUCIBLE.md` (§A4).
 - [x] **Doubled-ID inventory fully dispositioned** — the composer cluster (the bulk, ~368/402) is the documented LOAD-BEARING floor (A4, irreducible-by-design); the non-composer subset (MN-band, close-btn, learn-internal) was settled by A2 #124 (`3b4d7d8`) as pervasively load-bearing (N=2 de-doubled, rest proven-DEFENSIVE-kept). Residual doubled-IDs (402) == that documented floor.
 - [ ] **Media-gated dead-redeclaration slice** (78 style + 6 runtime) deleted under narrow/`@container` probe coverage, or documented as provably unreachable (§A5).
@@ -100,7 +100,7 @@ floor *is* the load-bearing set we intend to keep.
 | Surface | style.css | Isolation | Disposition |
 |---|---:|---|---|
 | `#learnView` (core) | ~3,410 | shared (cross-file arms race) | mixed — §3d + doubled-ID tranches |
-| `.app .sidebar` | ~639 | **shared** (syllabus tree + learn-collapsed layout) | **A3 — remaining** |
+| `.app .sidebar` | ~639 | **shared** (syllabus tree + learn-collapsed layout) | ✅ A3 CLOSED 2026-07-04 — 11 stripped / 609 floor (§A3) |
 | `#feedbackView` | ~503 | isolated | ✅ A1 CLOSED 2026-07-03 — floor 465, D1-guarded (§A1) |
 | `#mistakeNotebookView` | ~237 | isolated | ✅ stripped −193 (#106) |
 | `#settingsView` | ~64 | isolated | ✅ stripped −21 (#106) |
@@ -222,7 +222,7 @@ and gating:
 | NEEDS-NEW-VIEW | ~7 | isolated-view bootstraps | settings/preference/courseTracker close-btns; open-mode-menu composer. |
 | LOAD-BEARING (never touch) | 20 | — | cite-and-skip: composer L33191/33213-16/33238/37415-26, MN L34770/34784/34816+, topbar L34088/34176-78/34193-94, close-btn L34091. |
 
-#### A3 — `.app .sidebar` `!important` strip — the LAST open surface (gate built; strip pending)
+#### A3 — `.app .sidebar` `!important` strip — ✅ CLOSED 2026-07-04 (gate #127 + strip done)
 
 > **Split (FlyM1ss, 2026-07-03) into gate + strip** — the S14-witness-before-A4 pattern:
 > - **Gate ✅ BUILT — PR #127** (branch `a3/gate-witness`, task `07-03-a3-gate-witness`,
@@ -235,13 +235,23 @@ and gating:
 >   PASS 330 states byte-identical). css-probe durable sidebar state dropped as a named
 >   gap (no fail-closed sentinel — S14 precedent). **Run the arbiter with
 >   `node --max-old-space-size=5120`.** Full trail: task `results.md`.
-> - **Strip ⏳ PENDING = A3-proper (`06-29-a3-sidebar-strip`), Phase-2-only**, gated on #127
->   merging: fresh arbiter keep-set derivation over the 375 `.app .sidebar` decls → strip
->   **proven-NOCOMP only** (Q-A3-scope), 5 gates each → reconcile this DoD box.
-> - **Finding for the keep-set pass:** the syllabus arms L5904-5928 (`.sidebar
->   .syllabus-section*`) are OVERRIDDEN by the higher-specificity later `.app .sidebar
->   .syllabus-section*` rules at L20195/L20218/L20225 → the L5913-5928 `!important` arms are
->   likely NOCOMP/dead; classify against the L20195+ winners.
+> - **Strip ✅ DONE — A3-proper (`06-29-a3-sidebar-strip`), 2026-07-04.** Fresh arbiter
+>   keep-grow over the `.sidebar` surface (620 decls, reset-to-zero not seeded) → 19 NOCOMP
+>   → **11 stripped / 609 kept** (8 carve-outs). All 5 gates byte-identical: arbiter 330
+>   states + a **22-agent adversarial cascade/JS cross-check** (0/11 refuted) + visual-diff
+>   02/20 @ 0.000% + css-probe + `npm run check`. `@media`-gated competitors: **0** across
+>   all 11 → viewport-independent neutrality. Honest yield ≈ 1.8% (typography/order only;
+>   the geometry/colour wall is the load-bearing floor). Trail: task `results.md`.
+> - **Finding CORRECTED by the measurement:** the gate-witness prediction that the syllabus
+>   arms L5913-5928 (`.sidebar .syllabus-section*`) are "likely NOCOMP/dead" did **not** hold
+>   — the fresh keep-grow retained them as **load-bearing** (they flip when stripped). The
+>   actual strippable NOCOMP band was the *redundant typography* on the higher-specificity
+>   `.app .sidebar .syllabus-section*`/`.sidebar-link`/`.syllabus-chapter` winners
+>   (L20076/20096/20112/20173/20212/20214/20215 + L19813/19850), not the L5913-5928 arms.
+> - **Carve-outs (8, cite-and-keep):** L9580-83/9600-01 = a 19-arm `:root[data-theme="dark"]`
+>   cross-view grouped rule that `--force-mixed` missed (its `:root`-prefix guard skips the
+>   whole rule when every arm is `:root[…] .<non-sidebar>` — Sev-3 tooling fix filed);
+>   L11844-45 = `::-webkit-scrollbar-thumb`, unwitnessable by the arbiter's element walk.
 
 **Files:** `app/style.css` (`.app .sidebar` chains + comma-grouped `.sidebar` arms).
 **Risk:** **NOT isolated** — 169 `.app .sidebar` chains + 193 comma-grouped arms pair sidebar selectors with bare-class arms reachable from the **syllabus tree** (`.sidebar .syllabus-*, .syllabus-*`) and gate **learn-view layout** via `.app.sidebar-collapsed #learnView #learnBody.chat-collapsed .lesson-page-frame`. Stripping a sidebar `!important` can flip the cascade on the syllabus tree and on collapsed learn-view geometry.
@@ -429,6 +439,8 @@ Parked deliberately. Triage by the Gated Timebox protocol
    - De-duplicate the css-probe/visual-diff shared bridge-spawn/mask/report machinery (`§13a`) to stop drift.
    - **A1 feedback carve-out witness extension (Sev-3, filed at A1 close 2026-07-03).** The 15 accepted cite-and-keep carve-outs (§A1; incl. submit-btn `:disabled` L25244-25247, `:active` transform L25240, cross-view close-btn border L24702 — not exhaustive) are arbiter-unreachable — synthetic `:disabled`/`:active` probing false-flips. To ever retire them, extend the feedback VIEW/css-probe with real `:disabled` + `is-target`/`data-kind` states. Expected yield **~0** (almost certainly load-bearing); regression-safety only, does not block DONE.
    - **§3d composer fail-open gaps (Sev-3, surfaced by A4 2026-06-29 — see `docs/A4_COMPOSER_IRREDUCIBLE.md`).** Five composer props have NO witness, so any future edit touching them is unsafe until one is built (the S14-witness pattern, #125): (1) `#learnFollowupBar` **width** — add to `FOLLOWUP_PROBES` (css-probe.js) in S2/S3/S4 (the load-bearing gate currently omits it); (2) `#learnModeMenu` **position/right/bottom/z-index** — needs a css-probe state that adds `.show` + a same-file competitor check (later L30860 ties a de-doubled menu); (3) `#learnChatEmptyState` **transform** — add to `CHAT_STATE_PROBES` (freeze animation); (4) the **6 close-btn arms** display/visibility/size — no state asserts the hidden buttons; (5) `#learnChatCol` **background shorthand** (only background-image probed). None block DONE (A4 makes no edit here).
+    - **`_grow-keep-from-report.js --force-mixed` `:root`/`@`-prefix carve-out gap (Sev-3, surfaced by A3 2026-07-04).** The cross-view carve-out filter skips any comma-arm starting with `:root`/`@`; when EVERY arm is `:root[data-theme] .<non-sidebar>` (the L9580-83/9600-01 19-arm dark rule), the whole rule escapes carve-out and would be silently under-carved. Caught by hand at A3 R5 (kept). Fix: test the token AFTER the `:root[…]`/`@media` wrapper, not the wrapper itself. Affects any future per-view keep-grow, not just A3.
+    - **css-probe `S-feedback-rest` `#feedbackView .feedback-reply` nondeterminism (Sev-3, surfaced by A3 2026-07-04).** 4 probes (reply + reply-context width, `::before` left) intermittently shift a uniform −3.266px — a shared-container available-width race (scrollbar/font-load), reproduced once then cleared on an identical-tree re-run. Orthogonal to any strip. Harden the state with a settle-before-snapshot (fonts.ready + scrollbar-stable) like the S14-14c precedent; until then, an isolated `--check` fail on ONLY these 4 feedback-reply probes is a known flake, not a regression.
 5. **View-04 dead-JS/markup tidy** (C3 above) — optional cleanup, do not re-enable the buttons.
 
 ---
