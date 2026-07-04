@@ -13,3 +13,28 @@ __pycache__
 *.pyc
 tutor-openclaw-ui/users
 workspace_tutor_related_full/tutor-openclaw-ui/users
+
+# --- Dev/build-only: never shipped to the Render runtime (npm start = app/ws-bridge.js).
+# The container only reads app/ + workspace/materials/; everything below is unused at runtime.
+#
+# Two syntax rules this file lives or dies by (both verified with a real docker build,
+# 2026-07-05 — get either wrong and the exclusions silently no-op or nuke the app):
+#   1. NO inline/trailing comments. Only a line that STARTS with # is a comment; text
+#      after a pattern (e.g. `tools/  # harness`) becomes part of the pattern and matches
+#      nothing. Keep each pattern alone on its line.
+#   2. Unlike .gitignore, a slash-free pattern matches ONLY at the build-context root,
+#      not at any depth. So `materials` excludes the root materials/ mirror but NEVER
+#      workspace/materials/. Do NOT rewrite these as recursive `**/materials/` — that
+#      WOULD wrongly drop workspace/materials/ and break the app.
+#
+# What each excludes:
+#   tools/     = Playwright harness + 344M gitignored CSS baseline (dev-only)
+#   .local/    = gitignored archives / visual audits (dev-only)
+#   materials/ = legacy backup mirror; the app reads workspace/materials/
+#   .trellis/  = task / planning metadata, not runtime
+#   docs/      = docs, not runtime
+tools/
+.local/
+/materials/
+.trellis/
+docs/
