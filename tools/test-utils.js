@@ -269,6 +269,19 @@ async function settleRaf(page) {
     );
 }
 
+// Fast-forward any in-flight CSS transitions/animations to their end state so a
+// screenshot cannot land mid-tween. getAnimations() returns only the animations
+// running right now, so .finish() is a no-op wherever nothing is animating; the
+// try/catch swallows the rare "cannot finish an infinite animation" throw.
+// Extracted here (like settleRaf) because the identical one-liner is repeated
+// across the visual harnesses — a future tuning patch (scope to a root element,
+// change the catch behavior) should then land in one place.
+async function finishAnimations(page) {
+    await page.evaluate(
+        () => document.getAnimations().forEach((a) => { try { a.finish(); } catch (_) {} })
+    );
+}
+
 // Wait until MathJax typesetting + font loading + 2x rAF have all settled,
 // so canvas-based interactive demos paint against a stable layout. Used by
 // captureView before every screenshot.
@@ -664,6 +677,7 @@ module.exports = {
     resetLessonChromeState,
     enterTextbookOverflowState,
     settleLesson,
+    finishAnimations,
     assertOrThrow,
     resolveLessonCachePath,
     closeFeaturePopovers,

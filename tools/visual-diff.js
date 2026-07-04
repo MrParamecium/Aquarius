@@ -33,6 +33,7 @@ const {
     resetLessonChromeState,
     enterTextbookOverflowState,
     settleLesson,
+    finishAnimations,
     assertOrThrow,
     resolveLessonCachePath,
     closeFeaturePopovers,
@@ -199,8 +200,19 @@ const sharedViews = [
         await closeFeaturePopovers(page);
         await page.waitForTimeout(300);
     } },
-    { name: '02-syllabus-open', page: 'A', setup: async (page) => {
+    // A3 gate witness (task 07-03-a3-gate-witness) — R4: tight failRatio. This is
+    // the ONLY view that renders the syllabus tree unmasked, so it is the pixel
+    // backstop for a `.app .sidebar` strip that flips a `.syllabus-*` arm
+    // (color/border-left/background ≈ a few hundred px of a 1280×800 frame, well
+    // under the 0.5% default). 0.0005 (0.05%) = 512px. The ~1-2px/row settled-
+    // height drift that forced maskLessonSidebar on the downstream LESSON views
+    // (test-utils L169) does NOT surface here: ensureSyllabusOpen gates on
+    // `.is-open:not(.is-animating)` and getAnimations().finish() jumps any residual
+    // tween to its end, so the settled render is deterministic before capture.
+    // CALIBRATED: 3 baseline-vs-baseline runs each measured 0/1024000 (0.000%).
+    { name: '02-syllabus-open', page: 'A', failRatio: 0.0005, setup: async (page) => {
         await ensureSyllabusOpen(page);
+        await finishAnimations(page);
         await page.waitForTimeout(400);
     } },
     // View 03 — Page A — mistake notebook EMPTY landing. Idempotent
@@ -1094,12 +1106,27 @@ const sharedViews = [
     // strips view 15/16's `.chapter-overview-active*` classes so the underlying
     // lesson layout doesn't bleed in. Reversible cleanup not required — view
     // 21 is the next Page A view and does its own state reset.
-    { name: '20-sidebar-collapsed', page: 'A', setup: async (page) => {
+    // A3 gate witness (task 07-03-a3-gate-witness) — R4: tight failRatio. The
+    // collapsed-sidebar chrome (icons + the FINAL COLLAPSED SIDEBAR GLASS FIX
+    // cluster) is a small fraction of the frame; a single-rule collapse-arm flip
+    // would hide under the 0.5% default. 0.0005 (0.05%) = 512px. Adding
+    // `.sidebar-collapsed` fires the .sidebar (width/transform) + .main (margin)
+    // 0.4s transitions (style.css L6913/L6921); settleLesson's waits happen to
+    // outlast 400ms today, but that is wall-clock luck — a mid-transition capture
+    // on the full-frame slide would blow the tight budget under load, so setup
+    // calls getAnimations().finish() to jump the transitions to their end state,
+    // making the capture transition-independent. CALIBRATED: 3 baseline-vs-
+    // baseline runs each measured 0/1024000 (0.000%).
+    { name: '20-sidebar-collapsed', page: 'A', failRatio: 0.0005, setup: async (page) => {
         await resetLessonChromeState(page);
         await page.evaluate(() => {
             document.querySelector('.app')?.classList.add('sidebar-collapsed');
             document.getElementById('leftSidebar')?.classList.add('collapsed');
         });
+        // Jump the collapse transitions straight to their settled end state
+        // (see the CALIBRATED note above) so timing/scheduler jitter cannot
+        // land the screenshot mid-slide.
+        await finishAnimations(page);
         await page.evaluate(() => new Promise(r =>
             requestAnimationFrame(() => requestAnimationFrame(r))));
         await page.waitForTimeout(200);

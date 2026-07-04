@@ -111,13 +111,11 @@ LOAD-BEARING → keep. A3 downgrades only (a), proven per-occurrence by a witnes
 - `@layer` migration; any sidebar *behavior*/markup change.
 - Stripping anything the completed gate still cannot witness — carve out + backlog instead.
 
-## Open questions (BLOCKING — for FlyM1ss at the review gate)
+## Open questions — RESOLVED (FlyM1ss, 2026-07-03)
 
-1. **Q-A3-scope — strip depth / risk tolerance.** Given the highest blast radius of the
-   series, strip (A) only the proven-NOCOMP subset the completed gate can witness, carving out
-   the rest [RECOMMENDED — honest-yield, matches A2/A4]; or (B) push further into DEFENSIVE-
-   looking decls with extra bespoke witnesses per decl (higher cost, diminishing returns)?
-2. **Q-A3-split — one task or precondition-split?** The gate-build (R1-R4) is a self-contained
-   deliverable. Keep it as Phase 1 of this task with a review checkpoint [RECOMMENDED, honours
-   "two independent tasks"]; or split it into its own precondition task (like the S14 witness
-   preceded A4)? Affects PR granularity only.
+1. **Q-A3-scope → (A): strip only the proven-NOCOMP subset** the completed gate can
+   witness, carving out the rest (honest-yield; matches the A2/A4 precedent).
+2. **Q-A3-split → precondition-split**: the gate build (R1-R4 + canary) moved to its own
+   task `07-03-a3-gate-witness` + own PR (the S14-witness pattern). This task's scope is
+   now **Phase 2 only** (R5 classify / R6 strip / R7 carve-outs + reconcile); it does not
+   start until the gate task's PR is merged and green.

@@ -3,6 +3,11 @@
 > Companion to `prd.md` + `design.md`. Ordered checklist with validation gates.
 > **Do not begin until `task.py start` (review gate passed).** Phase 1 is test-only;
 > Phase 2 is the only phase that edits `app/style.css`.
+>
+> **SPLIT 2026-07-03 (Q-A3-split resolved):** Phase 1 below was carved out to the
+> precondition task `07-03-a3-gate-witness` (own PR, S14-witness pattern). It stays
+> here for reference only — execute it THERE. This task starts at Phase 2, gated on
+> the precondition PR being merged + green.
 
 ## Pre-flight (read before any edit — `trellis-before-dev`)
 

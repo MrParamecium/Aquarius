@@ -62,7 +62,7 @@ floor *is* the load-bearing set we intend to keep.
 
 ### CSS structural collapse (Full Phase 3.6)
 - [x] **`#feedbackView`** — ✅ CLOSED (A1, 2026-07-03, docs-only): #119 already delivered the criterion — non-load-bearing stripped, arbiter-verified against the seeded multi-tone fixture, permanent D1 css-probe floor guard. Measured floor **465** decls, 100% keep-set-covered; 15 arbiter-unreachable carve-outs accepted cite-and-keep (§A1).
-- [ ] **`.app .sidebar`** — non-load-bearing `!important` stripped, verified under multi-view + sidebar-collapsed-state probe coverage (§A3).
+- [ ] **`.app .sidebar`** — non-load-bearing `!important` stripped, verified under multi-view + sidebar-collapsed-state probe coverage (§A3). **Gate ✅ built (PR #127); strip pending** = the last open surface (A3-proper, Phase-2-only, NOCOMP-only).
 - [x] **§3d composer chain — verified IRREDUCIBLE-by-design (A4 CLOSED 2026-06-29, docs-only).** A 24-agent adversarial re-derivation proved the doubled-ID repetition IS the load-bearing cross-file specificity-war mechanism, not removable debt — every war-pair is IRREDUCIBLE / NO_BENEFIT in isolation; the only reductions need new witnesses + a high-risk two-file lockstep for ~0 net gain. The invariant *style.css eff-specificity > rcc eff-specificity* is preserved precisely BY the repetition. Proof + re-derived anchors: `docs/A4_COMPOSER_IRREDUCIBLE.md` (§A4).
 - [x] **Doubled-ID inventory fully dispositioned** — the composer cluster (the bulk, ~368/402) is the documented LOAD-BEARING floor (A4, irreducible-by-design); the non-composer subset (MN-band, close-btn, learn-internal) was settled by A2 #124 (`3b4d7d8`) as pervasively load-bearing (N=2 de-doubled, rest proven-DEFENSIVE-kept). Residual doubled-IDs (402) == that documented floor.
 - [ ] **Media-gated dead-redeclaration slice** (78 style + 6 runtime) deleted under narrow/`@container` probe coverage, or documented as provably unreachable (§A5).
@@ -222,11 +222,30 @@ and gating:
 | NEEDS-NEW-VIEW | ~7 | isolated-view bootstraps | settings/preference/courseTracker close-btns; open-mode-menu composer. |
 | LOAD-BEARING (never touch) | 20 | — | cite-and-skip: composer L33191/33213-16/33238/37415-26, MN L34770/34784/34816+, topbar L34088/34176-78/34193-94, close-btn L34091. |
 
-#### A3 — `.app .sidebar` `!important` strip
+#### A3 — `.app .sidebar` `!important` strip — the LAST open surface (gate built; strip pending)
+
+> **Split (FlyM1ss, 2026-07-03) into gate + strip** — the S14-witness-before-A4 pattern:
+> - **Gate ✅ BUILT — PR #127** (branch `a3/gate-witness`, task `07-03-a3-gate-witness`,
+>   harness-only, `app/**` byte-identical). Closes the 3 coverage gaps below via 3 new
+>   arbiter VIEWs (`sidebar-syllabus-expanded`, `sidebar-collapsed-hide`,
+>   `sidebar-collapsed-lesson-frame`) + PROP_LIST staples + visual-diff 02/20
+>   `failRatio: 0.0005`. Canary-proven: each VIEW goes RED on a deliberate flip of its
+>   target's cascade winner (7050 / 60 / 60), attribution clean. Arbiter determinism
+>   bug found+fixed en route (`settle()` now awaits `document.fonts.ready`; no-op control
+>   PASS 330 states byte-identical). css-probe durable sidebar state dropped as a named
+>   gap (no fail-closed sentinel — S14 precedent). **Run the arbiter with
+>   `node --max-old-space-size=5120`.** Full trail: task `results.md`.
+> - **Strip ⏳ PENDING = A3-proper (`06-29-a3-sidebar-strip`), Phase-2-only**, gated on #127
+>   merging: fresh arbiter keep-set derivation over the 375 `.app .sidebar` decls → strip
+>   **proven-NOCOMP only** (Q-A3-scope), 5 gates each → reconcile this DoD box.
+> - **Finding for the keep-set pass:** the syllabus arms L5904-5928 (`.sidebar
+>   .syllabus-section*`) are OVERRIDDEN by the higher-specificity later `.app .sidebar
+>   .syllabus-section*` rules at L20195/L20218/L20225 → the L5913-5928 `!important` arms are
+>   likely NOCOMP/dead; classify against the L20195+ winners.
 
 **Files:** `app/style.css` (`.app .sidebar` chains + comma-grouped `.sidebar` arms).
 **Risk:** **NOT isolated** — 169 `.app .sidebar` chains + 193 comma-grouped arms pair sidebar selectors with bare-class arms reachable from the **syllabus tree** (`.sidebar .syllabus-*, .syllabus-*`) and gate **learn-view layout** via `.app.sidebar-collapsed #learnView #learnBody.chat-collapsed .lesson-page-frame`. Stripping a sidebar `!important` can flip the cascade on the syllabus tree and on collapsed learn-view geometry.
-**Gate:** multi-view arbiter coverage **including a sidebar-collapsed state** + the syllabus tree, before any strip. ~639 candidates; spec quotes 44.2% safe — the highest blast radius of the view strips.
+**Gate:** ✅ the above (PR #127) — multi-view arbiter coverage **including a sidebar-collapsed state** + the syllabus tree, before any strip. ~639 candidates (375 inside `.app .sidebar` blocks by the fresh measurement); spec quotes 44.2% safe — the highest blast radius of the view strips.
 
 #### A4 — §3d learn-view composer chain — ✅ CLOSED 2026-06-29 (verified IRREDUCIBLE-by-design)
 
