@@ -28,21 +28,28 @@ or `.trellis/`. (Grep evidence in `prd.md` Background.)
 
 ## Chosen approach: targeted, dir-anchored `.dockerignore` blacklist
 
-Append to `.dockerignore`:
+Append bare patterns (comments on their OWN lines) to `.dockerignore`:
 
 ```
-# --- Dev/build-only: never used by the runtime container (npm start = app/ws-bridge.js) ---
-# NOTE: unlike .gitignore, a slash-free .dockerignore pattern matches ONLY at the
-# build-context root, NOT at any depth. So `materials`/`/materials/` excludes the
-# root materials/ mirror but NEVER workspace/materials/. Do NOT "fix" this into a
-# recursive `**/materials/` — that WOULD wrongly drop workspace/materials/ and
-# break the app. (Empirically verified with a real `docker build`, 2026-07-05.)
-tools/          # Playwright harness + 344M gitignored CSS baseline (dev-only)
-.local/         # gitignored archives / visual audits (dev-only)
-/materials/     # legacy backup mirror; app reads workspace/materials/
-.trellis/       # task/planning metadata, not runtime
-docs/           # docs, not runtime
+# ... explanatory comment lines start with # ...
+tools/
+.local/
+/materials/
+.trellis/
+docs/
 ```
+
+**Two `.dockerignore` syntax rules this depends on** (both empirically verified —
+see below; getting either wrong silently no-ops the exclusions or breaks the app):
+
+1. **No inline/trailing comments.** Only a line that *starts* with `#` is a
+   comment. Text after a pattern on the same line (`tools/  # harness`) becomes
+   part of the pattern and matches nothing. Each pattern must be alone on its line.
+   (First execution attempt used trailing comments → context stayed 630M, zero
+   exclusions. Caught by the build probe.)
+2. **Slash-free patterns are root-anchored** (inverse of `.gitignore`): `materials`
+   matches only root `materials/`, never `workspace/materials/`. Never rewrite as
+   `**/materials/`.
 
 ### Why a blacklist, not a whitelist
 
@@ -121,9 +128,9 @@ Preferred, in order:
 ## Adversarial verification results
 
 Three independent refuters ran (workflow `wf_7f51f396-2c0`), each trying to break
-the safety claim from a different lens. 2/3 returned (the ops-rollback lens timed
-out mid-run; its questions are covered below by the design + the empirical build).
-Both returned lenses: **refuted = false, high confidence.**
+the safety claim from a different lens. **All 3/3 returned refuted = false, high
+confidence**, backed by two independent empirical proofs (a real `docker build`
+and a live boot simulation).
 
 - **runtime-completeness** (refuted=false, high): grep-confirmed no runtime JS file
   reads or requires `tools/`, `.local/`, `.trellis/`, `docs/`, or root `materials/`;
@@ -147,7 +154,20 @@ Both returned lenses: **refuted = false, high confidence.**
   (added to the proposed block) prevents a future editor from "fixing" it into a
   recursive pattern that *would* break it.
 
-Net: the safety claim survived adversarial verification, including a live build.
+- **ops-rollback** (refuted=false, high): traced moby/patternmatcher's algorithm
+  confirming `materials` never matches `workspace/materials`, then ran a **live boot
+  simulation** with root `materials/` deleted and `workspace/materials/` intact —
+  `/health`, `/figures/*`, `/new-pages/*`, and `/api/section` (cache pipeline) all
+  HTTP 200, no exceptions.
+
+**Execution build (this task, on the actual shipped `.dockerignore`):** an Alpine
+context probe (`docker.exe build`, Docker Desktop 29.6.1) confirmed the copied
+context drops **630.1M → 142.7M (~487M off)** with `app/`, `workspace/materials/`
+(+ `new-book-ocr/`, `prompts/`), `package.json`, `Dockerfile` present and `tools/`,
+`materials/`, `.local/`, `.trellis/`, `docs/` absent. The first probe caught the
+inline-comment bug (630M, zero exclusions); the corrected bare-pattern file passed.
+
+Net: the safety claim survived adversarial verification plus an execution-time build.
 
 ## Risks & mitigations
 

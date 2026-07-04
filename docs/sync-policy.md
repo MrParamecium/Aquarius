@@ -62,13 +62,23 @@ See `docs/chapter-2-recrops.md` for the protection rationale.
 
 ## Future Cleanup
 
-Root `materials/` is being kept as a temporary backup mirror. A later cleanup pass may delete it
-once we confirm:
+**Update 2026-07-05:** root `materials/` is no longer shipped to the Render image.
+`.dockerignore` now excludes it (along with other dev-only content) from the
+`COPY . .` build context, so the image builds from `workspace/materials/` only.
+This was verified with a real `docker build` (copied context 630M → 143M) plus an
+adversarial-verification pass and a live boot simulation (`/health`, `/figures`,
+`/pages`, `/api/section` all 200 with root `materials/` absent). Of the three
+original conditions:
 
-1. The Render Docker image rebuilds correctly with only `workspace/materials/` present. The
-   `Dockerfile` `COPY . .` step currently copies both trees; switching to a workspace-only copy
-   would shrink the image.
-2. No external scripts or out-of-tree consumers read root `materials/`.
-3. Chapter 2 protection survives the consolidation (the canonical workspace copy is preserved).
+1. **Satisfied for the image.** The Render image rebuilds with only
+   `workspace/materials/` present.
+2. **Satisfied.** No runtime code, script, or out-of-tree consumer reads root
+   `materials/` (only `app/ws-bridge.js`'s workspace-first fallback, which never
+   selects it in a normal checkout).
+3. **Satisfied.** Chapter-2 protection is untouched — the change is
+   `.dockerignore`-only; both trees' files are unchanged on disk.
 
+Root `materials/` is **retained in the repo** as a backup mirror / startup
+fallback net; only its *inclusion in the deployed image* was removed. A later pass
+may still `git rm` the repo mirror to shrink clone size — a separate decision.
 Until then, treat root `materials/` as a read-only mirror that nobody should write to.
