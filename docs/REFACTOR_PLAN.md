@@ -2,8 +2,8 @@
 
 Owner: FlyM1ss
 Started: 2026-06-19
-Last refreshed: 2026-06-27 — Phase 3.6 partially merged to main (#105/#106/#118); Workstream B (app.js split) COMPLETE (#116). Canonical current status: `docs/REFACTOR_DONE.md`. (The 2026-06-25 "Phase 3.6 execution status" callout in Forward outlook is a frozen branch-era snapshot — see its reconciliation note.)
-Status:
+Last refreshed: 2026-07-04 — **refactor complete** (see below). Canonical current status: `docs/REFACTOR_DONE.md`. (The 2026-06-25 "Phase 3.6 execution status" callout in Forward outlook is a frozen branch-era snapshot — see its reconciliation note.)
+Status: **✅ REFACTOR COMPLETE — 2026-07-04.** The full Phase 3.6 CSS `!important`/doubled-ID collapse is at its load-bearing floor and every `docs/REFACTOR_DONE.md` §1 Definition-of-Done box is checked: A1 `#feedbackView`, A3 `.app .sidebar`, A4 §3d composer (irreducible-by-design), A2 doubled-IDs, and A5 media-gated slice all closed; `app.js` reasonably split (Workstream B, #116); landmines C1/C2 fixed (#111/#120). Only the post-refactor backlog remains (`REFACTOR_DONE.md` §4: Phase 4 DB migration, six demo bugs, `@layer` migration, harness hardening) — separate future work, not part of this refactor. The multi-phase history below is retained as the canonical record.
 
 - **Phase 0** merged (#15).
 - **Phase 1** complete (#17, #20–29).

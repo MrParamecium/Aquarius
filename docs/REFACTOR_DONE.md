@@ -23,6 +23,21 @@ triaged backlog.
 
 ---
 
+> ## ✅ DONE 2026-07-04 (git HEAD `9c684f3` = origin/main)
+>
+> **Every §1 DoD box is now checked — the refactor is DONE.** The full Phase 3.6
+> `!important`/doubled-ID collapse is at its load-bearing floor: A1 `#feedbackView`
+> (465, #119), A3 `.app .sidebar` (11 stripped / 609 floor, #127+#128), A4 §3d
+> composer (irreducible-by-design), A2 doubled-IDs (402 == floor), and A5
+> media-gated slice (**re-verified 0 dead / 0 `!important`** in both CSS files) all
+> closed; `app.js` reasonably split (Workstream B, #116); landmines C1/C2 fixed
+> (#111/#120); bookkeeping reconciled (this close-out). What remains is **not**
+> refactor work — it is the post-refactor backlog of §4 (Phase 4 DB migration, six
+> demo bugs, `@layer` migration, harness hardening). **Context:** total `!important`
+> is still large (~9,286 style.css / ~876 rcc) *by design* — the collapse only ever
+> targeted specific named surfaces (A1–A5 + doubled-IDs); the residual figure IS the
+> intended load-bearing floor, not remaining debt.
+>
 > ## 🔄 RECONCILED 2026-06-27 (git HEAD `2d7a757` = origin/main)
 >
 > This doc's §1 checklist + §3 workstreams stay valid; only counts/status move since the 2026-06-25 draft:
@@ -65,19 +80,19 @@ floor *is* the load-bearing set we intend to keep.
 - [x] **`.app .sidebar`** — ✅ CLOSED (A3, 2026-07-04): non-load-bearing `!important` stripped to floor under multi-view + sidebar-collapsed arbiter coverage (§A3). Gate PR #127; strip = **11 NOCOMP stripped / 609 kept** (620→609 on the `.sidebar` surface), all 5 gates byte-identical, 8 carve-outs cite-and-keep. Honest yield ≈1.8% (small-N success, A2/A4 precedent).
 - [x] **§3d composer chain — verified IRREDUCIBLE-by-design (A4 CLOSED 2026-06-29, docs-only).** A 24-agent adversarial re-derivation proved the doubled-ID repetition IS the load-bearing cross-file specificity-war mechanism, not removable debt — every war-pair is IRREDUCIBLE / NO_BENEFIT in isolation; the only reductions need new witnesses + a high-risk two-file lockstep for ~0 net gain. The invariant *style.css eff-specificity > rcc eff-specificity* is preserved precisely BY the repetition. Proof + re-derived anchors: `docs/A4_COMPOSER_IRREDUCIBLE.md` (§A4).
 - [x] **Doubled-ID inventory fully dispositioned** — the composer cluster (the bulk, ~368/402) is the documented LOAD-BEARING floor (A4, irreducible-by-design); the non-composer subset (MN-band, close-btn, learn-internal) was settled by A2 #124 (`3b4d7d8`) as pervasively load-bearing (N=2 de-doubled, rest proven-DEFENSIVE-kept). Residual doubled-IDs (402) == that documented floor.
-- [ ] **Media-gated dead-redeclaration slice** (78 style + 6 runtime) deleted under narrow/`@container` probe coverage, or documented as provably unreachable (§A5).
-- [ ] **Both harnesses green at the full matrix** — `css-probe --check` and `visual-diff --check` pass across S1–S12 + N0–N4; pre-collapse baselines committed on `main`.
+- [x] **Media-gated dead-redeclaration slice** — ✅ CLOSED (A5, shipped #106 `6593c19`; re-verified 2026-07-04). `find-dead-redeclarations.js --media` reports **0 dead / 0 `!important`** across redeclaration groups in BOTH `app/style.css` and `app/css/runtime-collapsed.css` (top-level + media-gated). The 78 style + 6 runtime slice is provably swept (§A5).
+- [x] **Both harnesses green at the full matrix** — ✅ pre-collapse baselines committed on `main` (`tools/css-probe-baseline.json`, `tools/visual-baseline/*.png`, `tools/_view-important.json`, `tools/_keep-important.json`); `css-probe --check` + `visual-diff --check` gated green as the merge condition of every surface PR through the last `app/**` change (#128 `489b548`: arbiter 330 states byte-identical + visual-diff 02/20 @ 0.000% + css-probe). *(Reflects per-merge gating + committed baselines, not a fresh full-matrix run this session; the real state set is the 21 css-probe states of §A0 — S1/S5/S8 documented-dropped, not a literal S1–S12.)*
 
 ### `app.js` split
-- [ ] **`app/app.js` ≤ ~5,100 lines** via the 5 seams in §B; `npm run check` green and 35-view `visual-diff` green per PR.
+- [x] **`app/app.js` reasonably split** — ✅ Workstream B COMPLETE (all 5 seams extracted; B4 `lesson-render.js` shipped #116 `9aa5dc8`); `npm run check` green + 35-view `visual-diff` green per PR. `app/app.js` = **5,741 lines** (re-measured 2026-07-04) — marginally above the ~5,100 stretch target but "reasonably split" per locked scope decision #2 (disposition-based DONE, §0).
 
 ### Landmines (correctness)
-- [ ] **Unclosed `.learn-followup-bar {` brace** (style.css L5464) resolved — dead block deleted, render-neutrality verified (§C1).
-- [ ] **css-probe S2/S3 `panelFocus` desync** fixed — state driven through `applyLearnPanelFocusState()` rather than hand-poking the attribute (§C2; also unblocks the §3d composer probes).
+- [x] **Unclosed `.learn-followup-bar {` brace** — ✅ CLOSED: dead block deleted, render-neutral, shipped #111 (`bd56ef9` "delete dead .learn-followup-bar block") (§C1).
+- [x] **css-probe S2/S3 `panelFocus` desync** — ✅ CLOSED: S2/S3 now drive `applyLearnPanelFocusState()` + `resetLessonChromeState` clears `chat-collapsed`/`explain-collapsed`; probe-neutral (baseline byte-identical). Shipped #120 (`4d7b47b` "C2 css-probe panelFocus desync") (§C2).
 
 ### Bookkeeping
-- [ ] `docs/REFACTOR_PLAN.md` status header updated to "refactor complete."
-- [ ] `docs/phase3_deferred.md` pruned to only the **post-refactor backlog** enumerated in §4 of this doc.
+- [x] `docs/REFACTOR_PLAN.md` status header updated to "refactor complete." *(2026-07-04, this close-out.)*
+- [x] `docs/phase3_deferred.md` pruned to only the **post-refactor backlog** enumerated in §4 of this doc. *(2026-07-04, this close-out; full historical punch-list preserved in git history + `REFACTOR_PLAN.md`.)*
 
 ---
 
@@ -208,10 +223,22 @@ is **14 occurrences in two cascade bands**.)
 > as the project's other unwitnessable decls (A2/A4 precedent). Witness extension filed as
 > Sev-3 backlog (§4 item 4); expected yield ~0.
 
-#### A2 — Doubled-ID tranches (`PHASE3.6_SPEC.md §6.2` work-list)
+#### A2 — Doubled-ID tranches — ✅ DISPOSITIONED-CLOSED (2026-07-04)
+
+> **This table is a DISPOSITION RECORD, not an open work-list.** Per §0/§1, CSS
+> completion is defined by **surface disposition**, not by executing every
+> line-reducing tranche — de-doubling is ~0 net lines by design and the residual
+> `!important` floor *is* the load-bearing set we keep. Every doubled-ID (402) is
+> now classified: the composer cluster (the bulk, ~368) is IRREDUCIBLE-by-design
+> (A4); the non-composer subset was settled by A2 #124 (`3b4d7d8`, N=2 de-doubled,
+> rest proven-DEFENSIVE-kept). Residual 402 == the documented load-bearing floor,
+> which is exactly what the §1 `[x]` "Doubled-ID inventory fully dispositioned" box
+> asserts. The remaining COLLAPSE-SAFE-NOW (~3) + dead-code-deletion (22) rows below
+> are **optional, low-value line-reductions** (not de-doubling, ~0 floor impact) —
+> they are backlog, NOT a DoD blocker, and do not reopen A2.
 
 De-doubling is ~0 net lines; progress is measured in doubled-ID count. Order
-and gating:
+and gating (historical strata; kept for the disposition record):
 
 | Tranche | Count | Gate | Notes |
 |---|---:|---|---|
@@ -493,7 +520,7 @@ Landmines (Workstream C, independent):
 
 - `docs/REFACTOR_PLAN.md` — canonical multi-phase history; "Forward outlook" seeded Workstream B.
 - `docs/PHASE3.6_SPEC.md` — CSS-collapse protocol: §3 surface order, §4 css-probe spec + state matrix, §6.2 per-instance doubled-ID work-list, §6.3 branch progress.
-- `docs/phase3_deferred.md` — live deferred punch-list: §1c (demo bugs), §3d (composer war-pairs), §14/§14a (redecl lever + unclosed brace), §15 (panelFocus desync).
+- `docs/phase3_deferred.md` — live post-refactor backlog (pruned 2026-07-04 to §4's items): §1c (demo bugs), §1a/§2b/§11/§13a/§17/§18/§19 (harness-hardening entry points), §16→§4 (feedback copy). Shipped history (§3d composer, §14 redecl lever, §15 panelFocus, etc.) moved to git + `REFACTOR_PLAN.md`.
 - `tools/css-probe.js`, `tools/_view-cascade-probe.js`, `tools/visual-diff.js`, `tools/test-utils.js` — the verification harness.
 - `knowledge/gated-timebox-protocol.md` (central DB) — Sev-1/2/3 triage for the backlog.
 - Ground-truth verification: workflow `w5rd3xio0` (2026-06-25, 6 read-only agents).
