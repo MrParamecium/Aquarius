@@ -1,3 +1,0 @@
-{"file": ".trellis/spec/css/verification.md", "reason": "the 5-gate verification the new witness must plug into (arbiter --check / css-probe --check / visual-diff --check byte-identical) + the canary-must-go-red discipline that proves the gate is real, not decorative"}
-{"file": ".trellis/spec/css/cascade-and-collapse.md", "reason": "Rule 3 classify-before-strip + Rule 4 style.css>runtime-collapsed invariant — the witness exists to observe exactly these cascade flips (comma-group arm precedence L5890-5923 / L18278-90, collapse-hide L17324)"}
-{"file": ".trellis/spec/css/index.md", "reason": "CSS layer entry point + pre-development checklist"}

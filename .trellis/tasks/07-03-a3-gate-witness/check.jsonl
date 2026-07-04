@@ -1,2 +1,0 @@
-{"file": ".trellis/spec/css/verification.md", "reason": "check must confirm: all three harnesses re-baselined additive-only (pre-existing keys byte-identical), the canary went RED on >=1 gate and was reverted byte-identical, npm run check green, git diff app/ empty (harness-only constraint)"}
-{"file": ".trellis/spec/css/index.md", "reason": "CSS layer Quality Check section"}
