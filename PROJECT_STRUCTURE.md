@@ -189,17 +189,21 @@ reversible):
 
 Hard-deleted: `workspace/materials/scan-check.txt` (0-byte placeholder).
 
-**Deferred by owner decision (documented, not executed):**
+**Root `materials/` consolidation — image half DONE (PR #130, 2026-07-05).**
+`.dockerignore` now excludes root `materials/` (plus `tools/`, `.local/`,
+`.trellis/`, `docs/`) from the Render build context, so the image builds from
+`workspace/materials/` only — copied context dropped 630M → 143M, deploy verified
+healthy. `docs/sync-policy.md` "Future Cleanup" conditions (1)–(3) are satisfied
+for the image. **Still deferred:** the repo-level `git rm` of the root `materials/`
+mirror (~107M off *clone* size). It is retained as a backup mirror / startup
+fallback net; deleting it is a separate owner decision with no further image
+benefit (already excluded).
 
-- **Root `materials/` consolidation (~107M).** Provably never read at runtime
-  (`workspace/materials/` always wins resolution) but shipped into the Render image
-  by `Dockerfile`'s `COPY . .`. Pre-authorized by `docs/sync-policy.md` once the
-  Dockerfile/`.dockerignore` is switched to workspace-only and the Render build is
-  re-verified. Kept for now as the startup fallback net.
-- **Live-data grey-area in `workspace/materials/`:** 16 end-of-chapter "Problems"-page
-  figure crops (possible future practice-problems feature), byte-identical legacy
-  cache version bumps, `lesson-cache/0_5` (old chapter numbering), and `_regen_backup/`.
-  Left untouched to avoid risking the canonical runtime tree for marginal tidiness.
+**Still deferred — live-data grey-area in `workspace/materials/`:** 16 end-of-chapter
+"Problems"-page figure crops (possible future practice-problems feature),
+byte-identical legacy cache version bumps, `lesson-cache/0_5` (old chapter
+numbering), and `_regen_backup/`. Left untouched to avoid risking the canonical
+runtime tree for marginal tidiness.
 
 Structure verdict: no directory reorganization was warranted — the layout is
 coherent and the app/ root maps/CSS/`logo.png` are load-bearing root-relative loads.
