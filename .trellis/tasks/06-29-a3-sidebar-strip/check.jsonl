@@ -1,3 +1,0 @@
-{"file": ".trellis/spec/css/verification.md", "reason": "the gates the check must enforce: cascade-competitor (top-level only) + arbiter --check + css-probe --check + visual-diff --check + inline-style/@media audit, all byte-identical / fail-closed; plus confirm the new gate passed its red-canary proof"}
-{"file": ".trellis/spec/css/cascade-and-collapse.md", "reason": "per-occurrence classification the check must re-verify (no per-token shortcuts); confirms each stripped sidebar decl is NOCOMP and every kept decl is DEFENSIVE (defends a comma-group arm or collapsed-frame precedence)"}
-{"file": ".trellis/spec/css/index.md", "reason": "CSS layer Quality Check section"}
