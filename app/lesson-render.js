@@ -1164,10 +1164,34 @@ function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   `;
 }
 
+// §11 lesson-settle sentinel — the app's own "layout has stabilized" signal.
+// dataset.lessonLayoutStable: '0' = a lesson render is in flight, '1' = MathJax
+// typeset + idle + 2×rAF have all resolved. The visual harness gates on it
+// (test-utils.settleLesson) instead of re-deriving from MathJax + rAFs, removing
+// the sidebar-drift capture nondeterminism. window.__ftutorLessonRenderGen is a
+// monotonic counter so a superseded render's late tail can't stamp '1' onto a
+// newer render still mid-typeset.
+function beginLessonRenderGen() {
+  const gen = (window.__ftutorLessonRenderGen = (window.__ftutorLessonRenderGen || 0) + 1);
+  document.documentElement.dataset.lessonLayoutStable = '0';
+  return gen;
+}
+function markLessonLayoutStable(gen) {
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 0));
+  idle(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (gen === window.__ftutorLessonRenderGen) {
+      document.documentElement.dataset.lessonLayoutStable = '1';
+    }
+  })), { timeout: 2000 });
+}
+window.__ftutorBeginLessonRenderGen = beginLessonRenderGen;
+window.__ftutorMarkLessonLayoutStable = markLessonLayoutStable;
+
 function renderCurrentKnowledgePoint() {
   const learnExplainContent = document.getElementById('learnExplainContent');
   const learnExplainScroll = document.getElementById('learnExplainScroll');
   if (!learnExplainContent) return;
+  const lessonRenderGen = beginLessonRenderGen();
   if (!learnKnowledgePoints.length) {
     learnExplainContent.innerHTML = buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1);
     delete learnExplainContent.dataset.lectureDecorated;
@@ -1182,6 +1206,7 @@ function renderCurrentKnowledgePoint() {
     if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
     if (learnKpNextBtn) learnKpNextBtn.disabled = true;
     window.__ftutorRefreshPager?.();
+    markLessonLayoutStable(lessonRenderGen);
     return;
   }
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
@@ -1231,7 +1256,14 @@ function renderCurrentKnowledgePoint() {
     startTestBtn.onmouseout = function() { if(!this.disabled){this.style.transform='none';this.style.boxShadow='0 4px 0px #0284c7';}};
   }
   setTimeout(() => {
-    if (window.MathJax && window.MathJax.typesetPromise) { window.MathJax.typesetPromise([learnExplainContent]).catch(() => {}); }
+    // [ST-5] decouple the sentinel emit from the MathJax-loaded guard: MathJax
+    // loads async from a CDN and may be unattached on the first lesson of a
+    // fresh page — the Promise.resolve() branch still reaches the sentinel.
+    const typeset = (window.MathJax && window.MathJax.typesetPromise)
+      ? window.MathJax.typesetPromise([learnExplainContent])
+      : Promise.resolve();
+    typeset.then(() => markLessonLayoutStable(lessonRenderGen),
+                 () => markLessonLayoutStable(lessonRenderGen));
     buildTocFromContent(learnExplainContent);
     bindStartTestBtnIfPresent();
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;

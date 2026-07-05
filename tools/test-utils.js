@@ -377,6 +377,16 @@ async function settleLesson(page) {
             try { await window.MathJax.typesetPromise(); } catch (_) {}
         }
     });
+    // §11 lesson-settle sentinel: gate on the app's own layout-stable signal.
+    // dataset.lessonLayoutStable is '0' while a lesson render is in flight, '1'
+    // once it settles (MathJax + idle + 2×rAF), and absent on non-lesson pages
+    // (or before any lesson renders). Wait only while it is exactly '0', so a
+    // non-lesson capture is never delayed; fall through on timeout so a stuck
+    // render can't hang the run.
+    await page.waitForFunction(
+        () => document.documentElement.dataset.lessonLayoutStable !== '0',
+        null, { timeout: 3000 }
+    ).catch(() => {});
     await settleRaf(page);
     await page.waitForTimeout(150);
 }

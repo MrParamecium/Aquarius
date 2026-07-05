@@ -2046,6 +2046,7 @@ function parseOverviewSubsectionTitle(subTitle, idx = 0) {
 
 function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [], options = {}) {
   if (!learnExplainContent) return;
+  const lessonRenderGen = beginLessonRenderGen();
   _learnLayoutMode = options && options.preludeHtml ? 'overview_lesson' : 'overview';
   setChapterOverviewLayoutActive(true);
   learnKnowledgePoints = [];
@@ -2068,11 +2069,16 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
     }
   });
   try {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      setTimeout(() => window.MathJax.typesetPromise([learnExplainContent]).catch(() => {}), 40);
-    }
+    setTimeout(() => {
+      const typeset = (window.MathJax && window.MathJax.typesetPromise)
+        ? window.MathJax.typesetPromise([learnExplainContent])
+        : Promise.resolve();
+      typeset.then(() => markLessonLayoutStable(lessonRenderGen),
+                   () => markLessonLayoutStable(lessonRenderGen));
+    }, 40);
   } catch (err) {
     console.warn('[ChapterOverview] MathJax scheduling skipped:', err);
+    markLessonLayoutStable(lessonRenderGen);
   }
 }
 
