@@ -33,6 +33,12 @@ function renderPhasorDemo(node, demo, demoControls, demoSpec) {
       if (!Object.prototype.hasOwnProperty.call(state, 'slider_a')) state.slider_a = 1;
       if (!Object.prototype.hasOwnProperty.call(state, 'slider_b')) state.slider_b = -1.732;
       if (!Object.prototype.hasOwnProperty.call(state, 'angle_toggle')) state.angle_toggle = 'degrees';
+      // Capture the resolved initial slider values (authored defaults when the demo
+      // supplies them via demoControls, else the 1/-1.732 fallback) so the Reset
+      // button restores THOSE rather than hardcoded values now that PH-4 makes
+      // authored defaults reachable.
+      const _resetSliderA = state.slider_a;
+      const _resetSliderB = state.slider_b;
 
       node.innerHTML = `
         <section class="phasor-demo-shell">
@@ -189,7 +195,9 @@ function renderPhasorDemo(node, demo, demoControls, demoSpec) {
         drawCurve((t) => c * Math.cos(t + theta), '#dc2626');
       };
 
+      let disposed = false;
       const renderPhasor = () => {
+        if (disposed) return;   // a coalesceFrames frame pending at teardown must not draw
         if (shellEl) {
           shellEl.classList.toggle('is-narrow', shellEl.clientWidth < 760);
         }
@@ -269,8 +277,8 @@ function renderPhasorDemo(node, demo, demoControls, demoSpec) {
           btn.className = 'phasor-demo-reset';
           btn.textContent = control.label || 'Reset';
           btn.addEventListener('click', () => {
-            state.slider_a = 1;
-            state.slider_b = -1.732;
+            state.slider_a = _resetSliderA;
+            state.slider_b = _resetSliderB;
             const sliders = controlsEl.querySelectorAll('input[type="range"]');
             sliders.forEach((input) => {
               if (input.closest('.phasor-demo-control')?.querySelector('.phasor-demo-control-label')?.textContent === 'a') {
@@ -300,6 +308,7 @@ function renderPhasorDemo(node, demo, demoControls, demoSpec) {
       // otherwise keeps the whole demo closure + old node alive on every
       // re-hydration) and disconnect the observer when the app tears this demo down.
       window.__ftutorRegisterInteractiveDemoCleanup?.(node, () => {
+        disposed = true;   // neutralize any in-flight coalesceFrames rerender
         window.removeEventListener('resize', rerender);
         if (node._phasorResizeObserver) {
           try { node._phasorResizeObserver.disconnect(); } catch (_) {}

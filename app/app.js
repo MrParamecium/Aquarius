@@ -1582,6 +1582,11 @@ function clearLearnRenderedContent(message = 'Preparing lesson...') {
     // wiped — this is the choke point every cross-section navigation runs through
     // synchronously, before the async render sites are ever reached (SP-1/PH-6).
     window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
+    // Reset the §11 settle sentinel HERE (synchronous nav kickoff): bump the
+    // render generation so a prior lesson's pending '1' mark is invalidated, and
+    // set '0' so settleLesson waits for the incoming lesson instead of reading the
+    // previous lesson's stale '1' during the async fetch window.
+    window.__ftutorBeginLessonRenderGen?.();
     learnExplainContent.innerHTML = message
       ? `<div class="lesson-transition-blank"><p class="ghost">${escapeHtml(message)}</p></div>`
       : '';
@@ -2075,11 +2080,15 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
   });
   try {
     setTimeout(() => {
-      const typeset = (window.MathJax && window.MathJax.typesetPromise)
-        ? window.MathJax.typesetPromise([learnExplainContent])
-        : Promise.resolve();
-      typeset.then(() => markLessonLayoutStable(lessonRenderGen),
-                   () => markLessonLayoutStable(lessonRenderGen));
+      try {
+        const typeset = (window.MathJax && window.MathJax.typesetPromise)
+          ? window.MathJax.typesetPromise([learnExplainContent])
+          : Promise.resolve();
+        typeset.then(() => markLessonLayoutStable(lessonRenderGen),
+                     () => markLessonLayoutStable(lessonRenderGen));
+      } catch (_) {
+        markLessonLayoutStable(lessonRenderGen);   // sync throw -> still settle
+      }
     }, 40);
   } catch (err) {
     console.warn('[ChapterOverview] MathJax scheduling skipped:', err);
@@ -2513,6 +2522,7 @@ async function startLesson(options = {}) {
     learnBody.classList.remove('hidden');
     window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
     learnExplainContent.innerHTML = `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`;
+    document.documentElement.dataset.lessonLayoutStable = '1';   // static error box is "settled"
     setLearnLoading(false);
   }
 }

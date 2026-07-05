@@ -33,9 +33,12 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
       const ampC = _resolveControl(/amplitude|\bamp\b/i, { value: 2, min: 0.5, max: 4, step: 0.1 });
       const freqC = _resolveControl(/frequency|\bfreq\b|f_?0/i, { value: 1, min: 0.25, max: 3, step: 0.05 });
       let phaseC = _resolveControl(/phase|theta|θ/i, { value: Math.PI / 3, min: -3.14, max: 3.14, step: 0.05 });
-      // Phase is kept in radians internally (display converts to degrees). If the
-      // authored control looks like degrees (|min| or |max| beyond ~2π), convert
-      // value + bounds to radians; otherwise assume radians.
+      // Phase is kept in radians internally (display converts to degrees). Degrees
+      // vs radians is genuinely ambiguous without a unit field (demos supply none),
+      // so we convert to radians only when the range is clearly beyond ~2π (looks
+      // like degrees); a NARROW authored degree range (e.g. ±5°) is indistinguishable
+      // from radians and is assumed radians. Acceptable: the matching is best-effort
+      // /UNVERIFIED (see header) and no cached sinusoid demo authors controls today.
       if (Math.abs(phaseC.min) > 6.5 || Math.abs(phaseC.max) > 6.5) {
         const _toRad = (d) => (d * Math.PI) / 180;
         phaseC = { value: _toRad(phaseC.value), min: _toRad(phaseC.min), max: _toRad(phaseC.max), step: _toRad(phaseC.step) };
