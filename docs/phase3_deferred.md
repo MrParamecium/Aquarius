@@ -99,6 +99,25 @@ or `pole_zero_roc_lab` subtopic with a cached lesson).
 
 ### 11 — Lesson-view sidebar-drift Option-B root fix (masked today, not fixed)
 
+> **Status 2026-07-06 (PR-A `feat/render-drivers-harness`):** the Option-B settle
+> sentinel below IS now shipped — the app emits
+> `document.documentElement.dataset.lessonLayoutStable` ('0' pending → '1' settled,
+> generation-token-guarded) after MathJax + `requestIdleCallback` + 2×rAF, and
+> `settleLesson` gates on it. This is a partial Option B: it settles the MathJax
+> reflow (cause #3) but does NOT explicitly gate on the chapter-accordion transition
+> (cause #1) or font-subpixel variance (cause #2).
+>
+> **deferred: full sidebar-coverage restore stays MASKED (Option A kept).** Evidence
+> the sentinel alone is insufficient: the mistake-notebook view `03b` shows the same
+> ~1.3% drift signature yet renders NO MathJax, so causes #1 (accordion `max-height`
+> jitter) and #2 (font subpixel) dominate and are untouched by a MathJax-settle
+> sentinel. Per the pre-execution adversarial review, un-masking + re-baselining is
+> expected to fail its own cold-double-baseline gate; not chased. **Next-session entry
+> point:** gate `markLessonLayoutStable` additionally on the `setAccordionOpen`
+> transition end (`app.js:641` `dataset.accordionToken` / transitionend) + a
+> font-rasterization settle, THEN retry the un-mask + cold double-baseline on the 9
+> lesson/MN views. Sev-3, regression-safety only.
+
 The 9 lesson/MN baselines drift ~1.3–1.4% because the left sidebar's vertical
 layout shifts ~1–2px per row across captures (accumulated rounding from the
 cascade-shadow removals #71–#83; no PR re-baselined the sidebar surface). Shipped
