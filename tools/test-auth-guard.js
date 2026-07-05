@@ -152,30 +152,24 @@ function stopBridge(bridge) {
 }
 
 // ── HTTP helper ──────────────────────────────────────────────────────────
-function httpJson(method, urlStr, { token, body } = {}) {
-    return new Promise((resolve, reject) => {
-        const u = new URL(urlStr);
-        const payload = body === undefined ? null : JSON.stringify(body);
-        const headers = {};
-        if (payload) headers['Content-Type'] = 'application/json';
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-        const req = http.request({
-            hostname: u.hostname, port: u.port, path: u.pathname + u.search, method, headers,
-        }, (res) => {
-            const chunks = [];
-            res.on('data', c => chunks.push(c));
-            res.on('end', () => {
-                const raw = Buffer.concat(chunks).toString('utf8');
-                let json = null;
-                try { json = JSON.parse(raw); } catch (_) {}
-                resolve({ status: res.statusCode, json, raw });
-            });
-        });
-        req.on('error', reject);
-        req.setTimeout(90000, () => req.destroy(new Error('request timeout')));
-        if (payload) req.write(payload);
-        req.end();
+// Global fetch, same convention as the other bridge-spawning tools
+// (tools/smoke.js, tools/test-lesson-open-no-hang.js). Resolves for ANY
+// status code (assertions inspect .status); rejects only on connection
+// errors/timeouts.
+async function httpJson(method, urlStr, { token, body } = {}) {
+    const headers = {};
+    if (body !== undefined) headers['Content-Type'] = 'application/json';
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+    const res = await fetch(urlStr, {
+        method,
+        headers,
+        body: body === undefined ? undefined : JSON.stringify(body),
+        signal: AbortSignal.timeout(90000),
     });
+    const raw = await res.text();
+    let json = null;
+    try { json = JSON.parse(raw); } catch (_) {}
+    return { status: res.status, json, raw };
 }
 
 // ── pass 1: enforcement ON ───────────────────────────────────────────────

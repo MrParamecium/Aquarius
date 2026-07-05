@@ -60,18 +60,31 @@ const PDF_VISUAL_PAGE_LIMIT = Number(process.env.TUTOR_PDF_VISUAL_PAGE_LIMIT || 
 // presented, uid comes from the token's `sub` and client-supplied uid
 // params/body fields are ignored, in EVERY route class.
 const REQUIRE_AUTH = process.env.TUTOR_REQUIRE_AUTH === '1';
+// Single source of truth for the Clerk config + allowed-origin list: env
+// vars (loaded above) with dev-instance defaults, dependency-injected into
+// clerk-verify.js, which itself reads no env and holds no defaults.
 const CLERK_AUTHORIZED_PARTIES = String(process.env.CLERK_AUTHORIZED_PARTIES
     || 'https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
     .split(',').map(s => s.trim()).filter(Boolean);
-const { verifyClerkToken } = require('./clerk-verify')({ authorizedParties: CLERK_AUTHORIZED_PARTIES });
+const CLERK_JWKS_URL = process.env.CLERK_JWKS_URL
+    || 'https://driven-troll-28.clerk.accounts.dev/.well-known/jwks.json';
+const CLERK_ISSUER = process.env.CLERK_ISSUER
+    || 'https://driven-troll-28.clerk.accounts.dev';
+const { verifyClerkToken, warmUp: warmUpClerkVerify } = require('./clerk-verify')({
+    httpRequestJson, // function declaration below — hoisted, same pattern as the llm-client require
+    jwksUrl: CLERK_JWKS_URL,
+    issuer: CLERK_ISSUER,
+    authorizedParties: CLERK_AUTHORIZED_PARTIES,
+});
 
+// Resolves the request's verified identity: {uid, sid} when a valid Bearer
+// token is presented, else null. Callers never need to distinguish an
+// invalid token from a missing one: both 401 on guarded routes under
+// enforcement, and both fall back to legacy uid-param behavior without it.
 async function resolveAuth(req) {
     const header = String((req.headers && req.headers['authorization']) || '');
     const m = /^Bearer\s+(.+)$/i.exec(header);
-    if (!m) return { hadToken: false, auth: null };
-    // Invalid token != tokenless: with enforcement ON it 401s; with
-    // enforcement OFF it falls back to legacy uid-param behavior.
-    return { hadToken: true, auth: await verifyClerkToken(m[1]) };
+    return m ? verifyClerkToken(m[1]) : null;
 }
 
 function send401(res) {
@@ -193,10 +206,13 @@ function setCORSHeaders(res, pathname, requestOrigin) {
         res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
         return;
     }
+    // Vary: Origin on EVERY API response (not just reflected ones) so a
+    // shared cache never serves a no-ACAO variant to an allowlisted origin
+    // or vice versa.
+    res.setHeader('Vary', 'Origin');
     const origin = String(requestOrigin || '');
     if (origin && CLERK_AUTHORIZED_PARTIES.includes(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
-        res.setHeader('Vary', 'Origin');
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -4365,7 +4381,7 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/tutor' && req.method === 'POST') {
         try {
             // LLM-spending route (design §2, review I5): legacy but can spend.
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const prompt = data.prompt;
@@ -4398,7 +4414,7 @@ const server = http.createServer(async (req, res) => {
     // ──────────────────────────────────────────────────
     if (pathname === '/api/sessions' && req.method === 'GET') {
         // uid-scoped route: token uid wins whenever a token is presented.
-        const { auth } = await resolveAuth(req);
+        const auth = await resolveAuth(req);
         if (REQUIRE_AUTH && !auth) { send401(res); return; }
         const uid = auth ? auth.uid : parsedUrl.query.uid;
         if (!uid) { res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
@@ -4407,7 +4423,7 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     if (pathname.startsWith('/api/sessions/') && (req.method === 'GET' || req.method === 'DELETE')) {
-        const { auth } = await resolveAuth(req);
+        const auth = await resolveAuth(req);
         if (REQUIRE_AUTH && !auth) { send401(res); return; }
         const uid = auth ? auth.uid : parsedUrl.query.uid;
         const sessionId = decodeURIComponent(pathname.slice('/api/sessions/'.length));
@@ -4427,7 +4443,7 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/memory') {
         if (req.method === 'GET') {
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const uid = auth ? auth.uid : parsedUrl.query.uid;
             if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
@@ -4438,7 +4454,7 @@ const server = http.createServer(async (req, res) => {
         }
         if (req.method === 'POST') {
             try {
-                const { auth } = await resolveAuth(req);
+                const auth = await resolveAuth(req);
                 if (REQUIRE_AUTH && !auth) { send401(res); return; }
                 const data = await readJsonBody(req);
                 const uid = auth ? auth.uid : data.uid;
@@ -4486,7 +4502,7 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/memory/rebuild' && req.method === 'POST') {
         try {
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const uid = auth ? auth.uid : data.uid;
@@ -4507,7 +4523,7 @@ const server = http.createServer(async (req, res) => {
             // Mode gate (design §2, review C1): unauthenticated requests get
             // cache-only behavior. mode defaults to 'intro' when absent, so a
             // missing mode is gated exactly like an explicit intro.
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             const sectionGenerationAllowed = !REQUIRE_AUTH || Boolean(auth);
             const data = await readJsonBody(req);
             const sectionId = compactWhitespace(data.sectionId || '');
@@ -4705,7 +4721,7 @@ const server = http.createServer(async (req, res) => {
     if (pathname === '/api/pregen/section' && req.method === 'POST') {
         try {
             // LLM-spending route (design §2 / D4).
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const sectionId = compactWhitespace(data.sectionId || '');
@@ -4754,7 +4770,7 @@ const server = http.createServer(async (req, res) => {
         try {
             // LLM-spending route (design §2, review M5): calls OpenRouter
             // unconditionally and reads no per-uid server data.
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const currentProfile = compactWhitespace(data.currentProfile || '').slice(0, 6000);
@@ -4812,7 +4828,7 @@ const server = http.createServer(async (req, res) => {
         try {
             // LLM-spending route (design §2 / D4). The handler never reads a
             // uid (review I4) — gating is the only identity concern here.
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const question = compactWhitespace(data.prompt || data.question || '');
@@ -4886,7 +4902,7 @@ const server = http.createServer(async (req, res) => {
             // C2): uid must come from the verified token whenever one is
             // presented — body.uid must never select whose memory is read or
             // whose session the turn persists into.
-            const { auth } = await resolveAuth(req);
+            const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const question = compactWhitespace(data.prompt || data.question || '');
@@ -5420,6 +5436,11 @@ if (IS_PREGEN_CLI) {
             process.exit(1);
         });
 } else {
+    // Eager JWKS fetch when auth is enforced: a typo'd CLERK_JWKS_URL shows
+    // up in boot logs instead of as unexplained runtime 401s. Non-blocking,
+    // never fatal (unlike the DB, verification is per-request fail-closed).
+    if (REQUIRE_AUTH) warmUpClerkVerify();
+
     // Storage init before listen: in pg mode this bootstraps the schema and
     // fails fast (loud crash, no ephemeral-file fallback) when DATABASE_URL
     // is set but unreachable; in file mode it resolves immediately.

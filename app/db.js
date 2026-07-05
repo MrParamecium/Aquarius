@@ -24,13 +24,16 @@
  * @param {{
  *   databaseUrl: string,
  *   normalizeQuizProfile: (quiz?: object) => object,
- * }} deps
+ *   isValidSessionId: (id?: string) => boolean,
+ * }} deps — isValidSessionId is injected from user-memory.js so both
+ * backends validate session ids with the same single definition.
  */
 module.exports = function createPgStore(deps) {
     const databaseUrl = deps && deps.databaseUrl;
     const normalizeQuizProfile = deps && deps.normalizeQuizProfile;
-    if (typeof databaseUrl !== 'string' || !databaseUrl || typeof normalizeQuizProfile !== 'function') {
-        throw new Error('db: missing required deps {databaseUrl, normalizeQuizProfile}');
+    const isValidSessionId = deps && deps.isValidSessionId;
+    if (typeof databaseUrl !== 'string' || !databaseUrl || typeof normalizeQuizProfile !== 'function' || typeof isValidSessionId !== 'function') {
+        throw new Error('db: missing required deps {databaseUrl, normalizeQuizProfile, isValidSessionId}');
     }
 
     // Required lazily so merely loading this module (e.g. via `node --check`,
@@ -98,15 +101,16 @@ module.exports = function createPgStore(deps) {
         return true;
     }
 
-    function isValidSessionId(id) {
-        return /^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(String(id || ''));
-    }
-
-    function exceedsSizeCap(value) {
+    // Serialize once, reused for both the size check and the query param
+    // (node-postgres accepts a pre-stringified value for jsonb params, and
+    // this avoids double-stringifying every write). Returns null when the
+    // payload exceeds the cap or cannot be serialized.
+    function serializeUnderCap(value) {
         try {
-            return Buffer.byteLength(JSON.stringify(value), 'utf8') > JSONB_CAP_BYTES;
+            const s = JSON.stringify(value);
+            return Buffer.byteLength(s, 'utf8') <= JSONB_CAP_BYTES ? s : null;
         } catch (_) {
-            return true; // unmeasurable input is refused rather than risked
+            return null; // unmeasurable input is refused rather than risked
         }
     }
 
@@ -145,19 +149,20 @@ module.exports = function createPgStore(deps) {
 
     async function writeUserMemory(uid, data) {
         if (!checkUidGate(uid, { warnOnGuestWrite: true })) return undefined;
-        if (exceedsSizeCap(data)) {
+        // node-postgres serializes plain JS objects to JSON automatically for
+        // jsonb params, but it serializes JS ARRAYS as Postgres array literals
+        // instead — so every jsonb param here is pre-stringified explicitly
+        // for consistency and to avoid that array pitfall.
+        const dataJson = serializeUnderCap(data);
+        if (dataJson === null) {
             console.warn('[db] writeUserMemory refused: document exceeds 64KB cap for uid', uid);
             return undefined;
         }
         try {
             await ensureUserRow(uid);
-            // node-postgres serializes plain JS objects to JSON automatically for
-            // jsonb params, but it serializes JS ARRAYS as Postgres array literals
-            // instead — so every jsonb param here is JSON.stringify'd explicitly
-            // for consistency and to avoid that array pitfall.
             await pool.query(
                 'INSERT INTO user_memory (uid, data, updated_at) VALUES ($1, $2, now()) ON CONFLICT (uid) DO UPDATE SET data = EXCLUDED.data, updated_at = now()',
-                [uid, JSON.stringify(data)]
+                [uid, dataJson]
             );
         } catch (e) {
             console.warn('[db] writeUserMemory failed:', e.message);
@@ -225,7 +230,8 @@ module.exports = function createPgStore(deps) {
         const id = session && session.id;
         if (!checkUidGate(uid, { warnOnGuestWrite: true }) || !isValidSessionId(id)) return false;
         const messages = Array.isArray(session.messages) ? session.messages : [];
-        if (exceedsSizeCap(messages)) {
+        const messagesJson = serializeUnderCap(messages);
+        if (messagesJson === null) {
             console.warn('[db] writeSessionFile refused: messages exceed 64KB cap for session', id);
             return false;
         }
@@ -246,7 +252,7 @@ module.exports = function createPgStore(deps) {
                  VALUES ($1, $2, $3, $4, $5, $6)
                  ON CONFLICT (id) DO UPDATE SET meta = EXCLUDED.meta, messages = EXCLUDED.messages, updated_at = EXCLUDED.updated_at
                  WHERE chat_sessions.uid = EXCLUDED.uid`,
-                [id, uid, JSON.stringify(meta), JSON.stringify(messages), session.createdAt, session.updatedAt]
+                [id, uid, JSON.stringify(meta), messagesJson, session.createdAt, session.updatedAt]
             );
             return result.rowCount > 0;
         } catch (e) {
@@ -288,11 +294,18 @@ module.exports = function createPgStore(deps) {
         try {
             await client.query('BEGIN');
             await client.query('DELETE FROM feedback_items');
-            for (const item of items) {
-                if (!item || !item.id) continue;
+            const rows = items.filter((item) => item && item.id);
+            if (rows.length) {
+                // One multi-row INSERT via unnest instead of up-to-300
+                // sequential round-trips — posting feedback is user-facing
+                // latency.
                 await client.query(
-                    'INSERT INTO feedback_items (id, data, created_at) VALUES ($1, $2, $3)',
-                    [item.id, JSON.stringify(item), item.createdAt || new Date().toISOString()]
+                    'INSERT INTO feedback_items (id, data, created_at) SELECT * FROM unnest($1::text[], $2::jsonb[], $3::timestamptz[])',
+                    [
+                        rows.map((item) => item.id),
+                        rows.map((item) => JSON.stringify(item)),
+                        rows.map((item) => item.createdAt || new Date().toISOString()),
+                    ]
                 );
             }
             await client.query('COMMIT');

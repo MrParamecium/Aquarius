@@ -214,9 +214,10 @@ module.exports = function createUserMemory(deps) {
     }
 
     // ── Store selection ──────────────────────────────────────────────────────
-    // 8-primitive store interface; both impls return identical shapes. The
-    // file impl is sync internally — the public async wrappers below make the
-    // exported surface uniform across backends.
+    // 8-primitive store interface; both impls return identical shapes and are
+    // spread directly into the module's exports (the file impl is sync
+    // internally — callers await everything, which resolves plain values
+    // just the same).
     const fileStore = {
         readUserMemory: fileReadUserMemory,
         writeUserMemory: fileWriteUserMemory,
@@ -228,7 +229,7 @@ module.exports = function createUserMemory(deps) {
         writeFeedbackBoard: fileWriteFeedbackBoard,
     };
     const store = usingPg
-        ? require('./db')({ databaseUrl: DATABASE_URL, normalizeQuizProfile })
+        ? require('./db')({ databaseUrl: DATABASE_URL, normalizeQuizProfile, isValidSessionId })
         : fileStore;
 
     // Startup hook: pg mode bootstraps schema and fails fast on an
@@ -242,14 +243,6 @@ module.exports = function createUserMemory(deps) {
             console.log(`[user-memory] file store active at ${USERS_DIR}`);
         }
     }
-
-    async function readUserMemory(uid) { return store.readUserMemory(uid); }
-    async function writeUserMemory(uid, data) { return store.writeUserMemory(uid, data); }
-    async function listSessionsForUid(uid) { return store.listSessionsForUid(uid); }
-    async function readSessionFile(uid, id) { return store.readSessionFile(uid, id); }
-    async function deleteSessionForUid(uid, id) { return store.deleteSessionForUid(uid, id); }
-    async function readFeedbackBoard() { return store.readFeedbackBoard(); }
-    async function writeFeedbackBoard(board) { return store.writeFeedbackBoard(board); }
 
     function publicFeedbackItem(item) {
         return {
@@ -523,17 +516,11 @@ module.exports = function createUserMemory(deps) {
 
     return {
         init,
-        readUserMemory,
-        writeUserMemory,
-        listSessionsForUid,
-        readSessionFile,
-        deleteSessionForUid,
+        ...store, // the 8 primitives, whichever backend is active
         persistSessionTurn,
         buildUserProfilePrompt,
         updateUserMemoryFromQA,
         deriveMemoryFromSessions,
-        readFeedbackBoard,
-        writeFeedbackBoard,
         publicFeedbackItem,
         cleanFeedbackText,
     };

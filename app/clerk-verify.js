@@ -5,12 +5,17 @@
  * `Authorization: Bearer <token>` (cross-origin Vercel -> Render topology,
  * see .trellis/tasks/07-05-user-db-auth-sessions/research/clerk-instance-facts.md).
  *
+ * Configuration is fully dependency-injected by ws-bridge.js (the module
+ * that owns env loading) — this module reads no env vars and holds no
+ * default URLs, so there is exactly one source of truth for the Clerk
+ * config and the allowed-origin list.
+ *
  * Mechanics:
- *   - JWKS fetched from the Clerk instance (CLERK_JWKS_URL), cached ~1h.
+ *   - JWKS fetched via the injected httpRequestJson helper, cached ~1h.
  *   - RS256 signature check via crypto.createPublicKey({format:'jwk'}) +
  *     crypto.verify. Any other alg (none/HS256/...) is rejected outright.
- *   - Claims: iss must equal CLERK_ISSUER; exp/nbf with +-5s clock skew;
- *     azp is CONDITIONAL - if present it must be in CLERK_AUTHORIZED_PARTIES
+ *   - Claims: iss must equal the injected issuer; exp/nbf with +-5s clock
+ *     skew; azp is CONDITIONAL - if present it MUST be in authorizedParties
  *     (fail closed), if absent the check passes (Clerk omits azp in some
  *     cross-origin setups and its docs say to skip the check when missing).
  *   - Unknown-kid handling is throttled: at most one JWKS refetch per 5
@@ -20,11 +25,11 @@
  *   - Fail-closed: any fetch/parse/verify failure returns null (the caller
  *     treats null as "no verified identity"); previously cached keys keep
  *     serving across fetch failures.
+ *   - warmUp() eagerly fetches the JWKS once so a misconfigured jwksUrl
+ *     shows up in boot logs instead of as unexplained runtime 401s.
  */
 'use strict';
 
-const http = require('http');
-const https = require('https');
 const crypto = require('crypto');
 
 const JWKS_TTL_MS = 60 * 60 * 1000;           // normal refresh cadence
@@ -32,25 +37,25 @@ const KID_REFETCH_MIN_INTERVAL_MS = 5 * 60 * 1000; // unknown-kid refetch thrott
 const FETCH_FAILURE_BACKOFF_MS = 60 * 1000;   // don't hammer Clerk when it's down
 const UNKNOWN_KID_CACHE_MAX = 1000;           // bound the negative cache
 const CLOCK_SKEW_SEC = 5;
+const JWKS_FETCH_TIMEOUT_MS = 10000;
 
 /**
- * @param {{ jwksUrl?: string, issuer?: string, authorizedParties?: string[] }} [opts]
- *   Optional overrides; defaults come from CLERK_JWKS_URL / CLERK_ISSUER /
- *   CLERK_AUTHORIZED_PARTIES env vars, falling back to the dev-instance
- *   values so opportunistic verification works before PR-C sets env vars.
+ * @param {{
+ *   httpRequestJson: (url: string, options?: object, body?: string|null, timeoutMs?: number) => Promise<any>,
+ *   jwksUrl: string,
+ *   issuer: string,
+ *   authorizedParties: string[],
+ * }} deps — all required; ws-bridge.js supplies env-derived values.
  */
-module.exports = function createClerkVerify(opts = {}) {
-    const JWKS_URL = opts.jwksUrl
-        || process.env.CLERK_JWKS_URL
-        || 'https://driven-troll-28.clerk.accounts.dev/.well-known/jwks.json';
-    const ISSUER = opts.issuer
-        || process.env.CLERK_ISSUER
-        || 'https://driven-troll-28.clerk.accounts.dev';
-    const AUTHORIZED_PARTIES = Array.isArray(opts.authorizedParties)
-        ? opts.authorizedParties
-        : String(process.env.CLERK_AUTHORIZED_PARTIES
-            || 'https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
-            .split(',').map(s => s.trim()).filter(Boolean);
+module.exports = function createClerkVerify(deps) {
+    const httpRequestJson = deps && deps.httpRequestJson;
+    const JWKS_URL = deps && deps.jwksUrl;
+    const ISSUER = deps && deps.issuer;
+    const AUTHORIZED_PARTIES = deps && deps.authorizedParties;
+    if (typeof httpRequestJson !== 'function' || typeof JWKS_URL !== 'string' || !JWKS_URL
+        || typeof ISSUER !== 'string' || !ISSUER || !Array.isArray(AUTHORIZED_PARTIES)) {
+        throw new Error('clerk-verify: missing required deps {httpRequestJson, jwksUrl, issuer, authorizedParties}');
+    }
 
     let keys = new Map();          // kid -> crypto KeyObject
     let jwksFetchedAt = 0;
@@ -59,31 +64,12 @@ module.exports = function createClerkVerify(opts = {}) {
     let inflightFetch = null;
     const unknownKids = new Set();
 
-    function fetchJwksRaw() {
-        return new Promise((resolve, reject) => {
-            // http allowed so the self-contained test harness can serve a local JWKS
-            const mod = JWKS_URL.startsWith('http://') ? http : https;
-            const req = mod.get(JWKS_URL, (resp) => {
-                if (resp.statusCode !== 200) {
-                    resp.resume();
-                    reject(new Error(`JWKS status ${resp.statusCode}`));
-                    return;
-                }
-                const chunks = [];
-                resp.on('data', c => chunks.push(c));
-                resp.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
-            });
-            req.on('error', reject);
-            req.setTimeout(10000, () => req.destroy(new Error('JWKS fetch timeout')));
-        });
-    }
-
     function refreshJwks() {
         if (inflightFetch) return inflightFetch;
         if (Date.now() < nextFetchNotBefore) return Promise.resolve();
         inflightFetch = (async () => {
             try {
-                const parsed = JSON.parse(await fetchJwksRaw());
+                const parsed = await httpRequestJson(JWKS_URL, {}, null, JWKS_FETCH_TIMEOUT_MS);
                 const list = Array.isArray(parsed && parsed.keys) ? parsed.keys : [];
                 const next = new Map();
                 for (const jwk of list) {
@@ -162,5 +148,18 @@ module.exports = function createClerkVerify(opts = {}) {
         }
     }
 
-    return { verifyClerkToken };
+    // Eager JWKS fetch for startup: a typo'd jwksUrl becomes a loud boot-log
+    // line instead of every request 401ing with healthy-looking logs. Never
+    // throws and never blocks — verification stays lazy/fail-closed either way.
+    function warmUp() {
+        refreshJwks().then(() => {
+            if (keys.size) {
+                console.log(`[clerk-verify] JWKS warm-up ok (${keys.size} key(s) from ${JWKS_URL})`);
+            } else {
+                console.warn(`[clerk-verify] JWKS warm-up got no keys from ${JWKS_URL} — all tokens will 401 until it becomes reachable`);
+            }
+        });
+    }
+
+    return { verifyClerkToken, warmUp };
 };
