@@ -8,6 +8,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { spawn } = require('child_process');
 
 // CSS masking non-deterministic regions before screenshot. Add selectors here
 // whenever a new always-animating or text-drifting element shows up.
@@ -77,6 +78,65 @@ function waitForHealth(base, timeoutMs = 15000) {
         };
         tryOnce();
     });
+}
+
+// §13a de-dup (docs/phase3_deferred.md §13, deferred D1): spawn the ws-bridge
+// subprocess the exact way both tools/visual-diff.js and tools/css-probe.js
+// did independently — `node app/ws-bridge.js` with PORT overridden via env,
+// stdout swallowed, stderr forwarded with a `[bridge-err]` prefix so a crash
+// during a harness run is still visible on the console. `port` is the
+// caller's already-resolved port number (each harness picks its own env var
+// to source it from — TUTOR_VDIFF_PORT vs TUTOR_CSSPROBE_PORT — so that
+// selection stays in the caller); the child process env var name is always
+// `PORT`, matching what ws-bridge.js reads.
+function spawnBridge(repoRoot, port) {
+    const server = spawn('node', ['app/ws-bridge.js'], {
+        cwd: repoRoot,
+        env: { ...process.env, PORT: String(port) },
+        stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    server.stdout.on('data', () => {});
+    server.stderr.on('data', d => process.stderr.write(`  [bridge-err] ${d}`));
+    return server;
+}
+
+// §13a de-dup: SIGTERM the spawned bridge and race its exit against a
+// timeout, warning (not failing) if it doesn't exit in time. Attaches the
+// exit listener BEFORE sending SIGTERM so a fast-exiting bridge can't race
+// past the listener. `label` prefixes the console warning so the caller's
+// existing `[visual-diff]` / `[css-probe]` log tags are preserved verbatim.
+function stopBridge(server, opts = {}) {
+    const { timeoutMs = 2000, label = 'test-utils' } = opts;
+    const exited = new Promise((resolve) => server.once('exit', resolve));
+    server.kill('SIGTERM');
+    return Promise.race([
+        exited,
+        new Promise((resolve) => setTimeout(() => {
+            // Text form matches the two call sites' pre-hoist literals verbatim
+            // (`bridge did not exit within 2s after SIGTERM`) at the default
+            // timeoutMs=2000; kept as a formula so a caller-supplied timeoutMs
+            // stays consistent instead of lying about the actual wait.
+            console.warn(`[${label}] bridge did not exit within ${timeoutMs / 1000}s after SIGTERM`);
+            resolve();
+        }, timeoutMs)),
+    ]);
+}
+
+// §13a de-dup: inject the shared MASK_CSS at BrowserContext level so every
+// page derived from the context inherits the mask before first paint.
+// addInitScript runs immediately after document creation (before the app's
+// <link rel=stylesheet>); the mask CSS leans on `!important` + selector
+// specificity to win the cascade regardless of order.
+function injectMaskInitScript(context) {
+    return context.addInitScript(({ css }) => {
+        const inject = () => {
+            const s = document.createElement('style');
+            s.textContent = css;
+            document.head.appendChild(s);
+        };
+        if (document.head) inject();
+        else document.addEventListener('DOMContentLoaded', inject);
+    }, { css: MASK_CSS });
 }
 
 // Shared first step for enterGuestMode + enterLoginView: navigate to BASE
@@ -668,6 +728,9 @@ function resolveLessonCachePath(repoRoot, sectionId) {
 module.exports = {
     MASK_CSS,
     waitForHealth,
+    spawnBridge,
+    stopBridge,
+    injectMaskInitScript,
     dismissIntro,
     enterGuestMode,
     enterLoginView,

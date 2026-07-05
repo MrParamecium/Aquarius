@@ -18,13 +18,14 @@
  */
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
 const { chromium } = require('playwright');
 const pixelmatch = require('pixelmatch').default;
 const { PNG } = require('pngjs');
 const {
-    MASK_CSS,
     waitForHealth,
+    spawnBridge,
+    stopBridge,
+    injectMaskInitScript,
     enterGuestMode,
     enterLoginView,
     ensureSyllabusOpen,
@@ -1961,14 +1962,8 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
 
     console.log(`[visual-diff] mode=${MODE} → ${outDir}`);
     console.log(`[visual-diff] starting bridge on :${PORT}`);
-    const server = spawn('node', ['app/ws-bridge.js'], {
-        cwd: repoRoot,
-        env: { ...process.env, PORT: String(PORT) },
-        stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    const server = spawnBridge(repoRoot, PORT);
     bridgeProcess = server; // expose to signal handler — see signalCleanupRestore
-    server.stdout.on('data', () => {});
-    server.stderr.on('data', d => process.stderr.write(`  [bridge-err] ${d}`));
 
     let exitCode = 0;
     const results = [];
@@ -2067,15 +2062,7 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
             timezoneId: 'UTC',
             locale: 'en-US',
         });
-        await context.addInitScript(({ css }) => {
-            const inject = () => {
-                const s = document.createElement('style');
-                s.textContent = css;
-                document.head.appendChild(s);
-            };
-            if (document.head) inject();
-            else document.addEventListener('DOMContentLoaded', inject);
-        }, { css: MASK_CSS });
+        await injectMaskInitScript(context);
 
         // Lazy per-page bootstraps. Each pageKey is bootstrapped on first
         // request and reused for subsequent views with the same key. A/B/C
@@ -2134,15 +2121,7 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
         // Attach the exit listener BEFORE sending SIGTERM so a fast-exiting
         // bridge can't race the listener; race against a 2s timeout and warn
         // if it hits so "real exit" and "never exited" don't look identical.
-        const exited = new Promise((resolve) => server.once('exit', resolve));
-        server.kill('SIGTERM');
-        await Promise.race([
-            exited,
-            new Promise((resolve) => setTimeout(() => {
-                console.warn('[visual-diff] bridge did not exit within 2s after SIGTERM');
-                resolve();
-            }, 2000)),
-        ]);
+        await stopBridge(server, { label: 'visual-diff' });
     }
 
     if (MODE === 'check') {
