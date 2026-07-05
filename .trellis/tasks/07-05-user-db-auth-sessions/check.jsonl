@@ -1,0 +1,6 @@
+{"file": ".trellis/spec/app/index.md", "reason": "Verify the change respects repo conventions (no framework, no build step, filename rules) and that the dependency-exception checklist amendment landed"}
+{"file": ".trellis/spec/app/architecture.md", "reason": "Verify new routes/guards follow the ws-bridge if-block pattern and module boundaries"}
+{"file": ".trellis/tasks/07-05-user-db-auth-sessions/research/current-auth-flow.md", "reason": "Checklist source for AC4: every endpoint in §3.1 must derive uid from the verified token; every callsite in §4 must have dropped client-supplied uid"}
+{"file": ".trellis/tasks/07-05-user-db-auth-sessions/research/clerk-instance-facts.md", "reason": "Verify claims validation matches Clerk's documented requirements (azp/iss checks present — azp is the CSRF guard) and token is fetched fresh per request"}
+{"file": ".trellis/spec/css/index.md", "reason": "Only if the frontend stage touches style.css (sign-in affordance): the css layer's verification protocol is mandatory for any style change"}
+{"file": ".trellis/tasks/07-05-user-db-auth-sessions/review-plan-2026-07-05.md", "reason": "Checklist source for verification: every review finding (C1-C3, M1-M10, m1-m6, I1-I5) maps to a concrete guard/test/step — check none regressed during implementation, esp. the test-auth-guard case list and the AC4/AC5/AC6 extensions"}
