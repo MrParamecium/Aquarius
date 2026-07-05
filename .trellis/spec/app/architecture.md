@@ -42,5 +42,5 @@ Follow that pattern; do not add a router abstraction.
 - Backend → `Dockerfile` (node + python) → Render (`aquarius-5ss0.onrender.com`), port 9000.
 - The image ships `app/` + `workspace/materials/` only; `.dockerignore` excludes dev-only trees (`tools/`, root `materials/`, `.local/`, `.trellis/`, `docs/`) from `COPY . .`. Two `.dockerignore` traps (documented in the file): it does **not** honor `.gitignore`, and inline/trailing comments are invalid (only a line starting with `#` is a comment); slash-free patterns are root-anchored, so `materials` never matches `workspace/materials/`.
 - Frontend → Vercel serves `app/` statically (`aquarius-seven.vercel.app`), talks to Render via `app/config.js`. **Pushing origin/main auto-deploys Vercel (~1 min).**
-- Releases bump the version in `app/index.html` (sidebar + Settings), the `app.js?v=` / `style.css?v=` query params, and the three package.json versions together.
+- Releases bump the version in `app/index.html` (sidebar + Settings), the `app.js?v=` / `style.css?v=` query params, and the package.json version together (single root package.json).
 - `vercel.json` landmine: do **not** add the legacy `"public": true` field — it fails v2 schema validation before build (central-db `knowledge/vercel-json-public-deprecated.md`).

@@ -27,13 +27,13 @@ For CSS work (the `!important` / doubled-ID collapse), use the [`css` layer](../
 - [ ] Confirmed the change is vanilla JS / plain CSS / Node built-ins only (no new dependency, no build step).
 - [ ] Filenames contain none of `: | ? * < > "` (repo is used from Windows + WSL).
 - [ ] Not renaming `aquarius_visual_latex_v2` or the `AQUARIUS_CONFIG` global (invalidates every cached lesson / deployed frontend config).
-- [ ] If editing materials/OCR/figures: change is mirrored into **both** `materials/` (runtime) and `workspace/materials/` (workbench) per `docs/sync-policy.md`.
+- [ ] If editing materials/OCR/figures: change goes into `workspace/materials/` — the **single** canonical tree since 2026-07-05 (root `materials/` mirror removed; see `docs/sync-policy.md`).
 - [ ] If editing a lesson, located the cache file the app **actually hits** (materials-resolution fallback chain — see architecture.md) rather than a stale duplicate.
 - [ ] Read the relevant layer spec (`css/` for stylesheet work).
 
 ## Quality Check
 
-- [ ] `npm run check` passes (`node --check` on `ws-bridge.js` and `app.js` — the only static check; run before every commit).
+- [ ] `npm run check` passes (`node --check` on 53 files — bridge, app.js, all `app/` modules, several `tools/*.js` — plus a smoke test; the only static check; run before every commit).
 - [ ] For CSS changes: the `css` layer verification gates ran green (css-probe byte-identical + visual-diff). See [css/verification.md](../css/verification.md).
 - [ ] No new file violates the Windows-illegal-filename constraint.
 - [ ] Change touches only the agreed scope (the PRD's acceptance criteria), nothing incidental.

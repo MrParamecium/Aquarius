@@ -8,6 +8,11 @@ sequencing sketch at the bottom of `PHASE3_PREP.md`; the inventory tables
 in that doc are still authoritative for the per-handler list and per-site
 sizes — corrections from direct code inspection are noted inline below.
 
+> **STATUS: SUPERSEDED — refactor complete 2026-07-04.** This is a frozen
+> planning document kept as historical record. Authoritative final status:
+> `docs/REFACTOR_DONE.md` (top banner). Do not use the line numbers or
+> sequencing below for new work.
+
 ## 1. Goal and non-goals
 
 **Phase 3 ships three PRs**, in order, that together remove the last

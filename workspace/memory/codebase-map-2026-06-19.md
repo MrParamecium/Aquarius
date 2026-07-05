@@ -1,8 +1,14 @@
 # Codebase Map — fourier-tutor-agent (2026-06-19, FULL)
 
-> **STATUS: COMPLETE.** Built by a 16-agent discovery workflow (run `wf_e3ed2630-c06`, second attempt
+> **STATUS: COMPLETE (historical). Line counts SUPERSEDED 2026-07-05 by
+> [codebase-map-2026-07-05.md](codebase-map-2026-07-05.md)** — the refactor closed 2026-07-04
+> and every monolith shrank massively. The **subsystem table, integration contracts, env vars,
+> localStorage keys, and `window.__ftutor*` contract sections remain the authoritative deep
+> reference** (nothing replaced them); verify line numbers by grep before use.
+>
+> Built by a 16-agent discovery workflow (run `wf_e3ed2630-c06`, second attempt
 > `wylsvupzp`). All 15 inventory + cross-reference agents succeeded on the resume run; one synthesis
-> agent unified the results. This is the canonical structural map for the repo as of 2026-06-19.
+> agent unified the results. This was the canonical structural map for the repo as of 2026-06-19.
 > Supersedes `codebase-map-2026-06-19-partial.md` (kept for historical record).
 >
 > The headline `cssEstimatePercent` figure dropped from ~35% (rough first-pass estimate in the partial

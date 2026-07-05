@@ -38,6 +38,12 @@ triaged backlog.
 > targeted specific named surfaces (A1–A5 + doubled-IDs); the residual figure IS the
 > intended load-bearing floor, not remaining debt.
 >
+> **Final metrics (re-measured 2026-07-05, post close-out + structure cleanup):**
+> `app/style.css` 32,514 lines / 402 doubled-IDs · `app/app.js` 5,741 ·
+> `app/ws-bridge.js` 5,348 · `app/index.html` 1,641 ·
+> `app/css/runtime-collapsed.css` 1,562. Dated tables below are historical
+> snapshots — always re-grep before quoting.
+>
 > ## 🔄 RECONCILED 2026-06-27 (git HEAD `2d7a757` = origin/main)
 >
 > This doc's §1 checklist + §3 workstreams stay valid; only counts/status move since the 2026-06-25 draft:

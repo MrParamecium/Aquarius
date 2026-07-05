@@ -1,5 +1,10 @@
 # Codebase Map — fourier-tutor-agent (2026-06-20)
 
+> **⚠️ SUPERSEDED 2026-07-05 by [codebase-map-2026-07-05.md](codebase-map-2026-07-05.md).**
+> The refactor closed 2026-07-04 (`docs/REFACTOR_DONE.md`); the line counts, extraction
+> candidates, and CSS-pain figures below predate Phase 3 / Phase 3.6 entirely (app.js was
+> 14,434 here, 5,741 now). Historical record only — do NOT plan work against this file.
+
 > **Refresh of [codebase-map-2026-06-19.md](codebase-map-2026-06-19.md)** after Phase 0 +
 > Phase 1 (#17, #20–29) + Phase 2 #12, #14–17, #13 deletion landed. The 06-19 map's
 > structural model (subsystems, contracts, hard constraints) is still correct; this file

@@ -18,7 +18,7 @@ http://127.0.0.1:9000/health
 ## Main Directories
 
 - `app/`: runtime UI and API bridge.
-- `materials/`: textbook pages, OCR metadata, extracted figure crops, and material scripts used by the app.
+- `workspace/materials/`: textbook pages, OCR metadata, extracted figure crops, and material scripts used by the app (the single canonical materials tree — the root `materials/` backup mirror was removed 2026-07-05).
 - `workspace/`: working copy of source materials, project memory, extraction experiments, QA output, and historical context.
 - `docs/`: project handoff notes for humans.
 - `tools/`: optional maintenance scripts.
@@ -30,4 +30,4 @@ http://127.0.0.1:9000/health
 - The UI currently expects several JSON maps and image assets directly under `app/`, so those files have intentionally not been moved into nested folders.
 - `workspace/memory/` is part of the project working memory. Read the newest date files before making broad changes.
 
-See `PROJECT_STRUCTURE.md` for the detailed layout and `docs/sync-policy.md` for the materials mirror policy.
+See `PROJECT_STRUCTURE.md` for the detailed layout and `docs/sync-policy.md` for the materials tree policy (single-tree since 2026-07-05).

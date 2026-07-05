@@ -6,13 +6,11 @@ Workstream B **seam #4** (the mandatory-last, highest-risk seam) of
 (post B1/B2/B3/B5: PRs #107/#108/#109/#110 merged). All line numbers below are
 from that snapshot — **re-grep every boundary before cutting**, they drift.
 
-> **Status: NOT YET EXECUTED — paused for owner (FlyM1ss) availability.** The
-> four cleanly-cuttable seams shipped autonomously. B4 is a **PARTIAL cut** (the
-> analysis verdict), touches the app's core feature (lesson rendering = the
-> owner's actual studying), auto-deploys to production on merge, and its proper
-> verification includes a **manual smoke of lesson interactivity** the visual
-> harness does not fully cover. Execute it in a focused session with the owner
-> able to eyeball lessons.
+> **Status: ✅ EXECUTED — shipped as PR #116 (2026-06-26).** `app/lesson-render.js`
+> (1,482 lines) extracted; `app.js` 7,157 → 5,720; 37-view stash-diff
+> render-neutral. Workstream B complete; refactor closed 2026-07-04
+> (`docs/REFACTOR_DONE.md`). This doc is kept as a worked example of
+> partial-cut analysis — line numbers below are from the pre-B4 snapshot.
 
 ## Verdict: PARTIAL-CUT-SAFER (~1,455 lines → app.js ≈ 5,780)
 

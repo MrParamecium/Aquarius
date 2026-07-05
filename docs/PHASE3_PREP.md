@@ -1,5 +1,8 @@
 # Phase 3 — Prep Notes
 
+> **STATUS: SUPERSEDED — refactor complete 2026-07-04.** Frozen prep notes kept
+> as historical record; authoritative final status: `docs/REFACTOR_DONE.md`.
+
 Prep work for the next loop iteration. Companion to `docs/REFACTOR_PLAN.md`.
 Last refreshed 2026-06-20 against post-Phase-2 line numbers.
 

@@ -4,10 +4,10 @@ Companion to `docs/B4_LESSON_RENDER_PLAN.md`. Grounded in a 13-agent
 read-only research workflow (`whsyxjdfz`, 2026-06-26) that surveyed the
 2026 UI-testing tool landscape and inventoried our current harness.
 
-> **Status: PR-1 + PR-2 ready to ship in one AFK loop.** Both PRs are
-> harness-only (no `app/` changes). They unblock B4 by adding a
-> deterministic interactive-flow gate to `tools/visual-diff.js` without
-> touching the 35-view set.
+> **Status: ✅ SHIPPED** — PR-1 landed as **#112** (FlowStep runner) and PR-2 as
+> **#113** (B4 KP-pager flow view), plus follow-up view 29 (#115). They gated
+> B4 (#116) as planned; refactor closed 2026-07-04 (`docs/REFACTOR_DONE.md`).
+> Kept as the harness-design rationale record.
 
 ## Verdict: extend our own harness; do **not** adopt a framework
 

@@ -24,9 +24,9 @@ Secrets load from `app/.env` (not committed): `OPENROUTER_API_KEY` is required f
 ## Architecture
 
 ```
-Browser (app/index.html + app/app.js, ~19k lines vanilla JS)
+Browser (app/index.html + app/app.js, ~5.7k lines vanilla JS + ~20 focused modules post-refactor)
    └─ app/config.js picks apiBase: '' locally, Render URL (aquarius-5ss0.onrender.com) otherwise
-ws-bridge.js (~6.7k lines, single http server, Node BUILT-IN modules only — no Express)
+ws-bridge.js (~5.3k lines, single http server, Node BUILT-IN modules only — no Express)
    ├─ /api/ask, /api/section, /api/pregen/section, /api/preference/draft,
    │  /api/feedback, /api/memory, /api/tutor (legacy), /api/crop
    ├─ static: /pages, /new-pages, /old-pages, /figures, /generated, app/ files
@@ -64,5 +64,5 @@ Before broad edits: read `workspace/memory/MEMORY.md` and the newest `workspace/
 ## Deployment
 
 - Backend: `Dockerfile` (node + python image) → Render (`aquarius-5ss0.onrender.com`), port 9000.
-- Frontend: `vercel.json` serves `app/` as a static site (`aquarius-seven.vercel.app`); it talks to the Render backend via `app/config.js`. **Pushing to origin main auto-deploys the Vercel frontend** (verified 2026-06-12, ~1 min). Releases bump the visible version in `app/index.html` (sidebar + Settings), the `app.js?v=` / `style.css?v=` query params, and the three package.json versions together.
+- Frontend: `vercel.json` serves `app/` as a static site (`aquarius-seven.vercel.app`); it talks to the Render backend via `app/config.js`. **Pushing to origin main auto-deploys the Vercel frontend** (verified 2026-06-12, ~1 min). Releases bump the visible version in `app/index.html` (sidebar + Settings), the `app.js?v=` / `style.css?v=` query params, and the package.json version together (single root package.json since the 2026-07 structure cleanup).
 - **`vercel.json` schema landmine (2026-06-17):** Vercel removed the legacy `"public": true` field from the v2 schema; pushes containing it fail schema validation **before** the build starts. Commits `04939da` + `6b761d9` both died this way until `9472db1` removed the line. The deceptive symptom is `aquarius-seven.vercel.app` still serving the previous deploy with `x-vercel-cache: HIT` and a rising `age` header — looks like CDN propagation lag but is actually "no artifact was produced." Diagnose by querying `gh api repos/MrParamecium/Fourier/deployments` for the failure state; do NOT add `public:` (or other legacy v2 fields) back. The deploy owner is on Vercel Hobby (no team invites — build-log access requires either a project transfer or a screenshot of the dashboard popup from them). Full diagnostic playbook + Hobby-tier workarounds at central-db `knowledge/vercel-json-public-deprecated.md`.

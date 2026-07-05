@@ -1,5 +1,8 @@
 # Windows RAG Handoff - Fourier Tutor Agent
 
+**Updated 2026-07-05** — materials paths on this page now reference `workspace/materials/` only:
+the root `materials/` backup mirror was removed that day (see `docs/sync-policy.md`).
+
 Date: 2026-05-21 · **Updated 2026-06-19** — env var names corrected from `WINDOWS_RAG_*` to the
 live `RAGFLOW_*` names; materials runtime tree corrected from root `materials/` to
 `workspace/materials/`; bridge function name corrected from `retrieveFromWindowsRag` to
@@ -43,7 +46,7 @@ Important memory summary:
 - The product is now named Fourier Tutor Agent.
 - The runtime app is root `app/`.
 - The server/bridge entry is `app/ws-bridge.js`.
-- Runtime materials are `workspace/materials/` (preferred over root `materials/` via the content-validated fallback in `ws-bridge.js:86` — see `docs/sync-policy.md`).
+- Runtime materials are `workspace/materials/` — the **single** materials tree since 2026-07-05 (the root `materials/` backup mirror was removed; see `docs/sync-policy.md`).
 - `workspace/` is the broader workbench and memory area, and now also the canonical materials tree.
 - Current retrieval is RAG-lite: OCR-aware page/keyword retrieval, not semantic chunk retrieval.
 - Desired upgrade: chunk OCR/materials, embed chunks, store vectors, retrieve semantically, optionally rerank, return citations, then feed selected chunks into the existing tutor answer pipeline.
@@ -97,9 +100,8 @@ Do not commit API keys. Put local keys into `.env` only on the machine that runs
 
 ## Do Not Casually Delete
 
-- `workspace/materials/` (**canonical runtime tree** — bridge prefers this; deleting breaks every section)
-- `materials/` (legacy fallback mirror; OK to consolidate later but not now)
-- Chapter 2 recrops and metadata (protected per CLAUDE.md hard constraint, in BOTH trees)
+- `workspace/materials/` (**the single canonical runtime tree** — deleting breaks every section; the bridge throws at startup without it. Root `materials/` was removed 2026-07-05.)
+- Chapter 2 recrops and metadata (protected per CLAUDE.md hard constraint, in `workspace/materials/`)
 - `workspace/memory/`
 - `app/section-page-map*.json`
 - `app/section-figure-map-new.json`
@@ -161,7 +163,7 @@ Expected returned chunk shape:
       "sectionTitle": "Convolution",
       "page": 123,
       "score": 0.82,
-      "source": "materials/new-book-ocr/page-123.txt"
+      "source": "workspace/materials/new-book-ocr/page-123.txt"
     }
   ]
 }
@@ -171,7 +173,7 @@ Expected returned chunk shape:
 
 If RAGFlow is too heavy, start with a small custom service:
 
-- Build chunks from `materials/new-book-ocr/*.txt` and metadata JSON.
+- Build chunks from `workspace/materials/new-book-ocr/*.txt` and metadata JSON.
 - Create embeddings.
 - Store vectors in SQLite/JSON/Qdrant/Chroma.
 - Expose a simple HTTP endpoint:

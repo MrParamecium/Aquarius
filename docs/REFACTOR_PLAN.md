@@ -83,7 +83,8 @@ Status: **✅ REFACTOR COMPLETE — 2026-07-04.** The full Phase 3.6 CSS `!impor
 - **Phase 3 Pass 2** is the active frontier — see §"Roadmap from
   here". Deferred punch-list lives in `docs/phase3_deferred.md`.
 
-Cumulative deltas through 2026-06-24 (post §3c.i pass 8 D3 ceiling):
+Cumulative deltas through 2026-06-24 (post §3c.i pass 8 D3 ceiling) — **historical
+snapshot; final post-refactor metrics live in the `REFACTOR_DONE.md` top banner**:
 
 | File | Original | Now | Δ |
 |---|---|---|---|
