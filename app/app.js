@@ -1578,6 +1578,10 @@ function clearLearnRenderedContent(message = 'Preparing lesson...') {
   learnKnowledgePoints = [];
   currentKnowledgePointIndex = 0;
   if (learnExplainContent) {
+    // Dispose any live demo (rAF loop / window listener) before the container is
+    // wiped — this is the choke point every cross-section navigation runs through
+    // synchronously, before the async render sites are ever reached (SP-1/PH-6).
+    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
     learnExplainContent.innerHTML = message
       ? `<div class="lesson-transition-blank"><p class="ghost">${escapeHtml(message)}</p></div>`
       : '';
@@ -2052,6 +2056,7 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
   learnKnowledgePoints = [];
   currentLessonTrailingHtml = '';
   currentKnowledgePointIndex = 0;
+  window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
   learnExplainContent.innerHTML = getOverviewSummaryHtml(sectionId, sectionTitle, subsections, options);
   const enhancementSteps = [
     () => bindOverviewSubsectionCards(),
@@ -2506,6 +2511,7 @@ async function startLesson(options = {}) {
     if (err.name === 'AbortError') return;
     if (!isCurrentLearnRequest(requestSeq, requestSectionId, requestSectionTitle, ['lesson'])) return;
     learnBody.classList.remove('hidden');
+    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
     learnExplainContent.innerHTML = `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`;
     setLearnLoading(false);
   }

@@ -1193,6 +1193,7 @@ function renderCurrentKnowledgePoint() {
   if (!learnExplainContent) return;
   const lessonRenderGen = beginLessonRenderGen();
   if (!learnKnowledgePoints.length) {
+    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
     learnExplainContent.innerHTML = buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1);
     delete learnExplainContent.dataset.lectureDecorated;
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
@@ -1212,6 +1213,7 @@ function renderCurrentKnowledgePoint() {
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
+  window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
   learnExplainContent.innerHTML = buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length);
   delete learnExplainContent.dataset.lectureDecorated;
   bindExpandableLessonImages(learnExplainContent);
@@ -1346,6 +1348,7 @@ function setLearnLessonContent(fullHtml, options = {}) {
     currentLessonTrailingHtml = '';
     currentKnowledgePointIndex = 0;
     if (learnExplainContent) {
+      window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
       learnExplainContent.innerHTML = `<div class="error-box"><strong>Lesson render failed</strong><p>${escapeHtml(err?.message || 'Unknown render error')}</p></div>`;
     }
   }

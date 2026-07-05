@@ -10,9 +10,15 @@
 //   - renderPhasorDemo(node, demo, demoSpec)
 // Preserve `node._phasorResizeObserver` — introspected by external callers.
 
-function renderPhasorDemo(node, demo, demoSpec) {
+function renderPhasorDemo(node, demo, demoControls, demoSpec) {
+      // PH-4: prefer the dispatcher-resolved demoControls (which already falls back
+      // to demo.controls) over demoSpec.controls, so a phasor demo authored with
+      // top-level demo.controls renders its panel instead of collapsing to the
+      // hardcoded slider_a=1 / slider_b=-1.732 defaults + an empty control panel.
       const spec = demoSpec || {};
-      const controls = Array.isArray(spec.controls) ? spec.controls : [];
+      const controls = (Array.isArray(demoControls) && demoControls.length)
+        ? demoControls
+        : (Array.isArray(spec.controls) ? spec.controls : []);
       const state = Object.create(null);
       controls.forEach((control) => {
         const key = control.id || control.key;
@@ -290,6 +296,16 @@ function renderPhasorDemo(node, demo, demoSpec) {
         node._phasorResizeObserver = observer;
       }
       window.addEventListener('resize', rerender, { passive: true });
+      // [PH-6] dispose contract: remove the window-level resize listener (which
+      // otherwise keeps the whole demo closure + old node alive on every
+      // re-hydration) and disconnect the observer when the app tears this demo down.
+      window.__ftutorRegisterInteractiveDemoCleanup?.(node, () => {
+        window.removeEventListener('resize', rerender);
+        if (node._phasorResizeObserver) {
+          try { node._phasorResizeObserver.disconnect(); } catch (_) {}
+          node._phasorResizeObserver = null;
+        }
+      });
       renderPhasor();
       return;
 }
