@@ -49,6 +49,36 @@ const MAX_JSON_BODY_BYTES = Number(process.env.TUTOR_MAX_JSON_BODY_BYTES || 35 *
 const PDF_TEXT_MAX_CHARS = Number(process.env.TUTOR_PDF_TEXT_MAX_CHARS || 120000);
 const PDF_VISUAL_PAGE_LIMIT = Number(process.env.TUTOR_PDF_VISUAL_PAGE_LIMIT || 3);
 
+// ── Server-side identity (07-05 user-db-auth-sessions task) ─────────────────
+// Route classes and the enforcement model live in
+// .trellis/tasks/07-05-user-db-auth-sessions/design.md §2.
+//
+// TUTOR_REQUIRE_AUTH=1 (Render prod only) makes uid-scoped and LLM-spending
+// routes reject tokenless requests with 401. With the flag unset (local dev,
+// all test harnesses) nothing is rejected — but guards still verify
+// opportunistically: whenever a valid `Authorization: Bearer` token is
+// presented, uid comes from the token's `sub` and client-supplied uid
+// params/body fields are ignored, in EVERY route class.
+const REQUIRE_AUTH = process.env.TUTOR_REQUIRE_AUTH === '1';
+const CLERK_AUTHORIZED_PARTIES = String(process.env.CLERK_AUTHORIZED_PARTIES
+    || 'https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
+    .split(',').map(s => s.trim()).filter(Boolean);
+const { verifyClerkToken } = require('./clerk-verify')({ authorizedParties: CLERK_AUTHORIZED_PARTIES });
+
+async function resolveAuth(req) {
+    const header = String((req.headers && req.headers['authorization']) || '');
+    const m = /^Bearer\s+(.+)$/i.exec(header);
+    if (!m) return { hadToken: false, auth: null };
+    // Invalid token != tokenless: with enforcement ON it 401s; with
+    // enforcement OFF it falls back to legacy uid-param behavior.
+    return { hadToken: true, auth: await verifyClerkToken(m[1]) };
+}
+
+function send401(res) {
+    res.writeHead(401, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify({ error: 'Authentication required' }));
+}
+
 function resolveBinary(candidates = []) {
     for (const candidate of candidates) {
         if (!candidate) continue;
@@ -148,10 +178,28 @@ const { handleStaticRoute } = require('./static-routes')({
     appDir: __dirname,
 });
 
-function setCORSHeaders(res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+// CORS is decided per route class (design §2 review M10): /api/* + /health
+// reflect an allowlisted Origin (required once requests carry Authorization
+// headers — a wildcard would either leak or break them), while public static
+// assets keep the permissive wildcard. `Vary: Origin` accompanies every
+// reflected response so shared caches never serve one origin's CORS headers
+// to another. Requests with no Origin header (same-origin, curl) need no
+// ACAO; disallowed origins simply get no ACAO and the browser blocks them.
+function setCORSHeaders(res, pathname, requestOrigin) {
+    const isApiRoute = String(pathname || '').startsWith('/api/') || pathname === '/health';
+    if (!isApiRoute) {
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+        return;
+    }
+    const origin = String(requestOrigin || '');
+    if (origin && CLERK_AUTHORIZED_PARTIES.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+        res.setHeader('Vary', 'Origin');
+    }
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 }
 
 function safeReadJSON(filePath) {
@@ -1225,7 +1273,12 @@ const { callOpenRouterChat, callOpenAIChat, tryParseJsonLoose } = require('./llm
     appName: APP_NAME,
 });
 
+// Storage backend: file store by default; Neon Postgres when DATABASE_URL is
+// set (07-05 user-db task). All destructured IO functions are async now —
+// every callsite below awaits them. TUTOR_USERS_DIR exists so the hermetic
+// auth-guard test harness can point the file store at a temp dir.
 const {
+    init: initUserStore,
     readUserMemory, writeUserMemory, listSessionsForUid, readSessionFile,
     deleteSessionForUid, persistSessionTurn, buildUserProfilePrompt,
     updateUserMemoryFromQA, deriveMemoryFromSessions, readFeedbackBoard,
@@ -1234,7 +1287,8 @@ const {
     compactWhitespace,
     normalizeQuizProfile,
     callOpenRouterChat,
-    usersDir: path.join(__dirname, 'users'),
+    usersDir: process.env.TUTOR_USERS_DIR || path.join(__dirname, 'users'),
+    databaseUrl: process.env.DATABASE_URL || '',
 });
 
 
@@ -4296,7 +4350,9 @@ async function callTutorSkillRaw(prompt, options = {}) {
 }
 
 const server = http.createServer(async (req, res) => {
-    setCORSHeaders(res);
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname || '/';
+    setCORSHeaders(res, pathname, req.headers && req.headers.origin);
 
     if (req.method === 'OPTIONS') {
         res.writeHead(200);
@@ -4304,12 +4360,13 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    const parsedUrl = url.parse(req.url, true);
-    const pathname = parsedUrl.pathname || '/';
     console.log(`[HTTP] ${req.method} ${pathname}`);
 
     if (pathname === '/api/tutor' && req.method === 'POST') {
         try {
+            // LLM-spending route (design §2, review I5): legacy but can spend.
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const prompt = data.prompt;
 
@@ -4340,24 +4397,29 @@ const server = http.createServer(async (req, res) => {
     // POST /api/memory          →  create or patch user memory
     // ──────────────────────────────────────────────────
     if (pathname === '/api/sessions' && req.method === 'GET') {
-        const uid = parsedUrl.query.uid;
+        // uid-scoped route: token uid wins whenever a token is presented.
+        const { auth } = await resolveAuth(req);
+        if (REQUIRE_AUTH && !auth) { send401(res); return; }
+        const uid = auth ? auth.uid : parsedUrl.query.uid;
         if (!uid) { res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify({ sessions: listSessionsForUid(uid) }));
+        res.end(JSON.stringify({ sessions: await listSessionsForUid(uid) }));
         return;
     }
     if (pathname.startsWith('/api/sessions/') && (req.method === 'GET' || req.method === 'DELETE')) {
-        const uid = parsedUrl.query.uid;
+        const { auth } = await resolveAuth(req);
+        if (REQUIRE_AUTH && !auth) { send401(res); return; }
+        const uid = auth ? auth.uid : parsedUrl.query.uid;
         const sessionId = decodeURIComponent(pathname.slice('/api/sessions/'.length));
         if (!uid) { res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
         if (req.method === 'GET') {
-            const session = readSessionFile(uid, sessionId);
+            const session = await readSessionFile(uid, sessionId);
             if (!session) { res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Session not found' })); return; }
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify(session));
             return;
         }
-        const ok = deleteSessionForUid(uid, sessionId);
+        const ok = await deleteSessionForUid(uid, sessionId);
         res.writeHead(ok ? 200 : 404, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify(ok ? { ok: true } : { error: 'Session not found' }));
         return;
@@ -4365,19 +4427,23 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/memory') {
         if (req.method === 'GET') {
-            const uid = parsedUrl.query.uid;
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
+            const uid = auth ? auth.uid : parsedUrl.query.uid;
             if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-            const mem = readUserMemory(uid);
+            const mem = await readUserMemory(uid);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify(mem || {}));
             return;
         }
         if (req.method === 'POST') {
             try {
+                const { auth } = await resolveAuth(req);
+                if (REQUIRE_AUTH && !auth) { send401(res); return; }
                 const data = await readJsonBody(req);
-                const uid = data.uid;
+                const uid = auth ? auth.uid : data.uid;
                 if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-                const existing = readUserMemory(uid) || { uid, createdAt: new Date().toISOString() };
+                const existing = (await readUserMemory(uid)) || { uid, createdAt: new Date().toISOString() };
                 // Merge patch: quiz, knownConcepts, weakConcepts, sessionSummaries
                 if (data.resetQuiz === true) {
                     existing.quiz = {};
@@ -4408,7 +4474,7 @@ const server = http.createServer(async (req, res) => {
                     };
                 }
                 existing.lastUpdated = new Date().toISOString();
-                writeUserMemory(uid, existing);
+                await writeUserMemory(uid, existing);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ ok: true, memory: existing }));
             } catch (err) {
@@ -4420,12 +4486,14 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/memory/rebuild' && req.method === 'POST') {
         try {
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
-            const uid = data.uid;
+            const uid = auth ? auth.uid : data.uid;
             if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-            const existing = readUserMemory(uid) || { uid, createdAt: new Date().toISOString() };
+            const existing = (await readUserMemory(uid)) || { uid, createdAt: new Date().toISOString() };
             const rebuilt = deriveMemoryFromSessions(uid, data.sessions, existing);
-            writeUserMemory(uid, rebuilt);
+            await writeUserMemory(uid, rebuilt);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ ok: true, memory: rebuilt }));
         } catch (err) {
@@ -4436,6 +4504,11 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/section' && req.method === 'POST') {
         try {
+            // Mode gate (design §2, review C1): unauthenticated requests get
+            // cache-only behavior. mode defaults to 'intro' when absent, so a
+            // missing mode is gated exactly like an explicit intro.
+            const { auth } = await resolveAuth(req);
+            const sectionGenerationAllowed = !REQUIRE_AUTH || Boolean(auth);
             const data = await readJsonBody(req);
             const sectionId = compactWhitespace(data.sectionId || '');
             const sectionTitle = compactWhitespace(data.sectionTitle || sectionId);
@@ -4480,6 +4553,7 @@ const server = http.createServer(async (req, res) => {
             }
 
             if (mode === 'intro') {
+                if (!sectionGenerationAllowed) { send401(res); return; } // intro always spends (LLM call below)
                 const intro = await generateSectionIntro(sectionId, sectionTitle, sectionOcrPages, language);
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({
@@ -4505,6 +4579,10 @@ const server = http.createServer(async (req, res) => {
                 let generatedResult = null;
 
                 if (hasPrelude && (!normalizedCachedLesson || responseFormatIssues.length)) {
+                    // Cache miss / format repair would spend: 401 instead of
+                    // generating for unauthenticated requests; cache hits above
+                    // and below stay public.
+                    if (!sectionGenerationAllowed) { send401(res); return; }
                     generatedResult = await preGenerateSectionLesson(sectionId, sectionTitle, {
                         language,
                         bookSource: data.bookSource,
@@ -4626,6 +4704,9 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/pregen/section' && req.method === 'POST') {
         try {
+            // LLM-spending route (design §2 / D4).
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const sectionId = compactWhitespace(data.sectionId || '');
             const sectionTitle = compactWhitespace(data.sectionTitle || sectionId);
@@ -4671,6 +4752,10 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/preference/draft' && req.method === 'POST') {
         try {
+            // LLM-spending route (design §2, review M5): calls OpenRouter
+            // unconditionally and reads no per-uid server data.
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const currentProfile = compactWhitespace(data.currentProfile || '').slice(0, 6000);
             const instruction = compactWhitespace(data.instruction || '').slice(0, 1200);
@@ -4725,6 +4810,10 @@ const server = http.createServer(async (req, res) => {
         // chit-chat that only needs a short reply? Fail-safe: default to grounded
         // so a real question is never wrongly skipped.
         try {
+            // LLM-spending route (design §2 / D4). The handler never reads a
+            // uid (review I4) — gating is the only identity concern here.
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const question = compactWhitespace(data.prompt || data.question || '');
             const language = data.language === 'zh' ? 'zh' : 'en';
@@ -4793,6 +4882,12 @@ const server = http.createServer(async (req, res) => {
 
     if (pathname === '/api/ask' && req.method === 'POST') {
         try {
+            // LLM-spending route that ALSO reads/writes per-uid data (review
+            // C2): uid must come from the verified token whenever one is
+            // presented — body.uid must never select whose memory is read or
+            // whose session the turn persists into.
+            const { auth } = await resolveAuth(req);
+            if (REQUIRE_AUTH && !auth) { send401(res); return; }
             const data = await readJsonBody(req);
             const question = compactWhitespace(data.prompt || data.question || '');
             const mode = data.mode === 'followup' ? 'followup' : 'ask';
@@ -4801,8 +4896,8 @@ const server = http.createServer(async (req, res) => {
             const sectionTitle = compactWhitespace(data.sectionTitle || '');
             const lessonContext = compactWhitespace(data.lessonContext || '');
             const language = data.language === 'zh' ? 'zh' : 'en';
-            const uid = data.uid || null;
-            const userMemory = uid ? readUserMemory(uid) : null;
+            const uid = auth ? auth.uid : (data.uid || null);
+            const userMemory = uid ? await readUserMemory(uid) : null;
             const userProfilePrompt = buildUserProfilePrompt(userMemory);
             const userPrefs = userMemory && userMemory.quiz ? userMemory.quiz : {};
             const answerLength = userPrefs.length || data.answerLength || 'medium';
@@ -5032,7 +5127,7 @@ const server = http.createServer(async (req, res) => {
             let savedSessionId = data.session_id || data.sessionId || null;
             if (uid) {
                 try {
-                    savedSessionId = persistSessionTurn(uid, savedSessionId, {
+                    savedSessionId = await persistSessionTurn(uid, savedSessionId, {
                         userText: question,
                         aiText: explanation,
                         origin: 'main',
@@ -5126,7 +5221,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname === '/api/feedback' && req.method === 'GET') {
-        const board = readFeedbackBoard();
+        const board = await readFeedbackBoard();
         const items = board.items
             .slice()
             .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
@@ -5147,7 +5242,7 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: 'title and body are required' }));
                 return;
             }
-            const board = readFeedbackBoard();
+            const board = await readFeedbackBoard();
             const item = {
                 id: `fb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
                 title,
@@ -5158,7 +5253,7 @@ const server = http.createServer(async (req, res) => {
             };
             board.items.unshift(item);
             board.items = board.items.slice(0, 300);
-            writeFeedbackBoard(board);
+            await writeFeedbackBoard(board);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ item: publicFeedbackItem(item) }));
         } catch (err) {
@@ -5183,7 +5278,7 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: 'feedback id and body are required' }));
                 return;
             }
-            const board = readFeedbackBoard();
+            const board = await readFeedbackBoard();
             const item = board.items.find(entry => entry.id === id);
             if (!item) {
                 res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -5202,7 +5297,7 @@ const server = http.createServer(async (req, res) => {
             item.replies = Array.isArray(item.replies) ? item.replies : [];
             item.replies.push(reply);
             item.replies = item.replies.slice(-200);
-            writeFeedbackBoard(board);
+            await writeFeedbackBoard(board);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ item: publicFeedbackItem(item), reply }));
         } catch (err) {
@@ -5325,20 +5420,29 @@ if (IS_PREGEN_CLI) {
             process.exit(1);
         });
 } else {
-    server.listen(HTTP_PORT, () => {
-        console.log('='.repeat(64));
-        console.log('Tutor Agent Bridge');
-        console.log('='.repeat(64));
-        console.log(`HTTP Server : http://localhost:${HTTP_PORT}`);
-        console.log(`Indexed OCR : new=${BOOK_INDEX_NEW.length} pages`);
-        console.log(`Skill Script: ${SKILL_SCRIPT}`);
-        console.log('');
-        console.log('Endpoints:');
-        console.log(`  - http://localhost:${HTTP_PORT}/           (Web UI)`);
-        console.log(`  - http://localhost:${HTTP_PORT}/api/ask    (RAG + Web + Claude Opus)`);
-        console.log(`  - http://localhost:${HTTP_PORT}/api/tutor  (Legacy API preserved)`);
-        console.log(`  - http://localhost:${HTTP_PORT}/health     (Health check)`);
-        console.log('='.repeat(64));
+    // Storage init before listen: in pg mode this bootstraps the schema and
+    // fails fast (loud crash, no ephemeral-file fallback) when DATABASE_URL
+    // is set but unreachable; in file mode it resolves immediately.
+    initUserStore().then(() => {
+        server.listen(HTTP_PORT, () => {
+            console.log('='.repeat(64));
+            console.log('Tutor Agent Bridge');
+            console.log('='.repeat(64));
+            console.log(`HTTP Server : http://localhost:${HTTP_PORT}`);
+            console.log(`Indexed OCR : new=${BOOK_INDEX_NEW.length} pages`);
+            console.log(`Skill Script: ${SKILL_SCRIPT}`);
+            console.log(`Auth        : ${REQUIRE_AUTH ? 'ENFORCED (TUTOR_REQUIRE_AUTH=1)' : 'off (opportunistic token verification only)'}`);
+            console.log('');
+            console.log('Endpoints:');
+            console.log(`  - http://localhost:${HTTP_PORT}/           (Web UI)`);
+            console.log(`  - http://localhost:${HTTP_PORT}/api/ask    (RAG + Web + Claude Opus)`);
+            console.log(`  - http://localhost:${HTTP_PORT}/api/tutor  (Legacy API preserved)`);
+            console.log(`  - http://localhost:${HTTP_PORT}/health     (Health check)`);
+            console.log('='.repeat(64));
+        });
+    }).catch((err) => {
+        console.error('[Storage] init failed, refusing to start:', err.message);
+        process.exit(1);
     });
 
     process.on('SIGINT', () => {
