@@ -1,0 +1,29 @@
+{
+  "id": "rendering-deferred-items",
+  "name": "rendering-deferred-items",
+  "title": "Rendering deferred items (drivers + demo bugs)",
+  "description": "Address REFACTOR_DONE §4 rendering backlog: render drivers/harness infra + structural root-cause fixes (PR-A) and residual demo symptom fixes (PR-B).",
+  "status": "planning",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P2",
+  "creator": "FlyM1ss",
+  "assignee": "FlyM1ss",
+  "createdAt": "2026-07-05",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [
+    "07-05-render-drivers-harness",
+    "07-05-demo-symptom-fixes"
+  ],
+  "parent": null,
+  "relatedFiles": [],
+  "notes": "",
+  "meta": {}
+}
