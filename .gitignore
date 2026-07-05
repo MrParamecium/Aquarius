@@ -66,3 +66,9 @@ tools/_view-cascade-baseline.json
 tools/_view-cascade-report.md
 tools/_allstrip-flips.md
 tools/_refine1-flips.md
+
+# claude-mem plugin auto-generates empty <claude-mem-context> CLAUDE.md stubs
+# in every directory it touches. Ignore them everywhere but keep the tracked
+# root CLAUDE.md (the checked-in project instructions).
+CLAUDE.md
+!/CLAUDE.md
