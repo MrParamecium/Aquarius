@@ -90,8 +90,9 @@ module.exports = function createUserMemory(deps) {
 
     function fileWriteUserMemory(uid, data) {
         const p = getUserMemoryPath(uid);
-        if (!p) return;
+        if (!p) return false;
         fs.writeFileSync(p, JSON.stringify(data, null, 2), 'utf8');
+        return true; // a write failure throws and surfaces as the route's 500
     }
 
     // ── Chat sessions (multi-session, Phase 1) ───────────────────────────────
@@ -211,6 +212,7 @@ module.exports = function createUserMemory(deps) {
     function fileWriteFeedbackBoard(board) {
         const items = Array.isArray(board && board.items) ? board.items : [];
         fs.writeFileSync(FEEDBACK_BOARD_PATH, JSON.stringify({ items }, null, 2), 'utf8');
+        return true; // a write failure throws and surfaces as the route's error response
     }
 
     // ── Store selection ──────────────────────────────────────────────────────

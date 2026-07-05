@@ -4365,6 +4365,17 @@ async function callTutorSkillRaw(prompt, options = {}) {
     });
 }
 
+// The feedback board is a whole-document read-modify-write (both backends),
+// so two concurrent posts can silently drop one another's just-written item.
+// This process is the only writer (single Render instance), so a promise
+// chain serializing the mutations closes the race for both backends.
+let feedbackMutationChain = Promise.resolve();
+function serializeFeedbackMutation(mutate) {
+    const run = feedbackMutationChain.then(mutate, mutate);
+    feedbackMutationChain = run.catch(() => {}); // keep the chain alive after a failed mutation
+    return run;
+}
+
 const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname || '/';
@@ -4490,7 +4501,14 @@ const server = http.createServer(async (req, res) => {
                     };
                 }
                 existing.lastUpdated = new Date().toISOString();
-                await writeUserMemory(uid, existing);
+                // Honest status: the pg store refuses guest_* uids, oversized
+                // documents, and transient DB failures — never claim a write
+                // that did not persist succeeded.
+                if (!(await writeUserMemory(uid, existing))) {
+                    res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'Storage write failed' }));
+                    return;
+                }
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ ok: true, memory: existing }));
             } catch (err) {
@@ -4509,7 +4527,11 @@ const server = http.createServer(async (req, res) => {
             if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
             const existing = (await readUserMemory(uid)) || { uid, createdAt: new Date().toISOString() };
             const rebuilt = deriveMemoryFromSessions(uid, data.sessions, existing);
-            await writeUserMemory(uid, rebuilt);
+            if (!(await writeUserMemory(uid, rebuilt))) {
+                res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: 'Storage write failed' }));
+                return;
+            }
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ ok: true, memory: rebuilt }));
         } catch (err) {
@@ -5258,18 +5280,21 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: 'title and body are required' }));
                 return;
             }
-            const board = await readFeedbackBoard();
-            const item = {
-                id: `fb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-                title,
-                body,
-                author,
-                createdAt: new Date().toISOString(),
-                replies: []
-            };
-            board.items.unshift(item);
-            board.items = board.items.slice(0, 300);
-            await writeFeedbackBoard(board);
+            const item = await serializeFeedbackMutation(async () => {
+                const board = await readFeedbackBoard();
+                const created = {
+                    id: `fb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                    title,
+                    body,
+                    author,
+                    createdAt: new Date().toISOString(),
+                    replies: []
+                };
+                board.items.unshift(created);
+                board.items = board.items.slice(0, 300);
+                if (!(await writeFeedbackBoard(board))) throw new Error('Storage write failed');
+                return created;
+            });
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ item: publicFeedbackItem(item) }));
         } catch (err) {
@@ -5294,28 +5319,32 @@ const server = http.createServer(async (req, res) => {
                 res.end(JSON.stringify({ error: 'feedback id and body are required' }));
                 return;
             }
-            const board = await readFeedbackBoard();
-            const item = board.items.find(entry => entry.id === id);
-            if (!item) {
+            const result = await serializeFeedbackMutation(async () => {
+                const board = await readFeedbackBoard();
+                const item = board.items.find(entry => entry.id === id);
+                if (!item) return null;
+                const reply = {
+                    id: `rp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                    body,
+                    author,
+                    createdAt: new Date().toISOString(),
+                    replyTo: replyTo || '',
+                    replyToAuthor: replyToAuthor || '',
+                    replyToBody: replyToBody || ''
+                };
+                item.replies = Array.isArray(item.replies) ? item.replies : [];
+                item.replies.push(reply);
+                item.replies = item.replies.slice(-200);
+                if (!(await writeFeedbackBoard(board))) throw new Error('Storage write failed');
+                return { item, reply };
+            });
+            if (!result) {
                 res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
                 res.end(JSON.stringify({ error: 'feedback item not found' }));
                 return;
             }
-            const reply = {
-                id: `rp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-                body,
-                author,
-                createdAt: new Date().toISOString(),
-                replyTo: replyTo || '',
-                replyToAuthor: replyToAuthor || '',
-                replyToBody: replyToBody || ''
-            };
-            item.replies = Array.isArray(item.replies) ? item.replies : [];
-            item.replies.push(reply);
-            item.replies = item.replies.slice(-200);
-            await writeFeedbackBoard(board);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ item: publicFeedbackItem(item), reply }));
+            res.end(JSON.stringify({ item: publicFeedbackItem(result.item), reply: result.reply }));
         } catch (err) {
             res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ error: err.message || 'bad request' }));

@@ -147,8 +147,12 @@ module.exports = function createPgStore(deps) {
         }
     }
 
+    // Returns true only when the row actually persisted; false on the uid
+    // gate (incl. guest_ refusal), the size cap, or any query failure — the
+    // routes use this to answer honestly instead of claiming a dropped write
+    // succeeded.
     async function writeUserMemory(uid, data) {
-        if (!checkUidGate(uid, { warnOnGuestWrite: true })) return undefined;
+        if (!checkUidGate(uid, { warnOnGuestWrite: true })) return false;
         // node-postgres serializes plain JS objects to JSON automatically for
         // jsonb params, but it serializes JS ARRAYS as Postgres array literals
         // instead — so every jsonb param here is pre-stringified explicitly
@@ -156,7 +160,7 @@ module.exports = function createPgStore(deps) {
         const dataJson = serializeUnderCap(data);
         if (dataJson === null) {
             console.warn('[db] writeUserMemory refused: document exceeds 64KB cap for uid', uid);
-            return undefined;
+            return false;
         }
         try {
             await ensureUserRow(uid);
@@ -164,10 +168,11 @@ module.exports = function createPgStore(deps) {
                 'INSERT INTO user_memory (uid, data, updated_at) VALUES ($1, $2, now()) ON CONFLICT (uid) DO UPDATE SET data = EXCLUDED.data, updated_at = now()',
                 [uid, dataJson]
             );
+            return true;
         } catch (e) {
             console.warn('[db] writeUserMemory failed:', e.message);
+            return false;
         }
-        return undefined;
     }
 
     async function listSessionsForUid(uid) {
@@ -282,6 +287,7 @@ module.exports = function createPgStore(deps) {
         }
     }
 
+    // Returns true when the whole-board replace committed, false otherwise.
     async function writeFeedbackBoard(board) {
         const items = Array.isArray(board && board.items) ? board.items : [];
         let client;
@@ -289,7 +295,7 @@ module.exports = function createPgStore(deps) {
             client = await pool.connect();
         } catch (e) {
             console.warn('[db] writeFeedbackBoard failed:', e.message);
-            return undefined;
+            return false;
         }
         try {
             await client.query('BEGIN');
@@ -309,13 +315,14 @@ module.exports = function createPgStore(deps) {
                 );
             }
             await client.query('COMMIT');
+            return true;
         } catch (e) {
             try { await client.query('ROLLBACK'); } catch (_) {}
             console.warn('[db] writeFeedbackBoard failed:', e.message);
+            return false;
         } finally {
             client.release();
         }
-        return undefined;
     }
 
     return {
