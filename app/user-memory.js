@@ -1,23 +1,35 @@
 /*
  * User memory + feedback + sessions IO (extracted from ws-bridge.js in
- * Phase 1 #5).
+ * Phase 1 #5; dual storage backend added in the 07-05 user-db task).
  *
- * Owns the on-disk JSON layout under USERS_DIR:
- *   USERS_DIR/<uid>.json            → user memory (quiz profile, concepts, style signals)
- *   USERS_DIR/feedback-board.json   → shared feedback board (threaded replies)
- *   USERS_DIR/sessions/<uid>/<id>.json → per-uid persisted chat sessions
+ * TWO interchangeable storage backends behind one 8-primitive store
+ * interface (readUserMemory / writeUserMemory / listSessionsForUid /
+ * readSessionFile / writeSessionFile / deleteSessionForUid /
+ * readFeedbackBoard / writeFeedbackBoard):
  *
- * Rule #3 of REFACTOR_PLAN.md flags this as Phase 4 DB-swap territory.
- * This extraction pre-positions that swap by making the file-based storage
- * a single dep-injectable surface — when the DB design lands, only this
- * module changes, not every callsite.
+ *   file store (default, deps.databaseUrl unset) — on-disk JSON under USERS_DIR:
+ *     USERS_DIR/<uid>.json            → user memory (quiz profile, concepts, style signals)
+ *     USERS_DIR/feedback-board.json   → shared feedback board (threaded replies)
+ *     USERS_DIR/sessions/<uid>/<id>.json → per-uid persisted chat sessions
+ *
+ *   pg store (deps.databaseUrl set) — Neon Postgres via app/db.js, JSONB
+ *     documents mirroring the exact file shapes. Durable across redeploys.
+ *
+ * The PUBLIC surface is async in both modes (the pg store forces it; the
+ * file store just resolves immediately). Callers must await every exported
+ * function except the pure helpers (buildUserProfilePrompt,
+ * deriveMemoryFromSessions, publicFeedbackItem, cleanFeedbackText).
+ *
+ * Call init() once at startup: in pg mode it bootstraps the schema and
+ * FAILS FAST if the database is unreachable (never silently falls back to
+ * ephemeral files); in file mode it just logs the active backend.
  *
  * Factory pattern follows Phase 1 #4 (ragflow-client.js) — bridge injects
  * its utilities so this module doesn't pull from a not-yet-extracted shared
  * utils module.
  *
- * The factory is NOT side-effect-free: it mkdirSyncs USERS_DIR and
- * SESSIONS_DIR on call. Call it once at bridge startup, not per-request.
+ * The factory is NOT side-effect-free in file mode: it mkdirSyncs USERS_DIR
+ * and SESSIONS_DIR on call. Call it once at bridge startup, not per-request.
  */
 'use strict';
 
@@ -31,6 +43,7 @@ const crypto = require('crypto');
  *   normalizeQuizProfile: (quiz?: object) => object,
  *   callOpenRouterChat: (opts: object) => Promise<string>,
  *   usersDir: string,
+ *   databaseUrl?: string,
  * }} deps
  */
 module.exports = function createUserMemory(deps) {
@@ -38,14 +51,20 @@ module.exports = function createUserMemory(deps) {
     const normalizeQuizProfile = deps && deps.normalizeQuizProfile;
     const callOpenRouterChat = deps && deps.callOpenRouterChat;
     const USERS_DIR = deps && deps.usersDir;
+    const DATABASE_URL = (deps && deps.databaseUrl) || '';
     if (typeof compactWhitespace !== 'function' || typeof normalizeQuizProfile !== 'function' || typeof callOpenRouterChat !== 'function' || typeof USERS_DIR !== 'string' || !USERS_DIR) {
         throw new Error('user-memory: missing required deps {compactWhitespace, normalizeQuizProfile, callOpenRouterChat, usersDir}');
     }
 
-    try { if (!fs.existsSync(USERS_DIR)) fs.mkdirSync(USERS_DIR, { recursive: true }); } catch (_) {}
+    const usingPg = Boolean(DATABASE_URL);
+    if (!usingPg) {
+        try { if (!fs.existsSync(USERS_DIR)) fs.mkdirSync(USERS_DIR, { recursive: true }); } catch (_) {}
+    }
     const FEEDBACK_BOARD_PATH = path.join(USERS_DIR, 'feedback-board.json');
     const SESSIONS_DIR = path.join(USERS_DIR, 'sessions');
-    try { if (!fs.existsSync(SESSIONS_DIR)) fs.mkdirSync(SESSIONS_DIR, { recursive: true }); } catch (_) {}
+    if (!usingPg) {
+        try { if (!fs.existsSync(SESSIONS_DIR)) fs.mkdirSync(SESSIONS_DIR, { recursive: true }); } catch (_) {}
+    }
 
     function sanitizeUid(uid) {
         return String(uid || '').replace(/[^a-zA-Z0-9_\-]/g, '_').slice(0, 64);
@@ -57,7 +76,7 @@ module.exports = function createUserMemory(deps) {
         return path.join(USERS_DIR, `${safe}.json`);
     }
 
-    function readUserMemory(uid) {
+    function fileReadUserMemory(uid) {
         const p = getUserMemoryPath(uid);
         if (!p) return null;
         try {
@@ -69,10 +88,11 @@ module.exports = function createUserMemory(deps) {
         }
     }
 
-    function writeUserMemory(uid, data) {
+    function fileWriteUserMemory(uid, data) {
         const p = getUserMemoryPath(uid);
-        if (!p) return;
+        if (!p) return false;
         fs.writeFileSync(p, JSON.stringify(data, null, 2), 'utf8');
+        return true; // a write failure throws and surfaces as the route's 500
     }
 
     // ── Chat sessions (multi-session, Phase 1) ───────────────────────────────
@@ -94,12 +114,14 @@ module.exports = function createUserMemory(deps) {
         if (!dir || !isValidSessionId(id)) return null; // UUID-only guards path traversal
         return path.join(dir, `${id}.json`);
     }
-    function readSessionFile(uid, id) {
+    function fileReadSessionFile(uid, id) {
         const p = getSessionPath(uid, id);
         if (!p) return null;
         try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return null; }
     }
-    function writeSessionFileAtomic(uid, session) {
+    // Store primitive `writeSessionFile` — file impl keeps the atomic
+    // tmp-write + rename behavior of the pre-split writeSessionFileAtomic.
+    function fileWriteSessionFile(uid, session) {
         const p = getSessionPath(uid, session && session.id);
         if (!p) return false;
         try {
@@ -126,7 +148,7 @@ module.exports = function createUserMemory(deps) {
             messageCount: Array.isArray(s.messages) ? s.messages.length : 0
         };
     }
-    function listSessionsForUid(uid) {
+    function fileListSessionsForUid(uid) {
         const dir = getSessionsDirForUid(uid);
         if (!dir || !fs.existsSync(dir)) return [];
         const out = [];
@@ -137,21 +159,21 @@ module.exports = function createUserMemory(deps) {
         out.sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
         return out;
     }
-    function deleteSessionForUid(uid, id) {
+    function fileDeleteSessionForUid(uid, id) {
         const p = getSessionPath(uid, id);
         if (!p || !fs.existsSync(p)) return false;
         try { fs.unlinkSync(p); return true; } catch (_) { return false; }
     }
     // Persist one Q&A turn. No sessionId (or unknown) -> create a new session
-    // and return its id; existing id -> append the turn. Returns the session
-    // id (or null).
-    function persistSessionTurn(uid, sessionId, { userText, aiText, origin, sectionId, sectionTitle } = {}) {
+    // and return its id; existing id -> append the turn. Resolves to the
+    // session id (or null). Async since the store may be Postgres-backed.
+    async function persistSessionTurn(uid, sessionId, { userText, aiText, origin, sectionId, sectionTitle } = {}) {
         const safe = sanitizeUid(uid);
         if (!safe) return null;
         const now = new Date().toISOString();
         const userMsg = { role: 'user', content: String(userText || ''), ts: now };
         const aiMsg = { role: 'assistant', content: String(aiText || ''), ts: now };
-        let session = sessionId ? readSessionFile(uid, sessionId) : null;
+        let session = sessionId ? await store.readSessionFile(uid, sessionId) : null;
         if (session) {
             session.messages = Array.isArray(session.messages) ? session.messages : [];
             session.messages.push(userMsg, aiMsg);
@@ -159,7 +181,7 @@ module.exports = function createUserMemory(deps) {
             if (origin) session.origin = origin;
             if (sectionId) session.sectionId = sectionId;
             if (sectionTitle) session.sectionTitle = sectionTitle;
-            return writeSessionFileAtomic(uid, session) ? session.id : null;
+            return (await store.writeSessionFile(uid, session)) ? session.id : null;
         }
         const id = crypto.randomUUID();
         session = {
@@ -170,14 +192,14 @@ module.exports = function createUserMemory(deps) {
             createdAt: now, updatedAt: now,
             messages: [userMsg, aiMsg]
         };
-        return writeSessionFileAtomic(uid, session) ? id : null;
+        return (await store.writeSessionFile(uid, session)) ? id : null;
     }
 
     function cleanFeedbackText(value, maxLen = 1200) {
         return compactWhitespace(String(value || '').replace(/\r/g, '\n')).slice(0, maxLen);
     }
 
-    function readFeedbackBoard() {
+    function fileReadFeedbackBoard() {
         try {
             const parsed = JSON.parse(fs.readFileSync(FEEDBACK_BOARD_PATH, 'utf8'));
             const items = Array.isArray(parsed.items) ? parsed.items : [];
@@ -187,9 +209,41 @@ module.exports = function createUserMemory(deps) {
         }
     }
 
-    function writeFeedbackBoard(board) {
+    function fileWriteFeedbackBoard(board) {
         const items = Array.isArray(board && board.items) ? board.items : [];
         fs.writeFileSync(FEEDBACK_BOARD_PATH, JSON.stringify({ items }, null, 2), 'utf8');
+        return true; // a write failure throws and surfaces as the route's error response
+    }
+
+    // ── Store selection ──────────────────────────────────────────────────────
+    // 8-primitive store interface; both impls return identical shapes and are
+    // spread directly into the module's exports (the file impl is sync
+    // internally — callers await everything, which resolves plain values
+    // just the same).
+    const fileStore = {
+        readUserMemory: fileReadUserMemory,
+        writeUserMemory: fileWriteUserMemory,
+        listSessionsForUid: fileListSessionsForUid,
+        readSessionFile: fileReadSessionFile,
+        writeSessionFile: fileWriteSessionFile,
+        deleteSessionForUid: fileDeleteSessionForUid,
+        readFeedbackBoard: fileReadFeedbackBoard,
+        writeFeedbackBoard: fileWriteFeedbackBoard,
+    };
+    const store = usingPg
+        ? require('./db')({ databaseUrl: DATABASE_URL, normalizeQuizProfile, isValidSessionId })
+        : fileStore;
+
+    // Startup hook: pg mode bootstraps schema and fails fast on an
+    // unreachable database (deliberate — mirrors the materials-dir fail-fast;
+    // never silently fall back to ephemeral files when durability was asked
+    // for). File mode just announces itself.
+    async function init() {
+        if (usingPg) {
+            await store.init();
+        } else {
+            console.log(`[user-memory] file store active at ${USERS_DIR}`);
+        }
     }
 
     function publicFeedbackItem(item) {
@@ -424,7 +478,7 @@ module.exports = function createUserMemory(deps) {
             update = JSON.parse(raw.slice(s, e + 1));
         } catch (_) { return; }
 
-        const mem = readUserMemory(uid) || { uid };
+        const mem = (await store.readUserMemory(uid)) || { uid };
 
         // Merge weakConcepts (cap at 20)
         if (Array.isArray(update.weakConcepts) && update.weakConcepts.length) {
@@ -458,22 +512,17 @@ module.exports = function createUserMemory(deps) {
         }
 
         mem.lastUpdated = new Date().toISOString();
-        writeUserMemory(uid, mem);
+        await store.writeUserMemory(uid, mem);
         console.log(`[MemoryUpdate] uid=${uid} weak=${JSON.stringify(mem.weakConcepts?.slice(-3))} known=${JSON.stringify(mem.knownConcepts?.slice(-3))}`);
     }
 
     return {
-        readUserMemory,
-        writeUserMemory,
-        listSessionsForUid,
-        readSessionFile,
-        deleteSessionForUid,
+        init,
+        ...store, // the 8 primitives, whichever backend is active
         persistSessionTurn,
         buildUserProfilePrompt,
         updateUserMemoryFromQA,
         deriveMemoryFromSessions,
-        readFeedbackBoard,
-        writeFeedbackBoard,
         publicFeedbackItem,
         cleanFeedbackText,
     };
