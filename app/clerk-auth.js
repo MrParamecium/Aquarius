@@ -62,6 +62,15 @@ const AUTH_CALLBACK_FLAG = 'auth_callback';
 const AUTH_VIEW_FLAG = 'view';
 const AUTH_RETURN_INTENT_KEY = 'aquarius-auth-return-intent';
 const AUTH_RETURN_TARGET_KEY = 'aquarius-auth-return-target';
+// Synchronous boot hint that a Clerk session probably exists (Clerk itself
+// resolves asynchronously, long after the intro-landing decision). Set on
+// every successful sign-in/sync, cleared on sign-out. A stale hint (session
+// expired server-side) just means the intro is skipped once — the user
+// lands signed-out on welcome, same as today's intro-seen behavior.
+const HAD_SESSION_HINT_KEY = 'aquarius-had-session';
+// Guest memory lives ONLY in sessionStorage (design D3: guest data dies
+// with the tab, never touches the backend or the database).
+const GUEST_MEMORY_KEY = 'aquarius-guest-memory';
 
 let currentUser = null;  // { uid, name, email, imageUrl }
 let userMemory  = {};    // loaded from backend after login
@@ -89,6 +98,81 @@ function isQuizProfileComplete(memory = userMemory) {
 
 function hasPendingAuthReturnIntent() {
   try { return Boolean(sessionStorage.getItem(AUTH_RETURN_INTENT_KEY)); } catch (_) { return false; }
+}
+
+// Fresh Clerk session JWT for one outgoing request (60s lifetime — Clerk.js
+// refreshes it internally; always call this per request, never store the
+// result). Returns null for guests / signed-out — apiFetch then simply
+// sends no Authorization header.
+async function getAuthToken() {
+  try {
+    if (clerkInstance && clerkInstance.session) {
+      return (await clerkInstance.session.getToken()) || null;
+    }
+  } catch (_) {}
+  return null;
+}
+
+function markSessionHint() {
+  try { localStorage.setItem(HAD_SESSION_HINT_KEY, '1'); } catch (_) {}
+}
+
+function clearSessionHint() {
+  try { localStorage.removeItem(HAD_SESSION_HINT_KEY); } catch (_) {}
+}
+
+function hasSessionHint() {
+  try { return localStorage.getItem(HAD_SESSION_HINT_KEY) === '1'; } catch (_) { return false; }
+}
+
+function hasLiveGuestSession() {
+  try { return Boolean(sessionStorage.getItem('guestUid')); } catch (_) { return false; }
+}
+
+function defaultPreferenceProfileDoc() {
+  return {
+    markdown: DEFAULT_PREFERENCE_PROFILE,
+    updatedAt: new Date().toISOString(),
+    source: 'default',
+    manualEdited: false
+  };
+}
+
+function loadGuestMemory() {
+  try {
+    const raw = sessionStorage.getItem(GUEST_MEMORY_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        if (!parsed.preferenceProfile || !parsed.preferenceProfile.markdown) {
+          parsed.preferenceProfile = defaultPreferenceProfileDoc();
+        }
+        return parsed;
+      }
+    }
+  } catch (_) {}
+  return { preferenceProfile: defaultPreferenceProfileDoc() };
+}
+
+function saveGuestMemory(memory) {
+  if (!currentUser || !currentUser.isGuest) return;
+  try { sessionStorage.setItem(GUEST_MEMORY_KEY, JSON.stringify(memory || {})); } catch (_) {}
+}
+
+// Quiet in-tab guest restore on reload: rebuilds currentUser/userMemory from
+// sessionStorage WITHOUT navigating and WITHOUT the quiz popup — the boot
+// restore step (app.js maybeBootRestoreLastLocation) handles where to land.
+function rehydrateGuestSession() {
+  if (currentUser) return false;
+  let gid = null;
+  try { gid = sessionStorage.getItem('guestUid'); } catch (_) {}
+  if (!gid) return false;
+  currentUser = { uid: gid, name: 'Guest', isGuest: true };
+  userMemory = loadGuestMemory();
+  renderUserBadge();
+  updatePreferenceSidebarSummary();
+  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
+  return true;
 }
 
 function setLoginStatus(message = '', type = 'error') {
@@ -399,6 +483,11 @@ function hideAuthOverlay() {
 function showAuthOverlay() {
   const intro = document.getElementById('introLanding');
   if (intro && !intro.classList.contains('hidden')) return;
+  // A live in-tab guest session owns the screen: Clerk firing its no-user
+  // listener on a guest reload must not bounce the guest to the login view.
+  // (Before the D2 intro gating this was masked by the intro overlay —
+  // guests reloading always had the intro visible and hit the early return.)
+  if (hasLiveGuestSession() || (currentUser && currentUser.isGuest)) return;
   showLoginView();
 }
 
@@ -602,17 +691,15 @@ async function onUserSignedIn(user) {
     imageUrl: user.imageUrl || '',
     isGuest: false
   };
+  markSessionHint();
   try {
-    const res = await fetch(`${API_BASE}/api/memory?uid=${encodeURIComponent(currentUser.uid)}`);
+    // Identity comes from the Bearer token (backend maps token sub -> uid);
+    // no uid query param — client-supplied uids are dead plumbing now.
+    const res = await apiFetch('/api/memory');
     userMemory = res.ok ? await res.json() : {};
   } catch (_) { userMemory = {}; }
   if (!userMemory.preferenceProfile || !userMemory.preferenceProfile.markdown) {
-    userMemory.preferenceProfile = {
-      markdown: DEFAULT_PREFERENCE_PROFILE,
-      updatedAt: new Date().toISOString(),
-      source: 'default',
-      manualEdited: false
-    };
+    userMemory.preferenceProfile = defaultPreferenceProfileDoc();
   }
   updatePreferenceSidebarSummary();
   updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
@@ -637,21 +724,21 @@ async function syncCurrentUserWithoutNavigation(user) {
     imageUrl: user.imageUrl || '',
     isGuest: false
   };
+  markSessionHint();
   try {
-    const res = await fetch(`${API_BASE}/api/memory?uid=${encodeURIComponent(currentUser.uid)}`);
+    const res = await apiFetch('/api/memory');
     userMemory = res.ok ? await res.json() : {};
   } catch (_) { userMemory = {}; }
   if (!userMemory.preferenceProfile || !userMemory.preferenceProfile.markdown) {
-    userMemory.preferenceProfile = {
-      markdown: DEFAULT_PREFERENCE_PROFILE,
-      updatedAt: new Date().toISOString(),
-      source: 'default',
-      manualEdited: false
-    };
+    userMemory.preferenceProfile = defaultPreferenceProfileDoc();
   }
   updatePreferenceSidebarSummary();
   updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   renderUserBadge();
+  // Plain-reload path (design D2): a restored session parks here with no
+  // navigation — the boot-restore step decides whether to reopen the last
+  // view. No-op unless the boot conditions hold (additive, one-shot).
+  if (typeof maybeBootRestoreLastLocation === 'function') maybeBootRestoreLastLocation();
 }
 
 function startGuestMode() {
@@ -665,14 +752,7 @@ function startGuestMode() {
     sessionStorage.setItem('guestUid', gid);
   }
   currentUser = { uid: gid, name: 'Guest', isGuest: true };
-  userMemory = {
-    preferenceProfile: {
-      markdown: DEFAULT_PREFERENCE_PROFILE,
-      updatedAt: new Date().toISOString(),
-      source: 'default',
-      manualEdited: false
-    }
-  };
+  userMemory = loadGuestMemory();
   setLoginButtonsBusy(false);
   setLoginStatus('');
   if (appShell) appShell.classList.remove('hidden');
@@ -687,7 +767,9 @@ function startGuestMode() {
   if (topbar) topbar.classList.add('hidden');
   renderUserBadge();
   updatePreferenceSidebarSummary();
-  showQuiz();
+  // Same rule as fresh sign-in: only quiz a guest whose profile is
+  // incomplete (a returning in-tab guest keeps their answers).
+  if (!isQuizProfileComplete(userMemory)) showQuiz();
 }
 
 // Helper for handling sign-out
@@ -696,9 +778,13 @@ async function handleSignOut() {
   document.body.classList.remove('auth-redirecting');
   if (clerkInstance) {
     try { await clerkInstance.signOut(); } catch (e) { console.error('Sign-out error:', e); }
-  } else if (currentUser && currentUser.isGuest) {
-    sessionStorage.removeItem('guestUid');
   }
+  if (currentUser && currentUser.isGuest) {
+    try { sessionStorage.removeItem('guestUid'); } catch (_) {}
+    try { sessionStorage.removeItem(GUEST_MEMORY_KEY); } catch (_) {}
+  }
+  clearSessionHint();
+  try { localStorage.removeItem('aquarius-last-location'); } catch (_) {} // next account must not inherit this one's restore point
   currentUser = null;
   userMemory = {};
   window.location.reload(); // Reload to show login screen
