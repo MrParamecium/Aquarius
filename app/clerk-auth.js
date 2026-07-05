@@ -64,9 +64,11 @@ const AUTH_RETURN_INTENT_KEY = 'aquarius-auth-return-intent';
 const AUTH_RETURN_TARGET_KEY = 'aquarius-auth-return-target';
 // Synchronous boot hint that a Clerk session probably exists (Clerk itself
 // resolves asynchronously, long after the intro-landing decision). Set on
-// every successful sign-in/sync, cleared on sign-out. A stale hint (session
-// expired server-side) just means the intro is skipped once — the user
-// lands signed-out on welcome, same as today's intro-seen behavior.
+// every successful sign-in/sync; cleared on sign-out AND self-healing: when
+// Clerk later resolves to no user, the listener clears it, so a stale hint
+// (session expired server-side) costs exactly one load — that load skips
+// the intro and bounces to the login view once Clerk settles; the next
+// load shows the intro again.
 const HAD_SESSION_HINT_KEY = 'aquarius-had-session';
 // Guest memory lives ONLY in sessionStorage (design D3: guest data dies
 // with the tab, never touches the backend or the database).
@@ -127,6 +129,14 @@ function hasSessionHint() {
 
 function hasLiveGuestSession() {
   try { return Boolean(sessionStorage.getItem('guestUid')); } catch (_) { return false; }
+}
+
+// A real sign-in supersedes the tab's guest identity: guest keys must not
+// outlive it, or hasLiveGuestSession() would keep answering true for the
+// rest of the tab (masking a later login bounce behind the guest bypass).
+function clearGuestSessionKeys() {
+  try { sessionStorage.removeItem('guestUid'); } catch (_) {}
+  try { sessionStorage.removeItem(GUEST_MEMORY_KEY); } catch (_) {}
 }
 
 function defaultPreferenceProfileDoc() {
@@ -589,6 +599,10 @@ async function initClerk() {
         if (shouldEnter) await onUserSignedIn(e.user);
         else await syncCurrentUserWithoutNavigation(e.user);
       } else {
+        // Clerk's verdict is authoritative: no user means any boot hint was
+        // stale (expired/revoked session) — clear it so the NEXT load shows
+        // the intro again instead of skipping it on a dead hint.
+        if (!currentUser || !currentUser.isGuest) clearSessionHint();
         showAuthOverlay();
       }
     });
@@ -692,6 +706,7 @@ async function onUserSignedIn(user) {
     isGuest: false
   };
   markSessionHint();
+  clearGuestSessionKeys(); // a real sign-in supersedes any in-tab guest (D3: no merge)
   try {
     // Identity comes from the Bearer token (backend maps token sub -> uid);
     // no uid query param — client-supplied uids are dead plumbing now.
@@ -725,6 +740,7 @@ async function syncCurrentUserWithoutNavigation(user) {
     isGuest: false
   };
   markSessionHint();
+  clearGuestSessionKeys(); // a real sign-in supersedes any in-tab guest (D3: no merge)
   try {
     const res = await apiFetch('/api/memory');
     userMemory = res.ok ? await res.json() : {};
@@ -784,7 +800,10 @@ async function handleSignOut() {
     try { sessionStorage.removeItem(GUEST_MEMORY_KEY); } catch (_) {}
   }
   clearSessionHint();
-  try { localStorage.removeItem('aquarius-last-location'); } catch (_) {} // next account must not inherit this one's restore point
+  // Next account must not inherit this one's restore point. LAST_LOCATION_KEY
+  // is app.js's const — resolvable here because sign-out runs long after all
+  // classic scripts loaded.
+  try { localStorage.removeItem(LAST_LOCATION_KEY); } catch (_) {}
   currentUser = null;
   userMemory = {};
   window.location.reload(); // Reload to show login screen

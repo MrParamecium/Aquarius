@@ -93,6 +93,9 @@ function readLastLocation() {
 const BOOT_SAVED_LOCATION = readLastLocation();
 
 function recordLastLocation(view, ctx = {}) {
+  // Boot-path callers (e.g. the top-level startup showWelcome()) DO write
+  // here — that's fine because the restore step reads BOOT_SAVED_LOCATION
+  // (the pre-boot snapshot above), never the live key.
   try {
     localStorage.setItem(LAST_LOCATION_KEY, JSON.stringify({
       view,
@@ -139,6 +142,11 @@ function maybeBootRestoreLastLocation() {
   const learnViewEl = document.getElementById('learnView');
   if (learnViewEl && !learnViewEl.classList.contains('hidden')) { bootRestoreDone = true; return; }
   if (!currentUser) return; // wait until a Clerk user or rehydrated guest exists
+  // The top-level boot code records 'welcome' when nothing claimed the
+  // screen; any OTHER live value means the user manually navigated during
+  // the auth-settling gap — never yank them away from that.
+  const live = readLastLocation();
+  if (live && live.view !== 'welcome') { bootRestoreDone = true; return; }
   bootRestoreDone = true;
   const loc = BOOT_SAVED_LOCATION; // pre-boot snapshot — see its comment
   if (!loc || typeof loc.view !== 'string') return;
@@ -146,12 +154,17 @@ function maybeBootRestoreLastLocation() {
     if (loc.view === 'learn') {
       const target = findSyllabusEntryForRestore(loc.sectionId);
       if (!target) return;
-      // Mirror continueToPendingLearnTarget's routing exactly — it is the
-      // proven post-auth navigation path.
+      // Mirror continueToPendingLearnTarget's routing — the proven
+      // post-auth navigation path.
       if (target.isParent && shouldOpenSectionAsChapterOverview(target.sectionId, target.sectionTitle, target.subsections)) {
         openChapterOverviewMode(target.sectionId, target.sectionTitle, target.subsections);
       } else {
-        openLearnMode(target.sectionId, target.sectionTitle, target.subsections);
+        // Reconstruct the parent-overview context explicitly: the back
+        // button (handleLearnBack) returns to the chapter overview only
+        // when learnParentOverviewContext is set, and the in-app click
+        // path gets it via openLearnModeKeepToc.
+        const parentCtx = findParentOverviewContextForSubsection(target.sectionId, target.sectionTitle);
+        openLearnMode(target.sectionId, target.sectionTitle, target.subsections, { parentOverviewContext: parentCtx });
       }
       return;
     }
@@ -325,11 +338,12 @@ async function resetQuiz() {
     saveGuestMemory(userMemory);
   } else {
     try {
-      await apiFetch('/api/memory', {
+      const res = await apiFetch('/api/memory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resetQuiz: true })
       });
+      if (!res.ok) console.warn('[quiz] reset failed:', res.status);
     } catch (_) {}
     if (userMemory) userMemory.quiz = {};
   }
@@ -492,29 +506,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // guests (D3: guest data never touches the server).
         const overlay = document.getElementById('quizOverlay');
         if (overlay) overlay.style.display = 'none';
-        if (currentUser && currentUser.isGuest) {
+        if (currentUser) {
           try {
             const quizProfile = buildPreferenceProfileAfterQuiz(quizAnswers, userMemory?.preferenceProfile || {});
-            userMemory = { ...(userMemory || {}), quiz: { ...quizAnswers }, preferenceProfile: quizProfile };
-            saveGuestMemory(userMemory);
-            syncPreferenceEditorFromMemory();
-          } catch (_) {}
-        } else if (currentUser) {
-          try {
-            const quizProfile = buildPreferenceProfileAfterQuiz(quizAnswers, userMemory?.preferenceProfile || {});
-            const res = await apiFetch('/api/memory', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                quiz: quizAnswers,
-                preferenceProfile: quizProfile
-              })
-            });
-            const data = await res.json();
-            userMemory = data.memory || userMemory;
-            // Also persist quiz locally so profileOverride always works
-            if (userMemory && userMemory.quiz) {
-              localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
+            if (currentUser.isGuest) {
+              userMemory = { ...(userMemory || {}), quiz: { ...quizAnswers }, preferenceProfile: quizProfile };
+              saveGuestMemory(userMemory);
+            } else {
+              const res = await apiFetch('/api/memory', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  quiz: quizAnswers,
+                  preferenceProfile: quizProfile
+                })
+              });
+              if (!res.ok) console.warn('[quiz] save failed:', res.status); // diagnosable; state merge below already guards
+              const data = await res.json();
+              userMemory = data.memory || userMemory;
+              // Also persist quiz locally so profileOverride always works
+              if (userMemory && userMemory.quiz) {
+                localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
+              }
             }
             syncPreferenceEditorFromMemory();
           } catch (_) {}
@@ -2330,23 +2343,24 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
       });
       if (res.status === 401) {
         // Guest against the intro-generation gate (C1): skip the intro
-        // gracefully — the cached lesson below is fully available.
+        // gracefully — the cached lesson below is fully available. No
+        // early return: the TOC build after this block must still run.
         hideSplash();
         learnIntroText.textContent = 'Ready to start learning.';
         setLearnLoading(false);
-        return;
+      } else {
+        const data = await readApiJson(res, 'section preview request');
+        learnPages = data.bookPages || [];
+        hideSplash();
+        if (learnIntroMeta && data.bookPages && data.bookPages.length) {
+          learnIntroMeta.innerHTML = [
+            `<span class="learn-intro-badge">${data.bookPages.length} reference${data.bookPages.length !== 1 ? 's' : ''}</span>`,
+            `<span class="learn-intro-badge">${sectionTitle}</span>`
+          ].join('');
+        }
+        learnIntroText.textContent = data.intro || 'Ready to start learning.';
+        setLearnLoading(false);
       }
-      const data = await readApiJson(res, 'section preview request');
-      learnPages = data.bookPages || [];
-      hideSplash();
-      if (learnIntroMeta && data.bookPages && data.bookPages.length) {
-        learnIntroMeta.innerHTML = [
-          `<span class="learn-intro-badge">${data.bookPages.length} reference${data.bookPages.length !== 1 ? 's' : ''}</span>`,
-          `<span class="learn-intro-badge">${sectionTitle}</span>`
-        ].join('');
-      }
-      learnIntroText.textContent = data.intro || 'Ready to start learning.';
-      setLearnLoading(false);
     } catch (err) {
       hideSplash();
       if (err.name === 'AbortError') return;
@@ -5370,6 +5384,10 @@ autoResize(userInput);
 autoResize(followupInput);
 setSendState();
 initTheme();
+// NOTE: this boot-path showWelcome() also records 'welcome' as the last
+// location — harmless, because the restore step reads BOOT_SAVED_LOCATION,
+// a snapshot taken at the very top of this script before any boot-path
+// navigation can write (see its definition near recordLastLocation).
 if (!hasStartupViewClaimedScreen()) {
   showWelcome();
 }

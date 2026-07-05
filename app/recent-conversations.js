@@ -6,7 +6,7 @@
 //
 // External globals used at call time:
 //   - escapeHtml, markdownToHtml                                (app.js / markdown-engine.js)
-//   - userMemory, currentUser, getUid, API_BASE                  (app.js + clerk-auth.js)
+//   - userMemory, currentUser, apiFetch                          (clerk-auth.js + api-client.js)
 //   - renderUserBadge                                            (clerk-auth.js)
 //   - cloneAttachmentSourcesForStorage,
 //     activeMainAttachmentSources, activeMainAttachmentIndex,

@@ -22,27 +22,17 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
+const { waitForHealth, enterGuestMode, openSubtopic } = require('./test-utils');
 
 const PORT = Number(process.env.TUTOR_TEST_PORT || 9127);
 const BASE = `http://127.0.0.1:${PORT}`;
-const SUBTOPIC = 'B.8-2 Complex Numbers';
+const SUBTOPIC = {
+    chapter: 'B Background',
+    section: 'B.8 Appendix: Useful Mathematical Formulas',
+    title: 'B.8-2 Complex Numbers'
+};
 const LESSON_MARKER = 'euler'; // phrase unique to the subtopic's cached lesson
-const LESSON_WAIT_MS = 25000;
 const RESTORE_WAIT_MS = 30000; // reload restore also waits on Clerk's script settling
-
-function waitForHealth(timeoutMs = 15000) {
-    const deadline = Date.now() + timeoutMs;
-    return new Promise((resolve, reject) => {
-        const tryOnce = () => {
-            fetch(`${BASE}/health`).then(r => r.ok ? resolve() : retry()).catch(retry);
-        };
-        const retry = () => {
-            if (Date.now() > deadline) return reject(new Error('bridge /health never came up'));
-            setTimeout(tryOnce, 300);
-        };
-        tryOnce();
-    });
-}
 
 async function waitForLessonMarker(page, timeoutMs) {
     const content = page.locator('#learnExplainContent');
@@ -67,36 +57,23 @@ async function waitForLessonMarker(page, timeoutMs) {
     let browser;
     let failure = null;
     try {
-        await waitForHealth();
+        await waitForHealth(BASE);
         browser = await chromium.launch();
         const page = await browser.newPage({
             viewport: { width: 1440, height: 900 },
             reducedMotion: 'reduce'
         });
-        await page.goto(BASE, { waitUntil: 'domcontentloaded' });
 
-        // Enter as guest, dismiss the quiz, open a lesson (same proven click
-        // path as tools/test-lesson-open-no-hang.js).
-        await page.click('#introGetStartedBtn');
-        await page.click('#guestModeBtnLogin[data-bound-guest-mode="1"]', { timeout: 25000 });
-        await page.click('#quizCloseBtn');
-        await page.click('#navSyllabusBtn');
-        await page.waitForSelector('#sidebarSyllabusPanel.is-open:not(.is-animating)');
-        await page.click('#courseSyllabus .syllabus-chapter:has-text("B Background")');
-        await page.click('#courseSyllabus .syllabus-section[data-section="B.8 Appendix: Useful Mathematical Formulas"]');
-        const card = page.locator(`.chapter-overview-subcard[data-sublesson-title="${SUBTOPIC}"]`);
-        await card.waitFor({ state: 'visible', timeout: 15000 });
-        for (let attempt = 0; attempt < 5; attempt++) {
-            await card.click();
-            await page.waitForTimeout(400);
-            const loc = await page.evaluate(() => localStorage.getItem('aquarius-last-location') || '');
-            if (loc.includes('"learn"')) break;
+        // Enter as guest and open a lesson via the shared harness helpers
+        // (tools/test-utils.js owns the selectors).
+        await enterGuestMode(page, BASE);
+        const lessonText = await openSubtopic(page, SUBTOPIC);
+        if (!lessonText.toLowerCase().includes(LESSON_MARKER)) {
+            throw new Error(`opened lesson did not contain the marker "${LESSON_MARKER}"`);
         }
-        const first = await waitForLessonMarker(page, LESSON_WAIT_MS);
-        if (!first.ok) throw new Error(`could not open the lesson before the reload test (last content: ${JSON.stringify(first.lastText.slice(0, 120))})`);
 
         const savedLoc = await page.evaluate(() => localStorage.getItem('aquarius-last-location') || '');
-        if (!savedLoc.includes('"view":"learn"') || !savedLoc.includes(SUBTOPIC)) {
+        if (!savedLoc.includes('"view":"learn"') || !savedLoc.includes(SUBTOPIC.title)) {
             throw new Error(`last-location not recorded before reload: ${savedLoc}`);
         }
 
@@ -117,8 +94,15 @@ async function waitForLessonMarker(page, timeoutMs) {
                     return Boolean(w && !w.classList.contains('hidden'));
                 });
                 failure = welcomeVisible
-                    ? `RESTORE FAILED: reload landed on the welcome screen instead of "${SUBTOPIC}"`
+                    ? `RESTORE FAILED: reload landed on the welcome screen instead of "${SUBTOPIC.title}"`
                     : `RESTORE FAILED: lesson never re-rendered after reload (last content: ${JSON.stringify(restored.lastText.slice(0, 160))})`;
+            } else {
+                // The restored lesson must keep its back-navigation context:
+                // without learnParentOverviewContext the lesson's back button
+                // drops to the home screen instead of the chapter overview.
+                const hasParentCtx = await page.evaluate(() =>
+                    typeof learnParentOverviewContext !== 'undefined' && Boolean(learnParentOverviewContext));
+                if (!hasParentCtx) failure = 'RESTORE FAILED: restored lesson lost its parent-overview (back-button) context';
             }
         }
 
@@ -146,6 +130,6 @@ async function waitForLessonMarker(page, timeoutMs) {
         console.error(`FAIL: ${failure}`);
         process.exit(1);
     }
-    console.log(`PASS: reload restored "${SUBTOPIC}" and fresh visitors still get the intro`);
+    console.log(`PASS: reload restored "${SUBTOPIC.title}" and fresh visitors still get the intro`);
     process.exit(0);
 })();

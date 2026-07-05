@@ -13,6 +13,7 @@
     "test:shape": "node tools/test-data-modules-shape.js",
     "test:ui-friction": "node tools/test-ui-friction-v123.js",
     "test:lesson": "node tools/test-lesson-open-no-hang.js",
+    "test:session-restore": "node tools/test-session-restore.js",
     "test:smoke": "node tools/smoke.js",
     "test:visual:baseline": "node tools/visual-diff.js --baseline",
     "test:visual:check": "node tools/visual-diff.js --check",

@@ -227,7 +227,10 @@ async function savePreferenceProfile(markdown) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ preferenceProfile: profileDoc })
   });
-  const data = await res.json();
+  if (res.status === 401) {
+    throw new Error('Session expired — sign in again to save your profile.');
+  }
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   userMemory = data.memory || {
     ...(userMemory || {}),
