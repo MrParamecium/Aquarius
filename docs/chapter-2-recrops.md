@@ -10,21 +10,19 @@ The current set contains 29 recropped figures:
 Figure 2.1 through Figure 2.29
 ```
 
-Runtime copies live in:
-
-```text
-materials/new-book-figures/
-materials/new-book-ocr/
-app/section-figure-map-new.json
-```
-
-Workbench copies live in:
+Canonical copies live in (single tree since 2026-07-05):
 
 ```text
 workspace/materials/new-book-figures/
 workspace/materials/new-book-ocr/
-workspace/app/section-figure-map-new.json
+app/section-figure-map-new.json
 ```
+
+> Historical note: this doc originally listed root `materials/` as the "runtime
+> copies" and a `workspace/app/` mirror — framing that predated the 2026-06-19
+> sync-policy rewrite (workspace is canonical). The root `materials/` mirror,
+> including its byte-identical recrop copies, was removed on 2026-07-05 with
+> explicit owner authorization; git history retains every version.
 
 ## Important Caution
 

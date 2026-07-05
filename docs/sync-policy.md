@@ -1,5 +1,23 @@
 # Materials Sync Policy
 
+**Updated 2026-07-05 — root mirror REMOVED; the two-tree policy below is now historical.**
+The root `materials/` backup mirror was `git rm`'d on 2026-07-05 with explicit owner
+authorization, after verifying: all 29 Chapter-2 recrop figures and the page-150..223
+meta files were byte-identical to the canonical `workspace/materials/` copies; only
+3 stale `b_6*` legacy cache files existed nowhere else (archived to
+`.local/archive/2026-07-05-root-materials-mirror/`); no runtime consumer ever read the
+root tree in a normal checkout; and the Render image already built from
+`workspace/materials/` only (PR #130). **`workspace/materials/` is now the single
+canonical materials tree — there is no mirror and no sync to perform.** The bridge's
+fallback chain (`ws-bridge.js:86`) remains in code with one live candidate: if
+`workspace/materials/` is missing or loses `new-book-ocr/`, the bridge throws at
+startup. That fail-fast is intentional — restore with `git restore workspace/materials`;
+do not recreate a root `materials/` tree (a silent fallback to a stale tree caused
+exactly the "which file does the app actually hit" confusion this repo's rules guard
+against). Everything below describes the pre-removal two-tree world, kept for history.
+
+---
+
 **Updated 2026-06-19** — rewritten to match what the running app actually does. Previous version
 described root `materials/` as the runtime tree, which contradicts the bridge's resolution chain.
 

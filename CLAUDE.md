@@ -44,7 +44,7 @@ Routes are `if (pathname === ...)` blocks in one request handler in `ws-bridge.j
 
 ### Materials resolution — the most important non-obvious behavior
 
-`ws-bridge.js` resolves its materials dir through a fallback chain (`resolveExistingDir`, `ws-bridge.js:86-91`): it prefers `workspace/materials/` over root `materials/`, validated by the presence of `new-book-ocr/`. In a normal checkout both trees have `new-book-ocr/`, so **`workspace/materials/` always wins** — root `materials/` is selected only if `workspace/materials/` is missing or loses its `new-book-ocr/`. Per `docs/sync-policy.md` (which supersedes older framing): **`workspace/materials/` is the canonical runtime tree; root `materials/` is a legacy one-way backup mirror (workspace → root) that the app never reads while workspace is present.** Changes meant for the app go to `workspace/materials/` (`new-book-figures/`, `new-book-ocr/`, extraction scripts) and are mirrored to root as backup. Experiments stay in `workspace/` or git-ignored `.local/`.
+`ws-bridge.js` resolves its materials dir through a fallback chain (`resolveExistingDir`, `ws-bridge.js:86-91`): candidates are `workspace/materials/` then root `materials/`, validated by the presence of `new-book-ocr/`. **`workspace/materials/` is the single materials tree since 2026-07-05** — the root `materials/` legacy backup mirror was removed that day (owner decision after verifying byte-identical content; git history retains it — see `docs/sync-policy.md`). The fallback chain remains in code with one live candidate, so the bridge **throws at startup** if `workspace/materials/` is missing or loses its `new-book-ocr/`; that fail-fast is intentional — restore via `git restore workspace/materials`, never recreate a root `materials/` tree. Changes meant for the app go to `workspace/materials/` (`new-book-figures/`, `new-book-ocr/`, extraction scripts). Experiments stay in `workspace/` or git-ignored `.local/`.
 
 ### Lesson cache
 
@@ -53,7 +53,7 @@ Pre-generated lessons live at `<materials>/lesson-cache/<sectionId>/<key>.aquari
 ## Hard Constraints
 
 - **Windows-illegal filenames**: this repo is used from both Windows (GitHub Desktop) and WSL. Never create files containing `:` `|` `?` `*` `<` `>` `"` — legacy lesson-cache files were sanitized for this in commit e269436.
-- **Do not delete or replace Chapter 2 figure recrops** (`materials/new-book-figures/page-*-figure_2_*.png` + `new-book-ocr/page-150..223.meta.json`, mirrored in `workspace/materials/`) unless explicitly asked.
+- **Do not delete or replace Chapter 2 figure recrops** (`workspace/materials/new-book-figures/page-*-figure_2_*.png` + `workspace/materials/new-book-ocr/page-150..223.meta.json`) unless explicitly asked. The former root `materials/` mirror copies went away with that tree on 2026-07-05 (owner-authorized, byte-identical to the canonical copies).
 - The UI loads several JSON maps (`section-page-map*.json`, `section-figure-map-new.json`) and image assets from the `app/` root by root-relative path — do not move them into subfolders.
 - Renaming `aquarius_visual_latex_v2` or the `AQUARIUS_CONFIG` global invalidates every cached lesson / deployed frontend config respectively.
 

@@ -1,56 +1,0 @@
-B.5 Partial Fraction Expansion              29
-
-C OMPLEX FACTORS OF Q(x)
-The procedure just given works regardless of whether the factors of Q(x) are real or complex.
-Consider, for example,
-
-                                 4x2 + 2x + 18            4x2 + 2x + 18
-                 F(x) =                          =
-                            (x + 1)(x2 + 4x + 13) (x + 1)(x + 2 − j3)(x + 2 + j3)
-                              k1         k2        k3
-                          =        +           +                                                           (B.25)
-                            x + 1 x + 2 − j3 x + 2 + j3
-where                                                               
-                                                4x2 + 2x + 18
-                                k1 =                                          =2
-                                            (x + 1) (x2 + 4x + 13)
-                                                                       x=−1
-
-Similarly,
-                                                            
-                                  4x2 + 2x + 18                                         √          ◦
-             k2 =                                                          = 1 + j2 =       5ej63.43
-                        (x + 1) (x + 2 − j3) (x + 2 + j3)
-                                                                 x=−2+j3
-                                                            
-                                  4x2 + 2x + 18                                         √              ◦
-             k3 =                                                          = 1 − j2 =       5e−j63.43
-                        (x + 1)(x + 2 − j3) (x + 2 + j3)
-                                                                 x=−2−j3
-
-Therefore,                                    √ j63.43◦ √ −j63.43◦
-                                         2     5e           5e
-                                F(x) =      +           +
-                                       x + 1 x + 2 − j3   x + 2 + j3
-The coefficients k2 and k3 corresponding to the complex-conjugate factors are also conjugates of
-each other. This is generally true when the coefficients of a rational function are real. In such a
-case, we need to compute only one of the coefficients.
-
-Q UADRATIC FACTORS
-Often we are required to combine the two terms arising from complex-conjugate factors into one
-quadratic factor. For example, F(x) in Eq. (B.25) can be expressed as
-
-                                      4x2 + 2x + 18       k1    c1 x + c2
-                         F(x) =                        =     +
-                                  (x + 1)(x2 + 4x + 13) x + 1 x2 + 4x + 13
-The coefficient k1 is found by the Heaviside method to be 2. Therefore,
-
-                                 4x2 + 2x + 18       2     c1 x + c2
-                                                  =     +                                                  (B.26)
-                             (x + 1)(x2 + 4x + 13) x + 1 x2 + 4x + 13
-The values of c1 and c2 are determined by clearing fractions and equating the coefficients of similar
-powers of x on both sides of the resulting equation. Clearing fractions on both sides of Eq. (B.26)
-yields
-
-                        4x2 + 2x + 18 = 2(x2 + 4x + 13) + (c1 x + c2 )(x + 1)
-                                           = (2 + c1 )x2 + (8 + c1 + c2 )x + (26 + c2 )

@@ -27,9 +27,10 @@ app/
 
 ## Runtime Materials
 
-The running app reads materials from **`workspace/materials/`** by default (verified by
-`app/ws-bridge.js:86` `resolveExistingDir`). Root `materials/` is a legacy fallback mirror kept for
-backward compatibility — see `docs/sync-policy.md` for the full sync rules.
+The running app reads materials from **`workspace/materials/`** (resolved by
+`app/ws-bridge.js:86` `resolveExistingDir`) — the **single materials tree since 2026-07-05**,
+when the root `materials/` legacy backup mirror was removed (owner decision; see
+`docs/sync-policy.md` for the removal record and the historical two-tree policy).
 
 Canonical tree (read by the bridge):
 
@@ -39,7 +40,7 @@ workspace/materials/
 ├── new-book-ocr/
 ├── new-book-section-ocr/
 ├── new-book-figures/
-├── lesson-cache/                  (173 section directories — live)
+├── lesson-cache/                  (171 section directories — live)
 ├── background-ocr-v3/
 ├── background-pages-split/
 ├── prompts/                       (agent-a-planner.md, agent-b-tutor.md, schemas)
@@ -50,22 +51,9 @@ workspace/materials/
 └── extract_new_book_figs.py
 ```
 
-Legacy fallback mirror (kept but not currently read):
-
-```text
-materials/
-├── new-book-pages/
-├── new-book-ocr/
-├── new-book-figures/
-├── lesson-cache/                  (42 section directories — stale, 131 dirs behind workspace)
-├── build_new_section_map.py
-├── generate_chapter_ocr_local.py
-└── extract_new_book_figs.py
-```
-
-The bridge prefers `workspace/materials/` when either `background-ocr-v3/` or `new-book-ocr/`
-exists under it. Both subdirs exist in a normal checkout, so workspace wins. Writing to root
-`materials/` has no runtime effect.
+The bridge validates the tree by the presence of `background-ocr-v3/` or `new-book-ocr/`
+and **throws at startup** if validation fails — restore with `git restore workspace/materials`;
+do not recreate a root `materials/` tree.
 
 ## Tools
 
@@ -120,10 +108,10 @@ workspace/
 ```
 
 This directory is the broader workbench and the **canonical materials tree**: project memory,
-the live materials/ subtree (preferred by the bridge), mirrored prompts and OCR data, and
+the live materials/ subtree (read by the bridge), prompts and OCR data, and
 extraction experiments. The running app uses root `app/` (UI + bridge code) and
-`workspace/materials/` (assets). Root `materials/` is a legacy fallback mirror — see
-`docs/sync-policy.md`.
+`workspace/materials/` (assets). The former root `materials/` fallback mirror was
+removed 2026-07-05 — see `docs/sync-policy.md`.
 
 ## Local-Only Files
 
@@ -207,10 +195,9 @@ it was NOT an intentional lighter variant; archived to
 `.trellis/`, `docs/`) from the Render build context, so the image builds from
 `workspace/materials/` only — copied context dropped 630M → 143M, deploy verified
 healthy. `docs/sync-policy.md` "Future Cleanup" conditions (1)–(3) are satisfied
-for the image. **Still deferred:** the repo-level `git rm` of the root `materials/`
-mirror (~107M off *clone* size). It is retained as a backup mirror / startup
-fallback net; deleting it is a separate owner decision with no further image
-benefit (already excluded).
+for the image. The repo-level `git rm` of the root `materials/` mirror was
+initially deferred as a separate owner decision — **executed later the same day;
+see the removal record below.**
 
 **Still deferred — live-data grey-area in `workspace/materials/`:** 16 end-of-chapter
 "Problems"-page figure crops (possible future practice-problems feature) and
@@ -229,6 +216,16 @@ and 1,804 harness-generated guest profiles from `app/users/` (all boilerplate
 test guests from smoke/visual-diff runs, no owner data, empty `sessions/`;
 archived to `.local/archive/2026-07-05-guest-sessions/`), then repacked loose
 git objects (`git gc`).
+
+**Root `materials/` mirror REMOVED (2026-07-05, owner-authorized):** verified
+before removal — all 29 Chapter-2 recrop figures and the page-150..223 meta
+files were byte-identical to the canonical `workspace/materials/` copies; only
+3 stale `b_6*` legacy cache files existed nowhere else (archived to
+`.local/archive/2026-07-05-root-materials-mirror/`); no runtime consumer ever
+selected the root tree in a normal checkout, and the Render image already
+excluded it (PR #130). 1,073 tracked files / ~107M of working tree removed.
+`workspace/materials/` is now the single materials tree, and the CLAUDE.md
+Chapter-2 protection constraint names it alone.
 
 Structure verdict: no directory reorganization was warranted — the layout is
 coherent and the app/ root maps/CSS/`logo.png` are load-bearing root-relative loads.
