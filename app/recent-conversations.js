@@ -6,7 +6,7 @@
 //
 // External globals used at call time:
 //   - escapeHtml, markdownToHtml                                (app.js / markdown-engine.js)
-//   - userMemory, currentUser, getUid, API_BASE                  (app.js + clerk-auth.js)
+//   - userMemory, currentUser, apiFetch                          (clerk-auth.js + api-client.js)
 //   - renderUserBadge                                            (clerk-auth.js)
 //   - cloneAttachmentSourcesForStorage,
 //     activeMainAttachmentSources, activeMainAttachmentIndex,
@@ -281,13 +281,14 @@ function saveRecentConversations(sessions) {
 }
 
 async function rebuildUserMemoryFromRemainingSessions(sessions) {
-  const uid = getUid();
-  if (!uid) return;
+  // Signed-in only: guest memory never lives server-side (D3), and identity
+  // travels in the Authorization header — no uid field.
+  if (!currentUser || currentUser.isGuest) return;
   try {
-    const res = await fetch(`${API_BASE}/api/memory/rebuild`, {
+    const res = await apiFetch('/api/memory/rebuild', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid, sessions })
+      body: JSON.stringify({ sessions })
     });
     const data = await res.json();
     if (res.ok && data && data.memory) {

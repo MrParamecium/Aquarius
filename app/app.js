@@ -66,7 +66,121 @@ function shouldShowIntroLanding() {
   if (hasPendingAuthReturnIntent()) {
     return false;
   }
+  // Design D2 (07-05 task): the intro landing is for signed-out visitors
+  // only. Clerk resolves async, so a synchronous localStorage hint stands in
+  // for "has a Clerk session"; a live in-tab guest also skips the intro.
+  if (hasSessionHint() || hasLiveGuestSession()) {
+    return false;
+  }
   return true;
+}
+
+// ── Last-location persistence + boot restore (07-05 task, design §4) ────────
+// Persisted at lesson granularity: { view, sectionId, ts }. sectionTitle is
+// deliberately NOT stored (tamperable localStorage input; derivable from the
+// validated sectionId via the syllabus map at restore time).
+const LAST_LOCATION_KEY = 'aquarius-last-location';
+
+function readLastLocation() {
+  try { return JSON.parse(localStorage.getItem(LAST_LOCATION_KEY) || 'null'); } catch (_) { return null; }
+}
+
+// Snapshot at script-eval time, BEFORE any boot-path navigation can record
+// over it: app.js's own top-level startup code calls showWelcome() (which
+// now records 'welcome') long before the async auth layer settles, so the
+// restore step must read the location the PREVIOUS page visit left behind,
+// not whatever this boot sequence just wrote.
+const BOOT_SAVED_LOCATION = readLastLocation();
+
+function recordLastLocation(view, ctx = {}) {
+  // Boot-path callers (e.g. the top-level startup showWelcome()) DO write
+  // here — that's fine because the restore step reads BOOT_SAVED_LOCATION
+  // (the pre-boot snapshot above), never the live key.
+  try {
+    localStorage.setItem(LAST_LOCATION_KEY, JSON.stringify({
+      view,
+      sectionId: String(ctx.sectionId || ''),
+      ts: Date.now()
+    }));
+  } catch (_) {}
+}
+
+// Validate a stored sectionId against the syllabus map. Returns null when the
+// id no longer exists (stale/tampered storage) — restore then falls through
+// to the default welcome view.
+function findSyllabusEntryForRestore(sectionId) {
+  const target = String(sectionId || '').trim();
+  if (!target) return null;
+  for (const chapter of syllabusData || []) {
+    const sections = (chapter.sections || []).map(s => typeof s === 'string' ? { title: s, subsections: [] } : s);
+    for (const sec of sections) {
+      if (!sec) continue;
+      if (sec.title === target) {
+        return { sectionId: sec.title, sectionTitle: sec.title, subsections: Array.isArray(sec.subsections) ? sec.subsections : [], isParent: true };
+      }
+      const subs = Array.isArray(sec.subsections) ? sec.subsections : [];
+      if (subs.includes(target)) {
+        return { sectionId: target, sectionTitle: target, subsections: [], isParent: false };
+      }
+    }
+  }
+  return null;
+}
+
+// One-shot additive boot step (design §4): runs after the auth layer has
+// resolved the initial session state. Deliberately does NOT touch
+// allowAuthNavigation or the return-intent/target machine — the 2026-05-08
+// startup saga (workspace/memory/2026-05-08.md) is the map of why. The
+// auth-callback / intro / quiz machinery keeps precedence via
+// hasStartupViewClaimedScreen().
+let bootRestoreDone = false;
+function maybeBootRestoreLastLocation() {
+  if (bootRestoreDone) return;
+  if (hasStartupViewClaimedScreen()) { bootRestoreDone = true; return; }
+  // If the user already navigated into a lesson while the auth layer was
+  // still settling, never yank them away from it.
+  const learnViewEl = document.getElementById('learnView');
+  if (learnViewEl && !learnViewEl.classList.contains('hidden')) { bootRestoreDone = true; return; }
+  if (!currentUser) return; // wait until a Clerk user or rehydrated guest exists
+  // The top-level boot code records 'welcome' when nothing claimed the
+  // screen; any OTHER live value means the user manually navigated during
+  // the auth-settling gap — never yank them away from that.
+  const live = readLastLocation();
+  if (live && live.view !== 'welcome') { bootRestoreDone = true; return; }
+  bootRestoreDone = true;
+  const loc = BOOT_SAVED_LOCATION; // pre-boot snapshot — see its comment
+  if (!loc || typeof loc.view !== 'string') return;
+  try {
+    if (loc.view === 'learn') {
+      const target = findSyllabusEntryForRestore(loc.sectionId);
+      if (!target) return;
+      // Mirror continueToPendingLearnTarget's routing — the proven
+      // post-auth navigation path.
+      if (target.isParent && shouldOpenSectionAsChapterOverview(target.sectionId, target.sectionTitle, target.subsections)) {
+        openChapterOverviewMode(target.sectionId, target.sectionTitle, target.subsections);
+      } else {
+        // Reconstruct the parent-overview context explicitly: the back
+        // button (handleLearnBack) returns to the chapter overview only
+        // when learnParentOverviewContext is set, and the in-app click
+        // path gets it via openLearnModeKeepToc.
+        const parentCtx = findParentOverviewContextForSubsection(target.sectionId, target.sectionTitle);
+        openLearnMode(target.sectionId, target.sectionTitle, target.subsections, { parentOverviewContext: parentCtx });
+      }
+      return;
+    }
+    const staticViews = {
+      welcome: showWelcome,
+      settings: showSettingsView,
+      preference: showPreferenceView,
+      feedback: showFeedbackView,
+      courseTracker: showCourseTrackerView,
+      mistakeNotebook: showMistakeNotebookView
+    };
+    const show = staticViews[loc.view];
+    if (show) show();
+  } catch (e) {
+    console.warn('[bootRestore] restore failed, staying on default view:', e);
+  }
 }
 
 
@@ -218,14 +332,21 @@ function renderCourseTracker() {
 
 async function resetQuiz() {
   if (!currentUser) return;
-  try {
-    await fetch(`${API_BASE}/api/memory`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid: currentUser.uid, resetQuiz: true })
-    });
-  } catch (_) {}
-  if (userMemory) userMemory.quiz = {};
+  if (currentUser.isGuest) {
+    // Guest memory is sessionStorage-only (D3): no backend traffic.
+    if (userMemory) userMemory.quiz = {};
+    saveGuestMemory(userMemory);
+  } else {
+    try {
+      const res = await apiFetch('/api/memory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resetQuiz: true })
+      });
+      if (!res.ok) console.warn('[quiz] reset failed:', res.status);
+    } catch (_) {}
+    if (userMemory) userMemory.quiz = {};
+  }
   localStorage.removeItem('tutorQuiz');
   quizAnswers = {};
   showQuiz({ returnView: 'settings' });
@@ -381,26 +502,32 @@ document.addEventListener('DOMContentLoaded', () => {
       if (quizStep < QUIZ_QUESTIONS.length) {
         renderQuizStep();
       } else {
-        // Done: save quiz to backend
+        // Done: save quiz — backend for signed-in users, sessionStorage for
+        // guests (D3: guest data never touches the server).
         const overlay = document.getElementById('quizOverlay');
         if (overlay) overlay.style.display = 'none';
         if (currentUser) {
           try {
             const quizProfile = buildPreferenceProfileAfterQuiz(quizAnswers, userMemory?.preferenceProfile || {});
-            const res = await fetch(`${API_BASE}/api/memory`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                uid: currentUser.uid,
-                quiz: quizAnswers,
-                preferenceProfile: quizProfile
-              })
-            });
-            const data = await res.json();
-            userMemory = data.memory || userMemory;
-            // Also persist quiz locally so profileOverride always works
-            if (userMemory && userMemory.quiz) {
-              localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
+            if (currentUser.isGuest) {
+              userMemory = { ...(userMemory || {}), quiz: { ...quizAnswers }, preferenceProfile: quizProfile };
+              saveGuestMemory(userMemory);
+            } else {
+              const res = await apiFetch('/api/memory', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  quiz: quizAnswers,
+                  preferenceProfile: quizProfile
+                })
+              });
+              if (!res.ok) console.warn('[quiz] save failed:', res.status); // diagnosable; state merge below already guards
+              const data = await res.json();
+              userMemory = data.memory || userMemory;
+              // Also persist quiz locally so profileOverride always works
+              if (userMemory && userMemory.quiz) {
+                localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
+              }
             }
             syncPreferenceEditorFromMemory();
           } catch (_) {}
@@ -429,25 +556,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Always try Clerk if key is set
-  initClerk();
+  // Always try Clerk if key is set. After the auth layer settles: quietly
+  // rehydrate an in-tab guest session (no navigation, no quiz popup), then
+  // attempt the one-shot last-location restore (no-op unless its boot
+  // conditions hold — see maybeBootRestoreLastLocation).
+  Promise.resolve(initClerk()).finally(() => {
+    try { rehydrateGuestSession(); } catch (_) {}
+    maybeBootRestoreLastLocation();
+  });
 });
 
 
-// Helper: get current uid for API calls
-function getUid() {
-  return currentUser ? currentUser.uid : null;
-}
+// getUid() deleted in Stage B of the 07-05 task: identity now travels in the
+// Authorization header via apiFetch; client-supplied uids are dead plumbing.
 
-// Save a session summary after lesson load
+// Save a session summary after lesson load (signed-in only — guest memory
+// is client-side and profile prompts never run server-side for guests)
 async function saveSessionSummary(summary) {
-  const uid = getUid();
-  if (!uid || !summary) return;
+  if (!currentUser || currentUser.isGuest || !summary) return;
   try {
-    await fetch(`${API_BASE}/api/memory`, {
+    await apiFetch('/api/memory', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uid, sessionSummary: summary })
+      body: JSON.stringify({ sessionSummary: summary })
     });
   } catch (_) {}
 }
@@ -1951,7 +2082,9 @@ async function loadChapterOverviewPrelude(sectionId, sectionTitle, subsections =
   const timeout = setTimeout(() => controller.abort(), 12000);
   const canWriteOverview = () => isCurrentLearnRequest(requestSeq, sectionId, sectionTitle, ['overview', 'overview_lesson']);
   try {
-    const res = await fetch(`${API_BASE}/api/section`, {
+    // A guest 401 on an uncached prelude lands in the catch below and
+    // renders the overview without a parent lesson — already graceful (C1).
+    const res = await apiFetch('/api/section', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,
@@ -1985,6 +2118,7 @@ async function openChapterParentLessonFromOverview(sectionId, sectionTitle, subs
   const parentContext = createOverviewContext(sectionId, sectionTitle, subsections);
   learnSectionId = sectionId;
   learnSectionTitle = sectionTitle;
+  recordLastLocation('learn', { sectionId });
   learnParentOverviewContext = parentContext;
   learnPages = [];
   learnPageIndex = 0;
@@ -2003,6 +2137,8 @@ async function openChapterParentLessonFromOverview(sectionId, sectionTitle, subs
   buildToc(tocItems);
 
   const canWriteParentLesson = () => isCurrentLearnRequest(requestSeq, sectionId, sectionTitle, ['lesson']);
+  // 401 on the overview fetch below (guest, uncached prelude) rides the
+  // existing catch -> openLearnMode fallback, which serves the cached lesson.
   const renderParentLessonMarkdown = (markdown = '', data = {}) => {
     learnBody.classList.remove('hidden');
     learnPages = data.bookPages || learnPages;
@@ -2019,7 +2155,7 @@ async function openChapterParentLessonFromOverview(sectionId, sectionTitle, subs
     renderLearnWebSection(data.webSources || []);
   };
   try {
-    const res = await fetch(`${API_BASE}/api/section`, {
+    const res = await apiFetch('/api/section', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       signal: controller.signal,
@@ -2115,6 +2251,7 @@ function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
   closeTextbookFocusMode();
   learnSectionId = sectionId;
   learnSectionTitle = sectionTitle;
+  recordLastLocation('learn', { sectionId });
   learnParentOverviewContext = null;
   learnPages = [];
   learnPageIndex = 0;
@@ -2152,6 +2289,7 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
   closeTextbookFocusMode();
   learnSectionId = sectionId;
   learnSectionTitle = sectionTitle;
+  recordLastLocation('learn', { sectionId });
   learnParentOverviewContext = options.parentOverviewContext || (
     subsections === null ? findParentOverviewContextForSubsection(sectionId, sectionTitle) : null
   );
@@ -2197,23 +2335,32 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
     const introAbort = new AbortController();
     if (learnAbort) learnAbort.signal.addEventListener('abort', () => introAbort.abort(), { once: true });
     try {
-      const res = await fetch(`${API_BASE}/api/section`, {
+      const res = await apiFetch('/api/section', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sectionId, sectionTitle, mode: 'intro', language: 'en', bookSource: currentBook }),
         signal: introAbort.signal
       });
-      const data = await readApiJson(res, 'section preview request');
-      learnPages = data.bookPages || [];
-      hideSplash();
-      if (learnIntroMeta && data.bookPages && data.bookPages.length) {
-        learnIntroMeta.innerHTML = [
-          `<span class="learn-intro-badge">${data.bookPages.length} reference${data.bookPages.length !== 1 ? 's' : ''}</span>`,
-          `<span class="learn-intro-badge">${sectionTitle}</span>`
-        ].join('');
+      if (res.status === 401) {
+        // Guest against the intro-generation gate (C1): skip the intro
+        // gracefully — the cached lesson below is fully available. No
+        // early return: the TOC build after this block must still run.
+        hideSplash();
+        learnIntroText.textContent = 'Ready to start learning.';
+        setLearnLoading(false);
+      } else {
+        const data = await readApiJson(res, 'section preview request');
+        learnPages = data.bookPages || [];
+        hideSplash();
+        if (learnIntroMeta && data.bookPages && data.bookPages.length) {
+          learnIntroMeta.innerHTML = [
+            `<span class="learn-intro-badge">${data.bookPages.length} reference${data.bookPages.length !== 1 ? 's' : ''}</span>`,
+            `<span class="learn-intro-badge">${sectionTitle}</span>`
+          ].join('');
+        }
+        learnIntroText.textContent = data.intro || 'Ready to start learning.';
+        setLearnLoading(false);
       }
-      learnIntroText.textContent = data.intro || 'Ready to start learning.';
-      setLearnLoading(false);
     } catch (err) {
       hideSplash();
       if (err.name === 'AbortError') return;
@@ -2268,7 +2415,9 @@ async function startLesson(options = {}) {
   learnAbort = new AbortController();
 
   try {
-    const res = await fetch(`${API_BASE}/api/section`, {
+    // Pure cache read for guests; with a token the backend may also repair a
+    // format-broken cache entry (generation stays gated for guests).
+    const res = await apiFetch('/api/section', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -4144,6 +4293,7 @@ function showWelcome() {
   toggleSyllabusPanel(false);
   toggleRecentPanel(false);
   updateSidebarNavActive('home');
+  recordLastLocation('welcome');
 }
 
 function showAnswer(question) {
@@ -4199,6 +4349,7 @@ function showSettingsView() {
   renderUserBadge();
   clearToc();
   updateSidebarNavActive('settings');
+  recordLastLocation('settings');
 }
 
 function showPreferenceView() {
@@ -4217,6 +4368,7 @@ function showPreferenceView() {
   setWorkspaceAccountBarVisible(false);
   updateSidebarNavActive('preference');
   syncPreferenceEditorFromMemory();
+  recordLastLocation('preference');
 }
 
 function showFeedbackView() {
@@ -4236,6 +4388,7 @@ function showFeedbackView() {
   clearToc();
   updateSidebarNavActive('feedback');
   loadFeedbackBoard();
+  recordLastLocation('feedback');
 }
 
 function showCourseTrackerView() {
@@ -4255,6 +4408,7 @@ function showCourseTrackerView() {
   clearToc();
   updateSidebarNavActive('course-tracker');
   renderCourseTracker();
+  recordLastLocation('courseTracker');
 }
 
 function showMistakeNotebookView() {
@@ -4274,6 +4428,7 @@ function showMistakeNotebookView() {
   clearToc();
   updateSidebarNavActive('mistake-notebook');
   renderMistakeNotebook();
+  recordLastLocation('mistakeNotebook');
 }
 
 function toggleSyllabusPanel(forceOpen = null) {
@@ -4732,10 +4887,16 @@ async function callAsk(prompt, signal, extra = {}) {
   const fetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt, uid: getUid(), bookSource: currentBook, ...extra })
+    // Identity travels in the Authorization header (apiFetch); no uid field.
+    body: JSON.stringify({ prompt, bookSource: currentBook, ...extra })
   };
   if (signal) fetchOptions.signal = signal;
-  const res = await fetch(`${API_BASE}/api/ask`, fetchOptions);
+  const res = await apiFetch('/api/ask', fetchOptions);
+  if (res.status === 401) {
+    // Guest / signed-out against the LLM gate (D4): friendly affordance —
+    // every callAsk caller renders err.message into its error slot.
+    throw new Error('Please sign in to ask questions — guest mode can browse the prepared lessons and take the quiz, but live Q&A needs an account.');
+  }
 
   const text = await res.text();
   let data;
@@ -4757,10 +4918,10 @@ async function callIntent(prompt, signal, extra = {}) {
     const fetchOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, uid: getUid(), bookSource: currentBook, ...extra })
+      body: JSON.stringify({ prompt, bookSource: currentBook, ...extra })
     };
     if (signal) fetchOptions.signal = signal;
-    const res = await fetch(`${API_BASE}/api/intent`, fetchOptions);
+    const res = await apiFetch('/api/intent', fetchOptions);
     const data = await res.json().catch(() => ({}));
     if (!res.ok || typeof data.grounded !== 'boolean') return { grounded: true, reply: '' };
     return data;
@@ -5223,6 +5384,10 @@ autoResize(userInput);
 autoResize(followupInput);
 setSendState();
 initTheme();
+// NOTE: this boot-path showWelcome() also records 'welcome' as the last
+// location — harmless, because the restore step reads BOOT_SAVED_LOCATION,
+// a snapshot taken at the very top of this script before any boot-path
+// navigation can write (see its definition near recordLastLocation).
 if (!hasStartupViewClaimedScreen()) {
   showWelcome();
 }

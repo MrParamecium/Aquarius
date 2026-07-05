@@ -206,25 +206,35 @@ async function savePreferenceProfile(markdown) {
   if (!currentUser) return;
   const cleaned = String(markdown || '').trim() || DEFAULT_PREFERENCE_PROFILE;
   setPreferenceSaveState('Saving...', 'working');
-  const payload = {
-    uid: currentUser.uid,
-    preferenceProfile: {
-      markdown: cleaned,
-      updatedAt: new Date().toISOString(),
-      source: 'manual',
-      manualEdited: true
-    }
+  const profileDoc = {
+    markdown: cleaned,
+    updatedAt: new Date().toISOString(),
+    source: 'manual',
+    manualEdited: true
   };
-  const res = await fetch(`${API_BASE}/api/memory`, {
+  if (currentUser.isGuest) {
+    // Guest memory stays in this tab only (D3) — no backend traffic.
+    userMemory = { ...(userMemory || {}), preferenceProfile: profileDoc };
+    saveGuestMemory(userMemory);
+    if (preferenceProfileEditor) preferenceProfileEditor.value = getPreferenceProfileMarkdown();
+    renderPreferenceMarkdownPreview(getPreferenceProfileMarkdown());
+    updatePreferenceSidebarSummary();
+    setPreferenceSaveState('Saved for this tab (guest)', 'saved');
+    return;
+  }
+  const res = await apiFetch('/api/memory', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({ preferenceProfile: profileDoc })
   });
-  const data = await res.json();
+  if (res.status === 401) {
+    throw new Error('Session expired — sign in again to save your profile.');
+  }
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
   userMemory = data.memory || {
     ...(userMemory || {}),
-    preferenceProfile: payload.preferenceProfile
+    preferenceProfile: profileDoc
   };
   if (preferenceProfileEditor) preferenceProfileEditor.value = getPreferenceProfileMarkdown();
   renderPreferenceMarkdownPreview(getPreferenceProfileMarkdown());
@@ -244,15 +254,18 @@ async function requestPreferenceDraft() {
     preferenceAiDraftBtn.textContent = 'Drafting...';
   }
   try {
-    const res = await fetch(`${API_BASE}/api/preference/draft`, {
+    const res = await apiFetch('/api/preference/draft', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        uid: currentUser.uid,
         currentProfile: preferenceProfileEditor.value || getPreferenceProfileMarkdown(),
         instruction
       })
     });
+    if (res.status === 401) {
+      // LLM-spending route is sign-in gated (D4); guests edit by hand.
+      throw new Error('Sign in to use AI drafting — guests can edit the profile manually.');
+    }
     const raw = await res.text();
     let data = {};
     if (raw) {
