@@ -13,16 +13,17 @@ app/
 ├── process-python.js
 ├── matplotlib_gen.py
 ├── config.js
+├── css/
+├── data/
+├── interactive-demos/
 ├── scripts/
-├── src/
-├── section-page-map.json
 ├── section-page-map-new.json
 ├── section-page-map-display-new.json
 ├── section-page-anchor-new.json
 └── section-figure-map-new.json
 ```
 
-`app/` is the running application. Some assets and map files still live at the UI root because the existing frontend and bridge load them from root-relative paths.
+`app/` is the running application. Some assets and map files still live at the UI root because the existing frontend and bridge load them from root-relative paths. `debug/`, `generated/`, and `users/` are git-ignored runtime directories the bridge recreates on demand (transient guest sessions live in `users/`); they are intentionally absent from the tracked tree even though earlier cleanup passes archived their old payloads.
 
 ## Runtime Materials
 
@@ -80,6 +81,9 @@ tools/
 ├── smoke.js , smoke-report.md     (deterministic UI smoke suite, ~12s; report git-ignored)
 ├── css-probe.js                   (computed-style floor probe; run by `npm run check`)
 ├── css-probe-baseline.json        (committed proof artifact for css-probe --check)
+├── css-probe-report.md            (last css-probe run output; regenerated each run, git-ignored)
+├── .harness-state/                (seeded-fixture backups for views 14b/03b; files exist only
+│                                   between seed and restore, git-ignored)
 ├── find-dead-redeclarations.js    (dead-redeclaration validator; `npm run check`)
 ├── check-harness-exports.js       (asserts required window.* exports; `npm run check`)
 ├── test-lesson-open-no-hang.js    (legacy Playwright regression: lesson open must not hang)
@@ -94,6 +98,9 @@ tools/
 ├── _keep-important.json           ┐  committed load-bearing cascade state (see .gitignore
 ├── _view-important.json           ┘  comments); required by css-probe.js and the strip loop.
 ├── _view-cascade-baseline.json    (~360M regenerated baseline; git-ignored)
+├── _view-cascade-report.md        ┐  arbiter flip reports; regenerated each
+├── _allstrip-flips.md             │  arbiter run (git-ignored)
+├── _refine1-flips.md              ┘
 ├── scan-unused-css.js             (dormant CSS orphan-selector finder; not wired into check)
 └── unused-css-report.md           (last scan-unused-css.js output; git-ignored)
 ```
@@ -109,8 +116,7 @@ To baseline the harness against the current code: `node tools/visual-diff.js --b
 ```text
 workspace/
 ├── memory/
-├── materials/
-└── app-mirror/
+└── materials/
 ```
 
 This directory is the broader workbench and the **canonical materials tree**: project memory,
@@ -188,6 +194,13 @@ reversible):
 - `HW/` (homework feature code was deleted in PR #36; only the asset dir remained)
 
 Hard-deleted: `workspace/materials/scan-check.txt` (0-byte placeholder).
+
+**Follow-up (2026-07-05, post-audit):** removed the drifted `workspace/package.json`
+— a stale 2026-06-20 snapshot of the root manifest (19-file `check` script vs the
+root's current one, unpinned playwright, no lockfile, no consumers). Owner confirmed
+it was NOT an intentional lighter variant; archived to
+`.local/archive/2026-07-05-workspace-pkg-drift/`. `workspace/` now contains only
+`memory/` and `materials/`.
 
 **Root `materials/` consolidation — image half DONE (PR #130, 2026-07-05).**
 `.dockerignore` now excludes root `materials/` (plus `tools/`, `.local/`,

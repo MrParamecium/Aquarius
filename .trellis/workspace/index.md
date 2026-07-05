@@ -27,7 +27,7 @@ workspace/
 
 | Developer | Last Active | Sessions | Active File |
 |-----------|-------------|----------|-------------|
-| (none yet) | - | - | - |
+| FlyM1ss | 2026-06-27 | 1 | `FlyM1ss/journal-1.md` |
 
 ---
 
