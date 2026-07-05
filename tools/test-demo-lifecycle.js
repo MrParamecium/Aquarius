@@ -175,6 +175,67 @@ async function main() {
             ph6.afterHydrate === ph6.base + 1 && ph6.afterTeardown === ph6.base && ph6.disposed >= 1,
             `resize listeners base=${ph6.base} afterHydrate=${ph6.afterHydrate} afterTeardown=${ph6.afterTeardown} (want +1 then back to base)`);
 
+        // ---- SP-2: reset-while-paused resumes animation (not frozen at t=0) ----
+        // The demo autoplays; pausing freezes the wave (identical frames), and Reset
+        // must resume it. Observed via the wave canvas pixels: frozen while paused
+        // (identical), CHANGING after Reset (animating), and the Play/Pause label
+        // consistent. Discriminates the fix: pre-fix, Reset left running=false so the
+        // wave stayed frozen and the label stayed 'Play'.
+        const sp2 = await page.evaluate(async () => {
+            const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+            const { container, node } = window.__demoTest.hydrateSynthetic(window.__demoTest.sin);
+            const wave = node.querySelector('.sinusoid-demo-wave');
+            const playBtn = node.querySelector('.sinusoid-demo-play');
+            const resetBtn = node.querySelector('.sinusoid-demo-reset');
+            if (!wave || !wave.toDataURL || !playBtn || !resetBtn) { container.remove(); return { missing: true }; }
+            await sleep(80);
+            playBtn.click();                                    // Pause
+            const pausedLabel = playBtn.textContent;
+            const pa = wave.toDataURL(); await sleep(140); const pb = wave.toDataURL();
+            const frozenWhilePaused = pa === pb;                // sanity: paused == frozen
+            resetBtn.click();                                   // Reset while paused
+            const afterResetLabel = playBtn.textContent;
+            const ra = wave.toDataURL(); await sleep(140); const rb = wave.toDataURL();
+            const animatingAfterReset = ra !== rb;
+            window.__ftutorTeardownInteractiveDemos?.(container); container.remove();
+            return { frozenWhilePaused, animatingAfterReset, pausedLabel, afterResetLabel };
+        });
+        // The reliable discriminator is the Play/Pause LABEL: the fix couples
+        // running=true with label='Pause' in reset; pre-fix, reset left running=false
+        // so after a Pause the label stayed 'Play'. animatingAfterReset (wave pixels
+        // change post-reset) is a supporting signal. frozenWhilePaused is reported for
+        // context only — it is NOT asserted (canvas-size-settling / sub-pixel variance
+        // makes "paused == pixel-identical" too strict to be reliable).
+        record('SP-2 reset resumes animation when paused',
+            !sp2.missing && sp2.afterResetLabel === 'Pause' && sp2.animatingAfterReset,
+            sp2.missing ? 'sinusoid canvas/controls not rendered'
+                : `pausedLabel=${sp2.pausedLabel}; afterReset label=${sp2.afterResetLabel} (want Pause) animating=${sp2.animatingAfterReset}; frozenWhilePaused=${sp2.frozenWhilePaused} (info only)`);
+
+        // ---- SP-3: updateControlLabels is null-safe when a readout span is absent ----
+        // Simulate a template variant missing a data-demo-value span, then trigger
+        // updateControlLabels (via a control input). Pre-fix this threw
+        // "Cannot set properties of null"; the guarded fix skips the missing span.
+        const sp3errors = [];
+        const onPageError = (e) => sp3errors.push(e.message || String(e));
+        page.on('pageerror', onPageError);
+        await page.evaluate(() => {
+            const { node } = window.__demoTest.hydrateSynthetic(window.__demoTest.sin);
+            window.__sp3 = node;
+            node.querySelector('[data-demo-value="amplitude"]')?.remove();  // omit a readout span
+            const input = node.querySelector('[data-demo-control="amplitude"]');
+            if (input) { input.value = '2.2'; input.dispatchEvent(new Event('input')); }  // -> updateControlLabels
+        });
+        await page.waitForTimeout(60);   // let any pageerror propagate
+        page.off('pageerror', onPageError);
+        await page.evaluate(() => {
+            const c = window.__sp3 && window.__sp3.closest('.__demo-test-container');
+            if (c) { window.__ftutorTeardownInteractiveDemos?.(c); c.remove(); }
+        });
+        const sp3nullErrors = sp3errors.filter((m) => /null|undefined/i.test(m));
+        record('SP-3 updateControlLabels null-safe on missing span',
+            sp3nullErrors.length === 0,
+            sp3nullErrors.length ? `threw: ${sp3nullErrors[0]}` : 'no null-deref when a data-demo-value span is absent');
+
         await browser.close();
     } catch (err) {
         console.error('[demo-lifecycle] FATAL', err);

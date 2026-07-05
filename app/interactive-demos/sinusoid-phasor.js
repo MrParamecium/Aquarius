@@ -246,9 +246,15 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
         }
       };
       const updateControlLabels = () => {
-        node.querySelector('[data-demo-value="amplitude"]').textContent = formatValue(state.amplitude);
-        node.querySelector('[data-demo-value="frequency"]').textContent = formatValue(state.frequency);
-        node.querySelector('[data-demo-value="phase"]').textContent = formatPhase();
+        // [SP-3] null-guard each readout span (guarded block, NOT `?.textContent =`
+        // which is a parse-time SyntaxError) so a template variant that omits any
+        // data-demo-value span can't throw "Cannot set properties of null".
+        const ampEl = node.querySelector('[data-demo-value="amplitude"]');
+        if (ampEl) ampEl.textContent = formatValue(state.amplitude);
+        const freqEl = node.querySelector('[data-demo-value="frequency"]');
+        if (freqEl) freqEl.textContent = formatValue(state.frequency);
+        const phaseEl = node.querySelector('[data-demo-value="phase"]');
+        if (phaseEl) phaseEl.textContent = formatPhase();
       };
       node.querySelectorAll('[data-demo-control]').forEach((input) => {
         input.addEventListener('input', () => {
@@ -262,11 +268,22 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
         state.amplitude = ampC.value;
         state.frequency = freqC.value;
         state.phase = phaseC.value;
-        node.querySelector('[data-demo-control="amplitude"]').value = String(state.amplitude);
-        node.querySelector('[data-demo-control="frequency"]').value = String(state.frequency);
-        node.querySelector('[data-demo-control="phase"]').value = String(state.phase);
+        // Guard these like SP-3 so a missing control input can't throw and abort the
+        // reset BEFORE the running=true / label restore below (which would re-freeze
+        // the demo — the exact SP-2 symptom).
+        const ampCtl = node.querySelector('[data-demo-control="amplitude"]');
+        if (ampCtl) ampCtl.value = String(state.amplitude);
+        const freqCtl = node.querySelector('[data-demo-control="frequency"]');
+        if (freqCtl) freqCtl.value = String(state.frequency);
+        const phaseCtl = node.querySelector('[data-demo-control="phase"]');
+        if (phaseCtl) phaseCtl.value = String(state.phase);
         state.start = performance.now();
         state.pausedAt = 0;
+        // [SP-2] resume animation on reset (the demo autoplays initially). Without
+        // this, Pause→Reset left running=false + pausedAt=0, so elapsedSeconds
+        // returned 0 forever and the wave stayed frozen until the user hit Play.
+        state.running = true;
+        if (playBtn) playBtn.textContent = 'Pause';
         updateControlLabels();
         drawDemo();
       });
