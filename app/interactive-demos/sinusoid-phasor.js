@@ -7,7 +7,7 @@
 //   - window.typesetMath, window.ResizeObserver                             (CDN / browser)
 //
 // Public surface (free-name lookup from the dispatcher in app.js):
-//   - renderSinusoidPhasorDemo(node, demo)
+//   - renderSinusoidPhasorDemo(node, demo, demoControls)
 // Preserve `node._sinusoidResizeObserver` — introspected by external callers.
 
 function renderSinusoidPhasorDemo(node, demo, demoControls) {

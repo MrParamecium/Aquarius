@@ -7,7 +7,7 @@
 //   - window.typesetMath, window.ResizeObserver                             (CDN / browser)
 //
 // Public surface (free-name lookup from the dispatcher in app.js):
-//   - renderPhasorDemo(node, demo, demoSpec)
+//   - renderPhasorDemo(node, demo, demoControls, demoSpec)
 // Preserve `node._phasorResizeObserver` — introspected by external callers.
 
 function renderPhasorDemo(node, demo, demoControls, demoSpec) {
