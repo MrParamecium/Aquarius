@@ -1191,14 +1191,44 @@ function markLessonLayoutStable(gen) {
 window.__ftutorBeginLessonRenderGen = beginLessonRenderGen;
 window.__ftutorMarkLessonLayoutStable = markLessonLayoutStable;
 
+// Schedule MathJax typeset for `el`, then flip the settle sentinel for `gen`
+// whether typeset resolves, rejects, or MathJax is unattached (the Promise.resolve
+// branch still reaches the sentinel — MathJax loads async from a CDN). The
+// try/catch guards a *synchronous* throw from typesetPromise so the sentinel never
+// stays stuck at '0'; the dual then-handlers (deliberately NOT `.finally`, which
+// would re-throw and surface as an unhandled rejection) swallow an async reject.
+// Shared by renderCurrentKnowledgePoint + renderChapterOverviewContent. [ST-5]
+function settleLessonAfterTypeset(el, gen) {
+  try {
+    const typeset = (window.MathJax && window.MathJax.typesetPromise)
+      ? window.MathJax.typesetPromise([el])
+      : Promise.resolve();
+    typeset.then(() => markLessonLayoutStable(gen),
+                 () => markLessonLayoutStable(gen));
+  } catch (_) {
+    markLessonLayoutStable(gen);
+  }
+}
+window.__ftutorSettleAfterTypeset = settleLessonAfterTypeset;
+
+// Single seam for swapping lesson content: dispose any live interactive demo
+// (rAF loop / window resize listener — SP-1/PH-6) BEFORE the innerHTML replace,
+// so the teardown invariant can't regress when a new render site forgets to pair
+// the two. Every `learnExplainContent.innerHTML =` in the lesson flow routes here.
+function replaceLearnContent(el, html) {
+  if (!el) return;
+  window.__ftutorTeardownInteractiveDemos?.(el);
+  el.innerHTML = html;
+}
+window.__ftutorReplaceLearnContent = replaceLearnContent;
+
 function renderCurrentKnowledgePoint() {
   const learnExplainContent = document.getElementById('learnExplainContent');
   const learnExplainScroll = document.getElementById('learnExplainScroll');
   if (!learnExplainContent) return;
   const lessonRenderGen = beginLessonRenderGen();
   if (!learnKnowledgePoints.length) {
-    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-    learnExplainContent.innerHTML = buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1);
+    replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1));
     delete learnExplainContent.dataset.lectureDecorated;
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
     bindExpandableLessonImages(learnExplainContent);
@@ -1217,8 +1247,7 @@ function renderCurrentKnowledgePoint() {
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
-  window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-  learnExplainContent.innerHTML = buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length);
+  replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
   delete learnExplainContent.dataset.lectureDecorated;
   bindExpandableLessonImages(learnExplainContent);
   decorateLectureContent(learnExplainContent);
@@ -1262,20 +1291,7 @@ function renderCurrentKnowledgePoint() {
     startTestBtn.onmouseout = function() { if(!this.disabled){this.style.transform='none';this.style.boxShadow='0 4px 0px #0284c7';}};
   }
   setTimeout(() => {
-    // [ST-5] decouple the sentinel emit from the MathJax-loaded guard: MathJax
-    // loads async from a CDN and may be unattached on the first lesson of a
-    // fresh page — the Promise.resolve() branch still reaches the sentinel. The
-    // try/catch guards a *synchronous* throw from typesetPromise so the sentinel
-    // never stays stuck at '0' (which would 3s-stall every later settleLesson).
-    try {
-      const typeset = (window.MathJax && window.MathJax.typesetPromise)
-        ? window.MathJax.typesetPromise([learnExplainContent])
-        : Promise.resolve();
-      typeset.then(() => markLessonLayoutStable(lessonRenderGen),
-                   () => markLessonLayoutStable(lessonRenderGen));
-    } catch (_) {
-      markLessonLayoutStable(lessonRenderGen);
-    }
+    settleLessonAfterTypeset(learnExplainContent, lessonRenderGen);
     buildTocFromContent(learnExplainContent);
     bindStartTestBtnIfPresent();
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
@@ -1358,8 +1374,7 @@ function setLearnLessonContent(fullHtml, options = {}) {
     currentLessonTrailingHtml = '';
     currentKnowledgePointIndex = 0;
     if (learnExplainContent) {
-      window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-      learnExplainContent.innerHTML = `<div class="error-box"><strong>Lesson render failed</strong><p>${escapeHtml(err?.message || 'Unknown render error')}</p></div>`;
+      replaceLearnContent(learnExplainContent, `<div class="error-box"><strong>Lesson render failed</strong><p>${escapeHtml(err?.message || 'Unknown render error')}</p></div>`);
       document.documentElement.dataset.lessonLayoutStable = '1';   // static error box is "settled"
     }
   }

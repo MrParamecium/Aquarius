@@ -46,13 +46,11 @@ if (fnStart < 0) fail('could not locate inferInteractiveDemoFamily');
 // `\nconst ` etc. only match the next top-level statement (the family-renderer
 // map), which is exactly where inferInteractiveDemoFamily ends.
 const bodyStart = SRC.indexOf('{', SRC.indexOf(')', fnStart));
-const after = SRC.slice(bodyStart);
-const bodyEnd = bodyStart + Math.min(
-  ...[/\nfunction /, /\nconst /, /\nlet /, /\nvar /, /\nwindow\./]
-    .map((re) => { const m = after.slice(1).match(re); return m ? m.index + 1 : Infinity; })
-);
-if (!Number.isFinite(bodyEnd)) fail('could not bound inferInteractiveDemoFamily body');
-const fnBody = SRC.slice(bodyStart, bodyEnd);
+// A single alternation finds the leftmost of the boundary patterns — the same
+// "earliest next top-level declaration" the per-regex Math.min used to compute.
+const boundary = SRC.slice(bodyStart + 1).match(/\n(?:function |const |let |var |window\.)/);
+if (!boundary) fail('could not bound inferInteractiveDemoFamily body');
+const fnBody = SRC.slice(bodyStart, bodyStart + 1 + boundary.index);
 const returnLiterals = [...new Set([...fnBody.matchAll(/return\s+'([a-z_][a-z0-9_]*)'/g)].map((m) => m[1]))];
 
 // 3. Families that are handled by hand-rolled dispatch branches / fallbacks and
@@ -67,7 +65,6 @@ const EXCLUDED = new Set([
 ]);
 
 const tableRouted = returnLiterals.filter((f) => !EXCLUDED.has(f)).sort();
-const keysSorted = [...mapKeys].sort();
 
 // 4a. Every non-excluded family the inferer can produce MUST have a table entry
 //     (else it silently falls to renderBriefDemoFallback).
@@ -84,10 +81,11 @@ if (unreachableKeys.length) {
 // 5. Every renderer referenced by the table must be a defined function somewhere
 //    in interactive-demos/*.js (a name typo would ReferenceError only at runtime).
 const demoDir = path.join(__dirname, '..', 'app', 'interactive-demos');
-const allSrc = fs.readdirSync(demoDir)
-  .filter((f) => f.endsWith('.js'))
+// dispatcher.js is already in memory as SRC — reuse it instead of re-reading.
+const allSrc = [SRC, ...fs.readdirSync(demoDir)
+  .filter((f) => f.endsWith('.js') && f !== 'dispatcher.js')
   .map((f) => fs.readFileSync(path.join(demoDir, f), 'utf8'))
-  .join('\n');
+].join('\n');
 const undefinedRenderers = rendererNames.filter((name) => {
   const defRe = new RegExp(`function\\s+${name}\\b|(?:const|let|var)\\s+${name}\\s*=`);
   return !defRe.test(allSrc);

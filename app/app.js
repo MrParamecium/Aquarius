@@ -1578,18 +1578,17 @@ function clearLearnRenderedContent(message = 'Preparing lesson...') {
   learnKnowledgePoints = [];
   currentKnowledgePointIndex = 0;
   if (learnExplainContent) {
-    // Dispose any live demo (rAF loop / window listener) before the container is
-    // wiped — this is the choke point every cross-section navigation runs through
-    // synchronously, before the async render sites are ever reached (SP-1/PH-6).
-    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-    // Reset the §11 settle sentinel HERE (synchronous nav kickoff): bump the
-    // render generation so a prior lesson's pending '1' mark is invalidated, and
-    // set '0' so settleLesson waits for the incoming lesson instead of reading the
-    // previous lesson's stale '1' during the async fetch window.
+    // Reset the §11 settle sentinel HERE (synchronous cross-section nav kickoff):
+    // bump the render generation so a prior lesson's pending '1' mark is
+    // invalidated, and set '0' so settleLesson waits for the incoming lesson
+    // instead of reading the previous lesson's stale '1' during the async fetch
+    // window. (This funnels cross-section nav, but is NOT the only content-swap
+    // path — replaceLearnContent below is the shared teardown-before-innerHTML
+    // seam that guards SP-1/PH-6 at every swap site, incl. same-section KP turns.)
     window.__ftutorBeginLessonRenderGen?.();
-    learnExplainContent.innerHTML = message
+    replaceLearnContent(learnExplainContent, message
       ? `<div class="lesson-transition-blank"><p class="ghost">${escapeHtml(message)}</p></div>`
-      : '';
+      : '');
     delete learnExplainContent.dataset.lectureDecorated;
   }
   if (learnExplainScroll) {
@@ -2061,8 +2060,7 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
   learnKnowledgePoints = [];
   currentLessonTrailingHtml = '';
   currentKnowledgePointIndex = 0;
-  window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-  learnExplainContent.innerHTML = getOverviewSummaryHtml(sectionId, sectionTitle, subsections, options);
+  replaceLearnContent(learnExplainContent, getOverviewSummaryHtml(sectionId, sectionTitle, subsections, options));
   const enhancementSteps = [
     () => bindOverviewSubsectionCards(),
     () => bindExpandableLessonImages(learnExplainContent),
@@ -2078,22 +2076,7 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
       console.warn('[ChapterOverview] render enhancement skipped:', err);
     }
   });
-  try {
-    setTimeout(() => {
-      try {
-        const typeset = (window.MathJax && window.MathJax.typesetPromise)
-          ? window.MathJax.typesetPromise([learnExplainContent])
-          : Promise.resolve();
-        typeset.then(() => markLessonLayoutStable(lessonRenderGen),
-                     () => markLessonLayoutStable(lessonRenderGen));
-      } catch (_) {
-        markLessonLayoutStable(lessonRenderGen);   // sync throw -> still settle
-      }
-    }, 40);
-  } catch (err) {
-    console.warn('[ChapterOverview] MathJax scheduling skipped:', err);
-    markLessonLayoutStable(lessonRenderGen);
-  }
+  setTimeout(() => settleLessonAfterTypeset(learnExplainContent, lessonRenderGen), 40);
 }
 
 async function loadChapterOverviewPrelude(sectionId, sectionTitle, subsections = []) {
@@ -2520,8 +2503,7 @@ async function startLesson(options = {}) {
     if (err.name === 'AbortError') return;
     if (!isCurrentLearnRequest(requestSeq, requestSectionId, requestSectionTitle, ['lesson'])) return;
     learnBody.classList.remove('hidden');
-    window.__ftutorTeardownInteractiveDemos?.(learnExplainContent);
-    learnExplainContent.innerHTML = `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`;
+    replaceLearnContent(learnExplainContent, `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`);
     document.documentElement.dataset.lessonLayoutStable = '1';   // static error box is "settled"
     setLearnLoading(false);
   }
