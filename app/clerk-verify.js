@@ -15,8 +15,9 @@
  *   - RS256 signature check via crypto.createPublicKey({format:'jwk'}) +
  *     crypto.verify. Any other alg (none/HS256/...) is rejected outright.
  *   - Claims: iss must equal the injected issuer; exp/nbf with +-5s clock
- *     skew; azp is CONDITIONAL - if present it MUST be in authorizedParties
- *     (fail closed), if absent the check passes (Clerk omits azp in some
+ *     skew; azp is CONDITIONAL - if present it MUST satisfy the injected
+ *     isAuthorizedParty predicate (fail closed), if absent the check passes
+ *     (Clerk omits azp in some
  *     cross-origin setups and its docs say to skip the check when missing).
  *   - Unknown-kid handling is throttled: at most one JWKS refetch per 5
  *     minutes triggered by unseen kids, with a bounded negative cache in
@@ -44,17 +45,20 @@ const JWKS_FETCH_TIMEOUT_MS = 10000;
  *   httpRequestJson: (url: string, options?: object, body?: string|null, timeoutMs?: number) => Promise<any>,
  *   jwksUrl: string,
  *   issuer: string,
- *   authorizedParties: string[],
+ *   isAuthorizedParty: (azp: string) => boolean,
  * }} deps — all required; ws-bridge.js supplies env-derived values.
+ *   isAuthorizedParty gates the token's azp claim; ws-bridge injects its shared
+ *   origin matcher (exact allowlist OR team-scoped Vercel preview regex) so the
+ *   azp check and CORS reflection stay in lock-step.
  */
 module.exports = function createClerkVerify(deps) {
     const httpRequestJson = deps && deps.httpRequestJson;
     const JWKS_URL = deps && deps.jwksUrl;
     const ISSUER = deps && deps.issuer;
-    const AUTHORIZED_PARTIES = deps && deps.authorizedParties;
+    const IS_AUTHORIZED_PARTY = deps && deps.isAuthorizedParty;
     if (typeof httpRequestJson !== 'function' || typeof JWKS_URL !== 'string' || !JWKS_URL
-        || typeof ISSUER !== 'string' || !ISSUER || !Array.isArray(AUTHORIZED_PARTIES)) {
-        throw new Error('clerk-verify: missing required deps {httpRequestJson, jwksUrl, issuer, authorizedParties}');
+        || typeof ISSUER !== 'string' || !ISSUER || typeof IS_AUTHORIZED_PARTY !== 'function') {
+        throw new Error('clerk-verify: missing required deps {httpRequestJson, jwksUrl, issuer, isAuthorizedParty}');
     }
 
     let keys = new Map();          // kid -> crypto KeyObject
@@ -139,7 +143,7 @@ module.exports = function createClerkVerify(deps) {
             if (typeof payload.exp !== 'number' || payload.exp <= now - CLOCK_SKEW_SEC) return null;
             if (typeof payload.nbf === 'number' && payload.nbf > now + CLOCK_SKEW_SEC) return null;
             if (payload.azp !== undefined && payload.azp !== null && payload.azp !== '') {
-                if (!AUTHORIZED_PARTIES.includes(payload.azp)) return null;
+                if (!IS_AUTHORIZED_PARTY(payload.azp)) return null;
             }
             if (!payload.sub || typeof payload.sub !== 'string') return null;
             return { uid: payload.sub, sid: typeof payload.sid === 'string' ? payload.sid : null };

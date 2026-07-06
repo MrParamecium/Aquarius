@@ -66,6 +66,21 @@ const REQUIRE_AUTH = process.env.TUTOR_REQUIRE_AUTH === '1';
 const CLERK_AUTHORIZED_PARTIES = String(process.env.CLERK_AUTHORIZED_PARTIES
     || 'https://fourier-tutor.vercel.app,https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
     .split(',').map(s => s.trim()).filter(Boolean);
+// Vercel preview deploys get a rotating hostname:
+//   https://fourier-<deploy-hash>-mrparameciums-projects.vercel.app
+// The <deploy-hash> changes every push, so a preview can never be an exact
+// CLERK_AUTHORIZED_PARTIES entry. Anchor on BOTH the project ("fourier-") and
+// the team scope ("-mrparameciums-projects") so ONLY our own previews match —
+// not arbitrary *.vercel.app sites, nor another team's "fourier" project. This
+// lives in code (not the env var) on purpose: previews then work with no Render
+// env edit, just a backend redeploy. Branch previews (fourier-git-<branch>-…)
+// match the same pattern for free.
+const VERCEL_PREVIEW_ORIGIN_RE =
+    /^https:\/\/fourier-[a-z0-9-]+-mrparameciums-projects\.vercel\.app$/;
+// Single origin gate shared by CORS reflection (setCORSHeaders) and the Clerk
+// azp check (injected into clerk-verify.js), so both stay consistent.
+const isAllowedOrigin = (origin) =>
+    !!origin && (CLERK_AUTHORIZED_PARTIES.includes(origin) || VERCEL_PREVIEW_ORIGIN_RE.test(origin));
 const CLERK_JWKS_URL = process.env.CLERK_JWKS_URL
     || 'https://driven-troll-28.clerk.accounts.dev/.well-known/jwks.json';
 const CLERK_ISSUER = process.env.CLERK_ISSUER
@@ -74,7 +89,7 @@ const { verifyClerkToken, warmUp: warmUpClerkVerify } = require('./clerk-verify'
     httpRequestJson, // function declaration below — hoisted, same pattern as the llm-client require
     jwksUrl: CLERK_JWKS_URL,
     issuer: CLERK_ISSUER,
-    authorizedParties: CLERK_AUTHORIZED_PARTIES,
+    isAuthorizedParty: isAllowedOrigin,
 });
 
 // Resolves the request's verified identity: {uid, sid} when a valid Bearer
@@ -211,7 +226,7 @@ function setCORSHeaders(res, pathname, requestOrigin) {
     // or vice versa.
     res.setHeader('Vary', 'Origin');
     const origin = String(requestOrigin || '');
-    if (origin && CLERK_AUTHORIZED_PARTIES.includes(origin)) {
+    if (isAllowedOrigin(origin)) {
         res.setHeader('Access-Control-Allow-Origin', origin);
     }
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
