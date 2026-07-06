@@ -64,7 +64,7 @@ const REQUIRE_AUTH = process.env.TUTOR_REQUIRE_AUTH === '1';
 // vars (loaded above) with dev-instance defaults, dependency-injected into
 // clerk-verify.js, which itself reads no env and holds no defaults.
 const CLERK_AUTHORIZED_PARTIES = String(process.env.CLERK_AUTHORIZED_PARTIES
-    || 'https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
+    || 'https://fourier-tutor.vercel.app,https://aquarius-seven.vercel.app,http://localhost:9000,http://127.0.0.1:9000')
     .split(',').map(s => s.trim()).filter(Boolean);
 const CLERK_JWKS_URL = process.env.CLERK_JWKS_URL
     || 'https://driven-troll-28.clerk.accounts.dev/.well-known/jwks.json';
