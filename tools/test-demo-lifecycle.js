@@ -219,18 +219,16 @@ async function main() {
         const onPageError = (e) => sp3errors.push(e.message || String(e));
         page.on('pageerror', onPageError);
         await page.evaluate(() => {
-            const { node } = window.__demoTest.hydrateSynthetic(window.__demoTest.sin);
-            window.__sp3 = node;
+            const { container, node } = window.__demoTest.hydrateSynthetic(window.__demoTest.sin);
             node.querySelector('[data-demo-value="amplitude"]')?.remove();  // omit a readout span
             const input = node.querySelector('[data-demo-control="amplitude"]');
-            if (input) { input.value = '2.2'; input.dispatchEvent(new Event('input')); }  // -> updateControlLabels
+            if (input) { input.value = '2.2'; input.dispatchEvent(new Event('input')); }  // -> updateControlLabels (sync)
+            // Teardown is safe inline: the input handler ran synchronously above, so any
+            // pageerror it raised is already queued over CDP and can't be un-sent here.
+            window.__ftutorTeardownInteractiveDemos?.(container); container.remove();
         });
-        await page.waitForTimeout(60);   // let any pageerror propagate
+        await page.waitForTimeout(60);   // let any pageerror from the input dispatch propagate
         page.off('pageerror', onPageError);
-        await page.evaluate(() => {
-            const c = window.__sp3 && window.__sp3.closest('.__demo-test-container');
-            if (c) { window.__ftutorTeardownInteractiveDemos?.(c); c.remove(); }
-        });
         const sp3nullErrors = sp3errors.filter((m) => /null|undefined/i.test(m));
         record('SP-3 updateControlLabels null-safe on missing span',
             sp3nullErrors.length === 0,

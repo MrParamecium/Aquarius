@@ -264,6 +264,14 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
           drawDemo();
         });
       });
+      // Resume playback + restore the Play/Pause label. Shared by the reset handler
+      // ([SP-2]) and the play/pause toggle so the "running=true ⇒ label='Pause'"
+      // pairing lives in one place and can't drift between the two call sites.
+      const resume = () => {
+        state.start = performance.now();
+        state.running = true;
+        if (playBtn) playBtn.textContent = 'Pause';
+      };
       node.querySelector('.sinusoid-demo-reset')?.addEventListener('click', () => {
         state.amplitude = ampC.value;
         state.frequency = freqC.value;
@@ -277,13 +285,11 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
         if (freqCtl) freqCtl.value = String(state.frequency);
         const phaseCtl = node.querySelector('[data-demo-control="phase"]');
         if (phaseCtl) phaseCtl.value = String(state.phase);
-        state.start = performance.now();
         state.pausedAt = 0;
         // [SP-2] resume animation on reset (the demo autoplays initially). Without
         // this, Pause→Reset left running=false + pausedAt=0, so elapsedSeconds
         // returned 0 forever and the wave stayed frozen until the user hit Play.
-        state.running = true;
-        if (playBtn) playBtn.textContent = 'Pause';
+        resume();
         updateControlLabels();
         drawDemo();
       });
@@ -293,9 +299,7 @@ function renderSinusoidPhasorDemo(node, demo, demoControls) {
           state.running = false;
           playBtn.textContent = 'Play';
         } else {
-          state.start = performance.now();
-          state.running = true;
-          playBtn.textContent = 'Pause';
+          resume();
         }
       });
       const rerender = coalesceFrames(drawDemo);
