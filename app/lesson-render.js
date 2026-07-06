@@ -438,6 +438,10 @@ function enhanceVisualMetadataUI(root) {
 }
 
 function resetLearnKnowledgePointState() {
+  // Leaving a lesson (closeLearnMode / handleLearnBack both call this) must tear
+  // down any live demo so its rAF loop + window resize listener stop — otherwise
+  // they run indefinitely after the user exits the lesson (SP-1/PH-6).
+  window.__ftutorTeardownInteractiveDemos?.(document.getElementById('learnExplainContent'));
   learnKnowledgePoints = [];
   currentKnowledgePointIndex = 0;
   currentFullLessonHtml = '';
@@ -1164,12 +1168,67 @@ function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   `;
 }
 
+// §11 lesson-settle sentinel — the app's own "layout has stabilized" signal.
+// dataset.lessonLayoutStable: '0' = a lesson render is in flight, '1' = MathJax
+// typeset + idle + 2×rAF have all resolved. The visual harness gates on it
+// (test-utils.settleLesson) instead of re-deriving from MathJax + rAFs, removing
+// the sidebar-drift capture nondeterminism. window.__ftutorLessonRenderGen is a
+// monotonic counter so a superseded render's late tail can't stamp '1' onto a
+// newer render still mid-typeset.
+function beginLessonRenderGen() {
+  const gen = (window.__ftutorLessonRenderGen = (window.__ftutorLessonRenderGen || 0) + 1);
+  document.documentElement.dataset.lessonLayoutStable = '0';
+  return gen;
+}
+function markLessonLayoutStable(gen) {
+  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 0));
+  idle(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+    if (gen === window.__ftutorLessonRenderGen) {
+      document.documentElement.dataset.lessonLayoutStable = '1';
+    }
+  })), { timeout: 2000 });
+}
+window.__ftutorBeginLessonRenderGen = beginLessonRenderGen;
+window.__ftutorMarkLessonLayoutStable = markLessonLayoutStable;
+
+// Schedule MathJax typeset for `el`, then flip the settle sentinel for `gen`
+// whether typeset resolves, rejects, or MathJax is unattached (the Promise.resolve
+// branch still reaches the sentinel — MathJax loads async from a CDN). The
+// try/catch guards a *synchronous* throw from typesetPromise so the sentinel never
+// stays stuck at '0'; the dual then-handlers (deliberately NOT `.finally`, which
+// would re-throw and surface as an unhandled rejection) swallow an async reject.
+// Shared by renderCurrentKnowledgePoint + renderChapterOverviewContent. [ST-5]
+function settleLessonAfterTypeset(el, gen) {
+  try {
+    const typeset = (window.MathJax && window.MathJax.typesetPromise)
+      ? window.MathJax.typesetPromise([el])
+      : Promise.resolve();
+    typeset.then(() => markLessonLayoutStable(gen),
+                 () => markLessonLayoutStable(gen));
+  } catch (_) {
+    markLessonLayoutStable(gen);
+  }
+}
+window.__ftutorSettleAfterTypeset = settleLessonAfterTypeset;
+
+// Single seam for swapping lesson content: dispose any live interactive demo
+// (rAF loop / window resize listener — SP-1/PH-6) BEFORE the innerHTML replace,
+// so the teardown invariant can't regress when a new render site forgets to pair
+// the two. Every `learnExplainContent.innerHTML =` in the lesson flow routes here.
+function replaceLearnContent(el, html) {
+  if (!el) return;
+  window.__ftutorTeardownInteractiveDemos?.(el);
+  el.innerHTML = html;
+}
+window.__ftutorReplaceLearnContent = replaceLearnContent;
+
 function renderCurrentKnowledgePoint() {
   const learnExplainContent = document.getElementById('learnExplainContent');
   const learnExplainScroll = document.getElementById('learnExplainScroll');
   if (!learnExplainContent) return;
+  const lessonRenderGen = beginLessonRenderGen();
   if (!learnKnowledgePoints.length) {
-    learnExplainContent.innerHTML = buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1);
+    replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(currentFullLessonHtml || '<p class="ghost">No explanation available.</p>', { type: 'full' }, 0, 1));
     delete learnExplainContent.dataset.lectureDecorated;
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
     bindExpandableLessonImages(learnExplainContent);
@@ -1182,12 +1241,13 @@ function renderCurrentKnowledgePoint() {
     if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
     if (learnKpNextBtn) learnKpNextBtn.disabled = true;
     window.__ftutorRefreshPager?.();
+    markLessonLayoutStable(lessonRenderGen);
     return;
   }
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
-  learnExplainContent.innerHTML = buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length);
+  replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
   delete learnExplainContent.dataset.lectureDecorated;
   bindExpandableLessonImages(learnExplainContent);
   decorateLectureContent(learnExplainContent);
@@ -1231,7 +1291,7 @@ function renderCurrentKnowledgePoint() {
     startTestBtn.onmouseout = function() { if(!this.disabled){this.style.transform='none';this.style.boxShadow='0 4px 0px #0284c7';}};
   }
   setTimeout(() => {
-    if (window.MathJax && window.MathJax.typesetPromise) { window.MathJax.typesetPromise([learnExplainContent]).catch(() => {}); }
+    settleLessonAfterTypeset(learnExplainContent, lessonRenderGen);
     buildTocFromContent(learnExplainContent);
     bindStartTestBtnIfPresent();
     if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
@@ -1314,7 +1374,8 @@ function setLearnLessonContent(fullHtml, options = {}) {
     currentLessonTrailingHtml = '';
     currentKnowledgePointIndex = 0;
     if (learnExplainContent) {
-      learnExplainContent.innerHTML = `<div class="error-box"><strong>Lesson render failed</strong><p>${escapeHtml(err?.message || 'Unknown render error')}</p></div>`;
+      replaceLearnContent(learnExplainContent, `<div class="error-box"><strong>Lesson render failed</strong><p>${escapeHtml(err?.message || 'Unknown render error')}</p></div>`);
+      document.documentElement.dataset.lessonLayoutStable = '1';   // static error box is "settled"
     }
   }
 }

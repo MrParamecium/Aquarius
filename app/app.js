@@ -1578,9 +1578,17 @@ function clearLearnRenderedContent(message = 'Preparing lesson...') {
   learnKnowledgePoints = [];
   currentKnowledgePointIndex = 0;
   if (learnExplainContent) {
-    learnExplainContent.innerHTML = message
+    // Reset the §11 settle sentinel HERE (synchronous cross-section nav kickoff):
+    // bump the render generation so a prior lesson's pending '1' mark is
+    // invalidated, and set '0' so settleLesson waits for the incoming lesson
+    // instead of reading the previous lesson's stale '1' during the async fetch
+    // window. (This funnels cross-section nav, but is NOT the only content-swap
+    // path — replaceLearnContent below is the shared teardown-before-innerHTML
+    // seam that guards SP-1/PH-6 at every swap site, incl. same-section KP turns.)
+    window.__ftutorBeginLessonRenderGen?.();
+    replaceLearnContent(learnExplainContent, message
       ? `<div class="lesson-transition-blank"><p class="ghost">${escapeHtml(message)}</p></div>`
-      : '';
+      : '');
     delete learnExplainContent.dataset.lectureDecorated;
   }
   if (learnExplainScroll) {
@@ -2046,12 +2054,13 @@ function parseOverviewSubsectionTitle(subTitle, idx = 0) {
 
 function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [], options = {}) {
   if (!learnExplainContent) return;
+  const lessonRenderGen = beginLessonRenderGen();
   _learnLayoutMode = options && options.preludeHtml ? 'overview_lesson' : 'overview';
   setChapterOverviewLayoutActive(true);
   learnKnowledgePoints = [];
   currentLessonTrailingHtml = '';
   currentKnowledgePointIndex = 0;
-  learnExplainContent.innerHTML = getOverviewSummaryHtml(sectionId, sectionTitle, subsections, options);
+  replaceLearnContent(learnExplainContent, getOverviewSummaryHtml(sectionId, sectionTitle, subsections, options));
   const enhancementSteps = [
     () => bindOverviewSubsectionCards(),
     () => bindExpandableLessonImages(learnExplainContent),
@@ -2067,13 +2076,7 @@ function renderChapterOverviewContent(sectionId, sectionTitle, subsections = [],
       console.warn('[ChapterOverview] render enhancement skipped:', err);
     }
   });
-  try {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-      setTimeout(() => window.MathJax.typesetPromise([learnExplainContent]).catch(() => {}), 40);
-    }
-  } catch (err) {
-    console.warn('[ChapterOverview] MathJax scheduling skipped:', err);
-  }
+  setTimeout(() => settleLessonAfterTypeset(learnExplainContent, lessonRenderGen), 40);
 }
 
 async function loadChapterOverviewPrelude(sectionId, sectionTitle, subsections = []) {
@@ -2500,7 +2503,8 @@ async function startLesson(options = {}) {
     if (err.name === 'AbortError') return;
     if (!isCurrentLearnRequest(requestSeq, requestSectionId, requestSectionTitle, ['lesson'])) return;
     learnBody.classList.remove('hidden');
-    learnExplainContent.innerHTML = `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`;
+    replaceLearnContent(learnExplainContent, `<div class="error-box"><strong>Failed to load lesson</strong><p>${escapeHtml(err.message)}</p></div>`);
+    document.documentElement.dataset.lessonLayoutStable = '1';   // static error box is "settled"
     setLearnLoading(false);
   }
 }

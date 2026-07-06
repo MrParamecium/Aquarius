@@ -278,6 +278,37 @@ const INTERACTIVE_DEMO_FAMILY_RENDERERS = {
   sequence_system_lab: renderSequenceSystemLabDemo,
 };
 
+// Interactive-demo dispose lifecycle contract (SP-1/PH-6). Renderers that own
+// teardown-worthy resources (rAF loops, window listeners, observers) register a
+// cleanup via window.__ftutorRegisterInteractiveDemoCleanup; the app calls
+// teardownInteractiveDemos(container) BEFORE any innerHTML replace, so those
+// resources are cancelled deterministically instead of being orphaned when the
+// node detaches (the pre-existing `if (!node.isConnected) return` self-heal is
+// racy and cannot stop a window-level listener).
+function registerInteractiveDemoCleanup(node, fn) {
+  if (!node || typeof fn !== 'function') return;
+  (node.__demoCleanups = node.__demoCleanups || []).push(fn);
+}
+function disposeInteractiveDemo(node) {
+  if (!node) return;
+  (node.__demoCleanups || []).forEach((fn) => { try { fn(); } catch (_) {} });
+  node.__demoCleanups = [];
+  if (node.dataset) delete node.dataset.hydrated;
+}
+function teardownInteractiveDemos(root) {
+  if (!root || typeof root.querySelectorAll !== 'function') return 0;
+  let n = 0;
+  root.querySelectorAll('.kc-interactive-demo').forEach((node) => {
+    if (node.__demoCleanups || (node.dataset && node.dataset.hydrated === '1')) {
+      disposeInteractiveDemo(node);
+      n += 1;
+    }
+  });
+  return n;
+}
+window.__ftutorRegisterInteractiveDemoCleanup = registerInteractiveDemoCleanup;
+window.__ftutorTeardownInteractiveDemos = teardownInteractiveDemos;
+
 function hydrateInteractiveDemos(root) {
   if (!root) return;
   const seenDemoKeys = new Set();
@@ -337,12 +368,12 @@ function hydrateInteractiveDemos(root) {
     }
 
     if (isSinusoidDemo) {
-      renderSinusoidPhasorDemo(node, demo);
+      renderSinusoidPhasorDemo(node, demo, demoControls);
       return;
     }
 
     if (isPhasorDemo) {
-      renderPhasorDemo(node, demo, demoSpec);
+      renderPhasorDemo(node, demo, demoControls, demoSpec);
       return;
     }
 

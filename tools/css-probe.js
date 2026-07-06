@@ -55,11 +55,12 @@
 'use strict';
 const fs = require('fs');
 const path = require('path');
-const { spawn } = require('child_process');
 const { chromium } = require('playwright');
 const {
-    MASK_CSS,
     waitForHealth,
+    spawnBridge,
+    stopBridge,
+    injectMaskInitScript,
     enterGuestMode,
     openSubtopic,
     resetLessonChromeState,
@@ -1214,14 +1215,8 @@ process.once('SIGTERM', () => signalCleanup('SIGTERM'));
 
     console.log(`[css-probe] mode=${MODE}`);
     console.log(`[css-probe] starting bridge on :${PORT}`);
-    const server = spawn('node', ['app/ws-bridge.js'], {
-        cwd: repoRoot,
-        env: { ...process.env, PORT: String(PORT) },
-        stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    const server = spawnBridge(repoRoot, PORT);
     bridgeProcess = server;
-    server.stdout.on('data', () => {});
-    server.stderr.on('data', d => process.stderr.write(`  [bridge-err] ${d}`));
 
     let exitCode = 0;
     const snapshot = {};
@@ -1239,15 +1234,7 @@ process.once('SIGTERM', () => signalCleanup('SIGTERM'));
         // properties (visibility/color/caret/animation on login + meta elements)
         // do not overlap any probed property, and the mask is identical across
         // --baseline and --check so it cannot create a false diff.
-        await context.addInitScript(({ css }) => {
-            const inject = () => {
-                const s = document.createElement('style');
-                s.textContent = css;
-                document.head.appendChild(s);
-            };
-            if (document.head) inject();
-            else document.addEventListener('DOMContentLoaded', inject);
-        }, { css: MASK_CSS });
+        await injectMaskInitScript(context);
 
         const page = await context.newPage();
         await enterGuestMode(page, BASE);
@@ -1272,15 +1259,7 @@ process.once('SIGTERM', () => signalCleanup('SIGTERM'));
         console.error('[css-probe] FATAL', err);
         exitCode = 1;
     } finally {
-        const exited = new Promise((resolve) => server.once('exit', resolve));
-        server.kill('SIGTERM');
-        await Promise.race([
-            exited,
-            new Promise((resolve) => setTimeout(() => {
-                console.warn('[css-probe] bridge did not exit within 2s after SIGTERM');
-                resolve();
-            }, 2000)),
-        ]);
+        await stopBridge(server, { label: 'css-probe' });
     }
 
     if (MODE === 'baseline') {

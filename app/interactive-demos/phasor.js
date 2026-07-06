@@ -7,12 +7,18 @@
 //   - window.typesetMath, window.ResizeObserver                             (CDN / browser)
 //
 // Public surface (free-name lookup from the dispatcher in app.js):
-//   - renderPhasorDemo(node, demo, demoSpec)
+//   - renderPhasorDemo(node, demo, demoControls, demoSpec)
 // Preserve `node._phasorResizeObserver` — introspected by external callers.
 
-function renderPhasorDemo(node, demo, demoSpec) {
+function renderPhasorDemo(node, demo, demoControls, demoSpec) {
+      // PH-4: prefer the dispatcher-resolved demoControls (which already falls back
+      // to demo.controls) over demoSpec.controls, so a phasor demo authored with
+      // top-level demo.controls renders its panel instead of collapsing to the
+      // hardcoded slider_a=1 / slider_b=-1.732 defaults + an empty control panel.
       const spec = demoSpec || {};
-      const controls = Array.isArray(spec.controls) ? spec.controls : [];
+      const controls = (Array.isArray(demoControls) && demoControls.length)
+        ? demoControls
+        : (Array.isArray(spec.controls) ? spec.controls : []);
       const state = Object.create(null);
       controls.forEach((control) => {
         const key = control.id || control.key;
@@ -27,6 +33,12 @@ function renderPhasorDemo(node, demo, demoSpec) {
       if (!Object.prototype.hasOwnProperty.call(state, 'slider_a')) state.slider_a = 1;
       if (!Object.prototype.hasOwnProperty.call(state, 'slider_b')) state.slider_b = -1.732;
       if (!Object.prototype.hasOwnProperty.call(state, 'angle_toggle')) state.angle_toggle = 'degrees';
+      // Capture the resolved initial slider values (authored defaults when the demo
+      // supplies them via demoControls, else the 1/-1.732 fallback) so the Reset
+      // button restores THOSE rather than hardcoded values now that PH-4 makes
+      // authored defaults reachable.
+      const _resetSliderA = state.slider_a;
+      const _resetSliderB = state.slider_b;
 
       node.innerHTML = `
         <section class="phasor-demo-shell">
@@ -183,7 +195,9 @@ function renderPhasorDemo(node, demo, demoSpec) {
         drawCurve((t) => c * Math.cos(t + theta), '#dc2626');
       };
 
+      let disposed = false;
       const renderPhasor = () => {
+        if (disposed) return;   // a coalesceFrames frame pending at teardown must not draw
         if (shellEl) {
           shellEl.classList.toggle('is-narrow', shellEl.clientWidth < 760);
         }
@@ -263,8 +277,8 @@ function renderPhasorDemo(node, demo, demoSpec) {
           btn.className = 'phasor-demo-reset';
           btn.textContent = control.label || 'Reset';
           btn.addEventListener('click', () => {
-            state.slider_a = 1;
-            state.slider_b = -1.732;
+            state.slider_a = _resetSliderA;
+            state.slider_b = _resetSliderB;
             const sliders = controlsEl.querySelectorAll('input[type="range"]');
             sliders.forEach((input) => {
               if (input.closest('.phasor-demo-control')?.querySelector('.phasor-demo-control-label')?.textContent === 'a') {
@@ -290,6 +304,17 @@ function renderPhasorDemo(node, demo, demoSpec) {
         node._phasorResizeObserver = observer;
       }
       window.addEventListener('resize', rerender, { passive: true });
+      // [PH-6] dispose contract: remove the window-level resize listener (which
+      // otherwise keeps the whole demo closure + old node alive on every
+      // re-hydration) and disconnect the observer when the app tears this demo down.
+      window.__ftutorRegisterInteractiveDemoCleanup?.(node, () => {
+        disposed = true;   // neutralize any in-flight coalesceFrames rerender
+        window.removeEventListener('resize', rerender);
+        if (node._phasorResizeObserver) {
+          try { node._phasorResizeObserver.disconnect(); } catch (_) {}
+          node._phasorResizeObserver = null;
+        }
+      });
       renderPhasor();
       return;
 }

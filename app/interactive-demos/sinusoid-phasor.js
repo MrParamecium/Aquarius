@@ -7,14 +7,46 @@
 //   - window.typesetMath, window.ResizeObserver                             (CDN / browser)
 //
 // Public surface (free-name lookup from the dispatcher in app.js):
-//   - renderSinusoidPhasorDemo(node, demo)
+//   - renderSinusoidPhasorDemo(node, demo, demoControls)
 // Preserve `node._sinusoidResizeObserver` — introspected by external callers.
 
-function renderSinusoidPhasorDemo(node, demo) {
+function renderSinusoidPhasorDemo(node, demo, demoControls) {
+      // SP-5: honour authored controls (demo.controls / demoSpec.controls, plumbed
+      // as demoControls by the dispatcher) instead of hardcoded defaults. Matching
+      // is permissive (case-insensitive over id + label) because authored demos use
+      // heterogeneous labels ('theta slider', 'Omega slider', …); unmatched fields
+      // fall back to the original literals so unauthored demos stay byte-identical.
+      // NOTE: matching convention is UNVERIFIED against real authored sinusoid
+      // content — the one cached sinusoid demo (b.2) authors no controls.
+      const _controls = Array.isArray(demoControls) ? demoControls : [];
+      const _num = (v, fallback) => (Number.isFinite(Number(v)) ? Number(v) : fallback);
+      const _resolveControl = (re, def) => {
+        const c = _controls.find((ctrl) => ctrl && (re.test(String(ctrl.id || ctrl.key || '')) || re.test(String(ctrl.label || ''))));
+        if (!c) return def;
+        return {
+          value: _num(c.default != null ? c.default : c.value, def.value),
+          min: _num(c.min, def.min),
+          max: _num(c.max, def.max),
+          step: _num(c.step, def.step),
+        };
+      };
+      const ampC = _resolveControl(/amplitude|\bamp\b/i, { value: 2, min: 0.5, max: 4, step: 0.1 });
+      const freqC = _resolveControl(/frequency|\bfreq\b|f_?0/i, { value: 1, min: 0.25, max: 3, step: 0.05 });
+      let phaseC = _resolveControl(/phase|theta|θ/i, { value: Math.PI / 3, min: -3.14, max: 3.14, step: 0.05 });
+      // Phase is kept in radians internally (display converts to degrees). Degrees
+      // vs radians is genuinely ambiguous without a unit field (demos supply none),
+      // so we convert to radians only when the range is clearly beyond ~2π (looks
+      // like degrees); a NARROW authored degree range (e.g. ±5°) is indistinguishable
+      // from radians and is assumed radians. Acceptable: the matching is best-effort
+      // /UNVERIFIED (see header) and no cached sinusoid demo authors controls today.
+      if (Math.abs(phaseC.min) > 6.5 || Math.abs(phaseC.max) > 6.5) {
+        const _toRad = (d) => (d * Math.PI) / 180;
+        phaseC = { value: _toRad(phaseC.value), min: _toRad(phaseC.min), max: _toRad(phaseC.max), step: _toRad(phaseC.step) };
+      }
       const state = {
-        amplitude: 2,
-        frequency: 1,
-        phase: Math.PI / 3,
+        amplitude: ampC.value,
+        frequency: freqC.value,
+        phase: phaseC.value,
         running: true,
         start: performance.now(),
         pausedAt: 0
@@ -33,17 +65,17 @@ function renderSinusoidPhasorDemo(node, demo) {
             <div class="sinusoid-demo-controls">
               <label class="sinusoid-demo-control">
                 <span>C amplitude</span>
-                <input type="range" min="0.5" max="4" step="0.1" data-demo-control="amplitude" value="2">
+                <input type="range" min="${ampC.min}" max="${ampC.max}" step="${ampC.step}" data-demo-control="amplitude" value="${ampC.value}">
                 <strong data-demo-value="amplitude">2</strong>
               </label>
               <label class="sinusoid-demo-control">
                 <span>f₀ frequency</span>
-                <input type="range" min="0.25" max="3" step="0.05" data-demo-control="frequency" value="1">
+                <input type="range" min="${freqC.min}" max="${freqC.max}" step="${freqC.step}" data-demo-control="frequency" value="${freqC.value}">
                 <strong data-demo-value="frequency">1</strong>
               </label>
               <label class="sinusoid-demo-control">
                 <span>θ phase</span>
-                <input type="range" min="-3.14" max="3.14" step="0.05" data-demo-control="phase" value="${Math.PI / 3}">
+                <input type="range" min="${phaseC.min}" max="${phaseC.max}" step="${phaseC.step}" data-demo-control="phase" value="${phaseC.value}">
                 <strong data-demo-value="phase">60°</strong>
               </label>
               <button type="button" class="sinusoid-demo-reset">Reset</button>
@@ -227,9 +259,9 @@ function renderSinusoidPhasorDemo(node, demo) {
         });
       });
       node.querySelector('.sinusoid-demo-reset')?.addEventListener('click', () => {
-        state.amplitude = 2;
-        state.frequency = 1;
-        state.phase = Math.PI / 3;
+        state.amplitude = ampC.value;
+        state.frequency = freqC.value;
+        state.phase = phaseC.value;
         node.querySelector('[data-demo-control="amplitude"]').value = String(state.amplitude);
         node.querySelector('[data-demo-control="frequency"]').value = String(state.frequency);
         node.querySelector('[data-demo-control="phase"]').value = String(state.phase);
@@ -258,9 +290,22 @@ function renderSinusoidPhasorDemo(node, demo) {
       const tick = (now) => {
         if (!node.isConnected) return;
         drawDemo(now);
-        window.requestAnimationFrame(tick);
+        state.raf = window.requestAnimationFrame(tick);   // [SP-1] track the LIVE id
       };
+      // [SP-1/PH-6] dispose contract: cancel the rAF loop + disconnect the observer
+      // when the app tears this demo down (before an innerHTML replace), so a
+      // re-hydration can never leave a second tick loop racing the first. The id is
+      // reassigned at BOTH the kickoff and the recursive site so cancelAnimationFrame
+      // always targets the loop's live frame, not a stale first-frame id.
+      window.__ftutorRegisterInteractiveDemoCleanup?.(node, () => {
+        if (state.raf) window.cancelAnimationFrame(state.raf);
+        state.raf = 0;
+        if (node._sinusoidResizeObserver) {
+          try { node._sinusoidResizeObserver.disconnect(); } catch (_) {}
+          node._sinusoidResizeObserver = null;
+        }
+      });
       updateControlLabels();
-      window.requestAnimationFrame(tick);
+      state.raf = window.requestAnimationFrame(tick);      // [SP-1] track the LIVE id
       return;
 }

@@ -74,6 +74,26 @@ resolvable here:
 
 ### 1a — 3 demo families pixel-unverified
 
+> **Status 2026-07-06 (PR-A):** the two renderers PR-A actually changes —
+> `sinusoid_phasor_projection` (SP-5/SP-1) and `phasor`/`renderPhasorDemo`
+> (PH-4/PH-6) — are now covered by DETERMINISTIC behavioral assertions in
+> `tools/test-demo-lifecycle.js` (authored-control plumbing + dispose lifecycle),
+> and the family-table typo class is guarded by `tools/check-demo-family-map.js`
+> (§2b, in `npm run check`). **deferred: real-lesson PIXEL views for
+> complex_plane / opposite-rotations / sinusoid.** complex_plane (`b.1-2`) and
+> opposite-rotations (`b.2-2`) are static (rAF-free) and pixel-diffable but cover
+> renderers PR-A does NOT touch (pure regression-safety); baking their baselines
+> into an unattended PR risks a flaky gate, so they are parked. The sinusoid
+> real-lesson view additionally needs a clock-freeze hook (its canvas animates on
+> a wall clock). **Next-session entry point (turnkey):** add PAGE_C_VIEWS
+> candidates in `tools/visual-diff.js` — complex_plane `{ sectionId: 'b.1-2',
+> expected: 'complex_plane', chapter: 'B Background', section: 'B.1 Complex
+> Numbers', title: 'B.1-2 Algebra of Complex Numbers' }`; opposite-rotations
+> `{ sectionId: 'b.2-2', expected: 'opposite_rotations', chapter: 'B Background',
+> section: 'B.2 Sinusoids', title: 'B.2-2 Sinusoids in Terms of Exponentials' }`
+> — plus matching VIEWS entries, then `--baseline` + a cold `--check` to confirm
+> determinism. Sev-3.
+
 The visual-diff harness pixel-covers `convolution_lab` + `pole_zero_roc_lab`
 family keys only. `complex_plane`, `sinusoid_phasor_projection`, and `phasor` are
 NOT pixel-verified. `drawCanvasArrow` save/restore is benign (every
@@ -98,6 +118,25 @@ whose primary demo `family` is one of the 13 table keys (e.g. a `convolution_lab
 or `pole_zero_roc_lab` subtopic with a cached lesson).
 
 ### 11 — Lesson-view sidebar-drift Option-B root fix (masked today, not fixed)
+
+> **Status 2026-07-06 (PR-A `feat/render-drivers-harness`):** the Option-B settle
+> sentinel below IS now shipped — the app emits
+> `document.documentElement.dataset.lessonLayoutStable` ('0' pending → '1' settled,
+> generation-token-guarded) after MathJax + `requestIdleCallback` + 2×rAF, and
+> `settleLesson` gates on it. This is a partial Option B: it settles the MathJax
+> reflow (cause #3) but does NOT explicitly gate on the chapter-accordion transition
+> (cause #1) or font-subpixel variance (cause #2).
+>
+> **deferred: full sidebar-coverage restore stays MASKED (Option A kept).** Evidence
+> the sentinel alone is insufficient: the mistake-notebook view `03b` shows the same
+> ~1.3% drift signature yet renders NO MathJax, so causes #1 (accordion `max-height`
+> jitter) and #2 (font subpixel) dominate and are untouched by a MathJax-settle
+> sentinel. Per the pre-execution adversarial review, un-masking + re-baselining is
+> expected to fail its own cold-double-baseline gate; not chased. **Next-session entry
+> point:** gate `markLessonLayoutStable` additionally on the `setAccordionOpen`
+> transition end (`app.js:641` `dataset.accordionToken` / transitionend) + a
+> font-rasterization settle, THEN retry the un-mask + cold double-baseline on the 9
+> lesson/MN views. Sev-3, regression-safety only.
 
 The 9 lesson/MN baselines drift ~1.3–1.4% because the left sidebar's vertical
 layout shifts ~1–2px per row across captures (accumulated rounding from the
