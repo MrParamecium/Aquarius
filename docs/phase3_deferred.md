@@ -1,18 +1,18 @@
 # Phase 3 — Deferred Items (post-refactor backlog)
 
-> ## ❄️ FROZEN 2026-07-18 — new AFK-loop deferrals go to GitHub issues
+> **❄️ FROZEN 2026-07-18 — new AFK-loop deferrals go to GitHub issues.**
 >
 > This doc is **frozen** as an AFK-dev-loop deferral sink. New deferrals (defer
 > rules D1–D6) are filed as GitHub issues labelled
 > [`afk-deferred`](https://github.com/MrParamecium/Fourier/issues?q=is%3Aissue+label%3Aafk-deferred)
-> — the issue queue this repo already treats as canonical. **No new entries are
+> — the issue queue this repo treats as canonical. **No new entries are
 > appended here.**
 >
 > This file remains the record for **historical and plan-level context** (the
 > Phase 3 post-refactor backlog below is unchanged and still triaged by the Gated
 > Timebox protocol). The **only** writer that may still append is an explicit
 > `afk-loop-runner.sh --issues off` run, whose entries land under a dedicated
-> `## Post-freeze fallback entries (--issues off)` subsection — never in the body
+> `## Post-freeze fallback entries (--issues off)` section — never in the body
 > above.
 >
 > Migration rationale + full protocol: central-db
