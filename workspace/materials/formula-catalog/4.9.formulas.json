@@ -1,0 +1,41 @@
+{
+  "sectionId": "4.9",
+  "sectionTitle": "Bode Plots",
+  "bookSource": "new",
+  "status": "draft_pdf_latex",
+  "verification": {
+    "method": "pdf_text_layer_and_section_ocr_partial_check",
+    "sourcePages": [
+      "page-420",
+      "page-421"
+    ],
+    "createdAt": "2026-06-14",
+    "note": "Contains draft formulas from PDF text layer; only per-formula status=verified entries are injected."
+  },
+  "formulas": [
+    {
+      "label": "(4.44)",
+      "name": "Bode example transfer function",
+      "latex": "H(s)=\\frac{K(s+a_1)(s+a_2)}{s(s+b_1)(s^2+b_2s+b_3)}",
+      "sourcePage": "page-420",
+      "role": "bode_example_model",
+      "status": "verified"
+    },
+    {
+      "label": "(4.45)",
+      "name": "Bode magnitude factorization",
+      "latex": "|H(j\\omega)|=\\left|\\frac{Ka_1a_2}{b_1b_3}\\right|\\frac{|1+j\\omega/a_1|\\,|1+j\\omega/a_2|}{|j\\omega|\\,|1+j\\omega/b_1|\\,|1+jb_2\\omega/b_3+(j\\omega)^2/b_3|}",
+      "sourcePage": "page-420",
+      "role": "bode_formula",
+      "status": "draft_pdf_latex"
+    },
+    {
+      "label": "(4.46)",
+      "name": "Bode phase factorization",
+      "latex": "\\angle H(j\\omega)=\\angle\\frac{Ka_1a_2}{b_1b_3}+\\angle\\left(1+\\frac{j\\omega}{a_1}\\right)+\\angle\\left(1+\\frac{j\\omega}{a_2}\\right)-\\angle j\\omega-\\angle\\left(1+\\frac{j\\omega}{b_1}\\right)-\\angle\\left(1+\\frac{jb_2\\omega}{b_3}+\\frac{(j\\omega)^2}{b_3}\\right)",
+      "sourcePage": "page-420",
+      "role": "bode_formula",
+      "status": "draft_pdf_latex"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.3. OCR text begins with: 362 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS The equation is d2 y(t) dy(t) dx(t) +5 + 6y(t) = + x(t) (4.22) dt2 dt dt Let y(t) ⇐⇒ Y(s)",
+  "keywords": [
+    "4.3",
+    "unit step",
+    "differential equation",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-362",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

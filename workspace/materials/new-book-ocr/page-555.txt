@@ -1,0 +1,59 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 555 — #68
+
+
+
+
+                                                                 5.8   The Bilateral z-Transform          555
+
+
+                                                                                              z plane
+                                          g nu[(n  1)]
+
+             7      5     3      1
+                                                                                        g
+                                          n
+
+
+                                                                           Region of convergence
+
+
+
+
+      Figure 5.27 (a) −γ n u[−(n + 1)] and (b) the region of convergence (ROC) of its z-transform.
+
+
+Therefore,
+                                                            z
+                             Z{−γ n u[−(n + 1)]} =                     |z| < |γ |                       (5.52)
+                                                           z−γ
+
+     A comparison of Eqs. (5.51) and (5.52) shows that the z-transform of γ n u[n] is identical to
+that of −γ n u[−(n + 1)]. The regions of convergence, however, are different. In the former case,
+X[z] converges for |z| > |γ |; in the latter, X[z] converges for |z| < |γ | (see Fig. 5.27b). Clearly,
+the inverse transform of X[z] is not unique unless the region of convergence is specified. If we
+add the restriction that all our signals be causal, however, this ambiguity does not arise. The
+inverse transform of z/(z − γ ) is γ n u[n] even without specifying the ROC. Thus, in the unilateral
+transform, we can ignore the ROC in determining the inverse z-transform  % of X[z].
+     As in the case of the bilateral Laplace transform, if x[n] = ki=1 xi [n], then the ROC
+for X[z] is the intersection of the ROCs (region common to all ROCs) for the transforms
+X1 [z], X2 [z], . . . , Xk [z].
+     The preceding results lead to the conclusion (similar to that for the Laplace transform) that
+if z = β is the largest magnitude pole for a causal sequence, its ROC is |z| > |β|. If z = α is the
+smallest magnitude nonzero pole for an anticausal sequence, its ROC is |z| < |α|.
+
+R EGION OF C ONVERGENCE FOR L EFT-S IDED
+AND R IGHT-S IDED S EQUENCES
+Let us first consider a finite duration sequence xf [n], defined as a sequence that is nonzero for
+N1 ≤ n ≤ N2 , where both N1 and N2 are finite numbers and N2 > N1 . Also,
+
+                                                    "
+                                                    N2
+                                         Xf [z] =          xf [n]z−n
+                                                    n=N1
+
+
+For example, if N1 = −2 and N2 = 1, then
+
+                                                                           xf [1]
+                            Xf [z] = xf [−2]z2 + xf [−1]z + xf [0] +
+                                                                              z

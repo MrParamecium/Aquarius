@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": "Application to Feedback and Controls 405",
+  "summary": "This page covers 4.7 (Application to Feedback and Controls 405). OCR text begins with: 4.7 Application to Feedback and Controls 405 correction to be applied to the system input. It may be possible to counteract the variations by feeding the output (or some function of output) back to the input. We unconsciously apply this principle in daily life. Consider an example of marketing a certain product. The optimum price of the product is the value that maximizes the profit of a merchant. The output in this",
+  "keywords": [
+    "4.7",
+    "Application to Feedback and Controls 405",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-405",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

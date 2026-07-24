@@ -1,0 +1,55 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 547 — #60
+
+
+
+
+                                                      5.7 Digital Processing of Analog Signals     547
+
+
+
+ D R I L L 5.21 Highpass Filter by Pole-Zero Placement
+ Use the graphical argument to show that a filter with transfer function
+
+
+                                                         z − 0.9
+                                              H[z] =
+                                                            z
+
+ acts like a highpass filter. Make a rough sketch of the amplitude response.
+
+
+
+
+5.7 D IGITAL P ROCESSING OF A NALOG S IGNALS
+An analog (meaning continuous-time) signal can be processed digitally by sampling the analog
+signal and processing the samples by a digital (meaning discrete-time) processor. The output of
+the processor is then converted back to analog signal, as shown in Fig. 5.24a. We saw some simple
+cases of such processing in Exs. 3.8, 3.9, 5.14, and 5.15. In this section, we shall derive a criterion
+for designing such a digital processor for a general LTIC system.
+     Suppose that we wish to realize an equivalent of an analog system with transfer function
+Ha (s), shown in Fig. 5.24b. Let the digital processor transfer function in Fig. 5.24a that realizes
+this desired Ha (s) be H[z]. In other words, we wish to make the two systems in Fig. 5.24 equivalent
+(at least approximately).
+     By “equivalence” we mean that for a given input x(t), the systems in Fig. 5.24 yield the same
+output y(t). Therefore, y(nT), the samples of the output in Fig. 5.24b, are identical to y[n], the
+output of H[z] in Fig. 5.24a.
+
+
+
+
+      x(t)      Continuous to   x[n]     Discrete-time    y[n]       Discrete to   y(t)
+                  discrete,                 system                   continuous,
+                    C/D           a          H[z]           b           D/C
+
+
+
+                                             Ha(s)
+                                               (a)
+
+
+      x(t)                                                                         y(t)
+                                              Ha(s)
+
+
+                                               (b)
+      Figure 5.24 Analog filter realization with a digital filter.

@@ -1,0 +1,23 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": "5.3-2",
+  "title": "Stability",
+  "summary": "This page covers 5.3-2 (Stability). OCR text begins with: 518 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM D R I L L 5.13 Transfer Function to Find Zero-State Response and Difference Equation A discrete-time system is described by the following transfer function: z − 0.5 H[z] = (z + 0.5)(z − 1)",
+  "keywords": [
+    "5.3",
+    "5.3-2",
+    "Stability",
+    "zero-state response",
+    "difference equation",
+    "characteristic roots",
+    "discrete-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-518",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": "THE z-TRANSFORM",
+  "summary": "This page covers 5.1 (THE z-TRANSFORM). OCR text begins with: CHAPTER 5 DISCRETE-TIME SYSTEM A NALYSIS U SING THE z-T RANSFORM The counterpart of the Laplace transform for discrete-time systems is the z-transform. The Laplace transform converts integro-differential equations into algebraic equations. In the same way, the z-transforms changes difference equations into algebraic equations, thereby simplifying",
+  "keywords": [
+    "5.1",
+    "THE z-TRANSFORM",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-488",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

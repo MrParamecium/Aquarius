@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": "Bode Plots 421",
+  "summary": "This page covers 4.9 (Bode Plots 421). OCR text begins with: 4.9 Bode Plots 421 denominator, its phase is subtracted. This makes it easy to plot the phase function \u0004 H(jω) as a function of ω. Computation of |H(jω)|, unlike that of the phase function, however, involves the multiplication and division of various terms. This is a formidable task, especially when we have to plot this function for the entire range of ω (0 to ∞). We know that a log operation converts multiplication",
+  "keywords": [
+    "4.9",
+    "Bode Plots 421"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-421",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

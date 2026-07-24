@@ -1,0 +1,57 @@
+         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 491 — #4
+
+
+
+
+                                                                             5.1 The z-Transform          491
+
+     Later in Eq. (5.52), we show that the z-transform of another signal, −γ n u[−(n + 1)], is
+also z/(z − γ ). However, the ROC in this case is |z| < |γ |. Clearly, the inverse z-transform of
+z/(z − γ ) is not unique. However, if we restrict the inverse transform to be causal, then the
+inverse transform is unique, namely, γ n u[n].
+
+
+
+     The ROC is required for evaluating x[n] from X[z], according to Eq. (5.2). The integral in
+Eq. (5.2) is a contour integral, implying integration in a counterclockwise direction along a closed
+path centered at the origin and satisfying the condition |z| > |γ |. Thus, any circular path centered at
+the origin and with a radius greater than |γ | (Fig. 5.1b) will suffice. We can show that the integral
+in Eq. (5.2) along any such path (with a radius greater than |γ |) yields the same result, namely,
+x[n].† Such integration in the complex plane requires a background in the theory of functions of
+complex variables. We can avoid this integration by compiling a table of z-transforms (Table 5.1),
+where z-transform pairs are tabulated for a variety of signals. To find the inverse z-transform of
+say, z/(z − γ ), instead of using the complex integration in Eq. (5.2), we consult the table and find
+the inverse z-transform of z/(z − γ ) as γ n u[n]. Because of the uniqueness property of the unilateral
+z-transform, there is only one inverse for each X[z]. Although the table given here is rather short,
+it comprises the functions of most practical interest.
+     The situation of the z-transform regarding the uniqueness of the inverse transform is parallel to
+that of the Laplace transform. For the bilateral case, the inverse z-transform is not unique unless the
+ROC is specified. For the unilateral case, the inverse transform is unique; the region of convergence
+need not be specified to determine the inverse z-transform. For this reason, we shall ignore the ROC
+in the unilateral z-transform Table 5.1.
+
+E XISTENCE OF THE z-T RANSFORM
+By definition,
+                                               ∞
+                                               "                  ∞
+                                                                  " x[n]
+                                      X[z] =         x[n]z−n =
+                                               n=0                n=0
+                                                                        zn
+
+The existence of the z-transform is guaranteed if
+
+                                                     ∞
+                                                     " |x[n]|
+                                         |X[z]| ≤                 <∞
+                                                     n=0
+                                                           |z|n
+
+for some |z|. Any signal x[n] that grows no faster than an exponential signal r0n , for some r0 ,
+satisfies this condition. Thus, if
+
+                                       |x[n]| ≤ r0n        for some r0                                  (5.6)
+
+
+† Indeed, the path need not even be circular. It can have any odd shape, as long as it encloses the pole(s) of
+X[z] and the path of integration is counterclockwise.

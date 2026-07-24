@@ -1,0 +1,56 @@
+{
+  "sectionId": "5.2-1",
+  "sectionTitle": "Time-Shifting Properties",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-501",
+      "page-503"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.12)",
+      "name": "One-sample right shift for causal sequence",
+      "latex": "x[n-1]u[n-1]\\Longleftrightarrow z^{-1}X[z]",
+      "sourcePage": "page-501",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.13)",
+      "name": "m-sample right shift for causal sequence",
+      "latex": "x[n-m]u[n-m]\\Longleftrightarrow z^{-m}X[z]",
+      "sourcePage": "page-501",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.14)",
+      "name": "One-sample right shift with u[n]",
+      "latex": "x[n-1]u[n]\\Longleftrightarrow z^{-1}X[z]+x[-1]",
+      "sourcePage": "page-501",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.15)",
+      "name": "m-sample right shift with u[n]",
+      "latex": "x[n-m]u[n]\\Longleftrightarrow z^{-m}X[z]+z^{-m}\\sum_{r=0}^{m-1}x[-m+r]z^{m-r}",
+      "sourcePage": "page-501",
+      "role": "core_property",
+      "status": "draft_pdf_latex"
+    },
+    {
+      "label": "(5.16)",
+      "name": "m-sample left shift with u[n]",
+      "latex": "x[n+m]u[n]\\Longleftrightarrow z^mX[z]-z^m\\sum_{n=0}^{m-1}x[n]z^{-n}",
+      "sourcePage": "page-503",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

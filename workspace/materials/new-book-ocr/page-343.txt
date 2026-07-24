@@ -1,0 +1,56 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 343 — #14
+
+
+
+
+                                                                4.1 The Laplace Transform         343
+
+We now clear fractions by multiplying both sides of the equation by (s + 1)(s + 2)3 . This
+procedure yields†
+
+      8s + 10 = 2(s + 2)3 + 6(s + 1) + a1 (s + 1)(s + 2) + a2 (s + 1)(s + 2)2
+               = (2 + a2 )s3 + (12 + a1 + 5a2 )s2 + (30 + 3a1 + 8a2 )s + (22 + 2a1 + 4a2 )
+
+Equating coefficients of s3 and s2 on both sides, we obtain
+
+                         0 = (2 + a2 )      ⇒     a2 = −2
+                         0 = 12 + a1 + 5a2 = 2 + a1         ⇒     a1 = −2
+
+We can stop here if we wish, since the two desired coefficients a1 and a2 have already been
+found. However, equating the coefficients of s1 and s0 serves as a check on our answers. This
+step yields
+
+                                          8 = 30 + 3a1 + 8a2
+                                         10 = 22 + 2a1 + 4a2
+
+Substitution of a1 = a2 = −2, obtained earlier, satisfies these equations. This step confirms the
+correctness of our answers.
+
+A NOTHER A LTERNATIVE : A H YBRID OF H EAVISIDE
+AND S HORTCUTS
+In this method, the simpler coefficients k1 and a0 are determined by the Heaviside “cover-up”
+procedure, as discussed earlier. The usual shortcuts are then used to determine the remaining
+coefficients. Using the values k1 = 2 and a0 = 6, determined earlier by the Heaviside method,
+we have
+                         8s + 10         2         6         a1        a2
+                                    =        +          +          +
+                     (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+There are two unknowns, a1 and a2 . If we multiply both sides by s and then let s → ∞, we
+eliminate a1 . This procedure yields
+
+                                  0 = 2 + a2       ⇒   a2 = −2
+
+Therefore,
+                         8s + 10       2       6       a1      2
+                                    =     +        +        −
+                     (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+There is now only one unknown, a1 . This value can be determined readily by setting s equal to
+any convenient value, say, s = 0. This step yields
+                             10     3 a1
+                                = 2+ + −1               ⇒ a1 = −2
+                              8     4 4
+† We could have cleared fractions without finding k and a . This alternative, however, proves more
+                                                   1      0
+laborious because it increases the number of unknowns to 4. By predetermining k1 and a0 , we reduce
+the unknowns to 2. Moreover, this method provides a convenient check on the solution. This hybrid
+procedure achieves the best of both methods.

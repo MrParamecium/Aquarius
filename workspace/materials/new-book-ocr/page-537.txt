@@ -1,0 +1,55 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 537 — #50
+
+
+
+
+                                     5.5    Frequency Response of Discrete-Time Systems            537
+
+a continuous-time signal that contains two distinct components of frequencies ω1 and ω2 . The
+samples of these components appear as discrete-time sinusoids of frequencies 1 = ω1 T and
+2 = ω2 T. If 1 and 2 happen to differ by an integer multiple of 2π (if ω2 − ω1 = 2kπ/T),
+the two frequencies will be read as the same (lower of the two) frequency by the digital processor.‡
+As a result, the higher-frequency component ω2 not only is lost for good (by losing its identity to
+ω1 ), but also it reincarnates as a component of frequency ω1 , thus distorting the true amplitude of
+the original component of frequency ω1 . Hence, the resulting processed signal will be distorted.
+Clearly, aliasing is highly undesirable and should be avoided. To avoid aliasing, the frequencies of
+the continuous-time sinusoids to be processed should be kept within the fundamental band ωT ≤ π
+or ω ≤ π/T. Under this condition the question of ambiguity or aliasing does not arise because any
+continuous-time sinusoid of frequency in this range has a unique waveform when it is sampled.
+Therefore, if ωh is the highest frequency to be processed, then, to avoid aliasing,
+                                                         π
+                                                ωh <
+                                                         T
+If fh is the highest frequency in hertz, fh = ωh /2π , and we avoid aliasing if
+
+                                            1                       1
+                                    fh <            or        T<                                (5.39)
+                                           2T                      2fh
+
+This shows that discrete-time signal processing places the limit on the highest frequency fh that
+can be processed for a given value of the sampling interval T. Fortunately, we can process a signal
+of any frequency (without aliasing) by choosing a suitably small value of T. Since the sampling
+frequency fs is the reciprocal of the sampling interval T, we can also express Eq. (5.39) as
+
+                                          1                              fs
+                                   fs =     > 2fh        or    fh <                             (5.40)
+                                          T                              2
+This result is a special case of the well-known sampling theorem (to be proved in Ch. 8). It states
+that for a discrete-time system to process a continuous-time sinusoid, the sampling rate must be
+greater than twice the frequency (in hertz) of the sinusoid. In short, a sampled sinusoid must have
+a minimum of two samples per cycle.† For sampling rates below this minimum value, the output
+signal will be aliased, which means it will be mistaken for a sinusoid of lower frequency.
+
+A NTI - ALIASING F ILTER
+If the sampling rate fails to satisfy Eq. (5.40), aliasing occurs, causing the frequencies beyond fs /2
+Hz to masquerade as lower frequencies to corrupt the spectrum at frequencies below fs /2. To avoid
+such a corruption, a signal to be sampled is passed through an anti-aliasing filter of bandwidth fs /2
+prior to sampling. This operation ensures the condition of Eq. (5.40). The drawback of such a filter
+is that we lose the spectral components of the signal beyond frequency fs /2, which is preferable
+to the aliasing corruption of the signal at frequencies below fs /2. Chapter 8 presents a detailed
+analysis of the aliasing problem.
+
+‡ In the case shown in Fig. 5.18, ω = 12π , ω = 2π , and T = 0.2. Hence, ω − ω = 10π T = 2π , and the
+                                   1          2                             2     1
+two frequencies are read as the same frequency  = 0.4π by the digital processor.
+† Strictly speaking, we must have more than two samples per cycle.

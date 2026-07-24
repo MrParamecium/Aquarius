@@ -1,0 +1,97 @@
+# Fourier section OCR
+section_id: 4.10-2
+source_pages: page-439, page-440, page-441
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.10-2 Lowpass Filters
+A typical lowpass filter has a maximum gain at ω = 0. Because a pole enhances the gain at
+frequencies in its vicinity, we need to place a pole (or poles) on the real axis opposite the origin
+(jω = 0), as shown in Fig. 4.50a. The transfer function of this system is
+                                                        ωc
+                                             H(s) =
+                                                      s + ωc
+We have chosen the numerator of H(s) to be ωc to normalize the dc gain H(0) to unity. If d is the
+distance from the pole −ωc to a point jω (Fig. 4.50a), then
+                                                         ωc
+                                             |H(jω)| =
+                                                         d
+with H(0) = 1. As ω increases, d increases and |H(jω)| decreases monotonically with ω, as
+illustrated in Fig. 4.50d with label N = 1. This is clearly a lowpass filter with gain enhanced
+in the vicinity of ω = 0.
+
+WALL OF P OLES
+An ideal lowpass filter characteristic (shaded in Fig. 4.50d) has a constant gain of unity up to
+frequency ωc . Then the gain drops suddenly to 0 for ω > ωc . To achieve the ideal lowpass
+
+[[PAGE page-440]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 440 — #111
+
+
+
+
+440   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                                                                 jvc
+                              N1                                                             jvc
+
+                                                                                                  N5
+                      d       jv
+
+            2vc               0      Re                         0      Re                     0      Re
+
+
+
+
+                                                                jvc                          jvc
+
+                            (a)                            (b)                              (c)
+
+
+                                     1                     Ideal (N  )
+
+
+
+                          H( jv)
+                                                                            N1
+
+                                                                            N2
+
+                                                                 8     N4
+                                                           10
+                                     0                vc                               v
+                                                                (d)
+            Figure 4.50 Pole-zero configuration and the amplitude response of a lowpass (Butterworth) filter.
+
+
+      characteristic, we need enhanced gain over the entire frequency band from 0 to ωc . We know
+      that to enhance a gain at any frequency ω, we need to place a pole opposite ω. To achieve an
+      enhanced gain for all frequencies over the band (0 to ωc ), we need to place a pole opposite every
+      frequency in this band. In other words, we need a continuous wall of poles facing the imaginary
+      axis opposite the frequency band 0 to ωc (and from 0 to −ωc for conjugate poles), as depicted in
+      Fig. 4.50b. At this point, the optimum shape of this wall is not obvious because our arguments
+      are qualitative and intuitive. Yet, it is certain that to have enhanced gain (constant gain) at every
+      frequency over this range, we need an infinite number of poles on this wall. We can show that
+      for a maximally flat† response over the frequency range (0 to ωc ), the wall is a semicircle with an
+      infinite number of poles uniformly distributed along the wall [11]. In practice, we compromise by
+      using a finite number (N) of poles with less-than-ideal characteristics. Figure 4.50c shows the pole
+      configuration for a fifth-order (N = 5) filter. The amplitude response for various values of N is
+      illustrated in Fig. 4.50d. As N → ∞, the filter response approaches the ideal. This family of filters
+      is known as the Butterworth filters. There are also other families. In Chebyshev filters, the wall
+      shape is a semiellipse rather than a semicircle. The characteristics of a Chebyshev filter are inferior
+      to those of Butterworth over the passband (0, ωc ), where the characteristics show a rippling effect
+
+      † Maximally flat amplitude response means the first 2N − 1 derivatives of |H(jω)| with respect to ω are zero
+      at ω = 0.
+
+[[PAGE page-441]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 441 — #112
+
+
+
+
+                                  4.10 Filter Design by Placement of Poles and Zeros of H(s)         441
+
+instead of the maximally flat response of Butterworth. But in the stopband (ω > ωc ), Chebyshev
+behavior is superior in the sense that Chebyshev filter gain drops faster than that of the Butterworth.

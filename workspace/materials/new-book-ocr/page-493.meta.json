@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": "The z-Transform 493",
+  "summary": "This page covers 5.1 (The z-Transform 493). OCR text begins with: 5.1 The z-Transform 493 then \"∞ n r0 1 |X[z]| ≤ = r0 |z| > r0 n=0 |z| 1−",
+  "keywords": [
+    "5.1",
+    "The z-Transform 493",
+    "unit impulse",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-493",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,56 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 536 — #49
+
+
+
+
+536   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           (e) We have 34.699 = −3 + 6(2π ). Hence, a = −3, and the apparent frequency |a | = 3
+      rad/sample. Because a is negative, there is a sign change of the phase. Hence, the apparent
+      sinusoid is cos (3n − θ ).
+
+
+
+
+       D R I L L 5.20 Apparent Frequency
+       Show that the sinusoids having frequencies  of (a) 2π , (b) 3π , (c) 5π , (d) 3.2π , (e) 22.1327,
+       and (f) π + 2 can be expressed, respectively, as sinusoids of frequencies (a) 0, (b) π , (c) π ,
+       (d) 0.8π , (e) 3, and (f) π − 2. Show that in cases (d), (e), and (f), phase changes sign.
+
+
+
+      5.5-2 Aliasing and Sampling Rate
+      The non-uniqueness of discrete-time sinusoids and the periodic repetition of the same waveforms
+      at intervals of 2π may seem innocuous, but in reality it leads to a serious problem for processing
+      continuous-time signals by digital filters. A continuous-time sinusoid cos ωt sampled every T
+      seconds (t = nT) results in a discrete-time sinusoid cos ωnT, which is cos n with  = ωT.
+      The discrete-time sinusoids cos n have unique waveforms only for the values of frequencies
+      in the range  < π or ωT < π . Therefore, samples of continuous-time sinusoids of two (or
+      more) different frequencies can generate the same discrete-time signal, as shown in Fig. 5.18.
+      This phenomenon is known as aliasing because through sampling, two entirely different analog
+      sinusoids take on the same “discrete-time” identity.†
+           Aliasing causes ambiguity in digital signal processing, which makes it impossible to
+      determine the true frequency of the sampled signal. Consider, for instance, digitally processing
+
+                                     cos 2pt                  cos 12pt
+                                     f  1 Hz                 f  6 Hz
+
+
+
+
+                                                                   0.6                0.8                  1
+       0                   0.2                  0.4                                                            t
+
+
+
+
+                                         fs  5 Hz
+
+      Figure 5.18 Demonstration of the aliasing effect.
+
+
+      † Figure 5.18 shows samples of two sinusoids cos 12π t and cos 2π t taken every 0.2 second. The corresponding
+      discrete-time frequencies ( = ωT = 0.2ω) are cos 2.4π and cos 0.4π . The apparent frequency of 2.4π
+      is 0.4π , identical to the discrete-time frequency corresponding to the lower sinusoid. This shows that the
+      samples of both these continuous-time sinusoids at 0.2-second intervals are identical, as verified from
+      Fig. 5.18.

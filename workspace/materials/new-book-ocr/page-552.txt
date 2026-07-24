@@ -1,0 +1,55 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 552 — #65
+
+
+
+
+552   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                     x[n]                      0.3142
+                                                        y[n]
+                                              1
+                                              z
+
+
+                                   0.7304
+                                      (a)
+         1    H
+
+
+
+
+                                                        H[e jvT]
+
+                       Ha( jv)
+
+               105                  5  105                          106      v
+                                      (b)
+
+       ⬔H
+               105                  5  105                      v
+
+                                                                     106
+
+                                   ⬔H[e jvT]
+
+
+
+
+                                   ⬔Ha( jv)
+
+      p2
+                                      (c)
+
+      Figure 5.26 An example of filter design by the impulse-invariance method: (a) filter
+      realization, (b) amplitude response, and (c) phase response.
+
+
+      The corresponding magnitude response is
+                                                                           0.3142
+                            |H[ejωT ]| = 
+                                              (1 − 0.7304 cos ωT)2 + (0.7304 sin ωT)2
+                                                     0.3142
+                                            =√                                          (5.49)
+                                               1.533 − 1.4608 cos ωT

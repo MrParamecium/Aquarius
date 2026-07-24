@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.12-3",
+  "sourcePages": [
+    "page-461",
+    "page-462",
+    "page-463"
+  ],
+  "usedPages": [
+    "page-461",
+    "page-462",
+    "page-463"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.12-3 Using Cascaded Second-Order Sections",
+  "foundEnd": true,
+  "endBeforeLine": "4.12-4 Chebyshev Filters",
+  "endBeforeCode": "4.12-4",
+  "charCount": 7282
+}

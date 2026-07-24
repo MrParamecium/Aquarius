@@ -1,0 +1,50 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 344 — #15
+
+
+
+
+344       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.4 Inverse Laplace Transform with MATLAB
+
+          Using the MATLAB residue command, determine the inverse Laplace transform of each of
+          the following functions:
+                              2s2 + 5
+               (a) Xa (s) =
+                            s2 + 3s + 2
+                              2s2 + 7s + 4
+               (b) Xb (s) =
+                            (s + 1)(s + 2)2
+                              8s2 + 21s + 19
+               (c) Xc (s) =
+                            (s + 2)(s2 + s + 7)
+
+
+          In each case, we use the MATLAB residue command to perform the necessary partial fraction
+          expansions. The inverse Laplace transform follows using Table 4.1.
+               (a)
+          >>   num = [2 0 5]; den = [1 3 2];
+          >>   [r, p, k] = residue(num,den)
+               r = -13
+                     7
+               p = -2
+                    -1
+               k =   2
+          Therefore, Xa (s) = −13/(s + 2) + 7/(s + 1) + 2 and xa (t) = (−13e−2t + 7e−t )u(t) + 2δ(t).
+               (b)
+          >>   num = [2 7 4]; den = [conv([1 1],conv([1 2],[1 2]))];
+          >>   [r, p, k] = residue(num,den)
+               r = 3
+                    2
+                   -1
+               p = -2
+                   -2
+                   -1
+               k = []
+          Therefore, Xb (s) = 3/(s + 2) + 2/(s + 2)2 − 1/(s + 1) and xb (t) = (3e−2t + 2te−2t − e−t )u(t).
+
+               (c) In this case, a few calculations are needed beyond the results of the residue command
+          so that pair 10b of Table 4.1 can be utilized.
+          >>   num = [8 21 19]; den = [conv([1 2],[1 1 7])];
+          >>   [r, p, k]= residue(num,den)

@@ -1,0 +1,56 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 385 — #56
+
+
+
+
+                       4.5 Analysis of Electrical Networks: The Transformed Network     385
+
+     The sum of all the three currents is zero. Therefore,
+                   Va (s) − Vi (s) Va (s) − Vb (s)
+                                  +                + [Va (s) − KVb (s)]C1 s = 0
+                         R1              R2
+or
+                    1   1                 1                  1
+                      +   + C1 s Va (s) −    + KC1 s Vb (s) = Vi (s)
+                    R1 R2                 R2                 R1
+Similarly, the node equation at node b yields
+
+                                  Vb (s) − Va (s)
+                                                  + C2 sVb (s) = 0
+                                        R2
+or
+                                  1           1
+                              −      Va (s) +    + C2 s Vb (s) = 0
+                                  R2          R2
+The two node equations in two unknown node voltages Va (s) and Vb (s) can be expressed in
+matrix form as
+                                               !       !              !
+                  G1 + G2 + C1 s −(G2 + KC1 s) Va (s)        G1 Vi (s)
+                                                         =
+                       −G2         (G2 + C2 s)   Vb (s)         0
+
+where
+                                         1                      1
+                                  G1 =          and      G2 =
+                                         R1                     R2
+Application of Cramer’s rule yields
+
+                  Vb (s)                          G1 G2
+                         =
+                  Vi (s)   C1 C2 s2 + [G1 C2 + G2 C2 + G2 C1 (1 − K)]s + G1 G2
+                                 ω0 2
+                         = 2
+                           s + 2αs + ω0 2
+where
+                             Rb                      G1 G2        1
+                     K = 1+          and      ω0 2 =       =
+                             Ra                      C1 C2   R1 R2 C1 C2
+                  G1 C2 + G2 C2 + G2 C1 (1 − K)       1      1        1
+             2α =                               =        +       +       (1 − K)
+                              C1 C2                 R1 C1 R2 C1 R2 C2
+Now
+                                          Vo (s) = KVb (s)
+Therefore,
+                                    Vo (s)    Vb (s)      Kω0 2
+                          H(s) =           =K        = 2
+                                    Vi (s)    Vi (s)  s + 2αs + ω0 2

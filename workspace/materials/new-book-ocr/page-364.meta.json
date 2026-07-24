@@ -1,0 +1,24 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-1",
+  "title": null,
+  "summary": "This page covers 4.3-1. OCR text begins with: 364 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS of linear systems because the response obtained cannot be separated into zero-input and zero-state components. As we know, the zero-state component represents the system response as an explicit function of the input, and without knowing this component, it is not possible to assess the effect of the input on the system response in a general way. The L+ version can separate",
+  "keywords": [
+    "4.3",
+    "4.3-1",
+    "zero-input response",
+    "zero-state response",
+    "convolution",
+    "unit step",
+    "differential equation",
+    "continuous-time",
+    "system response",
+    "state equation"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-364",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": "Frequency Response from Pole-Zero Locations 543",
+  "summary": "This page covers 5.6 (Frequency Response from Pole-Zero Locations 543). OCR text begins with: 5.6 Frequency Response from Pole-Zero Locations 543 where |γ | < 1 for stability. The closer γ is to the unit circle, the more sharply peaked is the response around ω = 250π . We also have zeros at ±1. Hence, (z − 1)(z + 1) z2 − 1 H[z] = K = K √ (z − |γ |ejπ/4 )(z − |γ |e−jπ/4 ) z2 − 2|γ |z + |γ |2 For convenience, we shall choose K = 1. The amplitude response is given by",
+  "keywords": [
+    "5.6",
+    "Frequency Response from Pole-Zero Locations 543",
+    "discrete-time",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-543",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

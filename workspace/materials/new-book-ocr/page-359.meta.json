@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": null,
+  "title": "Some Properties of the Laplace Transform 359",
+  "summary": "This page covers 4.2 (Some Properties of the Laplace Transform 359). OCR text begins with: 4.2 Some Properties of the Laplace Transform 359 I NITIAL AND F INAL VALUES In certain applications, it is desirable to know the values of x(t) as t → 0 and t → ∞ [initial and final values of x(t)] from the knowledge of its Laplace transform X(s). Initial and final value theorems provide such information. The initial value theorem states that if x(t) and its derivative dx/dt are both Laplace transformable, then",
+  "keywords": [
+    "4.2",
+    "Some Properties of the Laplace Transform 359",
+    "unit impulse",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-359",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

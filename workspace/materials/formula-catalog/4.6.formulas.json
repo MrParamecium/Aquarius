@@ -1,0 +1,23 @@
+{
+  "sectionId": "4.6",
+  "sectionTitle": "System Realization",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-388"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.36)",
+      "name": "General rational transfer function for realization",
+      "latex": "H(s)=\\frac{b_0s^N+b_1s^{N-1}+\\cdots+b_{N-1}s+b_N}{s^N+a_1s^{N-1}+\\cdots+a_{N-1}s+a_N}",
+      "sourcePage": "page-388",
+      "role": "core_model",
+      "status": "verified"
+    }
+  ]
+}

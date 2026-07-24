@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": "z-Transform Solution of Linear Difference Equations 513",
+  "summary": "This page covers 5.3 (z-Transform Solution of Linear Difference Equations 513). OCR text begins with: 5.3 z-Transform Solution of Linear Difference Equations 513 Therefore, 5 6 11 (3z + 5) 1− + Y[z] = 3 − + z z2 z z(z − 0.5) \u0019 \u001a\u001b \u0019 \u001a\u001b",
+  "keywords": [
+    "5.3",
+    "z-Transform Solution of Linear Difference Equations 513",
+    "zero-input response",
+    "zero-state response",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-513",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

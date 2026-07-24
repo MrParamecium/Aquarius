@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.6-2",
+  "sourcePages": [
+    "page-390",
+    "page-391",
+    "page-392",
+    "page-393"
+  ],
+  "usedPages": [
+    "page-390",
+    "page-391",
+    "page-392",
+    "page-393"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.6-2 Direct Form II Realization",
+  "foundEnd": true,
+  "endBeforeLine": "4.6-3 Cascade and Parallel Realizations",
+  "endBeforeCode": "4.6-3",
+  "charCount": 9145
+}

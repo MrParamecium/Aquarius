@@ -1,0 +1,56 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 571 — #84
+
+
+
+
+                                              5.10   MATLAB: Discrete-Time IIR Filters          571
+
+rate of 10 kHz, then T = 1/(10,000) and ωc maps to c = 2 arctan (ωc T/2) = 1.5116. Thus, the
+transformed cutoff frequency is short of the desired c = ωc T = 0.6π = 1.8850.
+     Cutoff frequencies are important and need to be as accurate as possible. By adjusting the
+parameter T used in the bilinear transform, one continuous-time frequency can be exactly mapped
+to one discrete-time frequency; the process is called prewarping. Continuing the last example,
+adjusting T = (2/ωc ) tan (c /2) ≈ 1/6848 achieves the appropriate prewarping to ensure ωc =
+2π 3000 maps to c = 0.6π .
+
+
+
+5.10-6 Example: Butterworth Filter Transformation
+To illustrate the transformation techniques, consider a continuous-time 10th-order Butterworth
+lowpass filter with cutoff frequency ωc = 2π 3000, as designed in Sec. 4.12. First, we determine
+continuous-time coefficient vectors A and B.
+
+>>   omega_c = 2*pi*3000; N=10;
+>>   poles = roots([(1j*omega_c)^(-2*N),zeros(1,2*N-1),1]);
+>>   poles = poles(find(poles<0));
+>>   B = 1; A = poly(poles); A = A/A(end);
+
+
+Programs CH5MP3 and CH5MP4 are used to perform first-order forward difference and bilinear
+transformations, respectively.
+
+>>   Omega = linspace(0,pi,200); T = 1/10000; Omega_c = omega_c*T;
+>>   [B1,A1] = CH5MP3(B,A,T); % First-order backward difference transformation
+>>   [B2,A2] = CH5MP4(B,A,T); % Bilinear transformation
+>>   [B3,A3] = CH5MP4(B,A,2/omega_c*tan(Omega_c/2)); % Bilinear with prewarping
+
+
+     Magnitude responses are computed using CH5MP1 and then plotted.
+
+>>   H1mag = abs(CH5MP1(B1,A1,Omega));
+>>   H2mag = abs(CH5MP1(B2,A2,Omega));
+>>   H3mag = abs(CH5MP1(B3,A3,Omega));
+>>   plot(Omega,(Omega<=Omega_c),’k’,Omega,H1mag,’k-.’,...
+>>        Omega,H2mag,’k--’,Omega,H3mag,’k:’);
+>>   axis([0 pi -.05 1.5]);
+>>   xlabel(’\Omega [rad]’); ylabel(’Magnitude Response’);
+>>   legend(’Ideal’,’FOBD’,’BLT’,’Prewarp BLT’,’location’,’best’);
+
+
+The result of each transformation method is shown in Fig. 5.31, where FOBD and BLT stand for
+first-order backward difference and bilinear transformation, respectively.
+      Although the first-order backward difference results in a lowpass filter, the method causes
+significant distortion that makes the resulting filter unacceptable with regard to cutoff frequency.
+The bilinear transformation is better, but, as predicted, the cutoff frequency falls short of the
+desired value. Bilinear transformation with prewarping properly locates the cutoff frequency and
+produces a very acceptable filter response.

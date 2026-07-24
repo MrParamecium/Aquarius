@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 336 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E XISTENCE OF THE L APLACE T RANSFORM The variable s in the Laplace transform is complex in general, and it can be expressed as s = σ +jω. By definition, # ∞ # ∞ −st X(s) = x(t)e dt = [x(t)e−σ t ]e−jωt dt",
+  "keywords": [
+    "4.1",
+    "unit impulse",
+    "unit step",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-336",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

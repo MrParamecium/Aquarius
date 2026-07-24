@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": "5.3-1",
+  "title": "Zero-State Response of LTID Systems: The Transfer Function",
+  "summary": "This page covers 5.3-1 (Zero-State Response of LTID Systems: The Transfer Function). OCR text begins with: 514 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 5.3-1 Zero-State Response of LTID Systems: The Transfer Function Consider an Nth-order LTID system specified by the difference equation Q[E]y[n] = P[E]x[n] or (EN + a1 EN−1 + · · · + aN−1 E + aN )y[n] = (b0 EN + b1 EN−1 + · · · + bN−1 E + bN )x[n]",
+  "keywords": [
+    "5.3",
+    "5.3-1",
+    "Zero-State Response of LTID Systems: The Transfer Function",
+    "zero-state response",
+    "difference equation",
+    "discrete-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-514",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

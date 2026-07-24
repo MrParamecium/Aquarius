@@ -1,0 +1,28 @@
+                       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 384 — #55
+
+
+
+
+384     CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+      Figure 4.17 (a) Sallen–Key circuit and (b) its equivalent.
+
+
+
+             We are required to find
+                                                             Vo (s)
+                                                    H(s) =
+                                                             Vi (s)
+        assuming all initial conditions to be zero.
+              Figure 4.17b shows the transformed version of the circuit in Fig. 4.17a. The noninverting
+        amplifier is replaced by its equivalent circuit. All the voltages are replaced by their Laplace
+        transforms, and all the circuit elements are shown by their impedances. All the initial
+        conditions are assumed to be zero, as required for determining H(s).
+              We shall use node analysis to derive the result. There are two unknown node voltages,
+        Va (s) and Vb (s), requiring two node equations.
+              At node a, IR1 (s), the current in R1 (leaving the node a), is [Va (s) − Vi (s)]/R1 . Similarly,
+        IR2 (s), the current in R2 (leaving the node a), is [Va (s) − Vb (s)]/R2 , and IC1 (s), the current in
+        capacitor C1 (leaving the node a), is [Va (s) − Vo (s)]C1 s = [Va (s) − KVb (s)]C1 s.

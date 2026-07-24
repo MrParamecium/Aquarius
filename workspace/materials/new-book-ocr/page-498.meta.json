@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.1. OCR text begins with: 498 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM and z z z X[z] = 2 + (1.6e−j2.246 ) + (1.6ej2.246 ) z−1 z − 3 − j4 z − 3 + j4 The inverse transform of the first term on the right-hand side is 2u[n]. The inverse transform of the remaining two terms (complex conjugate poles) can be obtained from pair 12b (Table 5.1)",
+  "keywords": [
+    "5.1",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-498",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

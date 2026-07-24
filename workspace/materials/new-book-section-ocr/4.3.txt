@@ -1,0 +1,189 @@
+# Fourier section OCR
+section_id: 4.3
+source_pages: page-360, page-361, page-362, page-363
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.3 S OLUTION OF D IFFERENTIAL AND
+          I NTEGRO -D IFFERENTIAL E QUATIONS
+          The time-differentiation property of the Laplace transform has set the stage for solving linear
+          differential (or integro-differential) equations with constant coefficients. Because dk y/dtk ⇐⇒
+          sk Y(s), the Laplace transform of a differential equation is an algebraic equation that can be readily
+
+[[PAGE page-361]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 361 — #32
+
+
+
+
+                               4.3      Solution of Differential and Integro-Differential Equations   361
+
+    TABLE 4.2       Unilateral Laplace Transform Properties
+
+    Operation                  x(t)                   X(s)
+
+    Addition                   x1 (t) + x2 (t)        X1 (s) + X2 (s)
+    Scalar multiplication      kx(t)                  kX(s)
+                               dx(t)
+    Time differentiation                              sX(s) − x(0− )
+                                 dt
+                               d2 x(t)
+                                                      s2 X(s) − sx(0− ) − ẋ(0− )
+                                 dt2
+                               d3 x(t)
+                                                      s3 X(s) − s2 x(0− ) − sẋ(0− ) − ẍ(0− )
+                                 dt3
+                               dn x(t)                            %
+                                                                  n
+                                    n
+                                                      sn X(s) −         sn−k x(k−1) (0− )
+                               # dt
+                                  t
+                                                                  k=1
+                                                      1
+    Time integration                  x(τ ) dτ          X(s)
+                                0−                    s
+                               # t                                # −
+                                                      1          1 0
+                                       x(τ ) dτ         X(s) +         x(t) dt
+                                −∞                    s          s −∞
+                                                           −st0
+    Time shifting              x(t − t0 )u(t − t0 )   X(s)e         t0 ≥ 0
+    Frequency shifting         x(t)es0 t              X(s − s0 )
+                                                      dX(s)
+    Frequency                  −tx(t)
+                                                        ds
+      differentiation
+                                                      # ∞
+                               x(t)
+    Frequency integration                                    X(z) dz
+                                t                      s
+                                                      1     s
+    Scaling                    x(at), a ≥ 0             X
+                                                      a     a
+    Time convolution           x1 (t) ∗ x2 (t)        X1 (s)X2 (s)
+                                                       1
+    Frequency convolution      x1 (t)x2 (t)                X1 (s) ∗ X2 (s)
+                                                      2π j
+    Initial value              x(0+ )                 lim sX(s)         (n > m)
+                                                      s→∞
+    Final value                x(∞)                   lim sX(s)          [poles of sX(s) in LHP]
+                                                      s→0
+
+    solved for Y(s). Next we take the inverse Laplace transform of Y(s) to find the desired solution
+    y(t). The following examples demonstrate the Laplace transform procedure for solving linear
+    differential equations with constant coefficients.
+
+
+E X A M P L E 4.12 Laplace Transform to Solve a Second-Order Linear
+Differential Equation
+
+    Solve the second-order linear differential equation
+
+                                          (D2 + 5D + 6)y(t) = (D + 1)x(t)
+
+    for the initial conditions y(0− ) = 2 and ẏ(0− ) = 1 and the input x(t) = e−4t u(t).
+
+[[PAGE page-362]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 362 — #33
+
+
+
+
+362   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      The equation is
+                                   d2 y(t)    dy(t)           dx(t)
+                                           +5       + 6y(t) =       + x(t)                   (4.22)
+                                    dt2        dt              dt
+      Let
+                                                    y(t) ⇐⇒ Y(s)
+      Then from Eq. (4.15),
+                                     dy(t)
+                                           ⇐⇒ sY(s) − y(0− ) = sY(s) − 2
+                                      dt
+      and
+                          d2 y(t)
+                                  ⇐⇒ s2 Y(s) − sy(0− ) − ẏ(0− ) = s2 Y(s) − 2s − 1
+                           dt2
+      Moreover, for x(t) = e−4t u(t),
+                             1               dx(t)                      s        s
+                   X(s) =            and           ⇐⇒ sX(s) − x(0− ) =     −0 =
+                            s+4               dt                       s+4      s+4
+      Taking the Laplace transform of Eq. (4.22), we obtain
+                                                                           s   1
+                         [s2 Y(s) − 2s − 1] + 5[sY(s) − 2] + 6Y(s) =         +
+                                                                          s+4 s+4
+      Collecting all the terms of Y(s) and the remaining terms separately on the left-hand side, we
+      obtain
+                                                                  s+1
+                                  (s2 + 5s + 6)Y(s) − (2s + 11) =                            (4.23)
+                                                                  s+4
+      Therefore,
+                                                                s + 1 2s2 + 20s + 45
+                         (s2 + 5s + 6)Y(s) = (2s + 11) +             =
+                                                                s+4        s+4
+      and
+                                        2s2 + 20s + 45             2s2 + 20s + 45
+                            Y(s) =                          =
+                                     (s2 + 5s + 6)(s + 4)       (s + 2)(s + 3)(s + 4)
+      Expanding the right-hand side into partial fractions yields
+                                                    13/2   3   3/2
+                                           Y(s) =        −   −
+                                                    s+2 s+3 s+4
+      The inverse Laplace transform of this equation yields
+                                          −2t                  
+                                  y(t) = 132
+                                             e − 3e−3t − 32 e−4t u(t)                        (4.24)
+
+
+
+
+           Example 4.12 demonstrates the ease with which the Laplace transform can solve linear
+      differential equations with constant coefficients. The method is general and can solve a linear
+      differential equation with constant coefficients of any order.
+
+[[PAGE page-363]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 363 — #34
+
+
+
+
+                         4.3    Solution of Differential and Integro-Differential Equations         363
+
+Z ERO -I NPUT AND Z ERO -S TATE C OMPONENTS OF R ESPONSE
+The Laplace transform method gives the total response, which includes zero-input and zero-state
+components. It is possible to separate the two components if we so desire. The initial condition
+terms in the response give rise to the zero-input response. For instance, in Ex. 4.12, the terms
+attributable to initial conditions y(0− ) = 2 and ẏ(0− ) = 1 in Eq. (4.23) generate the zero-input
+response. These initial condition terms are −(2s + 11), as seen in Eq. (4.23). The terms on the
+right-hand side are exclusively due to the input. Equation (4.23) is reproduced below with the
+proper labeling of the terms
+                                 2                            s+1
+                                  s + 5s + 6 Y(s) − (2s + 11) =
+                                                                s+4
+so that
+                           2                                               s+1
+                            s + 5s + 6 Y(s) =          (2s + 11) +
+                                                                           + 4
+                                                   initial condition terms  s 
+                                                                         input terms
+
+Therefore,
+                                   2s + 11       s+1
+                        Y(s) =                 +
+                                    (s + 4)(s+ 5s + 6)
+                                 s2 + 5s + 6      2
+
+                                    ZIR           ZSR
+                                            !                        !
+                                   7      5     −1/2       2     3/2
+                               =        −     +       +        −
+                                  s+2 s+3       s+2 s+3 s+4
+
+Taking the inverse transform of this equation yields
+                                                                        
+                    y(t) = 7e−2t − 5e−3t u(t) + − 12 e−2t + 2e−3t − 32 e−4t u(t)
+                                                                        
+                                     ZIR                              ZSR

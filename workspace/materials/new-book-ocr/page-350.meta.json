@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": "4.2-1",
+  "title": null,
+  "summary": "This page covers 4.2-1. OCR text begins with: 350 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Proof. # ∞ L [x(t − t0 )u(t − t0 )] = x(t − t0 )u(t − t0 )e−st dt 0 Setting t − t0 = τ , we obtain # ∞",
+  "keywords": [
+    "4.2",
+    "4.2-1",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-350",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

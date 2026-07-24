@@ -1,0 +1,57 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 409 — #80
+
+
+
+
+                                                  4.7   Application to Feedback and Controls                 409
+
+and                                                               
+                                      θo (t) = 1 − 76 e−t + 16 e−7t u(t)
+This response, illustrated in Fig. 4.35c, shows that the system reaches the desired angle, but at a
+rather leisurely pace. To speed up the response let us increase the gain to, say, 80.
+     For K = 80,
+                                           80                   80
+                          o (s) =                  =
+                                     s(s2 + 8s + 80) s(s + 4 − j8)(s + 4 + j8)
+                                           √             √
+                                       5 j153      ◦
+                                                 5 −j153           ◦
+                                  1     e         e
+                                 = + 4        + 4
+                                  s s + 4 − j8 s + 4 + j8
+and                                      '   √                        (
+                                 θo (t) = 1 + 25 e−4t cos (8t + 153◦ ) u(t)
+
+This response, also depicted in Fig. 4.35c, achieves the goal of reaching the final position at a
+faster rate than that in the earlier case (K = 7). Unfortunately the improvement is achieved at the
+cost of ringing (oscillations) with high overshoot. In the present case, the percent overshoot (PO) is
+21%. The response reaches its peak value at peak time tp = 0.393 second. The rise time, defined as
+the time required for the response to rise from 10% to 90% of its steady-state value, indicates the
+speed of response.† In the present case tr = 0.175 second. The steady-state value of the response
+is unity so that the steady-state error is zero. Theoretically it takes infinite time for the response to
+reach the desired value of unity. In practice, however, we may consider the response to have settled
+to the final value if it closely approaches the final value. A widely accepted measure of closeness
+is within 2% of the final value. The time required for the response to reach and stay within 2% of
+the final value is called the settling time ts .‡ In Fig. 4.35c, we find ts ≈ 1 second (when K = 80). A
+good system has a small overshoot, small tr and ts and a small steady-state error.
+     A large overshoot, as in the present case, may be unacceptable in many applications. Let
+us try to determine K (the gain) that yields the fastest response without oscillations. Complex
+characteristic roots lead to oscillations; to avoid oscillations, the characteristic roots should be
+real. In the present case, the characteristic polynomial is s2 + 8s + K. For K > 16, the characteristic
+roots are complex; for K < 16, the roots are real. The fastest response without oscillations is
+obtained by choosing K = 16. We now consider this case.
+     For K = 16,
+                                      16            16     1   1       4
+                     o (s) =                  =          = −     −
+                                s(s2 + 8s + 16) s(s + 4)2  s s + 4 (s + 4)2
+and
+                                       θo (t) = [1 − (4t + 1)e−4t ]u(t)
+This response also appears in Fig. 4.35c. The system with K > 16 is said to be underdamped
+(oscillatory response), whereas the system with K < 16 is said to be overdamped. For K = 16, the
+system is said to be critically damped.
+
+† Delay time t , defined as the time required for the response to reach 50% of its steady-state value, is another
+              d
+indication of speed. For the present case, td = 0.141 second.
+‡ Typical percentage values used are 2 to 5% for t .
+                                                    s

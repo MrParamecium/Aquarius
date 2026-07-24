@@ -1,0 +1,31 @@
+{
+  "sectionId": "4.4",
+  "sectionTitle": "Analysis of Electrical Networks: The Transformed Network",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-377"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.33)",
+      "name": "Capacitor transformed-network voltage relation",
+      "latex": "V(s)=\\frac{1}{Cs}I(s)+\\frac{v(0^-)}{s}",
+      "sourcePage": "page-377",
+      "role": "network_model",
+      "status": "verified"
+    },
+    {
+      "label": "(4.34)",
+      "name": "Inductor transformed-network voltage relation",
+      "latex": "V(s)=L[sI(s)-i(0^-)]=LsI(s)-Li(0^-)",
+      "sourcePage": "page-377",
+      "role": "network_model",
+      "status": "verified"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 346 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS >> syms a b s; X_b = (a*s^2)/(s^2+b^2); >> x_b = ilaplace(X_b) x_b = a*dirac(t) - a*b*sin(b*t) Therefore, xb (t) = aδ(t) − ab sin (bt)u(t). D R I L L 4.2 Laplace Transform Show that the Laplace transform of 10e−3t cos (4t + 53.13◦ ) is (6s − 14)/(s2 + 6s + 25). Use",
+  "keywords": [
+    "4.1",
+    "unit impulse",
+    "unit step",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-346",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

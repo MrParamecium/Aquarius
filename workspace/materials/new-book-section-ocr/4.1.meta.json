@@ -1,0 +1,30 @@
+{
+  "sectionId": "4.1",
+  "sourcePages": [
+    "page-330",
+    "page-331",
+    "page-332",
+    "page-333",
+    "page-334",
+    "page-335",
+    "page-336",
+    "page-337"
+  ],
+  "usedPages": [
+    "page-330",
+    "page-331",
+    "page-332",
+    "page-333",
+    "page-334",
+    "page-335",
+    "page-336",
+    "page-337"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.1 T HE L APLACE T RANSFORM",
+  "foundEnd": false,
+  "endBeforeLine": "",
+  "endBeforeCode": "",
+  "charCount": 23945
+}

@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.5",
+  "subsection": null,
+  "title": "Block Diagrams 387",
+  "summary": "This page covers 4.5 (Block Diagrams 387). OCR text begins with: 4.5 Block Diagrams 387 We can extend this result to any number of transfer functions in cascade. It follows from this discussion that the subsystems in cascade can be interchanged without affecting the overall transfer function. This commutation property of LTI systems follows directly from the commutative (and associative) property of convolution. We have already proved this property in Sec. 2.4-3. Every possible or",
+  "keywords": [
+    "4.5",
+    "Block Diagrams 387",
+    "convolution",
+    "LTI system",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-387",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

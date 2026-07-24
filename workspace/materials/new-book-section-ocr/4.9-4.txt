@@ -1,0 +1,578 @@
+# Fourier section OCR
+section_id: 4.9-4
+source_pages: page-426, page-427, page-428, page-429, page-430, page-431, page-432, page-433, page-434, page-435
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.9-4 Second-Order Pole (or Zero)
+      Let us consider the second-order pole in Eq. (4.44). The denominator term is s2 + b2 s + b3 . We
+      shall introduce the often-used standard form s2 + 2ζ ωn s + ωn2 instead of s2 + b2 s + b3 . With this
+      form, the log amplitude function for the second-order term in Eq. (4.47) becomes
+                                                         
+                                                                                 2 
+                                                                  ω    jω            
+                                                −20 log 1 + 2jζ    +               
+                                                                  ωn   ωn
+
+      and the phase function is                                                 
+                                                                             2
+                                                                   ω    jω
+                                                 −        1 + 2jζ    +                                      (4.48)
+                                                                   ωn   ωn
+
+[[PAGE page-427]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 427 — #98
+
+
+
+
+                                                                                      4.9     Bode Plots     427
+
+T HE L OG M AGNITUDE
+The log amplitude is given by
+                                                                                      2 
+                                                                 ω              jω
+                         log amplitude = −20 log 1 + 2jζ                +              
+                                                                                                          (4.49)
+                                                                  ωn             ωn
+For ω  ωn , the log amplitude becomes
+
+                                    log amplitude ≈ −20 log 1 = 0
+
+For ω  ωn , the log amplitude is
+                                                       
+                                                 ω 2              ω
+                     log amplitude ≈ −20 log  −         = −40 log
+                                                  ωn               ωn
+                                   = −40 log ω − 40 log ωn = −40u − 40 log ωn                              (4.50)
+
+The two asymptotes are zero for ω < ωn and −40u − 40 log ωn for ω > ωn . The second asymptote
+is a straight line with a slope of −40 dB/decade (or −12 dB/octave) when plotted against the log
+ω scale. It begins at ω = ωn [see Eq. (4.50)]. The asymptotes are depicted in Fig. 4.43a. The exact
+log amplitude is given by [see Eq. (4.49)]
+                                                                2 !2                    2 1/2
+                                                            ω                    ω
+                    log amplitude = −20 log            1−               + 4ζ 2                             (4.51)
+                                                            ωn                   ωn
+
+The log amplitude in this case involves a parameter ζ , resulting in a different plot for each value
+of ζ . For complex-conjugate poles,† ζ < 1. Hence, we must sketch a family of curves for a number
+of values of ζ in the range 0 to 1. This is illustrated in Fig. 4.43a. The error between the actual plot
+and the asymptotes is shown in Fig. 4.44. The actual plot can be obtained by adding the error to
+the asymptotic plot.
+      For second-order zeros (complex-conjugate zeros), the plots are mirror images (about the 0 dB
+line) of the plots depicted in Fig. 4.43a. Note the resonance phenomenon of the complex-conjugate
+poles. This phenomenon is barely noticeable for ζ > 0.707 but becomes pronounced as ζ → 0.
+
+P HASE
+The phase function for second-order poles, as apparent in Eq. (4.48), is
+                                                 ⎡              ⎤
+                                                          ω
+                                                 ⎢ 2ζ ω         ⎥
+                               H(jω) = − tan−1 ⎢
+                                                 ⎢         n    ⎥
+                                                               2⎥
+                                                                                                           (4.52)
+                                                 ⎣        ω     ⎦
+                                                   1−
+                                                          ωn
+For ω  ωn ,
+                                                  H(jω) ≈ 0
+
+† For ζ ≥ 1, the two poles in the second-order factor are no longer complex but real, and each of these two
+real poles can be dealt with as a separate first-order factor.
+
+[[PAGE page-428]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 428 — #99
+
+
+
+
+428   CHAPTER 4                      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                              20
+
+                                                                               z  0.1
+                              10                                                  0.2
+                                                      Asymptote
+                                                                                  0.3
+
+                               0
+                                                                                                                    v
+
+
+
+          20 log H (dB)
+                                                                                           Asymptote
+                            10                                          0.5
+                                                                       0.707
+                            20                                        z1
+
+
+
+                            30
+
+
+                            40
+                             0.1vn       0.2vn          0.5vn         vn                 2vn           5vn   10vn
+                                                                      (a)
+
+                              0
+                                                                                                                    v
+                                                                                    Asymptote
+                                                                                z  0.1
+                            30
+                                                                                     0.2
+                                             0.5                                     0.3
+                            60            0.707
+                                            z1
+
+      Phase                 90
+
+
+                   120
+
+
+                   150
+
+                                                    Asymptote
+                   180
+                      0.1vn              0.2vn          0.5vn         vn                 2vn           5vn   10vn
+                                                                      (b)
+      Figure 4.43 Amplitude and phase response of a second-order pole.
+
+
+      For ω  ωn ,
+                                                               H(jω) ≃ −180◦
+
+      Hence, the phase → −180◦ as ω → ∞. As in the case of amplitude, we also have a family of
+      phase plots for various values of ζ , as illustrated in Fig. 4.43b. A convenient asymptote for the
+      phase of complex-conjugate poles is a step function that is 0◦ for ω < ωn and −180◦ for ω > ωn .
+
+[[PAGE page-429]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 429 — #100
+
+
+
+
+                                                                             4.9     Bode Plots          429
+
+                14
+
+
+
+                10
+                                                           z  0.1
+                                                              0.2
+                                                              0.3
+
+
+Error (dB)
+                 5
+
+
+
+
+                 0
+                                                                                                         v
+                                  0.5
+                                 0.707
+               5                 z1
+               6
+                0.1vn    0.2vn           0.5vn   v  vn        2vn                  5vn           10vn
+                                                  (a)
+
+               90
+                                                                     z1
+                                                                      0.707
+               60                                                     0.5
+                                                                         0.3
+                                                                            0.2
+                                                                                   0.1
+               30
+
+
+
+Phase error
+                0
+                                                                                                         v
+
+              30
+
+
+              60
+
+
+              90
+                0.1vn    0.2vn           0.5vn   v  vn        2vn                  5vn           10vn
+                                                  (b)
+Figure 4.44 Errors in the asymptotic approximation of a second-order pole.
+
+
+
+Error plots for such an asymptote are shown in Fig. 4.44 for various values of ζ . The exact phase
+is the asymptotic value plus the error.
+     For complex-conjugate zeros, the amplitude and phase plots are mirror images of those for
+complex conjugate-poles.
+     We shall demonstrate the application of these techniques with two examples.
+
+[[PAGE page-430]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 430 — #101
+
+
+
+
+430       CHAPTER 4     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.29 Bode Plots for Second-Order Transfer Function with
+      Real Roots
+
+          Sketch Bode plots for the transfer function
+
+                                                         20s(s + 100)
+                                              H(s) =
+                                                        (s + 2)(s + 10)
+
+
+          M AGNITUDE P LOT
+          First, we write the transfer function in normalized form
+                                                         s                          s
+                                              s 1+                         s 1+
+                                 20 × 100               100                        100
+                        H(s) =                                   = 100
+                                  2 × 10       s            s                  s          s
+                                            1+          1+                1+       1+
+                                               2           10                  2         10
+
+          Here, the constant term is 100; that is, 40 dB (20 log 100 = 40). This term can be added to the
+          plot by simply relabeling the horizontal axis (from which the asymptotes begin) as the 40 dB
+          line (see Fig. 4.45a). Such a step implies shifting the horizontal axis upward by 40 dB. This is
+          precisely what is desired.
+               In addition, we have two first-order poles at −2 and −10, one zero at the origin, and one
+          zero at −100.
+
+          Step 1. For each of these terms, we draw an asymptotic plot as follows (shown in Fig. 4.45a
+          by dashed lines):
+              (a) For the zero at the origin, draw a straight line with a slope of 20 dB/decade passing
+                  through ω = 1.
+              (b) For the pole at −2, draw a straight line with a slope of −20 dB/decade (for ω > 2)
+                  beginning at the corner frequency ω = 2.
+              (c) For the pole at −10, draw a straight line with a slope of −20 dB/decade beginning at
+                  the corner frequency ω = 10.
+              (d) For the zero at −100, draw a straight line with a slope of 20 dB/decade beginning at
+                  the corner frequency ω = 100.
+
+          Step 2. Add all the asymptotes, as depicted in Fig. 4.45a by solid line segments.
+
+          Step 3. Apply the following corrections (see Fig. 4.42a):
+              (a) The correction at ω = 1 because of the corner frequency at ω = 2 is −1 dB. The
+                  correction at ω = 1 because of the corner frequencies at ω = 10 and ω = 100 is quite
+                  small (see Fig. 4.42a) and may be ignored. Hence, the net correction at ω = 1 is
+                  −1 dB.
+
+[[PAGE page-431]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 431 — #102
+
+
+
+
+                                                                                               4.9   Bode Plots           431
+
+                    50
+
+                                                                      Asymptotic plot
+                    45
+                                                                            Exact plot
+
+                    40
+                                         1    2       5       10       20                100         400         1000
+                                                                                               v
+
+
+20 log H (dB)
+                    35
+
+
+                    30
+
+
+                    25
+
+
+                    20
+                                                             (a)
+
+                   90
+
+
+
+
+                   45
+
+                                                         Exact plot
+
+
+                    0
+      Phase
+                          0.2           1     2      5        10        20               100         400           1000
+
+
+                                                                                                      v
+                  45
+                                                                                               Asymptotic plot
+
+
+
+                  90
+
+                                                              (b)
+Figure 4.45 (a) Amplitude and (b) phase responses of the second-order system.
+
+
+                   (b) The correction at ω = 2 because of the corner frequency at ω = 2 is −3 dB, and the
+                       correction because of the corner frequency at ω = 10 is −0.17 dB. The correction
+                       because of the corner frequency ω = 100 can be safely ignored. Hence the net
+                       correction at ω = 2 is −3.17 dB.
+                   (c) The correction at ω = 10 because of the corner frequency at ω = 10 is −3 dB, and
+                       the correction because of the corner frequency at ω = 2 is −0.17 dB. The correction
+                       because of ω = 100 can be ignored. Hence the net correction at ω = 10 is −3.17 dB.
+
+[[PAGE page-432]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 432 — #103
+
+
+
+
+432       CHAPTER 4     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              (d) The correction at ω = 100 because of the corner frequency at ω = 100 is 3 dB, and
+                  the corrections because of the other corner frequencies may be ignored.
+              (e) In addition to the corrections at corner frequencies, we may consider corrections at
+                  intermediate points for more accurate plots. For instance, the corrections at ω = 4
+                  because of corner frequencies at ω = 2 and 10 are −1 and about −0.65, totaling
+                  −1.65 dB. In the same way, the corrections at ω = 5 because of corner frequencies at
+                  ω = 2 and 10 are −0.65 and −1, totaling −1.65 dB.
+              With these corrections, the resulting amplitude plot is illustrated in Fig. 4.45a.
+
+          P HASE P LOT
+          We draw the asymptotes corresponding to each of the four factors:
+              (a) The zero at the origin causes a 90◦ phase shift.
+              (b) The pole at s = −2 has an asymptote with a zero value for −∞ < ω < 0.2 and a slope
+                  of −45◦ /decade beginning at ω = 0.2 and going up to ω = 20. The asymptotic value
+                  for ω > 20 is −90◦ .
+              (c) The pole at s = −10 has an asymptote with a zero value for −∞ < ω < 1 and a slope
+                  of −45◦ /decade beginning at ω = 1 and going up to ω = 100. The asymptotic value
+                  for ω > 100 is −90◦ .
+              (d) The zero at s = −100 has an asymptote with a zero value for −∞ < ω < 10 and a
+                  slope of 45◦ /decade beginning at ω = 10 and going up to ω = 1000. The asymptotic
+                  value for ω > 1000 is 90◦ . All the asymptotes are added, as shown in Fig. 4.45b.
+                  The appropriate corrections are applied from Fig. 4.42b, and the exact phase plot is
+                  depicted in Fig. 4.45b.
+
+
+
+
+      E X A M P L E 4.30 Bode Plots for Second-Order Transfer Function with
+      Complex Poles
+
+          Sketch the amplitude and phase response (Bode plots) for the transfer function
+                                                                          s
+                                           10(s + 100)              1+
+                                    H(s) = 2           = 10              100
+                                          s + 2s + 100                 s   s2
+                                                                 1+      +
+                                                                      50 100
+
+          M AGNITUDE P LOT
+          Here, the constant term is 10: that is, 20 dB(20 log 10 = 20). To add this term, we simply
+          label the horizontal axis (from which the asymptotes begin) as the 20 dB line, as before (see
+          Fig. 4.46a).
+
+[[PAGE page-433]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 433 — #104
+
+
+
+
+                                                                                                      4.9    Bode Plots   433
+
+
+
+
+                     30
+                                                                       Exact plot
+                                                                                                                                 v
+                     20
+                           1       2       5           10         20                        100                 400       10 3
+                                                                                                                v
+                     10
+
+
+
+
+ 20 log H (dB)
+                                                     Asymptotic plot
+                      0
+
+
+                   10
+
+
+                   20
+
+
+                   30
+
+                                                                         (a)
+
+
+                     90
+
+
+                     50
+
+
+                                                                                                                                 v
+                      0
+                           1   2       5        10                50      100                500      1000       3000     103
+                                                                                                                v
+                   50
+    Phase
+
+
+                   100
+                                                     Exact plot
+                                                                                    Asymptotic plot
+                   150
+
+                   180
+                                                                         (b)
+ Figure 4.46 (a) Amplitude and (b) phase responses of the second-order system.
+
+
+
+    In addition, we have a real zero at s = −100 and a pair of complex conjugate poles. When
+we express the second-order factor in standard form,
+
+                                               s2 + 2s + 100 = s2 + 2ζ ωn s + ωn2
+
+[[PAGE page-434]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 434 — #105
+
+
+
+
+434   CHAPTER 4                       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      we have
+                                                     ωn = 10     and          ζ = 0.1
+
+      Step 1. Draw an asymptote of −40 dB/decade (−12 dB/octave) starting at ω = 10 for the
+      complex conjugate poles, and draw another asymptote of 20 dB/decade starting at ω = 100
+      for the (real) zero.
+
+      Step 2. Add both asymptotes.
+
+      Step 3. Apply the correction at ω = 100, where the correction because of the corner frequency
+      ω = 100 is 3 dB. The correction because of the corner frequency ω = 10, as seen from
+      Fig. 4.44a for ζ = 0.1, can be safely ignored. Next, the correction at ω = 10 because of the
+      corner frequency ω = 10 is 13.90 dB (see Fig. 4.44a for ζ = 0.1). The correction because of
+      the real zero at −100 can be safely ignored at ω = 10. We may find corrections at a few more
+      points. The resulting plot is illustrated in Fig. 4.46a.
+
+      P HASE P LOT
+      The asymptote for the complex conjugate poles is a step function with a jump of −180◦ at
+      ω = 10. The asymptote for the zero at s = −100 is zero for ω ≤ 10 and is a straight line with a
+      slope of 45◦ /decade, starting at ω = 10 and going to ω = 1000. For ω ≥ 1000, the asymptote
+      is 90◦ . The two asymptotes add to give the sawtooth shown in Fig. 4.46b. We now apply the
+      corrections from Figs. 4.42b and 4.44b to obtain the exact plot.
+
+                                                                Bode Diagram
+                                 40
+
+                                 20
+
+
+
+
+               Magnitude (dB)
+                                  0
+
+                                –20
+
+                                –40
+
+                                –60
+
+
+
+                                  0
+
+                                –45
+
+
+
+        Phase (deg)
+                                –90
+
+                          –135
+
+                          –180
+                             10 0                 10 1                 10 2             10 3       10 4
+                                                               Frequency (rad/s)
+       Figure 4.47 MATLAB-generated Bode plots for Ex. 4.30.
+
+[[PAGE page-435]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 435 — #106
+
+
+
+
+                                                                           4.9   Bode Plots        435
+
+B ODE P LOTS WITH MATLAB
+Bode plots make it relatively simple to hand-draw straight-line approximations to a system’s
+magnitude and frequency responses. To produce exact Bode plots, we turn to MATLAB and
+its bode command.
+
+>>   bode(tf([10 1000],[1 2 100]),’k-’);
+
+The resulting MATLAB plots, shown in Fig. 4.47, match the plots shown in Fig. 4.46.
+
+
+
+Comment. These two examples demonstrate that actual frequency response plots are very close
+to asymptotic plots, which are so easy to construct. Thus, by mere inspection of H(s) and its poles
+and zeros, one can rapidly construct a mental image of the frequency response of a system. This is
+the principal virtue of Bode plots.
+
+P OLES AND Z EROS IN THE R IGHT H ALF -P LANE
+In our discussion so far, we have assumed the poles and zeros of the transfer function to be in the
+left half-plane. What if some of the poles and/or zeros of H(s) lie in the RHP? If there is a pole in
+the RHP, the system is unstable. Such systems are useless for any signal-processing application.
+For this reason, we shall consider only the case of the RHP zero. The term corresponding to RHP
+zero at s = a is (s/a) − 1, and the corresponding frequency response is (jω/a) − 1. The amplitude
+response is
+                                            
+                                       jω                 1/2
+                                       − 1 = ω + 1
+                                                     2
+
+                                      a          a2
+This shows that the amplitude response of an RHP zero at s = a is identical to that of an LHP zero
+or s = −a. Therefore, the log amplitude plots remain unchanged whether the zeros are in the LHP
+or the RHP. However, the phase corresponding to the RHP zero at s = a is
+
+                   jω             jω                          −ω                    ω
+                     −1 =  − 1−             = π + tan−1           = π − tan−1
+                    a              a                           a                    a
+
+whereas the phase corresponding to the LHP zero at s = −a is tan−1 (ω/a).
+     The complex-conjugate zeros in the RHP give rise to a term s2 −2ζ ωn s+ωn2 , which is identical
+to the term s2 + 2ζ ωn s + ωn2 with a sign change in ζ . Hence, from Eqs. (4.51) and (4.52), it follows
+that the amplitudes are identical, but the phases are of opposite signs for the two terms.
+     Systems whose poles and zeros are restricted to the LHP are classified as minimum phase
+systems. Minimum phase systems are particularly desirable because the system and its inverse are
+both stable.

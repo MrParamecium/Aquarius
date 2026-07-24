@@ -1,0 +1,23 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-8",
+  "title": "Problems",
+  "summary": "This page covers 5.10-8 (Problems). OCR text begins with: Problems 575 (when all initial conditions are zero), then Y[z] = H[z]X[z]. For an LTID system specified by the difference equation Q[E]y[n] = P[E]x[n], the transfer function H[z] = P[z]/Q[z]. Moreover, H[z] is the z-transform of the system impulse response h[n]. We showed in Ch. 3 that the system response to an everlasting exponential zn is H[z]zn . We may also view the z-transform as a tool that expresses a signal x",
+  "keywords": [
+    "5.10",
+    "5.10-8",
+    "Problems",
+    "impulse response",
+    "difference equation",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "problems",
+  "book_page": "page-575",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

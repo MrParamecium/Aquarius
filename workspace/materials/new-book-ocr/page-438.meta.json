@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-1",
+  "title": null,
+  "summary": "This page covers 4.10-1. OCR text begins with: 438 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Im u1 \u0006H( jv)\u0006 jv0 ⬔H( jv) d jv",
+  "keywords": [
+    "4.10",
+    "4.10-1",
+    "continuous-time",
+    "LTIC system",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-438",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

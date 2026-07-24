@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.8. OCR text begins with: 414 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Therefore, √ ω2 + 0.01 ω ω |H(jω)| = √ and \u0004 H(jω) = tan−1 − tan−1 ω2 + 25 0.1 5 Both the amplitude and the phase response are depicted in Fig. 4.38a as functions of ω. These",
+  "keywords": [
+    "4.8",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-414",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

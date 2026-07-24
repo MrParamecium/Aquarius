@@ -1,0 +1,62 @@
+ “05-Lathi-C05” — 2017/9/25 — 15:54 — page 541 — #54
+
+
+
+
+                               5.6 Frequency Response from Pole-Zero Locations               541
+
+                                                             H
+
+
+
+
+                                                      0                         p
+                                                                                     (vT )
+                                                    p
+                                       (a)                                  ⬔H
+
+                                                             H
+
+
+
+
+                                                      0                         p
+                                                                                     (vT)
+                                       (b)                           ⬔H
+
+
+
+
+                                                             H
+
+
+
+
+                                                     0                          p
+                                                 p/2                                (vT)
+                                                                            ⬔H
+                                       (c)
+
+                                                             H
+
+                                                                        Ideal
+
+
+
+                                                     0                          p
+                                                3p/2                                (vT)
+                                                                            ⬔H
+                                       (d)
+
+
+                                                                        Ideal
+                                                            H
+
+                                                  3p/2
+
+
+                                                      0                          p
+                                                                                     (vT)
+                                                                       ⬔H
+                                       (e)
+Figure 5.20 Various pole-zero configurations and the corresponding frequency responses.

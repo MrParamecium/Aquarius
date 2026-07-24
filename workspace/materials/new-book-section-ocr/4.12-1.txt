@@ -1,0 +1,213 @@
+# Fourier section OCR
+section_id: 4.12-1
+source_pages: page-456, page-457, page-458, page-459
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.12-1 Frequency Response and Polynomial Evaluation
+      Magnitude response plots help assess a filter’s performance and quality. The magnitude response
+      of an ideal filter is a brick-wall function with unity passband gain and perfect stopband attenuation.
+      For a lowpass filter with cutoff frequency ωc , the ideal magnitude response is
+                                                           
+                                                            1    |ω| ≤ ωc
+                                           |Hideal (jω)| =
+                                                            0    |ω| > ωc
+
+      Unfortunately, ideal filters cannot be implemented in practice. Realizable filters require
+      compromises, although good designs will closely approximate the desired brick-wall response.
+          A realizable LTIC system often has a rational transfer function that is represented in the
+      s-domain as
+                                                        %M
+                                                           bk+N−M sM−k
+                                         Y(s) B(s) k=0
+                                  H(s) =      =       =
+                                         X(s) A(s)         % N−k
+                                                            N
+                                                              ak s
+                                                                k=0
+
+      Frequency response H(jω) is obtained by letting s = jω, where frequency ω is in radians per
+      second.
+          MATLAB is ideally suited to evaluate frequency response functions. Defining a length-(N +
+      1) coefficient vector A = [a0 , a1 , . . . , aN ] and a length-(M + 1) coefficient vector B =
+      [bN−M , bN−M+1 , . . . , bN ], program CH4MP1 computes H(jω) for each frequency in the input vector
+      ω.
+
+      function [H] = CH4MP1(B,A,omega);
+      % CH4MP1.m : Chapter 4, MATLAB Program 1
+      % Function M-file computes frequency response for LTIC system
+      % INPUTS:   B = vector of feedforward coefficients
+      %           A = vector of feedback coefficients
+      %           omega = vector of frequencies [rad/s].
+      % OUTPUTS: H = frequency response
+
+      H = polyval(B,j*omega)./polyval(A,j*omega);
+
+      The function polyval efficiently evaluates simple polynomials and makes the program nearly
+      trivial. For example, when A is the vector of coefficients [a0 , a1 , . . . , aN ], polyval (A,j*omega)
+      computes
+                                                 "N
+                                                     ak (jω)N−k
+                                                  k=0
+
+[[PAGE page-457]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 457 — #128
+
+
+
+
+                                               4.12 MATLAB: Continuous-Time Filters            457
+
+for each value of the frequency vector omega. It is also possible to compute frequency responses
+by using the signal-processing toolbox function freqs.
+
+
+D ESIGN AND E VALUATION OF A S IMPLE RC F ILTER
+One of the simplest lowpass filters is realized by using an RC circuit, as shown in Fig. 4.61.
+                                                                       −1
+This one-pole system has transfer  function HRC (s) = (RCs + 1) and magnitude response
+                         −1
+|HRC (jω)| = |(jωRC + 1) | = 1/ 1 + (RCω) . Independent of component values R and C, this
+                                                 2
+
+circuit has many desirable characteristics, such as unity gain at ω = 0 and magnitude response that
+monotonically decreases to zero as ω → ∞.
+
+
+           R
+ +                       +
+x(t)           C        y(t)
+ –                       –     Figure 4.61 An RC filter.
+
+
+
+
+    Components R and C are chosen to set the desired 3 kHz cutoff frequency. For √   many filter
+types, the cutoff frequency corresponds to the half-power point, or |HRC (jωc )| = 1/ 
+                                                                                      2. Assign
+Ca realistic capacitance of 1 nF, then the required resistance is computed by R = 1/ C2 ωc2 =
+1/ (10−9 )2 (2π 3000)2 .
+
+>>     omega_c = 2*pi*3000; C = 1e-9; R = 1/sqrt(C^2*omega_c^2)
+       R = 5.3052e+004
+
+The root of this first-order RC filter is directly related to the cutoff frequency, λ = −1/RC =
+−18,850 = −ωc .
+    To evaluate the RC filter performance, the magnitude response is plotted over the mostly
+audible frequency range (0 ≤ f ≤ 20 kHz).
+
+>>     f = linspace(0,20000,200); Hmag_RC = abs(CH4MP1([1],[R*C 1],f*2*pi));
+>>     plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_RC,’k--’);
+>>     axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+>>     legend(’Ideal’,’First-order RC’,’location’,’best’);
+
+The linspace(X1,X2,N) command generates an N-length vector of linearly spaced points
+between X1 and X2.
+     As shown in Fig. 4.62, the first-order RC response is indeed lowpass with a half-power
+cutoff frequency equal to 3 kHz. It rather poorly approximates the desired brick-wall response:
+the passband is not very flat, and stopband attenuation increases very slowly to less than 20 dB at
+20 kHz.
+
+[[PAGE page-458]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 458 — #129
+
+
+
+
+458   CHAPTER 4                     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                           1
+                                                                                                   Ideal
+                          0.8                                                                      First-order RC
+
+
+
+            |H(j2 π f)|
+                          0.6
+
+                          0.4
+
+                          0.2
+
+                           0
+                                0          0.2   0.4     0.6     0.8       1      1.2       1.4   1.6          1.8      2
+                                                                         f [Hz]                                      ×104
+            Figure 4.62 Magnitude response |HRC (j2π f )| of a first-order RC filter.
+
+
+
+
+                                                 –                                           –
+                                R                                          R
+                                                 +                                           +
+             +                                                                                           +
+            x(t)                       C                                          C                     y(t)
+             –                                                                                           –
+
+            Figure 4.63 A cascaded RC filter.
+
+
+
+
+      A C ASCADED RC F ILTER AND P OLYNOMIAL E XPANSION
+      A first-order RC filter is destined for poor performance; one pole is simply insufficient to obtain
+      good results. A cascade of RC circuits increases the number of poles and improves the filter
+      response. To simplify the analysis and prevent loading between stages, we employ op-amp
+      followers to buffer the output of each stage, as shown in Fig. 4.63. A cascade of N stages results
+      in an Nth-order filter with transfer function given by
+
+                                                  Hcascade (s) = [HRC (s)]N = (RCs + 1)−N
+
+           Upon choosing
+                 √                    10 stages and C = 1 nF, a 3 kHz cutoff frequency is obtained by
+                         a cascade of √
+      setting R = 21/10 − 1/(Cωc ) = 21/10 − 1/(6π(10)−6 ).
+
+      >>   R = sqrt(2^(1/10)-1)/(C*omega_c)
+           R = 1.4213e+004
+
+          This cascaded filter has a 10th-order pole at λ = −1/RC and no finite zeros. To compute
+      the magnitude response, polynomial coefficient vectors A and B are needed. Setting B = [1]
+      ensures there are no finite zeros or, equivalently, that all zeros are at infinity. The poly command,
+      which expands a vector of roots into a corresponding vector of polynomial coefficients, is used to
+      obtain A.
+
+[[PAGE page-459]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 459 — #130
+
+
+
+
+                                                     4.12 MATLAB: Continuous-Time Filters                    459
+
+>>   B = 1; A = poly(-1/(R*C)*ones(10,1));A = A/A(end);
+>>   Hmag_cascade = abs(CH4MP1(B,A,f*2*pi));
+>>   plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_cascade,’k--’);
+>>   axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+>>   legend(’Ideal’,’Tenth-order RC cascade’,’location’,’best’);
+
+Notice that scaling a polynomial by a constant does not change its roots. Conversely, the roots of
+a polynomial specify a polynomial within a scale factor. The command A = A/A(end) properly
+scales the denominator polynomial to ensure unity gain at ω = 0.
+     The magnitude response plot of the tenth-order RC cascade is shown in Fig. 4.64. Compared
+with the simple RC response of Fig. 4.62, the passband remains relatively unchanged, but stopband
+attenuation is greatly improved to over 60 dB at 20 kHz.
+
+                     1
+                                                                             Ideal
+                    0.8                                                      Tenth-order RC cascade
+
+
+
+      |H(j2 π f)|
+                    0.6
+
+                    0.4
+
+                    0.2
+
+                     0
+                          0   0.2   0.4     0.6     0.8        1       1.2     1.4       1.6          1.8      2
+                                                             f [Hz]                                         ×10 4
+      Figure 4.64 Magnitude response |Hcascade (j2π f )| of a tenth-order RC cascade.

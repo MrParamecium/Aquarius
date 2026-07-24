@@ -1,0 +1,20 @@
+{
+  "sectionId": "5.1-2",
+  "sourcePages": [
+    "page-499",
+    "page-500",
+    "page-501"
+  ],
+  "usedPages": [
+    "page-499",
+    "page-500",
+    "page-501"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.1-2 Inverse z-Transform by Power Series Expansion",
+  "foundEnd": true,
+  "endBeforeLine": "5.2 Some Properties of the z-Transform 501",
+  "endBeforeCode": "5.2",
+  "charCount": 3839
+}

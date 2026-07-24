@@ -1,0 +1,21 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.3. OCR text begins with: 370 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Therefore, Y(s) H(s) = = e−sT (4.30) X(s) (b) Ideal Differentiator. For an ideal differentiator, the input x(t) and the output y(t) are related by",
+  "keywords": [
+    "4.3",
+    "zero-state response",
+    "unit step",
+    "differential equation",
+    "continuous-time",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-370",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,49 @@
+                       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 432 — #103
+
+
+
+
+432       CHAPTER 4     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              (d) The correction at ω = 100 because of the corner frequency at ω = 100 is 3 dB, and
+                  the corrections because of the other corner frequencies may be ignored.
+              (e) In addition to the corrections at corner frequencies, we may consider corrections at
+                  intermediate points for more accurate plots. For instance, the corrections at ω = 4
+                  because of corner frequencies at ω = 2 and 10 are −1 and about −0.65, totaling
+                  −1.65 dB. In the same way, the corrections at ω = 5 because of corner frequencies at
+                  ω = 2 and 10 are −0.65 and −1, totaling −1.65 dB.
+              With these corrections, the resulting amplitude plot is illustrated in Fig. 4.45a.
+
+          P HASE P LOT
+          We draw the asymptotes corresponding to each of the four factors:
+              (a) The zero at the origin causes a 90◦ phase shift.
+              (b) The pole at s = −2 has an asymptote with a zero value for −∞ < ω < 0.2 and a slope
+                  of −45◦ /decade beginning at ω = 0.2 and going up to ω = 20. The asymptotic value
+                  for ω > 20 is −90◦ .
+              (c) The pole at s = −10 has an asymptote with a zero value for −∞ < ω < 1 and a slope
+                  of −45◦ /decade beginning at ω = 1 and going up to ω = 100. The asymptotic value
+                  for ω > 100 is −90◦ .
+              (d) The zero at s = −100 has an asymptote with a zero value for −∞ < ω < 10 and a
+                  slope of 45◦ /decade beginning at ω = 10 and going up to ω = 1000. The asymptotic
+                  value for ω > 1000 is 90◦ . All the asymptotes are added, as shown in Fig. 4.45b.
+                  The appropriate corrections are applied from Fig. 4.42b, and the exact phase plot is
+                  depicted in Fig. 4.45b.
+
+
+
+
+      E X A M P L E 4.30 Bode Plots for Second-Order Transfer Function with
+      Complex Poles
+
+          Sketch the amplitude and phase response (Bode plots) for the transfer function
+                                                                          s
+                                           10(s + 100)              1+
+                                    H(s) = 2           = 10              100
+                                          s + 2s + 100                 s   s2
+                                                                 1+      +
+                                                                      50 100
+
+          M AGNITUDE P LOT
+          Here, the constant term is 10: that is, 20 dB(20 log 10 = 20). To add this term, we simply
+          label the horizontal axis (from which the asymptotes begin) as the 20 dB line, as before (see
+          Fig. 4.46a).

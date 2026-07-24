@@ -1,0 +1,50 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 454 — #125
+
+
+
+
+454       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          s = 2 lies to the right of the ROC and thus represents an anticausal signal. Hence,
+
+                                           y(t) = 16 e−t u(t) + 12 et u(t) + 23 e2t u(−t)
+
+          Figure 4.60c shows y(t). Note that in this example, if
+
+                                                 x(t) = e−4t u(t) + e−2t u(−t)
+
+          then the ROC of X(s) is −4 < Re s < −2. Here no region of convergence exists for X(s)H(s).
+          Hence, the response y(t) goes to infinity.
+
+
+
+
+      E X A M P L E 4.34 Response of a Noncausal System
+
+          Find the response y(t) of a noncausal system with the transfer function
+                                                            −1
+                                                 H(s) =                 Re s < 1
+                                                           s−1
+
+          to the input x(t) = e−2t u(t).
+
+
+          We have
+                                                           1
+                                                X(s) =                Re s > −2
+                                                          s+2
+          and
+                                                                          −1
+                                             Y(s) = X(s)H(s) =
+                                                                     (s − 1)(s + 2)
+          The ROC of X(s)H(s) is the region −2 < Re s < 1. By partial fraction expansion,
+                                                  −1/3   1/3
+                                      Y(s) =           +                 −2 < Re s < 1
+                                                  s−1 s+2
+          and
+                                                y(t) = 13 [et u(−t) + e−2t u(t)]
+          Note that the pole of H(s) lies in the RHP at 1. Yet the system is not unstable. The pole(s) in
+          the RHP may indicate instability or noncausality, depending on its location with respect to the
+          region of convergence of H(s). For example, if H(s) = −1/(s − 1) with Re s > 1, the system is
+          causal and unstable, with h(t) = −et u(t). In contrast, if H(s) = −1/(s − 1) with Re s < 1, the
+          system is noncausal and stable, with h(t) = et u(−t).

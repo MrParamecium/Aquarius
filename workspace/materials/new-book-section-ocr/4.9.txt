@@ -1,0 +1,210 @@
+# Fourier section OCR
+section_id: 4.9
+source_pages: page-419, page-420, page-421, page-422
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.9   Bode Plots   419
+
+characteristic polynomial given by Q(s) = (s − λ1 )(s − λ2 ) · · · (s − λN ).† Hence,
+
+                                                                     P(s)
+                       Y(s) = X(s)H(s) =
+                                                   (s − λ1 )(s − λ2 ) · · · (s − λN )(s − jω)
+
+In the partial fraction expansion of the right-hand side, let the coefficients corresponding to the N
+terms (s − λ1 ), (s − λ2 ), . . . , (s − λN ) be k1 , k2 , . . . , kN . The coefficient corresponding to the last
+term (s − jω) is P(s)/Q(s)|s=jω = H(jω). Hence,
+
+                                                      "
+                                                      n
+                                                             ki       H(jω)
+                                          Y(s) =                    +
+                                                       i=1
+                                                           s −  λ i   s − jω
+
+and
+                                          "
+                                          n
+                               y(t) =         ki eλi t u(t) + H(jω)ejωt u(t)
+                                                                                 
+                                          i=1
+                                                         steady-state component yss (t)
+                                        transient component ytr (t)
+
+
+For an asymptotically stable system, the characteristic mode terms eλi t decay with time, and,
+therefore, constitute the so-called transient component of the response. The last term H(jω)ejωt
+persists forever, and is the steady-state component of the response given by
+
+                                              yss (t) = H(jω)ejωt u(t)
+
+This result also explains why an everlasting exponential input ejωt results in the total response
+H(jω)ejωt for BIBO systems. Because the input started at t = −∞, at any finite time the decaying
+transient component has long vanished, leaving only the steady-state component. Hence, the total
+response appears to be H(jω)ejωt .
+     From the argument that led to Eq. (4.43), it follows that for a causal sinusoidal input cos ωt,
+the steady-state response yss (t) is given by
+
+                                  yss (t) = |H(jω)| cos [ωt +  H(jω)]u(t)
+
+    In summary, |H(jω)| cos [ωt +  H(jω)] is the total response to everlasting sinusoid cos ωt. In
+contrast, it is the steady-state response to the same input applied at t = 0.
+
+
+
+4.9 B ODE P LOTS
+Sketching frequency response plots (|H(jω)| and  H(jω) versus ω) is considerably facilitated by
+the use of logarithmic scales. The amplitude and phase response plots as a function of ω on a
+logarithmic scale are known as Bode plots. By using the asymptotic behavior of the amplitude and
+the phase responses, we can sketch these plots with remarkable ease, even for higher-order transfer
+functions.
+
+† For simplicity, we have assumed nonrepeating characteristic roots. The procedure is readily modified for
+repeated roots, and the same conclusion results.
+
+[[PAGE page-420]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 420 — #91
+
+
+
+
+420   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+            Let us consider a system with the transfer function
+                                                            K(s + a1 )(s + a2 )
+                                             H(s) =                                                    (4.44)
+                                                         s(s + b1 )(s2 + b2 s + b3 )
+
+      where the second-order factor (s2 + b2 s + b3 ) is assumed to have complex conjugate roots.† We
+      shall rearrange Eq. (4.44) in the form
+
+                                                                    s           s
+                                                                      +1          +1
+                                            Ka1 a2                 a1          a2
+                                     H(s) =
+                                            b1 b3               s            s2 b2
+                                                          s       +1           + s+1
+                                                               b1            b3 b3
+
+      and
+                                                                        jω       jω
+                                                                   1+         1+
+                                             Ka1 a2                     a1       a2
+                                 H(jω) =                                                !
+                                              b1 b3                jω        b2 ω (jω)2
+                                                      jω 1 +             1+j      +
+                                                                   b1         b3    b3
+      This equation shows that H(jω) is a complex function of ω. The amplitude response |H(jω)| and
+      the phase response  H(jω) are given by
+                                                                             
+                                                                jω     jω 
+                                                        
+                                        Ka1 a2          1 + a 1 + a 
+                            |H(jω)| =                      
+                                                                   1          2
+                                                                                            (4.45)
+                                         b1 b3       
+                                                           jω 
+                                                                       b2 ω     (jω)2 
+                                                  |jω|1 + 1 + j             +
+                                                            b1            b3        b3 
+
+      and
+                                               Ka1 a2                   jω              jω
+                               H(jω) =                      +   1+      +      1+
+                                               b1 b3                    a1              a2
+                                                                                                 !
+                                                                   jω              jb2 ω (jω)2
+                                            −  jω −         1+      −      1+        +              (4.46)
+                                                                   b1               b3     b3
+
+      From Eq. (4.46) we see that the phase function consists of the addition of terms of four kinds: (i)
+      the phase of a constant, (ii) the phase of jω, which is 90◦ for all values of ω, (iii) the phase for the
+      first-order term of the form 1 + jω/a, and (iv) the phase of the second-order term
+                                                                  !
+                                                     jb2 ω (jω)2
+                                                1+        +
+                                                      b3      b3
+
+      We can plot these basic phase functions for ω in the range 0 to ∞ and then, using these plots, we
+      can construct the phase function of any transfer function by properly adding these basic responses.
+      Note that if a particular term is in the numerator, its phase is added, but if the term is in the
+
+      † Coefficients a , a and b , b , b used in this section are not to be confused with those used in the
+                      1   2       1  2   3
+      representation of Nth-order LTIC system equations given earlier [Eqs. (2.1) or (4.26)].
+
+[[PAGE page-421]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 421 — #92
+
+
+
+
+                                                                                  4.9   Bode Plots          421
+
+denominator, its phase is subtracted. This makes it easy to plot the phase function  H(jω) as a
+function of ω. Computation of |H(jω)|, unlike that of the phase function, however, involves the
+multiplication and division of various terms. This is a formidable task, especially when we have
+to plot this function for the entire range of ω (0 to ∞).
+     We know that a log operation converts multiplication and division to addition and subtraction.
+So, instead of plotting |H(jω)|, why not plot log |H(jω)| to simplify our task? We can take
+advantage of the fact that logarithmic units are desirable in several applications, where the
+variables considered have a very large range of variation. This is particularly true in frequency
+response plots, where we may have to plot frequency response over a range from a very low
+frequency, near 0, to a very high frequency, in the range of 1010 or higher. A plot on a linear
+scale of frequencies for such a large range will bury much of the useful information at lower
+frequencies. Also, the amplitude response may have a very large dynamic range from a low of
+10−6 to a high of 106 . A linear plot would be unsuitable for such a situation. Therefore, logarithmic
+plots not only simplify our task of plotting, but, fortunately, they are also desirable in this
+situation.
+     There is another important reason for using logarithmic scale. The Weber–Fechner law (first
+observed by Weber in 1834) states that human senses (sight, touch, hearing, etc.) generally
+respond in a logarithmic way. For instance, when we hear sound at two different power levels,
+we judge one sound twice as loud when the ratio of the two sound powers is 10. Human senses
+respond to equal ratios of power, not equal increments in power [10]. This is clearly a logarithmic
+response.†
+     The logarithmic unit is the decibel and is equal to 20 times the logarithm of the quantity
+(log to the base 10). Therefore, 20 log10 |H(jω)| is simply the log amplitude in decibels (dB).‡
+Thus, instead of plotting |H(jω)|, we shall plot 20 log10 |H(jω)| as a function of ω. These plots
+(log amplitude and phase) are called Bode plots. For the transfer function in Eq. (4.45), the log
+amplitude is
+                                                                          
+                                   Ka1 a2              jω            jω 
+                                  
+          20 log |H(jω)| = 20 log                                 
+                                             + 20 log1 +  + 20 log1 +  − 20 log |jω|
+                                     b1 b3               a1               a2
+                                                                      
+                                          jω              jb2 ω (jω) 
+                                                                       2
+                           − 20 log1 +  − 20 log1 +         +                                      (4.47)
+                                           b   1                b   3b       3
+
+
+The term 20 log(Ka1 a2 /b1 b3 ) is a constant. We observe that the log amplitude is a sum of four
+basic terms corresponding to a constant, a pole or zero at the origin (20 log |jω|), a first-order pole
+or zero (20 log |1 + jω/a|), and complex-conjugate poles or zeros (20 log |1 + jωb2 /b3 + (jω)2 /b3 |).
+
+
+† Observe that the frequencies of musical notes are spaced logarithmically (not linearly). The octave is a ratio
+of 2. The frequencies of the same note in the successive octaves have a ratio of 2. On the Western musical
+scale, there are 12 distinct notes in each octave. The frequency of each note is about 6% higher than the
+frequency of the preceding note. Thus, the successive notes are separated not by some constant frequency,
+but by constant ratio of 1.06.
+‡ Originally, the unit bel (after the inventor of telephone, Alexander Graham Bell) was introduced to
+represent power ratio as log10 P2 /P1 bels. A tenth of this unit is a decibel, as in 10 log10 P2 /P1 decibels.
+Since the power ratio of two signals is proportional to the amplitude ratio squared, or |H(jω)|2 , we have
+10 log10 P2 /P1 = 10 log10 |H(jω)|2 = 20 log10 |H(jω)| dB.
+
+[[PAGE page-422]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 422 — #93
+
+
+
+
+422   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can sketch these four basic terms as functions of ω and use them to construct the log-amplitude
+      plot of any desired transfer function. Let us discuss each of the terms.

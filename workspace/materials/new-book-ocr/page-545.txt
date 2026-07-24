@@ -1,0 +1,54 @@
+           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 545 — #58
+
+
+
+
+                                          5.6 Frequency Response from Pole-Zero Locations                545
+
+
+E X A M P L E 5.15 Bandstop Filter by Pole-Zero Placement
+
+    Design a second-order notch filter to have zero transmission at 250 Hz and a sharp recovery
+    of gain to unity on both sides of 250 Hz. The highest significant frequency to be processed is
+    fh = 400 Hz.
+
+
+    In this case, T < 1/2fh = 1.25 × 10−3 . Let us choose T = 10−3 . For the frequency 250 Hz,
+     = 2π(250)T = π/2. Thus, the frequency 250 Hz is represented by a point ej = ejπ/2 = j on
+    the unit circle, as depicted in Fig. 5.23a. Since we need zero transmission at this frequency, we
+    must place a zero at z = ejπ/2 = j and its conjugate at z = e−jπ/2 = −j. We also require a sharp
+    recovery of gain on both sides of frequency 250 Hz. To accomplish this goal, we place two
+    poles close to the two zeros, to cancel out the effect of the two zeros as we move away from
+    the point j (corresponding to frequency 250 Hz). For this reason, let us use poles at ±ja with
+    a < 1 for stability. The closer the poles are to zeros (the closer the a to 1), the faster is the gain
+    recovery on either side of 250 Hz. The resulting transfer function is
+
+                                               (z − j)(z + j)     z2 + 1
+                                   H[z] = K                    =K 2
+                                              (z − ja)(z + ja)   z + a2
+
+    The dc gain (gain at  = 0, or z = 1 ) of this filter is
+
+                                                           2
+                                              H[1] = K
+                                                         1 + a2
+
+    Because we require a dc gain of unity, we must select K = (1 + a2 )/2. The transfer function is
+    therefore
+
+                                                  (1 + a2 )(z2 + 1)
+                                         H[z] =
+                                                     2(z2 + a2 )
+
+    and according to Eq. (5.37),
+
+                                          (1 + a2 )2 (ej2 + 1)(e−j2 + 1)
+                              |H[ej ]|2 =
+                                              4      (ej2 + a2 )(e−j2 + a2 )
+                                          (1 + a ) (1 + cos 2)
+                                                 2 2
+                                        =
+                                          2(1 + a4 + 2a2 cos 2)
+
+    Figure 5.23b shows |H[ej ]| for values of a = 0.3, 0.6, and 0.95. Figure 5.23c shows a
+    realization of this filter.

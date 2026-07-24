@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": null,
+  "title": "Frequency Response of an LTIC System 413",
+  "summary": "This page covers 4.8 (Frequency Response of an LTIC System 413). OCR text begins with: 4.8 Frequency Response of an LTIC System 413 ROC for H(s) does not include the ω axis where s = jω [see Eq. (4.10)]. This means that H(s) when s = jω is meaningless for BIBO-unstable systems.† Equation (4.43) shows that for a sinusoidal input of radian frequency ω, the system response is also a sinusoid of the same frequency ω. The amplitude of the output sinusoid is |H(jω)| times the input amplitude, and the phase o",
+  "keywords": [
+    "4.8",
+    "Frequency Response of an LTIC System 413",
+    "zero-input response",
+    "continuous-time",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-413",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 535",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 535). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 535 F URTHER R EDUCTION IN THE F REQUENCY R ANGE Because cos (−\u0004n + θ ) = cos (\u0004n − θ ), a frequency in the range −π to 0 is identical to the frequency (of the same magnitude) in the range 0 to π (but with a change in phase sign). Consequently the apparent frequency for a discrete-time sinusoid of any frequency is equal to some value in the range 0 to π . Thus, cos (8.7",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 535",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-535",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

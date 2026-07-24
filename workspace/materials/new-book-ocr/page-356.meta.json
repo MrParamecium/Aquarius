@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": "4.2-4",
+  "title": "The Time-Integration Property",
+  "summary": "This page covers 4.2-4 (The Time-Integration Property). OCR text begins with: 356 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS The Laplace transform of this equation yields d2 x(t) L = L [δ(t) − 3δ(t − 2) + 2δ(t − 3)] dt2 Using the time-differentiation property of Eq. (4.15), the time-shifting property of Eq. (4.12), and the facts that x(0− ) = ẋ(0− ) = 0, and δ(t) ⇐⇒ 1, we obtain",
+  "keywords": [
+    "4.2",
+    "4.2-4",
+    "The Time-Integration Property",
+    "unit impulse",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-356",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

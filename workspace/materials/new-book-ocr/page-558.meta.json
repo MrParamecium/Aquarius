@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.8. OCR text begins with: 558 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM (b) In this case, |z| < 0.8, which is less than the magnitudes of both poles. Hence, both terms correspond to anticausal sequences, and x[n] = [−(0.8)n + 2(2)n ]u[−(n + 1)] This sequence appears in Fig. 5.29b. (c) In this case, 0.8 < |z| < 2; the part of X[z] corresponding to the pole at 0.8 is a causal sequence, and the part corresponding to the pole",
+  "keywords": [
+    "5.8",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-558",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

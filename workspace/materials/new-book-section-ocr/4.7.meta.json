@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.7",
+  "sourcePages": [
+    "page-404",
+    "page-405",
+    "page-406"
+  ],
+  "usedPages": [
+    "page-404",
+    "page-405",
+    "page-406"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.7 A PPLICATION TO F EEDBACK AND C ONTROLS",
+  "foundEnd": true,
+  "endBeforeLine": "4.7-1 Analysis of a Simple Control System",
+  "endBeforeCode": "4.7-1",
+  "charCount": 8654
+}

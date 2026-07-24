@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": "z-Transform Solution of Linear Difference Equations 515",
+  "summary": "This page covers 5.3 (z-Transform Solution of Linear Difference Equations 515). OCR text begins with: 5.3 z-Transform Solution of Linear Difference Equations 515 We have shown in Eq. (5.20) that Y[z] = X[z]H[z]. Hence, it follows that P[z] b0 zN + b1 zN−1 + · · · + bN−1 z + bN H[z] = = N (5.26) Q[z] z + a1 zN−1 + · · · + aN−1 z + aN As in the case of LTIC systems, this result leads to an alternative definition of the LTID system transfer function as the ratio of Y[z] to X[z] (assuming all initial conditions zero).",
+  "keywords": [
+    "5.3",
+    "z-Transform Solution of Linear Difference Equations 515",
+    "zero-state response",
+    "discrete-time",
+    "continuous-time",
+    "LTIC system",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-515",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,28 @@
+{
+  "sectionId": "5.5",
+  "sourcePages": [
+    "page-526",
+    "page-527",
+    "page-528",
+    "page-529",
+    "page-530",
+    "page-531",
+    "page-532"
+  ],
+  "usedPages": [
+    "page-526",
+    "page-527",
+    "page-528",
+    "page-529",
+    "page-530",
+    "page-531",
+    "page-532"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.5 F REQUENCY R ESPONSE OF D ISCRETE -T IME S YSTEMS",
+  "foundEnd": true,
+  "endBeforeLine": "5.5-1 The Periodic Nature of Frequency Response",
+  "endBeforeCode": "5.5-1",
+  "charCount": 16352
+}

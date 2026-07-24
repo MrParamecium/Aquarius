@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-5",
+  "title": null,
+  "summary": "This page covers 5.2-5. OCR text begins with: 508 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Interchanging the order of summation, we have ∞ \" ∞ \" Z[x1 [n] ∗ x2 [n]] = x1 [m] x2 [n − m]z−n m=−∞ n=−∞",
+  "keywords": [
+    "5.2",
+    "5.2-5",
+    "convolution",
+    "discrete-time",
+    "LTID system"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-508",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

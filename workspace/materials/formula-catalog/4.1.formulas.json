@@ -1,0 +1,84 @@
+{
+  "sectionId": "4.1",
+  "sectionTitle": "The Laplace Transform",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-330",
+      "page-331",
+      "page-332",
+      "page-335",
+      "page-336",
+      "page-337"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.1)",
+      "name": "Bilateral Laplace transform",
+      "latex": "X(s)=\\int_{-\\infty}^{\\infty} x(t)e^{-st},dt",
+      "sourcePage": "page-330",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.2)",
+      "name": "Inverse Laplace transform",
+      "latex": "x(t)=\\frac{1}{2\\pi j}\\int_{c-j\\infty}^{c+j\\infty} X(s)e^{st}\\,ds",
+      "sourcePage": "page-330",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.3)",
+      "name": "Linearity of the Laplace transform",
+      "latex": "a_1x_1(t)+a_2x_2(t)\\Longleftrightarrow a_1X_1(s)+a_2X_2(s)",
+      "sourcePage": "page-331",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.6)",
+      "name": "Causal exponential transform",
+      "latex": "e^{-at}u(t)\\Longleftrightarrow \\frac{1}{s+a},\\qquad \\operatorname{Re}s>-a",
+      "sourcePage": "page-332",
+      "role": "canonical_pair",
+      "status": "verified"
+    },
+    {
+      "label": "(4.7)",
+      "name": "Unilateral Laplace transform",
+      "latex": "X(s)=\\int_{0^-}^{\\infty}x(t)e^{-st},dt",
+      "sourcePage": "page-335",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.8)",
+      "name": "Laplace existence condition",
+      "latex": "\\int_{0^-}^{\\infty}\\left|x(t)e^{-\\sigma t}\\right|,dt<\\infty",
+      "sourcePage": "page-336",
+      "role": "core_condition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.9)",
+      "name": "Exponential order sufficient condition",
+      "latex": "|x(t)|\\le Me^{\\sigma_0 t}",
+      "sourcePage": "page-336",
+      "role": "core_condition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.10)",
+      "name": "Cosine unilateral Laplace transform",
+      "latex": "\\cos(\\omega_0 t)u(t)\\Longleftrightarrow \\frac{s}{s^2+\\omega_0^2},\\qquad \\operatorname{Re}s>0",
+      "sourcePage": "page-337",
+      "role": "canonical_pair",
+      "status": "verified"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.2-3",
+  "sourcePages": [
+    "page-354",
+    "page-355",
+    "page-356"
+  ],
+  "usedPages": [
+    "page-354",
+    "page-355",
+    "page-356"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.2-3 The Time-Differentiation Property",
+  "foundEnd": true,
+  "endBeforeLine": "4.2-4 The Time-Integration Property",
+  "endBeforeCode": "4.2-4",
+  "charCount": 4882
+}

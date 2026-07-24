@@ -1,0 +1,24 @@
+{
+  "sectionId": "5.3-1",
+  "sourcePages": [
+    "page-514",
+    "page-515",
+    "page-516",
+    "page-517",
+    "page-518"
+  ],
+  "usedPages": [
+    "page-514",
+    "page-515",
+    "page-516",
+    "page-517",
+    "page-518"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.3-1 Zero-State Response of LTID Systems: The Transfer Function",
+  "foundEnd": true,
+  "endBeforeLine": "5.3-2 Stability",
+  "endBeforeCode": "5.3-2",
+  "charCount": 10520
+}

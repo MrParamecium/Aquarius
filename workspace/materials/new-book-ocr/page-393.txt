@@ -1,0 +1,57 @@
+          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 393 — #64
+
+
+
+
+                                                                      4.6    System Realization   393
+
+        (d)
+                                                    4s + 28
+                                        H(s) =
+                                                  s2 + 6s + 5
+This is a second-order system with b0 = 0, b1 = 4, b2 = 28, a1 = 6, and a2 = 5. Figure 4.23d
+shows a realization with two feedback connections and two feedforward connections.
+
+ X(s)                                            X(s)                     Y(s)
+
+
+                   1                                                1
+                   s                                                s
+                         Y(s)
+              7          5                                    7
+                   (a)                                              (b)
+
+ X(s)                               Y(s)         X(s)
+
+
+                    1                                               1
+                    s                                               s
+                                                                                     Y(s)
+              7              5                                6           4
+                   (c)                                              1
+                                                                    s
+
+
+                                                               5           28
+                                                                    (d)
+
+Figure 4.23 Realizations of H(s) for Ex. 4.22.
+
+
+
+
+ D R I L L 4.11 Canonic Direct Form Realization
+ Give the canonic direct realization of
+                                                          2s
+                                           H(s) =
+                                                    s2 + 6s + 25
+
+
+
+4.6-3 Cascade and Parallel Realizations
+An Nth-order transfer function H(s) can be expressed as a product or a sum of N first-order transfer
+functions. Accordingly, we can also realize H(s) as a cascade (series) or parallel form of these N
+first-order transfer functions. Consider, for instance, the transfer function in part (d) of Ex. 4.22.
+                                                        4s + 28
+                                           H(s) =
+                                                    s2 + 6s + 5

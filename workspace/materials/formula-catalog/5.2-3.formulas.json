@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.2-3",
+  "sectionTitle": "z-Domain Differentiation Property (Multiplication by n)",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-506"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.18)",
+      "name": "z-domain differentiation property",
+      "latex": "nx[n]u[n]\\Longleftrightarrow -z\\frac{d}{dz}X[z]",
+      "sourcePage": "page-506",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

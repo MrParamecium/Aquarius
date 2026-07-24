@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.7. OCR text begins with: 548 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM For the sake of generality, we are assuming a noncausal system. The argument and the results are also valid for causal systems. The output y(t) of the system in Fig. 5.24b is # ∞ ∞ \" y(t) = x(τ )ha (t − τ ) dτ = lim x(m τ )ha (t − m τ ) τ −∞ τ →0",
+  "keywords": [
+    "5.7",
+    "impulse response",
+    "unit impulse",
+    "discrete-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-548",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

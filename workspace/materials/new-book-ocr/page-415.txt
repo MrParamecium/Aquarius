@@ -1,0 +1,51 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 415 — #86
+
+
+
+
+                                           4.8 Frequency Response of an LTIC System             415
+
+We also could have read these values directly from the frequency response plots in Fig. 4.38a
+corresponding to ω = 2. This result means that for a sinusoidal input with frequency ω = 2, the
+amplitude gain of the system is 0.372, and the phase shift is 65.3◦ . In other words, the output
+amplitude is 0.372 times the input amplitude, and the phase of the output is shifted with respect
+to that of the input by 65.3◦ . Therefore, the system response to the input cos 2t is
+
+                                 y(t) = 0.372 cos (2t + 65.3◦ )
+
+The input cos 2t and the corresponding system response 0.372 cos (2t + 65.3◦ ) are illustrated
+in Fig. 4.38b.
+     (b) For the input cos (10t − 50◦ ), instead of computing the values |H(jω)| and  H(jω)
+as in part (a), we shall read them directly from the frequency response plots in Fig. 4.38a
+corresponding to ω = 10. These are
+
+                        |H(j10)| = 0.894       and         H(j10) = 26◦
+
+Therefore, for a sinusoidal input of frequency ω = 10, the output sinusoid amplitude is 0.894
+times the input amplitude, and the output sinusoid is shifted with respect to the input sinusoid
+by 26◦ . Therefore, the system response y(t) to an input cos (10t − 50◦ ) is
+
+                  y(t) = 0.894 cos (10t − 50◦ + 26◦ ) = 0.894 cos (10t − 24◦ )
+
+If the input were sin (10t − 50◦ ), the response would be 0.894 sin (10t − 50◦ + 26◦ ) =
+0.894 sin (10t − 24◦ ).
+     The frequency response plots in Fig. 4.38a show that the system has highpass filtering
+characteristics; it responds well to sinusoids of higher frequencies (ω well above 5), and
+suppresses sinusoids of lower frequencies (ω well below 5).
+
+P LOTTING F REQUENCY R ESPONSE WITH MATLAB
+It is simple to use MATLAB to create magnitude and phase response plots. Here, we consider
+two methods. In the first method, we use an anonymous function to define the transfer function
+H(s) and then obtain the frequency response plots by substituting jω for s.
+
+>>   H = @(s) (s+0.1)./(s+5); omega = 0:.01:20;
+>>   subplot(1,2,1); plot(omega,abs(H(1j*omega)),’k-’);
+>>   subplot(1,2,2); plot(omega,angle(H(1j*omega))*180/pi,’k-’);
+
+In the second method, we define vectors that contain the numerator and denominator
+coefficients of H(s) and then use the freqs command to compute frequency response.
+>>   B = [1 0.1]; A = [1 5]; H = freqs(B,A,omega); omega = 0:.01:20;
+>>   subplot(1,2,1); plot(omega,abs(H),’k-’);
+>>   subplot(1,2,2); plot(omega,angle(H)*180/pi,’k-’);
+
+Both approaches generate plots that match Fig. 4.38a.

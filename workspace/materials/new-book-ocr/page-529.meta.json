@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 529",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 529). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 529 Substituting for H[ej\u0004 ], it follows that 1 1 1 |H[ej\u0004 ]|2 = = 1 − 0.8e−j\u0004 1 − 0.8ej\u0004 1.64 − 1.6 cos \u0004 which matches the result found earlier. Figure 5.14 shows plots of amplitude and phase response as functions of \u0004. We now",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 529",
+    "discrete-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-529",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

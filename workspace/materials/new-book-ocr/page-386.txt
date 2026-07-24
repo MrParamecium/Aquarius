@@ -1,0 +1,58 @@
+                         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 386 — #57
+
+
+
+
+386   CHAPTER 4          CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      4.5 B LOCK D IAGRAMS
+      Large systems may consist of an enormous number of components or elements. As anyone who has
+      seen the circuit diagram of a radio or a television receiver can appreciate, analyzing such systems
+      all at once could be next to impossible. In such cases, it is convenient to represent a system by
+      suitably interconnected subsystems, each of which can be readily analyzed. Each subsystem can
+      be characterized in terms of its input–output relationships. A linear system can be characterized by
+      its transfer function H(s). Figure 4.18a shows a block diagram of a system with a transfer function
+      H(s) and its input and output X(s) and Y(s), respectively.
+            Subsystems may be interconnected by using cascade, parallel, and feedback interconnections
+      (Figs. 4.18b, 4.18c, 4.18d), the three elementary types. When transfer functions appear in cascade,
+      as depicted in Fig. 4.18b, then, as shown earlier, the transfer function of the overall system is
+      the product of the two transfer functions. This result can also be proved by observing that in
+      Fig. 4.18b
+                                             Y(s) W(s) Y(s)
+                                                  =           = H1 (s)H2 (s)
+                                             X(s)   X(s) W(s)
+
+
+                                      X(s)                     H(s)                Y(s)
+
+
+                                                         (a)
+
+              X(s)                  W(s)              Y(s)            X(s)                   Y(s)
+                          H1(s)              H2(s)                           H1(s) H2(s)
+
+
+                                                         (b)
+
+
+                                   H1(s)
+              X(s)                                    Y(s)            X(s)                   Y(s)
+                                                                            H1(s)  H2(s)
+
+                                   H2(s)
+
+
+                                                         (c)
+
+              X(s)          E(s)                      Y(s)            X(s)       G(s)        Y(s)
+                                    G(s)                         
+                                                                             1  G(s)H(s)
+                     
+
+
+                                    H(s)
+
+
+                                                         (d)
+            Figure 4.18 Elementary connections of blocks and their equivalents.

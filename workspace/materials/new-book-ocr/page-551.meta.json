@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": "Digital Processing of Analog Signals 551",
+  "summary": "This page covers 5.7 (Digital Processing of Analog Signals 551). OCR text begins with: 5.7 Digital Processing of Analog Signals 551 E X A M P L E 5.16 Butterworth Filter Design by the Impulse-Invariance Method Design a digital filter to realize a first-order lowpass Butterworth filter with the transfer function ωc Ha (s) = ωc = 105 (5.46) s + ωc",
+  "keywords": [
+    "5.7",
+    "Digital Processing of Analog Signals 551",
+    "digital filter"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-551",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

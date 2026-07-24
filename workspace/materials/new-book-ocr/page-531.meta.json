@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 531",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 531). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 531 In this case, \u0004 = 1.5. According to Eqs. (5.35) and (5.36), 1 |H[ej1.5 ]| = √ = 0.809 1.64 − 1.6 cos (1.5) ! 0.8 sin (1.5)",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 531",
+    "discrete-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-531",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

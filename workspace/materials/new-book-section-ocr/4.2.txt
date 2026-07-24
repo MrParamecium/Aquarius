@@ -1,0 +1,36 @@
+# Fourier section OCR
+section_id: 4.2
+source_pages: page-349
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.2 Some Properties of the Laplace Transform                 349
+
+with contempt, asserting that his methods were either complete nonsense or a rehash of known
+ideas [6].
+     Sir William Preece, the chief engineer of the British Post Office, a savage critic of Heaviside,
+ridiculed Heaviside’s work as too theoretical and, therefore, leading to faulty conclusions.
+Heaviside’s work on transmission lines and loading was dismissed by the British Post Office
+and might have remained hidden, had not Lord Kelvin himself publicly expressed admiration
+for it [6].
+     Heaviside’s operational calculus may be formally inaccurate, but in fact it anticipated the
+operational methods developed in more recent years [9]. Although his method was not fully
+understood, it provided correct results. When Heaviside was attacked for the vague meaning of
+his operational calculus, his pragmatic reply was, “Shall I refuse my dinner because I do not fully
+understand the process of digestion?”
+     Heaviside lived as a bachelor hermit, often in near-squalid conditions, and died largely
+unnoticed, in poverty. His life demonstrates the persistent arrogance and snobbishness of the
+intellectual establishment, which does not respect creativity unless it is presented in the strict
+language of the establishment.
+
+
+
+4.2 S OME P ROPERTIES OF THE L APLACE T RANSFORM
+Properties of the Laplace transform are useful not only in the derivation of the Laplace transform
+of functions but also in the solutions of linear integro-differential equations. A glance at Eqs. (4.2)
+and (4.1) shows that there is a certain measure of symmetry in going from x(t) to X(s), and vice
+versa. This symmetry or duality is also carried over to the properties of the Laplace transform.
+This fact will be evident in the following development.
+     We are already familiar with two properties: linearity [Eq. (4.3)] and the uniqueness property
+of the Laplace transform discussed earlier.

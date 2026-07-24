@@ -1,0 +1,62 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 342 — #13
+
+
+
+
+342   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can determine A by eliminating B on the right-hand side. This step can be accomplished
+      by multiplying both sides of the equation for X(s) by s and then letting s → ∞. This procedure
+      yields
+                                        0 = 6+A       ⇒ A = −6
+      Therefore,
+                                       6(s + 34)    6    −6s + B
+                                                   = +
+                                   s(s2 + 10s + 34) s s2 + 10s + 34
+      To find B, we let s take on any convenient value, say, s = 1, in this equation to obtain
+                                    210      B−6
+                                        = 6+              ⇒     B = −54
+                                     45       45
+      a result that agrees with the answer found earlier.
+           (d)
+                                   8s + 10        k1      a0     a1      a2
+                       X(s) =                 =        +     +        +
+                               (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+      where
+                                                     
+                                         8s + 10     
+                               k1 =                      =2
+                                    (s + 1)(s + 2) s=−1
+                                                   3
+                                                     
+                                         8s + 10     
+                               a0 =                      =6
+                                                   3
+                                    (s + 1)(s + 2) s=−2
+                                    )                    .
+                                       d       8s + 10
+                               a1 =                               = −2
+                                      ds (s + 1)(s + 2)3
+                                                             s=−2
+                                      )                     .
+                                    1 d2          8s + 10
+                               a2 =                                 = −2
+                                    2 ds2 (s + 1)(s + 2)3
+                                                                  s=−2
+
+      Therefore,
+                                           2       6           2        2
+                                X(s) =        +          −           −
+                                         s + 1 (s + 2) 3   (s + 2) 2   s+2
+      and
+                                   x(t) = [2e−t + (3t2 − 2t − 2)e−2t ]u(t)
+
+      A LTERNATIVE M ETHOD : A H YBRID OF H EAVISIDE
+      AND C LEARING F RACTIONS
+      In this method, the simpler coefficients k1 and a0 are determined by the Heaviside
+      “cover-up” procedure, as discussed earlier. To determine the remaining coefficients, we use the
+      clearing-fraction method. Using the values k1 = 2 and a0 = 6 obtained earlier by the Heaviside
+      “cover-up” method, we have
+                              8s + 10          2       6          a1        a2
+                                           =      +          +           +
+                          (s + 1)(s + 2) 3   s + 1 (s + 2) 3   (s + 2) 2   s+2

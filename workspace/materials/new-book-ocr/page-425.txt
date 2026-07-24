@@ -1,0 +1,70 @@
+                          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 425 — #96
+
+
+
+
+                                                                                              4.9   Bode Plots          425
+
+
+                     18
+                                                  For s  a
+
+                     12                                               1dB
+
+                                                           3dB
+                      6               Asymptote
+
+
+ 20 log H (dB)
+                                                   1dB
+                                                                                Asymptotes
+
+                      0
+                                                                                                                        v
+
+                    6                             1dB
+                                                           3dB
+
+                   12                                                1dB
+                                                         1
+                                                   For s  a
+                   18
+
+                     0.01a              0.1a              va                           10a                      100a
+                                                            (a)
+
+                    90
+                                                         For s  a
+
+
+                    45                                               Asymptote
+
+                                     Asymptote
+
+
+Phase
+                     0
+                                                                                                                        v
+
+
+                   45                                                     Asymptote
+
+
+                                                                  1
+                                                         For s  a
+                   90
+                     0.01a              0.1a              va                           10a                      100a
+                                                           (b)
+
+        Figure 4.41 (a) Amplitude and (b) phase responses of a first-order pole or zero at s = −a.
+
+
+
+
+        The actual plot along with the asymptotes is depicted in Fig. 4.41b. In this case, we use a three-line
+        segment asymptotic plot for greater accuracy. The asymptotes are a phase angle of 0◦ for ω ≤ a/10,
+        a phase angle of −90◦ for ω ≥ 10a, and a straight line with a slope −45◦ /decade connecting
+        these two asymptotes (from ω = a/10 to 10a) crossing the ω axis at ω = a/10. It can be seen
+        from Fig. 4.41b that the asymptotes are very close to the curve and the maximum error is 5.7◦ .
+        Figure 4.42b plots the error as a function of ω; the actual plot can be obtained by adding the error
+        to the asymptotic plot.

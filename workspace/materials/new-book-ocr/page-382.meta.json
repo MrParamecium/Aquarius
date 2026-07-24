@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": "4.4-1",
+  "title": "Analysis of Active Circuits",
+  "summary": "This page covers 4.4-1 (Analysis of Active Circuits). OCR text begins with: 382 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS √ y(t) = 10 2e−t cos (2t + 81.8◦ )u(t) and vC (t) = [24 + 31.62e−t cos (2t − 34.7◦ )]u(t) t\u00050 2 1H \u0003 24 V y(t) 0.2 F vC (t) \u0002 Figure 4.15 Circuit for Drill 4.10.",
+  "keywords": [
+    "4.4",
+    "4.4-1",
+    "Analysis of Active Circuits",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-382",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

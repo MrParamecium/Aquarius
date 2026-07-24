@@ -1,0 +1,24 @@
+{
+  "sectionId": "4.3-2",
+  "sourcePages": [
+    "page-366",
+    "page-367",
+    "page-368",
+    "page-369",
+    "page-370"
+  ],
+  "usedPages": [
+    "page-366",
+    "page-367",
+    "page-368",
+    "page-369",
+    "page-370"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.3-2 Zero-State Response",
+  "foundEnd": false,
+  "endBeforeLine": "",
+  "endBeforeCode": "",
+  "charCount": 11593
+}

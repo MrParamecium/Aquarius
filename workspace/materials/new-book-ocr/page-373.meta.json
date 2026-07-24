@@ -1,0 +1,22 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-4",
+  "title": "Inverse Systems",
+  "summary": "This page covers 4.3-4 (Inverse Systems). OCR text begins with: 4.4 Analysis of Electrical Networks: The Transformed Network 373 black box with only the input and the output terminals accessible, any measurement from these external terminals would show that the transfer function of the system is 1/(s + 1), without any hint of the fact that the system is housing an unstable system (Fig. 4.9b). The impulse response of the cascade system is h(t) = e−t u(t), which is absolutely integ",
+  "keywords": [
+    "4.3",
+    "4.3-4",
+    "Inverse Systems",
+    "impulse response",
+    "unit impulse",
+    "unit step",
+    "characteristic roots",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-373",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

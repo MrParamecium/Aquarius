@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-4",
+  "title": "Bilinear Transformation",
+  "summary": "This page covers 5.10-4 (Bilinear Transformation). OCR text begins with: 5.10 MATLAB: Discrete-Time IIR Filters 569 % of a continuous-time filter described by B and A into a discrete-time filter. % INPUTS: B = vector of continuous-time filter feedforward coefficients % A = vector of continuous-time filter feedback coefficients % T = sampling interval % OUTPUTS: Bd = vector of discrete-time filter feedforward coefficients % Ad = vector of discrete-time filter feedback coefficients",
+  "keywords": [
+    "5.10",
+    "5.10-4",
+    "Bilinear Transformation",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB",
+    "sampling",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-569",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,62 @@
+                          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 414 — #85
+
+
+
+
+414   CHAPTER 4            CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Therefore,
+                               √
+                                 ω2 + 0.01                                               ω          ω
+                      |H(jω)| = √             and                H(jω) = tan−1             − tan−1
+                                  ω2 + 25                                               0.1         5
+
+      Both the amplitude and the phase response are depicted in Fig. 4.38a as functions of ω. These
+      plots furnish the complete information about the frequency response of the system to sinusoidal
+      inputs.
+           (a) For the input x(t) = cos 2t, ω = 2, and
+                                  
+                                    (2)2 + 0.01
+                        |H(j2)| =               = 0.372
+                                     (2)2 + 25
+                                           2             2
+                         H(j2) = tan−1        − tan−1      = 87.1◦ − 21.8◦ = 65.3◦
+                                          0.1            5
+
+
+
+           H( jv)
+
+       1
+
+
+                                                                              ⬔H( jv)
+
+
+
+
+                                0.894                                 65.3
+
+
+                                                                                         26
+            0.372
+
+       0      2                  10          v                                                                v
+                                                                  0    2                 10
+
+                                                        (a)
+
+
+                       x(t)  cos 2t                                                      y(t)  0.372 cos(2t  65.3)
+
+
+
+
+                                                                                               t
+                                        0     2                                    6
+
+
+
+
+                                                  (b)
+      Figure 4.38 Responses for the system of Ex. 4.27.

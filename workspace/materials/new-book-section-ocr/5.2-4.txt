@@ -1,0 +1,51 @@
+# Fourier section OCR
+section_id: 5.2-4
+source_pages: page-506, page-507
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.2-4 Time-Reversal Property
+      If
+                                                     x[n] ⇐⇒ X[z]
+      then†
+                                                  x[−n] ⇐⇒ X[1/z]
+
+      Proof.
+                                                                 ∞
+                                                                 "
+                                             Z{x[−n]} =                 x[−n]z−n
+                                                                 n=−∞
+
+
+      † For complex signal x[n], the time-reversal property is modified as follows:
+
+                                                 x∗ [−n] ⇐⇒ X ∗ [1/z∗ ]
+
+[[PAGE page-507]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 507 — #20
+
+
+
+
+                                                       5.2 Some Properties of the z-Transform     507
+
+Changing the sign of the dummy variable n yields
+                                                       ∞
+                                                       "
+                                     Z{x[−n]} =                    x[n]zn
+                                                       n=−∞
+                                                        "∞
+                                                   =               x[n](1/z)−n
+                                                       n=−∞
+
+                                                   = X[1/z]
+
+The region of convergence is also inverted; that is, if the ROC of x[n] is |z| > |γ |, then the ROC of
+x[−n] is |z| < 1/|γ |.
+
+
+
+ D R I L L 5.8 Using the Time-Reversal Property
+ Use the time-reversal property and pair 2 in Table 5.1 to show that u[−n] ⇐⇒ −1/(z − 1) with
+ the ROC |z| < 1.

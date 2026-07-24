@@ -1,0 +1,59 @@
+                          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 336 — #7
+
+
+
+
+336       CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          E XISTENCE OF THE L APLACE T RANSFORM
+          The variable s in the Laplace transform is complex in general, and it can be expressed as s = σ +jω.
+          By definition,
+                                             # ∞              # ∞
+                                                      −st
+                                     X(s) =      x(t)e dt =       [x(t)e−σ t ]e−jωt dt
+                                                0−                   0−
+
+          Because |ejωt | = 1, the integral on the right-hand side of this equation converges if
+                                                  # ∞
+                                                                 
+                                                       x(t)e−σ t  dt < ∞                                        (4.8)
+                                                     0−
+
+          Hence the existence of the Laplace transform is guaranteed if the integral in Eq. (4.8) is finite for
+          some value of σ . Any signal that grows no faster than an exponential signal Meσ0 t for some M and
+          σ0 satisfies the condition of Eq. (4.8). Thus, if for some M and σ0 ,
+
+                                                          |x(t)| ≤ Meσ0 t                                         (4.9)
+                                                                                 2
+          we can choose σ > σ0 to satisfy Eq. (4.8).† The signal et , in contrast, grows at a rate faster
+          than eσ0 t , and consequently is not Laplace–transformable.‡ Fortunately such signals (which are not
+          Laplace–transformable) are of little consequence from either a practical or a theoretical viewpoint.
+          If σ0 is the smallest value of σ for which the integral in Eq. (4.8) is finite, σ0 is called the abscissa
+          of convergence and the ROC of X(s) is Re s > σ0 . The abscissa of convergence for e−at u(t) is −a
+          (the ROC is Re s > −a).
+
+
+
+      E X A M P L E 4.2 Bilateral Laplace Transform of Common Causal Signals
+
+          Determine the Laplace transform of the following: (a) δ(t), (b) u(t), and (c) cos ω0 t u(t).
+
+
+               (a)                                           # ∞
+                                                 L[δ(t)] =         δ(t)e−st dt
+                                                              0−
+
+          Using the sampling property [Eq. (1.11) with T = 0], we obtain
+
+                                                 L[δ(t)] = 1         for all s
+
+          that is,
+                                                  δ(t) ⇐⇒ 1         for all s
+
+
+
+          † The condition of Eq. (4.9) is sufficient but not necessary for the existence of the Laplace transform. For
+                             √                                                                                 √
+          example, x(t) =√1/ t is infinite at t = 0, and Eq. (4.9) cannot be satisfied; but the transform of 1/ t exists
+          and is given by π/s.
+          ‡ However, if we consider a truncated (finite-duration) signal et2 , the Laplace transform exists.

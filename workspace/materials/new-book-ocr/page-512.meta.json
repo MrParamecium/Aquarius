@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.3. OCR text begins with: 512 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Comment. Sometimes, instead of initial conditions y[−1], y[−2], . . . , y[−n], auxiliary conditions y[0], y[1], . . . , y[N − 1] are given to solve a difference equation. In this case, the equation can be solved by expressing it in the advance form and then using the left-shift property (see Drill 5.11). D R I L L 5.10 z-Transform Solution of a Linear",
+  "keywords": [
+    "5.3",
+    "zero-input response",
+    "zero-state response",
+    "difference equation",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-512",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

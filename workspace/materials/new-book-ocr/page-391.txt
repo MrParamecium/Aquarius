@@ -1,0 +1,59 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 391 — #62
+
+
+
+
+                                                                               4.6   System Realization       391
+
+       X(s)                   V(s)         b0            Y(s)          X(s)                     b0     Y(s)
+
+
+                          1           1                                                   1
+                          s           s                                                   s
+                   a1                     b1                                     a1           b1
+
+                          1           1                                                   1
+                          s           s                                                   s
+
+                 aN1                    bN1                                    aN1         bN1
+
+
+                          1           1                                                   1
+                          s           s                                                   s
+                   aN                     bN                                     aN           bN
+
+                              (a)                                                         (b)
+      Figure 4.22 Direct form II realization of an Nth-order LTIC system.
+
+
+This procedure is known as the direct form II realization. Figure 4.22a shows direct form II
+realization, where we have interchanged sections representing H1 (s) and H2 (s) in Fig. 4.21b. The
+output of H2 (s) in this case is denoted by V(s).‡
+     An interesting observation in Fig. 4.22a is that the input signal to both the chains of integrators
+is V(s). Clearly, the outputs of integrators in the left-side chain are identical to the corresponding
+outputs of the right-side integrator chain, thus making the right-side chain redundant. We can
+eliminate this chain and obtain the required signals from the left-side chain, as shown in Fig. 4.22b.
+This implementation halves the number of integrators to N, and, thus, is more efficient in hardware
+utilization than either Figs. 4.21b or 4.22a. This is the direct form II (DFII) realization.
+     An Nth-order differential equation with N = M has a property that its implementation requires
+a minimum of N integrators. A realization is canonic if the number of integrators used in the
+realization is equal to the order of the transfer function realized. Thus, canonic realization has no
+redundant integrators. The DFII form in Fig. 4.22b is a canonic realization, and is also called the
+direct canonic form. Note that the DFI is noncanonic.
+     The direct form I realization (Fig. 4.22b) implements zeros first [the left-half section
+represented by H1 (s)] followed by realization of poles [the right-half section represented by
+H2 (s)] of H(s). In contrast, canonic direct implements poles first followed by zeros. Although
+both these realizations result in the same transfer function, they generally behave differently from
+the viewpoint of sensitivity to parameter variations.
+
+
+
+
+‡ The reader can show that the equations relating X(s), V(s), and Y(s) in Fig. 4.22a are
+                                                    a
+                                                     1          a2           aN 
+                                    V(s) = X(s) −         +        + · · · +      V(s)
+                                                     s          s2           sN
+and                                            b1 b2         bN 
+                                     Y(s) = b0 + + 2 + · · · + N V(s)
+                                                 s s          s

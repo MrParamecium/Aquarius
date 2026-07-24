@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": "Solution Of Differential And",
+  "summary": "This page covers 4.3 (Solution Of Differential And). OCR text begins with: 360 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS x(0+ ) is the value of the remainder (strictly proper) fraction, for which the initial value theorem applies. In the present case, −2s2 x(0+ ) = lim 2 = −2 s→∞ s + 2s + 1 To prove the final value theorem, we let n = 1 and s → 0 in Eq. (4.15) to obtain",
+  "keywords": [
+    "4.3",
+    "Solution Of Differential And",
+    "differential equation",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-360",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

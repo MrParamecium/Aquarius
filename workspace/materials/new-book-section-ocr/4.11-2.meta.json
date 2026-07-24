@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.11-2",
+  "sourcePages": [
+    "page-452",
+    "page-453",
+    "page-454",
+    "page-455"
+  ],
+  "usedPages": [
+    "page-452",
+    "page-453",
+    "page-454",
+    "page-455"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.11-2 Using the Bilateral Transform for Linear System Analysis",
+  "foundEnd": true,
+  "endBeforeLine": "4.12 MATLAB: Continuous-Time Filters 455",
+  "endBeforeCode": "4.12",
+  "charCount": 5369
+}

@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.4. OCR text begins with: 376 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS I NITIAL C ONDITION G ENERATORS The discussion in which we assumed zero initial conditions can be readily extended to the case of nonzero initial conditions because the initial condition in a capacitor or an inductor can be represented by an equivalent source. We now show that a capacitor C with an initial voltage v(0− ) (Fig. 4.11a) can be represented in the frequency do",
+  "keywords": [
+    "4.4",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-376",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

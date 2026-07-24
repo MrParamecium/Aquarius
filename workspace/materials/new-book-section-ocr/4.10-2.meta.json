@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.10-2",
+  "sourcePages": [
+    "page-439",
+    "page-440",
+    "page-441"
+  ],
+  "usedPages": [
+    "page-439",
+    "page-440",
+    "page-441"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.10-2 Lowpass Filters",
+  "foundEnd": true,
+  "endBeforeLine": "4.10-3 Bandpass Filters",
+  "endBeforeCode": "4.10-3",
+  "charCount": 4808
+}

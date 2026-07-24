@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": null,
+  "title": "Some Properties of the z-Transform 509",
+  "summary": "This page covers 5.2 (Some Properties of the z-Transform 509). OCR text begins with: 5.2 Some Properties of the z-Transform 509 and (z − 1)X[z] \"N lim = lim(z − 1)X[z] = lim lim {x[n] − x[n − 1]}z−n = lim x[N] z→1 z z→1 z→1 N→∞ n=−∞ N→∞",
+  "keywords": [
+    "5.2",
+    "Some Properties of the z-Transform 509",
+    "convolution",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-509",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

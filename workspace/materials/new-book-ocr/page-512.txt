@@ -1,0 +1,57 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 512 — #25
+
+
+
+
+512   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Comment.
+      Sometimes, instead of initial conditions y[−1], y[−2], . . . , y[−n], auxiliary conditions y[0],
+      y[1], . . . , y[N − 1] are given to solve a difference equation. In this case, the equation can
+      be solved by expressing it in the advance form and then using the left-shift property (see
+      Drill 5.11).
+
+
+
+
+       D R I L L 5.10 z-Transform Solution of a Linear Difference Equation
+       Solve the following equation if the initial conditions y[−1] = 2, y[−2] = 0, and the input
+       x[n] = u[n]:
+                             y[n + 2] − 56 y[n + 1] + 16 y[n] = 5x[n + 1] − x[n]
+
+
+       ANSWER
+                      n      1 n
+       y[n] = 12 − 15 12 + 14
+                            3 3
+                                     u[n]
+
+
+
+
+       D R I L L 5.11 Difference Equation Solution Using y[0], y[1], . . . ,
+       y[N − 1]
+       Solve the following equation if the auxiliary conditions are y[0] = 1, y[1] = 2, and the input
+       x[n] = u[n]:
+                            y[n] + 3y[n − 1] + 2y[n − 2] = x[n − 1] + 3x[n − 2]
+
+
+       ANSWER
+       y[n] =   2
+                3
+                  + 2(−1)n − 53 (−2)n   u[n]
+
+
+
+      Z ERO -I NPUT AND Z ERO -S TATE C OMPONENTS
+      In Ex. 5.5 we found the total solution of the difference equation. It is relatively easy to separate the
+      solution into zero-input and zero-state components. All we have to do is to separate the response
+      into terms arising from the input and terms arising from initial conditions (IC). We can separate
+      the response in Eq. (5.22) as follows:
+
+
+                                   5 6             11      3        5
+                              1−    + 2 Y[z] − 3 −    =        +
+                                   z z              z   z − 0.5 z(z − 0.5)
+                                                                  
+                                                      IC terms           input terms

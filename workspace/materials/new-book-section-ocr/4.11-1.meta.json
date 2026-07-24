@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.11-1",
+  "sourcePages": [
+    "page-451",
+    "page-452"
+  ],
+  "usedPages": [
+    "page-451",
+    "page-452"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.11-1 Properties of the Bilateral Laplace Transform",
+  "foundEnd": true,
+  "endBeforeLine": "4.11-2 Using the Bilateral Transform for Linear System Analysis",
+  "endBeforeCode": "4.11-2",
+  "charCount": 2662
+}

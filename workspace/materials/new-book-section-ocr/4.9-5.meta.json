@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.9-5",
+  "sourcePages": [
+    "page-435",
+    "page-436"
+  ],
+  "usedPages": [
+    "page-435",
+    "page-436"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.9-5 The Transfer Function from the Frequency Response",
+  "foundEnd": true,
+  "endBeforeLine": "4.10 F ILTER D ESIGN BY P LACEMENT OF P OLES",
+  "endBeforeCode": "4.10",
+  "charCount": 1908
+}

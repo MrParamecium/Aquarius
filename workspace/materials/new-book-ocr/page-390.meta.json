@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-2",
+  "title": "Direct Form II Realization",
+  "summary": "This page covers 4.6-2 (Direct Form II Realization). OCR text begins with: 390 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS X(s) b0 W(s) Y(s) X(s) b0 W(s) Y(s) 1 1 1 1 s s s s b1 \u0002a1 b1 \u0002a1 1 1 1 1 s s s s",
+  "keywords": [
+    "4.6",
+    "4.6-2",
+    "Direct Form II Realization",
+    "continuous-time",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-390",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

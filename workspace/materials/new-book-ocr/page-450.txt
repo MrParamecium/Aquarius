@@ -1,0 +1,51 @@
+                            “04-Lathi-C04” — 2017/9/25 — 19:46 — page 450 — #121
+
+
+
+
+450        CHAPTER 4         CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.32 Inverse Bilateral Laplace Transform
+
+           Find the inverse bilateral Laplace transform of
+                                                                   −3
+                                                     X(s) =
+                                                              (s + 2)(s − 1)
+           if the ROC is (a) −2 < Re s < 1, (b) Re s > 1, and (c) Re s < −2.
+
+
+                 (a)
+                                                               1   1
+                                                     X(s) =      −
+                                                              s+2 s−1
+           Now, X(s) has poles at −2 and 1. The strip of convergence is −2 < Re s < 1. The pole at −2,
+           being to the left of the strip of convergence, corresponds to a causal signal. The pole at 1, being
+           to the right of the strip of convergence, corresponds to an anticausal signal. Equations (4.59)
+           and (4.60) yield
+                                                 x(t) = e−2t u(t) + et u(−t)
+               (b) Both poles lie to the left of the ROC, so both poles correspond to causal signals.
+           Therefore,
+                                               x(t) = (e−2t − et )u(t)
+
+
+                                             x (t)
+                                                     1
+
+
+
+
+                       4                            0           2   t
+
+                                                 (a)
+
+              x(t)                                                               x(t)
+
+                                            4        4
+          0                             t                                               0   t
+
+
+
+
+                            (b)                                          (c)
+         Figure 4.59 Three possible inverse transforms of −3/((s + 2)(s − 1)).

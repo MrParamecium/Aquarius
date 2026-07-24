@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-8",
+  "title": "Summary",
+  "summary": "This page covers 5.10-8 (Summary). OCR text begins with: 574 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 0.8 0.6 0.4 0.2 Imag 0 –0.2",
+  "keywords": [
+    "5.10",
+    "5.10-8",
+    "Summary",
+    "discrete-time",
+    "LTID system",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "summary",
+  "book_page": "page-574",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

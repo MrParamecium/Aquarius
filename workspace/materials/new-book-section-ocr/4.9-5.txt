@@ -1,0 +1,34 @@
+# Fourier section OCR
+section_id: 4.9-5
+source_pages: page-435, page-436
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.9-5 The Transfer Function from the Frequency Response
+In the preceding section we were given the transfer function of a system. From a knowledge of
+the transfer function, we developed techniques for determining the system response to sinusoidal
+inputs. We can also reverse the procedure to determine the transfer function of a minimum phase
+
+[[PAGE page-436]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 436 — #107
+
+
+
+
+436   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      system from the system’s response to sinusoids. This application has significant practical utility. If
+      we are given a system in a black box with only the input and output terminals available, the transfer
+      function has to be determined by experimental measurements at the input and output terminals.
+      The frequency response to sinusoidal inputs is one of the possibilities that is very attractive because
+      the measurements involved are so simple. One needs only to apply a sinusoidal signal at the input
+      and observe the output. We find the amplitude gain |H(jω)| and the output phase shift  H(jω)
+      (with respect to the input sinusoid) for various values of ω over the entire range from 0 to ∞. This
+      information yields the frequency response plots (Bode plots) when plotted against log ω. From
+      these plots we determine the appropriate asymptotes by taking advantage of the fact that the slopes
+      of all asymptotes must be multiples of ±20 dB/decade if the transfer function is a rational function
+      (function that is a ratio of two polynomials in s). From the asymptotes, the corner frequencies are
+      obtained. Corner frequencies determine the poles and zeros of the transfer function. Because of the
+      ambiguity about the location of zeros since LHP and RHP zeros (zeros at s = ±a) have identical
+      magnitudes, this procedure works only for minimum phase systems.

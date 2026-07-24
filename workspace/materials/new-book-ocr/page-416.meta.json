@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.8. OCR text begins with: 416 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.28 Frequency Responses of Delay, Differentiator, and Integrator Systems Find and sketch the frequency responses (magnitude and phase) for (a) an ideal delay of T seconds, (b) an ideal differentiator, and (c) an ideal integrator. (a) Ideal delay of T seconds. The transfer function of an ideal delay is [see Eq. (4.30)] H(s) = e−sT",
+  "keywords": [
+    "4.8",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-416",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

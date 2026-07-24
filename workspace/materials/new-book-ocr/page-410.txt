@@ -1,0 +1,52 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 410 — #81
+
+
+
+
+410       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              There is a trade-off between undesirable overshoot and rise time. Reducing overshoots leads
+          to higher rise time (sluggish system). In practice, a small overshoot, which is still faster than
+          the critical damping, may be acceptable. Note that percent overshoot PO and peak time tp are
+          meaningless for the overdamped or critically damped cases. In addition to adjusting gain K, we
+          may need to augment the system with some type of compensator if the specifications on overshoot
+          and the speed of response are too stringent.
+
+          R AMP I NPUT
+          If the anti-aircraft gun in Fig. 4.35a is tracking an enemy plane moving with a uniform velocity,
+          the gun-position angle must increase linearly with t. Hence, the input in this case is a ramp; that
+          is, θi (t) = tu(t). Let us find the response of the system to this input when K = 80. In this case,
+          i (s) = 1/s2 , and
+
+                                                 80                0.1 1   0.1(s − 2)
+                               o (s) =                       =−      + 2+ 2
+                                          s2 (s2 + 8s + 80)         s  s  s + 8s + 80
+
+          Use of Table 4.1 yields
+
+                                    θo (t) = −0.1 + t + 18 e−8t cos (8t + 36.87◦ ) u(t)
+
+          This response, sketched in Fig. 4.35d, shows that there is a steady-state error er = 0.1 radian. In
+          many cases such a small steady-state error may be tolerable. If, however, a zero steady-state error
+          to a ramp input is required, this system in its present form is unsatisfactory. We must add some
+          form of compensator to the system.
+
+
+
+      E X A M P L E 4.26 Step and Ramp Responses of Feedback Systems Using
+      MATLAB
+
+          Using the feedback system of Fig. 4.18d with G(s) = K/(s(s + 8)) and H(s) = 1, determine
+          the step response for each of the following cases: (a) K = 7, (b) K = 16, and (c) K = 80.
+          Additionally, find the unit ramp response when (d) K = 80.
+
+
+          Example 4.21 computes the transfer functions of these feedback systems in a simple way. In
+          this example, the conv command is used to demonstrate polynomial multiplication of the two
+          denominator factors of G(s). Step responses are computed by using the step command.
+               (a–c)
+          >>   H = tf(1,1); K = 7; G = tf([K],conv([1 0],[1 8])); Ha = feedback(G,H);
+          >>   H = tf(1,1); K = 16; G = tf([K],conv([1 0],[1 8])); Hb = feedback(G,H);
+          >>   H = tf(1,1); K = 80; G = tf([K],conv([1 0],[1 8])); Hc = feedback(G,H);
+          >>   clf; step(Ha,’k-’,Hb,’k--’,Hc,’k-.’);
+          >>   legend(’K = 7’,’K = 16’,’K = 80’,’Location’,’best’);

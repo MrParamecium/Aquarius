@@ -1,0 +1,37 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 347 — #18
+
+
+
+
+                                                            4.1 The Laplace Transform            347
+
+
+
+
+                          Pierre-Simon de Laplace and Oliver Heaviside
+
+
+been unable to explain the irregularities of some heavenly bodies; in desperation, he concluded
+that God himself must intervene now and then to prevent such catastrophes as Jupiter eventually
+falling into the sun (and the moon into the earth), as predicted by Newton’s calculations. Laplace
+proposed to show that these irregularities would correct themselves periodically and that a little
+patience—in Jupiter’s case, 929 years—would see everything returning automatically to order;
+thus there was no reason why the solar and the stellar systems could not continue to operate by the
+laws of Newton and Laplace to the end of time [4].
+     Laplace presented a copy of Mécanique céleste to Napoleon, who, after reading the book,
+took Laplace to task for not including God in his scheme: “You have written this huge book on the
+system of the world without once mentioning the author of the universe.” “Sire,” Laplace retorted,
+“I had no need of that hypothesis.” Napoleon was not amused, and when he reported this reply to
+another great mathematician-astronomer, Louis de Lagrange, the latter remarked, “Ah, but that is
+a fine hypothesis. It explains so many things” [5].
+     Napoleon, following his policy of honoring and promoting scientists, made Laplace the
+minister of the interior. To Napoleon’s dismay, however, the new appointee attempted to bring
+“the spirit of infinitesimals” into administration, and so Laplace was transferred hastily to the
+Senate.
+
+O LIVER H EAVISIDE (1850–1925)
+Although Laplace published his transform method to solve differential equations in 1779, the
+method did not catch on until a century later. It was rediscovered independently in a rather
+awkward form by an eccentric British engineer, Oliver Heaviside (1850–1925), one of the tragic
+figures in the history of science and engineering. Despite his prolific contributions to electrical
+engineering, he was severely criticized during his lifetime and was neglected later to the point that

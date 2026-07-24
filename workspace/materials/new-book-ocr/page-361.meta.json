@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": "Solution of Differential and Integro-Differential Equations 361",
+  "summary": "This page covers 4.3 (Solution of Differential and Integro-Differential Equations 361). OCR text begins with: 4.3 Solution of Differential and Integro-Differential Equations 361 TABLE 4.2 Unilateral Laplace Transform Properties Operation x(t) X(s) Addition x1 (t) + x2 (t) X1 (s) + X2 (s) Scalar multiplication kx(t) kX(s) dx(t) Time differentiation sX(s) − x(0− )",
+  "keywords": [
+    "4.3",
+    "Solution of Differential and Integro-Differential Equations 361",
+    "convolution",
+    "unit step",
+    "differential equation",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-361",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

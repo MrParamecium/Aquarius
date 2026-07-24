@@ -1,0 +1,58 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 337 — #8
+
+
+
+
+                                                                         4.1 The Laplace Transform        337
+
+     (b) To find the Laplace transform of u(t), recall that u(t) = 1 for t ≥ 0. Therefore,
+                                 # ∞              # ∞                      
+                                          −st            −st        1 −st ∞
+                      L [u(t)] =     u(t)e dt =         e dt = − e 
+                                  0−               0−               s        0−
+                                 1
+                               =       Re s > 0
+                                 s
+We also could have obtained this result from Eq. (4.6) by letting a = 0.
+    (c) Because cos ω0 t u(t) = 12 [ejω0 t + e−jω0 t ]u(t), we know that
+
+                                  L [cos ω0 t u(t)] = 12 L[ejω0 t u(t) + e−jω0 t u(t)]
+
+From Eq. (4.6), it follows that
+                                                        !
+                                      1    1       1
+                L[cos ω0 t u(t)] =             +                         Re (s ± jω) = Re s > 0
+                                      2 s − jω0 s + jω0
+                                         s
+                                     = 2         Re s > 0                                            (4.10)
+                                      s + ω0 2
+
+
+      For the unilateral Laplace transform, there is a unique inverse transform of X(s); consequently,
+there is no need to specify the ROC explicitly. For this reason, we shall generally ignore any
+mention of the ROC for unilateral transforms. Recall, also, that in the unilateral Laplace transform
+it is understood that every signal x(t) is zero for t < 0, and it is appropriate to indicate this fact by
+multiplying the signal by u(t).
+
+ D R I L L 4.1 Bilateral Laplace Transform of Gate Functions
+ By direct integration, find the Laplace transform X(s) and the region of convergence of X(s) for
+ the gate functions shown in Fig. 4.2.
+
+                x(t)                                             x(t)
+            1                                                1
+
+
+
+
+            0           2                     t              0           2          4    t
+                            (a)                                              (b)
+        Figure 4.2 Gate functions for Drill 4.1.
+
+
+ ANSWERS
+         1
+      (a)   (1 − e−2s ) for all s
+         s
+          1
+      (b) (1 − e−2s )e−2s for all s
+          s

@@ -1,0 +1,21 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response Of Discrete -Time Systems",
+  "summary": "This page covers 5.5 (Frequency Response Of Discrete -Time Systems). OCR text begins with: 526 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM in a direct form (or its transpose), all the coefficients interact with each other, and a change in any coefficient will be magnified through its repeated influence from feedback and feedforward connections. In a parallel realization, in contrast, a change in a coefficient will affect only a localized segment; the case of a cascade realization is simil",
+  "keywords": [
+    "5.5",
+    "Frequency Response Of Discrete -Time Systems",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-526",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,57 @@
+{
+  "sectionId": "5.5",
+  "sectionTitle": "Frequency Response of Discrete-Time Systems",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-526",
+      "page-527",
+      "page-528"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.30)",
+      "name": "Everlasting exponential response",
+      "latex": "z^n\\Rightarrow H[z]z^n",
+      "sourcePage": "page-526",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.31)",
+      "name": "Complex sinusoid response",
+      "latex": "e^{j\\Omega n}\\Rightarrow H[e^{j\\Omega}]e^{j\\Omega n}",
+      "sourcePage": "page-526",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.32)",
+      "name": "Cosine response as real part",
+      "latex": "\\cos\\Omega n\\Rightarrow \\operatorname{Re}\\{H[e^{j\\Omega}]e^{j\\Omega n}\\}",
+      "sourcePage": "page-526",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.33)",
+      "name": "Discrete-time sinusoidal steady-state response",
+      "latex": "y[n]=|H[e^{j\\Omega}]|\\cos(\\Omega n+\\theta+\\angle H[e^{j\\Omega}])",
+      "sourcePage": "page-527",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "(5.34)",
+      "name": "Analog-to-discrete radian frequency relation",
+      "latex": "\\Omega=\\omega T",
+      "sourcePage": "page-528",
+      "role": "frequency_relation",
+      "status": "verified"
+    }
+  ]
+}

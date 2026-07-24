@@ -1,0 +1,55 @@
+         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 335 — #6
+
+
+
+
+                                                                   4.1 The Laplace Transform               335
+
+Equation (4.5) shows that
+
+                                   lim e−(s+a)t = 0         Re (s + a) < 0
+                                  t→−∞
+
+Hence,
+                                                 1
+                                       X(s) =              Re s < −a
+                                                s+a
+The signal −e−at u(−t) and its ROC (Re s < −a) are depicted in Fig. 4.1b. Note that the Laplace
+transforms for the signals e−at u(t) and −e−at u(−t) are identical except for their regions of
+convergence. Therefore, for a given X(s), there may be more than one inverse transform, depending
+on the ROC. In other words, unless the ROC is specified, there is no one-to-one correspondence
+between X(s) and x(t). This fact increases the complexity in using the Laplace transform. The
+complexity is the result of trying to handle causal as well as noncausal signals. If we restrict all
+our signals to the causal type, such an ambiguity does not arise. There is only one inverse transform
+of X(s) = 1/(s + a), namely, e−at u(t). To find x(t) from X(s), we need not even specify the ROC.
+In summary, if all signals are restricted to the causal type, then, for a given X(s), there is only one
+inverse transform x(t).†
+     The unilateral Laplace transform is a special case of the bilateral Laplace transform in which
+all signals are restricted to being causal; consequently, the limits of integration for the integral in
+Eq. (4.1) can be taken from 0 to ∞. Therefore, the unilateral Laplace transform X(s) of a signal
+x(t) is defined as
+                                                # ∞
+                                        X(s) =       x(t)e−st dt                                   (4.7)
+                                                     0−
+
+We choose 0− (rather than 0+ used in some texts) as the lower limit of integration. This convention
+not only ensures inclusion of an impulse function at t = 0, but also allows us to use initial
+conditions at 0− (rather than at 0+ ) in the solution of differential equations via the Laplace
+transform. In practice, we are likely to know the initial conditions before the input is applied
+(at 0− ), not after the input is applied (at 0+ ). Indeed, the very meaning of the term “initial
+conditions” implies conditions at t = 0− (conditions before the input is applied). Detailed analysis
+of desirability of using t = 0− appears in Sec. 4.3.
+     The unilateral Laplace transform simplifies the system analysis problem considerably because
+of its uniqueness property, which says that for a given X(s), there is a unique inverse transform.
+But there is a price for this simplification: we cannot analyze noncausal systems or use noncausal
+inputs. However, in most practical problems, this restriction is of little consequence. For this
+reason, we shall first consider the unilateral Laplace transform and its application to system
+analysis. (The bilateral Laplace transform is discussed later, in Sec. 4.11.)
+     Basically there is no difference between the unilateral and the bilateral Laplace transform. The
+unilateral transform is the bilateral transform that deals with a subclass of signals starting at t = 0
+(causal signals). Therefore, the expression [Eq. (4.2)] for the inverse Laplace transform remains
+unchanged. In practice, the term Laplace transform means the unilateral Laplace transform.
+
+† Actually, X(s) specifies x(t) within a null function n(t), which has the property that the area under |n(t)|2
+is zero over any finite interval 0 to t (t > 0) (Lerch’s theorem). For example, if two functions are identical
+everywhere except at finite number of points, they differ by a null function.

@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.6",
+  "sectionTitle": "Frequency Response from Pole-Zero Locations",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-539"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.41)",
+      "name": "Discrete pole-zero magnitude from unit-circle distances",
+      "latex": "|H[e^{j\\Omega}]|=b_0\\frac{r_1r_2\\cdots r_N}{d_1d_2\\cdots d_N}",
+      "sourcePage": "page-539",
+      "role": "pole_zero_geometry",
+      "status": "verified"
+    }
+  ]
+}

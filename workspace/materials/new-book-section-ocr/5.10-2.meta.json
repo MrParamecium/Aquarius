@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.10-2",
+  "sourcePages": [
+    "page-567",
+    "page-568"
+  ],
+  "usedPages": [
+    "page-567",
+    "page-568"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-2 Transformation Basics",
+  "foundEnd": true,
+  "endBeforeLine": "5.10-3 Transformation by First-Order Backward Difference",
+  "endBeforeCode": "5.10-3",
+  "charCount": 2372
+}

@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.6. OCR text begins with: 402 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS X(s) s2W(s) 2 1 s X(s) s2W(s) sW(s) W(s) Y(s) 1 1 s s 5",
+  "keywords": [
+    "4.6",
+    "continuous-time"
+  ],
+  "has_math": false,
+  "page_type": "text",
+  "book_page": "page-402",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

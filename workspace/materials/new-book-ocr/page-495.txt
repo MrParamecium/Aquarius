@@ -1,0 +1,56 @@
+            “05-Lathi-C05” — 2017/9/25 — 15:54 — page 495 — #8
+
+
+
+
+                                                                      5.1 The z-Transform          495
+
+
+     ANSWERS
+                      z5 + z4 + +z3 + z2 + z + 1             z
+          (a) X[z] =                                 or         (z−4 − z−10 )
+                                  z9                        z−1
+              z(3.2z + 17.2)
+          (b)
+                z2 − 2z + 2
+
+
+               x[n]
+           1
+
+
+
+
+           0                4   5   6   7   8   9   n        Figure 5.3 Signal for Drill 5.1a.
+
+
+
+
+    5.1-1 Inverse Transform by Partial Fraction Expansion and Tables
+    As in the Laplace transform, we shall avoid the integration in the complex plane required to find
+    the inverse z-transform [Eq. (5.2)] by using the (unilateral) transform table (Table 5.1). Many of
+    the transforms X[z] of practical interest are rational functions (ratio of polynomials in z), which
+    can be expressed as a sum of partial fractions, whose inverse transforms can be readily found in a
+    table of transform. The partial fraction method works because for every transformable x[n] defined
+    for n ≥ 0, there is a corresponding unique X[z] defined for |z| > r0 (where r0 is some constant),
+    and vice versa.
+
+
+
+E X A M P L E 5.3 Inverse z-Transform by Partial Fraction Expansion
+
+    Find the inverse z-transforms of
+                 8z − 19
+        (a)
+             (z − 2)(z − 3)
+             z(2z2 − 11z + 12)
+        (b)
+               (z − 1)(z − 2)3
+                  2z(3z + 17)
+        (c)
+             (z − 1)(z2 − 6z + 25)
+
+        (a) Expanding X[z] into partial fractions yields
+                                            8z − 19       3     5
+                                X[z] =                 =     +
+                                         (z − 2)(z − 3) z − 2 z − 3

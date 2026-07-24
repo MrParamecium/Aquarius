@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": "Analysis of Electrical Networks: The Transformed Network 375",
+  "summary": "This page covers 4.4 (Analysis of Electrical Networks: The Transformed Network 375). OCR text begins with: 4.4 Analysis of Electrical Networks: The Transformed Network 375 divider rules, Thévenin and Norton theorems—can be applied to general electrical networks. The following examples demonstrate these concepts. E X A M P L E 4.17 Transform Analysis of a Simple Circuit Find the loop current i(t) in the circuit shown in Fig. 4.10a if all the initial conditions are zero. 1H 3 s 3 10u(t) i(t) 1",
+  "keywords": [
+    "4.4",
+    "Analysis of Electrical Networks: The Transformed Network 375",
+    "unit step"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-375",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

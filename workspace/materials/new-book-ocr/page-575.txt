@@ -1,0 +1,56 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 575 — #88
+
+
+
+
+                                                                                               Problems          575
+
+           (when all initial conditions are zero), then Y[z] = H[z]X[z]. For an LTID system specified by
+           the difference equation Q[E]y[n] = P[E]x[n], the transfer function H[z] = P[z]/Q[z]. Moreover,
+           H[z] is the z-transform of the system impulse response h[n]. We showed in Ch. 3 that the system
+           response to an everlasting exponential zn is H[z]zn .
+                We may also view the z-transform as a tool that expresses a signal x[n] as a sum of
+           exponentials of the form zn over a continuum of the values of z. Using the fact that an LTID
+           system response to zn is H[z]zn , we find the system response to x[n] as a sum of the system’s
+           responses to all the components of the form zn over the continuum of values of z.
+                LTID systems can be realized by scalar multipliers, adders, and time delays. A given transfer
+           function can be synthesized in many different ways. We discussed canonical, transposed canonical,
+           cascade, and parallel forms of realization. The realization procedure is identical to that for
+           continuous-time systems with 1/s (integrator) replaced by 1/z (unit delay).
+                The majority of the input signals and practical systems are causal. Consequently, we are
+           required to deal with causal signals most of the time. Restricting all signals to the causal type
+           greatly simplifies z-transform analysis; the ROC of a signal becomes irrelevant to the analysis
+           process. This special case of z-transform (which is restricted to causal signals) is called the
+           unilateral z-transform. Much of the chapter deals with this transform. Section 5.8 discusses the
+           general variety of the z-transform (bilateral z-transform), which can handle causal and noncausal
+           signals and systems. In the bilateral transform, the inverse transform of X[z] is not unique, but
+           depends on the ROC of X[z]. Thus, the ROC plays a crucial role in the bilateral z-transform.
+                In Sec. 5.9, we showed that discrete-time systems can be analyzed by the Laplace transform
+           as if they were continuous-time systems. In fact, we showed that the z-transform is the Laplace
+           transform with a change in variable.
+
+
+           REFERENCES
+           1.   Lyons, R. G. Understanding Digital Signal Processing. Addison-Wesley, Reading, MA, 1997.
+           2.   Oppenheim, A. V., and R. W. Schafer. Discrete-Time Signal Processing, 2nd ed. Prentice-Hall, Upper
+                Saddle River, NJ, 1999.
+           3.   Mitra, S. K. Digital Signal Processing, 2nd ed. McGraw-Hill, New York, 2001.
+
+
+
+        PROBLEMS
+5.1-1   Using the definition, compute the z-transform of                         y[n]
+        x[n] = (−1)n (u[n] − u[n − 8]). Sketch the poles
+        and zeros of X[z] in the z plane. No calculator is                   3
+        needed to do this problem!
+5.1-2   Determine the unilateral z-transform X[z] of the                     1
+        signal x[n] shown in Fig. P5.1-2. As the picture                                          10       15
+        suggests, x[n] = −3 for all n ≥ 9 and x[n] = 0              −5                   5                        n
+        for all n < 3.                                                     −1
+                                                                                                                ···
+5.1-3   (a) A causal signal has z-transform given by
+                       2
+            X[z] = z3z−1 . Determine the time-domain                       −3
+            signal x[n] and sketch x[n] over −4 ≤ n ≤
+            11. [Hint: No complex arithmetic is needed              Figure P5.1-2
+            to solve this problem!]

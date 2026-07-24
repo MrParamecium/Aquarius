@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-8",
+  "title": null,
+  "summary": "This page covers 5.10-8. OCR text begins with: 5.10 MATLAB: Discrete-Time IIR Filters 573 1 0.5 Imag 0 –0.5 –1 –1 –0.5 0 0.5 1",
+  "keywords": [
+    "5.10",
+    "5.10-8",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-573",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

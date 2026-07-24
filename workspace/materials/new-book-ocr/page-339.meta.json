@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 339",
+  "summary": "This page covers 4.1 (The Laplace Transform 339). OCR text begins with: 4.1 The Laplace Transform 339 Therefore, 7s − 6 4 3 X(s) = = + (4.11) (s + 2)(s − 3) s + 2 s − 3 C HECKING THE A NSWER It is easy to make a mistake in partial fraction computations. Fortunately it is simple to check",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 339",
+    "unit impulse",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-339",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

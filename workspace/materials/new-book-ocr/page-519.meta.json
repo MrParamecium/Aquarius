@@ -1,0 +1,24 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": "5.3-3",
+  "title": "Inverse Systems",
+  "summary": "This page covers 5.3-3 (Inverse Systems). OCR text begins with: 5.4 System Realization 519 3. An LTID system is marginally stable if and only if there are no poles of H[z] outside the unit circle, and there are some simple poles on the unit circle. D R I L L 5.14 Transfer Function to Determine Stability Show that an accumulator whose impulse response is h[n] = u[n] is marginally stable but BIBO-unstable. 5.3-3 Inverse Systems",
+  "keywords": [
+    "5.3",
+    "5.3-3",
+    "Inverse Systems",
+    "impulse response",
+    "convolution",
+    "unit impulse",
+    "continuous-time",
+    "LTIC system",
+    "LTID system",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-519",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,55 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 441 — #112
+
+
+
+
+                                  4.10 Filter Design by Placement of Poles and Zeros of H(s)         441
+
+instead of the maximally flat response of Butterworth. But in the stopband (ω > ωc ), Chebyshev
+behavior is superior in the sense that Chebyshev filter gain drops faster than that of the Butterworth.
+
+
+4.10-3 Bandpass Filters
+The shaded characteristic in Fig. 4.51b shows the ideal bandpass filter gain. In the bandpass
+filter, the gain is enhanced over the entire passband. Our earlier discussion indicates that this
+can be realized by a wall of poles opposite the imaginary axis in front of the passband centered
+at ω0 . (There is also a wall of conjugate poles opposite −ω0 .) Ideally, an infinite number of
+poles is required. In practice, we compromise by using a finite number of poles and accepting
+less-than-ideal characteristics (Fig. 4.51).
+
+
+4.10-4 Notch (Bandstop) Filters
+An ideal notch filter amplitude response (shaded in Fig. 4.52b) is a complement of the amplitude
+response of an ideal bandpass filter. Its gain is zero over a small band centered at some frequency
+ω0 and is unity over the remaining frequencies. Realization of such a characteristic requires an
+infinite number of poles and zeros. Let us consider a practical second-order notch filter to obtain
+zero gain at a frequency ω = ω0 . For this purpose, we must have zeros at ±jω0 . The requirement
+of unity gain at ω = ∞ requires the number of poles to be equal to the number of zeros (M = N).
+This ensures that for very large values of ω, the product of the distances of poles from ω will
+be equal to the product of the distances of zeros from ω. Moreover, unity gain at ω = 0 requires
+a pole and the corresponding zero to be equidistant from the origin. For example, if we use two
+(complex-conjugate) zeros, we must have two poles; the distance from the origin of the poles
+and of the zeros should be the same. This requirement can be met by placing the two conjugate
+poles on the semicircle of radius ω0 , as depicted in Fig. 4.52a. The poles can be anywhere on the
+semicircle to satisfy the equidistance condition. Let the two conjugate poles be at angles ±θ with
+respect to the negative real axis. Recall that a pole and a zero in the same vicinity tend to cancel out
+
+
+               Im
+
+                            jv0
+                                            H( jv)
+                                                                         Ideal
+
+
+                        0         Re
+
+
+
+                        jv0
+                                                                v0                v
+
+
+
+                      (a)                                      (b)
+      Figure 4.51 (a) Pole-zero configuration and (b) the amplitude response of a bandpass filter.

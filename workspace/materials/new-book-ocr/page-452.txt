@@ -1,0 +1,52 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 452 — #123
+
+
+
+
+452   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      T IME S CALING
+
+                                                           1    s
+                                             x(βt) ⇐⇒         X
+                                                          |β|   β
+
+      The ROC for X(s/β) is βa < Re s < βb. For β > 1, x(βt) represents time compression and the
+      corresponding ROC expands by factor β. For 0 > β > 1, x(βt) represents time expansion and the
+      corresponding ROC is compressed by factor β.
+
+      T IME C ONVOLUTION
+
+
+                                          x1 (t) ∗ x2 (t) ⇐⇒ X1 (s)X2 (s)
+
+      The ROC for X1 (s)X2 (s) is the region common to (intersection of ) the ROCs for X1 (s) and X2 (s).
+
+      F REQUENCY C ONVOLUTION
+
+                                                      # c+j∞
+                                                   1
+                                x1 (t)x2 (t) ⇐⇒              X1 (w)X2 (s − w) dw
+                                                  2π j c−j∞
+
+      The ROC for X1 (s) ∗ X2 (s) is a1 + a2 < Re s < b1 + b2 .
+
+      T IME R EVERSAL
+
+
+                                               x(−t) ⇐⇒ X(−s)
+
+      The ROC for X(−s) is −b < Re s < −a.
+
+
+
+      4.11-2 Using the Bilateral Transform for Linear System Analysis
+      Since the bilateral Laplace transform can handle noncausal signals, we can analyze noncausal
+      LTIC systems using the bilateral Laplace transform. We have shown that the (zero-state) output
+      y(t) is given by
+
+                                             y(t) = L−1 [X(s)H(s)]
+
+      This expression is valid only if X(s)H(s) exists. The ROC of X(s)H(s) is the region in which both
+      X(s) and H(s) exist. In other words, the ROC of X(s)H(s) is the region common to the regions of
+      convergence of both X(s) and H(s). These ideas are clarified in the following examples.

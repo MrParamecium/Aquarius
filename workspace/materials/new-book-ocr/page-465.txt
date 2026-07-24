@@ -1,0 +1,56 @@
+               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 465 — #136
+
+
+
+
+                                                   4.12 MATLAB: Continuous-Time Filters              465
+
+>>           omega_c = 2*pi*1000; R = 1; N = 8;
+>>           epsilon = sqrt(10^(R/10)-1);
+
+The coefficients of CN [s/(jωc )] are obtained with the help of CH4MP3, and then the coefficients of
+[1 + 2 CN2 (s/(jωc ))] are computed by using convolution to perform polynomial multiplication.
+
+>>           CN = CH4MP3(N).*((1/(1j*omega_c)).^[N:-1:0]);
+>>           CP = epsilon^2*conv(CN,CN); CP(end) = CP(end)+1;
+
+Next, the polynomial roots are found, and the left-half-plane poles are retained and plotted.
+
+>>           poles = roots(CP); i = find(real(poles)<0); C_poles = poles(i);
+>>           plot(real(C_poles),imag(C_poles),’kx’); axis equal;
+>>           axis(omega_c*[-1.1 1.1 -1.1 1.1]);
+>>           xlabel(’Real’); ylabel(’Imaginary’);
+
+As shown in Fig. 4.69, the roots of a Chebyshev filter lie on an ellipse† (see Prob. 4.12-14).
+
+
+             6000
+
+             4000
+
+             2000
+
+
+Imaginary
+               0
+
+            –2000
+
+            –4000
+
+            –6000
+                                                        Figure 4.69 Pole-zero plot for an order-8
+                    –5000       0           5000        Chebyshev LPF with fc = 1 kHz and R = 1
+                              Real                      dB.
+
+
+    To compute the filter’s magnitude response, the poles are expanded into a polynomial, the dc
+gain is set based on the even value of N, and CH4MP1 is used.
+
+>>           A = poly(C_poles); B = A(end)/sqrt(1+epsilon^2);
+>>           omega = linspace(0,2*pi*2000,2001); H_C = CH4MP1(B,A,omega);
+>>           plot(omega/2/pi,abs(H_C),’k’); axis([0 2000 0 1.1]);
+>>           xlabel(’f [Hz]’); ylabel(’|H_C(j2\pi f)|’);
+
+† E. A. Guillemin demonstrates a wonderful relationship between the Chebyshev ellipse and the Butterworth
+circle in his book Synthesis of Passive Networks (Wiley, New York, 1957).

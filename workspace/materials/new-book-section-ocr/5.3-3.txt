@@ -1,0 +1,35 @@
+# Fourier section OCR
+section_id: 5.3-3
+source_pages: page-519
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.3-3 Inverse Systems
+If H[z] is the transfer function of a system S, then Si , its inverse system, has a transfer function
+Hi [z] given by
+                                                      1
+                                            Hi [z] =
+                                                     H[z]
+This follows from the fact the inverse system Si undoes the operation of S. Hence, if H[z] is placed
+in cascade with Hi [z], the transfer function of the composite system (identity system) is unity. For
+example, an accumulator whose transfer function is H[z] = z/(z − 1) and a backward difference
+system whose transfer function is Hi [z] = (z − 1)/z are inverse of each other. Similarly if
+
+                                                      z − 0.4
+                                           H[z] =
+                                                      z − 0.7
+its inverse system transfer function is
+
+                                                      z − 0.7
+                                           Hi [z] =
+                                                      z − 0.4
+as required by the property H[z]Hi [z] = 1. Hence, it follows that
+
+                                          h[n] ∗ hi [n] = δ[n]
+
+
+
+ D R I L L 5.15 Inverse Systems
+ Find the impulse responses of an accumulator and a first-order backward difference system.
+ Show that the convolution of the two impulse responses yields δ[n].

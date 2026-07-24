@@ -1,0 +1,60 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 427 — #98
+
+
+
+
+                                                                                      4.9     Bode Plots     427
+
+T HE L OG M AGNITUDE
+The log amplitude is given by
+                                                                                      2 
+                                                                 ω              jω
+                         log amplitude = −20 log 1 + 2jζ                +              
+                                                                                                          (4.49)
+                                                                  ωn             ωn
+For ω  ωn , the log amplitude becomes
+
+                                    log amplitude ≈ −20 log 1 = 0
+
+For ω  ωn , the log amplitude is
+                                                       
+                                                 ω 2              ω
+                     log amplitude ≈ −20 log  −         = −40 log
+                                                  ωn               ωn
+                                   = −40 log ω − 40 log ωn = −40u − 40 log ωn                              (4.50)
+
+The two asymptotes are zero for ω < ωn and −40u − 40 log ωn for ω > ωn . The second asymptote
+is a straight line with a slope of −40 dB/decade (or −12 dB/octave) when plotted against the log
+ω scale. It begins at ω = ωn [see Eq. (4.50)]. The asymptotes are depicted in Fig. 4.43a. The exact
+log amplitude is given by [see Eq. (4.49)]
+                                                                2 !2                    2 1/2
+                                                            ω                    ω
+                    log amplitude = −20 log            1−               + 4ζ 2                             (4.51)
+                                                            ωn                   ωn
+
+The log amplitude in this case involves a parameter ζ , resulting in a different plot for each value
+of ζ . For complex-conjugate poles,† ζ < 1. Hence, we must sketch a family of curves for a number
+of values of ζ in the range 0 to 1. This is illustrated in Fig. 4.43a. The error between the actual plot
+and the asymptotes is shown in Fig. 4.44. The actual plot can be obtained by adding the error to
+the asymptotic plot.
+      For second-order zeros (complex-conjugate zeros), the plots are mirror images (about the 0 dB
+line) of the plots depicted in Fig. 4.43a. Note the resonance phenomenon of the complex-conjugate
+poles. This phenomenon is barely noticeable for ζ > 0.707 but becomes pronounced as ζ → 0.
+
+P HASE
+The phase function for second-order poles, as apparent in Eq. (4.48), is
+                                                 ⎡              ⎤
+                                                          ω
+                                                 ⎢ 2ζ ω         ⎥
+                               H(jω) = − tan−1 ⎢
+                                                 ⎢         n    ⎥
+                                                               2⎥
+                                                                                                           (4.52)
+                                                 ⎣        ω     ⎦
+                                                   1−
+                                                          ωn
+For ω  ωn ,
+                                                  H(jω) ≈ 0
+
+† For ζ ≥ 1, the two poles in the second-order factor are no longer complex but real, and each of these two
+real poles can be dealt with as a separate first-order factor.

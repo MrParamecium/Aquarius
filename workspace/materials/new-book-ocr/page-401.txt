@@ -1,0 +1,41 @@
+             “04-Lathi-C04” — 2017/9/25 — 19:46 — page 401 — #72
+
+
+
+
+                                                                              4.6   System Realization   401
+
+
+
+
+            Figure 4.30 Op-amp summing and amplifying circuit.
+
+    T HE A DDER
+    Consider now the circuit in Fig. 4.30a with r inputs X1 (s), X2 (s), . . . , Xr (s). As usual, the input
+    voltage Vx (s) ≃ 0 because the op-amp gain → ∞. Moreover, the current going into the op amp is
+    very small (≃ 0) because the input impedance → ∞. Therefore, the total current in the feedback
+    resistor Rf is I1 (s) + I2 (s) + · · · + Ir (s). Moreover, because Vx (s) = 0,
+                                                   Xj (s)
+                                        Ij (s) =              j = 1, 2, . . . , r
+                                                    Rj
+    Also,
+                              Y(s) = −Rf [I1 (s) + I2 (s) + · · · + Ir (s)]
+                                                                                       !
+                                         Rf            Rf                   Rf
+                                   =−        X1 (s) + X2 (s) + · · · + Xr (s)
+                                         R1            R2                   Rr
+                                   = k1 X1 (s) + k2 X2 (s) + · · · + kr Xr (s)
+    where
+                                                             −Rf
+                                                      ki =
+                                                              Ri
+    Clearly, the circuit in Fig. 4.30 serves an adder and an amplifier with any desired gain for each of
+    the input signals. Figure 4.30b shows the compact symbol used in circuit diagrams for an adder
+    with r inputs.
+
+E X A M P L E 4.25 Op-Amp Realization
+
+    Use op-amp circuits to realize the canonic direct form of the transfer function
+                                                            2s + 5
+                                            H(s) =
+                                                        s2 + 4s + 10

@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-1",
+  "title": null,
+  "summary": "This page covers 4.12-1. OCR text begins with: 4.12 MATLAB: Continuous-Time Filters 457 for each value of the frequency vector omega. It is also possible to compute frequency responses by using the signal-processing toolbox function freqs. D ESIGN AND E VALUATION OF A S IMPLE RC F ILTER One of the simplest lowpass filters is realized by using an RC circuit, as shown in Fig. 4.61. −1 This one-pole system has transfer \b function HRC (s) = (RCs + 1) and magnitude re",
+  "keywords": [
+    "4.12",
+    "4.12-1",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-457",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

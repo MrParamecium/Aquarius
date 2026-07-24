@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-4",
+  "title": "Notch (Bandstop) Filters",
+  "summary": "This page covers 4.10-4 (Notch (Bandstop) Filters). OCR text begins with: 4.10 Filter Design by Placement of Poles and Zeros of H(s) 441 instead of the maximally flat response of Butterworth. But in the stopband (ω > ωc ), Chebyshev behavior is superior in the sense that Chebyshev filter gain drops faster than that of the Butterworth. 4.10-3 Bandpass Filters The shaded characteristic in Fig. 4.51b shows the ideal bandpass filter gain. In the bandpass filter, the gain is enhanced over the e",
+  "keywords": [
+    "4.10",
+    "4.10-4",
+    "Notch (Bandstop) Filters"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-441",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

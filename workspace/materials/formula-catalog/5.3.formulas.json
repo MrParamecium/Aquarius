@@ -1,0 +1,25 @@
+{
+  "sectionId": "5.3",
+  "sectionTitle": "z-Transform Solution of Linear Difference Equations",
+  "bookSource": "new",
+  "status": "draft_pdf_latex",
+  "verification": {
+    "method": "pdf_text_layer_and_section_ocr_partial_check",
+    "sourcePages": [
+      "page-510",
+      "page-511"
+    ],
+    "createdAt": "2026-06-14",
+    "note": "Contains draft formulas from PDF text layer; only per-formula status=verified entries are injected."
+  },
+  "formulas": [
+    {
+      "label": "(5.21)",
+      "name": "Example linear difference equation",
+      "latex": "y[n]-5y[n-1]+6y[n-2]=3x[n-1]+5x[n-2]",
+      "sourcePage": "page-510",
+      "role": "worked_example_setup",
+      "status": "draft_pdf_latex"
+    }
+  ]
+}

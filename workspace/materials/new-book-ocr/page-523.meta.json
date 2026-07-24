@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.4",
+  "subsection": null,
+  "title": "System Realization 523",
+  "summary": "This page covers 5.4 (System Realization 523). OCR text begins with: 5.4 System Realization 523 (c) z H[z] = z+7 Here N = 1 and b0 = 1, b1 = 0 and a1 = 7. Figure 5.11 shows the direct and the transposed realizations. Observe that the realizations are almost alike.",
+  "keywords": [
+    "5.4",
+    "System Realization 523"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-523",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

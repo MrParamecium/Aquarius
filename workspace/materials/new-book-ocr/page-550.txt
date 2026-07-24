@@ -1,0 +1,62 @@
+                        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 550 — #63
+
+
+
+
+550   CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          The procedure of finding H[z] can be systematized for any Nth-order system. First we express
+      an Nth-order analog transfer function Ha (s) as a sum of partial fractions as‡
+
+
+                                                            "
+                                                            n
+                                                                  ci
+                                                 Ha (s) =
+                                                            i=1
+                                                                s − λi
+
+
+      Then the corresponding H[z] is given by
+
+
+                                                           "
+                                                           n
+                                                                   ci z
+                                                H[z] = T
+                                                            i=1
+                                                                z − eλi T
+
+
+      This transfer function can be readily realized, as explained in Sec. 5.4. Table 5.3 lists several pairs
+      of Ha (s) and their corresponding H[z]. For instance, to realize a digital integrator, we examine its
+      Ha (s) = 1/s. From Table 5.3, corresponding to Ha (s) = 1/s (pair 2), we find H[z] = Tz/(z − 1).
+      This is exactly the result we obtained in Ex. 3.9 using another approach.
+           Note that the frequency response Ha (jω) of a practical analog filter cannot be bandlimited.
+      Consequently, all these realizations are approximate.
+
+
+      C HOOSING THE S AMPLING I NTERVAL T
+      The impulse-invariance criterion (5.44) was derived under the assumption that T → 0. Such an
+      assumption is neither practical nor necessary for satisfactory design. Avoiding of aliasing is the
+      most important consideration for the choice of T. In Eq. (5.39), we showed that for a sampling
+      interval T seconds, the highest frequency that can be sampled without aliasing is 1/2T Hz or
+      π/T radians per second. This implies that Ha (jω), the frequency response of the analog filter in
+      Fig. 5.24b should not have spectral components beyond frequency π/T radians per second. In
+      other words, to avoid aliasing, the frequency response of the system Ha (s) must be bandlimited to
+      π/T radians per second. We shall see later in Ch. 7 that frequency response of a realizable LTIC
+      system cannot be bandlimited; that is, the response generally exists for all frequencies up to ∞.
+      Therefore, it is impossible to digitally realize an LTIC system exactly without aliasing. The saving
+      grace is that the frequency response of every realizable LTIC system decays with frequency. This
+      allows for a compromise in digitally realizing an LTIC system with an acceptable level of aliasing.
+      The smaller the value of T, the smaller the aliasing, and the better the approximation. Since it is
+      impossible to make |Ha (jω)| zero, we are satisfied with making it negligible beyond the frequency
+      π/T. As a rule of thumb [3], we choose T such that |Ha (jω)| at the frequency ω = π/T is less than
+      a certain fraction (often taken as 1%) of the peak value of |Ha (jω)|. This ensures that aliasing is
+      negligible. The peak |Ha (jω)| usually occurs at ω = 0 for lowpass filters and at the band center
+      frequency ωc for bandpass filters.
+
+
+      ‡ Assuming H (s) has simple poles. For repeated poles, the form changes accordingly. Entry 6 in Table 5.3 is
+                    a
+      suitable for repeated poles.

@@ -1,0 +1,55 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 403 — #74
+
+
+
+
+                                                                      4.6   System Realization            403
+
+     The basic canonic realization is shown in Fig. 4.31a. The same realization with horizontal
+reorientation is shown in Fig. 4.31b. Signals at various points are also indicated in the
+realization. For convenience, we denote the output of the last integrator by W(s). Consequently,
+the signals at the inputs of the two integrators are sW(s) and s2 W(s), as shown in Figs. 4.31a
+and 4.31b. Op-amp elements (multipliers, integrators, and adders) change the polarity of the
+output signals. To incorporate this fact, we modify the canonic realization in Fig. 4.31b to that
+depicted in Fig. 4.31c. In Fig. 4.31b, the successive outputs of the adder and the integrators
+are s2 W(s), sW(s), and W(s), respectively. Because of polarity reversals in op-amp circuits,
+these outputs are −s2 W(s), sW(s), and −W(s), respectively, in Fig. 4.31c. This polarity
+reversal requires corresponding modifications in the signs of feedback and feedforward gains.
+According to Fig. 4.31b,
+
+                                 s2 W(s) = X(s) − 4sW(s) − 10W(s)
+
+Therefore,
+                               −s2 W(s) = −X(s) + 4sW(s) + 10W(s)
+Because the adder gains are always negative (see Fig. 4.30b), we rewrite the foregoing equation
+as
+                      −s2 W(s) = −1[X(s)] − 4[−sW(s)] − 10[−W(s)]
+Figure 4.31c shows the implementation of this equation. The hardware realization appears in
+Fig. 4.31d. Both integrators have a unity gain, which requires RC = 1. We have used R = 100
+k and C = 10 µF. The gain of 10 in the outer feedback path is obtained in the adder by
+choosing the feedback resistor of the adder to be 100 k and an input resistor of 10 k.
+Similarly, the gain of 4 in the inner feedback path is obtained by using the corresponding input
+resistor of 25 k. The gains of 2 and 5, required in the feedforward connections, are obtained
+by using a feedback resistor of 100 k and input resistors of 50 and 20 k, respectively.†
+     The op-amp realization in Fig. 4.31 is not necessarily the one that uses the fewest op
+amps. This example is given just to illustrate a systematic procedure for designing an op-amp
+circuit of an arbitrary transfer function. There are more efficient circuits (such as Sallen–Key
+or biquad) that use fewer op amps to realize a second-order transfer function.
+
+
+
+
+ D R I L L 4.14 Transfer Functions of Op-Amp Circuits
+ Show that the transfer functions of the op-amp circuits in Figs. 4.32a and 4.32b are H1 (s) and
+ H2 (s), respectively, where
+
+                                    −Rf       a                 1
+                           H1 (s) =                       a=
+                                     R       s+a              Rf Cf
+                                      C      s+b                1              1
+                           H2 (s) = −                      a=           b=
+                                      Cf     s+a              Rf Cf           RC
+
+
+† It is possible to avoid the two inverting op amps (with gain −1) in Fig. 4.31d by adding signal sW(s) to the
+input and output adders directly, using the noninverting amplifier configuration in Fig. 4.16d.

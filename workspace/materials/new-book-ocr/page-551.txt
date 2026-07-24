@@ -1,0 +1,56 @@
+           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 551 — #64
+
+
+
+
+                                                    5.7 Digital Processing of Analog Signals        551
+
+
+E X A M P L E 5.16 Butterworth Filter Design by the Impulse-Invariance
+Method
+
+    Design a digital filter to realize a first-order lowpass Butterworth filter with the transfer
+    function                                    ωc
+                                     Ha (s) =            ωc = 105                          (5.46)
+                                              s + ωc
+
+
+    For this filter, we find the corresponding H[z] according to Eq. (5.45) (or pair 5 in Table 5.3)
+    as
+                                                     ωc Tz
+                                            H[z] =                                            (5.47)
+                                                   z − e−ωc T
+    Next, we select the value of T by means of the criterion according to which the gain at ω = π/T
+    drops to 1% of the maximum filter gain. However, this choice results in such a good design that
+    aliasing is imperceptible. The resulting amplitude response is so close to the desired response
+    that we can hardly notice the aliasing effect in our plot. For the sake of demonstrating the
+    aliasing effect, we shall deliberately select a 10% criterion (instead of 1%). We have
+                                                                
+                                                        ωc      
+                                                                
+                                         |Ha (jω)| =           
+                                                      ω2 + ωc2 
+
+    In this case |Ha (jω)|max = 1, which occurs at ω = 0. Use of 10% criterion leads to |Ha (π/T)| =
+    0.1. Observe that                              ωc
+                                       |Ha (jω)| ≈         ω  ωc
+                                                    ω
+         Hence,
+                                         ωc
+                          |Ha (π/T)| ≈       = 0.1     ⇒ π/T = 10ωc = 106
+                                        π/T
+    Thus, the 10% criterion yields T = 10−6 π . The 1% criterion would have given T = 10−7 π .
+    Substitution of T = 10−6 π in Eq. (5.47) yields
+                                                      0.3142z
+                                           H[z] =                                              (5.48)
+                                                    z − 0.7304
+    A canonical realization of this filter is shown in Fig. 5.26a.
+        To find the frequency response of this digital filter, we rewrite H[z] as
+                                                     0.3142
+                                         H[z] =
+                                                  1 − 0.7304z−1
+    Therefore,
+                                   0.3142                       0.3142
+                 H[ejωT ] =               −jωT
+                                               =
+                              1 − 0.7304e        (1 − 0.7304 cos ωT) + j0.7304 sin ωT

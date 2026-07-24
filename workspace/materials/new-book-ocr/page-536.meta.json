@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": "5.5-2",
+  "title": "Aliasing and Sampling Rate",
+  "summary": "This page covers 5.5-2 (Aliasing and Sampling Rate). OCR text begins with: 536 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM (e) We have 34.699 = −3 + 6(2π ). Hence, \u0004a = −3, and the apparent frequency |\u0004a | = 3 rad/sample. Because \u0004a is negative, there is a sign change of the phase. Hence, the apparent sinusoid is cos (3n − θ ). D R I L L 5.20 Apparent Frequency Show that the sinusoids having frequencies \u0004 of (a) 2π , (b) 3π , (c) 5π , (d) 3.2π , (e) 22.1327, and (f) π + 2",
+  "keywords": [
+    "5.5",
+    "5.5-2",
+    "Aliasing and Sampling Rate",
+    "discrete-time",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-536",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

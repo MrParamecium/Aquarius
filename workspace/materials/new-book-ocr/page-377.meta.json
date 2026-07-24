@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": "Analysis of Electrical Networks: The Transformed Network 377",
+  "summary": "This page covers 4.4 (Analysis of Electrical Networks: The Transformed Network 377). OCR text begins with: 4.4 Analysis of Electrical Networks: The Transformed Network 377 This equation can be rearranged as 1 v(0− ) V(s) = I(s) + (4.33) Cs s Observe that V(s) is the voltage (in the frequency domain) across the charged capacitor and I(s)/Cs is the voltage across the same capacitor without any charge. Therefore, the charged capacitor can",
+  "keywords": [
+    "4.4",
+    "Analysis of Electrical Networks: The Transformed Network 377",
+    "unit impulse",
+    "unit step"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-377",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

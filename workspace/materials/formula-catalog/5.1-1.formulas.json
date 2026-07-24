@@ -1,0 +1,32 @@
+{
+  "sectionId": "5.1-1",
+  "sectionTitle": "Inverse Transform by Partial Fraction Expansion and Tables",
+  "bookSource": "new",
+  "status": "draft_pdf_latex",
+  "verification": {
+    "method": "pdf_text_layer_and_section_ocr_partial_check",
+    "sourcePages": [
+      "page-496"
+    ],
+    "createdAt": "2026-06-14",
+    "note": "Contains draft formulas from PDF text layer; only per-formula status=verified entries are injected."
+  },
+  "formulas": [
+    {
+      "label": "(5.8)",
+      "name": "Inverse z-transform example result",
+      "latex": "x[n]=[3(2)^{n-1}+5(3)^{n-1}]u[n-1]",
+      "sourcePage": "page-496",
+      "role": "worked_example_result",
+      "status": "draft_pdf_latex"
+    },
+    {
+      "label": "(5.9)",
+      "name": "Inverse z-transform example equivalent form",
+      "latex": "x[n]=\\left[\\delta[n]+\\frac{3}{2}2^n+\\frac{5}{3}3^n\\right]u[n]",
+      "sourcePage": "page-496",
+      "role": "worked_example_result",
+      "status": "draft_pdf_latex"
+    }
+  ]
+}

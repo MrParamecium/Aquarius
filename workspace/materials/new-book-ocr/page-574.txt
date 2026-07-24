@@ -1,0 +1,66 @@
+                                           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 574 — #87
+
+
+
+
+574   CHAPTER 5                            DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                                 0.8
+
+                                 0.6
+
+                                 0.4
+
+                                 0.2
+
+            Imag                   0
+
+                                 –0.2
+
+                                 –0.4
+
+                                 –0.6
+
+                                 –0.8
+
+
+                                              –1         –0.5       0   0.5             1
+                                                                Real
+            Figure 5.33 Pole-zero plot for 180th-order discrete-time Butterworth filter.
+
+
+                                   1
+
+
+
+
+            Magnitude Response
+                                 0.8
+
+                                 0.6
+
+                                 0.4
+
+                                 0.2
+
+                                   0
+                                       0           0.5          1        1.5                2   2.5   3
+                                                                              Ω [rad]
+            Figure 5.34 Magnitude response for a 180th-order discrete-time Butterworth filter.
+
+
+      trivial; even functions from the MATLAB signal-processing toolbox fail to properly design such a
+      high-order discrete-time Butterworth filter.
+
+
+
+      5.11 S UMMARY
+      In this chapter we discussed the analysis of linear, time-invariant, discrete-time (LTID) systems by
+      means of the z-transform. The z-transform changes the difference equations of LTID systems into
+      algebraic equations. Therefore, solving these difference equations reduces to solving algebraic
+      equations.
+           The transfer function H[z] of an LTID system is equal to the ratio of the z-transform of the
+      output to the z-transform of the input when all initial conditions are zero. Therefore, if X[z] is
+      the z-transform of the input x[n] and Y[z] is the z-transform of the corresponding output y[n]

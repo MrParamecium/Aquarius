@@ -1,0 +1,55 @@
+                      “05-Lathi-C05” — 2017/9/25 — 15:54 — page 518 — #31
+
+
+
+
+518   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+       D R I L L 5.13 Transfer Function to Find Zero-State Response and
+       Difference Equation
+       A discrete-time system is described by the following transfer function:
+                                                             z − 0.5
+                                                H[z] =
+                                                         (z + 0.5)(z − 1)
+
+            (a) Find the system response to input x[n] = 3−(n+1) u[n] if all initial conditions are zero.
+            (b) Write the difference equation relating the output y[n] to input x[n] for this system.
+
+
+       ANSWERS
+                                                n
+            (a) y[n] = 13 12 − 0.8(−0.5)n + 0.3 13 u[n]
+            (b) y[n + 2] − 0.5y[n + 1] − 0.5y[n] = x[n + 1] − 0.5x[n]
+
+
+
+
+      5.3-2 Stability
+      Equation (5.26) shows that the denominator of H[z] is Q[z], which is apparently identical to the
+      characteristic polynomial Q[γ ] defined in Ch. 3. Does this mean that the denominator of H[z] is
+      the characteristic polynomial of the system? This may or may not be the case: if P[z] and Q[z]
+      in Eq. (5.26) have any common factors, they cancel out, and the effective denominator of H[z]
+      is not necessarily equal to Q[z]. Recall also that the system transfer function H[z], like h[n], is
+      defined in terms of measurements at the external terminals. Consequently, H[z] and h[n] are both
+      external descriptions of the system. In contrast, the characteristic polynomial Q[z] is an internal
+      description. Clearly, we can determine only external stability, that is, BIBO stability, from H[z].
+      If all the poles of H[z] are within the unit circle, all the terms in h[n] are decaying exponentials,
+      and as shown in Sec. 3.9, h[n] is absolutely summable. Consequently, the system is BIBO-stable.
+      Otherwise the system is BIBO-unstable.
+           If P[z] and Q[z] do not have common factors, then the denominator of H[z] is identical to
+      Q[z].† The poles of H[z] are the characteristic roots of the system. We can now determine internal
+      stability. The internal stability criterion in Sec. 3.9-2 can be restated in terms of the poles of H[z],
+      as follows.
+          1. An LTID system is asymptotically stable if and only if all the poles of its transfer function
+             H[z] are within the unit circle. The poles may be repeated or simple.
+          2. An LTID system is unstable if and only if either one or both of the following conditions
+             exist: (i) at least one pole of H[z] is outside the unit circle; (ii) there are repeated poles of
+             H[z] on the unit circle.
+
+
+      † There is no way of determining whether any common factors in P[z] and Q[z] were canceled out. This is
+      because in our derivation of H[z], we generally get the final result after the cancellations have been effected.
+      When we use internal description of the system to derive Q[z], however, we find pure Q[z] unaffected by any
+      common factor in P[z].

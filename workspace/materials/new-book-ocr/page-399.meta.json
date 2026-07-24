@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-5",
+  "title": "Using Operational Ampliﬁers for System Realization",
+  "summary": "This page covers 4.6-5 (Using Operational Ampliﬁers for System Realization). OCR text begins with: 4.6 System Realization 399 4.6-5 Using Operational Ampliﬁers for System Realization In this section, we discuss practical implementation of the realizations described in Sec. 4.6-4. Earlier we saw that the basic elements required for the synthesis of an LTIC system (or a given transfer function) are (scalar) multipliers, integrators, and adders. All these elements can be realized by operational amplifier (op-amp) cir",
+  "keywords": [
+    "4.6",
+    "4.6-5",
+    "Using Operational Ampliﬁers for System Realization",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-399",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-1",
+  "title": "Frequency Response and Pole-Zero Plots",
+  "summary": "This page covers 5.10-1 (Frequency Response and Pole-Zero Plots). OCR text begins with: 566 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 5.10-1 Frequency Response and Pole-Zero Plots Frequency response and pole-zero plots help characterize filter behavior. Similar to continuous-time systems, rational transfer functions for realizable LTID systems are represented in the z-domain as %N −k %N",
+  "keywords": [
+    "5.10",
+    "5.10-1",
+    "Frequency Response and Pole-Zero Plots",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "MATLAB",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-566",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

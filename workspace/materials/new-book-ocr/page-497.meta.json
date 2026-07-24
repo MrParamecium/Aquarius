@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": "The z-Transform 497",
+  "summary": "This page covers 5.1 (The z-Transform 497). OCR text begins with: 5.1 The z-Transform 497 We can determine a1 and a2 by clearing fractions. Or we may use a shortcut. For example, to determine a2 , we multiply both sides of Eq. (5.10) by z and let z → ∞. This yields 0 = −3 − 0 + 0 + a2 ⇒ a2 = 3 This result leaves only one unknown, a1 , which is readily determined by letting z take any convenient value, say, z = 0, on both sides of Eq. (5.10). This produces 12 1 a1 3",
+  "keywords": [
+    "5.1",
+    "The z-Transform 497",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-497",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

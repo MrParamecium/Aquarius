@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": "Application to Feedback and Controls 407",
+  "summary": "This page covers 4.7 (Application to Feedback and Controls 407). OCR text begins with: 4.7 Application to Feedback and Controls 407 (set at the desired output position) and the output θo (actual position) is amplified; the amplified output, which is proportional to θi − θo , is applied to the motor input. If θi − θo = 0 (the output being equal to the desired angle), there is no input to the motor, and the motor stops. But if θo \u0004= θi , there will be a nonzero input to the motor, which will turn the sha",
+  "keywords": [
+    "4.7",
+    "Application to Feedback and Controls 407",
+    "unit step"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-407",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

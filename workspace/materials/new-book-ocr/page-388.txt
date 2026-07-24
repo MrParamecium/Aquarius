@@ -1,0 +1,53 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 388 — #59
+
+
+
+
+388   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      (a)
+
+      >>    H = tf(1,1); K = 7; G = tf([0 0 K],[1 8 0]); TFa = feedback(G,H)
+            Ha =
+                    7
+              -------------
+              s^2 + 8 s + 7
+
+      Thus, Ha (s) = 7/(s2 + 8s + 7).
+      (b)
+      >>    H = tf(1,1); K = 16; G = tf([0 0 K],[1 8 0]); TFb = feedback(G,H)
+            Hb =
+                    16
+              --------------
+              s^2 + 8 s + 16
+
+      Thus, Hb (s) = 16/(s2 + 8s + 16).
+      (c)
+
+      >>    H = tf(1,1); K = 80; G = tf([0 0 K],[1 8 0]); TFc = feedback(G,H)
+            Hc =
+                    80
+              --------------
+              s^2 + 8 s + 80
+
+      Thus, Hc (s) = 80/(s2 + 8s + 80).
+
+
+
+
+      4.6 S YSTEM R EALIZATION
+      We now develop a systematic method for realization (or implementation) of an arbitrary Nth-order
+      transfer function. The most general transfer function with M = N is given by
+
+                                           b0 sN + b1 sN−1 + · · · + bN−1 s + bN
+                                  H(s) =                                                            (4.36)
+                                            sN + a1 sN−1 + · · · + aN−1 s + aN
+
+      Since realization is basically a synthesis problem, there is no unique way of realizing a system.
+      A given transfer function can be realized in many different ways. A transfer function H(s) can be
+      realized by using integrators or differentiators along with adders and multipliers. We avoid use of
+      differentiators for practical reasons discussed in Secs. 2.1 and 4.3-3. Hence, in our implementation,
+      we shall use integrators along with scalar multipliers and adders. We are already familiar with
+      representation of all these elements except the integrator. The integrator can be represented by a
+      box with integral sign (time-domain representation, Fig. 4.19a) or by a box with transfer function
+      1/s (frequency-domain representation, Fig. 4.19b).

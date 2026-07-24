@@ -1,0 +1,60 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 549 — #62
+
+
+
+
+                                                               5.7 Digital Processing of Analog Signals                 549
+
+The impulse response h(t), given by the inverse Laplace transform of Ha (s), is
+
+                                                        ha (t) = ceλt u(t)
+
+The corresponding digital filter unit impulse response h[n], per Eq. (5.44), is
+
+                                                h[n] = Tha (nT) = TcenλT
+
+Figure 5.25 shows ha (t) and h[n]. The corresponding H[z], the z-transform of h[n], as found from
+Table 5.1, is
+                                                  Tcz
+                                         H[z] =                                             (5.45)
+                                                z − eλT
+
+        c         ha(t)                                                     cT    h[n]
+
+
+
+
+                                                           t                                                       n
+                                       (a)                                                        (b)
+      Figure 5.25 Impulse response for analog and digital systems in the impulse invariance
+      method of filter design.
+
+
+TABLE 5.3        Select Impulse-Invariance Pairs
+
+No.     Ha (s)                     ha (t)                      h[n]                          H[z]
+
+1           K                      Kδ(t)                       TKδ[n]                        TK
+
+            1                                                                                 Tz
+2                                  u(t)                        Tu[n]
+            s                                                                                z−1
+            1                                                                                   T 2z
+3                                  t                           nT 2
+            s2                                                                               (z − 1)2
+            1                      t2                          k2 T 3                        T 3 z(z + 1)
+4
+            s3                     2                             2                            2(z − 1)3
+             1                                                                                  Tz
+5                                  eλt                         TeλnT
+            s−λ                                                                              z − eλT
+                1                                                                              T 2 zeλT
+6                                  teλt                        nT 2 eλnT
+            (s − λ)2                                                                         (z − eλT )2
+               As+B                                                                          Trz[z cos θ − e−aT cos(bT −θ )]
+7                                  Tre−at cos(bt+θ)            Tre−anT cos(bnT +θ)
+            s2 +2as+c                                                                         z2 −(2e−aT cos bT)z+e−2aT
+                               
+                                   A2 c + B2 − 2ABa              √                            Aa − B
+                          r=                        ,     b=          c − a2 ,   θ = tan−1    √
+                                         c − a2                                              A c − a2

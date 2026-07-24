@@ -1,0 +1,67 @@
+                               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 402 — #73
+
+
+
+
+402       CHAPTER 4               CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+      X(s)               s2W(s)
+                                                                                                                        2
+                              1
+                              s                                    X(s)           s2W(s)             sW(s)              W(s)            Y(s)
+                                                                                                1                  1
+                                                                                                s                  s            5
+                 sW(s)               2             Y(s)
+                  4                                                                        4
+                              1
+                              s
+                                                                                                     10
+
+                 10         W(s)     5
+                              (a)                                                                            (b)
+
+
+
+
+                                                                                                     1
+
+
+               X(s)                                                                                                2           Y(s)
+                             1
+                                             s2W(s)                      sW(s)                           W(s)
+                             10                              1                                1                 5
+                             4
+
+                                              1
+
+
+
+                                                                          (c)
+
+
+
+                                                                                            100 k
+                                                                                100 k
+                                                                                                
+                                                                                                
+
+                                                                                                                        100 k
+                                    100 k                 10 F                         10 F
+                                                                                                           50 k
+       X(s)      100 k                                                                                                      
+                                              100 k                                                                                 
+                      10 k                                                                                                          Y(s)
+                                                                          100 k                            20 k
+                                            10 k                                                                                        
+                      25 k
+
+                                                         10 k
+                                               
+
+
+
+                                                                          (d)
+
+      Figure 4.31 Op-amp realization of a second-order transfer function (2s + 5)/(s2 + 4s + 10).

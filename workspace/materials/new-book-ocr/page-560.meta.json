@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": "5.8-2",
+  "title": "Using the Bilateral z-Transform for Analysis of LTID Systems",
+  "summary": "This page covers 5.8-2 (Using the Bilateral z-Transform for Analysis of LTID Systems). OCR text begins with: 560 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM C ONVOLUTION x1 [n] ∗ x2 [n] ⇐⇒ X1 [z]X2 [z] The ROC for X1 [z]X2 [z] is the region common to (intersection of) the ROCs for X1 [z] and X2 [z]. M ULTIPLICATION BY γ n ! z",
+  "keywords": [
+    "5.8",
+    "5.8-2",
+    "Using the Bilateral z-Transform for Analysis of LTID Systems",
+    "zero-state response",
+    "discrete-time",
+    "LTID system"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-560",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

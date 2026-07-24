@@ -1,0 +1,59 @@
+                               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 466 — #137
+
+
+
+
+466   CHAPTER 4                CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                      1
+
+                     0.8
+
+
+      |HC( j2π f)|
+                     0.6
+
+                     0.4
+
+                     0.2
+
+                      0
+                           0   200    400         600       800     1000      1200      1400        1600   1800   2000
+                                                                    f [Hz]
+      Figure 4.70 Magnitude responses for an order-8 Chebyshev LPF with fc = 1 kHz and R = 1 dB.
+
+
+      As seen in Fig. 4.70, the magnitude response exhibits correct Chebyshev filter characteristics:
+      passband ripples are equal in height and never exceed R = 1 dB; there are a total of N = 8 maxima
+      and minima in the passband; and the gain rapidly and monotonically decreases after the cutoff
+      frequency of fc = 1 kHz.
+          For higher-order filters, polynomial rooting may not provide reliable results. Fortunately,
+      Chebyshev roots can also be determined analytically. For
+
+                                                 2k + 1                           1        1
+                                        φk =            π         and        ξ=     sinh−1
+                                                  2N                              N
+
+      the Chebyshev poles are
+
+                                            pk = ωc sinh (ξ ) sin (φk ) + jωc cosh (ξ ) cos (φk )
+
+      Continuing the same example, the poles are recomputed and again plotted. The result is identical
+      to Fig. 4.69.
+
+      >>              k = [1:N]; xi = 1/N*asinh(1/epsilon); phi = (k*2-1)/(2*N)*pi;
+      >>              C_poles = omega_c*(-sinh(xi)*sin(phi)+1j*cosh(xi)*cos(phi));
+      >>              plot(real(C_poles),imag(C_poles),’kx’); axis equal;
+      >>              axis(omega_c*[-1.1 1.1 -1.1 1.1]);
+      >>              xlabel(’Real’); ylabel(’Imaginary’);
+
+           As in the case of high-order Butterworth filters, a cascade of second-order filter sections
+      facilitates practical implementation of Chebyshev filters. Problems 4.12-5 and 4.12-8 use
+      second-order Sallen–Key circuit stages to investigate such implementations.
+
+
+
+      4.13 S UMMARY
+      This chapter discusses analysis of LTIC (linear, time-invariant, continuous-time) systems by the
+      Laplace transform, which transforms integro-differential equations of such systems into algebraic

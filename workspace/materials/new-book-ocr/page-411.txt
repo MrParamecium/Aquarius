@@ -1,0 +1,61 @@
+                           “04-Lathi-C04” — 2017/9/25 — 19:46 — page 411 — #82
+
+
+
+
+                                                           4.7   Application to Feedback and Controls     411
+
+
+                                                       Step Response
+
+
+
+              1
+
+
+Amplitude
+            0.5                                                                                 K=7
+                                                                                                K=16
+                                                                                                K=80
+
+
+                     0                     2                           4                   6
+                                                       Time (seconds)
+Figure 4.36 Step responses for Ex. 4.26.
+
+             (d) The unit ramp response is equivalent to the integral of the unit step response. We
+        can obtain the ramp response by taking the step response of the system in cascade with an
+        integrator. To help highlight waveform detail, we compute the ramp response over the short
+        time interval of 0 ≤ t ≤ 1.5.
+
+        >>               t = 0:.001:1.5; Hd = series(Hc,tf([1],[1 0]));
+        >>               step(Hd,’k-’,t); title(’Unit Ramp Response’);
+
+
+
+                                                       Unit Ramp Response
+                         1.5
+
+
+
+                          1
+
+
+             Amplitude
+                         0.5
+
+
+
+
+                               0                 0.5                           1                        1.5
+                                                           Time (seconds)
+             Figure 4.37 Ramp response for Ex. 4.26 with K = 80.
+
+
+
+
+       D ESIGN S PECIFICATIONS
+       Now the reader has some idea of the various specifications a control system might require.
+       Generally, a control system is designed to meet given transient specifications, steady-state error
+       specifications, and sensitivity specifications. Transient specifications include overshoot, rise time,
+       and settling time of the response to step input. The steady-state error is the difference between

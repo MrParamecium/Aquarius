@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": "5.8-1",
+  "title": "Properties of the Bilateral z-Transform",
+  "summary": "This page covers 5.8-1 (Properties of the Bilateral z-Transform). OCR text begins with: 5.8 The Bilateral z-Transform 559 D R I L L 5.23 Inverse Bilateral z-Transform Find the inverse bilateral z-transform of z X[z] = 1 > |z| > 13 z2 + 56 z + 16 2",
+  "keywords": [
+    "5.8",
+    "5.8-1",
+    "Properties of the Bilateral z-Transform",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-559",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

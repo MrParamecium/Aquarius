@@ -1,0 +1,24 @@
+{
+  "sectionId": "4.2-1",
+  "sourcePages": [
+    "page-349",
+    "page-350",
+    "page-351",
+    "page-352",
+    "page-353"
+  ],
+  "usedPages": [
+    "page-349",
+    "page-350",
+    "page-351",
+    "page-352",
+    "page-353"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.2-1 Time Shifting",
+  "foundEnd": true,
+  "endBeforeLine": "4.2-2 Frequency Shifting",
+  "endBeforeCode": "4.2-2",
+  "charCount": 8912
+}

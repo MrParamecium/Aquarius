@@ -1,0 +1,58 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 440 — #111
+
+
+
+
+440   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                                                                 jvc
+                              N1                                                             jvc
+
+                                                                                                  N5
+                      d       jv
+
+            2vc               0      Re                         0      Re                     0      Re
+
+
+
+
+                                                                jvc                          jvc
+
+                            (a)                            (b)                              (c)
+
+
+                                     1                     Ideal (N  )
+
+
+
+                          H( jv)
+                                                                            N1
+
+                                                                            N2
+
+                                                                 8     N4
+                                                           10
+                                     0                vc                               v
+                                                                (d)
+            Figure 4.50 Pole-zero configuration and the amplitude response of a lowpass (Butterworth) filter.
+
+
+      characteristic, we need enhanced gain over the entire frequency band from 0 to ωc . We know
+      that to enhance a gain at any frequency ω, we need to place a pole opposite ω. To achieve an
+      enhanced gain for all frequencies over the band (0 to ωc ), we need to place a pole opposite every
+      frequency in this band. In other words, we need a continuous wall of poles facing the imaginary
+      axis opposite the frequency band 0 to ωc (and from 0 to −ωc for conjugate poles), as depicted in
+      Fig. 4.50b. At this point, the optimum shape of this wall is not obvious because our arguments
+      are qualitative and intuitive. Yet, it is certain that to have enhanced gain (constant gain) at every
+      frequency over this range, we need an infinite number of poles on this wall. We can show that
+      for a maximally flat† response over the frequency range (0 to ωc ), the wall is a semicircle with an
+      infinite number of poles uniformly distributed along the wall [11]. In practice, we compromise by
+      using a finite number (N) of poles with less-than-ideal characteristics. Figure 4.50c shows the pole
+      configuration for a fifth-order (N = 5) filter. The amplitude response for various values of N is
+      illustrated in Fig. 4.50d. As N → ∞, the filter response approaches the ideal. This family of filters
+      is known as the Butterworth filters. There are also other families. In Chebyshev filters, the wall
+      shape is a semiellipse rather than a semicircle. The characteristics of a Chebyshev filter are inferior
+      to those of Butterworth over the passband (0, ωc ), where the characteristics show a rippling effect
+
+      † Maximally flat amplitude response means the first 2N − 1 derivatives of |H(jω)| with respect to ω are zero
+      at ω = 0.

@@ -1,0 +1,65 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 566 — #79
+
+
+
+
+566   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      5.10-1 Frequency Response and Pole-Zero Plots
+      Frequency response and pole-zero plots help characterize filter behavior. Similar to
+      continuous-time systems, rational transfer functions for realizable LTID systems are represented
+      in the z-domain as
+
+                                                 %N        −k
+                                                                %N
+                                     Y[z] B[z]    k=0 bk z           bk zN−k
+                              H[z] =     =     = %N           = %k=0
+                                                                 N
+                                                                                                       (5.54)
+                                     X[z] A[z]             −k             N−k
+                                                  k=0 ak z       k=0 ak z
+
+
+
+      When only the first (N1 + 1) numerator coefficients are nonzero and only the first (N2 + 1)
+      denominator coefficients are nonzero, Eq. (5.54) simplifies to
+
+                                             % N1       −k
+                                                             % N1
+                                 Y[z] B[z]     k=0 bk z            bk zN1 −k N2 −N1
+                          H[z] =     =     = %N            = %k=0
+                                                               N2
+                                                                              z                        (5.55)
+                                 X[z] A[z]      2       −k              N2 −k
+                                               k=0 ak z        k=0 ak z
+
+
+
+      The form of Eq. (5.55) has many advantages. It can be more efficient than Eq. (5.54); it still
+      works when N1 = N2 = N; and it more closely conforms to the notation of built-in MATLAB
+      discrete-time signal-processing functions.
+           The right-hand side of Eq. (5.55) is a form that is convenient for MATLAB computations.
+      The frequency response H[ej ] is obtained by letting z = ej , where  has units of radians.
+      Often,  = ωT, where ω is the continuous-time frequency in radians per second and T is the
+      sampling period in seconds. Defining length-(N2 + 1) coefficient vector A = [a0 , a1 , . . . , aN2 ] and
+      length-(N1 +1) coefficient vector B = [b0 , b1 , . . . , bN1 ], program CH5MP1 computes H[ej ] by using
+      Eq. (5.55) for each frequency in the input vector .
+
+
+      function [H] = CH5MP1(B,A,Omega);
+      % CH5MP1.m : Chapter 5, MATLAB Program 1
+      % Function M-file computes frequency response for LTID systems
+      % INPUTS:   B = vector of feedforward coefficients
+      %           A = vector of feedback coefficients
+      %           Omega = vector of frequencies [rad], typically -pi<=Omega<=pi
+      % OUTPUTS: H = frequency response
+
+      N_1 = length(B)-1; N_2 = length(A)-1;
+      H = polyval(B,exp(1j*Omega))./polyval(A,exp(1j*Omega)).*...
+          exp(1j*Omega*(N_2-N_1));
+
+
+      Note that owing to MATLAB’s indexing scheme, A(k) corresponds to coefficient ak−1 and B(k)
+      corresponds to coefficient bk−1 . It is also possible to use the signal-processing toolbox function
+      freqz to evaluate the frequency response of a system described by Eq. (5.55). Under special
+      circumstances, the control system toolbox function bode can also be used.

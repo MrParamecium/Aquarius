@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": null,
+  "summary": "This page covers 4.10-5. OCR text begins with: 4.11 The Bilateral Laplace Transform 445 In a typical design procedure, Gp (minimum passband gain) and Gs (maximum stopband gain) are specified. Figure 4.55 shows the passband, the stopband, and the transition band for typical lowpass, bandpass, highpass, and bandstop filters. Fortunately, the highpass, bandpass, and bandstop filters can be obtained from a basic lowpass filter by simple frequency transformations. For",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-445",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

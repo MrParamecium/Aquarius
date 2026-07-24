@@ -1,0 +1,61 @@
+           “04-Lathi-C04” — 2017/12/5 — 19:19 — page 461 — #132
+
+
+
+
+                                                            4.12   MATLAB: Continuous-Time Filters                 461
+
+                     1
+                                                                                   Ideal
+                    0.8                                                            Tenth-order Butterworth
+
+
+
+      |H(j2 π f)|
+                    0.6
+
+                    0.4
+
+                    0.2
+
+                     0
+                          0        0.2     0.4      0.6     0.8      1      1.2     1.4        1.6           1.8     2
+                                                                   f [Hz]                                          ×104
+      Figure 4.66 Magnitude response |HBW (j2π f )| of a tenth-order Butterworth filter.
+
+
+
+4.12-3 Using Cascaded Second-Order Sections
+for Butterworth Filter Realization
+For our RC filters, realization preceded design. For our Butterworth filter, however, design has
+preceded realization. For our Butterworth filter to be useful, we must be able to implement it.
+     Since the transfer function HBW (s) is known, the differential equation is also known.
+Therefore, it is possible to try to implement the design by using op-amp integrators, summers, and
+scalar multipliers. Unfortunately, this approach will not work well. To understand why, consider
+the denominator coefficients a0 = 1.766 × 10−43 and a10 = 1. The smallest coefficient is 43 orders
+of magnitude smaller than the largest coefficient! It is practically impossible to accurately realize
+such a broad range in scale values. To understand this, skeptics should try to find realistic resistors
+such that Rf /R = 1.766×10−43 . Additionally, small component variations will cause large changes
+in actual pole location.
+     A better approach is to cascade five second-order sections, where each section implements
+one complex conjugate pair of poles. By pairing poles in complex conjugate pairs, each of the
+resulting second-order sections has real coefficients. With this approach, the smallest coefficients
+are only about nine orders of magnitude smaller than the largest coefficients. Furthermore, pole
+placement is typically less sensitive to component variations for cascaded structures.
+     The Sallen–Key circuit shown in Fig. 4.67 provides a good way to realize a pair of
+complex-conjugate poles.† The transfer function of this circuit is
+
+                                                          1
+                                                     R1 R2 C1 C2                       ω2
+                              HSK (s) =                                     =       0
+                                                 1       1             1              ω0
+                                        s2 +        +          s+               s2 +      s + ω02
+                                               R1 C1 R2 C1        R1 R2 C1 C2         Q
+
+Geometrically, ω0 is the distance from the origin to the poles and Q = 1/2 cos ψ, where ψ is
+the angle between the negative real axis and the pole. Termed the “quality factor” of a circuit, Q
+
+
+† A more general version of the Sallen–Key circuit has a resistor R from the negative terminal to ground and
+                                                                    a
+a resistor Rb between the negative terminal and the output. In Fig. 4.67, Ra = ∞ and Rb = 0.

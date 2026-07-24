@@ -1,0 +1,57 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 443 — #114
+
+
+
+
+                                              4.10 Filter Design by Placement of Poles and Zeros of H(s)            443
+
+               MATLAB easily computes and plots the magnitude response curves of Fig. 4.52b. To
+          illustrate, let us plot the magnitude response using θ = 60◦ over a frequency range of
+          0 ≤ f ≤ 150 Hz. The result, shown in Fig. 4.53, matches the θ = 60◦ case of Fig. 4.52b.
+
+          >>        f = (0:.01:150); omega0 = 2*pi*60; theta = 60*pi/180;
+          >>        H = @(s) (s.^2+omega0^2)./(s.^2+2*omega0*cos(theta)*s+omega0^2);
+          >>        plot(f,abs(H(1j*2*pi*f)),’k-’);
+          >>        xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+
+
+               1
+
+
+
+
+|H(j2 π f)|
+              0.5
+
+
+
+               0
+                    0                    50               100                  150
+                                                f [Hz]
+Figure 4.53 Magnitude response for notch filter with θ = 60◦ .
+
+
+
+
+              D R I L L 4.16 Magnitude Response from Pole-Zero Plots
+              Use the qualitative method of sketching the frequency response to show that the system with
+              the pole-zero configuration in Fig. 4.54a is a highpass filter and the configuration in Fig. 4.54b
+              is a bandpass filter.
+
+
+
+                                              s plane
+
+                            Im                                    Im
+                                                                       jv0
+
+
+
+
+                v0                 Re                                    Re
+
+
+
+                                                                                Figure 4.54 Pole-zero configura-
+                                                                                tion of (a) a highpass filter and (b)
+                              (a)                                   (b)         a bandpass filter.

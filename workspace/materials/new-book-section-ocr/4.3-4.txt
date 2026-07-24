@@ -1,0 +1,16 @@
+# Fourier section OCR
+section_id: 4.3-4
+source_pages: page-373
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.3-4 Inverse Systems
+If H(s) is the transfer function of a system S, then Si , its inverse system has a transfer function
+Hi (s) given by
+                                                     1
+                                           Hi (s) =
+                                                    H(s)
+This follows from the fact the cascade of S with its inverse system Si is an identity system, with
+impulse response δ(t), implying H(s)Hi (s) = 1. For example, an ideal integrator and its inverse,
+an ideal differentiator, have transfer functions 1/s and s, respectively, leading to H(s)Hi (s) = 1.

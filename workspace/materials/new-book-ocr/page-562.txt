@@ -1,0 +1,59 @@
+                        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 562 — #75
+
+
+
+
+562       CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+      E X A M P L E 5.20 Zero-State Response for an Input with No z-Transform
+
+          For the system in Ex. 5.19, find the zero-state response to input
+
+                                        x[n] = (0.8)n u[n] + (0.6)n u[−(n + 1)]
+                                                                       
+                                                     x1 [n]           x2 [n]
+
+
+
+
+          The z-transforms of the causal and anticausal components x1 [n] and x2 [n] of the output are
+                                                           z
+                                               X1 [z] =             |z| > 0.8
+                                                        z − 0.8
+                                                          −z
+                                               X2 [z] =             |z| < 0.6
+                                                        z − 0.6
+
+
+          Observe that a common ROC for X1 [z] and X2 [z] does not exist. Therefore, X[z] does not exist.
+          In such a case we take advantage of the superposition principle and find y1 [n] and y2 [n], the
+          system responses to x1 [n] and x2 [n], separately. The desired response y[n] is the sum of y1 [n]
+          and y2 [n]. Now
+                                         z
+                             H[z] =                  |z| > 0.5
+                                      z − 0.5
+                                                          z2
+                            Y1 [z] = X1 [z]H[z] =                               |z| > 0.8
+                                                  (z − 0.5)(z − 0.8)
+                                                         −z2
+                            Y2 [z] = X2 [z]H[z] =                               0.5 < |z| < 0.6
+                                                  (z − 0.5)(z − 0.6)
+          Expanding Y1 [z] and Y2 [z] into modified partial fractions yields
+
+                                           5   z      8      z
+                              Y1 [z] = −            +                             |z| > 0.8
+                                           3z − 0.5   3 z − 0.8
+                                            z             z
+                              Y2 [z] = 5           −6                          0.5 < |z| < 0.6
+                                         z − 0.5       z − 0.6
+
+          Therefore,
+
+                                      y1 [n] = − 53 (0.5)n + 83 (0.8)n u[n]
+                                      y2 [n] = 5(0.5)n u[n] + 6(0.6)n u[−(n + 1)]
+
+          and
+                       y[n] = y1 [n] + y2 [n] =    10
+                                                   3
+                                                      (0.5)n + 83 (0.8)n u[n] + 6(0.6)n u[−(n + 1)]

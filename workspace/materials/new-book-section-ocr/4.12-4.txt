@@ -1,0 +1,198 @@
+# Fourier section OCR
+section_id: 4.12-4
+source_pages: page-463, page-464, page-465, page-466
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.12-4 Chebyshev Filters
+Like an order-N Butterworth lowpass filter (LPF), an order-N Chebyshev LPF is an all-pole filter
+that possesses many desirable characteristics. Compared with an equal-order Butterworth filter,
+the Chebyshev filter achieves better stopband attenuation and reduced transition bandwidth by
+allowing an adjustable amount of ripple within the passband.
+     The squared magnitude response of a Chebyshev filter is
+
+                                                                           1
+                                                 |HC (jω)|2 =
+                                                                1+       2 C 2 (ω/ω )
+                                                                            N      c
+
+
+where controls the passband ripple, CN (ω/ωc ) is a degree-N Chebyshev polynomial, and ωc is
+the radian cutoff frequency. Several characteristics of Chebyshev LPFs are noteworthy:
+
+                      • An order-N Chebyshev LPF is equi-ripple in the passband (|ω| ≤ ωc ), has a total of N
+                        maxima and minima over (0 ≤ ω ≤ ωc ), and is monotonic decreasing in the stopband
+                        (|ω| > ωc ).
+
+[[PAGE page-464]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 464 — #135
+
+
+
+
+464   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                                                                                              √
+                                                                            √ gain is 1/ 1 + . For
+           • In the passband, the maximum gain is 1 and the minimum                                  2
+
+             odd-valued N, |H(j0)| = 1. For even-valued N, |HC (j0)| = 1/ 1 + 2 .
+                                                   √
+           • Ripple is controlled by setting = 10R/10 − 1, where R is the allowable passband ripple
+             expressed in decibels. Reducing adversely affects filter performance (see Prob. 4.12-10).
+           • Unlike Butterworth filters, the cutoff frequency ωc rarely specifies the 3 dB point. For = 1,
+             |HC (jωc )|2 = 1/(1 + √
+                                   2
+                                     ) = 0.5. The cutoff frequency ωc simply indicates the frequency after
+             which |HC (jω)| < 1/ 1 + 2 .
+
+           The Chebyshev polynomial CN (x) is defined as
+
+                                 CN (x) = cos[N cos−1 (x)] = cosh[N cosh−1 (x)]
+
+      In this form, it is difficult to verify that CN (x) is a degree-N polynomial in x. A recursive form of
+      CN (x) makes this fact more clear (see Prob. 4.12-13).
+
+                                         CN (x) = 2xCN−1 (x) − CN−2 (x)
+
+      With C0 (x) = 1 and C1 (x) = x, the recursive form shows that any CN is a linear combination
+      of degree-N polynomials and is therefore a degree-N polynomial itself. For N ≥ 2, MATLAB
+      program CH4MP3 generates the (N + 1) coefficients of Chebyshev polynomial CN (x).
+      function [C_N] = CH4MP3(N);
+      % CH4MP3.m : Chapter 4, MATLAB Program 3
+      % Function M-file computes Chebyshev polynomial coefficients
+      % using the recursion relation C_N(x) = 2xC_{N-1}(x) - C_{N-2}(x)
+      % INPUTS:   N = degree of Chebyshev polynomial
+      % OUTPUTS: C_N = vector of Chebyshev polynomial coefficients
+
+      C_Nm2 = 1; C_Nm1 = [1 0];       % Initial polynomial coefficients:
+      for t = 2:N;
+          C_N = 2*conv([1 0],C_Nm1)-[zeros(1,length(C_Nm1)-length(C_Nm2)+1),C_Nm2];
+          C_Nm2 = C_Nm1; C_Nm1 = C_N;
+      end
+      As examples, consider C2 (x) = 2xC1 (x) − C0 (x) = 2x(x) − 1 = 2x2 − 1 and C3 (x) = 2xC2 (x) −
+      C1 (x) = 2x(2x2 − 1) − x = 4x3 − 3x. CH4MP3 easily confirms these cases.
+      >>   CH4MP3(2)
+           ans = 2           0      -1
+      >>   CH4MP3(3)
+           ans = 4           0      -3       0
+            Since CN (ω/ωc ) is a degree-N polynomial, |HC (jω)|2 is an all-pole rational function with 2N
+      finite poles. Similar to the Butterworth case, the N poles specifying a causal and stable Chebyshev
+      filter can be found by selecting the N left-half-plane roots of 1 + 2 CN2 [s/(jωc )].
+            Root locations and dc gain are sufficient to specify a Chebyshev filter for a given N and . To
+      demonstrate, consider the design of an order-8 Chebyshev filter with cutoff frequency fc = 1 kHz
+      and allowable passband ripple R = 1 dB. First, filter parameters are specified.
+
+[[PAGE page-465]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 465 — #136
+
+
+
+
+                                                   4.12 MATLAB: Continuous-Time Filters              465
+
+>>           omega_c = 2*pi*1000; R = 1; N = 8;
+>>           epsilon = sqrt(10^(R/10)-1);
+
+The coefficients of CN [s/(jωc )] are obtained with the help of CH4MP3, and then the coefficients of
+[1 + 2 CN2 (s/(jωc ))] are computed by using convolution to perform polynomial multiplication.
+
+>>           CN = CH4MP3(N).*((1/(1j*omega_c)).^[N:-1:0]);
+>>           CP = epsilon^2*conv(CN,CN); CP(end) = CP(end)+1;
+
+Next, the polynomial roots are found, and the left-half-plane poles are retained and plotted.
+
+>>           poles = roots(CP); i = find(real(poles)<0); C_poles = poles(i);
+>>           plot(real(C_poles),imag(C_poles),’kx’); axis equal;
+>>           axis(omega_c*[-1.1 1.1 -1.1 1.1]);
+>>           xlabel(’Real’); ylabel(’Imaginary’);
+
+As shown in Fig. 4.69, the roots of a Chebyshev filter lie on an ellipse† (see Prob. 4.12-14).
+
+
+             6000
+
+             4000
+
+             2000
+
+
+Imaginary
+               0
+
+            –2000
+
+            –4000
+
+            –6000
+                                                        Figure 4.69 Pole-zero plot for an order-8
+                    –5000       0           5000        Chebyshev LPF with fc = 1 kHz and R = 1
+                              Real                      dB.
+
+
+    To compute the filter’s magnitude response, the poles are expanded into a polynomial, the dc
+gain is set based on the even value of N, and CH4MP1 is used.
+
+>>           A = poly(C_poles); B = A(end)/sqrt(1+epsilon^2);
+>>           omega = linspace(0,2*pi*2000,2001); H_C = CH4MP1(B,A,omega);
+>>           plot(omega/2/pi,abs(H_C),’k’); axis([0 2000 0 1.1]);
+>>           xlabel(’f [Hz]’); ylabel(’|H_C(j2\pi f)|’);
+
+† E. A. Guillemin demonstrates a wonderful relationship between the Chebyshev ellipse and the Butterworth
+circle in his book Synthesis of Passive Networks (Wiley, New York, 1957).
+
+[[PAGE page-466]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 466 — #137
+
+
+
+
+466   CHAPTER 4                CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                      1
+
+                     0.8
+
+
+      |HC( j2π f)|
+                     0.6
+
+                     0.4
+
+                     0.2
+
+                      0
+                           0   200    400         600       800     1000      1200      1400        1600   1800   2000
+                                                                    f [Hz]
+      Figure 4.70 Magnitude responses for an order-8 Chebyshev LPF with fc = 1 kHz and R = 1 dB.
+
+
+      As seen in Fig. 4.70, the magnitude response exhibits correct Chebyshev filter characteristics:
+      passband ripples are equal in height and never exceed R = 1 dB; there are a total of N = 8 maxima
+      and minima in the passband; and the gain rapidly and monotonically decreases after the cutoff
+      frequency of fc = 1 kHz.
+          For higher-order filters, polynomial rooting may not provide reliable results. Fortunately,
+      Chebyshev roots can also be determined analytically. For
+
+                                                 2k + 1                           1        1
+                                        φk =            π         and        ξ=     sinh−1
+                                                  2N                              N
+
+      the Chebyshev poles are
+
+                                            pk = ωc sinh (ξ ) sin (φk ) + jωc cosh (ξ ) cos (φk )
+
+      Continuing the same example, the poles are recomputed and again plotted. The result is identical
+      to Fig. 4.69.
+
+      >>              k = [1:N]; xi = 1/N*asinh(1/epsilon); phi = (k*2-1)/(2*N)*pi;
+      >>              C_poles = omega_c*(-sinh(xi)*sin(phi)+1j*cosh(xi)*cos(phi));
+      >>              plot(real(C_poles),imag(C_poles),’kx’); axis equal;
+      >>              axis(omega_c*[-1.1 1.1 -1.1 1.1]);
+      >>              xlabel(’Real’); ylabel(’Imaginary’);
+
+           As in the case of high-order Butterworth filters, a cascade of second-order filter sections
+      facilitates practical implementation of Chebyshev filters. Problems 4.12-5 and 4.12-8 use
+      second-order Sallen–Key circuit stages to investigate such implementations.

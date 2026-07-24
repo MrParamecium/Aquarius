@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": "Solution of Differential and Integro-Differential Equations 369",
+  "summary": "This page covers 4.3 (Solution of Differential and Integro-Differential Equations 369). OCR text begins with: 4.3 Solution of Differential and Integro-Differential Equations 369 E X A M P L E 4.14 Laplace Transform to Find the Zero-State Response Find the response y(t) of an LTIC system described by the equation d2 y(t) dy(t) dx(t) 2 +5 + 6y(t) = + x(t) dt dt dt",
+  "keywords": [
+    "4.3",
+    "Solution of Differential and Integro-Differential Equations 369",
+    "zero-state response",
+    "unit step",
+    "continuous-time",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-369",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

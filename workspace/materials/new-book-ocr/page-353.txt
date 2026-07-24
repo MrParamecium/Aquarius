@@ -1,0 +1,56 @@
+             “04-Lathi-C04” — 2017/9/25 — 19:46 — page 353 — #24
+
+
+
+
+                                              4.2 Some Properties of the Laplace Transform              353
+
+
+
+     D R I L L 4.5 Inverse Laplace Transform and the Time-Shifting
+     Property
+                                                             3e−2s
+     Find the inverse Laplace transform of X(s) =                       .
+                                                         (s − 1)(s + 2)
+
+     ANSWER
+      et−2 − e−2(t−2) u(t − 2)
+
+
+
+    4.2-2 Frequency Shifting
+    The frequency-shifting property states that if
+
+                                                x(t) ⇐⇒ X(s)
+
+    then
+                                            x(t)es0 t ⇐⇒ X(s − s0 )                                   (4.14)
+    Observe the symmetry (or duality) between this property and the time-shifting property of
+    Eq. (4.12).
+    Proof.                         # ∞                         # ∞
+                                             s0 t −st
+                    L[x(t)e ] =
+                            s0 t
+                                         x(t)e e        dt =         x(t)e−(s−s0 )t dt = X(s − s0 )
+                                   0−                          0−
+
+
+
+E X A M P L E 4.8 Frequency-Shifting Property
+
+    Derive pair 9a in Table 4.1 from pair 8a and the frequency-shifting property.
+
+
+    Pair 8a is                                                       s
+                                          cos bt u(t) ⇐⇒
+                                                               s2 + b2
+    From the frequency-shifting property [Eq. (4.14)] with s0 = −a, we obtain
+                                                                   s+a
+                                   e−at cos bt u(t) ⇐⇒
+                                                               (s + a)2 + b2
+
+
+
+
+     D R I L L 4.6 Frequency-Shifting Property
+     Derive pair 6 in Table 4.1 from pair 3 and the frequency-shifting property.

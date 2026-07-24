@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.8-1",
+  "sourcePages": [
+    "page-559",
+    "page-560"
+  ],
+  "usedPages": [
+    "page-559",
+    "page-560"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.8-1 Properties of the Bilateral z-Transform",
+  "foundEnd": true,
+  "endBeforeLine": "5.8-2 Using the Bilateral z-Transform for Analysis of LTID Systems",
+  "endBeforeCode": "5.8-2",
+  "charCount": 2204
+}

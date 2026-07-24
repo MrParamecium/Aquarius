@@ -1,0 +1,56 @@
+             “04-Lathi-C04” — 2017/9/25 — 19:46 — page 369 — #40
+
+
+
+
+                              4.3    Solution of Differential and Integro-Differential Equations        369
+
+
+E X A M P L E 4.14 Laplace Transform to Find the Zero-State Response
+
+    Find the response y(t) of an LTIC system described by the equation
+                                    d2 y(t)    dy(t)           dx(t)
+                                        2
+                                            +5       + 6y(t) =       + x(t)
+                                     dt         dt              dt
+    if the input x(t) = 3e−5t u(t) and all the initial conditions are zero; that is, the system is in the
+    zero state.
+
+
+    The system equation is
+                                      (D2 + 5D + 6) y(t) = (D + 1) x(t)
+                                                         
+                                             Q(D)               P(D)
+
+    Therefore,
+                                                    P(s)     s+1
+                                         H(s) =          = 2
+                                                    Q(s) s + 5s + 6
+    Also,
+                                                                   3
+                                         X(s) = L[3e−5t u(t)] =
+                                                                  s+5
+    and
+                                                     3(s + 1)
+                          Y(s) = X(s)H(s) =
+                                               (s + 5)(s2 + 5s + 6)
+                                        3(s + 1)            −2      1   3
+                                =                       =        −    +
+                                  (s + 5)(s + 2)(s + 3) s + 5 s + 2 s + 3
+    The inverse Laplace transform of this equation is
+                                      y(t) = (−2e−5t − e−2t + 3e−3t )u(t)
+
+
+
+
+E X A M P L E 4.15 Laplace Transform to Find System Transfer Functions
+
+    Show that the transfer function of:
+          (a) an ideal delay of T seconds is e−sT
+          (b) an ideal differentiator is s
+          (c) an ideal integrator is 1/s
+
+
+          (a) Ideal Delay. For an ideal delay of T seconds, the input x(t) and output y(t) are related
+    by
+                       y(t) = x(t − T)    and       Y(s) = X(s)e−sT     [see Eq. (4.12)]

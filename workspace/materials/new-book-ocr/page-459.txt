@@ -1,0 +1,57 @@
+           “04-Lathi-C04” — 2017/9/25 — 19:46 — page 459 — #130
+
+
+
+
+                                                     4.12 MATLAB: Continuous-Time Filters                    459
+
+>>   B = 1; A = poly(-1/(R*C)*ones(10,1));A = A/A(end);
+>>   Hmag_cascade = abs(CH4MP1(B,A,f*2*pi));
+>>   plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_cascade,’k--’);
+>>   axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+>>   legend(’Ideal’,’Tenth-order RC cascade’,’location’,’best’);
+
+Notice that scaling a polynomial by a constant does not change its roots. Conversely, the roots of
+a polynomial specify a polynomial within a scale factor. The command A = A/A(end) properly
+scales the denominator polynomial to ensure unity gain at ω = 0.
+     The magnitude response plot of the tenth-order RC cascade is shown in Fig. 4.64. Compared
+with the simple RC response of Fig. 4.62, the passband remains relatively unchanged, but stopband
+attenuation is greatly improved to over 60 dB at 20 kHz.
+
+                     1
+                                                                             Ideal
+                    0.8                                                      Tenth-order RC cascade
+
+
+
+      |H(j2 π f)|
+                    0.6
+
+                    0.4
+
+                    0.2
+
+                     0
+                          0   0.2   0.4     0.6     0.8        1       1.2     1.4       1.6          1.8      2
+                                                             f [Hz]                                         ×10 4
+      Figure 4.64 Magnitude response |Hcascade (j2π f )| of a tenth-order RC cascade.
+
+
+
+4.12-2 Butterworth Filters and the Find Command
+The pole location of a first-order lowpass filter is necessarily fixed by the cutoff frequency. There
+is little reason, however, to place all the poles of a 10th-order filter at one location. Better pole
+placement will improve our filter’s magnitude response. One strategy, discussed in Sec. 4.10, is to
+place a wall of poles opposite the passband frequencies. A semicircular wall of poles leads to the
+Butterworth family of filters, and a semi-elliptical shape leads to the Chebyshev family of filters.
+Butterworth filters are considered first.
+      To begin, notice that a transfer function H(s) with real coefficients has a squared magnitude
+response given by |H(jω)|2 = H(jω)H ∗ (jω) = H(jω)H(−jω) = H(s)H(−s)|s=jω . Thus, half the
+poles of |H(jω)|2 correspond to the filter H(s) and the other half correspond to H(−s). Filters that
+are both stable and causal require H(s) to include only left-half-plane poles.
+      The squared magnitude response of a Butterworth filter is
+                                                                 1
+                                          |HBW (jω)|2 =
+                                                          1 + (jω/jωc )2N
+This function has the same appealing characteristics as the first-order RC filter: a gain that is unity
+at ω = 0 and monotonically decreases to zero as ω → ∞. By construction, the half-power gain

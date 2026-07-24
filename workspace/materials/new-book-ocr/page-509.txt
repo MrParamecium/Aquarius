@@ -1,0 +1,74 @@
+         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 509 — #22
+
+
+
+
+                                                      5.2 Some Properties of the z-Transform                  509
+
+and
+
+
+            (z − 1)X[z]                             "N
+        lim             = lim(z − 1)X[z] = lim lim      {x[n] − x[n − 1]}z−n = lim x[N]
+        z→1      z        z→1              z→1 N→∞
+                                                   n=−∞
+                                                                              N→∞
+
+
+
+      All these properties of the z-transform are listed in Table 5.2.
+
+
+TABLE 5.2        z-Transform Properties
+
+Operation                           x[n]                          X[z]
+
+Addition                            x1 [n] + x2 [n]               X1 [z] + X2 [z]
+
+Scalar multiplication               ax[n]                         aX[z]
+
+                                                                   1
+Right shifting                      x[n − m]u[n − m]                 X[z]
+                                                                  zm
+                                                                              1 "
+                                                                                    m
+                                                                   1
+                                    x[n − m]u[n]                    m
+                                                                      X[z] + m      x[−n]zn
+                                                                  z          z
+                                                                                n=1
+                                                                  1
+                                    x[n − 1]u[n]                    X[z] + x[−1]
+                                                                  z
+                                                                  1         1
+                                    x[n − 2]u[n]                      X[z] + x[−1] + x[−2]
+                                                                  z2         z
+                                                                  1          1         1
+                                    x[n − 3]u[n]                      X[z] + 2 x[−1] + x[−2] + x[−3]
+                                                                  z3        z          z
+                                                                                 "
+                                                                                 m−1
+Left shifting                       x[n + m]u[n]                  zm X[z] − zm          x[n]z−n
+                                                                                 n=0
+                                    x[n + 1]u[n]                  zX[z] − zx[0]
+
+                                    x[n + 2]u[n]                  z2 X[z] − z2 x[0] − zx[1]
+
+                                    x[n + 3]u[n]                  z3 X[z] − z3 x[0] − z2 x[1] − zx[2]
+                                                                         !
+                                                                       z
+Multiplication by γ n               γ n x[n]u[n]                  X
+                                                                      γ
+                                                                      d
+Multiplication by n                 nx[n]u[n]                     −z X[z]
+                                                                      dz
+Time reversal                       x[−n]                         X[1/z]
+
+Time convolution                    x1 [n] ∗ x2 [n]               X1 [z]X2 [z]
+
+Initial value                       x[0]                          lim X[z]
+                                                                  z→∞
+
+Final value                          lim x[N]                     lim (z − 1)X[z]           Poles of (z − 1)X[z]
+                                    N→∞                           z→1
+                                                                                           inside the unit circle

@@ -1,0 +1,52 @@
+              “04-Lathi-C04” — 2017/9/25 — 19:46 — page 387 — #58
+
+
+
+
+                                                                        4.5 Block Diagrams           387
+
+    We can extend this result to any number of transfer functions in cascade. It follows from this
+    discussion that the subsystems in cascade can be interchanged without affecting the overall transfer
+    function. This commutation property of LTI systems follows directly from the commutative (and
+    associative) property of convolution. We have already proved this property in Sec. 2.4-3. Every
+    possible ordering of the subsystems yields the same overall transfer function. However, there may
+    be practical consequences (such as sensitivity to parameter variation) affecting the behavior of
+    different ordering.
+         Similarly, when two transfer functions, H1 (s) and H2 (s), appear in parallel, as illustrated in
+    Fig. 4.18c, the overall transfer function is given by H1 (s) + H2 (s), the sum of the two transfer
+    functions. The proof is trivial. This result can be extended to any number of systems in parallel.
+         When the output is fed back to the input, as shown in Fig. 4.18d, the overall transfer function
+    Y(s)/X(s) can be computed as follows. The inputs to the adder are X(s) and −H(s)Y(s). Therefore,
+    E(s), the output of the adder, is
+                                           E(s) = X(s) − H(s)Y(s)
+    But
+                                      Y(s) = G(s)E(s)
+                                           = G(s)[X(s) − H(s)Y(s)]
+
+    Therefore,
+                                      Y(s)[1 + G(s)H(s)] = G(s)X(s)
+    so that
+                                           Y(s)     G(s)
+                                                =                                                 (4.35)
+                                           X(s) 1 + G(s)H(s)
+    Therefore, the feedback loop can be replaced by a single block with the transfer function shown
+    in Eq. (4.35) (see Fig. 4.18d).
+         In deriving these equations, we implicitly assume that when the output of one subsystem is
+    connected to the input of another subsystem, the latter does not load the former. For example,
+    the transfer function H1 (s) in Fig. 4.18b is computed by assuming that the second subsystem
+    H2 (s) was not connected. This is the same as assuming that H2 (s) does not load H1 (s). In other
+    words, the input–output relationship of H1 (s) will remain unchanged regardless of whether H2 (s)
+    is connected. Many modern circuits use op amps with high input impedances, so this assumption
+    is justified. When such an assumption is not valid, H1 (s) must be computed under operating
+    conditions [i.e., with H2 (s) connected].
+
+
+E X A M P L E 4.21 Transfer Functions of Feedback Systems Using
+MATLAB
+
+    Consider the feedback system of Fig. 4.18d with G(s) = K/(s(s + 8)) and H(s) = 1. Use
+    MATLAB to determine the transfer function for each of the following cases: (a) K = 7, (b)
+    K = 16, and (c) K = 80.
+
+
+    We solve these cases using the control system toolbox function feedback.

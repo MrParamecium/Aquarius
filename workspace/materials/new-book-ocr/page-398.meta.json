@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.6. OCR text begins with: 398 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS We have essentially doubled the number of possible realizations. Every realization that was found earlier has a transpose. Note that the transpose of a transpose results in the same realization. E X A M P L E 4.24 Transposed Realizations Find the transpose canonic direct realizations for parts (a) and (d) of Ex. 4.22 (Figs. 4.23c and 4.23d). The transfer functions are: s+",
+  "keywords": [
+    "4.6",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-398",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

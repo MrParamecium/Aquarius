@@ -1,0 +1,16 @@
+{
+  "sectionId": "5.2",
+  "sourcePages": [
+    "page-501"
+  ],
+  "usedPages": [
+    "page-501"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.2 Some Properties of the z-Transform 501",
+  "foundEnd": true,
+  "endBeforeLine": "5.2-1 Time-Shifting Properties",
+  "endBeforeCode": "5.2-1",
+  "charCount": 732
+}

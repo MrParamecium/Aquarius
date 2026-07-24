@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-1",
+  "title": "Time-Shifting Properties",
+  "summary": "This page covers 5.2-1 (Time-Shifting Properties). OCR text begins with: 5.2 Some Properties of the z-Transform 501 D R I L L 5.4 Impulse Response by Inverse z-Transform Redo Drill 3.14 by taking the inverse z-transform of H[z], as given by Eq. (3.41). 5.2 S OME P ROPERTIES OF THE z-T RANSFORM The z-transform properties are useful in the derivation of z-transforms of many functions and also in the solution of linear difference equations with constant coefficients. Here we consider a few i",
+  "keywords": [
+    "5.2",
+    "5.2-1",
+    "Time-Shifting Properties",
+    "impulse response",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-501",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.9",
+  "sourcePages": [
+    "page-419",
+    "page-420",
+    "page-421",
+    "page-422"
+  ],
+  "usedPages": [
+    "page-419",
+    "page-420",
+    "page-421",
+    "page-422"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.9 Bode Plots 419",
+  "foundEnd": true,
+  "endBeforeLine": "4.9-1 Constant Ka1 a2 /b1 b3",
+  "endBeforeCode": "4.9-1",
+  "charCount": 12444
+}

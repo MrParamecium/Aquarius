@@ -1,0 +1,48 @@
+{
+  "sectionId": "5.2-5",
+  "sectionTitle": "Convolution Property",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-507",
+      "page-508"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.19)",
+      "name": "Time-convolution property",
+      "latex": "x_1[n]*x_2[n]\\Longleftrightarrow X_1[z]X_2[z]",
+      "sourcePage": "page-507",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(5.20)",
+      "name": "LTID zero-state response in the z-domain",
+      "latex": "Y[z]=X[z]H[z]",
+      "sourcePage": "page-508",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "",
+      "name": "Initial value theorem for causal sequence",
+      "latex": "x[0]=\\lim_{z\\to\\infty}X[z]",
+      "sourcePage": "page-508",
+      "role": "core_theorem",
+      "status": "verified"
+    },
+    {
+      "label": "",
+      "name": "Final value theorem for causal sequence",
+      "latex": "\\lim_{N\\to\\infty}x[N]=\\lim_{z\\to1}(z-1)X[z]",
+      "sourcePage": "page-508",
+      "role": "core_theorem",
+      "status": "verified"
+    }
+  ]
+}

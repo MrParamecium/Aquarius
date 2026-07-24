@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-4",
+  "title": null,
+  "summary": "This page covers 4.12-4. OCR text begins with: 4.12 MATLAB: Continuous-Time Filters 465 >> omega_c = 2*pi*1000; R = 1; N = 8; >> epsilon = sqrt(10^(R/10)-1); The coefficients of CN [s/(jωc )] are obtained with the help of CH4MP3, and then the coefficients of [1 + 2 CN2 (s/(jωc ))] are computed by using convolution to perform polynomial multiplication. >> CN = CH4MP3(N).*((1/(1j*omega_c)).^[N:-1:0]); >> CP = epsilon^2*conv(CN,CN); CP(end) = CP(end)+1;",
+  "keywords": [
+    "4.12",
+    "4.12-4",
+    "convolution",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-465",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

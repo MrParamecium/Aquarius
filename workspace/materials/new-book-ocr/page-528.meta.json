@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.5. OCR text begins with: 528 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM signal is a discrete-time sinusoid cos ωnT, obtained by setting t = nT in cos ωt. Therefore, all the results developed in this section apply if we substitute ωT for \u0004: \u0004 = ωT (5.34) E X A M P L E 5.10 Sinusoidal Response of a Difference Equation System For a system specified by the equation y[n + 1] − 0.8y[n] = x[n + 1]",
+  "keywords": [
+    "5.5",
+    "difference equation",
+    "discrete-time",
+    "system response",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-528",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

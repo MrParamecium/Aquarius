@@ -1,0 +1,58 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 442 — #113
+
+
+
+
+442       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                            Im
+                                        s plane
+                                       jv0
+                                                      H( jv)
+                                                                                         u  87
+                                                            1
+                                                                                         u  80
+                             u
+                                   0          Re                                          u  60
+
+                                                                                             Ideal
+
+                                       jv0
+                                                                  0           v0                      v
+
+
+                                 (a)                                               (b)
+                Figure 4.52 (a) Pole-zero configuration and (b) the amplitude response of a bandstop (notch) filter.
+
+
+
+          each other’s influences. Therefore, placing poles closer to zeros (selecting θ closer to π/2) results
+          in a rapid recovery of the gain from value 0 to 1 as we move away from ω0 in either direction.
+          Figure 4.52b shows the gain |H(jω)| for three different values of θ .
+
+
+
+      E X A M P L E 4.31 Notch Filter Design
+
+          Design a second-order notch filter to suppress 60 Hz hum in a radio receiver.
+
+
+          We use the poles and zeros in Fig. 4.52a with ω0 = 120π . The zeros are at s = ±jω0 . The two
+          poles are at −ω0 cos θ ± jω0 sin θ . The filter transfer function is (with ω0 = 120π )
+
+                                                (s − jω0 )(s + jω0 )
+                        H(s) =
+                               (s + ω0 cos θ + jω0 sin θ )(s + ω0 cos θ − jω0 sin θ )
+                                       s2 + ω02                      s2 + 142122.3
+                              = 2                       =
+                               s + (2ω0 cos θ )s + ω02 s2 + (753.98 cos θ )s + 142122.3
+
+          and
+                                                                 −ω2 + 142122.3
+                                 |H(jω)| = 
+                                                   (−ω2 + 142122.3)2 + (753.98ω cos θ )2
+          The closer the poles are to the zeros (the closer θ is to π/2), the faster the gain recovery from 0
+          to 1 on either side of ω0 = 120π . Figure 4.52b shows the amplitude response for three different
+          values of θ . This example is a case of very simple design. To achieve zero gain over a band,
+          we need an infinite number of poles as well as an infinite number of zeros.

@@ -1,0 +1,38 @@
+# Fourier section OCR
+section_id: 5.2-3
+source_pages: page-506
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.2-3 z-Domain Differentiation Property (Multiplication by n)
+      Multiplying a signal by n in the time domain produces differentiation in the z-domain. That is, if
+
+                                                  x[n]u[n] ⇐⇒ X[z]
+
+      then
+                                                                         d
+                                               nx[n]u[n] ⇐⇒ −z              X[z]                   (5.18)
+                                                                         dz
+      Proof.
+
+
+                                                           ∞
+                                          d            d "
+                                     −z      X[z] = −z        x[n]z−n
+                                          dz           dz n=0
+                                                        ∞
+                                                        "
+                                                 = −z            −nx[n]z−n−1
+                                                           n=0
+                                                     ∞
+                                                     "
+                                                 =         nx[n]z−n = Z{nx[n]u[n]}
+                                                     n=0
+
+
+
+
+       D R I L L 5.7 Using the z-Domain Differentiation Property
+       Use Eq. (5.18) to derive pairs 3 and 4 in Table 5.1 from pair 2. Similarly, derive pairs 8 and 9
+       from pair 6.

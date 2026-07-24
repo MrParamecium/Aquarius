@@ -1,0 +1,52 @@
+                               “05-Lathi-C05” — 2017/9/25 — 15:54 — page 544 — #57
+
+
+
+
+544   CHAPTER 5                DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Figure 5.21b shows the amplitude response as a function of ω, as well as  = ωT = 10−3 ω
+      for values of |γ | = 0.83, 0.96, and 1. As expected, the gain is zero at ω = 0 and at 500 Hz
+      (ω = 1000π ). The gain peaks at about 125 Hz (ω = 250π ). The resonance (peaking) becomes
+      pronounced as |γ | approaches 1. Figure 5.21c shows a canonical realization of this filter, which
+      follows from the transfer function H[z].
+
+      M ULTIPLE M AGNITUDE R ESPONSE C URVES U SING MATLAB
+      By defining an anonymous function of the two variables z and γ in MATLAB, it is
+      straightforward to duplicate the three magnitude response curves in Fig. 5.21b, corresponding
+      to the cases γ = 0.83, 0.96, and 1.
+
+
+      >>            Omega = linspace(0,pi,400);
+      >>            H = @(z,gamma_m) (z.^2-1)./(z.^2-sqrt(2)*gamma_m*z+gamma_m^2);
+      >>            plot(Omega,abs(H(exp(1j*Omega),0.83)),...
+      >>                Omega,abs(H(exp(1j*Omega),0.96)),...
+      >>                Omega,abs(H(exp(1j*Omega),0.99)));
+      >>            text(.27*pi,35,’|\gamma|=1’);
+      >>            text(.28*pi,25.5,’|\gamma|=0.96’);
+      >>            text(.35*pi,6.41,’|\gamma|=0.83’);
+      >>            set(gca,’xtick’,0:pi/4:pi,’ytick’,[0 6.41,25.5]);
+      >>            axis([0 pi 0 40]); xlabel(’\Omega’); ylabel(’|H[e^{j \Omega}]|’);
+
+
+      The result, shown in Fig. 5.22, confirms the earlier result of Fig. 5.21b. Phase response curves
+      can be generated with minor modification to the MATLAB code.
+
+
+
+
+                                              |γ|=1
+
+
+                    25.5                           |γ|=0.96
+
+       |H[e j Ω]|
+
+
+                    6.41                                  |γ|=0.83
+
+                       0
+                           0             0 .7854                     1.5708   2.3562               3.1416
+                                                                       Ω
+
+      Figure 5.22 MATLAB-generated magnitude response curves for Ex. 5.14.

@@ -1,0 +1,21 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-5",
+  "title": "Bilinear Transformation with Prewarping",
+  "summary": "This page covers 5.10-5 (Bilinear Transformation with Prewarping). OCR text begins with: 570 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM MATLAB program CH5MP4 converts a continuous-time filter described by coefficient vectors A = [a0 , a1 , . . . , aN ] and B = [bN−M , bN−M+1 , . . . , bN ] into a discrete-time filter by using the bilinear transformation of Eq. (5.58). The form of the discrete-time filter follows Eq. (5.55). If available, it is also possible to use the signal-processing",
+  "keywords": [
+    "5.10",
+    "5.10-5",
+    "Bilinear Transformation with Prewarping",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-570",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

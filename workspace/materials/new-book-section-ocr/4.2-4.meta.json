@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.2-4",
+  "sourcePages": [
+    "page-356",
+    "page-357"
+  ],
+  "usedPages": [
+    "page-356",
+    "page-357"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.2-4 The Time-Integration Property",
+  "foundEnd": true,
+  "endBeforeLine": "4.2-5 The Scaling Property",
+  "endBeforeCode": "4.2-5",
+  "charCount": 3100
+}

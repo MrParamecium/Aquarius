@@ -1,0 +1,49 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 330 — #1
+
+
+
+
+CHAPTER
+
+         4 CONTINUOUS-TIME SYSTEM
+                  A NALYSIS U SING THE
+                  L APLACE T RANSFORM
+
+
+
+      Because of the linearity (superposition) property of linear time-invariant systems, we can find the
+      response of these systems by breaking the input x(t) into several components and then summing the
+      system response to all the components of x(t). We have already used this procedure in time-domain
+      analysis, in which the input x(t) is broken into impulsive components. In the frequency-domain
+      analysis developed in this chapter, we break up the input x(t) into exponentials of the form est ,
+      where the parameter s is the complex frequency of the signal est , as explained in Sec. 1.4-3. This
+      method offers an insight into the system behavior complementary to that seen in the time-domain
+      analysis. In fact, the time-domain and the frequency-domain methods are duals of each other.
+           The tool that makes it possible to represent arbitrary input x(t) in terms of exponential
+      components is the Laplace transform, which is discussed in the following section.
+
+
+
+      4.1 T HE L APLACE T RANSFORM
+      For a signal x(t), its Laplace transform X(s) is defined by
+                                                     # ∞
+                                              X(s) =      x(t)e−st dt                               (4.1)
+                                                      −∞
+
+      The signal x(t) is said to be the inverse Laplace transform of X(s). It can be shown that
+                                                      # c+j∞
+                                                   1
+                                           x(t) =            X(s)est ds                             (4.2)
+                                                  2π j c−j∞
+      where c is a constant chosen to ensure the convergence of the integral in Eq. (4.1), as explained
+      later. See also [1].
+           This pair of equations is known as the bilateral Laplace transform pair, where X(s) is the
+      direct Laplace transform of x(t) and x(t) is the inverse Laplace transform of X(s). Symbolically,
+
+                                 X(s) = L[x(t)]       and      x(t) = L−1 [X(s)]
+
+      Note that
+                            L−1 {L[x(t)]} = x(t)      and      L{L−1 [X(s)]} = X(s)
+
+
+330

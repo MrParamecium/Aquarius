@@ -1,0 +1,22 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": "4.2-6",
+  "title": null,
+  "summary": "This page covers 4.2-6. OCR text begins with: 358 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS and (frequency-convolution property) 1 x1 (t)x2 (t) ⇐⇒ [X1 (s) ∗ X2 (s)] 2π j Observe the symmetry (or duality) between the two properties. Proofs of these properties are postponed to Ch. 7.",
+  "keywords": [
+    "4.2",
+    "4.2-6",
+    "zero-state response",
+    "impulse response",
+    "convolution",
+    "unit step",
+    "continuous-time",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-358",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

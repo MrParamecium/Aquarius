@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-3",
+  "title": "Cascade and Parallel Realizations",
+  "summary": "This page covers 4.6-3 (Cascade and Parallel Realizations). OCR text begins with: 4.6 System Realization 393 (d) 4s + 28 H(s) = s2 + 6s + 5 This is a second-order system with b0 = 0, b1 = 4, b2 = 28, a1 = 6, and a2 = 5. Figure 4.23d shows a realization with two feedback connections and two feedforward connections.",
+  "keywords": [
+    "4.6",
+    "4.6-3",
+    "Cascade and Parallel Realizations"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-393",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

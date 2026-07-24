@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-2",
+  "title": "Butterworth Filters and the Find Command",
+  "summary": "This page covers 4.12-2 (Butterworth Filters and the Find Command). OCR text begins with: 4.12 MATLAB: Continuous-Time Filters 459 >> B = 1; A = poly(-1/(R*C)*ones(10,1));A = A/A(end); >> Hmag_cascade = abs(CH4MP1(B,A,f*2*pi)); >> plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_cascade,’k--’); >> axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\\pi f)|’); >> legend(’Ideal’,’Tenth-order RC cascade’,’location’,’best’); Notice that scaling a polynomial by a constant does not change its roots. Conversely, t",
+  "keywords": [
+    "4.12",
+    "4.12-2",
+    "Butterworth Filters and the Find Command",
+    "continuous-time",
+    "MATLAB",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-459",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

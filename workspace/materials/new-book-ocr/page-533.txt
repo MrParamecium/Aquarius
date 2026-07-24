@@ -1,0 +1,52 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 533 — #46
+
+
+
+
+                                     5.5   Frequency Response of Discrete-Time Systems             533
+
+response of an LTID system. Because e±j2πm = 1 for all integer values of m [see Eq. (B.10)],
+
+                               H[ej ] = H ej(+2πm)         m integer
+
+Therefore, the frequency response H[ej ] is a periodic function of  with a period 2π . This is the
+mathematical explanation of the periodic behavior. The physical explanation that follows provides
+a much better insight into the periodic behavior.
+
+N ON - UNIQUENESS OF D ISCRETE -T IME S INUSOID WAVEFORMS
+A continuous-time sinusoid cos ωt has a unique waveform for every real value of ω in the range 0
+to ∞. Increasing ω results in a sinusoid of ever-increasing frequency. Such is not the case for the
+discrete-time sinusoid cos n because
+
+                             cos [( ± 2π m)n] = cos n        m integer
+
+and
+                                  ej(±2πm)n = ejn       m integer
+This shows that the discrete-time sinusoids cos n (and exponentials ejn ) separated by values of
+ in integral multiples of 2π are identical. The reason for the periodic nature of the frequency
+response of an LTID system is now clear. Since the sinusoids (or exponentials) with frequencies
+separated by interval 2π are identical, the system response to such sinusoids is also identical and,
+hence, is periodic with period 2π .
+     This discussion shows that the discrete-time sinusoid cos n has a unique waveform only
+for the values of  in the range −π to π . This band is called the fundamental band. Every
+frequency , no matter how large, is identical to some frequency, a , in the fundamental band
+(−π ≤ a < π ), where
+
+                       a =  − 2π m        − π ≤ a < π       and    m integer                 (5.38)
+
+The integer m can be positive or negative. We use Eq. (5.38) to plot the fundamental band
+frequency a versus the frequency  of a sinusoid (Fig. 5.17a). The frequency a is modulo
+2π value of .
+    All these conclusions are also valid for exponential ejn .
+
+A LL D ISCRETE -T IME S IGNALS A RE I NHERENTLY B ANDLIMITED
+This discussion leads to the surprising conclusion that all discrete-time signals are inherently
+bandlimited, with frequencies lying in the range −π to π radians per sample. In terms of frequency
+F = /2π , where F is in cycles per sample, all frequencies F separated by an integer number
+are identical. For instance, all discrete-time sinusoids of frequencies 0.3, 1.3, 2.3, . . . cycles per
+sample are identical. The fundamental range of frequencies is −0.5 to 0.5 cycles per sample.
+     Any discrete-time sinusoid of frequency beyond the fundamental band, when plotted, appears
+and behaves, in every way, like a sinusoid having its frequency in the fundamental band. It is
+impossible to distinguish between the two signals. Thus, in a basic sense, discrete-time frequencies
+beyond || = π or |F| = 1/2 do not exist. Yet, in a “mathematical” sense, we must admit the
+existence of sinusoids of frequencies beyond  = π . What does this mean?

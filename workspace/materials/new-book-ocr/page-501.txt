@@ -1,0 +1,56 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 501 — #14
+
+
+
+
+                                                 5.2 Some Properties of the z-Transform         501
+
+
+
+ D R I L L 5.4 Impulse Response by Inverse z-Transform
+ Redo Drill 3.14 by taking the inverse z-transform of H[z], as given by Eq. (3.41).
+
+
+
+
+5.2 S OME P ROPERTIES OF THE z-T RANSFORM
+The z-transform properties are useful in the derivation of z-transforms of many functions and also
+in the solution of linear difference equations with constant coefficients. Here we consider a few
+important properties of the z-transform.
+     In our discussion, the variable n appearing in signals, such as x[n] and y[n], may or may not
+stand for time. However, in most applications of our interest, n is proportional to time. For this
+reason, we shall loosely refer to the variable n as time.
+
+
+5.2-1 Time-Shifting Properties
+In the following discussion of the shift property, we deal with shifted signals x[n]u[n], x[n−k]u[n−
+k], x[n − k]u[n], and x[n + k]u[n]. Unless we physically understand the meaning of such shifts, our
+understanding of the shift property remains mechanical rather than intuitive or heuristic. For this
+reason, using a hypothetical signal x[n], we have illustrated various shifted signals for k = 1 in
+Fig. 5.4.
+
+R IGHT S HIFT (D ELAY )
+If
+                                           x[n]u[n] ⇐⇒ X[z]
+then
+                                                         1
+                                      x[n − 1]u[n − 1] ⇐⇒ X[z]                               (5.12)
+                                                         z
+In general,
+                                                             1
+                                      x[n − m]u[n − m] ⇐⇒      X[z]                          (5.13)
+                                                            zm
+Moreover,
+                                                1
+                                x[n − 1]u[n] ⇐⇒ X[z] + x[−1]                                 (5.14)
+                                                z
+Repeated application of this property yields
+                                              !
+                              1 1                        1       1
+          x[n − 2]u[n] ⇐⇒         X[z] + x[−1] + x[−2] = 2 X[z] + x[−1] + x[−2]
+                              z z                       z        z
+In general, for integer value of m,
+                                                              "
+                                                              m
+                           x[n − m]u[n] ⇐⇒ z−m X[z] + z−m           x[−n]zn                  (5.15)
+                                                              n=1

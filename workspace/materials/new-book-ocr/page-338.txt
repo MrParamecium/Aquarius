@@ -1,0 +1,60 @@
+                         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 338 — #9
+
+
+
+
+338       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          4.1-1 Finding the Inverse Transform
+          Finding the inverse Laplace transform by using Eq. (4.2) requires integration in the complex plane,
+          a subject beyond the scope of this book (but see, e.g., [3]). For our purpose, we can find the inverse
+          transforms from Table 4.1. All we need is to express X(s) as a sum of simpler functions of the forms
+          listed in the table. Most of the transforms X(s) of practical interest are rational functions, that is,
+          ratios of polynomials in s. Such functions can be expressed as a sum of simpler functions by using
+          partial fraction expansion (see Sec. B.5).
+               Values of s for which X(s) = 0 are called the zeros of X(s); the values of s for which X(s) → ∞
+          are called the poles of X(s). If X(s) is a rational function of the form P(s)/Q(s), the roots of P(s)
+          are the zeros and the roots of Q(s) are the poles of X(s).
+
+
+
+      E X A M P L E 4.3 Inverse Unilateral Laplace Transform
+
+          Find the inverse unilateral Laplace transforms of
+                     7s − 6
+               (a)
+                   s2 − s − 6
+                     2s2 + 5
+               (b) 2
+                   s + 3s + 2
+                       6(s + 34)
+               (c)
+                   s(s2 + 10s + 34)
+                       8s + 10
+               (d)
+                   (s + 1)(s + 2)3
+
+
+          In no case is the inverse transform of these functions directly available in Table 4.1. Rather,
+          we need to expand these functions into partial fractions, as discussed in Sec. B.5-1. Today,
+          it is very easy to find partial fractions via software such as MATLAB. However, just as the
+          availability of a calculator does not obviate the need for learning the mechanics of arithmetical
+          operations (addition, multiplication, etc.), the widespread availability of computers does not
+          eliminate the need to learn the mechanics of partial fraction expansion.
+                (a)
+                                                    7s − 6         k1       k2
+                                        X(s) =                 =        +
+                                                (s + 2)(s − 3) s + 2 s − 3
+          To determine k1 , corresponding to the term (s + 2), we cover up (conceal) the term (s + 2) in
+          X(s) and substitute s = −2 (the value of s that makes s + 2 = 0) in the remaining expression
+          (see Sec. B.5-2):                             
+                                              7s − 6           −14 − 6
+                                    k1 =                     =          =4
+                                                        
+                                         (s + 2)(s − 3) s=−2     −2 − 3
+          Similarly, to determine k2 corresponding to the term (s − 3), we cover up the term (s − 3) in
+          X(s) and substitute s = 3 in the remaining expression
+                                                            
+                                                 7s − 6     
+                                       k2 =                  = 21 − 6 = 3
+                                             (s + 2)(s − 3) s=3 3+2

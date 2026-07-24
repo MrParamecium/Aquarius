@@ -1,0 +1,53 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 346 — #17
+
+
+
+
+346   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      >>   syms a b s; X_b = (a*s^2)/(s^2+b^2);
+      >>   x_b = ilaplace(X_b)
+           x_b = a*dirac(t) - a*b*sin(b*t)
+
+      Therefore, xb (t) = aδ(t) − ab sin (bt)u(t).
+
+
+
+
+       D R I L L 4.2 Laplace Transform
+       Show that the Laplace transform of 10e−3t cos (4t + 53.13◦ ) is (6s − 14)/(s2 + 6s + 25). Use
+       Table 4.1.
+
+
+
+
+       D R I L L 4.3 Inverse Laplace Transform
+       Find the inverse Laplace transform of the following:
+                    s + 17
+            (a)
+                  s2 + 4s − 5
+                       3s − 5
+            (b)
+                (s + 1)(s2 + 2s + 5)
+                   16s + 43
+            (c)
+                (s − 2)(s + 3)2
+
+       ANSWERS
+            (a) (3et − 2e−5t )u(t)
+            (b) −2e−t + 52 e−t cos (2t − 36.87◦ ) u(t)
+            (c) [3e2t + (t − 3)e−3t ]u(t)
+
+
+
+      A H ISTORICAL N OTE : M ARQUIS P IERRE -S IMON DE L APLACE
+      (1749–1827)
+      The Laplace transform is named after the great French mathematician and astronomer Laplace,
+      who first presented the transform and its applications to differential equations in a paper published
+      in 1779.
+           Laplace developed the foundations of potential theory and made important contributions to
+      special functions, probability theory, astronomy, and celestial mechanics. In his Exposition du
+      système du monde (1796), Laplace formulated a nebular hypothesis of cosmic origin and tried to
+      explain the universe as a pure mechanism. In his Traité de mécanique céleste (celestial mechanics),
+      which completed the work of Newton, Laplace used mathematics and physics to subject the solar
+      system and all heavenly bodies to the laws of motion and the principle of gravitation. Newton had

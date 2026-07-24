@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-6",
+  "title": "Example: Butterworth Filter Transformation",
+  "summary": "This page covers 5.10-6 (Example: Butterworth Filter Transformation). OCR text begins with: 5.10 MATLAB: Discrete-Time IIR Filters 571 rate of 10 kHz, then T = 1/(10,000) and ωc maps to \u0004c = 2 arctan (ωc T/2) = 1.5116. Thus, the transformed cutoff frequency is short of the desired \u0004c = ωc T = 0.6π = 1.8850. Cutoff frequencies are important and need to be as accurate as possible. By adjusting the parameter T used in the bilinear transform, one continuous-time frequency can be exactly mapped to one discrete-t",
+  "keywords": [
+    "5.10",
+    "5.10-6",
+    "Example: Butterworth Filter Transformation",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-571",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

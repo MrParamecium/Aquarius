@@ -1,0 +1,128 @@
+# Fourier section OCR
+section_id: 4.4-1
+source_pages: page-382, page-383, page-384, page-385
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.4-1 Analysis of Active Circuits
+      Although we have considered examples of only passive networks so far, the circuit analysis
+      procedure using the Laplace transform is also applicable to active circuits. All that is needed is
+      to replace the active elements with their mathematical models (or equivalent circuits) and proceed
+      as before.
+           The operational amplifier (depicted by the triangular symbol in Fig. 4.16a) is a well-known
+      element in modern electronic circuits. The terminals with the positive and the negative signs
+      correspond to noninverting and inverting terminals, respectively. This means that the polarity of
+      the output voltage v2 is the same as that of the input voltage at the terminal marked by the positive
+      sign (noninverting). The opposite is true for the inverting terminal, marked by the negative sign.
+           Figure 4.16b shows the model (equivalent circuit) of the operational amplifier (op amp) in
+      Fig. 4.16a. A typical op amp has a very large gain. The output voltage v2 = −Av1 , where A is
+      typically 105 to 106 . The input impedance is very high, of the order of 1012 , and the output
+      impedance is very low (50–100 ). For most applications, we are justified in assuming the gain A
+      and the input impedance to be infinite and the output impedance to be zero. For this reason we see
+      an ideal voltage source at the output.
+           Consider now the operational amplifier with resistors Ra and Rb connected, as shown in
+      Fig. 4.16c. This configuration is known as the noninverting amplifier. Observe that the input
+      polarities in this configuration are inverted in comparison to those in Fig. 4.16a. We now show
+      that the output voltage v2 and the input voltage v1 in this case are related by
+
+                                           v2 = Kv1 ,      where K = 1 + RRba
+
+      First, we recognize that because the input impedance and the gain of the operational amplifier
+      approach infinity, the input current ix and the input voltage vx in Fig. 4.16c are infinitesimal and
+      may be taken as zero. The dependent source in this case is Avx instead of −Avx because of the input
+      polarity inversion. The dependent source Avx (see Fig. 4.16b) at the output will generate current
+      io , as illustrated in Fig. 4.16c. Now
+                                                   v2 = (Rb + Ra )io
+
+[[PAGE page-383]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 383 — #54
+
+
+
+
+                                      4.4 Analysis of Electrical Networks: The Transformed Network                     383
+
+                                                                                       
+                          v1(t)                                               v1(t)
+                                                                                                             
+                                                          v2(t)                                               v2(t)
+                                                                                               Av1(t)
+                                                                                                                 
+
+
+                                            (a)                                                (b)
+
+                  ix(t)           b
+                                        
+                            vx 
+                                                        io(t)                                              
+          v1(t)                                                                           
+                                                                  v2(t)           v1(t)             Kv1(t)   v2(t)
+                                                  Rb                                      
+                                       Ra
+                                                                                                             
+
+
+
+                                            (c)                                               (d)
+          Figure 4.16 Operational amplifier and its equivalent circuit.
+
+
+
+    and also
+
+                                                         v1 = vx + Ra io = Ra io
+
+    Therefore,
+
+                                                       v2 Rb + Ra      Rb
+                                                          =       = 1+    =K
+                                                       v1   Ra         Ra
+
+    or
+
+                                                             v2 (t) = Kv1 (t)
+
+    The equivalent circuit of the noninverting amplifier is depicted in Fig. 4.16d.
+
+
+
+E X A M P L E 4.20 Transform Analysis of a Sallen–Key Circuit
+
+    The circuit in Fig. 4.17a is called the Sallen–Key circuit, which is frequently used in filter
+    design. Find the transfer function H(s) relating the output voltage vo (t) to the input voltage
+    vi (t).
+
+[[PAGE page-384]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 384 — #55
+
+
+
+
+384     CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+      Figure 4.17 (a) Sallen–Key circuit and (b) its equivalent.
+
+
+
+             We are required to find
+                                                             Vo (s)
+                                                    H(s) =
+                                                             Vi (s)
+        assuming all initial conditions to be zero.
+              Figure 4.17b shows the transformed version of the circuit in Fig. 4.17a. The noninverting
+        amplifier is replaced by its equivalent circuit. All the voltages are replaced by their Laplace
+        transforms, and all the circuit elements are shown by their impedances. All the initial
+        conditions are assumed to be zero, as required for determining H(s).
+              We shall use node analysis to derive the result. There are two unknown node voltages,
+        Va (s) and Vb (s), requiring two node equations.
+              At node a, IR1 (s), the current in R1 (leaving the node a), is [Va (s) − Vi (s)]/R1 . Similarly,
+        IR2 (s), the current in R2 (leaving the node a), is [Va (s) − Vb (s)]/R2 , and IC1 (s), the current in
+        capacitor C1 (leaving the node a), is [Va (s) − Vo (s)]C1 s = [Va (s) − KVb (s)]C1 s.
+
+[[PAGE page-385]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 385 — #56

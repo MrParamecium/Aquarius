@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.1. OCR text begins with: 494 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM This geometric sum simplifies [see Sec. B.8-3] to \u0018 \u0018 1 \u00181\u0018 X[z] = \u0018 \u0018<1 1 \u0018z\u0018 1−",
+  "keywords": [
+    "5.1",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-494",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

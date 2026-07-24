@@ -1,0 +1,33 @@
+{
+  "sectionId": "4.3",
+  "sectionTitle": "Solution of Differential and Integro-Differential Equations",
+  "bookSource": "new",
+  "status": "draft_pdf_latex",
+  "verification": {
+    "method": "pdf_text_layer_and_section_ocr_partial_check",
+    "sourcePages": [
+      "page-362",
+      "page-365"
+    ],
+    "createdAt": "2026-06-14",
+    "note": "Contains draft formulas from PDF text layer; only per-formula status=verified entries are injected."
+  },
+  "formulas": [
+    {
+      "label": "(4.22)",
+      "name": "Example differential equation",
+      "latex": "\\frac{d^2y(t)}{dt^2}+5\\frac{dy(t)}{dt}+6y(t)=\\frac{dx(t)}{dt}+x(t)",
+      "sourcePage": "page-362",
+      "role": "worked_example_setup",
+      "status": "draft_pdf_latex"
+    },
+    {
+      "label": "(4.25)",
+      "name": "Example integro-differential equation",
+      "latex": "\\frac{dy(t)}{dt}+2y(t)+5\\int_{-\\infty}^{t}y(\\tau),d\\tau=10u(t)",
+      "sourcePage": "page-365",
+      "role": "worked_example_setup",
+      "status": "draft_pdf_latex"
+    }
+  ]
+}

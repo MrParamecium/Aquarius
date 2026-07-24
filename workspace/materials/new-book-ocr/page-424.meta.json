@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": "4.9-3",
+  "title": "First-Order Pole (or Zero)",
+  "summary": "This page covers 4.9-3 (First-Order Pole (or Zero)). OCR text begins with: 424 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS 4.9-3 First-Order Pole (or Zero) T HE L OG M AGNITUDE The log amplitude of a first-order pole at −a is −20 log |1+jω/a|. Let us investigate the asymptotic behavior of this function for extreme values of ω (ω \u000e a and ω \u0018 a). (a) For ω \u000e a, \u0018 \u0018 \u0018 jω \u0018",
+  "keywords": [
+    "4.9",
+    "4.9-3",
+    "First-Order Pole (or Zero)",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-424",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

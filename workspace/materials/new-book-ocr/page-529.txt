@@ -1,0 +1,55 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 529 — #42
+
+
+
+
+                                        5.5       Frequency Response of Discrete-Time Systems             529
+
+Substituting for H[ej ], it follows that
+
+                                       1                       1                         1
+                  |H[ej ]|2 =                                                =
+                                  1 − 0.8e−j              1 − 0.8ej             1.64 − 1.6 cos 
+
+which matches the result found earlier.
+    Figure 5.14 shows plots of amplitude and phase response as functions of . We now
+compute the amplitude and the phase response for the various inputs.
+
+
+
+                                          5
+             H [e j ]
+
+
+
+
+         2p              p                  0                  p                      2p           3p
+                                                       (a)
+
+                                                  53.13
+             ⬔H [e j ]
+
+
+
+
+       2p                p                  0                 p                       2p           3p
+
+
+
+                                    53.13
+                                                       (b)
+  Figure 5.14 Frequency response of the LTID system.
+
+
+
+    (a) Since 1n = (ej )n with  = 0, the amplitude response is H[ej0 ]. From Eq. (5.35) we
+obtain
+                                        1               1
+                     H[ej0 ] = √                    =√      = 5 = 5 0
+                                 1.64 − 1.6 cos (0)    0.04
+Therefore,
+                                 |H[ej0 ]| = 5         and               H[ej0 ] = 0
+These values also can be read directly from Figs. 5.14a and 5.14b, respectively, corresponding
+to  = 0. Therefore, the system response to input 1 is
+
+                                     y[n] = 5(1n ) = 5                   for all n

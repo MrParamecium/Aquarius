@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 334 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS TABLE 4.1 Select (Unilateral) Laplace Transform Pairs No. x(t) X(s) 1 δ(t) 1 1 2 u(t) s",
+  "keywords": [
+    "4.1",
+    "unit impulse",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-334",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

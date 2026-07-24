@@ -1,0 +1,65 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 431 — #102
+
+
+
+
+                                                                                               4.9   Bode Plots           431
+
+                    50
+
+                                                                      Asymptotic plot
+                    45
+                                                                            Exact plot
+
+                    40
+                                         1    2       5       10       20                100         400         1000
+                                                                                               v
+
+
+20 log H (dB)
+                    35
+
+
+                    30
+
+
+                    25
+
+
+                    20
+                                                             (a)
+
+                   90
+
+
+
+
+                   45
+
+                                                         Exact plot
+
+
+                    0
+      Phase
+                          0.2           1     2      5        10        20               100         400           1000
+
+
+                                                                                                      v
+                  45
+                                                                                               Asymptotic plot
+
+
+
+                  90
+
+                                                              (b)
+Figure 4.45 (a) Amplitude and (b) phase responses of the second-order system.
+
+
+                   (b) The correction at ω = 2 because of the corner frequency at ω = 2 is −3 dB, and the
+                       correction because of the corner frequency at ω = 10 is −0.17 dB. The correction
+                       because of the corner frequency ω = 100 can be safely ignored. Hence the net
+                       correction at ω = 2 is −3.17 dB.
+                   (c) The correction at ω = 10 because of the corner frequency at ω = 10 is −3 dB, and
+                       the correction because of the corner frequency at ω = 2 is −0.17 dB. The correction
+                       because of ω = 100 can be ignored. Hence the net correction at ω = 10 is −3.17 dB.

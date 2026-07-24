@@ -1,0 +1,57 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 464 — #135
+
+
+
+
+464   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                                                                                              √
+                                                                            √ gain is 1/ 1 + . For
+           • In the passband, the maximum gain is 1 and the minimum                                  2
+
+             odd-valued N, |H(j0)| = 1. For even-valued N, |HC (j0)| = 1/ 1 + 2 .
+                                                   √
+           • Ripple is controlled by setting = 10R/10 − 1, where R is the allowable passband ripple
+             expressed in decibels. Reducing adversely affects filter performance (see Prob. 4.12-10).
+           • Unlike Butterworth filters, the cutoff frequency ωc rarely specifies the 3 dB point. For = 1,
+             |HC (jωc )|2 = 1/(1 + √
+                                   2
+                                     ) = 0.5. The cutoff frequency ωc simply indicates the frequency after
+             which |HC (jω)| < 1/ 1 + 2 .
+
+           The Chebyshev polynomial CN (x) is defined as
+
+                                 CN (x) = cos[N cos−1 (x)] = cosh[N cosh−1 (x)]
+
+      In this form, it is difficult to verify that CN (x) is a degree-N polynomial in x. A recursive form of
+      CN (x) makes this fact more clear (see Prob. 4.12-13).
+
+                                         CN (x) = 2xCN−1 (x) − CN−2 (x)
+
+      With C0 (x) = 1 and C1 (x) = x, the recursive form shows that any CN is a linear combination
+      of degree-N polynomials and is therefore a degree-N polynomial itself. For N ≥ 2, MATLAB
+      program CH4MP3 generates the (N + 1) coefficients of Chebyshev polynomial CN (x).
+      function [C_N] = CH4MP3(N);
+      % CH4MP3.m : Chapter 4, MATLAB Program 3
+      % Function M-file computes Chebyshev polynomial coefficients
+      % using the recursion relation C_N(x) = 2xC_{N-1}(x) - C_{N-2}(x)
+      % INPUTS:   N = degree of Chebyshev polynomial
+      % OUTPUTS: C_N = vector of Chebyshev polynomial coefficients
+
+      C_Nm2 = 1; C_Nm1 = [1 0];       % Initial polynomial coefficients:
+      for t = 2:N;
+          C_N = 2*conv([1 0],C_Nm1)-[zeros(1,length(C_Nm1)-length(C_Nm2)+1),C_Nm2];
+          C_Nm2 = C_Nm1; C_Nm1 = C_N;
+      end
+      As examples, consider C2 (x) = 2xC1 (x) − C0 (x) = 2x(x) − 1 = 2x2 − 1 and C3 (x) = 2xC2 (x) −
+      C1 (x) = 2x(2x2 − 1) − x = 4x3 − 3x. CH4MP3 easily confirms these cases.
+      >>   CH4MP3(2)
+           ans = 2           0      -1
+      >>   CH4MP3(3)
+           ans = 4           0      -3       0
+            Since CN (ω/ωc ) is a degree-N polynomial, |HC (jω)|2 is an all-pole rational function with 2N
+      finite poles. Similar to the Butterworth case, the N poles specifying a causal and stable Chebyshev
+      filter can be found by selecting the N left-half-plane roots of 1 + 2 CN2 [s/(jωc )].
+            Root locations and dc gain are sufficient to specify a Chebyshev filter for a given N and . To
+      demonstrate, consider the design of an order-8 Chebyshev filter with cutoff frequency fc = 1 kHz
+      and allowable passband ripple R = 1 dB. First, filter parameters are specified.

@@ -1,0 +1,54 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 436 — #107
+
+
+
+
+436   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      system from the system’s response to sinusoids. This application has significant practical utility. If
+      we are given a system in a black box with only the input and output terminals available, the transfer
+      function has to be determined by experimental measurements at the input and output terminals.
+      The frequency response to sinusoidal inputs is one of the possibilities that is very attractive because
+      the measurements involved are so simple. One needs only to apply a sinusoidal signal at the input
+      and observe the output. We find the amplitude gain |H(jω)| and the output phase shift  H(jω)
+      (with respect to the input sinusoid) for various values of ω over the entire range from 0 to ∞. This
+      information yields the frequency response plots (Bode plots) when plotted against log ω. From
+      these plots we determine the appropriate asymptotes by taking advantage of the fact that the slopes
+      of all asymptotes must be multiples of ±20 dB/decade if the transfer function is a rational function
+      (function that is a ratio of two polynomials in s). From the asymptotes, the corner frequencies are
+      obtained. Corner frequencies determine the poles and zeros of the transfer function. Because of the
+      ambiguity about the location of zeros since LHP and RHP zeros (zeros at s = ±a) have identical
+      magnitudes, this procedure works only for minimum phase systems.
+
+
+
+      4.10 F ILTER D ESIGN BY P LACEMENT OF P OLES
+      AND Z EROS OF H(s)
+      In this section we explore the strong dependence of frequency response on the location of poles
+      and zeros of H(s). This dependence points to a simple intuitive procedure to filter design.
+
+
+      4.10-1 Dependence of Frequency Response on Poles
+      and Zeros of H(s)
+      Frequency response of a system is basically the information about the filtering capability of the
+      system. A system transfer function can be expressed as
+
+                                          P(s)       (s − z1 )(s − z2 ) · · · (s − zN )
+                                 H(s) =        = b0
+                                          Q(s)      (s − λ1 )(s − λ2 ) · · · (s − λN )
+
+      where z1 , z2 , . . . , zN are λ1 , λ2 , . . . , λN are the poles of H(s). Now the value of the transfer
+      function H(s) at some frequency s = p is
+
+                                                    (p − z1 )(p − z2 ) · · · (p − zN )
+                                   H(s)|s=p = b0                                                         (4.53)
+                                                   (p − λ1 )(p − λ2 ) · · · (p − λN )
+
+       This equation consists of factors of the form p−zi and p−λi . The factor p−zi is a complex number
+      represented by a vector drawn from point z to the point p in the complex plane, as illustrated in
+      Fig. 4.48a. The length of this line segment is |p − zi |, the magnitude of p − zi . The angle of this
+      directed line segment (with the horizontal axis) is  (p − zi ). To compute H(s) at s = p, we draw
+      line segments from all poles and zeros of H(s) to the point p, as shown in Fig. 4.48b. The vector
+      connecting a zero zi to the point p is p − zi . Let the length of this vector be ri , and let its angle
+      with the horizontal axis be φi . Then p − zi = ri ejφi . Similarly, the vector connecting a pole λi to the
+      point p is p − λi = di ejθi , where di and θi are the length and the angle (with the horizontal axis),

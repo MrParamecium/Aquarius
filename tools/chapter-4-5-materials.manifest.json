@@ -1,0 +1,4755 @@
+{
+  "schemaVersion": 1,
+  "chapters": [
+    4,
+    5
+  ],
+  "counts": {
+    "sections": 83,
+    "pages": 226,
+    "pageImages": 226,
+    "pageOcrFiles": 452,
+    "sectionOcrFiles": 166,
+    "formulaCatalogs": 32,
+    "formulas": 85,
+    "verifiedCatalogs": 27,
+    "draftCatalogs": 5,
+    "verifiedFormulas": 76,
+    "draftFormulas": 9,
+    "materialFiles": 876
+  },
+  "sections": [
+    "4",
+    "4.1",
+    "4.1-1",
+    "4.2",
+    "4.2-1",
+    "4.2-2",
+    "4.2-3",
+    "4.2-4",
+    "4.2-5",
+    "4.2-6",
+    "4.3",
+    "4.3-1",
+    "4.3-2",
+    "4.3-3",
+    "4.3-4",
+    "4.4",
+    "4.4-1",
+    "4.5",
+    "4.6",
+    "4.6-1",
+    "4.6-2",
+    "4.6-3",
+    "4.6-4",
+    "4.6-5",
+    "4.7",
+    "4.7-1",
+    "4.8",
+    "4.8-1",
+    "4.9",
+    "4.9-1",
+    "4.9-2",
+    "4.9-3",
+    "4.9-4",
+    "4.9-5",
+    "4.10",
+    "4.10-1",
+    "4.10-2",
+    "4.10-3",
+    "4.10-4",
+    "4.10-5",
+    "4.11",
+    "4.11-1",
+    "4.11-2",
+    "4.12",
+    "4.12-1",
+    "4.12-2",
+    "4.12-3",
+    "4.12-4",
+    "4.13",
+    "5",
+    "5.1",
+    "5.1-1",
+    "5.1-2",
+    "5.2",
+    "5.2-1",
+    "5.2-2",
+    "5.2-3",
+    "5.2-4",
+    "5.2-5",
+    "5.3",
+    "5.3-1",
+    "5.3-2",
+    "5.3-3",
+    "5.4",
+    "5.5",
+    "5.5-1",
+    "5.5-2",
+    "5.6",
+    "5.7",
+    "5.8",
+    "5.8-1",
+    "5.8-2",
+    "5.9",
+    "5.10",
+    "5.10-1",
+    "5.10-2",
+    "5.10-3",
+    "5.10-4",
+    "5.10-5",
+    "5.10-6",
+    "5.10-7",
+    "5.10-8",
+    "5.11"
+  ],
+  "pages": [
+    "page-330",
+    "page-331",
+    "page-332",
+    "page-333",
+    "page-334",
+    "page-335",
+    "page-336",
+    "page-337",
+    "page-338",
+    "page-339",
+    "page-340",
+    "page-341",
+    "page-342",
+    "page-343",
+    "page-344",
+    "page-345",
+    "page-346",
+    "page-347",
+    "page-348",
+    "page-349",
+    "page-350",
+    "page-351",
+    "page-352",
+    "page-353",
+    "page-354",
+    "page-355",
+    "page-356",
+    "page-357",
+    "page-358",
+    "page-359",
+    "page-360",
+    "page-361",
+    "page-362",
+    "page-363",
+    "page-364",
+    "page-365",
+    "page-366",
+    "page-367",
+    "page-368",
+    "page-369",
+    "page-370",
+    "page-371",
+    "page-372",
+    "page-373",
+    "page-374",
+    "page-375",
+    "page-376",
+    "page-377",
+    "page-378",
+    "page-379",
+    "page-380",
+    "page-381",
+    "page-382",
+    "page-383",
+    "page-384",
+    "page-385",
+    "page-386",
+    "page-387",
+    "page-388",
+    "page-389",
+    "page-390",
+    "page-391",
+    "page-392",
+    "page-393",
+    "page-394",
+    "page-395",
+    "page-396",
+    "page-397",
+    "page-398",
+    "page-399",
+    "page-400",
+    "page-401",
+    "page-402",
+    "page-403",
+    "page-404",
+    "page-405",
+    "page-406",
+    "page-407",
+    "page-408",
+    "page-409",
+    "page-410",
+    "page-411",
+    "page-412",
+    "page-413",
+    "page-414",
+    "page-415",
+    "page-416",
+    "page-417",
+    "page-418",
+    "page-419",
+    "page-420",
+    "page-421",
+    "page-422",
+    "page-423",
+    "page-424",
+    "page-425",
+    "page-426",
+    "page-427",
+    "page-428",
+    "page-429",
+    "page-430",
+    "page-431",
+    "page-432",
+    "page-433",
+    "page-434",
+    "page-435",
+    "page-436",
+    "page-437",
+    "page-438",
+    "page-439",
+    "page-440",
+    "page-441",
+    "page-442",
+    "page-443",
+    "page-444",
+    "page-445",
+    "page-446",
+    "page-447",
+    "page-448",
+    "page-449",
+    "page-450",
+    "page-451",
+    "page-452",
+    "page-453",
+    "page-454",
+    "page-455",
+    "page-456",
+    "page-457",
+    "page-458",
+    "page-459",
+    "page-460",
+    "page-461",
+    "page-462",
+    "page-463",
+    "page-464",
+    "page-465",
+    "page-466",
+    "page-467",
+    "page-488",
+    "page-489",
+    "page-490",
+    "page-491",
+    "page-492",
+    "page-493",
+    "page-494",
+    "page-495",
+    "page-496",
+    "page-497",
+    "page-498",
+    "page-499",
+    "page-500",
+    "page-501",
+    "page-502",
+    "page-503",
+    "page-504",
+    "page-505",
+    "page-506",
+    "page-507",
+    "page-508",
+    "page-509",
+    "page-510",
+    "page-511",
+    "page-512",
+    "page-513",
+    "page-514",
+    "page-515",
+    "page-516",
+    "page-517",
+    "page-518",
+    "page-519",
+    "page-520",
+    "page-521",
+    "page-522",
+    "page-523",
+    "page-524",
+    "page-525",
+    "page-526",
+    "page-527",
+    "page-528",
+    "page-529",
+    "page-530",
+    "page-531",
+    "page-532",
+    "page-533",
+    "page-534",
+    "page-535",
+    "page-536",
+    "page-537",
+    "page-538",
+    "page-539",
+    "page-540",
+    "page-541",
+    "page-542",
+    "page-543",
+    "page-544",
+    "page-545",
+    "page-546",
+    "page-547",
+    "page-548",
+    "page-549",
+    "page-550",
+    "page-551",
+    "page-552",
+    "page-553",
+    "page-554",
+    "page-555",
+    "page-556",
+    "page-557",
+    "page-558",
+    "page-559",
+    "page-560",
+    "page-561",
+    "page-562",
+    "page-563",
+    "page-564",
+    "page-565",
+    "page-566",
+    "page-567",
+    "page-568",
+    "page-569",
+    "page-570",
+    "page-571",
+    "page-572",
+    "page-573",
+    "page-574",
+    "page-575"
+  ],
+  "formulaCatalogs": [
+    "4.1-1.formulas.json",
+    "4.1.formulas.json",
+    "4.2-1.formulas.json",
+    "4.2-2.formulas.json",
+    "4.2-3.formulas.json",
+    "4.2-4.formulas.json",
+    "4.2-6.formulas.json",
+    "4.3-2.formulas.json",
+    "4.3.formulas.json",
+    "4.4.formulas.json",
+    "4.6.formulas.json",
+    "4.8.formulas.json",
+    "4.9.formulas.json",
+    "4.10.formulas.json",
+    "4.11.formulas.json",
+    "5.1-1.formulas.json",
+    "5.1.formulas.json",
+    "5.2-1.formulas.json",
+    "5.2-2.formulas.json",
+    "5.2-3.formulas.json",
+    "5.2-5.formulas.json",
+    "5.2.formulas.json",
+    "5.3-1.formulas.json",
+    "5.3.formulas.json",
+    "5.4.formulas.json",
+    "5.5-1.formulas.json",
+    "5.5-2.formulas.json",
+    "5.5.formulas.json",
+    "5.6.formulas.json",
+    "5.7.formulas.json",
+    "5.8.formulas.json",
+    "5.9.formulas.json"
+  ],
+  "mapHashes": {
+    "app/section-page-map-new.json": "a032ed82ba254aadf6be2e4640fbaadd1c562e8557d0c9b803f72ec63021f703",
+    "app/section-page-map-display-new.json": "bceb2f0567aa1f45c5780324bf4204a0b700143a9a60491b87cd46d59eea41ed",
+    "app/section-page-anchor-new.json": "de7e4415f8fa4d9cb7895a987df6476f4d30a2809aa47f8e898b9d8b85040585"
+  },
+  "files": [
+    {
+      "path": "workspace/materials/formula-catalog/4.1-1.formulas.json",
+      "size": 733,
+      "sha256": "9257e1427c50f7ff427467e27c056d6800a3b4e8dfb5d36ca9d32f60c4bdf52c"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.1.formulas.json",
+      "size": 2431,
+      "sha256": "b81645081eba0d93f86b94679e9f4f01a0298ccd726e370a81d56ae3aaf671cb"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.2-1.formulas.json",
+      "size": 534,
+      "sha256": "ec45d5fc88d98dd0b46c3a1fa16892dcec7491977b68ddddc808c025b60c41d2"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.2-2.formulas.json",
+      "size": 525,
+      "sha256": "60e5ce3a2d477cdec0e24f2ea4c4dc5b7e2169631da226802a2c707756ad9efb"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.2-3.formulas.json",
+      "size": 588,
+      "sha256": "81f9a797a025bc2a6289fa09c125ab52823f40722f013f3b061865ae36984824"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.2-4.formulas.json",
+      "size": 908,
+      "sha256": "6427ccf034714b36988f856503a0390281902e86abe8b825cbf20781c1e5c288"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.2-6.formulas.json",
+      "size": 1567,
+      "sha256": "0fb569c7bd6345873e7b4f72f132bd72ebc2408fb8310962f789b6c025de968f"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.3-2.formulas.json",
+      "size": 2250,
+      "sha256": "a6ebdf78c10d47acaee70a6d9502dfe3c60138083546f513e1dca154f294c86b"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.3.formulas.json",
+      "size": 1035,
+      "sha256": "f0a93c17d8ead28cc3f8df20b060bcae8d231f076b9cebb56e69006a3c92299f"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.4.formulas.json",
+      "size": 824,
+      "sha256": "b5e1c74995b781d2152997bc2084d128f178f2786d2f9b14d6df30d9f0c7b252"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.6.formulas.json",
+      "size": 590,
+      "sha256": "4f205f87336ad6b9fe6a391a2981645c116492e09770623700444af0ce31b208"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.8.formulas.json",
+      "size": 1306,
+      "sha256": "53d22cf65937139ab702ed9f978c792bc22eab696cc48d68146688cf31520e03"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.9.formulas.json",
+      "size": 1517,
+      "sha256": "b4b72a729236f9dda95bbd6a9abb1ae5ab046ecfce7b4a34543707fb05bf5c41"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.10.formulas.json",
+      "size": 902,
+      "sha256": "44700c4637b3432dabada7f793f9939df499927942ef054e70087be73dd95aeb"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/4.11.formulas.json",
+      "size": 1385,
+      "sha256": "1a0430477082a4e09ce7f3312ec1e595031de94dea123c600d66836e467ea4a7"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.1-1.formulas.json",
+      "size": 993,
+      "sha256": "00a97752f8551fbd3ff85642861f73d1add9c149c3112a67163459d4b36fec76"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.1.formulas.json",
+      "size": 1864,
+      "sha256": "c6b465690df8cfe7fe76ec56bc4a203780f3704d0bd9bfec9d5f8dde5b3bcdab"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.2-1.formulas.json",
+      "size": 1602,
+      "sha256": "49f74f7e0f68141398e38e79e27cd0d230c2f0527db019baa7499f9b959f6b22"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.2-2.formulas.json",
+      "size": 590,
+      "sha256": "198d9829e8e6054aa19b36d99a54a3ca80a769babb336fa06c822cb8728ef3e1"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.2-3.formulas.json",
+      "size": 576,
+      "sha256": "fd1cbcba64917a44015e050e3df69d3fc0e2b9606fd5dc679206e16526f37234"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.2-5.formulas.json",
+      "size": 1241,
+      "sha256": "6c6686f794d5f69fd80c2db4ace8f7199b2caf0b1befe6750ed9ad01c5c80f8b"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.2.formulas.json",
+      "size": 558,
+      "sha256": "0b795fe9054345d510f0320169e4880d256d0d381b016d06155ce5d2653116b5"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.3-1.formulas.json",
+      "size": 1503,
+      "sha256": "c5e26a13e4369fe22ceef681a3ab5d024616afc56de40e88683af68c95e268d0"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.3.formulas.json",
+      "size": 716,
+      "sha256": "e87a5895e7fdb79a23042781b79bb15fa59a2b47ece536ab1a66eaa9e804320f"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.4.formulas.json",
+      "size": 590,
+      "sha256": "5e5139bd4e14b4fa8c760bba17d239f2438ea0562cd2c75d32b8c4844879695e"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.5-1.formulas.json",
+      "size": 599,
+      "sha256": "1493598dfeb5c8b577338fc5bdb3b42fe4ddcd63038b7606b8027807948ab33a"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.5-2.formulas.json",
+      "size": 854,
+      "sha256": "3312552ebe3606c128b8a3899a77a714ca130850c0bd69a5dc00456d26c228ea"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.5.formulas.json",
+      "size": 1604,
+      "sha256": "3ecc890f48fda1128586c13806cfe1dd6826ece1d8302a1d7085cae2e5f69259"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.6.formulas.json",
+      "size": 605,
+      "sha256": "abe34b02fecbd36e67a419ae0b1ae9bf141f9533a70a3c7992bd0bd53c7c46db"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.7.formulas.json",
+      "size": 1021,
+      "sha256": "3f5520238b79d6ea00dcae2d2e29b6ad59d0f1fc3e97d6c5b648b980a3c16d67"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.8.formulas.json",
+      "size": 876,
+      "sha256": "fdea4ce5542099466168eaea48ba3f6b3f86e6ac442df19ac46503de5bc9464d"
+    },
+    {
+      "path": "workspace/materials/formula-catalog/5.9.formulas.json",
+      "size": 555,
+      "sha256": "2699f5f081adfc884652acab3abad974783757aa24b82e6992c142e44d837573"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-330.meta.json",
+      "size": 822,
+      "sha256": "7a9bf18468d8a9b87e96366ab0d1a5a84e7dafefe86150700f212a2e45915e84"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-330.txt",
+      "size": 2475,
+      "sha256": "4bf266d6913e154008459b909ba10255c7bb619d89ba516461616b8d1dd23672"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-331.meta.json",
+      "size": 876,
+      "sha256": "7939f5cca4f853eeb494ae261d08d43c560da06b4131349264cd64a6738fb765"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-331.txt",
+      "size": 2954,
+      "sha256": "2b9d27f8d94aace971e04939d54371880e041088fd28cea72edcd6838b7745c2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-332.meta.json",
+      "size": 738,
+      "sha256": "b16c025f22f8a838047ab15553ee915591b2cda92b6d06701c7fc510f7d7b8ed"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-332.txt",
+      "size": 3108,
+      "sha256": "1278c22e260e0c028dc5cf55a0a689134b2e8e8b1adc550de061ffd204f94e66"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-333.meta.json",
+      "size": 873,
+      "sha256": "05f5f42f8497c7e19dac37547da02f0f29a29414bb0fc84951666e961e57480a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-333.txt",
+      "size": 3531,
+      "sha256": "8a7a6223e3bdbe86c6bfb4dec72bc98c5f20cafdfe10193ea69af197491c9338"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-334.meta.json",
+      "size": 517,
+      "sha256": "b4a2c61d4c0def0b7eea68e67fc8b6e67d7312e6695a4334a54d49df65358224"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-334.txt",
+      "size": 3830,
+      "sha256": "bad4e5bbb656e1450d5373ad865706eb6d1b24d29ce0131a1b5e0651918526d9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-335.meta.json",
+      "size": 572,
+      "sha256": "b8ce5835b9420afd6a572c6f80fd79b1ddadba6651344dfd0ae92ef37573dc97"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-335.txt",
+      "size": 3908,
+      "sha256": "592dec6e11d864ffc0b259b51bb0cf1487dc29ebcf9da56fde2e87729d1a0fb5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-336.meta.json",
+      "size": 660,
+      "sha256": "830a7b891630dea9e465fb77c0c41f7e89beb2828cba431ecb5a2fd9d4a75cdf"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-336.txt",
+      "size": 3333,
+      "sha256": "5891601529b9caa0979d3d6212d4a23ba1b0b92249d2944474a0b4b099ef77c7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-337.meta.json",
+      "size": 680,
+      "sha256": "56b27d2c0933c545ad12555e92b01ee5ef9e2ac4bb9d2da10dbdd94944896024"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-337.txt",
+      "size": 2601,
+      "sha256": "99d16b7a64b2159767da7b3a3cc6ae1c7f992db0e6452cb174ab6416b13fb775"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-338.meta.json",
+      "size": 890,
+      "sha256": "93fddf256b72c351059e10974fb27b5d0b3fe041e7a862dd2eff18676b69c610"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-338.txt",
+      "size": 3432,
+      "sha256": "8823a7532e9f78b602c8d690e97f3d9c5a26e5d424bc7bbbea8c284471581256"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-339.meta.json",
+      "size": 688,
+      "sha256": "4190e33104dd065fa8bfceeeab59c18722b417e0daf785a2f9eeb9214048eaea"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-339.txt",
+      "size": 3049,
+      "sha256": "bb655869b4fc7f23f9c7c6e7621f2612b4ec7c36735d27107e6c26904a81899a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-340.meta.json",
+      "size": 487,
+      "sha256": "d3ceeba8a14f05c512ee878be31f16b5692440b071c6659f15a096c65700a274"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-340.txt",
+      "size": 2233,
+      "sha256": "861509df06b1b8e9d7e565540af3135254b8418fee57f9a7b354043e42a63b6c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-341.meta.json",
+      "size": 599,
+      "sha256": "49039a4f627d8f8b015b5a26e6f3134f9a19eb5ecfb405d79ec4a788ce334062"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-341.txt",
+      "size": 2771,
+      "sha256": "6f1de77a3596ae8be9f508cba957f1189b4c5fe0b17ebcbab68b30c39a8b7b37"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-342.meta.json",
+      "size": 658,
+      "sha256": "ede09bc6b484c039bf970657c6016bab61e67363e13f5dce9699d61224cb0cb7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-342.txt",
+      "size": 3405,
+      "sha256": "efe0837862738fa891472ef8145baeae6e03ce634e4a5c1daf2e99b405e095a1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-343.meta.json",
+      "size": 783,
+      "sha256": "a109cb9bef8f1c40bd85499090e06606bad3b002bcd531930047287b33bf6425"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-343.txt",
+      "size": 2790,
+      "sha256": "fd59f7d1413d0d9228c480d2e79590c9d71523c6ff79f634647af6d4f0a410e5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-344.meta.json",
+      "size": 637,
+      "sha256": "b41f53c4e871b2b99230797e2f8267370a0436d0eca350610d558ba3feff6745"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-344.txt",
+      "size": 1867,
+      "sha256": "75f18ba17251357ff6637d92c8f253d452880fabb1fd494f788af83bda2383c1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-345.meta.json",
+      "size": 550,
+      "sha256": "7b6242e748077549f8c7231350f073175a0d35e8b38d761b963d73e5f12bb346"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-345.txt",
+      "size": 2167,
+      "sha256": "9e11c3f287e8ee9ed3931ac1eeaa6d463681ff98dc17e73765345d3ee3fadfce"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-346.meta.json",
+      "size": 713,
+      "sha256": "2c790e01d63f41159286b24a0cc6f1dc110fcee7b7a87fd58d7f119f0d94d35a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-346.txt",
+      "size": 1931,
+      "sha256": "2d884e15b904b4923215c81b5c7605247644deb084f6c50ce87dc2062cd31cac"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-347.meta.json",
+      "size": 824,
+      "sha256": "b420a33dfd22aa736912ae2cb30ddbd24eeb81fe6d6e7365eae83c499a9e4943"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-347.txt",
+      "size": 2264,
+      "sha256": "d96aead87d1d535a4ccdfa38d241e8fbadf87c8a5d25126dc5256d0b8b0c73c2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-348.meta.json",
+      "size": 761,
+      "sha256": "5241d61c6024c62ace9b71bc0858434a789a0611173df99a16f8b16f11bd356b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-348.txt",
+      "size": 4049,
+      "sha256": "a257480d7ed3df50fadc4a968b9d5eceea5cab7908b67e3ab6bee82273efe21e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-349.meta.json",
+      "size": 847,
+      "sha256": "93ceaca64d230933c3ddeaff996c3ce5225fe48b7df0a1a95dc4dd12897f7bf5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-349.txt",
+      "size": 2770,
+      "sha256": "43e7d0e968a263965ff022f14929c0f3575d83bbd51b6a082fabd1a5484f0ff9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-350.meta.json",
+      "size": 543,
+      "sha256": "cc3b157856d8baba5ddfee8ab4c2736042348b1fd5794a5ee0694b7ab508395b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-350.txt",
+      "size": 3234,
+      "sha256": "86205cc635a73587c72aa962a90c0b21c79973eee2f11b4d138be87cf4887e74"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-351.meta.json",
+      "size": 631,
+      "sha256": "7d526f29d4f53f1e4246c1d63d2ac6cca7efdfc49dcc13a8c2c65efb8d2740d2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-351.txt",
+      "size": 2854,
+      "sha256": "0e4c91ecb929ccc0d59d5e16330068bde6fa3d6cc340f07a4f55117236916751"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-352.meta.json",
+      "size": 651,
+      "sha256": "6911e5dbf9604ff727782551d40535405743bd2f480b5fa3d53574631b169e73"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-352.txt",
+      "size": 1940,
+      "sha256": "9d1ff570a1008e0d81a31574ee1d7996ae5a1bba3dd2229ad8e31c559758dc4d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-353.meta.json",
+      "size": 639,
+      "sha256": "97b0ae4fec446873303362ad3d5aaa4bfbb8f6ed197ced6606f59d4ea2417bf5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-353.txt",
+      "size": 2054,
+      "sha256": "f084c76b60ac6f2efe3115a0d8a3fce4c7aa27ee414b7a5f1672e43c97b17386"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-354.meta.json",
+      "size": 763,
+      "sha256": "89fb46c7d785379203cac242495d4c4aeb74fbfbf3907845d5fbd430e19a0563"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-354.txt",
+      "size": 2885,
+      "sha256": "e6155af43b1f3b5fc16e2a3435775fe7691498742ccaf4060ae6b0cd90ee21ee"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-355.meta.json",
+      "size": 803,
+      "sha256": "fa3d23ed8d777e475bb4871bb887f03c41ea5c696f87aff2ce9a7a1a5b60336a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-355.txt",
+      "size": 1570,
+      "sha256": "a3920448ed5ca220fd298b97bcdeb2763e5b149e95d5ebd310d8cfa909a91767"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-356.meta.json",
+      "size": 802,
+      "sha256": "c2e3fe2e2dd43b0db7aa3697f63297a192df50deb4afb67a465e80350ac8da28"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-356.txt",
+      "size": 2660,
+      "sha256": "bda1c0c15f9057d54825b36599a7ab72f42cad92a88abf696716f8088f7b9ec7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-357.meta.json",
+      "size": 597,
+      "sha256": "6d44d58ac81a05ad193e65e37fdce6f3f47372d31388241ebdd5f810fc37f31e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-357.txt",
+      "size": 2754,
+      "sha256": "656376215250f196fff3f6529cc555532fe448e3977c2ac023e07599d15d31ab"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-358.meta.json",
+      "size": 710,
+      "sha256": "67671c2fd0a1dfef8e55f00876d88a1706c9ba77de588ec2eb9f8be01bf613c4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-358.txt",
+      "size": 2697,
+      "sha256": "84549966b8f2c5b58d7866b7559ae03ced7676766dfdc562f2c56ef10bce8d24"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-359.meta.json",
+      "size": 924,
+      "sha256": "39416f16b5b2724abbcb22c2461f62f833e230365f780f23486cc13426f990c5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-359.txt",
+      "size": 4000,
+      "sha256": "53836b3fccbcb0ce03adbaec9362e8d2ce7d54f8ec07a3a00f6111511acffead"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-360.meta.json",
+      "size": 772,
+      "sha256": "7dc0876e38bdf5ad6054db30bfddac1691af93ce817bca453bb9346dd35aac2c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-360.txt",
+      "size": 3149,
+      "sha256": "ffe396cf64f6ff55d413d5e16a50598e405c0615fee6ded312795cbefa5a4474"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-361.meta.json",
+      "size": 864,
+      "sha256": "2674da59fb3a47adc4b20033ecd6deab54b7c41b4384b1cf1e7a18a23e450e2c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-361.txt",
+      "size": 3769,
+      "sha256": "0cd4e4d88a44954f5fffbd18c6ca64ca4218b4d7178b0747a8f6287e0cad67c2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-362.meta.json",
+      "size": 528,
+      "sha256": "84d936e0e077e2d679c3eba554ede14ce909fa505b173b1f1eb5fc9fd49a99ea"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-362.txt",
+      "size": 3116,
+      "sha256": "dcfe96487c4f9d82295b1514373b28d4535d8efae49bbb0434225a0abc67422e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-363.meta.json",
+      "size": 1025,
+      "sha256": "3f5dac7da5ed187a3c63a19eeab973e2011a95d96d163d65a0d5507e73e2fd0c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-363.txt",
+      "size": 3946,
+      "sha256": "6899f2cfa321a0a6270b5184ea9a57e85445dcfbac084153c3c03fb29cd37233"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-364.meta.json",
+      "size": 945,
+      "sha256": "7a4d7b90850c3c01e9dddfd82e4f82b227213ca838bbca581d0fe85571946a4f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-364.txt",
+      "size": 3102,
+      "sha256": "21a40f6b7e21c153f8e308e18a2e7adf1601969360a461fed4057a39825a06c4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-365.meta.json",
+      "size": 655,
+      "sha256": "2d10169481cb53abe25aa0c03f59d70720c2b70b1f82221a394d39a7af3ab850"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-365.txt",
+      "size": 3043,
+      "sha256": "283a4ff30c6af17dfad082c1d292712ba8b85e8bae6ccd1d68028cdcbe784d00"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-366.meta.json",
+      "size": 645,
+      "sha256": "69f03dc98c14b7c5aa4de7afff90d0811483750a227cd0115c6c7c6bcd43fe2c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-366.txt",
+      "size": 2798,
+      "sha256": "bc6dd99bb029c8aa4d4bb364c29c01582d43ce2f4be910d8bd156a1b790ba421"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-367.meta.json",
+      "size": 888,
+      "sha256": "0bacb6c4b9796520becc2458331d8896b5b6179265efe4b20bc76ee873b09aa9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-367.txt",
+      "size": 3188,
+      "sha256": "89f366b8de1c9799f25dbe7ab2bb1873c1be9f33b08b1ea25a422c982dcfe854"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-368.meta.json",
+      "size": 755,
+      "sha256": "cc6f2f2a71a1741ca8777b35edd29b7b2bf8db5c78af3090d2bb149747f9435d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-368.txt",
+      "size": 2981,
+      "sha256": "8c2535db7c5a30be3babff7bf84b829141d16b4ade976e4c85fe7be6a83ee5e8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-369.meta.json",
+      "size": 858,
+      "sha256": "c17bbd1b33a0c7dc16382a23bf645196d2d9f9d68cb8ef8f5dcd09d99270d56e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-369.txt",
+      "size": 2372,
+      "sha256": "f60c98f0c3e190e9de3442565c2bee79281dbe678111756b9c40d65ab721ef55"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-370.meta.json",
+      "size": 655,
+      "sha256": "eb271104b05559838d7c29f7b48a0d924b9c654fb51f89fa86bddc61c9666b31"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-370.txt",
+      "size": 2538,
+      "sha256": "ed6ccab89f3cbf00e7938f95b3e6acafe70522eb7c6749f0e8123d78b7295de5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-371.meta.json",
+      "size": 795,
+      "sha256": "dd56ee615d7ea839e3b66313e931371799bbf25b4abfecfbe3e1d289d3f4681b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-371.txt",
+      "size": 2383,
+      "sha256": "47e8ec1962d415b21a188f665fbf6881e3803fe42cb166b79e312f122b1b3c88"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-372.meta.json",
+      "size": 817,
+      "sha256": "da2657feec803dd7ca7fcbadc17b82df0893c7b3e1d8cce0aa8b095de3874ad5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-372.txt",
+      "size": 2939,
+      "sha256": "6b67e3134d2ba780e9393c5eb9626c586064b5bc3e8b36becc73fdcc64cc899d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-373.meta.json",
+      "size": 920,
+      "sha256": "4d6d614a411bddf7a6aa4523e733c9693d4322c04562b6a2f99a0ddc4d96a5bd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-373.txt",
+      "size": 2907,
+      "sha256": "b9f0744157ee35811fc6b01c2f9edd82e7ed3b1aad9f30f6aa099e791cb21d0d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-374.meta.json",
+      "size": 788,
+      "sha256": "ebb9b2283a4e133c46b6bae34fdd4a33724779ac099736c649b6a95ee18a645b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-374.txt",
+      "size": 3872,
+      "sha256": "1d2ac41769f590148999ce2ae4ea8d4c88e96ff4268205bcf9e6c6bd8792c1e2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-375.meta.json",
+      "size": 918,
+      "sha256": "e1f6b1d48f2f60ded1333249b4f281c3531b78f0c8b4ba1dc8e7a3fa5ee621a6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-375.txt",
+      "size": 2538,
+      "sha256": "28331481875aab192535eff9458a60f1a96b82bdfe2ad2acfff986bd99c42a96"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-376.meta.json",
+      "size": 762,
+      "sha256": "fb1aacde4dd2bcc85743e058a48fe0b45bf7296d022bd0c3fc5c89fd1d853d30"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-376.txt",
+      "size": 3249,
+      "sha256": "a1f78dc8d7856c4c6c913a93a59e4df363340d5ef654c44b6f1daf9a2e0874db"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-377.meta.json",
+      "size": 883,
+      "sha256": "d83d2d402192b13f27e8abfe94310e7ff04832ff887091ba5eef7a01f68fa0d8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-377.txt",
+      "size": 3616,
+      "sha256": "6dc2cb0d32853243ee97f09477526c6ee2ad4f70547c57137434645365eea179"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-378.meta.json",
+      "size": 452,
+      "sha256": "c854ec52382283e51b812fc077d5de6495452932cd26bbbb6a896de5959d19fc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-378.txt",
+      "size": 4295,
+      "sha256": "0515f122b09ef570e90070ec780de5b90a5fbf1fec7721422290e2982060127e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-379.meta.json",
+      "size": 953,
+      "sha256": "d49c36d7af7ba903045b503682a0c779307b6075759380300a0781bf0e8bb744"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-379.txt",
+      "size": 3668,
+      "sha256": "9bf980d005802e8c79d3391f2c3de68e07e926d0aca01ea38b9d938e7f6f33b2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-380.meta.json",
+      "size": 783,
+      "sha256": "e69ec7144f5c3c10016c7507ce0c87373bdc5372559f7865c965fc510a06db50"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-380.txt",
+      "size": 2823,
+      "sha256": "eedfc95f1311e7f75538420a74fb7d80fcd392a3f51b638c771abfd942396583"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-381.meta.json",
+      "size": 674,
+      "sha256": "83e6076b8d9f9ea18be2e916f58c9985e3e0e9ec10079c9c553b4c53630f4826"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-381.txt",
+      "size": 2509,
+      "sha256": "d721e79dd16c63bc521cddbbc03e23d4355100339d3a4cc23507fd1ccdcbbad3"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-382.meta.json",
+      "size": 699,
+      "sha256": "17306c601f63f1f255156825978e3fd09882ba343358339077b6d20e6b87a856"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-382.txt",
+      "size": 3023,
+      "sha256": "a6042c155e0276367ed303b83ac8f517bfb6d9bbab6b1d7b4c029af9f3db50dd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-383.meta.json",
+      "size": 708,
+      "sha256": "16a3f3ad1ff6f955336cb68811c2dabc76b27c1f18f41a3fc3854fdd66b99516"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-383.txt",
+      "size": 2577,
+      "sha256": "020fd81c26af408550299de2dacf6bbae3dfe531e91f1a8d0d4e8b1c731bf54c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-384.meta.json",
+      "size": 537,
+      "sha256": "3d997faa87d4a94df6be25894fe9baa2a6b7ff167cc6c7f369ace2e643aa00f5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-384.txt",
+      "size": 1367,
+      "sha256": "f8743c55246c9f4de17d7de09f8d36de6695c8fe9e69b5b7ab7df1c511e337b9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-385.meta.json",
+      "size": 716,
+      "sha256": "765081217d0c36bf05f935a48e96dc46d0976f9c66d3b4e20e400660ad5ad60c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-385.txt",
+      "size": 2586,
+      "sha256": "683aa9d3a3311dd497fe5912c523ec1b0905dcc927185fafa42fa3c4c579bf89"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-386.meta.json",
+      "size": 813,
+      "sha256": "5a8373880ed6dc977d3f1da115e32a6de180ec57765670b3b3dcfc737fc79a51"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-386.txt",
+      "size": 2705,
+      "sha256": "57e352911181502af1226c444f3d3366655ef7e599376473432b4550c8a8c12e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-387.meta.json",
+      "size": 853,
+      "sha256": "d801f9ea048f7405ad26616eb3c76cde999cd5bd03f300bfa41595078ae411ad"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-387.txt",
+      "size": 3136,
+      "sha256": "b91e81a89ad38988333c4276082e3414adb81d1474213ff673d3d14be5d020bc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-388.meta.json",
+      "size": 571,
+      "sha256": "da0f4f78f6ffbacc303f8b25603ae408c4824bc6843591f13caf3e4628d2a12b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-388.txt",
+      "size": 2114,
+      "sha256": "9a0f6d949320d4823ccfbeb6a450a041457ad2fffc7794e81205bfd80751fe8f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-389.meta.json",
+      "size": 565,
+      "sha256": "80e901796cdc5360dde33bc2743d01bef6e022d7e95c07e679810459cdb58fd4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-389.txt",
+      "size": 3267,
+      "sha256": "e12d7f10944ed2750543ac130362fe814148e7d9919bc5af77c5536516b92cba"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-390.meta.json",
+      "size": 601,
+      "sha256": "a48961ce0d05c26b987f4a31528a2ad1f207feef401ea617fcd90c4a216829c7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-390.txt",
+      "size": 4130,
+      "sha256": "c53e49baca1d7858691ae5ee3820a320ca1d82b89d70db7ecab72eb67916d0cb"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-391.meta.json",
+      "size": 545,
+      "sha256": "57a341ca8f26af52a850effb0cf0a095c28dfc46f47021925716c2bce4bc2fb9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-391.txt",
+      "size": 3668,
+      "sha256": "da7ffbd43ecd7965392953be7b7b1dd7b379dd272ee7dd6a74046b079e6992c9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-392.meta.json",
+      "size": 530,
+      "sha256": "38ecabe424cc4dc49e3949de4a539e77f1a9688b016c74f3ba548754b90e13e9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-392.txt",
+      "size": 2866,
+      "sha256": "a08eb0e33893990073bc4d631be814397f1038f79bae70087ec97269ff36b497"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-393.meta.json",
+      "size": 678,
+      "sha256": "d110111ef08763bfe35503530ac628554dddacd81d82b314460096aa2ef66222"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-393.txt",
+      "size": 2426,
+      "sha256": "e6072e433ac3dc2bf3047e94d0861fc38c694f4393372f70b4a9aed0a17f0fbc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-394.meta.json",
+      "size": 519,
+      "sha256": "fe3b4381539c451ec37d6f9d3b68cf86821d91ebcc5ab4bb564a2d70e3901e54"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-394.txt",
+      "size": 3628,
+      "sha256": "8bb13f7c474ef32f5946173a350b5695a878d5a847d455ff2abefc84ad8fa955"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-395.meta.json",
+      "size": 670,
+      "sha256": "cdd1128f1bcc7e828b96b724be6519a10182580bfca1c4c84a2745e3cbdd0196"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-395.txt",
+      "size": 3081,
+      "sha256": "26b1c44e7571ef2f7ae1959f2fc73302bb677da6dbf22ab86c349f31b8fdcb62"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-396.meta.json",
+      "size": 526,
+      "sha256": "1a4fa4407476c51995fdb3b44a24bbc1b6c8bbbfd5de5369ce42e7783e2b7799"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-396.txt",
+      "size": 2512,
+      "sha256": "b08badbab3e38c2eb53202df681c81aee99dd721232647a033e210a2a838ba3e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-397.meta.json",
+      "size": 504,
+      "sha256": "a6e39167b1d304f33f0f4d9deec4f121b81b3b7efbe0f2cf463c3539c723f0ea"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-397.txt",
+      "size": 2727,
+      "sha256": "5a68285bd610bc237bdadc193347348ac72a75be41be0d8dedd9a25b65db14f0"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-398.meta.json",
+      "size": 763,
+      "sha256": "6b71efbf4b279dd3285763d06b0a91cac19680e2d95c754772393528862fb5c3"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-398.txt",
+      "size": 2330,
+      "sha256": "974687753561af5d37b4c246d3ccd9d2c8ba901e5b47930d6cbc7684950f379b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-399.meta.json",
+      "size": 943,
+      "sha256": "cf9577cde3b5a497165ddf9b4ef5cc0b1760d081f9c6dcb37c31e672d3117c24"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-399.txt",
+      "size": 2400,
+      "sha256": "106fc44771c8806a78b3290a549f9a2ec3a90185ec736a61a7a0c87da6b20a7c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-400.meta.json",
+      "size": 563,
+      "sha256": "03a111689972675e2ff2c7c6ba6ee03f198fdee8c743f282ab78c5fe94d2b803"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-400.txt",
+      "size": 2965,
+      "sha256": "499402d6240bdbafab4679e8cf025d82a3e76bbb2fbf03c19d29cdc1e99820d8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-401.meta.json",
+      "size": 827,
+      "sha256": "03516487a1d90cefcc525ea7a54b9be4a077a7398585943a8612ad3ef0519ed6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-401.txt",
+      "size": 2112,
+      "sha256": "32b1b4006f2a102ca6ce3a99da7fd0633e20da0b4881f7af6109160e13f2b3e6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-402.meta.json",
+      "size": 442,
+      "sha256": "5330eb279b98b7a0d4659c9de9b61cab10ef517eb81c2b642dd1a75a214e40ad"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-402.txt",
+      "size": 3574,
+      "sha256": "1e624a85a16a2fbe6339c31aef6217006f59f482b602a8bc30b83a107dfe077d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-403.meta.json",
+      "size": 815,
+      "sha256": "60c18b3d607ef1d3d82f23ac1150d65a2942ddcd97f3122d230dc0852d050cac"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-403.txt",
+      "size": 3333,
+      "sha256": "2f946d0fab3cb818e3d0ec16e392513bd6d5e770207629885901403c9353c3bc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-404.meta.json",
+      "size": 559,
+      "sha256": "ccb68a58cc520438458e487e61074201ecc200953d257e3646d622fc6bfbcedd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-404.txt",
+      "size": 2735,
+      "sha256": "1ae9e19446c24f5b3f184a2ca96a26603db495a3853994767146595462886e1d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-405.meta.json",
+      "size": 891,
+      "sha256": "6270c4885106befa1bfa72e8c19816c6af842ed02fb742ddd1910a69b7dc4d08"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-405.txt",
+      "size": 3818,
+      "sha256": "26cb8f3eefaa27cdc4d3eea7f56e5ec16532adde0912bcf28eab1f0a19c23e69"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-406.meta.json",
+      "size": 897,
+      "sha256": "7720e58ddba53e150c6554552d0c00081e18f3e70ce88a259cc985c408331119"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-406.txt",
+      "size": 3750,
+      "sha256": "32e7f24c231f9ef4ff95c5a0e9599556c421d08a52cf3df3e3bc55bb6711e507"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-407.meta.json",
+      "size": 905,
+      "sha256": "239f807e581828af3fc40b7c009cbf1b84d84210bf0c9ebc76e8433903a862e5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-407.txt",
+      "size": 3514,
+      "sha256": "ca2f876849daa158d93cfc6867073f5c5e49ba82b5d8bdef450120290ee0a948"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-408.meta.json",
+      "size": 445,
+      "sha256": "572b8f74da985da4d3cf34deadaf8f21fca6b96dc0803a7d1469532e34421f62"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-408.txt",
+      "size": 2181,
+      "sha256": "bf87f66ebdd1799581efd456d798f41898b2aff363074a4381b170fcfe299aac"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-409.meta.json",
+      "size": 805,
+      "sha256": "be4834cd72df4cd5c31b8ce7a840d052d5e8a7f18bee055dc971598b1edf4f42"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-409.txt",
+      "size": 3848,
+      "sha256": "b7e96623c1d14dc532de14b2f4869cdd6d93df72dca09419c1837762005a9177"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-410.meta.json",
+      "size": 793,
+      "sha256": "045dd6627b3395d6442ae6223d9932d734a04adef38fc66aaf9e0d75e9500008"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-410.txt",
+      "size": 2968,
+      "sha256": "de405d55701c00bfea8964202fd916f283bb9f2957cf3fd5434086dfb6dae796"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-411.meta.json",
+      "size": 567,
+      "sha256": "9194f046299b90336e46ae9462843dde0b325fa7f3d541809be475b28e31b6ed"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-411.txt",
+      "size": 2203,
+      "sha256": "e6be77d3081358fe7e3eb969fdf626c09e5c2e7db9e129b589d1fc91852e7281"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-412.meta.json",
+      "size": 941,
+      "sha256": "a6fb4af6028aad936ba3ddd7fb7a195331e1e20fcdd1b927e356b476a3420349"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-412.txt",
+      "size": 2800,
+      "sha256": "71332f6ffe82e68c182fb1f005bf539c405ac17f459c9c26560773cf9a238458"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-413.meta.json",
+      "size": 969,
+      "sha256": "c9ddc1ed2a5f58cbbd839b949091e29ac5686a9cca38fa3e180c732c71098e75"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-413.txt",
+      "size": 3331,
+      "sha256": "86ae6b70b2e8b91c89366c17a9e9688caadab8b13ec680f22de7bff336988425"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-414.meta.json",
+      "size": 588,
+      "sha256": "faeb08e649d5ff1dfb958e33a0fa25244fcce52748dbde28044079673c763883"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-414.txt",
+      "size": 2205,
+      "sha256": "fe33f26304ff723347724899650ef464c227ba67165c688cb8696b9fde2bc6a0"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-415.meta.json",
+      "size": 928,
+      "sha256": "5a148fc27185ebfe32ada10e1420e07e984d280a91a127f943644215982b13cd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-415.txt",
+      "size": 2760,
+      "sha256": "f5720aa3c7dfc2ed190803d7829c73e56a56fbe750d7841682990c8fb121aad9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-416.meta.json",
+      "size": 737,
+      "sha256": "78929d9bd393f75971056a8ca05fd8e8768c748d500cf0145417b33a0de6846c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-416.txt",
+      "size": 2899,
+      "sha256": "5525051a603ec4ff63c109c0e12436202cf02ae5cefbd32726ccfc82172a663f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-417.meta.json",
+      "size": 636,
+      "sha256": "71a37e9261b0a1ce64999407109585925411cd9a5a527d20ac173500078cf7b2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-417.txt",
+      "size": 2920,
+      "sha256": "b8c05516f3279c0568e9ef8ac40c7ab01a843077cbea7326a6c9119c476215e6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-418.meta.json",
+      "size": 1003,
+      "sha256": "280cb7de023f163c9a1ba20ddf6838c64a891662e4d8a261a693e4b9f0d9618d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-418.txt",
+      "size": 2956,
+      "sha256": "c21389f11ddf0b31b728af3587d74056ae2471ff55f895beb7b4fa4fe52f7afe"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-419.meta.json",
+      "size": 848,
+      "sha256": "f1f30aec889c461e1cd3aef91291f0ff45f4f1484ad09f7c23f730ed86d41874"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-419.txt",
+      "size": 3342,
+      "sha256": "3f4d15462023cbc8969a68720c471304d3b9d5251c69614d0710f8811617d03b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-420.meta.json",
+      "size": 661,
+      "sha256": "1a81641939e801a849be015aedf2f30560100689c00b08a7f73a9b32981a980c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-420.txt",
+      "size": 4707,
+      "sha256": "fea62112886d10b9897f79e72d494bedd07653b81e74b78720e1a06f0f683a64"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-421.meta.json",
+      "size": 804,
+      "sha256": "08b3adfa626dd0532ebf02d3adfdfcaecc19480c0005702fd7ef2ed632992eea"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-421.txt",
+      "size": 4438,
+      "sha256": "8f1bdfc4eb8ead2f38a542f4c68de01b633f81d0065df220157746871c5b9b9e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-422.meta.json",
+      "size": 878,
+      "sha256": "e2a90fbfe7a0ab48c7ce6049d18982e2ead34bdfc25a55e260fdc5f309ecac12"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-422.txt",
+      "size": 2565,
+      "sha256": "94b63f6bd8aa1cb063389e6b4ab352464dc4526967d1b4f08b175da6b6b7ccdb"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-423.meta.json",
+      "size": 431,
+      "sha256": "610fb202e105396231323206221a7ac49dca89b9a762a9151b1c8d0b9c916d7c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-423.txt",
+      "size": 2563,
+      "sha256": "ede4eaaaa4143e925e9b0b1fbb56b806ce716425373ef660562fa9152cd66155"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-424.meta.json",
+      "size": 791,
+      "sha256": "ae441b8b25a2bfb3b77104312ad706a925c8f2dff2f97616a4c732b1e5ebc04d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-424.txt",
+      "size": 3459,
+      "sha256": "150433eb0a72d0aec53a612fe403b1fed6bead9629b02ccf5edd20199b9eca31"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-425.meta.json",
+      "size": 455,
+      "sha256": "636d62dfd8b0515137c0b813a2f3859bee9fd48ae64ef5862439cbcaa83aa96c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-425.txt",
+      "size": 2920,
+      "sha256": "bf092afd706544c649f72c7dd7a692c8e5a1d47396e7e0b114db03c522d1a968"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-426.meta.json",
+      "size": 536,
+      "sha256": "47db256c8e0a55b90de609946522c8b5fe68b6206fd3ba419cd155495912e176"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-426.txt",
+      "size": 2636,
+      "sha256": "9274eb0bb1dcf1547ee482c3bc2e41233a721ad999210d777badf3ad4f6dbc0b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-427.meta.json",
+      "size": 549,
+      "sha256": "92efb5e73dad66d9a80247790cb96f0cd829e791da35efeb47a80fca9f43c665"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-427.txt",
+      "size": 3764,
+      "sha256": "65bb4957a9317d91d02aece5c3ec29231b88e145c4c1722919fc3a87e12c2a26"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-428.meta.json",
+      "size": 424,
+      "sha256": "c4ec2c61a4efe70cf416a9fdf44faca99c9ff7bf018d52ffef266f258e0d5126"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-428.txt",
+      "size": 2812,
+      "sha256": "8872b8533b5ed223861431feefd847c4cbb4c93770c96fcb34e9e5a0827a6e14"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-429.meta.json",
+      "size": 425,
+      "sha256": "9fa3a6a13097fa991422cfab833ac1cd8de9f1f793248f357ce6374844961099"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-429.txt",
+      "size": 2174,
+      "sha256": "16ae3165d92f65f8ad4ef0730e6523644b552449ab2a355e7dbf87080a75b23a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-430.meta.json",
+      "size": 549,
+      "sha256": "88e165a6315f0c3c21d1c6777b7ef8c7958c8d0049763acb0335e3d0358e0f4e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-430.txt",
+      "size": 2915,
+      "sha256": "80dd8fd0aa4f0783bda869471295b3f751e55596456415b3ce00740bb7c0d305"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-431.meta.json",
+      "size": 453,
+      "sha256": "44fe062be763ecc6ca5751aba6cd3a0cb6ac83930bd7cda3a18fe4b71688b954"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-431.txt",
+      "size": 2252,
+      "sha256": "1c7da1ea8e48213776046147ab51aeb908d1b2ce8f4cefca9ed5caf3765d4d53"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-432.meta.json",
+      "size": 766,
+      "sha256": "9f89de1b05107117dca08e5e10a0b79bf63e508af7e6a4978bad1a583f4a3a7c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-432.txt",
+      "size": 2966,
+      "sha256": "395256554514f88ca678116470f503da689e48ac6e97d1912851e3320d792d05"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-433.meta.json",
+      "size": 432,
+      "sha256": "7b4a0da5d3c048c9478e5f0cfbd3fe6bc3f5d2a7e96b2f3ef54b57c55875f8cd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-433.txt",
+      "size": 2133,
+      "sha256": "bdf5feacec394741439537e45b9f61f8f6c18b71f5da8b44739df9e0daad9fd8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-434.meta.json",
+      "size": 661,
+      "sha256": "fa7217162d2ce053a9039ccfd0d5941afff645d55c3b667e1914e5e299188fe6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-434.txt",
+      "size": 2390,
+      "sha256": "e4184606f0f4b203d410154e6175da5566044ed2892582cb5adacf5bd00e428b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-435.meta.json",
+      "size": 916,
+      "sha256": "f21ca3a4093bd8986c58a9fd27e70e66d870271df63fc7fee4079e4723d171e9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-435.txt",
+      "size": 3176,
+      "sha256": "ed127852adae05ae6de007f5ad0ce951ffb28c3b0c16dddb31ff8ed72a66a721"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-436.meta.json",
+      "size": 923,
+      "sha256": "972694db4f381df5b62626d22fc31adce1e802658ebb4f0b35b9228a823c5c57"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-436.txt",
+      "size": 3716,
+      "sha256": "a80cbf461164993f1f295fa64f6f02e895527d8d846ade0d8c69abc4186a0a62"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-437.meta.json",
+      "size": 438,
+      "sha256": "fa7c14bee1f9b2b048c14709ccedeb907cae6a49b1558967af966c936a005132"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-437.txt",
+      "size": 3505,
+      "sha256": "749ac5389d90e966fd1767929b74f4c1525cb39f3f704f113b011e3879684de9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-438.meta.json",
+      "size": 494,
+      "sha256": "4ee36476baeb245f225cb994c528a8c20056df00c17901e5ca2afa26aa086392"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-438.txt",
+      "size": 2904,
+      "sha256": "a824dd66ccbca3356429cd72120bbae55d260bef137a7ebb2588cd21bd2f39f2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-439.meta.json",
+      "size": 852,
+      "sha256": "4fff82576afb094b22700df54bc8b275ad1c4849c9b9d6d38d0213921dbdab59"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-439.txt",
+      "size": 3451,
+      "sha256": "9e900cde8f721e8bec8d3cbed1927f5e5f6b6f2423dcfc0e70fcd9a415725ba6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-440.meta.json",
+      "size": 484,
+      "sha256": "12d413ebbaf1699b8149e2955b76e69008d37c7badfb56e1f631e4fcf89b235a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-440.txt",
+      "size": 3255,
+      "sha256": "0ee582346ba3720658fe1d327fb1b6c0534fe702ad44acbcb36de3f3b2ce21a6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-441.meta.json",
+      "size": 846,
+      "sha256": "33d445252688eaffa8a0c0397b72bcb3cd128cff0d63b65553ba5527dc03eec5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-441.txt",
+      "size": 2862,
+      "sha256": "90d08deced7c9ebb20def7d7164995c325756b62a6d539c7db5da9c13a0849a2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-442.meta.json",
+      "size": 465,
+      "sha256": "a71d028332daf295cd27da9545178f6d5014b868375d6ec07761c730a33bb256"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-442.txt",
+      "size": 2922,
+      "sha256": "96a517c4bda9d7eaa4165b0b372288db1eb9f4f4d896ba9541b5ebfb904f03ae"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-443.meta.json",
+      "size": 786,
+      "sha256": "dea60920c384e55bc287f020a2aaef6ef5024d3a89bd9ed23ff2c4655351d351"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-443.txt",
+      "size": 2023,
+      "sha256": "3d8cc128933d71c2e1e00cd7ce77841ab818e9e42d625766638a0f2262168f2b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-444.meta.json",
+      "size": 923,
+      "sha256": "c35962c6da51914e89b2215cd413a63aa268d80dd5a6832bd212f8b223146e69"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-444.txt",
+      "size": 3179,
+      "sha256": "a3a729636fb942f8818427bdfe88c38444fbbf1aadd2c7c5cb2e544e6776d32f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-445.meta.json",
+      "size": 803,
+      "sha256": "742202d0b94874181319086da4312300342ece6a25d550ca13e9f84673b76462"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-445.txt",
+      "size": 3244,
+      "sha256": "28cb5fe98ab00a3737bc85ecb02a5dc70f7e0f07b98064a598f00d8863330914"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-446.meta.json",
+      "size": 435,
+      "sha256": "9e508b92079ffe165d4617e4a40c99c7be04038234c478a1029ada463565c947"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-446.txt",
+      "size": 1550,
+      "sha256": "91e1302cd04428cd9522836ac0c850483a24474d64e7c8e1497ecce4281de547"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-447.meta.json",
+      "size": 660,
+      "sha256": "877d6d8a63eb5322b209fd5e6ba2297ea0bae47bd221437264b7fce66f093e0b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-447.txt",
+      "size": 3856,
+      "sha256": "d74ad7d1c6c309fbf05f6faaca869d256baac11b397287c08c55fb3f0e2ff7f8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-448.meta.json",
+      "size": 799,
+      "sha256": "4c701ba99d06d3fbc0b3bd5951b3cafbdb7b4c931a2ab959822a3f7bd50fee51"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-448.txt",
+      "size": 2303,
+      "sha256": "29f2c5b9338eeb73103f883c8b3603799fa658385f54658e65da194c150b80a6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-449.meta.json",
+      "size": 535,
+      "sha256": "d4035c1cf575f8aed0b311ff2dbed6feb7846bffe865110911d7eb05f31b01a8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-449.txt",
+      "size": 3636,
+      "sha256": "873be5f43e552d05c515b46d8217da89fe22233a108626c7743185cc9b7d0e16"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-450.meta.json",
+      "size": 630,
+      "sha256": "edf798f7a76fc0a1b09c7accb9c8d6189086bab3381449f0679c48d2f6a72c82"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-450.txt",
+      "size": 2080,
+      "sha256": "6c8b99c16a4da48c6b2324bf3c2682560d02bf957e7ba7e6c372775bef826db3"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-451.meta.json",
+      "size": 884,
+      "sha256": "3dee1e894f778a8bf979d56b6bb8d19812680a9b7885914cf988347ef7601a82"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-451.txt",
+      "size": 1904,
+      "sha256": "eb96c49e5cd446fceeab26834797525aee9f3a9e5aa1926678d8a38702f9e06f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-452.meta.json",
+      "size": 867,
+      "sha256": "47a585c3f6be824d25be5d18cc17e3423f4d8d5153b1d0480197f8425f560f18"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-452.txt",
+      "size": 2020,
+      "sha256": "b3b3e892b5c2fbadc6971f1e2d7a27dc3ba4458a030bb495edc69c4812f304bc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-453.meta.json",
+      "size": 606,
+      "sha256": "0662c884f9fe0b74471edbeb6b231c1994dbc7267c89787d6fa0956a03241325"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-453.txt",
+      "size": 2332,
+      "sha256": "f02fb78d64e37978281ece0ef2b5e615947403dccf166460a58f0e56e938bdf2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-454.meta.json",
+      "size": 809,
+      "sha256": "406e28130f1e8dd401a8d49d43011c2d10a89c90ab4cdd08b5f5d71b337c39ce"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-454.txt",
+      "size": 2417,
+      "sha256": "f520797a4547a346befb622bd3673b6a5c4a1dbd2ccff25a0ea85a54c52b4c48"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-455.meta.json",
+      "size": 616,
+      "sha256": "b0d2e984a1ab82c3cbe191a3282300e448d55ee92e09bd7a801437bc533ffdc9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-455.txt",
+      "size": 2662,
+      "sha256": "6445864bc0129a7c7d644efa60cd4f1a90ef39049de76081b9dc24d8d1827bcd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-456.meta.json",
+      "size": 965,
+      "sha256": "74be1c4b61d5ecb655d2573309268a6739f1fdb0f7e605d5b32264302dfcd4b4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-456.txt",
+      "size": 3301,
+      "sha256": "a3016c5785068528aeb03c14cb943ee2936ce0fcb27f1ae1e69b12df4e1769ab"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-457.meta.json",
+      "size": 802,
+      "sha256": "2145622e579da582a89df08ee985e875dba523d34ee7680a2797466fde91ac67"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-457.txt",
+      "size": 2558,
+      "sha256": "7e543a70c983622398f080ee5d2897ca3a0519cd2f89e36ca52bdd49c794bde4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-458.meta.json",
+      "size": 472,
+      "sha256": "563e6e00f20fe9067abba55ae41506f37cc44561ed57878a18e852173c60e561"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-458.txt",
+      "size": 2911,
+      "sha256": "1cb529643da2e5f05be3b13cc78dff358a4be3f22a414b1be2a7628e7ea33acc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-459.meta.json",
+      "size": 978,
+      "sha256": "d5f6498e706a762afa77dda7133e69a7e81e7f10c1ac6161060331ad237c1cd8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-459.txt",
+      "size": 3128,
+      "sha256": "0053ad6dc3036e64ab7393475a4fa9d95f4421b8c67c45c846771b36a221dd43"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-460.meta.json",
+      "size": 473,
+      "sha256": "c55346557ea671dd626cfe489c3ce1f1cf83f451f0df99b05cab309e923147b4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-460.txt",
+      "size": 2889,
+      "sha256": "6222737ac30aec2ea51efab32c6fc58c58b64620320d473695bccd8b10ebad55"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-461.meta.json",
+      "size": 622,
+      "sha256": "b6193809df40c0c52a45bad0f30252021a0c5203725efb030cbbe794ab260fb9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-461.txt",
+      "size": 3498,
+      "sha256": "57fdce09a572409c7314a2a119598ab83d13d74c2d4763a16b3b9cfac1a73bdc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-462.meta.json",
+      "size": 451,
+      "sha256": "6d7bc22de16ff0e4957e197933c177a7d314ed86797b54cfa55b6968f47e0e2d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-462.txt",
+      "size": 3462,
+      "sha256": "9ed69d897a0bd0b1f3f28ab848e99e5e8303df97768fd8493563abff66ad47ac"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-463.meta.json",
+      "size": 514,
+      "sha256": "0f7010b15b882d37f6adde4132e4bede528bb148216d19c6cfe8af23c08fd45c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-463.txt",
+      "size": 2515,
+      "sha256": "9641486bacb8a8d7af661f8a5fe046dcc2fec6a8a5316823bec0ca81c3befa54"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-464.meta.json",
+      "size": 697,
+      "sha256": "36295ef3f5c3d603e66fc0a76673b290d4a564d93f67be2004a5cd48648aaefb"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-464.txt",
+      "size": 3302,
+      "sha256": "7b4b9db456da90009349f5d85987709f22f62f37d18146583e3923cda625d2e9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-465.meta.json",
+      "size": 807,
+      "sha256": "f74c57929e28b3d8732442ea608fc4f662e2e6c0d069ff9141a49c7bc0c68746"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-465.txt",
+      "size": 2071,
+      "sha256": "e7d89837a7899fe9f97d8e51deef0678c3d25f1da16b3622460a408573a1a840"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-466.meta.json",
+      "size": 506,
+      "sha256": "2070514e23bd2514b157d74bc0b3008671dc104f4bdf863d8e8d41910e6cd471"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-466.txt",
+      "size": 2552,
+      "sha256": "32fbe9e05041f92da2781785b764239d3e92c22abe2d0ce60a5d41835640fb84"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-467.meta.json",
+      "size": 938,
+      "sha256": "1b86a390d216b0183cf496a735c9694d6b9f630da38c70814e2f7ea3aa486146"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-467.txt",
+      "size": 4045,
+      "sha256": "217f5236d14c921466855e9a8d1b1d864b26209110acb55519d3372a66ed1f4e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-488.meta.json",
+      "size": 811,
+      "sha256": "f7390a9b00a02e3feccd780debe690185518d4a281724c8853ea0e0cbdb309d7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-488.txt",
+      "size": 2699,
+      "sha256": "09b6a44a5f092069d464d48826535efe792d6d1866d188e3ddcbeb6e91fa686b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-489.meta.json",
+      "size": 768,
+      "sha256": "71d57044659608b09d07f7504c6eff3b242a638abf750f7443ca81ef0e83766e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-489.txt",
+      "size": 2935,
+      "sha256": "73cdfc7f47505220b41682bf3f389898aaab47bcc1906398790a6ce10ccd7bdc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-490.meta.json",
+      "size": 587,
+      "sha256": "064bbaac2794d59652877c74d5d48a8bb9ea86b40d43d0be435771874ec7be83"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-490.txt",
+      "size": 3342,
+      "sha256": "1439d0a1acdc01dc9f1e4ef8717abd9e47a1992cf745c9c64d4de18aa2e77c1e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-491.meta.json",
+      "size": 843,
+      "sha256": "79c27bee6a65352ef4e643d3edfa93f8ac1ce2ebd2f726dc295a5101f9a549b2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-491.txt",
+      "size": 3394,
+      "sha256": "17d4e33e23fc04a3069359f7f4e53bf8271c1f5b7f70b7988266a9ef3e726a92"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-492.meta.json",
+      "size": 526,
+      "sha256": "1082b690de08838804fa1463773814aa6b356a717a0b8c33b663fb4f8c1ab637"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-492.txt",
+      "size": 3832,
+      "sha256": "65518826d901ad0420e5fb3b2ad8c7e21aa5cf65ef466c17c497d3e7f3cc500e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-493.meta.json",
+      "size": 506,
+      "sha256": "0b64fab49d6e86b2218b1635152158f9e3f934579a92a68142743743ec5e615b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-493.txt",
+      "size": 2355,
+      "sha256": "fc0e6dfcf3888047707b6997c105480e3e7e564705a31024c98de69c90ea72e5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-494.meta.json",
+      "size": 533,
+      "sha256": "94d5fddd6b2d4ee40defc11fae8042478280ddf6b6af92df21d57ff467437ce6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-494.txt",
+      "size": 3122,
+      "sha256": "5ee67c1af8fa787de1c6c290545662548a0b19acdca5df0bc1eb8d7376ea9018"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-495.meta.json",
+      "size": 664,
+      "sha256": "eebcf5aacaaebb83ecfb19eaf6c80091f5c8bf825b6bb781b04bc21bc2035fd6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-495.txt",
+      "size": 1935,
+      "sha256": "3930084a37e6f824f5bfeb1ecfcca1ba6de30a87b604a89e5e79629e93058a17"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-496.meta.json",
+      "size": 812,
+      "sha256": "23025944f550c876782ea50272c2ba36e560f58390f2c315a8d561dd6020393f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-496.txt",
+      "size": 3675,
+      "sha256": "55c08167d5471afd118ad72e28c16637c5c5da3ddc3e2fbebaf2fa6018b9705b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-497.meta.json",
+      "size": 820,
+      "sha256": "62564396d951e7b038d0ef288eecad98c3627a52a24231f58503429994089309"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-497.txt",
+      "size": 2957,
+      "sha256": "d888d8941511f10a3ebbb01aa62a47929f42681b2fddd650ae728952961d3098"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-498.meta.json",
+      "size": 687,
+      "sha256": "72f3e56a184d4d7971281ac88bd903a1d4b8aef44e295ba9569fa659c3259921"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-498.txt",
+      "size": 2848,
+      "sha256": "db2f1618ddc96947c6aa9625d4b59dde0a9371229dd89a7f2f03fac88a9ef36a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-499.meta.json",
+      "size": 704,
+      "sha256": "8d670aeb664f1b9bbd14a6eb8fe4082f305b228e5a21630559471d2da67ecd5e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-499.txt",
+      "size": 1940,
+      "sha256": "cd24cdb4d0fc1f37a827f971cad00e98d4c0e6b6db0225e547e55727f60ab9f9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-500.meta.json",
+      "size": 717,
+      "sha256": "cac3cfa62163c464303dc721fb5c47e6b2a838875743989b3e8c50a2c803b25d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-500.txt",
+      "size": 2806,
+      "sha256": "6e9fc001941e92aa426105affc0ac3f8daa2d50d892389e4d27d650e689975a8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-501.meta.json",
+      "size": 881,
+      "sha256": "6fb869e2d5d6b17f7721172d21ce30fca5b9ae7183b785fe5a3c8a3a8ca93b8a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-501.txt",
+      "size": 2757,
+      "sha256": "345ba8973666ff7d03485a1bdfbe685f1d427110a713dff8f92a3e42f51dbc73"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-502.meta.json",
+      "size": 477,
+      "sha256": "2ece1bc0f4963228732116993dfc20ded05053d8dddcf9579049d2616e3e7df4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-502.txt",
+      "size": 1263,
+      "sha256": "37c6621a52ca093020d40b18f4e58944e14a57c0efd8c92f66f634a5459e0d89"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-503.meta.json",
+      "size": 708,
+      "sha256": "9761d6050ba562d9e06a6fa78444455ca49be0118af48913ddd6d61c1384c9a9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-503.txt",
+      "size": 3269,
+      "sha256": "fb7daff5c3c11d29cd4187980c4c0fd1a9b50542c3e84fb25dcaccd9ada62992"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-504.meta.json",
+      "size": 475,
+      "sha256": "ab270763e8eed19ee2a5ab740a93caa650c87b0d2604a4b0126d45f38e2f2a56"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-504.txt",
+      "size": 2803,
+      "sha256": "4f9c2f2c972050364a099c523cfd2e9654d526fa450f33519810b9f393079d9d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-505.meta.json",
+      "size": 793,
+      "sha256": "32da9d7b18a07ecef0dbe3e8f7615958b5a6f6642580c488ece77715315d9f00"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-505.txt",
+      "size": 2701,
+      "sha256": "6d9ce1b545b5bd6e47035aadebd8715590d8b761a672f3680e14bc74cbae8eba"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-506.meta.json",
+      "size": 725,
+      "sha256": "f1395e6367a10ed6c54a81d418371b167c92f893fa0690c3fd3c20afe409df53"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-506.txt",
+      "size": 2359,
+      "sha256": "c9462c5153ab02629038696ab9edde9da0b7a667b4587314eab87af32ccab596"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-507.meta.json",
+      "size": 583,
+      "sha256": "b2dcf8461b67a61eccca8072f96747ae6a1fadf8994fc727a09499aaef41251e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-507.txt",
+      "size": 2653,
+      "sha256": "a153eb1363b299a65688313081b30099cf944d34c0db175653ba8c8910d401d9"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-508.meta.json",
+      "size": 591,
+      "sha256": "02088da196462f9677b86cf2dfb038f304f595d5e2bb1401030a65b3406fd703"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-508.txt",
+      "size": 2962,
+      "sha256": "378420956054734dd01e5fe7af00c82717351487612fdf3ea2a00b9e07dfc03d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-509.meta.json",
+      "size": 666,
+      "sha256": "fd2dbd26acc967881c1f09ac9df3f801f7f9bad9d7dda1109a2b07a447e16f7b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-509.txt",
+      "size": 4217,
+      "sha256": "cd4c6a491660cf0b36a4144293888a7cd920a6b2b7dc683a378c32717e870b8e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-510.meta.json",
+      "size": 920,
+      "sha256": "67926379fee2c9a942978efdf425aab333635ec09202e5da4f3834a0e8647ba1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-510.txt",
+      "size": 3447,
+      "sha256": "27ac057bcc74d10f57093711eec30ba4c166ab683ee68b2480dbd520feb93b2b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-511.meta.json",
+      "size": 757,
+      "sha256": "c2dc0c11327963f9653a98a2b8af04acdfc47f97706a8165af740bdb942c6d9c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-511.txt",
+      "size": 3241,
+      "sha256": "34ac496833cef73ea0c40ef4d7e7d24ffc48e5847e013991b0c48dd783340edd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-512.meta.json",
+      "size": 852,
+      "sha256": "193a8c5a6ba0dc26aff10bf824460be1e66b9e27e9be81e8f0938b100d050943"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-512.txt",
+      "size": 2163,
+      "sha256": "b3281c49086598502fdf161d4e620d5b6ae6b4e7aeb961d9a7e48ba4ada9fbf7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-513.meta.json",
+      "size": 740,
+      "sha256": "b5ff5649e5b54de7e310a808fc353c21f0f5dc07c811ee67c5862ecfeba6a1d3"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-513.txt",
+      "size": 3687,
+      "sha256": "4e366075ad040dfc2c81e551557089d17f621a408f0fb9535acae5b50479bb2a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-514.meta.json",
+      "size": 968,
+      "sha256": "666a50871c8221674b796dc13dc30ef14d6c77bb919d9eef1a2fca193e688f20"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-514.txt",
+      "size": 2677,
+      "sha256": "dd034e9f9ee29dfdfe8981b29f06d3dc59e079e6bf9a9a09e753d8a1118020a7"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-515.meta.json",
+      "size": 1057,
+      "sha256": "fcadf8430a4d2d64f4fc0edc91bc3ff22eaf757f6656b6e585c38a4d8395aac5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-515.txt",
+      "size": 3321,
+      "sha256": "a18923a38761ef00edcac3fbea6dd3529f7848be788426a45de1b8100e1b7101"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-516.meta.json",
+      "size": 873,
+      "sha256": "4cc994f1a71fecccd00225258c095743909cf7f56034b32c0f425818cbc23516"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-516.txt",
+      "size": 1809,
+      "sha256": "18b2f444dec8faa8ffc3d249acce6a9915a2105819ef1ce0b4329d7829e06c10"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-517.meta.json",
+      "size": 690,
+      "sha256": "9f8c3c9aef7f180a2e7c39c0a9e66b7c6b1db72ec8b87e22c341fd82860437d1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-517.txt",
+      "size": 2142,
+      "sha256": "caf50dc43d16c6acd298e96efe039f6c1f6e501a81b859139fdd2337088f61cc"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-518.meta.json",
+      "size": 774,
+      "sha256": "ceea39e9f19ceef9813a4941e6ca3534d9ce16ae93265d9f69466f6312ff359f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-518.txt",
+      "size": 3227,
+      "sha256": "a2fe127a7cef92067b481f61df6621fd860240c4e6cfd248731b16a88e5ba0e6"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-519.meta.json",
+      "size": 898,
+      "sha256": "1aade50fe2febca5660e06af246d8ae7c46a1429400306847b28cfc0e88469e2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-519.txt",
+      "size": 2278,
+      "sha256": "fc5c17dbc88d45c7f6ecea6b2bbf15644b5dd2a6b1f16bdb551c54bc77a83996"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-520.meta.json",
+      "size": 796,
+      "sha256": "7b53bf984503c320032ab75777fdea910b9741621a78b7ef6ad67500967acf56"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-520.txt",
+      "size": 3138,
+      "sha256": "393213793f7e611dc7af057b4aaeed10272ef732454ebc22ce8481575047cd04"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-521.meta.json",
+      "size": 853,
+      "sha256": "6598b387dee27bf5d09003aeaa5ef197f4fd978ba5e87e8be6fc01b746e7ad58"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-521.txt",
+      "size": 3516,
+      "sha256": "6366ee5f2435dcd1e7e4c3ee2ae64bab4837b64fccef4ddfd600d022ff59bd90"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-522.meta.json",
+      "size": 749,
+      "sha256": "2c37bd00ee8d94920e98b93351c957d855653ca8a51f323dde6c672f44225685"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-522.txt",
+      "size": 3066,
+      "sha256": "0c519fbbd4b6de6c832e662a74631f616aaaa47f3dfb401deabb61b88d8e5bbd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-523.meta.json",
+      "size": 593,
+      "sha256": "0a97c37a6bda6d5b23abb32669848f0fca58fd451daa961892b1fa051906e0de"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-523.txt",
+      "size": 2368,
+      "sha256": "1fbae78ee48ea1402730b30fa4fd0a9123af587873b1e02464d4e865d43641b1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-524.meta.json",
+      "size": 604,
+      "sha256": "2cded942f5ff1645f31a89c4750ee62f0d31b77ba1b4bd9e304963b70bd73732"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-524.txt",
+      "size": 2495,
+      "sha256": "1550cb3eddb388ac7497ce3e906c6bf25b86d8b9fc5388233253dc356339d509"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-525.meta.json",
+      "size": 848,
+      "sha256": "62a0e1bed89115b56dd04d7fa6f08029124675dd5653641693d738dfbab6047e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-525.txt",
+      "size": 3117,
+      "sha256": "4cfe5c5abb6a03b7f5e3f32960f7968ae77ef5f8fb0e31f65997beea805a358b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-526.meta.json",
+      "size": 981,
+      "sha256": "a2a308c601ba88740bed6cde00e1986443c3fc31f36c5dcfa5ec6306577fd25f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-526.txt",
+      "size": 3654,
+      "sha256": "06b9bc86768b4e0136e9fce92723fd5e08f157a63b0cc10299f9d4d2317afc84"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-527.meta.json",
+      "size": 1119,
+      "sha256": "256bda3a2344c3ae8574dc42da871d5bd5e6e69af194670d2c70c98647b30c6d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-527.txt",
+      "size": 3601,
+      "sha256": "8a5ef2503109f30af45edff7461d9c8da399c04de672b0efba8321872a87cbfa"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-528.meta.json",
+      "size": 810,
+      "sha256": "f4fc446e9223cb4eaa5a8877c95d6061d7f6c5dc41fd62fd9b2d84b187fba2ed"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-528.txt",
+      "size": 2611,
+      "sha256": "ed12060060fec9d25610394b9cb29ed14b95c30ea9704611fa28fd37c5c87c78"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-529.meta.json",
+      "size": 850,
+      "sha256": "672a09cc7e52570231ca574363cffa3fb553b0c5cc25605ecd8706db2022c9aa"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-529.txt",
+      "size": 1920,
+      "sha256": "4c41f286cbe7e7fb6bdabb6ee225f74b34559851abcd3651e8fc8a1717a41734"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-530.meta.json",
+      "size": 611,
+      "sha256": "44d9936b3623a065e7dbfa710ad4bd8cc3d0cdd435fb8092a5ee654d117a5c53"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-530.txt",
+      "size": 2306,
+      "sha256": "cbab2e6ec52c7c81940bf24453975f64d9d8e6da97a3ffe8d16697a8c0feee6f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-531.meta.json",
+      "size": 687,
+      "sha256": "09d7478e61837fa6ff38340f8414e90cab810250891bdcd79988d0544a99c749"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-531.txt",
+      "size": 2355,
+      "sha256": "bdf865912a026ed900152ed1c6f23669d0f0e252f65a258247ff5ef5f0bde651"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-532.meta.json",
+      "size": 1031,
+      "sha256": "da950aa604ef635943260051c542f0776fef787ff429cde771414c2fec8a7a5f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-532.txt",
+      "size": 2448,
+      "sha256": "57d1bf8e08435674e534e61b91c71a35d12ff50462348b5272ba1bb33a5499eb"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-533.meta.json",
+      "size": 1003,
+      "sha256": "d7609a003b9cc83467e19b0ff15c41588e5bd12013a77ce7c24c255572adceeb"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-533.txt",
+      "size": 3186,
+      "sha256": "506d66fcb4cfd6011efa20d3bff9005489bd1e56d263d1f37d56cfb4949344d5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-534.meta.json",
+      "size": 503,
+      "sha256": "3ed88f9c7296944ac7a59cb7ec9e13d5c891890365237273247d5690ac722642"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-534.txt",
+      "size": 2901,
+      "sha256": "08875db04d4bbd155d01985b53746cfa74e17cc303b63312c76176cbf9d93638"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-535.meta.json",
+      "size": 932,
+      "sha256": "f1276fb75c491132b2eacf011e86fa0e75ba295bd9e2b515139fd4639a7215e2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-535.txt",
+      "size": 3696,
+      "sha256": "9708190eb648a4fa696d7deef6bdc77f65f220c61f116bed72790a8d0016d0f1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-536.meta.json",
+      "size": 940,
+      "sha256": "e9f1e159366a57463b7efdf33c0e3f3abf7be382988ee8471ebf8a22554943d8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-536.txt",
+      "size": 2835,
+      "sha256": "6dc43f85b458d9c9472d57f767bbb390efac3cc4ee2684baefac842acce08d1b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-537.meta.json",
+      "size": 983,
+      "sha256": "f3d82fbf1063fc780870b24941b4a2c4c741993f03a3b84ad6949bc2358e8868"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-537.txt",
+      "size": 3997,
+      "sha256": "8748fb240dbf6291b757ede6c2ae58032b76530f73641ad4bb3be616d042e642"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-538.meta.json",
+      "size": 850,
+      "sha256": "3d782ca9f17437c3dbd4bad7ab5fb929ccd5286ac8244fc7182213950b048975"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-538.txt",
+      "size": 2788,
+      "sha256": "1ed0010069ede2aaaa85c4d38e062d999e3b036c8ce59475950cc23132078de8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-539.meta.json",
+      "size": 559,
+      "sha256": "1befb2ca6f005bfad0877660b744d6eb64d3d89eb727b2651beee06b78feb18a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-539.txt",
+      "size": 3385,
+      "sha256": "b627b44844043122abe05a84aacad82e761ae36ebf877d6d21e031c1beaefd6a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-540.meta.json",
+      "size": 798,
+      "sha256": "aa1933661772139c9529564e92aeca69393567cf27697eddfda084e842c6f45d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-540.txt",
+      "size": 4308,
+      "sha256": "68c175518ac187f6d432289d2a4532db464a71a75c5a4ff52f600ff9f2be0592"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-541.meta.json",
+      "size": 574,
+      "sha256": "025442d3c365ab5d9f33aa4983db9dd7bdcc43b1d5b82cbf830306297015c81f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-541.txt",
+      "size": 2256,
+      "sha256": "f412b72a6058aa2eed9dfb009c9e7efad8ac4952828959bc9a99eef3c970a025"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-542.meta.json",
+      "size": 820,
+      "sha256": "3729ddf4b971c7cff14456168fb665dfccf175f893c622080b942c4255233740"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-542.txt",
+      "size": 3816,
+      "sha256": "a2eab91d226433dd9d258d6f7b3eec89a060b108ff8c5f3515d341b12f96a30a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-543.meta.json",
+      "size": 910,
+      "sha256": "eb2b13d85420d4c5adc52d1ec38f53b1676df903ec48749bb13c85228d1a1ac1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-543.txt",
+      "size": 2807,
+      "sha256": "4048926f688664c6fdfde90810628c4ef8a5783d7a71810b9b8057fcd59ad20e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-544.meta.json",
+      "size": 791,
+      "sha256": "d033cdbc42a81f5ab94f5c507da006c7eea52164b1201ed6f12eb99d59edddf0"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-544.txt",
+      "size": 2249,
+      "sha256": "287aded79c2e222a764d68ce893343fe343bdd8c74322dc59fb8ad5694ebbd81"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-545.meta.json",
+      "size": 919,
+      "sha256": "a7213e2ac1e0166564c3b02c99ab7f4b715d59593701c45d3cee67e885bd2585"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-545.txt",
+      "size": 2686,
+      "sha256": "ef22bb80269595cc382670ed1bc6c718433daa16c396a37ba40c4a492209e4ee"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-546.meta.json",
+      "size": 494,
+      "sha256": "034370b2427533f38cda866adc2e12270d78c93de21212d44fbcd273f37ac45d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-546.txt",
+      "size": 1639,
+      "sha256": "fd04379f27a12cb2dc503e8ed417514e39d39c9570cb054cbc1be615349b9546"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-547.meta.json",
+      "size": 800,
+      "sha256": "5a2b31b7f581bd11776ab0b7e5e99bf720b3b5eb648c30dd62c0edbeefa6340f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-547.txt",
+      "size": 2248,
+      "sha256": "6fe11726657df9a7ead9c42c351c20dad547876c508b1c6129b2b8543fea502b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-548.meta.json",
+      "size": 738,
+      "sha256": "9fc53bd21be42a28d94505b1f91641496af2d04359372c9a8ad156d3936ea10d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-548.txt",
+      "size": 3766,
+      "sha256": "23d568f34d6aa08a6b1eee2af482b92c4890ea541f60f1e97cd170b1c878937e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-549.meta.json",
+      "size": 897,
+      "sha256": "21c2fe0353481eaf055f652a3e43b0465c50705c9708d5a33b0cadd1f3119491"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-549.txt",
+      "size": 3539,
+      "sha256": "c79a04e242782c04190f729060756b2d9b853eb98ebb08437790f2505ec8cd10"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-550.meta.json",
+      "size": 635,
+      "sha256": "5f407cc78d1ae644de3b8e17fbc5b7a21f9563f184e36eb60b9c67a55f06763a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-550.txt",
+      "size": 3800,
+      "sha256": "e62916835bc4379a725d15ba1d7695f1a2799ab2f31a3a56a6e606d82d6d5c55"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-551.meta.json",
+      "size": 734,
+      "sha256": "7167e89317a6858eb2fc92b18452e8707ec3d6ed52309aad27daec436e9b486b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-551.txt",
+      "size": 3194,
+      "sha256": "e68836a5af8bbfe55a5519294c54867d33bda6c66afb6a3ee430a1eff1d1fd4f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-552.meta.json",
+      "size": 438,
+      "sha256": "67b6580fd7cfcd25eb0c1ff414dda294b58cc822f1b4050a8b43a95169bedd4b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-552.txt",
+      "size": 1667,
+      "sha256": "5c42755923035fbdde300fdc35227a73f504a49abf1191f58d3804408bff16ff"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-553.meta.json",
+      "size": 815,
+      "sha256": "f0758e5e6fb62d2929a38171f7ab5eb52431a57ea148bf265019bd6ed13a3331"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-553.txt",
+      "size": 2981,
+      "sha256": "5a740d2e58e22865d026d2b613d212a283c910079d55df0572cb3d6f7a19dd28"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-554.meta.json",
+      "size": 666,
+      "sha256": "1eefbe0d57501ae3e1f588a3baa3eba02fa890d9d5cb3c939ebfbbc14cd889b2"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-554.txt",
+      "size": 3658,
+      "sha256": "92222bd7ecd71451a326a924c8e43c78705e1d65da64601e96cedb44f3f7ecdf"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-555.meta.json",
+      "size": 579,
+      "sha256": "5ae4c66f13a9b9f62b65582484b05bdf0c4d2bc8ec889cf2b34deac8fc0aecfa"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-555.txt",
+      "size": 2944,
+      "sha256": "50b57e82348fa199093c75e4ed16caab761a6f961784572aa338ff3adf8bc535"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-556.meta.json",
+      "size": 771,
+      "sha256": "b9989adc4bdf0b47cf5f0bd60254afba91643bc2b7510262670760f3da414df3"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-556.txt",
+      "size": 3361,
+      "sha256": "42e8bad2b0bc8a6f95ac2a12c389fe715783c698a56caba205ad25bd5f8c5284"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-557.meta.json",
+      "size": 516,
+      "sha256": "e41fe0ac669d726ef7def6ba344753c56d39c46d772caac9bfd019bde82139f4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-557.txt",
+      "size": 1788,
+      "sha256": "fd532ebd434207788b4679f41c0009235e563b00f519d96ad7d8f4c203fe0281"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-558.meta.json",
+      "size": 761,
+      "sha256": "401038b01c69dd1340a7b1a22578f31740d5dd872aa777f035ff8705dff94704"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-558.txt",
+      "size": 1895,
+      "sha256": "b1eeea2d6008a1280badbba28e36cce9a1842fc1050a06216294d792efbb4490"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-559.meta.json",
+      "size": 641,
+      "sha256": "6cdc7fe379f4f734c9a03239882bdd11486642077406e15d18d81148764841bf"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-559.txt",
+      "size": 2138,
+      "sha256": "a0b69fca50228e99cf736c54787eeda0373b68b1ebe276cbe7c52b2542d6d0f4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-560.meta.json",
+      "size": 840,
+      "sha256": "02cf79a6bd8552a7f325b3a9ac8f053e46b98b3e9206156f13c20abf43b82436"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-560.txt",
+      "size": 2091,
+      "sha256": "ca0f3c5a73aef08d8f9619772bff330d8b0f46311c4e1b65fbc30e7433422e29"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-561.meta.json",
+      "size": 673,
+      "sha256": "86bdd2462f2ddcb8cdca295b491278629387f51830768b9651858187695ce78a"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-561.txt",
+      "size": 2423,
+      "sha256": "ed1a84598a579a60c09464cfdd602c2f8063a77885d7cb0791a773e2c12ba9db"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-562.meta.json",
+      "size": 667,
+      "sha256": "2949b7ff6e3b894e407fccc3c50e42a94a7769d5a3e83343633678921c485d41"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-562.txt",
+      "size": 2979,
+      "sha256": "e0d794c64bb714db9cf0a6335c1b408ac7c20f9d1ff4eac6e4cb66b4386eac17"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-563.meta.json",
+      "size": 822,
+      "sha256": "ad00f87c4cdda4b0621f9df6953ff066804a031688cd75502dd1e8cf381a5951"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-563.txt",
+      "size": 3165,
+      "sha256": "c58f2555e53f298797e9f87eaae33ed268c874567e62b8c8ee90726bdc309cac"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-564.meta.json",
+      "size": 515,
+      "sha256": "50a2bc8ab52ae0018d03741261466b4819481457142efd4632e985ffacf0a84d"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-564.txt",
+      "size": 2212,
+      "sha256": "d784292cc2be1c6a97e70614951a16044bc4618d25764dd84b2085e586421460"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-565.meta.json",
+      "size": 533,
+      "sha256": "2d33aabf976d6abe2a1bbe78850527276ce3b26d84b86f1ad6a7b4153859fd10"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-565.txt",
+      "size": 3722,
+      "sha256": "a04d72f4b9fe51c6088ec6b68a7763908d0020603ea097f85f90bbe87dd433bd"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-566.meta.json",
+      "size": 881,
+      "sha256": "98e00c7d6722b270cb3663a84ad4a8c4f6aaf8da5a2152bf6c912c2a239fa5ba"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-566.txt",
+      "size": 3579,
+      "sha256": "a44b184503b7decc1b357cde0a2ee36b38e34c629d711fad0c47a97269469844"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-567.meta.json",
+      "size": 866,
+      "sha256": "6836326e871af888e328fca0138a6588967199a19721b2185a96df51fb0cb119"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-567.txt",
+      "size": 3283,
+      "sha256": "93c6d30ab63a1c71bb03d66190ff6dae7f7ffeda357829b582373a49aef62a7b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-568.meta.json",
+      "size": 1009,
+      "sha256": "80cb7808c68ff078dabfb491c34df6958d598d528215ce9239fbef4bbb94ff88"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-568.txt",
+      "size": 4012,
+      "sha256": "85f4b6116a32471bb6e370f0234c58da191e9265a8f18bb8ce4517f86c2656b1"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-569.meta.json",
+      "size": 922,
+      "sha256": "18377b7d821b2cbed17fc99481d39c0b7c54d9ebc1799c88b420c7ad3b19996e"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-569.txt",
+      "size": 3726,
+      "sha256": "3b5ab764c2baf62fa17a1d7e91ee35d0c820265a5adddbd1727a3a783a00b986"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-570.meta.json",
+      "size": 966,
+      "sha256": "54336db49cda63ec5eeb08c30f6517a1e56556afff10f37718bcef543d0acdec"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-570.txt",
+      "size": 2713,
+      "sha256": "cb939de96c2e8ddb792a7133e23ab89eb60efc0f0f9a32747185450593dc25e4"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-571.meta.json",
+      "size": 969,
+      "sha256": "d797b2edc261ea9eeb96f3220eeda10d49660869b231625158315b0139ab0cb8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-571.txt",
+      "size": 2744,
+      "sha256": "ed50154ea19fff24a27aeb801bf60ade1c837d98fec6cc4ddf47dea9f9ecfaa8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-572.meta.json",
+      "size": 676,
+      "sha256": "95b2aa849eb4e7f87f4b3fd4f8c31b7daf3da8bb759bd000dc1e21d2cd28a262"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-572.txt",
+      "size": 3322,
+      "sha256": "3e54cb4c8116d9afe0c7422e66a89b64ba20961340e24ee8abf00a932ae977f5"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-573.meta.json",
+      "size": 487,
+      "sha256": "8f4822cdbfebe62e8fca2690bc52dd56876c723c768bc4168cad517158e3656b"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-573.txt",
+      "size": 2366,
+      "sha256": "380e6218b9596401eb64d1a8879ccf561b768b21e950d1bf19d1c9068a0d5a2f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-574.meta.json",
+      "size": 522,
+      "sha256": "621ba8de66986e4bf490a6ac095fc7aea842d610686712d2c9d40cf3cafbd52f"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-574.txt",
+      "size": 2182,
+      "sha256": "a2cc2175347560850fdfd120f19071f8ffa138b6c3966be63ef93fd47d647cd8"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-575.meta.json",
+      "size": 934,
+      "sha256": "fba0e6a6b230df74d6026f89a26f2686c9d196d8e8dd7a1c4b84dfb1b5a1ae9c"
+    },
+    {
+      "path": "workspace/materials/new-book-ocr/page-575.txt",
+      "size": 4034,
+      "sha256": "bc71b4e0aca0b66a8fcf2ee277b2c69084fa8de80d8581b38ac478a716d35647"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-330.png",
+      "size": 357273,
+      "sha256": "f600e12a32054ba31cf3b3cce05cd26db3a9fd2401925206efa16c3e776eb305"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-331.png",
+      "size": 285741,
+      "sha256": "97d7276fcce30104929f14e099cb3b6f8aa485058dc14c78ea8510f17986d0ae"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-332.png",
+      "size": 233517,
+      "sha256": "660d87a5c4bc0edfe2495fbb84b395c9db5516d060035f83bad0c266c4be6b05"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-333.png",
+      "size": 413809,
+      "sha256": "a2a92edbfc1860ee9d4393d96f503d5c4526c2ee41765c5748799914e20361bc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-334.png",
+      "size": 158853,
+      "sha256": "b103b42b23bb60887b0659534e2afe4b890c83d9c9660391061f6608d4a48bc2"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-335.png",
+      "size": 438244,
+      "sha256": "20a1ca3595e6809b50e08162c1806dfaab394ca6d50442e2e399382fa720cc84"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-336.png",
+      "size": 305611,
+      "sha256": "97f8cb8f29f8c9d5f8b307abcb5aeef251da13aebd9edec8abb67cf9ecc02e1b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-337.png",
+      "size": 230586,
+      "sha256": "8cf7d6baca2075d2975037aa757bb4127dd6b7361727cbc9dc9c9c1ef7b61713"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-338.png",
+      "size": 338220,
+      "sha256": "98309488fdea3e6662648de551599169f5f66476c017590e1a67922bb0e2a579"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-339.png",
+      "size": 262908,
+      "sha256": "92ee728f00f23cd7204ab20df061d1d5becc1a169dc0775a94029ca6924fde6c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-340.png",
+      "size": 175104,
+      "sha256": "2d2af5604d37707f06f06a6a3236066bf5edf15181be21add7fcb266ca23fd87"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-341.png",
+      "size": 274781,
+      "sha256": "8cb1790a0aebf074c9777aa1e57d806cab3f7df56ad711f33e30f0c4132ee935"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-342.png",
+      "size": 239174,
+      "sha256": "20006e84ee00e2abbbdc147afb861e6e5c83509f41298cf2731f684414f8c80d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-343.png",
+      "size": 296030,
+      "sha256": "475f8c67fbb7adcad63a3ccc5e46004ee4212ced8017a1054d29841cb197891c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-344.png",
+      "size": 214864,
+      "sha256": "0ff5257f38d4b5bc98b1b83a6df18849e778311057dfedb6f2d785a4ccd4b049"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-345.png",
+      "size": 267430,
+      "sha256": "f0c9a4bbb765e42455d8fbe026444aa6ea898b5e0c4b31ae675693400725d3f8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-346.png",
+      "size": 271955,
+      "sha256": "7d93e3c144484fb6e9d33defcdf14e26d709727bb2781458b134cd5fbed4e33a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-347.png",
+      "size": 779233,
+      "sha256": "0f6c7a299620ba267ac334c15e72fd24524b71e86a65b6777ec716e9a3cefb71"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-348.png",
+      "size": 470329,
+      "sha256": "e259ac3d622bf76e2ee142330b70d54caad622ad2db6ac784212a6d4ef3f6ac8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-349.png",
+      "size": 346895,
+      "sha256": "3d9a439ffb2c1eba35b3011ae069d09daf643861641bc7f8061a28b2d0623951"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-350.png",
+      "size": 293965,
+      "sha256": "6bd5b07d9728a8513e8d1091fae906bf00ef5b3aad79498b72427188a69fa01f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-351.png",
+      "size": 206047,
+      "sha256": "6833cbb9b3428fe95ecb43940f488bee11f09a1495436604def2188147c12a93"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-352.png",
+      "size": 168866,
+      "sha256": "f400ecb4092561c33333e5eeea0cc54f9fcef779ee1acc4edae7d892c52c264c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-353.png",
+      "size": 212775,
+      "sha256": "79048a1bc5f81eaa92d3036f103061ae67cda9af8d257a672d287df1740f4cfb"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-354.png",
+      "size": 217957,
+      "sha256": "90e3ac19d046c0fd20b2e6e2a126d86f3e9168ed1804b1022ac84589b9b8f010"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-355.png",
+      "size": 155793,
+      "sha256": "4555ef610acd931eeb649aaf8765d4635f607ea921e78cbef0b3cfbb9ed4b779"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-356.png",
+      "size": 190107,
+      "sha256": "b4f54136e351ba078bbc0662905905b9840d685550223cbb1fdde43a1dc58613"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-357.png",
+      "size": 254124,
+      "sha256": "f3b8a8e779bd956652ff82be9958a71de223082932f7d6dd691a8f9971860332"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-358.png",
+      "size": 246459,
+      "sha256": "994da5e8e1984b5e8bc5ffafaf265a96aaacf2a9ab9522214da1f05802701071"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-359.png",
+      "size": 315307,
+      "sha256": "8e35d627497caacc466447b80541edc4f7e05747b1b54f6365fc26a7b00f93c0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-360.png",
+      "size": 286514,
+      "sha256": "bc620cff2d6fbe38a03cef68e7dd056a7d3f00f17e27261e062e9d3b20697556"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-361.png",
+      "size": 264479,
+      "sha256": "547d92e0c262e4f7b171c6be5e48a48b4b9f1c3dd2f52db140f121aed4cb8bcd"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-362.png",
+      "size": 226914,
+      "sha256": "d00f0b67da3f48cf77a6b8e1dba6f3f030fc5cd9547fd448eba94e31e5a975b1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-363.png",
+      "size": 365938,
+      "sha256": "d938e834c34b91125d40c0202f94519da2f7226895df08985b831a9594a4e0cc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-364.png",
+      "size": 352194,
+      "sha256": "abb4288534665bab1b8e94be00a5ac00571ae2e899e4c3921ddb28928b4fb01d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-365.png",
+      "size": 182519,
+      "sha256": "6221ae6e9f2d51b4e884951041da97408e0973585033da2376b3c5997df6bcdc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-366.png",
+      "size": 269827,
+      "sha256": "3b5ac08740faeadf2c5995608e9b56f7c6fb4fb869875555cc79f9c07fde0946"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-367.png",
+      "size": 294826,
+      "sha256": "765176942eab77f4b1a4b0c5ca3bd75b35b59d58e53df6c6e5843e90ced50be1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-368.png",
+      "size": 383633,
+      "sha256": "b2cde103eb5d124e1b9f0ee66deba0828e455671ea5f18aa327e1e8660969425"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-369.png",
+      "size": 220978,
+      "sha256": "e5e2b64acc2be9297264b4cd7c2ff3bede2e22b2bfeef7b5f0f8321c36ad5e7a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-370.png",
+      "size": 209692,
+      "sha256": "a9140452e4ec3c16b8ff29934d8737db2d7c69e1c8fb9e9928f15b6df4d8a869"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-371.png",
+      "size": 417779,
+      "sha256": "24e36f8bdb147f08b188466d05b1bed70d1104946dd29feb89a23091fecd676e"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-372.png",
+      "size": 324062,
+      "sha256": "ea2410afe4956e35e84302948c3bb41120391801efc18c9ae1fe137d23d8aba3"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-373.png",
+      "size": 395047,
+      "sha256": "40cea6933c8c6466bf91050b241271f8ebe1135d92e89acbb78544e9740f0981"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-374.png",
+      "size": 339332,
+      "sha256": "49f80f148d45d431dd5c83e141fb42421c65ece19c94da2d27039f9232b6b498"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-375.png",
+      "size": 273843,
+      "sha256": "855942213f18222b6c0fdcd5b94cf89ce6dff8f339aa40800fa076857ee9185e"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-376.png",
+      "size": 234657,
+      "sha256": "41705a306c9c93ec1d2f6fffdafcfc8d217f73d5fe117eb2a1660f9841a6df70"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-377.png",
+      "size": 356995,
+      "sha256": "3d0bff4451371dad249b0343e1be56411502bef99041a4f29289a23dca1b67bb"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-378.png",
+      "size": 228087,
+      "sha256": "783b0457fc24c8eeffcee3a0eecbf558ce1326b623c52e8453d1c5933c4e8776"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-379.png",
+      "size": 263847,
+      "sha256": "b755391d2919f2f5ed5b7e6ad404ed71e8751f8fab57d43da86c61c766b3e1cd"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-380.png",
+      "size": 259202,
+      "sha256": "f42c19aac4734862aaab2e526e0c6ec2c47eb5b24eefc7f5fe0b294acb79bff1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-381.png",
+      "size": 210672,
+      "sha256": "d94116d7a9001c5adfb458317be8d33014d0182e8f6b7fb60744ca46382fb280"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-382.png",
+      "size": 362057,
+      "sha256": "61fe313d2d16ba756a6702f6d3ce53002f27ef5ae8923fc3ca2f589d10e031c9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-383.png",
+      "size": 160244,
+      "sha256": "74f62ea990e984744cd578986b809b95a0f5d38d5fee5bd046e9c5a613600d28"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-384.png",
+      "size": 223087,
+      "sha256": "b9480c11393232d8096bf1867899963fcff19e8816281c903ad5981454ab7ee9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-385.png",
+      "size": 191545,
+      "sha256": "8d2d8cdc28048bd368e9ea14ebf448b179cf109aea83f3fcfa4a4b6422260722"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-386.png",
+      "size": 245890,
+      "sha256": "b5630690ff63fe4b026757ddc7fd396bd045e6e6526a4a1cf68c4c155acc2401"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-387.png",
+      "size": 378350,
+      "sha256": "158be5eb202b6c52cea169fb6176c31cc86b357b722b4d14d98b205f6647ac8f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-388.png",
+      "size": 242989,
+      "sha256": "7f0af1b376363241c6b98d184e37b7acd35d7457bfb8756a205dcdc1f34995d9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-389.png",
+      "size": 257674,
+      "sha256": "89b2c47011604810aa4320ae44ae90aa0ced5817bde6d622f0d40b6557c4d7b6"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-390.png",
+      "size": 394375,
+      "sha256": "152b8b081c3bba2d520fbaf44ed7fe8ce4089434311e1fe3f2ce62723576ac87"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-391.png",
+      "size": 343124,
+      "sha256": "399a45fddf0d361d1ee7760cc96c7f0daca814a031687e2912dbbc85cd98392a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-392.png",
+      "size": 273768,
+      "sha256": "21f8fbfa150f13e99041f7e2db7623ef9f23e42949dc1e4b8b7d69eadcaee49c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-393.png",
+      "size": 189323,
+      "sha256": "a4ab0c8807ac4d2605889a1ecf3c512cbe3dbb66cea1d248dc66bbc839218a23"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-394.png",
+      "size": 314976,
+      "sha256": "15cb0e5304b2c6af71c765e69c134bf3ca17b1414e4a42681a27695eb1589bc7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-395.png",
+      "size": 288234,
+      "sha256": "8127930324644c8061e1f7cb8d09a3a38152cba1e4fb8a309460816da19b021b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-396.png",
+      "size": 264662,
+      "sha256": "54e46483971c70b7889c9ee57f30d31e4707b0c0ecd9630c94f349044af3c194"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-397.png",
+      "size": 213686,
+      "sha256": "97e2e46e64b29e5319b8f84b1fe934c4ca70288dff159ed4186dc0973b3c05d0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-398.png",
+      "size": 247656,
+      "sha256": "24afb56982e6923b62c90d32163737e76b8a4f0d4af9ffacc76eed1f1927c082"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-399.png",
+      "size": 238591,
+      "sha256": "05c713aaf14efc7747bde75dc1190dc143fff271bf4441a85f2d15a4cd1826b9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-400.png",
+      "size": 210477,
+      "sha256": "2cb030cbd1d7f09101c968b2eb6e54864595cdecf13350df4cf9d64f855ea57c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-401.png",
+      "size": 228140,
+      "sha256": "22a1b76d2c21cf5674d95f7dca6a27056096c8e111a9e5ae775d235b152aa317"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-402.png",
+      "size": 166152,
+      "sha256": "a427c99d1f21c887a3c1790deba7b5e82c0e31248b6ce5fd920de7bbddcbe13c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-403.png",
+      "size": 399425,
+      "sha256": "925ba292cd8707a246e0aae0a3b4bf3c10387325681f5db487127bfbbbeb9590"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-404.png",
+      "size": 244964,
+      "sha256": "959ad81856d9328e68c8ff41bd9f94e164f0e5c63a1dd78dbb38fffc63be5772"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-405.png",
+      "size": 441864,
+      "sha256": "bb01c72d871539b0ad42c2f04ec31698b10fec69bd953888fc6a4594e53558b1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-406.png",
+      "size": 419203,
+      "sha256": "5cbaa5d9d28136843c869387bbcb12981e16259ca6cba1437f1dcaecdc31b25f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-407.png",
+      "size": 360251,
+      "sha256": "523549d19f637c3c2811bd0d93fc5e685710bd29e4c026a8f31a0406bbe105c8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-408.png",
+      "size": 169656,
+      "sha256": "dea74dfe2aa7e9f7699af954c45f9be9ee357520ad8bf76104ce217aa62eea2a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-409.png",
+      "size": 391100,
+      "sha256": "e31e1eec95f1ceb2b97c00bb9352e242d1f2748fcab178300bf71fa70d433abb"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-410.png",
+      "size": 351180,
+      "sha256": "fbf7f2ff1d03f022d96d22b05a25f1bea3009d3834a6274b829e344d4fe21822"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-411.png",
+      "size": 221145,
+      "sha256": "a3385d0896ad96df7ce218970aa0c87aa88aac5d92584dcfb3fe31dbee9089e8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-412.png",
+      "size": 323263,
+      "sha256": "57c192a393f2ef09f00bf8265f6b3d7cf6018289cd2536b2c8a6674a4017c551"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-413.png",
+      "size": 411329,
+      "sha256": "c0aa2b722d226158c6c685e60347f46009ff36f9a8bf7784e13b52bcef559dfe"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-414.png",
+      "size": 218342,
+      "sha256": "a4521e084ae220aeeb6668844be2c1014f68c1f4efc8360eb0429bf4e8716789"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-415.png",
+      "size": 390993,
+      "sha256": "326e6505592cdcb8c88d5a5e8715e4b4e052a86d6760829db89674c6a82462d2"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-416.png",
+      "size": 320961,
+      "sha256": "083c7366d7746bcad09e5cb68c25e306a7091c0a09059ebe908978ffd36dc987"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-417.png",
+      "size": 253887,
+      "sha256": "f17c346b08826d96fc117d6150ecaef541fa66ad5b3ed660bece33aeb0a312ae"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-418.png",
+      "size": 335357,
+      "sha256": "bfb03468f0e4bcd810b04bf48d5b1250b0f3c831b80d5ffb51eda62548858ca6"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-419.png",
+      "size": 327219,
+      "sha256": "3a8897b73c46e0049aa7e07bedb6199a21e01d701d8c5f3c1d6fdcbf1d10b0af"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-420.png",
+      "size": 268739,
+      "sha256": "0273c8aec984e39e50630b39ec3718dae4986d6f43690054f33d983214003df3"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-421.png",
+      "size": 474942,
+      "sha256": "d9537466250ca93c55e5157177aba98f9b9aff67cda665c0cb9339c58dfcdada"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-422.png",
+      "size": 290194,
+      "sha256": "925df3b8be2a832ce2bc408517ebc9102f71f75b6cc5f780e8e6aa2d5759db52"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-423.png",
+      "size": 245696,
+      "sha256": "4c0078ff92f00d77122a09fc516e4dee2121b8cab871802754bbbe9727aff57d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-424.png",
+      "size": 326669,
+      "sha256": "c7b674d4192bb3d6fd5395650220ffbd569dda74de195b78bb1a72c84bfaf026"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-425.png",
+      "size": 255472,
+      "sha256": "ba019ac7682594a27791a9a6d920b475043335034ff2930c731de6e1ad3d3669"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-426.png",
+      "size": 218968,
+      "sha256": "901b02b12841d96a284a2f2b7d1af907161d9cd11f9bcc23e1e1ab261ef13b2b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-427.png",
+      "size": 309751,
+      "sha256": "09b2ad868c65d8f39659b0507f2a3f20171f34e6395786279712e1fb8eebb5e6"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-428.png",
+      "size": 296553,
+      "sha256": "a01fc073cae1ef51bda619810b6c7a18cd543a58c9bb174eb805749580e5200e"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-429.png",
+      "size": 279381,
+      "sha256": "4ae456329294c0437d0e385bf37e814afeb2868b0e139b42d6682340b695bc9f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-430.png",
+      "size": 313414,
+      "sha256": "a8839962fbb388bfc950922692dc0d479c38e39838e2a12c6af5e7e987d6785d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-431.png",
+      "size": 255003,
+      "sha256": "b81297d8145246d37bc626b5929487f3904418dfd62e4cc1f564d52663e55b84"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-432.png",
+      "size": 339488,
+      "sha256": "8469643b5364ef1095a16d43b1aef268697fd6e866138f70d0095d62bb6f4cc5"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-433.png",
+      "size": 182057,
+      "sha256": "565caa934ca9a1d5b7a25bcc834b8bb2654f1bfb9cb720dbeb4a6544ef1a37aa"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-434.png",
+      "size": 278889,
+      "sha256": "ea7a108d28bf03ecf24fa5ed85ec7af0b4f55a42abfd8d7f4f435beef605123b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-435.png",
+      "size": 378958,
+      "sha256": "6976f0a59128bca848ce9ca0655cc042ebacc63c91ad64f5d94900ca488fd288"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-436.png",
+      "size": 425955,
+      "sha256": "f58ab9e2fd7a24bf2516ac7269ff73808c109ecfa541c03d46ad777c3526c567"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-437.png",
+      "size": 318236,
+      "sha256": "be52fa9bf3993b3f1a4f61ed95e8f50ca19134b9d69c7f19511975ef4738aea0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-438.png",
+      "size": 292704,
+      "sha256": "162baf3e3b2452f8c0ca6cbeb2c5df459bafcd8f49869a3d0b325b654090e9e2"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-439.png",
+      "size": 433907,
+      "sha256": "478d3741e6bf133f58e0b46d17b7d3db1210487e8ec127671bf38c35591ac990"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-440.png",
+      "size": 332830,
+      "sha256": "e04532c2521242b0b2e0e02b446395d3e85304a0a19d4e62a0698411f4437f31"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-441.png",
+      "size": 348236,
+      "sha256": "57620537363ebd4848e0093d9355832931e3cd97f3f77662a424646d4c49d164"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-442.png",
+      "size": 273073,
+      "sha256": "ff4ad9a90e95921d9291c1d87d525f26d5c3d5cb40d0115b8648882989e7e36b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-443.png",
+      "size": 217077,
+      "sha256": "29a3f41f1e58357fb5614d7d6ce622df1a2a522a84a38652014a529230815247"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-444.png",
+      "size": 307905,
+      "sha256": "57525673d6e57df4263e95b8d3de6fa74b2375a80f1c50b3f8500b978d1c6981"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-445.png",
+      "size": 384444,
+      "sha256": "be0131cf04b59e0bad2f4b06c647628746d8d33037584727b2ea7bd9dd007ba8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-446.png",
+      "size": 114210,
+      "sha256": "926741b3678d39509878c6d83a26457089193a4ebb8fbe3facd5ea437f44215a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-447.png",
+      "size": 436631,
+      "sha256": "0eb2c7974133639ea3f911608e7fda9720a3dd74013d07119e540da1c916fedc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-448.png",
+      "size": 277798,
+      "sha256": "46e136c84dfe39d65fc02199768611b098320999e4d35c11c0b0143132be875d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-449.png",
+      "size": 241169,
+      "sha256": "68f84c8172381cd383e0f6cc0ba640279201f6f3e293016d0f5c837c89eaa08f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-450.png",
+      "size": 179019,
+      "sha256": "edd75121ed1483727884fb948f80ded3d6fc30f01fba9077c7d475b43b8b1e60"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-451.png",
+      "size": 237907,
+      "sha256": "9df85d9d48e71ef4eda9c01f24e5f8b26a14c85c812bd015cd7fc5a9a7946f3f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-452.png",
+      "size": 243894,
+      "sha256": "d00cfc14db1ea8ed25d546f77b2210112759c6e06407066193b312d78b802ea0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-453.png",
+      "size": 186300,
+      "sha256": "5768def26998a5e6ea72a35f45e45962ad8aad43ae1c13ebb6cb2a038aa067db"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-454.png",
+      "size": 225629,
+      "sha256": "a42152a21b9422d01e0926794949aa2cfac37e02b0c42fc547aad844ffab7be8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-455.png",
+      "size": 224800,
+      "sha256": "47ee98bd96ad031a7b557df1f1624e220fff7a288a6372d85ce6ae7588f4c47d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-456.png",
+      "size": 360132,
+      "sha256": "a186870ff728f7ea3fb0608fd7c7df8f369b4cd17335f1827e0eeff3f38de09b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-457.png",
+      "size": 344330,
+      "sha256": "afccc155d23847ed8d61aac22212506e727f90b66d82ee8d5a3169d3da35b4b1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-458.png",
+      "size": 258729,
+      "sha256": "a28cfc9af5ab8c4351b00da55d75f0f75b0649559afb720d889ae621b307e35f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-459.png",
+      "size": 367479,
+      "sha256": "cb87077973198401ea2237b078fe4d0f368c40b8761b88eabdfbbba97d15f4be"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-460.png",
+      "size": 329891,
+      "sha256": "7a602dfced68a1a87e9455e69bfe1c2490b1c7861bd6ceba23a31497c9fd961d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-461.png",
+      "size": 346626,
+      "sha256": "feaef064bd1e6be19639e3bed526a802c966141f1998e4122d91e85fbaa232ca"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-462.png",
+      "size": 406243,
+      "sha256": "625cb6cae1053ce063240c878e3d6aa2caf67847d66bd8afd3a5b454e3ef620a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-463.png",
+      "size": 306978,
+      "sha256": "8ea921abf4bce34b80654ef1216413986d2635001345ae3f2a45d127ed8bfb3b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-464.png",
+      "size": 407790,
+      "sha256": "1c66a5c69496982929f67ac18fabcc6022cd85b5698812b8c62036447a1289db"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-465.png",
+      "size": 281209,
+      "sha256": "76d795604cfdbd94e6a2e1b40adcd9d869ae32c2ab4c9436ad1fd17bca8ac0b1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-466.png",
+      "size": 283933,
+      "sha256": "4c488a1980c754670370bf79bcce973e5c6b9c5e2bedc63f50caa14fe34d12f7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-467.png",
+      "size": 499591,
+      "sha256": "be16c78b0ff4a8091ef99cdf27add276f7c0063f7648d7643c3c7d1e03e4a15b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-488.png",
+      "size": 360891,
+      "sha256": "e1c3ccbe509d053d126af4e52ff2bfc145354c4eae4004588f86dc352d713415"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-489.png",
+      "size": 343035,
+      "sha256": "b7779a0cfcd836cbad1dd4c09916cba2ed4cc9587154a5ad9bff0e97d019e876"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-490.png",
+      "size": 212388,
+      "sha256": "b8a67271f8484994a5312b73439333cf7189235953e4b83defe6f7a798589d0f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-491.png",
+      "size": 354065,
+      "sha256": "d829013af2a9ade8495cb6aaab8c65a269448f7a3598443418201f6efe3cfef0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-492.png",
+      "size": 171620,
+      "sha256": "7aed0ccc89512837fd6cced2ab982e62442094de4fd8b2d636a9ac260471f403"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-493.png",
+      "size": 178345,
+      "sha256": "83951ccf298a54c641ac93beab2c94e2285c7df2141714b2ce7bd25e88e4181b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-494.png",
+      "size": 197503,
+      "sha256": "d22ac7f9e7c700df0e1ec2ea3bcedeb3d85a67f762b590837907ea5537ec41f1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-495.png",
+      "size": 217080,
+      "sha256": "e41b077a9ff998535ed73695f135d51f74de04e7e4d4df1bf07acb6048fcde02"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-496.png",
+      "size": 304681,
+      "sha256": "ab097baf355d34832192eef7c73a669fa830436ec2cab5e358203618895dd026"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-497.png",
+      "size": 241933,
+      "sha256": "f57112e97fddbe59b7d4694c57dc2e8a878187dbd2963de82d6c009de6705866"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-498.png",
+      "size": 226760,
+      "sha256": "362bb2ef316b41332d28ea52b5d16eaf5705554bd9ec9ed7114eb1f541448925"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-499.png",
+      "size": 202467,
+      "sha256": "27abeaa62fed5da96dcb4c4dde39adbe120b6698924cd634cf138c41997126b2"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-500.png",
+      "size": 254419,
+      "sha256": "37a4136bf329cef50ca957726bb899615a094821c08899857e6625fb849c7781"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-501.png",
+      "size": 259385,
+      "sha256": "fb3ec46f3d2f7e770cfef809efb23e2a3000152ba7d23f1f2c9856ea290e61b3"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-502.png",
+      "size": 133083,
+      "sha256": "af1296bededcde5208623cf56e654ba579a20c13deca84e856536e68243f49fe"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-503.png",
+      "size": 170374,
+      "sha256": "ed223284b66de9e0c1b48f394aa07a709eddea4a1d2497b371da7f43eb1ab8bf"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-504.png",
+      "size": 172502,
+      "sha256": "5f12cb0dd13018e8f670d7a38cd6fd7b375b74920352f40106dc15aeaac12aa8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-505.png",
+      "size": 224377,
+      "sha256": "5d24055fcc772ae666338a8e46fa0adda51bc819243ca23aa2219c5a65642bcb"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-506.png",
+      "size": 174132,
+      "sha256": "55f13975624e4058bc656c23ded502e8f3223c34416bd3c6f8e3f768ab18ac20"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-507.png",
+      "size": 197897,
+      "sha256": "21b422cdd4c1905005e42c03b6de02387468de9b671760b0ccdad6437ae6c6ce"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-508.png",
+      "size": 208058,
+      "sha256": "8a3ff53826072f632fcb932c98990877478e79467af3cc66370f826579986247"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-509.png",
+      "size": 182849,
+      "sha256": "974583afda0addce7f30c37c33de48bf97b59224a91d0cc97497a1c945096584"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-510.png",
+      "size": 360586,
+      "sha256": "eced9f930d4354059d8856168739735c9990e9168fcf0e938520cc223b526070"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-511.png",
+      "size": 218934,
+      "sha256": "dbb03c1320d0f3885f220a8685242b2f926c13452f82e8bbc73479ab19c28482"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-512.png",
+      "size": 238251,
+      "sha256": "f2e3120c0fd233fff4d744fe87c5ec9a69f58dff445d3c64e178b35325a64ac9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-513.png",
+      "size": 224358,
+      "sha256": "abc2ba51d7506178bb59c9843699198978a3cb91c3b0080b62810c566267f5dc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-514.png",
+      "size": 229317,
+      "sha256": "30b073ee0ef0d12c4d3d191096cc2a97787d985fd55fee7cf3fe50a3a3e753b0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-515.png",
+      "size": 323944,
+      "sha256": "b36bffe27d081b8627c5d3c774b8bca5058c0dec8fe576b616d0a7b0667e21c7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-516.png",
+      "size": 233649,
+      "sha256": "ab0e048370bc62e0865b83be08cb2125f7a974b64ffbea63bd9d0a40871a6ba8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-517.png",
+      "size": 158034,
+      "sha256": "50673ba5850d496787161acf004b60f61332f5ed3b77eb135cc48045dbb09437"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-518.png",
+      "size": 387064,
+      "sha256": "0dc24a215e333cbb0ec80d8bcc38e2e258f6e3661eab887001af5501c1c2e365"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-519.png",
+      "size": 266386,
+      "sha256": "2937b0acf3ffb71739f249d86af06b313ac8a25bbeeae2551e0904d9a07e905c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-520.png",
+      "size": 231672,
+      "sha256": "9b4e29e3d1a63055681897002abfe7fd78381a71b7b1a2d0961dafe3ca64d1c8"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-521.png",
+      "size": 391151,
+      "sha256": "4c62e25c2b116e31651d8461b1f67b810c7db859dffa40ff3bd68f687d96615a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-522.png",
+      "size": 234470,
+      "sha256": "98f6690d82296f41664bea92bf3fccebaf5fb5747e3895bcbf6ce1026b35a732"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-523.png",
+      "size": 151460,
+      "sha256": "34cb904c6db197d46856963e81d5f164b6b29b9829c445a5876ba39da563a748"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-524.png",
+      "size": 209596,
+      "sha256": "367e2332e484bc2d8e3e4c5c8705e67b2c5d4fb0dec8bf2ece4d669f12042a48"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-525.png",
+      "size": 390015,
+      "sha256": "8b5299be44ae18ea05300ffa7388ad5a38aa75d778b840c04fc48162af7d6478"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-526.png",
+      "size": 417632,
+      "sha256": "e6cebb1982707735645dc29cbb699d11ffc964b9b0f4322717178a8856610dc7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-527.png",
+      "size": 474295,
+      "sha256": "0f5699cb816efcbd53c0d5267439784c29efb5ac6407a32bf4c01c19f69373c1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-528.png",
+      "size": 214824,
+      "sha256": "11684cdbc017f80a18951f74b0ca2cdfa6a321d679a20a6c36a0da831318cf11"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-529.png",
+      "size": 212801,
+      "sha256": "df1f5be745a1dc6e1206bd9f87d1a7f37d0203d400e368f47ef1644b72722348"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-530.png",
+      "size": 225258,
+      "sha256": "f16e2d1c3f56ccdf24c83af59e70c48aaf9c882f2660db4f025f1ac2d5d97b50"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-531.png",
+      "size": 237210,
+      "sha256": "9462533d0f8940d2c084853ec01dda7378d09b2edfa3824eda0b1c848b3f09a1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-532.png",
+      "size": 297289,
+      "sha256": "ae6951ecf473d0f44a83a8d9602163a852cc5efbf587e7da9ab4d1f00ef15ad9"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-533.png",
+      "size": 417056,
+      "sha256": "5a20582d130a041f5f9513faef8b013996510de90b24c6e0daed233864c8dcc5"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-534.png",
+      "size": 324191,
+      "sha256": "c2b1c75521062c0e04e19e50556b1179449d1c765315aa56f89545cabc1f2787"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-535.png",
+      "size": 471299,
+      "sha256": "73358e8de6718dd08c9b922e2ae7456f892a9ce69f6cffc6f3806e68cb9a0366"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-536.png",
+      "size": 379491,
+      "sha256": "bc3f4a0670fc48ccc9028a6f824c690ce7a94ff527425b142710b7c2dcf36509"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-537.png",
+      "size": 452944,
+      "sha256": "ce3d376b39011aa83e2e750f7817b14c5d52258dab826d392761809b5a48ab18"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-538.png",
+      "size": 305122,
+      "sha256": "16dfb01360e0cc4bb9524942d3fd8fc578c371353afe4df2cf709f3a1bfcaaf0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-539.png",
+      "size": 293922,
+      "sha256": "f71311ef73b64965205849851b0691874da6023a8c1c5098443ffad2c73ba88a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-540.png",
+      "size": 505232,
+      "sha256": "dc4b2eb1ef695d7e0480891f6e92f5fa11d048c90b69b58e0c04149145d6123a"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-541.png",
+      "size": 166583,
+      "sha256": "e619a3ab4b8077a4d86811d8b5e03b9045f33f7b678491138df09bf107ff505c"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-542.png",
+      "size": 463785,
+      "sha256": "2c23e2be9dacc86541bc9f3fd410188453c4fab532fa0ebfcc7bead3ab0e8ced"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-543.png",
+      "size": 197636,
+      "sha256": "817cf67bc7d7933155d75a86062fd47f4b2d43152f6b3d2d425bb7e48597ad3d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-544.png",
+      "size": 306686,
+      "sha256": "fd74f337a7c36166d33e30f8dd34f41efb985f4b59b0e7a387e1c3c749a881c7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-545.png",
+      "size": 276373,
+      "sha256": "99775715b2415f750a6cdba251d9f745acc2c94cb6d12315760c5ce34ace9cfc"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-546.png",
+      "size": 129075,
+      "sha256": "58489b08299f6cff5969d543bececf5e9a1a604019ba9426f8f0b03b8e783c4b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-547.png",
+      "size": 256801,
+      "sha256": "f92adba7ed9090fdfbb5125aa5f4cba562a3fb08b049a24981562264a6d1a760"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-548.png",
+      "size": 325847,
+      "sha256": "5c6c337bbea9fdf49af06267cd359cdb5858d25976aa81051fc9df093acdc219"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-549.png",
+      "size": 210646,
+      "sha256": "40814837e3043d4273bf5ac6c2805232d50476eedeb396330d3c2eb1434051e2"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-550.png",
+      "size": 406063,
+      "sha256": "f781b1de5a9bde6b6900abd7cf396011a67337b8f7d77d9738141c0fbadac349"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-551.png",
+      "size": 270814,
+      "sha256": "9d477b2ccef2f736c70e702d0fbf2acd8d869e7ac4720b42f4018e2c3b3badab"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-552.png",
+      "size": 152448,
+      "sha256": "2aecd936b2fb14267fa319c92cdb3ccf4582b564053f69b7ad3ec966618c50f1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-553.png",
+      "size": 355152,
+      "sha256": "d270aefaa7c3fd1cc422c5bc51ec3c7bfc3304ae5aaba6c93f41d112e852e15e"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-554.png",
+      "size": 201728,
+      "sha256": "2c3d907371de54fbf2ef695e4ef8fe0f17c412e38f0de7927d9bb0949fafcad7"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-555.png",
+      "size": 298789,
+      "sha256": "7ba2b593cf3c81308d362ce42c438147d0131c2371147e706f8d0bf6b591cb63"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-556.png",
+      "size": 329324,
+      "sha256": "c7410eccb4e9ee18c50814832aacbf25feb0a7dc71aeb692e27ab57bd1ab4ab1"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-557.png",
+      "size": 203518,
+      "sha256": "83b5acaa8614a41ef3683101145a390445a13b633ca18bd69509628d3e01ab18"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-558.png",
+      "size": 155857,
+      "sha256": "51a7fd230990e337503760b26d0b67019f67d3dba75fa24a191aafabed13b113"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-559.png",
+      "size": 237596,
+      "sha256": "4702657fb0ab478f750f66a14ebf24fa5ff51590572b0beb6b9fb68745a14a1d"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-560.png",
+      "size": 218122,
+      "sha256": "43e2b3efb8e8e747eb729369475a20b66a0477fe8ac3f54116061dd43c43aadd"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-561.png",
+      "size": 225858,
+      "sha256": "bdbefd3b4425e39c8db98982c60856179c5febd9af20154205577d0602df2cc0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-562.png",
+      "size": 225420,
+      "sha256": "36d05c1d68f1a82ac6ffeeed6b87f42e1774177807f9a4191365c3f3fcd7d212"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-563.png",
+      "size": 416007,
+      "sha256": "09d84346ad1458fd285a716e1ee331a8f07d8fb4a6524bc566e00592198f8186"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-564.png",
+      "size": 217741,
+      "sha256": "9ab615bc1174a64bc3214467508e804816f8738e911507d9af9ed96e8c18769e"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-565.png",
+      "size": 301523,
+      "sha256": "485b78aefd1400de52646ad16880291b6abfe4a61b6c38b4ba998cf492503e80"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-566.png",
+      "size": 374024,
+      "sha256": "73405306f9abbd27300630e4fe3ebe1c093c1705e475030bac4c332b7628e47b"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-567.png",
+      "size": 389601,
+      "sha256": "4d50b263500e02c61ef8fa03acbe2002a052402ccb1f8ed2dd1dcdf95eaef6c3"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-568.png",
+      "size": 376287,
+      "sha256": "fa3684e5f7acc534597eb5bbd645a257e6d17c72b023611b071303f372df1f29"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-569.png",
+      "size": 313983,
+      "sha256": "c903cc605fd34b50a2c6569629508732b9ff7e2df8b344b47f2f2312b98c6072"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-570.png",
+      "size": 383001,
+      "sha256": "505627ab9caea712d930a5ebd3ed298c08982a90f52af86821e81e1af644ef18"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-571.png",
+      "size": 396538,
+      "sha256": "c3c9de2a1db3967ef87bcf2e8bcad9d09af1378e3280d3ca0c581e213d2505a4"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-572.png",
+      "size": 360493,
+      "sha256": "b1d6f62278365b889614540287ad6aa30a1de2434494e97e88e1d84d990683b0"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-573.png",
+      "size": 321900,
+      "sha256": "a2c45076b95279d519214be1080df0a5d0b571a90fd7225ebc16deb2e456e063"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-574.png",
+      "size": 215212,
+      "sha256": "053e34e25d3147980f6429a318fef652831726161f9418e0ed70b3866dc5972f"
+    },
+    {
+      "path": "workspace/materials/new-book-pages/page-575.png",
+      "size": 450686,
+      "sha256": "062abb8d94f14cf32f320653fd9441ff14a6dc2bbb84061d283a8a0384470513"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.1-1.meta.json",
+      "size": 692,
+      "sha256": "29be35ef08ef2c593801da6a8a32249fa4e41ce0e69761c2cd85e22c8d54f614"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.1-1.txt",
+      "size": 30147,
+      "sha256": "5697c71ce6dc92d03d41ca4cce0d07e8a6128e874aad4a053d2e8bd05cf9b19e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.1.meta.json",
+      "size": 505,
+      "sha256": "021d5e0dd22671b5a92315db72b1704bc7017ed6598329b201d2f8de41648083"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.1.txt",
+      "size": 24717,
+      "sha256": "73636b809b4c80af4bbc6995ccc4bf76bb0c07bc3acbd28028aeb23af235d52a"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-1.meta.json",
+      "size": 429,
+      "sha256": "3e2492b37761e624e41154202afe6bc60b4baaba7bab560d6977e53c3d91bfe3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-1.txt",
+      "size": 9422,
+      "sha256": "dad3f8a7297bf2de0e24ac773dad7d72a588c1a2d0aaa9c4975e0b5df21506f3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-2.meta.json",
+      "size": 353,
+      "sha256": "6de39b170fc0085b1e8dc22c28df23eeee142584aaa6028186ae16c09c84fab4"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-2.txt",
+      "size": 1919,
+      "sha256": "3fe0944814bbbddcb5a0e5e3fcaa3c8b363c9647db76c81fcd2c0a6c6329b5f0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-3.meta.json",
+      "size": 396,
+      "sha256": "3015d4e70c7095938a0d9e0d00fd759c672b5ce7ebeb899b9cafda74a83bae68"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-3.txt",
+      "size": 5192,
+      "sha256": "2ec31ec96502c35b6bf65e13ba14ca6fd2f15b8ad8c5dc0913ce3cf44a123ccc"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-4.meta.json",
+      "size": 351,
+      "sha256": "4300537edb9493601d90471487b9b1ad8f03406d7394364ce86cb6b1b60ecb0f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-4.txt",
+      "size": 3339,
+      "sha256": "1b024300d1ea91c88335b760bd0027c84a345e6240cdcf556eadeb1f3465debf"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-5.meta.json",
+      "size": 331,
+      "sha256": "337de63edf76849e59a141b0281a5dcf5ada74f8774dd84b3cdb2bdc9fc0cbce"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-5.txt",
+      "size": 1085,
+      "sha256": "a2911ac650f090284675e8701acaaefd8e718de0fc3346d0659f3df1e20d921e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-6.meta.json",
+      "size": 434,
+      "sha256": "c194c61689bd2bb218c51371b33bff25500bdea4625d95a486d2009caf8572c2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2-6.txt",
+      "size": 9900,
+      "sha256": "a3f9049aec6581232049cb11da9354ea4926d557569bdb7fa7f14bd4428074e2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2.meta.json",
+      "size": 323,
+      "sha256": "479751c1e7635c75a3c5ac0d4036db3c05b135158434561daec4cb8776d1228e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.2.txt",
+      "size": 2069,
+      "sha256": "7471a4c662cb3a882a4037183c4e97cae2df324a2cc0ba2d7d5d116e2ab5e33d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-1.meta.json",
+      "size": 433,
+      "sha256": "5456f5b4295834eac01cb0c2c9475cf9ec64155de40c09ac4472ceedd9a3ace6"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-1.txt",
+      "size": 9913,
+      "sha256": "cb4fa568a3dcf665c5e6546f3ac6973ea5662af247e7f70da46c85188a0ad895"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-2.meta.json",
+      "size": 408,
+      "sha256": "9e0a3be118d50534ef2524d79f63de3503373962a513bdef4f3a760aa7d6e809"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-2.txt",
+      "size": 11951,
+      "sha256": "67fd02a99de1eb5ceecb422f658b40226139343e5147f94e46cb9870dcf3c8e1"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-3.meta.json",
+      "size": 399,
+      "sha256": "9234388bf735bb887f063c3b8cf53e319786fa9ae2231900c515fa0d59a59f40"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-3.txt",
+      "size": 5349,
+      "sha256": "172bc18fe00dc7da122105df117feff4745e8ca797807c4940c716661ac1d656"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-4.meta.json",
+      "size": 316,
+      "sha256": "315a4d3835bbb6ad1b90c94fd1825f8cec9bf7b8883f6337fb2922d03d4c2d67"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3-4.txt",
+      "size": 718,
+      "sha256": "73d90d154e723aa09fa1989ebfd0a901362c65cd2de9383e47830c0a5255a1c3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3.meta.json",
+      "size": 440,
+      "sha256": "77f10207fd36ecae1a92fa5c42bb59b34b8a5bb15e500f073699eb06f68bde6c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.3.txt",
+      "size": 9856,
+      "sha256": "7b70bac2790293360242058e676c3f8a076d0e15d9445cb64469051890fd19b1"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.4-1.meta.json",
+      "size": 449,
+      "sha256": "fba52f2e6129892d1b8d5ebf3d2ada0f42c97bf25b46e223a562dbe5afe6e6d0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.4-1.txt",
+      "size": 6615,
+      "sha256": "d4f5f177064c1c19c010b5db4a8541212fbee325474247de33825e36fe80f93e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.4.meta.json",
+      "size": 629,
+      "sha256": "8c5cf9aa7716abfd6672296648bc0472cd24cf53392d924644568a4ed7bfef82"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.4.txt",
+      "size": 2052,
+      "sha256": "d6b6377d44655a51fa5c96c0ecfe3c1547507ab47f92ba67b11bfd6dc2690c63"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.5.meta.json",
+      "size": 362,
+      "sha256": "a333e6314c1f39838d1c9baa7d334404bca6f77fea487741204f887fa664a8a7"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.5.txt",
+      "size": 6640,
+      "sha256": "bbdd8fc065f4b0e0c1f6650347bd11ca1208313f8d1db5f8f5aaaf1bee1b65dd"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-1.meta.json",
+      "size": 353,
+      "sha256": "a53d73172d0a2adb1ce58d6309a691689c1740fa55db333262557ddb24fd085b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-1.txt",
+      "size": 6054,
+      "sha256": "b1c95b8837da220fec99e483488e6e78501a220c564a39b7fa2de73ca8cbf519"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-2.meta.json",
+      "size": 425,
+      "sha256": "eab876a424cc17fd1272998bc1e408c5fad3e79281e31bc0814e2e2c5970e132"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-2.txt",
+      "size": 9352,
+      "sha256": "bc941040c1a543dbee3b5273ccb99b8d5f13553886a32f060096161128128628"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-3.meta.json",
+      "size": 421,
+      "sha256": "7bbecd37168c066f49d8d3f74d744d339ae21bcfefb00e83f31b96513aba2f5c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-3.txt",
+      "size": 8735,
+      "sha256": "2eb0d6947e319c084ea45b4755479b88e3bb8522ca79ec547f24097e8c41d3ed"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-4.meta.json",
+      "size": 346,
+      "sha256": "4c4c2493d2d46059d7755eebda8363f73f84dfecedf91dc6228e8330bead260d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-4.txt",
+      "size": 6336,
+      "sha256": "a41c6d7b458b82149d50cad96b6294cefe810c3e138ef74957412ae02f307cfe"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-5.meta.json",
+      "size": 518,
+      "sha256": "26e5dec27111423b56631221563b65bed77509f5348801d7b640ad29a240941b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6-5.txt",
+      "size": 15413,
+      "sha256": "29ee67da5f4963d5e45f6e6d48c6deb1789b6d5a14b7f9f17670e934af624d45"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6.meta.json",
+      "size": 343,
+      "sha256": "8d824f41b021a2b0cdd7e8963054a34f9356c5fd0d428ebd8075030c079799df"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.6.txt",
+      "size": 2120,
+      "sha256": "bfae264d7ec9d717e1ddca5478fb2eb56e959e92e23deb54924001b2404ff97d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.7-1.meta.json",
+      "size": 533,
+      "sha256": "809a012b1d3bb9e0adecd0e1371a1a39411796c33fbb4b390a2698481991e222"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.7-1.txt",
+      "size": 16001,
+      "sha256": "6b54dbcf439845e94714fd7a5a295747562f09cb52f30066ab0a4304bb6f046d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.7.meta.json",
+      "size": 404,
+      "sha256": "a8dc050445416348be070ec5d24b3e6e43171a54cbfd7842b25e3071eae6a322"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.7.txt",
+      "size": 8832,
+      "sha256": "edcd4898b954aaa2bd93b25390b366e2a839ddb1d1b914cd6ceac82d27f1b960"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.8-1.meta.json",
+      "size": 361,
+      "sha256": "dfa2e6e1ca4204b31b6c71c63702ec4af76e00841c5f5023b9965a6e4a199d38"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.8-1.txt",
+      "size": 2222,
+      "sha256": "94d3d48585676965eb00aecfaa4981ce6f7a754424ec51553e76e60bb3229d22"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.8.meta.json",
+      "size": 547,
+      "sha256": "104e88791ee3f4e038a493ffdb1dd10e3ec3899a6b909a6232ae981dfc01d6b0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.8.txt",
+      "size": 17473,
+      "sha256": "c6c122020f076a950f33f1cb2fab794475b1d4813cbd9a0120478b7a390f8b44"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-1.meta.json",
+      "size": 319,
+      "sha256": "b666ba8fb0e07bd4f24200ea3cad426519c972c804d1b0c1eab66c4bac95fb40"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-1.txt",
+      "size": 415,
+      "sha256": "5f8ed284920c1148b9653b48d3eef46a7becfe67c54d579a93f754a0f8808d2b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-2.meta.json",
+      "size": 320,
+      "sha256": "f59a0f208b1e866fcad513648043947ec3a329b31d5ec0fa742bd9203f9df8ee"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-2.txt",
+      "size": 4609,
+      "sha256": "8b9cb36c5ced20abc9767cef65fc54fe9ba970188d4b43ead50794748ec11eae"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-3.meta.json",
+      "size": 387,
+      "sha256": "01e5bcd8d0832d80e343708dc9211c274dc4c4bd62d6aab42a3c0aaff43422fb"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-3.txt",
+      "size": 7805,
+      "sha256": "8685c5d444e342e138c7aa92080e5d19e24bdc281909f1d31acdcaf51a88e1e9"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-4.meta.json",
+      "size": 635,
+      "sha256": "6c9051832f85c97ef095d7b1f06325ae43867917e6fb42222b13aa399b65804c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-4.txt",
+      "size": 25592,
+      "sha256": "a9b797ce19bfb902db9677e85b3a4846f434452a2e307553fb11337068cc7e1f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-5.meta.json",
+      "size": 388,
+      "sha256": "4885de6cbdcde2093a3818f2bd5332b6aa64c696e50695aeb2b6d86e47680a6e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9-5.txt",
+      "size": 2057,
+      "sha256": "bbab9836e370bfcdfa9d9e14368ae657c0242b62e0c4132a575b29d04c1d53e2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9.meta.json",
+      "size": 399,
+      "sha256": "7ab02130b8792653222a61faecf3a097f4b28dbfc95489ec28e1ddf522966aac"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.9.txt",
+      "size": 12796,
+      "sha256": "4ea5bc04dd3acbbb127a06c2839997909c0ff0d0b8ce47e05a5e49ce24eaf761"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-1.meta.json",
+      "size": 427,
+      "sha256": "caccef53f013a5e2b4264b602fe68f12a8d456fed3b12e15aac353942c7964c0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-1.txt",
+      "size": 10639,
+      "sha256": "620e1db7ad51f7b5d4b4bec153981b0957ce286530659b3754c5dc58089472d3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-2.meta.json",
+      "size": 369,
+      "sha256": "260900ef1ae4b64745e30005a0f53783fb6aa1f8aea21241173d35520f712952"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-2.txt",
+      "size": 5013,
+      "sha256": "4d0f314e4e2f7dd67a29574345955490a48f33a48715edd9649df70166af53de"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-3.meta.json",
+      "size": 313,
+      "sha256": "3efe926241a7363d6a9c0e24bdc83fdfc498289956898740f1110e70260c5bed"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-3.txt",
+      "size": 669,
+      "sha256": "3fbd04352ab2baf62790f36062cac5d4c1c0de10e9e706536c0f163dc540fac0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-4.meta.json",
+      "size": 350,
+      "sha256": "a7f17379206ba5599b20fd3c2aab45bcad52dafff9dacc75e407eab581be070e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-4.txt",
+      "size": 6993,
+      "sha256": "93a80b94ce76ce7d6cb2e0925caea16e4cbd687ea9c71592c4fab87e8cfc0cf0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-5.meta.json",
+      "size": 380,
+      "sha256": "5debbd47bc4443e401ff953adfaa33ad48ff3ff47c1ef720e7c873ba43cdb090"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10-5.txt",
+      "size": 3236,
+      "sha256": "3ecd898e5728ec4bb14954d76fa5896c87562daeaf5463c7eca182d6d4273413"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10.meta.json",
+      "size": 349,
+      "sha256": "37389a08856dae5454533601a3fe53f7e37f036740d9168552f74211465cdc3d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.10.txt",
+      "size": 385,
+      "sha256": "56b2d7597f4fc3dbe8d76b1389da298ec6d711c3135a3f71c874abe3fbbfcda8"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11-1.meta.json",
+      "size": 407,
+      "sha256": "0de1907a851c4ae531e5c18901e5f989b59d9ac8ef25b0784b0af22e434b1963"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11-1.txt",
+      "size": 2889,
+      "sha256": "18674b574dd1d2e39e65d588034b0610ed22dbffeb0b3a723022fe1799d59452"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11-2.meta.json",
+      "size": 457,
+      "sha256": "dd93dab5abc5cf3748ce3caf62b34868f12b7154026e54a8badf8043f24945f4"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11-2.txt",
+      "size": 5640,
+      "sha256": "781a346de20e9a89b51dc0fe57006764426540f4f197d70410725c1c6ab93b6b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11.meta.json",
+      "size": 543,
+      "sha256": "fc313b364afdece0e23a671383fb5eed4344aaf979716de3544b4fa34f46f019"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.11.txt",
+      "size": 17228,
+      "sha256": "fc152c3620786442ad1a3c64bef53b638b7542d33246a86d5c7bb372689a43b1"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-1.meta.json",
+      "size": 454,
+      "sha256": "cabf7efbd7cc7816d577e35b9998bd4233862d784c9d977c9fd1e2727bb7e33d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-1.txt",
+      "size": 9995,
+      "sha256": "635db79b5cbec6335f2b90e0cdf9ef5bd5d0b362c56cc88e73ffb0e822181139"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-2.meta.json",
+      "size": 414,
+      "sha256": "7f0f97042f74ce54980f1e510835677a6decbf7069096e31bc852364b6e09def"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-2.txt",
+      "size": 5331,
+      "sha256": "c7af4d8dbf1473459fc8e293a295a6342d9d3366559821e10be6c3d8c55bdd30"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-3.meta.json",
+      "size": 391,
+      "sha256": "94b413afacfd0d4f375219ae2f8325b1ca276995b52ba403aad7943c3c9148b7"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-3.txt",
+      "size": 7525,
+      "sha256": "22f9b98bc8241b4a5932b539485d44cda8e9e9d3e194faac6375a861309ba2b3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-4.meta.json",
+      "size": 391,
+      "sha256": "4d7a6d37f4a27d32370f30e3e618b00ec388b547f31ae678eb323b2a48cb7f8c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12-4.txt",
+      "size": 9034,
+      "sha256": "60d2bb9a8290c4ad5abb173bcc3f4309b0fd77f5123a32d93eca9ef0ce2888c8"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12.meta.json",
+      "size": 381,
+      "sha256": "bd0accef8a778920b55aa46b06cb4e81b0a34b3a8d1716ae6c41e339e6d89bcf"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.12.txt",
+      "size": 3242,
+      "sha256": "67aa55775d58e11cb5262cb4df841977ab898deb2902a7ba0067552df0094444"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.13.meta.json",
+      "size": 298,
+      "sha256": "e545b8c27dcd225ce99faf0e3ea351ce1419314af7962677376f7dbbb545b5e3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.13.txt",
+      "size": 4402,
+      "sha256": "2051fa03dfa6b69d9ea36db5c44f169a574e6b88200ae4ee92f9981147a7cc9f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.meta.json",
+      "size": 4665,
+      "sha256": "073dcb126698c572cdd98d12aba828859caf9f91acb1c6ffee2bdb035746211a"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/4.txt",
+      "size": 2705,
+      "sha256": "9f497c88c560afb2cb972eb79b712eeef76e45dd5071c2a560b72b52ac621219"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1-1.meta.json",
+      "size": 502,
+      "sha256": "f14e0c7934b4c3aa131c60ddbca3ce3b270d89cd0a3feffad90b3217781bb2cb"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1-1.txt",
+      "size": 11810,
+      "sha256": "8aa9bddec45285b13b8a0bbdfe199c33f61bd9edd79fb9448291bd2cc8b4c970"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1-2.meta.json",
+      "size": 413,
+      "sha256": "4ea4d8bbe73cb7d001b919f2ec0dae2570981396e5fce97048843f57bbdad65b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1-2.txt",
+      "size": 4114,
+      "sha256": "d40bc9f286fd5028c695a1ab84bd600678579f9c44606116870f4a3c6fd12fc3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1.meta.json",
+      "size": 566,
+      "sha256": "88b588d11505a276b0cd3131c187b7c67a18c9c4493791169faafee187f5c0a3"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.1.txt",
+      "size": 20899,
+      "sha256": "2ca92fc53aff2230ae4a15da451d20ffbe6fce475efc4e18cd67b843b92f20c5"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-1.meta.json",
+      "size": 474,
+      "sha256": "772795b6efa7288769038be626e5e1c0c58819233a6c605f291bc2a7e8349875"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-1.txt",
+      "size": 10670,
+      "sha256": "7eb83693b7e3b8f3726229d77a367f89cb9b58608deb4f9e4899142ff24a2b67"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-2.meta.json",
+      "size": 408,
+      "sha256": "50c9a1541956cdf5b3b3ae8e61b626b41b595924110112faac0066aeb1beadde"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-2.txt",
+      "size": 1714,
+      "sha256": "b53c3849195c700076579c792067347b8011ddcfb74ef76e01db7e856985ffff"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-3.meta.json",
+      "size": 347,
+      "sha256": "636e825b93058807ebd504eb22dc591174b1721aafc8530ae8d50c47913a6f84"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-3.txt",
+      "size": 1618,
+      "sha256": "e7966cad43e386f7057cb9ff82951ef8e85ec792442daf6a791fb5c2e5d265f2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-4.meta.json",
+      "size": 344,
+      "sha256": "d55f5ce2724c70e70712d024cb51d15c1e6d0aef929cfa11ba0858fc6c44031f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-4.txt",
+      "size": 1870,
+      "sha256": "135bf7e333b400b1b14c369f1b715cc8cbcc6a4a024a90a870c907c41875aecc"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-5.meta.json",
+      "size": 344,
+      "sha256": "7fd3a831020da12314556d45c8ec3cadfde2971ac077dbc591107c44f1f3997f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2-5.txt",
+      "size": 8916,
+      "sha256": "e5d01e61e1db5cddd49e8eef9f024245653be7a2f99c8a76a7114f6b3d9ae8fa"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2.meta.json",
+      "size": 327,
+      "sha256": "c0a029a552bd563971415eb8f1456a5346a1f2101dce67a4c0519ef572b4427f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.2.txt",
+      "size": 847,
+      "sha256": "3a242ab3d86634ac067cc64cba95081fc10e561f4c23c64110568cb525ddb021"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-1.meta.json",
+      "size": 466,
+      "sha256": "74206b2ef451e9e4310372bf67826a3701c8b6a5244b31a7d9a1b961db953edd"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-1.txt",
+      "size": 10907,
+      "sha256": "0a3c09a4851479fc0927498f3e775007639b30fdc69541ecfab2130ebe0eb2f8"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-2.meta.json",
+      "size": 329,
+      "sha256": "ae3e7d9f948e6475ba8262f21e526f6c4cae9db6d94e346caa5365ed97064560"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-2.txt",
+      "size": 2463,
+      "sha256": "49c9e1fb2553130bdae85e8fe8a318729b5bd7de14fb479334334de346ff92ed"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-3.meta.json",
+      "size": 301,
+      "sha256": "9cf41f9edbdb909daf341645d2880b47ba58c633d6b961d078d65de1db6761a5"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3-3.txt",
+      "size": 1548,
+      "sha256": "b8f900492fcd408b92c6e9b234c5eb8e0aa41e2abed3092bcce77b4fdff0920f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3.meta.json",
+      "size": 398,
+      "sha256": "468b805f877fcb7bff3c760bc4e40b64b5dffb65b29a737c87240f5d02b7d431"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.3.txt",
+      "size": 12513,
+      "sha256": "bd13241e895f6938dd5c6220f5eff77e61c8d9d8500df1ea75dbd7052b0fb004"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.4.meta.json",
+      "size": 526,
+      "sha256": "122f3f7e7ef8793a6b8b87d87f2e8caa56a1e286645015053a7b0c490df2f4e2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.4.txt",
+      "size": 556,
+      "sha256": "8df52ec5908da6d7f574bba36b720d3786504218bc4caa03c167a17b3f926bdb"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5-1.meta.json",
+      "size": 466,
+      "sha256": "186fdf585fdfaf4678bc4c20c2e37d9d3785ea8bc03b2df23ad60f6ea5f3d062"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5-1.txt",
+      "size": 11059,
+      "sha256": "4ce2b542557a0f929ef917f171c2d06e2e473bdae148292d2b8de26d604dbe83"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5-2.meta.json",
+      "size": 405,
+      "sha256": "f828f95ce9b2663d7d9a04ea39618672f8ce04e33982714da47898c656f02776"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5-2.txt",
+      "size": 7459,
+      "sha256": "6ca872fff11f21b1a29ab188fc2016ec3897549e67da5b9687ff5d74dde01530"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5.meta.json",
+      "size": 549,
+      "sha256": "3e1afbf8f6f244078876ec691160d6f4ed370fc858cb16d6a7027b065f81c19e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.5.txt",
+      "size": 16808,
+      "sha256": "005fbc8209621b1ed4588da0a85512bf9b9da11e84fc2dfc724de268b0411f99"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.6.meta.json",
+      "size": 640,
+      "sha256": "ebc38f809ada57cbb6d0c348f051961e78ae7f834a49618dd333b8002fc724cf"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.6.txt",
+      "size": 24963,
+      "sha256": "fb3f460e30e245a5f1ebaf7878b0fa01e8c98cb788868d755d969f8ff647be01"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.7.meta.json",
+      "size": 555,
+      "sha256": "58f5c46143943f4fbe7753b6cd45401a3b6487ad6c90435ac8597b6340cfa25d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.7.txt",
+      "size": 21897,
+      "sha256": "c6f245e99e37c02bc39b2f5f79fa5f7f1a4047bab9f860f8989a13bd258abd8b"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8-1.meta.json",
+      "size": 401,
+      "sha256": "b447d09a42beaca96dfbf9eeb49117f085eed37bcc439242eeaa5e0b69fcf49f"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8-1.txt",
+      "size": 2412,
+      "sha256": "4f121de1a2d04a94321f338c16fe331fcb802eaf692183e87af3c8d5396ea627"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8-2.meta.json",
+      "size": 465,
+      "sha256": "28b6457628ad4828707abaa6e88b5ee64ed934629ed20a22d3d90bfffce3a548"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8-2.txt",
+      "size": 6145,
+      "sha256": "7125313792e6b493aab1f20a6f14e36bfb0e783258fa400327c163920b67fc4c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8.meta.json",
+      "size": 494,
+      "sha256": "02de97dd31f8fea90f599f0e9ea7e1dd44bf883536ebb83e9fa9056908594ed0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.8.txt",
+      "size": 14605,
+      "sha256": "cd92b582e54f3860dc8c4ced56af16954a5fe7c1106b948ae998ece22e618378"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.9.meta.json",
+      "size": 408,
+      "sha256": "12226446eb4a84a49b314958c73d13e18f8fbba4ad1db111c45b2274a36382a5"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.9.txt",
+      "size": 5472,
+      "sha256": "db8dac0df58f4e2fa0c58b9385ffbbf3927fb974219773f42dfa25054e89a0d0"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-1.meta.json",
+      "size": 365,
+      "sha256": "7831b9331d7035ba583c24cf62368a252c503f13865cd6e615b86249804342bf"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-1.txt",
+      "size": 5302,
+      "sha256": "8fe1411b2468bc94e8146c0f81307ebedb14110640b1b0fd237c22f39ac4680e"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-2.meta.json",
+      "size": 376,
+      "sha256": "155a69e40cc69db76b8e3272582c5c27eeb3ef064ae243539fa73d02c18613db"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-2.txt",
+      "size": 2531,
+      "sha256": "b7660c65ec6c7ada9ed90f57f7df40ae2b072edbf1946e773319ea12d7141bd8"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-3.meta.json",
+      "size": 378,
+      "sha256": "dda696e444281176901efaed22e02c1a349c5b24e412340e2419916d139ec879"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-3.txt",
+      "size": 4016,
+      "sha256": "0c203c82904d2cae08f491e926975a56278bfb7c44a6ca3541981a2659ad60de"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-4.meta.json",
+      "size": 368,
+      "sha256": "d3f2aaefd88c2664de08792ddd199bf96e06e208a3adae423b279278e8b16a7c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-4.txt",
+      "size": 5169,
+      "sha256": "ae555db4208f1d7f38d78046149cfb10170c035b8a80fe2ab4e57278188406d4"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-5.meta.json",
+      "size": 387,
+      "sha256": "e4e0a7218e405790cd2d03fb4b8143e008ecfdeb34fa51844c8d90aabb34faed"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-5.txt",
+      "size": 1537,
+      "sha256": "61c8063de508e725959df81de44d205a95b410da575a326fa99f7ff502e40c1c"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-6.meta.json",
+      "size": 381,
+      "sha256": "64bb3dd5fa166d115905ab2ba5b8c58bffce20f9ded8369e9abee56b77f13b3d"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-6.txt",
+      "size": 3185,
+      "sha256": "f415f87a2a395d512b0d4c1709258e375d8e6206b35496dd544fd8f9020173bb"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-7.meta.json",
+      "size": 361,
+      "sha256": "470b9f293a59ae6e1eed0820a2b498d894fd7d3078698760316b8ae00c22e857"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-7.txt",
+      "size": 1335,
+      "sha256": "8247d0843847a5a8220b190952e46eca9334e54974b6fe50812a88ad2fb81f31"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-8.meta.json",
+      "size": 396,
+      "sha256": "ce4a07239b88ebd738d07fa42b251a0acc3b81fbc69bb4eebe55745db38080c6"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10-8.txt",
+      "size": 4987,
+      "sha256": "91ce6ae50b6628fbb980ef550fed55dc041adbe9a6a32b5722fb7ed5cebb1bf9"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10.meta.json",
+      "size": 295,
+      "sha256": "b1c4f92dab49bf06a4edf5be9aca110e2c86b166541b254912521e75540962a2"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.10.txt",
+      "size": 3708,
+      "sha256": "ee25cc45390af7c02d73d50e2be86994edc27b2fb98b5a74ee0d5dfa18ee1369"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.11.meta.json",
+      "size": 361,
+      "sha256": "d9b3970d84242117f82ddb0bcfcf47c4982aa9607f5070171fdaa49576df44b6"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.11.txt",
+      "size": 3699,
+      "sha256": "22f3c637d4eba21522e96046fc068c79fdf177758d57c85a849d70b4b4d5bc71"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.meta.json",
+      "size": 3026,
+      "sha256": "77b93c6a57d6a0f5d15753b5f2ab3afc5501400c29866b164a8a57892c655fbb"
+    },
+    {
+      "path": "workspace/materials/new-book-section-ocr/5.txt",
+      "size": 2559,
+      "sha256": "b05143d80b4c237284c9f810603ca1efc8727f7c804e3513df5d24c0d139d58a"
+    }
+  ]
+}

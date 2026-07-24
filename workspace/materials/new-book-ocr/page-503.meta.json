@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": null,
+  "title": "Some Properties of the z-Transform 503",
+  "summary": "This page covers 5.2 (Some Properties of the z-Transform 503). OCR text begins with: 5.2 Some Properties of the z-Transform 503 Proof. For the integer value of m, ∞ \" Z{x[n − m]u[n − m]} = x[n − m]u[n − m]z−n n=0 Recall that x[n − m]u[n − m] = 0 for n < m so that the limits on the summation on the right-hand",
+  "keywords": [
+    "5.2",
+    "Some Properties of the z-Transform 503",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-503",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

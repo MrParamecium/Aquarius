@@ -1,0 +1,70 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 420 — #91
+
+
+
+
+420   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+            Let us consider a system with the transfer function
+                                                            K(s + a1 )(s + a2 )
+                                             H(s) =                                                    (4.44)
+                                                         s(s + b1 )(s2 + b2 s + b3 )
+
+      where the second-order factor (s2 + b2 s + b3 ) is assumed to have complex conjugate roots.† We
+      shall rearrange Eq. (4.44) in the form
+
+                                                                    s           s
+                                                                      +1          +1
+                                            Ka1 a2                 a1          a2
+                                     H(s) =
+                                            b1 b3               s            s2 b2
+                                                          s       +1           + s+1
+                                                               b1            b3 b3
+
+      and
+                                                                        jω       jω
+                                                                   1+         1+
+                                             Ka1 a2                     a1       a2
+                                 H(jω) =                                                !
+                                              b1 b3                jω        b2 ω (jω)2
+                                                      jω 1 +             1+j      +
+                                                                   b1         b3    b3
+      This equation shows that H(jω) is a complex function of ω. The amplitude response |H(jω)| and
+      the phase response  H(jω) are given by
+                                                                             
+                                                                jω     jω 
+                                                        
+                                        Ka1 a2          1 + a 1 + a 
+                            |H(jω)| =                      
+                                                                   1          2
+                                                                                            (4.45)
+                                         b1 b3       
+                                                           jω 
+                                                                       b2 ω     (jω)2 
+                                                  |jω|1 + 1 + j             +
+                                                            b1            b3        b3 
+
+      and
+                                               Ka1 a2                   jω              jω
+                               H(jω) =                      +   1+      +      1+
+                                               b1 b3                    a1              a2
+                                                                                                 !
+                                                                   jω              jb2 ω (jω)2
+                                            −  jω −         1+      −      1+        +              (4.46)
+                                                                   b1               b3     b3
+
+      From Eq. (4.46) we see that the phase function consists of the addition of terms of four kinds: (i)
+      the phase of a constant, (ii) the phase of jω, which is 90◦ for all values of ω, (iii) the phase for the
+      first-order term of the form 1 + jω/a, and (iv) the phase of the second-order term
+                                                                  !
+                                                     jb2 ω (jω)2
+                                                1+        +
+                                                      b3      b3
+
+      We can plot these basic phase functions for ω in the range 0 to ∞ and then, using these plots, we
+      can construct the phase function of any transfer function by properly adding these basic responses.
+      Note that if a particular term is in the numerator, its phase is added, but if the term is in the
+
+      † Coefficients a , a and b , b , b used in this section are not to be confused with those used in the
+                      1   2       1  2   3
+      representation of Nth-order LTIC system equations given earlier [Eqs. (2.1) or (4.26)].

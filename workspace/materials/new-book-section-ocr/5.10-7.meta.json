@@ -1,0 +1,16 @@
+{
+  "sectionId": "5.10-7",
+  "sourcePages": [
+    "page-572"
+  ],
+  "usedPages": [
+    "page-572"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-7 Problems Finding Polynomial Roots",
+  "foundEnd": true,
+  "endBeforeLine": "5.10-8 Using Cascaded Second-Order Sections to Improve Design",
+  "endBeforeCode": "5.10-8",
+  "charCount": 1215
+}

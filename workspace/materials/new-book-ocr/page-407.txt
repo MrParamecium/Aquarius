@@ -1,0 +1,59 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 407 — #78
+
+
+
+
+                                               4.7   Application to Feedback and Controls            407
+
+(set at the desired output position) and the output θo (actual position) is amplified; the amplified
+output, which is proportional to θi − θo , is applied to the motor input. If θi − θo = 0 (the output
+being equal to the desired angle), there is no input to the motor, and the motor stops. But if θo = θi ,
+there will be a nonzero input to the motor, which will turn the shaft until θo = θi . It is evident that
+by setting the input potentiometer at a desired position in this system, we can control the angular
+position of a heavy remote object.
+     The block diagram of this system is shown in Fig. 4.35b. The amplifier gain is K, where K is
+adjustable. Let the motor (with load) transfer function that relates the output angle θo to the motor
+input voltage be G(s) [for a starting point, see Eq. (1.32)]. This feedback arrangement is identical
+to that in Fig. 4.18d with H(s) = 1. Hence, T(s), the (closed-loop) system transfer function relating
+the output θo to the input θi , is
+
+                                     o (s)            KG(s)
+                                            = T(s) =
+                                     i (s)          1 + KG(s)
+
+From this equation, we shall investigate the behavior of the automatic position control system in
+Fig. 4.35a for a step and a ramp input.
+
+S TEP I NPUT
+If we desire to change the angular position of the object instantaneously, we need to apply a step
+input. We may then want to know how long the system takes to position itself at the desired
+angle, whether it reaches the desired angle, and whether it reaches the desired position smoothly
+(monotonically) or oscillates about the final position. If the system oscillates, we may want to
+know how long it takes for the oscillations to settle down. All these questions can be readily
+answered by finding the output θo (t) when the input θi (t) = u(t). A step input implies instantaneous
+change in the angle. This input would be one of the most difficult to follow; if the system can
+perform well for this input, it is likely to give a good account of itself under most other expected
+situations. This is why we test control systems for a step input.
+     For the step input θi (t) = u(t), i (s) = 1/s and
+
+                                           1           KG(s)
+                                   o (s) = T(s) =
+                                           s       s[1 + KG(s)]
+
+Let the motor (with load) transfer function relating the load angle θo (t) to the motor input voltage
+be G(s) = 1/(s(s + 8)). This yields
+
+                                             K
+                                         s(s + 8)           K
+                             o (s) =                != 2
+                                               K       s(s + 8s + K)
+                                      s 1+
+                                            s(s + 8)
+
+Let us investigate the system behavior for three different values of gain K.
+    For K = 7,
+                                                                 7    1
+                                   7               7         1
+                  o (s) =                 =               =   − 6
+                                                                   +  6
+                             s(s2 + 8s + 7) s(s + 1)(s + 7) s s + 1 s + 7

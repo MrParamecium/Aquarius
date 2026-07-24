@@ -1,0 +1,49 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 422 — #93
+
+
+
+
+422   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can sketch these four basic terms as functions of ω and use them to construct the log-amplitude
+      plot of any desired transfer function. Let us discuss each of the terms.
+
+
+      4.9-1 Constant Ka1 a2 /b1 b3
+      The log amplitude of the constant Ka1 a2 /b1 b2 term is also a constant, 20 log |Ka1 a2 /b1 b3 |. The
+      phase contribution from this term is zero for positive value and π for negative value of the constant
+      (complex constants can have different phases).
+
+
+      4.9-2 Pole (or Zero) at the Origin
+      L OG M AGNITUDE
+      A pole at the origin gives rise to the term −20 log |jω|, which can be expressed as
+
+                                            −20 log |jω| = −20 log ω
+
+      This function can be plotted as a function of ω. However, we can effect further simplification by
+      using the logarithmic scale for the variable ω itself. Let us define a new variable u such that
+
+                                                       u = log ω
+
+      Hence,
+                                               −20 log ω = −20u
+      The log-amplitude function −20u is plotted as a function of u in Fig. 4.40a. This is a straight
+      line with a slope of −20. It crosses the u axis at u = 0. The ω-scale (u = log ω) also appears in
+      Fig. 4.40a. Semilog graphs can be conveniently used for plotting, and we can directly plot ω on
+      semilog paper. A ratio of 10 is a decade, and a ratio of 2 is known as an octave. Furthermore, a
+      decade along the ω scale is equivalent to 1 unit along the u scale. We can also show that a ratio of
+      2 (an octave) along the ω scale equals to 0.3010 (which is log10 2) along the u scale.†
+
+      † This point can be shown as follows. Let ω and ω along the ω scale correspond to u and u along the u
+                                                    1  2                                 1     2
+      scale so that log ω1 = u1 and log ω2 = u2 . Then
+                                   u2 − u1 = log10 ω2 − log10 ω1 = log10 (ω2 /ω1 )
+      Thus, if
+                                      (ω2 /ω1 ) = 10       (which is a decade)
+      then
+                                              u2 − u1 = log10 10 = 1
+      and if
+                                       (ω2 /ω1 ) = 2      (which is an octave)
+      then
+                                            u2 − u1 = log10 2 = 0.3010

@@ -1,0 +1,51 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 418 — #89
+
+
+
+
+418   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      with frequency.† Because its gain is 1/ω, the ideal integrator suppresses higher-frequency
+      components but enhances lower-frequency components with ω < 1. Consequently, noise
+      signals (if they do not contain an appreciable amount of very-low-frequency components) are
+      suppressed (smoothed out) by an integrator.
+
+
+
+
+       D R I L L 4.15 Sinusoidal Response of an LTIC System
+       Find the response of an LTIC system specified by
+
+                                       d2 y(t)    dy(t)           dx(t)
+                                               +3       + 2y(t) =       + 5x(t)
+                                        dt2        dt              dt
+       if the input is a sinusoid 20 sin (3t + 35◦ ).
+
+       ANSWER
+       10.23 sin(3t − 61.91◦ )
+
+
+
+
+      4.8-1 Steady-State Response to Causal Sinusoidal Inputs
+      So far we have discussed the LTIC system response to everlasting sinusoidal inputs (starting at
+      t = −∞). In practice, we are more interested in causal sinusoidal inputs (sinusoids starting at
+      t = 0). Consider the input ejωt u(t), which starts at t = 0 rather than at t = −∞. In this case
+      X(s) = 1/(s + jω). Moreover, according to Eq. (4.27), H(s) = P(s)/Q(s), where Q(s) is the
+
+
+
+      † A puzzling aspect of this result is that in deriving the transfer function of the integrator in Eq. (4.32), we
+      have assumed that the input starts at t = 0. In contrast, in deriving its frequency response, we assume that the
+      everlasting exponential input ejωt starts at t = −∞. There appears to be a fundamental contradiction between
+      the everlasting input, which starts at t = −∞, and the integrator, which opens its gates only at t = 0. Of
+      what use is everlasting input, since the integrator starts integrating at t = 0? The answer is that the integrator
+      gates are always open, and integration begins whenever the input starts. We restricted the input to start at
+      t = 0 in deriving Eq. (4.32) because we were finding the transfer function using the unilateral transform,
+      where the inputs begin at t = 0. So the integrator starting to integrate at t = 0 is restricted because of the
+      limitations of the unilateral transform method, not because of the limitations of the integrator itself. If we
+      were to find the integrator transfer function using Eq. (2.40), where there is no such restriction on the input,
+      we would still find the transfer function of an integrator as 1/s. Similarly, even if we were to use the bilateral
+      Laplace transform, where t starts at −∞, we would find the transfer function of an integrator to be 1/s.
+      The transfer function of a system is the property of the system and does not depend on the method used to
+      find it.

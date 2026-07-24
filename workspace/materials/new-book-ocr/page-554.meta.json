@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": null,
+  "title": "THE BILATERAL z-TRANSFORM",
+  "summary": "This page covers 5.8 (THE BILATERAL z-TRANSFORM). OCR text begins with: 554 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM D R I L L 5.22 Filter Design by the Impulse-Invariance Method Design a digital filter to realize an analog transfer function 20 Ha (s) = s + 20 ANSWER",
+  "keywords": [
+    "5.8",
+    "THE BILATERAL z-TRANSFORM",
+    "discrete-time",
+    "digital filter"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-554",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

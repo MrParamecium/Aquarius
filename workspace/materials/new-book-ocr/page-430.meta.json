@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.9. OCR text begins with: 430 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.29 Bode Plots for Second-Order Transfer Function with Real Roots Sketch Bode plots for the transfer function 20s(s + 100) H(s) = (s + 2)(s + 10)",
+  "keywords": [
+    "4.9",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-430",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

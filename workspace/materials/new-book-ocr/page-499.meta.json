@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": "5.1-2",
+  "title": "Inverse z-Transform by Power Series Expansion",
+  "summary": "This page covers 5.1-2 (Inverse z-Transform by Power Series Expansion). OCR text begins with: 5.1 The z-Transform 499 D R I L L 5.2 Inverse z-Transform by Partial Fraction Expansion Find the inverse z-transform of the following functions: z(2z − 1) (a) (z − 1)(z + 0.5) 1",
+  "keywords": [
+    "5.1",
+    "5.1-2",
+    "Inverse z-Transform by Power Series Expansion",
+    "unit impulse",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-499",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

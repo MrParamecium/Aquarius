@@ -1,0 +1,28 @@
+{
+  "sectionId": "4.7-1",
+  "sourcePages": [
+    "page-406",
+    "page-407",
+    "page-408",
+    "page-409",
+    "page-410",
+    "page-411",
+    "page-412"
+  ],
+  "usedPages": [
+    "page-406",
+    "page-407",
+    "page-408",
+    "page-409",
+    "page-410",
+    "page-411",
+    "page-412"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.7-1 Analysis of a Simple Control System",
+  "foundEnd": true,
+  "endBeforeLine": "4.8 F REQUENCY R ESPONSE OF AN LTIC S YSTEM",
+  "endBeforeCode": "4.8",
+  "charCount": 15622
+}

@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": null,
+  "summary": "This page covers 4.10-5. OCR text begins with: 4.11 The Bilateral Laplace Transform 447 where X1 (s) is the Laplace transform of the causal component x1 (t), and X2 (s) is the Laplace transform of the anticausal component x2 (t). Consider X2 (s), given by # 0− # ∞ X2 (s) = x2 (t)e−st dt = x2 (−t)est dt −∞ 0+ Therefore, # ∞",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-447",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

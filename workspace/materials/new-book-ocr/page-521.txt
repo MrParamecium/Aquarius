@@ -1,0 +1,55 @@
+           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 521 — #34
+
+
+
+
+                                                                      5.4   System Realization       521
+
+    system is H1 [z] + H2 [z]. For a feedback system (as in Fig. 4.18d), the transfer function is
+    G[z]/(1 + G[z]H[z]).
+         We now consider a systematic method for realization (or simulation) of an arbitrary Nth-order
+    LTID transfer function. Since realization is basically a synthesis problem, there is no unique way of
+    realizing a system. A given transfer function can be realized in many different ways. We present
+    here the two forms of direct realization. Each of these forms can be executed in several other
+    ways, such as cascade and parallel. Furthermore, a system can be realized by the transposed
+    version of any known realization of that system. This artifice doubles the number of system
+    realizations. A transfer function H[z] can be realized by using time delays along with adders and
+    multipliers.
+         We shall consider a realization of a general Nth-order causal LTID system, whose transfer
+    function is given by
+                                         b0 zN + b1 zN−1 + · · · + bN−1 z + bN
+                                H[z] =                                                            (5.29)
+                                          zN + a1 zN−1 + · · · + aN−1 z + aN
+
+    This equation is identical to the transfer function of a general Nth-order proper LTIC system given
+    in Eq. (4.36). The only difference is that the variable z in the former is replaced by the variable s
+    in the latter. Hence, the procedure for realizing an LTID transfer function is identical to that for
+    the LTIC transfer function with the basic element 1/s (integrator) replaced by the element 1/z
+    (unit delay). The reader is encouraged to follow the steps in Sec. 4.6 and rederive the results for
+    the LTID transfer function in Eq. (5.29). Here we shall merely reproduce the realizations from
+    Sec. 4.6 with integrators (1/s) replaced by unit delays (1/z).
+         The direct form I (DFI) is shown in Fig. 5.8a, the canonic direct form (DFII) is shown in
+    Fig. 5.8b and the transpose of canonic direct is shown in Fig. 5.8c. The DFII and its transpose are
+    canonic because they require N delays, which is the minimum number needed to implement the
+    Nth-order LTID transfer function in Eq. (5.29). In contrast, the form DFI is a noncanonic because
+    it generally requires 2N delays. The DFII realization in Fig. 5.8b is also called a canonic direct
+    form.
+
+
+
+E X A M P L E 5.8 Canonical Realizations of Transfer Functions
+
+    Find the canonic direct and the transposed canonic direct realizations of the following transfer
+                    2         4z + 28        z             4z + 28
+    functions: (a)      , (b)         , (c)     , and (d) 2          .
+                   z+5         z+1          z+7          z + 6z + 5
+
+    All four of these transfer functions are special cases of H[z] in Eq. (5.29).
+         (a)
+                                                        2
+                                              H[z] =
+                                                       z+5
+    For this case, the transfer function is of the first order (N = 1); therefore, we need only one
+    delay for its realization. The feedback and feedforward coefficients are
+
+                                  a1 = 5      and       b0 = 0,   b1 = 2

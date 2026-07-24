@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": "Frequency Response From Pole -Zero Locations",
+  "summary": "This page covers 5.6 (Frequency Response From Pole -Zero Locations). OCR text begins with: 538 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM E X A M P L E 5.12 Maximum Sampling Interval Determine the maximum sampling interval T that can be used in a discrete-time oscillator that generates a sinusoid of 50 kHz. Here the highest significant frequency fh = 50 kHz. Therefore from Eq. (5.39), 1 T< = 10 µs",
+  "keywords": [
+    "5.6",
+    "Frequency Response From Pole -Zero Locations",
+    "discrete-time",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-538",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

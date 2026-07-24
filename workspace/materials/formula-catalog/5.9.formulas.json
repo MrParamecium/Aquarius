@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.9",
+  "sectionTitle": "Connecting the Laplace and z-Transforms",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-565"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.53)",
+      "name": "Impulse-train processing bridge between Laplace and z domains",
+      "latex": "Y(s)=H[e^{sT}]X(s)",
+      "sourcePage": "page-565",
+      "role": "domain_bridge",
+      "status": "verified"
+    }
+  ]
+}

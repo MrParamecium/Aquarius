@@ -1,0 +1,59 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 374 — #45
+
+
+
+
+374   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      integro-differential equations. This procedure is considerably simpler because it permits us to treat
+      an electrical network as if it were a resistive network. For this purpose, we need to represent a
+      network in the “frequency domain” where all the voltages and currents are represented by their
+      Laplace transforms.
+            For the sake of simplicity, let us first discuss the case with zero initial conditions. If v(t) and
+      i(t) are the voltage across and the current through an inductor of L henries, then
+
+                                                                    di(t)
+                                                         v(t) = L
+                                                                     dt
+      The Laplace transform of this equation (assuming zero initial current) is
+
+                                                     V(s) = LsI(s)
+
+      Similarly, for a capacitor of C farads, the voltage-current relationship is i(t) = C(dv/dt) and its
+      Laplace transform, assuming zero initial capacitor voltage, yields I(s) = CsV(s); that is,
+
+                                                                1
+                                                     V(s) =        I(s)
+                                                                Cs
+      For a resistor of R ohms, the voltage-current relationship is v(t) = Ri(t), and its Laplace transform
+      is
+                                                 V(s) = RI(s)
+      Thus, in the “frequency domain,” the voltage-current relationships of an inductor and a capacitor
+      are algebraic; these elements behave like resistors of “resistance” Ls and 1/Cs, respectively. The
+      generalized “resistance” of an element is called its impedance and is given by the ratio V(s)/I(s)
+      for the element (under zero initial conditions). The impedances of a resistor of R ohms, an inductor
+      of L henries, and a capacitance of C farads are R, Ls, and 1/Cs, respectively.
+           Also, the interconnection constraints (Kirchhoff’s laws) remain valid for voltages and currents
+      in the frequency domain. To demonstrate this point, let vj (t) (j = 1, 2, . . . , k) be the voltages across
+      k elements in a loop and let ij (t)(j = 1, 2, . . . , m) be the j currents entering a node. Then
+
+                                      "
+                                      k                                     "
+                                                                            m
+                                            vj (t) = 0       and                  ij (t) = 0
+                                      j=1                                   j=1
+
+      Now if
+                                    vj (t) ⇐⇒ Vj (s)          and           ij (t) ⇐⇒ Ij (s)
+      then
+                                     "
+                                     k                                      "
+                                                                            m
+                                            Vj (s) = 0       and                  Ij (s) = 0
+                                      j=1                                   j=1
+
+      This result shows that if we represent all the voltages and currents in an electrical network by
+      their Laplace transforms, we can treat the network as if it consisted of the “resistances” R, Ls,
+      and 1/Cs corresponding to a resistor R, an inductor L, and a capacitor C, respectively. The system
+      equations (loop or node) are now algebraic. Moreover, the simplification techniques that have been
+      developed for resistive circuits—equivalent series and parallel impedances, voltage and current

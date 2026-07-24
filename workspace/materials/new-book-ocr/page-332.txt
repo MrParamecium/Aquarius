@@ -1,0 +1,56 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 332 — #3
+
+
+
+
+332   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Note that s is complex and as t → ∞, the term e−(s+a)t does not necessarily vanish. Here we
+      recall that for a complex number z = α + jβ,
+                                                  e−zt = e−(α+jβ)t = e−αt e−jβt
+      Now |e−jβt | = 1 regardless of the value of βt. Therefore, as t → ∞, e−zt → 0 only if α > 0,
+      and e−zt → ∞ if α < 0. Thus,
+                                                   
+                                                    0      Re z > 0
+                                        lim e−zt =                                            (4.5)
+                                       t→∞          ∞      Re z < 0
+      Clearly,                                              
+                                                             0       Re(s + a) > 0
+                                         lim e−(s+a)t =
+                                         t→∞                  ∞      Re(s + a) < 0
+      Use of this result in Eq. (4.4) yields
+                                                        1
+                                              X(s) =              Re(s + a) > 0
+                                                       s+a
+      or
+                                                             1
+                                             e−at u(t) ⇐⇒              Re s > −a                                  (4.6)
+                                                            s+a
+      The ROC of X(s) is Re s > −a, as shown in the shaded area in Fig. 4.1a. This fact means that
+      the integral defining X(s) in Eq. (4.4) exists only for the values of s in the shaded region in
+      Fig. 4.1a. For other values of s, the integral in Eq. (4.4) does not converge. For this reason, the
+      shaded region is called the ROC (or the region of existence) for X(s).
+                   Signal x(t)                                                         Region of convergence
+
+                     1
+                                                                                         Im         cj
+                              eatu(t)
+
+                                              t                                               0     c
+                                                                                  a                       Real
+
+
+
+                                                           (a)                                    cj
+
+
+
+                                                                                              Im
+                         0               t
+                         1                                                       a          0            Real
+
+            eatu(t)
+                                                           (b)
+
+      Figure 4.1 Signals (a) e−at u(t) and (b) −e−at u(−t) have the same Laplace transform but
+      different regions of convergence.

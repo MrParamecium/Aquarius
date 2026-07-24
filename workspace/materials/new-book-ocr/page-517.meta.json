@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": "z-Transform Solution of Linear Difference Equations 517",
+  "summary": "This page covers 5.3 (z-Transform Solution of Linear Difference Equations 517). OCR text begins with: 5.3 z-Transform Solution of Linear Difference Equations 517 Therefore, Y[z] (z + 0.32) (z + 0.32) = 2 = z (z + z + 0.16)(z + 0.5) (z + 0.2)(z + 0.8)(z + 0.5) 2/3 8/3 2 = − +",
+  "keywords": [
+    "5.3",
+    "z-Transform Solution of Linear Difference Equations 517",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-517",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

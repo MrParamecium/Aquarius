@@ -1,0 +1,55 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 396 — #67
+
+
+
+
+396     CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                         1                  5
+                        s2
+
+
+                                                                             
+      X(s)                                            2                            Y(s)
+                                                                        
+                                                                        
+
+
+                        1                        1         3
+                       s3                      s3
+
+      Figure 4.25 Parallel realization of (7s2 + 37s + 51)/((s + 2)(s + 3)2 ).
+
+
+
+        1/(s + 3)2 can be realized with a cascade of two subsystems, each having a transfer function
+        1/(s + 3), as shown in Fig. 4.25. Each of the three first-order transfer functions in Fig. 4.25
+        may now be realized as in Fig. 4.23.
+
+
+
+
+         D R I L L 4.12 Canonic, Cascade, and Parallel Realizations
+         Find the canonic, cascade, and parallel realization of
+
+                                                     s+3            s+3           1
+                                       H(s) =                 =
+                                                 s2 + 7s + 10       s+2          s+5
+
+
+
+
+        4.6-4 Transposed Realization
+        Two realizations are said to be equivalent if they have the same transfer function. A simple way
+        to generate an equivalent realization from a given realization is to use its transpose. To generate a
+        transpose of any realization, we change the given realization as follows:
+             1. Reverse all the arrow directions without changing the scalar multiplier values.
+             2. Replace pickoff nodes by adders and vice versa.
+             3. Replace the input X(s) with the output Y(s) and vice versa.
+             Figure 4.26a shows the transposed version of the canonic direct form realization in Fig. 4.22b
+        found according to the rules just listed. Figure 4.26b is Fig. 4.26a reoriented in the conventional
+        form so that the input X(s) appears at the left and the output Y(s) appears at the right. Observe that
+        this realization is also canonic.
+             Rather than prove the theorem on equivalence of the transposed realizations, we shall verify
+        that the transfer function of the realization in Fig. 4.26b is identical to that in Eq. (4.36).

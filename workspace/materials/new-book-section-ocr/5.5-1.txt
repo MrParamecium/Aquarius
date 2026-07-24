@@ -1,0 +1,203 @@
+# Fourier section OCR
+section_id: 5.5-1
+source_pages: page-532, page-533, page-534, page-535, page-536
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.5-1 The Periodic Nature of Frequency Response
+      In Ex. 5.10 and Fig. 5.14, we saw that the frequency response H[ej ] is a periodic function of
+      . This is not a coincidence. Unlike continuous-time systems, all LTID systems have periodic
+      frequency response. This is seen clearly from the nature of the expression of the frequency
+
+[[PAGE page-533]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 533 — #46
+
+
+
+
+                                     5.5   Frequency Response of Discrete-Time Systems             533
+
+response of an LTID system. Because e±j2πm = 1 for all integer values of m [see Eq. (B.10)],
+
+                               H[ej ] = H ej(+2πm)         m integer
+
+Therefore, the frequency response H[ej ] is a periodic function of  with a period 2π . This is the
+mathematical explanation of the periodic behavior. The physical explanation that follows provides
+a much better insight into the periodic behavior.
+
+N ON - UNIQUENESS OF D ISCRETE -T IME S INUSOID WAVEFORMS
+A continuous-time sinusoid cos ωt has a unique waveform for every real value of ω in the range 0
+to ∞. Increasing ω results in a sinusoid of ever-increasing frequency. Such is not the case for the
+discrete-time sinusoid cos n because
+
+                             cos [( ± 2π m)n] = cos n        m integer
+
+and
+                                  ej(±2πm)n = ejn       m integer
+This shows that the discrete-time sinusoids cos n (and exponentials ejn ) separated by values of
+ in integral multiples of 2π are identical. The reason for the periodic nature of the frequency
+response of an LTID system is now clear. Since the sinusoids (or exponentials) with frequencies
+separated by interval 2π are identical, the system response to such sinusoids is also identical and,
+hence, is periodic with period 2π .
+     This discussion shows that the discrete-time sinusoid cos n has a unique waveform only
+for the values of  in the range −π to π . This band is called the fundamental band. Every
+frequency , no matter how large, is identical to some frequency, a , in the fundamental band
+(−π ≤ a < π ), where
+
+                       a =  − 2π m        − π ≤ a < π       and    m integer                 (5.38)
+
+The integer m can be positive or negative. We use Eq. (5.38) to plot the fundamental band
+frequency a versus the frequency  of a sinusoid (Fig. 5.17a). The frequency a is modulo
+2π value of .
+    All these conclusions are also valid for exponential ejn .
+
+A LL D ISCRETE -T IME S IGNALS A RE I NHERENTLY B ANDLIMITED
+This discussion leads to the surprising conclusion that all discrete-time signals are inherently
+bandlimited, with frequencies lying in the range −π to π radians per sample. In terms of frequency
+F = /2π , where F is in cycles per sample, all frequencies F separated by an integer number
+are identical. For instance, all discrete-time sinusoids of frequencies 0.3, 1.3, 2.3, . . . cycles per
+sample are identical. The fundamental range of frequencies is −0.5 to 0.5 cycles per sample.
+     Any discrete-time sinusoid of frequency beyond the fundamental band, when plotted, appears
+and behaves, in every way, like a sinusoid having its frequency in the fundamental band. It is
+impossible to distinguish between the two signals. Thus, in a basic sense, discrete-time frequencies
+beyond || = π or |F| = 1/2 do not exist. Yet, in a “mathematical” sense, we must admit the
+existence of sinusoids of frequencies beyond  = π . What does this mean?
+
+[[PAGE page-534]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 534 — #47
+
+
+
+
+534   CHAPTER 5             DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+                                           p
+                a
+
+
+
+
+                        2p        p          0        p            2p          3p          4p
+
+                                          p
+
+                                                       (a)
+
+
+
+               a
+                       p
+
+                     0.4p
+
+                        2p        p          0        p            2p          3p          4p
+                                                              1.6p        2.4p        3.6p
+
+                                                       (b)
+            Figure 5.17 (a) Actual frequency versus (b) apparent frequency.
+
+
+
+
+      A M AN N AMED R OBERT
+      To give an analogy, consider a fictitious person Mr. Robert Thompson. His mother calls him
+      Robby; his acquaintances call him Bob, his close friends call him by his nickname, Shorty. Yet,
+      Robert, Robby, Bob, and Shorty are one and the same person. However, we cannot say that only
+      Mr. Robert Thompson exists, or only Robby exists, or only Shorty exists, or only Bob exists. All
+      these four persons exist, although they are one and the same individual. In a same way, we cannot
+      say that the frequency π/2 exists and frequency 5π/2 does not exist; they are both the same entity,
+      called by different names.
+           It is in this sense that we have to admit the existence of frequencies beyond the fundamental
+      band. Indeed, mathematical expressions in the frequency domain automatically cater to this
+      need by their built-in periodicity. As seen earlier, the very structure of the frequency response
+      is 2π -periodic. We shall also see later, in Ch. 9, that discrete-time signal spectra are also
+      2π -periodic.
+           Admitting the existence of frequencies beyond π also serves mathematical and computational
+      convenience in digital signal-processing applications. Values of frequencies beyond π may also
+      originate naturally in the process of sampling continuous-time sinusoids. Because there is no upper
+      limit on the value of ω, there is no upper limit on the value of the resulting discrete-time frequency
+       = ωT either.†
+           The highest possible frequency is π and the lowest frequency is 0 (dc or constant). Clearly,
+      the high frequencies are those in the vicinity of  = (2m + 1)π and the low frequencies are those
+      in the vicinity of  = 2π m for all positive or negative integer values of m.
+
+
+
+      † However, if  goes beyond π , the resulting aliasing reduces the apparent frequency to  < π .
+                                                                                                a
+
+[[PAGE page-535]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 535 — #48
+
+
+
+
+                                         5.5   Frequency Response of Discrete-Time Systems            535
+
+    F URTHER R EDUCTION IN THE F REQUENCY R ANGE
+    Because cos (−n + θ ) = cos (n − θ ), a frequency in the range −π to 0 is identical to the
+    frequency (of the same magnitude) in the range 0 to π (but with a change in phase sign).
+    Consequently the apparent frequency for a discrete-time sinusoid of any frequency is equal to some
+    value in the range 0 to π . Thus, cos (8.7π n + θ ) = cos (0.7π n + θ ), and the apparent frequency is
+    0.7π . Similarly,
+                          cos (9.6π n + θ ) = cos (−0.4π n + θ ) = cos (0.4π n − θ )
+
+    Hence, the frequency 9.6π is identical (in every respect) to frequency −0.4π , which, in turn, is
+    equal (within the sign of its phase) to frequency 0.4π . In this case, the apparent frequency reduces
+    to |a | = 0.4π . We can generalize the result to say that the apparent frequency of a discrete-time
+    sinusoid  is |a |, as found from Eq. (5.38), and if a < 0, there is a phase reversal. Figure 5.17b
+    plots  versus the apparent frequency |a |. The shaded bands represent the ranges of  for
+    which there is a phase reversal, when represented in terms of |a |. For example, the apparent
+    frequency for both the sinusoids cos (2.4π + θ ) and cos (3.6π + θ ) is |a | = 0.4π , as seen from
+    Fig. 5.17b. But 2.4π is in a clear band and 3.6π is in a shaded band. Hence, these sinusoids appear
+    as cos (0.4π + θ ) and cos (0.4π − θ ), respectively.
+         Although every discrete-time sinusoid can be expressed as having frequency in the range from
+    0 to π , we generally use the frequency range from −π to π instead of 0 to π for two reasons. First,
+    exponential representation of sinusoids with frequencies in the range 0 to π requires a frequency
+    range −π to π . Second, even when we are using a trigonometric representation, we generally need
+    the frequency range −π to π to have exact identity (without phase reversal) of a higher-frequency
+    sinusoid.
+         For certain practical advantages, in place of the range −π to π , we often use other contiguous
+    ranges of width 2π . The range 0 to 2π , for instance, is used in many applications. It is left as an
+    exercise for the reader to show that the frequencies in the range from π to 2π are identical to those
+    in the range from −π to 0.
+
+
+
+E X A M P L E 5.11 Apparent Frequency
+
+    Express the following signals in terms of their apparent frequencies: (a) cos (0.5π n + θ ), (b)
+    cos (1.6π n + θ ), (c) sin (1.6π n + θ ), (d) cos (2.3π n + θ ), and (e) cos (34.699n + θ ).
+
+
+        (a)  = 0.5π is in the reduced range already. This is also apparent from Fig. 5.17a or 5.17b.
+    Because a = 0.5π , there is no phase reversal, and the apparent sinusoid is cos (0.5π n + θ ).
+        (b) We express 1.6π = −0.4π + 2π so that a = −0.4π and |a | = 0.4. Also, a is
+    negative, implying sign change for the phase. Hence, the apparent sinusoid is cos (0.4π n − θ ).
+    This fact is also apparent from Fig. 5.17b.
+        (c) We first convert the sine form to cosine form as sin (1.6π n + θ ) = cos (1.6π n −
+    (π/2) + θ ). In part (b), we found a = −0.4π . Hence, the apparent sinusoid is cos (0.4π n +
+    (π/2) − θ ) = − sin (0.4π n − θ ). In this case, both the phase and the amplitude change signs.
+        (d) 2.3π = 0.3π + 2π so that a = 0.3π . Hence, the apparent sinusoid is cos (0.3π n + θ ).
+
+[[PAGE page-536]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 536 — #49
+
+
+
+
+536   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           (e) We have 34.699 = −3 + 6(2π ). Hence, a = −3, and the apparent frequency |a | = 3
+      rad/sample. Because a is negative, there is a sign change of the phase. Hence, the apparent
+      sinusoid is cos (3n − θ ).
+
+
+
+
+       D R I L L 5.20 Apparent Frequency
+       Show that the sinusoids having frequencies  of (a) 2π , (b) 3π , (c) 5π , (d) 3.2π , (e) 22.1327,
+       and (f) π + 2 can be expressed, respectively, as sinusoids of frequencies (a) 0, (b) π , (c) π ,
+       (d) 0.8π , (e) 3, and (f) π − 2. Show that in cases (d), (e), and (f), phase changes sign.

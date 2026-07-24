@@ -1,0 +1,66 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 433 — #104
+
+
+
+
+                                                                                                      4.9    Bode Plots   433
+
+
+
+
+                     30
+                                                                       Exact plot
+                                                                                                                                 v
+                     20
+                           1       2       5           10         20                        100                 400       10 3
+                                                                                                                v
+                     10
+
+
+
+
+ 20 log H (dB)
+                                                     Asymptotic plot
+                      0
+
+
+                   10
+
+
+                   20
+
+
+                   30
+
+                                                                         (a)
+
+
+                     90
+
+
+                     50
+
+
+                                                                                                                                 v
+                      0
+                           1   2       5        10                50      100                500      1000       3000     103
+                                                                                                                v
+                   50
+    Phase
+
+
+                   100
+                                                     Exact plot
+                                                                                    Asymptotic plot
+                   150
+
+                   180
+                                                                         (b)
+ Figure 4.46 (a) Amplitude and (b) phase responses of the second-order system.
+
+
+
+    In addition, we have a real zero at s = −100 and a pair of complex conjugate poles. When
+we express the second-order factor in standard form,
+
+                                               s2 + 2s + 100 = s2 + 2ζ ωn s + ωn2

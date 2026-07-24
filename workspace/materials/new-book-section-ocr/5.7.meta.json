@@ -1,0 +1,30 @@
+{
+  "sectionId": "5.7",
+  "sourcePages": [
+    "page-547",
+    "page-548",
+    "page-549",
+    "page-550",
+    "page-551",
+    "page-552",
+    "page-553",
+    "page-554"
+  ],
+  "usedPages": [
+    "page-547",
+    "page-548",
+    "page-549",
+    "page-550",
+    "page-551",
+    "page-552",
+    "page-553",
+    "page-554"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.7 Digital Processing of Analog Signals 547",
+  "foundEnd": true,
+  "endBeforeLine": "5.8 T HE B ILATERAL z-T RANSFORM",
+  "endBeforeCode": "5.8",
+  "charCount": 21337
+}

@@ -1,0 +1,56 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 399 — #70
+
+
+
+
+                                                                     4.6   System Realization    399
+
+4.6-5 Using Operational Ampliﬁers for System Realization
+In this section, we discuss practical implementation of the realizations described in Sec. 4.6-4.
+Earlier we saw that the basic elements required for the synthesis of an LTIC system (or a given
+transfer function) are (scalar) multipliers, integrators, and adders. All these elements can be
+realized by operational amplifier (op-amp) circuits.
+
+O PERATIONAL A MPLIFIER C IRCUITS
+Figure 4.28 shows an op-amp circuit in the frequency domain (the transformed circuit). Because
+the input impedance of the op amp is infinite (very high), all the current I(s) flows in the feedback
+path, as illustrated. Moreover Vx (s), the voltage at the input of the op amp, is zero (very small)
+because of the infinite (very large) gain of the op amp. Therefore, for all practical purposes,
+
+                                            Y(s) = −I(s)Zf (s)
+
+Moreover, because vx ≈ 0,
+                                                        X(s)
+                                               I(s) =
+                                                        Z(s)
+
+Substitution of the second equation in the first yields
+
+                                                       Zf (s)
+                                            Y(s) = −          X(s)
+                                                       Z(s)
+
+Therefore, the op-amp circuit in Fig. 4.28 has the transfer function
+
+                                                         Zf (s)
+                                             H(s) = −
+                                                         Z(s)
+
+By properly choosing Z(s) and Zf (s), we can obtain a variety of transfer functions, as the following
+development shows.
+
+
+                                  Z f (s)
+                  I(s)
+
+
+         Z(s)                      –
+                I(s)        
+                         Vx (s)
+                                  +           
+      X(s)
+                                              Y(s)
+
+                                               
+                                                     Figure 4.28 A basic inverting configuration
+                                                     op-amp circuit.

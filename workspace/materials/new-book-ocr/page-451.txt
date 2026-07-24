@@ -1,0 +1,50 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 451 — #122
+
+
+
+
+                                                    4.11   The Bilateral Laplace Transform      451
+
+     (c) Both poles lie to the right of the region of convergence, so both poles correspond to
+anticausal signals, and
+                                    x(t) = (−e−2t + et )u(−t)
+     Figure 4.59 shows the three inverse transforms corresponding to the same X(s) but with
+different regions of convergence.
+
+
+
+
+4.11-1 Properties of the Bilateral Laplace Transform
+Properties of the bilateral Laplace transform are similar to those of the unilateral transform. We
+shall merely state the properties here without proofs. Let the ROC of X(s) be a < Re s < b.
+Similarly, let the ROC of Xi (s) be ai < Re s < bi for (i = 1, 2).
+
+L INEARITY
+
+                             a1 x1 (t) + a2 x2 (t) ⇐⇒ a1 X1 (s) + a2 X2 (s)
+The ROC for a1 X1 (s) + a2 X2 (s) is the region common to (intersection of) the ROCs for X1 (s) and
+X2 (s).
+
+T IME S HIFT
+
+                                       x(t − T) ⇐⇒ X(s)e−sT
+The ROC for X(s)e−sT is identical to the ROC for X(s).
+
+F REQUENCY S HIFT
+
+                                       x(t)es0 t ⇐⇒ X(s − s0 )
+The ROC for X(s − s0 ) is a + c < Re s < b + c, where c = Re s0 .
+
+T IME D IFFERENTIATION
+                                            dx(t)
+                                                  ⇐⇒ sX(s)
+                                             dt
+The ROC for sX(s) contains the ROC for X(s) and may be larger than that of X(s) under certain
+conditions [e.g., if X(s) has a first-order pole at s = 0, it is canceled by the factor s in sX(s)].
+
+T IME I NTEGRATION
+                                     # t
+                                            x(τ ) dτ ⇐⇒ X(s)/s
+                                       −∞
+
+The ROC for sX(s) is max (a, 0) < Re s < b.

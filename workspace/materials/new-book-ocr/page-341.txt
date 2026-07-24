@@ -1,0 +1,57 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 341 — #12
+
+
+
+
+                                                                4.1 The Laplace Transform     341
+
+Therefore,
+                                                      ◦              ◦
+                                        6   5ej126.9   5e−j126.9
+                              X(s) =      +          +
+                                        s s + 5 − j3 s + 5 + j3
+From Table 4.1 (pairs 2 and 10b), we obtain
+
+                            x(t) = [6 + 10e−5t cos (3t + 126.9◦ )]u(t)
+
+A LTERNATIVE M ETHOD U SING Q UADRATIC FACTORS
+The foregoing procedure involves considerable manipulation of complex numbers. Pair 10c
+(Table 4.1) indicates that the inverse transform of quadratic terms (with complex conjugate
+poles) can be found directly without having to find first-order partial fractions. We discussed
+such a procedure in Sec. B.5-2. For this purpose, we shall express X(s) as
+                                    6(s + 34)             k1     As + B
+                        X(s) =                        =      + 2
+                                 s(s2 + 10s + 34)          s  s + 10s + 34
+We have already determined that k1 = 6 by the (Heaviside) “cover-up” method. Therefore,
+                                 6(s + 34)          6     As + B
+                                                =     + 2
+                             s(s2 + 10s + 34)       s s + 10s + 34
+
+Clearing the fractions by multiplying both sides by s(s2 + 10s + 34) yields
+
+                           6(s + 34) = (6 + A)s2 + (60 + B)s + 204
+
+Now, equating the coefficients of s2 and s on both sides yields
+
+                                 A = −6         and        B = −54
+
+and
+                                             6   −6s − 54
+                                   X(s) =      +
+                                             s s2 + 10s + 34
+We now use pairs 2 and 10c to find the inverse
+                                          √ Laplace transform. The parameters for pair 10c
+are A = −6, B = −54, a = 5, c = 34, b = c − a2 = 3, and
+                  
+                    A2 c + B2 − 2ABa                      Aa − B
+              r=                       = 10    θ = tan−1 √        = 126.9◦
+                          c − a2                        A c − a2
+Therefore,
+                            x(t) = [6 + 10e−5t cos (3t + 126.9◦ )]u(t)
+which agrees with the earlier result.
+
+S HORTCUTS
+The partial fractions with quadratic terms also can be obtained by using shortcuts. We have
+                                     6(s + 34)    6    As + B
+                        X(s) =                   = +
+                                 s(s2 + 10s + 34) s s2 + 10s + 34

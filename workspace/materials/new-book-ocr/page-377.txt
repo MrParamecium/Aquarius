@@ -1,0 +1,57 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 377 — #48
+
+
+
+
+                          4.4 Analysis of Electrical Networks: The Transformed Network                        377
+
+This equation can be rearranged as
+
+                                                    1         v(0− )
+                                           V(s) =      I(s) +                                             (4.33)
+                                                    Cs          s
+Observe that V(s) is the voltage (in the frequency domain) across the charged capacitor and I(s)/Cs
+is the voltage across the same capacitor without any charge. Therefore, the charged capacitor can
+be represented by the uncharged capacitor in series with a voltage source of value v(0− )/s, as
+depicted in Fig. 4.11b. Equation (4.33) can also be rearranged as
+
+                                                  1
+                                         V(s) =      [I(s) + Cv(0− )]
+                                                  Cs
+This equation shows that the charged capacitor voltage V(s) is equal to the uncharged capacitor
+voltage caused by a current I(s) + Cv(0− ). This result is reflected precisely in Fig. 4.11c, where
+the current through the uncharged capacitor is I(s) + Cv(0− ).†
+     For the inductor in Fig. 4.11d, the terminal equation is
+
+                                                            di(t)
+                                                 v(t) = L
+                                                             dt
+and
+                                V(s) = L[sI(s) − i(0− )] = LsI(s) − Li(0− )                               (4.34)
+
+This expression is consistent with Fig. 4.11e. We can rearrange Eq. (4.34) as
+                                                                         !
+                                                                i(0− )
+                                          V(s) = Ls I(s) −
+                                                                  s
+
+This expression is consistent with Fig. 4.11f.
+     Let us rework Ex. 4.13 using these concepts. Figure 4.12a shows the circuit in Fig. 4.7b
+with the initial conditions y(0− ) = 2 and vC (0− ) = 10. Figure 4.12b shows the frequency-domain
+representation (transformed circuit) of the circuit in Fig. 4.12a. The resistor is represented by
+its impedance 2; the inductor with initial current of 2 amperes is represented according to the
+arrangement in Fig. 4.11e with a series voltage source Ly(0− ) = 2. The capacitor with initial
+voltage of 10 volts is represented according to the arrangement in Fig. 4.11b with a series voltage
+source v(0− )/s = 10/s. Note that the impedance of the inductor is s and that of the capacitor is
+5/s. The input of 10u(t) is represented by its Laplace transform 10/s.
+     The total voltage in the loop is (10/s) + 2 − (10/s) = 2, and the loop impedance is
+(s + 2 + (5/s)). Therefore,
+                                               2             2s
+                                  Y(s) =              = 2
+                                         s + 2 + 5/s s + 2s + 5
+which confirms our earlier result in Ex. 4.13.
+
+† In the time domain, a charged capacitor C with initial voltage v(0− ) can be represented as the same capacitor
+uncharged in series with a voltage source v(0− )u(t), or in parallel with a current source Cv(0− )δ(t). Similarly,
+an inductor L with initial current i(0− ) can be represented by the same inductor with zero initial current in
+series with a voltage source Li(0− )δ(t) or with a parallel current source i(0− )u(t).

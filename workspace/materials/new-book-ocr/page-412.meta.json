@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": null,
+  "title": "Frequency Response Of An Ltic System",
+  "summary": "This page covers 4.8 (Frequency Response Of An Ltic System). OCR text begins with: 412 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS the desired response and the actual response to a test input in steady state. The system should also satisfy a specified sensitivity specifications to some system parameter variations, or to certain disturbances. Above all, the system must remain stable under operating conditions. Discussion of design procedures used to realize given specifications is beyond the scope of",
+  "keywords": [
+    "4.8",
+    "Frequency Response Of An Ltic System",
+    "continuous-time",
+    "LTIC system",
+    "system response",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-412",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

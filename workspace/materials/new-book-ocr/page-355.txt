@@ -1,0 +1,56 @@
+              “04-Lathi-C04” — 2017/9/25 — 19:46 — page 355 — #26
+
+
+
+
+                                            4.2 Some Properties of the Laplace Transform        355
+
+
+E X A M P L E 4.9 Laplace Transform and the Time-Differentiation Property
+
+    Find the Laplace transform of the signal x(t) in Fig. 4.6a by using Table 4.1 and the
+    time-differentiation and time-shifting properties of the Laplace transform.
+
+
+
+
+              2
+
+      x(t)
+
+
+              0               2         3                 t
+                                  (a)
+
+
+       dx     1
+       dt
+
+              0               2         3                 t
+
+
+             2
+
+                                  (b)
+
+
+              2
+      d 2x
+      dt 2
+
+              0               2         3                 t
+
+
+                                                                 Figure 4.6 Finding the Laplace
+                                                                 transform of a piecewise-linear
+             3                                                  function by using the time-
+                                  (c)                            differentiation property.
+
+
+
+         Figures 4.6b and 4.6c show the first two derivatives of x(t). Recall that the derivative
+    at a point of jump discontinuity is an impulse of strength equal to the amount of jump [see
+    Eq. (1.12)]. Therefore,
+                                d2 x(t)
+                                        = δ(t) − 3δ(t − 2) + 2δ(t − 3)
+                                  dt2

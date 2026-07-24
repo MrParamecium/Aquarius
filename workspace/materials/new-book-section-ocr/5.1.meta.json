@@ -1,0 +1,30 @@
+{
+  "sectionId": "5.1",
+  "sourcePages": [
+    "page-488",
+    "page-489",
+    "page-490",
+    "page-491",
+    "page-492",
+    "page-493",
+    "page-494",
+    "page-495"
+  ],
+  "usedPages": [
+    "page-488",
+    "page-489",
+    "page-490",
+    "page-491",
+    "page-492",
+    "page-493",
+    "page-494",
+    "page-495"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.1 T HE z-T RANSFORM",
+  "foundEnd": true,
+  "endBeforeLine": "5.1-1 Inverse Transform by Partial Fraction Expansion and Tables",
+  "endBeforeCode": "5.1-1",
+  "charCount": 20285
+}

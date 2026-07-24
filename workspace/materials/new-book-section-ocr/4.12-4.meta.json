@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.12-4",
+  "sourcePages": [
+    "page-463",
+    "page-464",
+    "page-465",
+    "page-466"
+  ],
+  "usedPages": [
+    "page-463",
+    "page-464",
+    "page-465",
+    "page-466"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.12-4 Chebyshev Filters",
+  "foundEnd": true,
+  "endBeforeLine": "4.13 S UMMARY",
+  "endBeforeCode": "4.13",
+  "charCount": 8714
+}

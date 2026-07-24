@@ -1,0 +1,50 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 488 — #1
+
+
+
+
+CHAPTER
+
+         5 DISCRETE-TIME SYSTEM
+                 A NALYSIS U SING THE
+                 z-T RANSFORM
+
+
+
+      The counterpart of the Laplace transform for discrete-time systems is the z-transform. The
+      Laplace transform converts integro-differential equations into algebraic equations. In the same
+      way, the z-transforms changes difference equations into algebraic equations, thereby simplifying
+      the analysis of discrete-time systems. The z-transform method of analysis of discrete-time systems
+      parallels the Laplace transform method of analysis of continuous-time systems, with some minor
+      differences. In fact, we shall see that the z-transform is the Laplace transform in disguise.
+           The behavior of discrete-time systems is similar to that of continuous-time systems (with
+      some differences). The frequency-domain analysis of discrete-time systems is based on the fact
+      (proved in Sec. 3.8-2) that the response of a linear, time-invariant, discrete-time (LTID) system to
+      an everlasting exponential zn is the same exponential (within a multiplicative constant) given by
+      H[z]zn . We then express an input x[n] as a sum of (everlasting) exponentials of the form zn . The
+      system response to x[n] is then found as a sum of the system’s responses to all these exponential
+      components. The tool that allows us to represent an arbitrary input x[n] as a sum of (everlasting)
+      exponentials of the form zn is the z-transform.
+
+
+
+      5.1 T HE z-T RANSFORM
+      We define X[z], the direct z-transform of x[n], as
+                                                      ∞
+                                                      "
+                                             X[z] =          x[n]z−n                                  (5.1)
+                                                      n=−∞
+
+      where z is a complex variable. The signal x[n], which is the inverse z-transform of X[z], can be
+      obtained from X[z] by using the following inverse z-transformation:
+                                                       5
+                                                   1
+                                           x[n] =        X[z]zn−1 dz                                  (5.2)
+                                                  2π j
+                   6
+      The symbol indicates an integration in counterclockwise direction around a closed path in the
+      complex plane (see Fig. 5.1). We derive this z-transform pair later, in Ch. 9, as an extension of the
+      discrete-time Fourier transform pair.
+
+
+488

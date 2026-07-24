@@ -1,0 +1,176 @@
+# Fourier section OCR
+section_id: 5.2-5
+source_pages: page-507, page-508, page-509
+cut_start_found: yes
+cut_end_found: no
+
+--- OCR ---
+5.2-5 Convolution Property
+The time-convolution property states that if‡
+
+                            x1 [n] ⇐⇒ X1 [z]           and            x2 [n] ⇐⇒ X2 [z],
+
+then (time convolution)
+                                      x1 [n] ∗ x2 [n] ⇐⇒ X1 [z]X2 [z]                           (5.19)
+
+Proof. This property applies to causal as well as noncausal sequences. We shall prove it for the
+more general case of noncausal sequences, where the convolution sum ranges from −∞ to ∞.
+    We have
+                                               ∞                    
+                                                "
+                       Z{x1 [n] ∗ x2 [n]} = Z       x1 [m]x2 [n − m]
+                                                       m=−∞
+                                                   ∞
+                                                   "                ∞
+                                                                    "
+                                                              −n
+                                             =            z                 x1 [m]x2 [n − m]
+                                                 n=−∞              m=−∞
+
+
+
+‡ There is also the frequency-convolution property, which states that
+                                                          5                 'z(
+                                                    1
+                                 x1 [n]x2 [n] ⇐⇒              X1 [u]X2            u−1 du
+                                                   2π j                      u
+
+[[PAGE page-508]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 508 — #21
+
+
+
+
+508   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Interchanging the order of summation, we have
+                                                      ∞
+                                                      "                ∞
+                                                                       "
+                               Z[x1 [n] ∗ x2 [n]] =          x1 [m]          x2 [n − m]z−n
+                                                      m=−∞            n=−∞
+                                                       "∞              "∞
+                                                 =           x1 [m]          x2 [r]z−(r+m)
+                                                      m=−∞            r=−∞
+                                                       "∞                   ∞
+                                                                            "
+                                                                       −m
+                                                 =           x1 [m]z               x2 [r]z−r
+                                                      m=−∞                  r=−∞
+
+                                                 = X1 [z]X2 [z]
+
+      LTID S YSTEM R ESPONSE
+      It is interesting to apply the time-convolution property to the LTID input–output equation y[n] =
+      x[n] ∗ h[n]. Since h[n] ⇐⇒ H[z], it follows from Eq. (5.19) that
+
+                                                 Y[z] = X[z]H[z]                                     (5.20)
+
+
+
+
+       D R I L L 5.9 Using the Convolution Property
+       Use the time-convolution property and appropriate pairs in Table 5.1 to show that
+       u[n] ∗ u[n − 1] = nu[n].
+
+
+
+      I NITIAL AND F INAL VALUES
+      For a causal x[n], the initial value theorem states that
+
+                                                 x[0] = lim X[z]
+                                                          z→∞
+
+      This result follows immediately from Eq. (5.7).
+          If (z − 1)X[z] has no poles outside the unit circle, then the final value theorem states that
+
+                                            lim x[N] = lim(z − 1)X[z]
+                                           N→∞            z→1
+
+      This can be shown from the fact that
+                                                       
+                                                      1          (z − 1)X[z]
+                               x[n] − x[n − 1] ⇐⇒ 1 −     X[z] =
+                                                      z               z
+
+      and
+                                                   "∞
+                                    (z − 1)X[z]
+                                                =      {x[n] − x[n − 1]}z−n
+                                         z        n=−∞
+
+[[PAGE page-509]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 509 — #22
+
+
+
+
+                                                      5.2 Some Properties of the z-Transform                  509
+
+and
+
+
+            (z − 1)X[z]                             "N
+        lim             = lim(z − 1)X[z] = lim lim      {x[n] − x[n − 1]}z−n = lim x[N]
+        z→1      z        z→1              z→1 N→∞
+                                                   n=−∞
+                                                                              N→∞
+
+
+
+      All these properties of the z-transform are listed in Table 5.2.
+
+
+TABLE 5.2        z-Transform Properties
+
+Operation                           x[n]                          X[z]
+
+Addition                            x1 [n] + x2 [n]               X1 [z] + X2 [z]
+
+Scalar multiplication               ax[n]                         aX[z]
+
+                                                                   1
+Right shifting                      x[n − m]u[n − m]                 X[z]
+                                                                  zm
+                                                                              1 "
+                                                                                    m
+                                                                   1
+                                    x[n − m]u[n]                    m
+                                                                      X[z] + m      x[−n]zn
+                                                                  z          z
+                                                                                n=1
+                                                                  1
+                                    x[n − 1]u[n]                    X[z] + x[−1]
+                                                                  z
+                                                                  1         1
+                                    x[n − 2]u[n]                      X[z] + x[−1] + x[−2]
+                                                                  z2         z
+                                                                  1          1         1
+                                    x[n − 3]u[n]                      X[z] + 2 x[−1] + x[−2] + x[−3]
+                                                                  z3        z          z
+                                                                                 "
+                                                                                 m−1
+Left shifting                       x[n + m]u[n]                  zm X[z] − zm          x[n]z−n
+                                                                                 n=0
+                                    x[n + 1]u[n]                  zX[z] − zx[0]
+
+                                    x[n + 2]u[n]                  z2 X[z] − z2 x[0] − zx[1]
+
+                                    x[n + 3]u[n]                  z3 X[z] − z3 x[0] − z2 x[1] − zx[2]
+                                                                         !
+                                                                       z
+Multiplication by γ n               γ n x[n]u[n]                  X
+                                                                      γ
+                                                                      d
+Multiplication by n                 nx[n]u[n]                     −z X[z]
+                                                                      dz
+Time reversal                       x[−n]                         X[1/z]
+
+Time convolution                    x1 [n] ∗ x2 [n]               X1 [z]X2 [z]
+
+Initial value                       x[0]                          lim X[z]
+                                                                  z→∞
+
+Final value                          lim x[N]                     lim (z − 1)X[z]           Poles of (z − 1)X[z]
+                                    N→∞                           z→1
+                                                                                           inside the unit circle

@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.5. OCR text begins with: 530 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM (b) For x[n] = cos [(π/6)n − 0.2], \u0004 = π/6. According to Eqs. (5.35) and (5.36), 1 |H[ejπ/6 ]| = \u0003 = 1.983 π 1.64 − 1.6 cos 6",
+  "keywords": [
+    "5.5",
+    "discrete-time",
+    "LTID system",
+    "system response",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-530",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,60 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 568 — #81
+
+
+
+
+568   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           Section 5.9 suggests that the z-transform can be considered to be a Laplace transform with
+      a change of variable z = esT or s = (1/T) ln z, where T is the sampling interval. It is tempting,
+      therefore, to convert a continuous-time filter to a discrete-time filter by substituting s = (1/T) ln z
+      into H(s), or H[z] = H(s)|s=(1/T) ln z . This approach is impractical, however, since the resulting
+      H[z] is not rational and therefore cannot be implemented by using standard blocks. Although
+      not considered here, the so-called matched-z transformation relies on the relationship z = esT to
+      transform system poles and zeros, so the connection is not completely without merit.
+
+
+      5.10-3 Transformation by First-Order Backward Difference
+      Consider the transfer function H(s) = Y(s)/X(s) = s, which corresponds to the first-order
+      continuous-time differentiator
+                                                         d
+                                                 y(t) = x(t)
+                                                         dt
+      An approximation that resembles the fundamental theorem of calculus is the first-order backward
+      difference
+                                                    x(t) − x(t − T)
+                                            y(t) =
+                                                            T
+      For sampling interval T and t = nT, the corresponding discrete-time approximation is
+                                                        x[n] − x[n − 1]
+                                               y[n] =
+                                                               T
+      which has transfer function
+                                                                  1 − z−1
+                                            H[z] = Y[z]/X[z] =
+                                                                     T
+      This implies a transformation rule that uses the change of variable s = (1 − z−1 )/T or z =
+      1/(1 − sT). This transformation rule is appealing since the resulting H[z] is rational and has the
+      same number of poles and zeros as H(s). Section 3.4 discusses this transformation strategy in a
+      different way in describing the kinship of difference equations to differential equations.
+           After some algebra, substituting s = (1 − z−1 )/T into Eq. (5.56) yields
+                                   8       7M               9 7M                 −1
+                                                                                     
+                                     bN−M k=1 (1/T − zk )        k=1  1 −   1
+                                                                          1−Tzk
+                                                                                z
+                           H[z] =        7N                   7N                                (5.57)
+                                       a0 k=1 (1/T − pk )        k=1 1 − 1−Tpk z
+                                                                            1     −1
+
+
+      The discrete-time system has M zeros at 1/(1 − Tzk ) and N poles at 1/(1 − Tpk ). This
+      transformation rule preserves system stability but does not map the ω axis to the unit circle (see
+      Prob. 5.7-10).
+           MATLAB program CH5MP3 uses the first-order backward difference method of Eq. (5.57)
+      to convert a continuous-time filter described by coefficient vectors A = [a0 , a1 , . . . , aN ] and
+      B = [bN−M , bN−M+1 , . . . , bN ] into a discrete-time filter. The form of the discrete-time filter follows
+      Eq. (5.55).
+      function [Bd,Ad] = CH5MP3(B,A,T);
+      % CH5MP3.m : Chapter 5, MATLAB Program 3
+      % Function M-file first-order backward difference transformation

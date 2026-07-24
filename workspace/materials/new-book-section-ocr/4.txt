@@ -1,0 +1,31 @@
+# Fourier section OCR
+section_id: 4
+source_pages: page-330, page-331, page-332, page-333, page-334, page-335, page-336, page-337, page-338, page-339, page-340, page-341, page-342, page-343, page-344, page-345, page-346, page-347, page-348, page-349, page-350, page-351, page-352, page-353, page-354, page-355, page-356, page-357, page-358, page-359, page-360, page-361, page-362, page-363, page-364, page-365, page-366, page-367, page-368, page-369, page-370, page-371, page-372, page-373, page-374, page-375, page-376, page-377, page-378, page-379, page-380, page-381, page-382, page-383, page-384, page-385, page-386, page-387, page-388, page-389, page-390, page-391, page-392, page-393, page-394, page-395, page-396, page-397, page-398, page-399, page-400, page-401, page-402, page-403, page-404, page-405, page-406, page-407, page-408, page-409, page-410, page-411, page-412, page-413, page-414, page-415, page-416, page-417, page-418, page-419, page-420, page-421, page-422, page-423, page-424, page-425, page-426, page-427, page-428, page-429, page-430, page-431, page-432, page-433, page-434, page-435, page-436, page-437, page-438, page-439, page-440, page-441, page-442, page-443, page-444, page-445, page-446, page-447, page-448, page-449, page-450, page-451, page-452, page-453, page-454, page-455, page-456, page-457, page-458, page-459, page-460, page-461, page-462, page-463, page-464, page-465, page-466, page-467
+cut_start_found: no
+cut_end_found: yes
+
+--- OCR ---
+[[PAGE page-330]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 330 — #1
+
+
+
+
+CHAPTER
+
+         4 CONTINUOUS-TIME SYSTEM
+                  A NALYSIS U SING THE
+                  L APLACE T RANSFORM
+
+
+
+      Because of the linearity (superposition) property of linear time-invariant systems, we can find the
+      response of these systems by breaking the input x(t) into several components and then summing the
+      system response to all the components of x(t). We have already used this procedure in time-domain
+      analysis, in which the input x(t) is broken into impulsive components. In the frequency-domain
+      analysis developed in this chapter, we break up the input x(t) into exponentials of the form est ,
+      where the parameter s is the complex frequency of the signal est , as explained in Sec. 1.4-3. This
+      method offers an insight into the system behavior complementary to that seen in the time-domain
+      analysis. In fact, the time-domain and the frequency-domain methods are duals of each other.
+           The tool that makes it possible to represent arbitrary input x(t) in terms of exponential
+      components is the Laplace transform, which is discussed in the following section.

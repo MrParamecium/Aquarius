@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 340 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS (c) 6(s + 34) 6(s + 34) X(s) = = s(s2 + 10s + 34) s(s + 5 − j3)(s + 5 + j3) k1 k2 k2∗ = + +",
+  "keywords": [
+    "4.1",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-340",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

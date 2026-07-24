@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.3-3",
+  "sourcePages": [
+    "page-371",
+    "page-372",
+    "page-373"
+  ],
+  "usedPages": [
+    "page-371",
+    "page-372",
+    "page-373"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.3-3 Stability",
+  "foundEnd": true,
+  "endBeforeLine": "4.4 Analysis of Electrical Networks: The Transformed Network 373",
+  "endBeforeCode": "4.4",
+  "charCount": 5163
+}

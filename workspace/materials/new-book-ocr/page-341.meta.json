@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 341",
+  "summary": "This page covers 4.1 (The Laplace Transform 341). OCR text begins with: 4.1 The Laplace Transform 341 Therefore, ◦ ◦ 6 5ej126.9 5e−j126.9 X(s) = + + s s + 5 − j3 s + 5 + j3 From Table 4.1 (pairs 2 and 10b), we obtain",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 341",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-341",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

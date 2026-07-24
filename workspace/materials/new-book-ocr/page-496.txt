@@ -1,0 +1,60 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 496 — #9
+
+
+
+
+496   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      From Table 5.1, pair 7, we obtain
+
+                                    x[n] = [3(2)n−1 + 5(3)n−1 ]u[n − 1]                           (5.8)
+
+      If we expand rational X[z] into partial fractions directly, we shall always obtain an answer
+      that is multiplied by u[n − 1] because of the nature of pair 7 in Table 5.1. This form is rather
+      awkward as well as inconvenient. We prefer the form that contains u[n] rather than u[n − 1]. A
+      glance at Table 5.1 shows that the z-transform of every signal that is multiplied by u[n] has a
+      factor z in the numerator. This observation suggests that we expand X[z] into modified partial
+      fractions, where each term has a factor z in the numerator. This goal can be accomplished
+      by expanding X[z]/z into partial fractions and then multiplying both sides by z. We shall
+      demonstrate this procedure by reworking part (a). For this case,
+                           X[z]       8z − 19       (−19/6) (3/2) (5/3)
+                                =                 =        +     +
+                            z     z(z − 2)(z − 3)      z     z−2   z−3
+      Multiplying both sides by z yields
+                                             19 3      z    5        z
+                                  X[z] = −      +         +
+                                              6   2   z−2   3       z−3
+      From pairs 1 and 6 in Table 5.1, it follows that
+
+                                  x[n] = − 19
+                                            6
+                                              δ[n] + 32 (2)n + 53 (3)n u[n]                       (5.9)
+
+      The reader can verify that this answer is equivalent to that in Eq. (5.8) by computing x[n]
+      in both cases for n = 0, 1, 2, 3, . . . , and comparing the results. The form in Eq. (5.9) is more
+      convenient than that in Eq. (5.8). For this reason, we shall always expand X[z]/z rather than
+      X[z] into partial fractions and then multiply both sides by z to obtain modified partial fractions
+      of X[z], which have a factor z in the numerator.
+          (b)
+                                                     z(2z2 − 11z + 12)
+                                              X[z] =
+                                                      (z − 1)(z − 2)3
+      and
+                     X[z] 2z2 − 11z + 12        k      a0          a1          a2
+                         =                  =      +          +           +
+                      z    (z − 1)(z − 2) 3   z − 1 (z − 2) 3   (z − 2) 2   (z − 2)
+      where                                                
+                                           2z2 − 11z + 12 
+                                       k=                   = −3
+                                           (z − 1)(z − 2)3 
+                                                           z=1
+                                           2z − 11z + 12 
+                                              2
+                                      a0 =                  = −2
+                                           (z − 1)(z − 2)3 
+                                                             z=2
+
+      Therefore,
+                     X[z] 2z2 − 11z + 12    −3       2       a1       a2
+                         =                =     −        +        +                              (5.10)
+                      z    (z − 1)(z − 2)3 z − 1 (z − 2)3 (z − 2)2 (z − 2)

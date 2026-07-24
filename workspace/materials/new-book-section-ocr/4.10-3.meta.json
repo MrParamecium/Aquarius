@@ -1,0 +1,16 @@
+{
+  "sectionId": "4.10-3",
+  "sourcePages": [
+    "page-441"
+  ],
+  "usedPages": [
+    "page-441"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.10-3 Bandpass Filters",
+  "foundEnd": true,
+  "endBeforeLine": "4.10-4 Notch (Bandstop) Filters",
+  "endBeforeCode": "4.10-4",
+  "charCount": 547
+}

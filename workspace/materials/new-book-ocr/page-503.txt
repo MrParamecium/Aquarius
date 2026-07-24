@@ -1,0 +1,65 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 503 — #16
+
+
+
+
+                                                  5.2 Some Properties of the z-Transform             503
+
+Proof. For the integer value of m,
+                                                       ∞
+                                                       "
+                         Z{x[n − m]u[n − m]} =               x[n − m]u[n − m]z−n
+                                                       n=0
+
+Recall that x[n − m]u[n − m] = 0 for n < m so that the limits on the summation on the right-hand
+side can be taken from n = m to ∞. Therefore,
+                                                       ∞
+                                                       "
+                         Z{x[n − m]u[n − m]} =               x[n − m]z−n
+                                                       n=m
+                                                       ∞
+                                                       "
+                                                  =          x[r]z−(r+m)
+                                                       r=0
+                                                             ∞
+                                                        1 "             1
+                                                  =           x[r]z−r = m X[z]
+                                                       zm r=0          z
+
+
+
+To prove Eq. (5.15), we have
+                                          ∞
+                                          "                            ∞
+                                                                       "
+                      Z{x[n − m]u[n]} =          x[n − m]z−n =                    x[r]z−(r+m)
+                                          n=0                          r=−m
+                                                  −1                     ∞
+                                                                                               
+                                                  "                       "
+                                            −m                   −r                       −r
+                                       =z                x[r]z        +           x[r]z
+                                                 r=−m                       r=0
+                                                 "
+                                                 m
+                                       = z−m           x[−n]zn + z−m X[z]
+                                                 n=1
+
+
+L EFT S HIFT (A DVANCE )
+If
+                                        x[n]u[n] ⇐⇒ X[z]
+
+then
+                                  x[n + 1]u[n] ⇐⇒ zX[z] − zx[0]
+
+Repeated application of this property yields
+
+               x[n + 2]u[n] ⇐⇒ z{z(X[z] − zx[0]) − x[1]} = z2 X[z] − z2 x[0] − zx[1]
+
+and for the integer value of m,
+
+                                                                   "
+                                                                   m−1
+                            x[n + m]u[n] ⇐⇒ zm X[z] − zm                    x[n]z−n                (5.16)
+                                                                      n=0

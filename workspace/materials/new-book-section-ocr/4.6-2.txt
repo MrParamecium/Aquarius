@@ -1,0 +1,186 @@
+# Fourier section OCR
+section_id: 4.6-2
+source_pages: page-390, page-391, page-392, page-393
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.6-2 Direct Form II Realization
+      In the direct form I, we realize H(s) by implementing H1 (s) followed by H2 (s), as shown in
+      Fig. 4.20a. We can also realize H(s), as shown in Fig. 4.20b, where H2 (s) is followed by H1 (s).
+
+      † It may seem odd that we first assumed the existence of Y(s), integrated it successively, and then in turn
+      generated Y(s) from W(s) and the three successive integrals of signal Y(s). This procedure poses a dilemma
+      similar to “Which came first, the chicken or the egg?” The problem here is satisfactorily resolved by writing
+      the expression for Y(s) at the output of the right-hand adder (at the top) in Fig. 4.21a and verifying that this
+      expression is indeed the same as Eq. (4.38).
+
+[[PAGE page-391]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 391 — #62
+
+
+
+
+                                                                               4.6   System Realization       391
+
+       X(s)                   V(s)         b0            Y(s)          X(s)                     b0     Y(s)
+
+
+                          1           1                                                   1
+                          s           s                                                   s
+                   a1                     b1                                     a1           b1
+
+                          1           1                                                   1
+                          s           s                                                   s
+
+                 aN1                    bN1                                    aN1         bN1
+
+
+                          1           1                                                   1
+                          s           s                                                   s
+                   aN                     bN                                     aN           bN
+
+                              (a)                                                         (b)
+      Figure 4.22 Direct form II realization of an Nth-order LTIC system.
+
+
+This procedure is known as the direct form II realization. Figure 4.22a shows direct form II
+realization, where we have interchanged sections representing H1 (s) and H2 (s) in Fig. 4.21b. The
+output of H2 (s) in this case is denoted by V(s).‡
+     An interesting observation in Fig. 4.22a is that the input signal to both the chains of integrators
+is V(s). Clearly, the outputs of integrators in the left-side chain are identical to the corresponding
+outputs of the right-side integrator chain, thus making the right-side chain redundant. We can
+eliminate this chain and obtain the required signals from the left-side chain, as shown in Fig. 4.22b.
+This implementation halves the number of integrators to N, and, thus, is more efficient in hardware
+utilization than either Figs. 4.21b or 4.22a. This is the direct form II (DFII) realization.
+     An Nth-order differential equation with N = M has a property that its implementation requires
+a minimum of N integrators. A realization is canonic if the number of integrators used in the
+realization is equal to the order of the transfer function realized. Thus, canonic realization has no
+redundant integrators. The DFII form in Fig. 4.22b is a canonic realization, and is also called the
+direct canonic form. Note that the DFI is noncanonic.
+     The direct form I realization (Fig. 4.22b) implements zeros first [the left-half section
+represented by H1 (s)] followed by realization of poles [the right-half section represented by
+H2 (s)] of H(s). In contrast, canonic direct implements poles first followed by zeros. Although
+both these realizations result in the same transfer function, they generally behave differently from
+the viewpoint of sensitivity to parameter variations.
+
+
+
+
+‡ The reader can show that the equations relating X(s), V(s), and Y(s) in Fig. 4.22a are
+                                                    a
+                                                     1          a2           aN 
+                                    V(s) = X(s) −         +        + · · · +      V(s)
+                                                     s          s2           sN
+and                                            b1 b2         bN 
+                                     Y(s) = b0 + + 2 + · · · + N V(s)
+                                                 s s          s
+
+[[PAGE page-392]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 392 — #63
+
+
+
+
+392       CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.22 Canonic Direct Form Realizations
+
+          Find the canonic direct form realization of the following transfer functions:
+                     5
+               (a)
+                   s+7
+                      s
+               (b)
+                   s+7
+                   s+5
+               (c)
+                   s+7
+                     4s + 28
+               (d) 2
+                   s + 6s + 5
+          All four of these transfer functions are special cases of H(s) in Eq. (4.36).
+
+
+              (a) The transfer function 5/(s + 7) is of the first order (N = 1); therefore, we need only
+          one integrator for its realization. The feedback and feedforward coefficients are
+
+                                          a1 = 7       and      b0 = 0,    b1 = 5
+
+          The realization is depicted in Fig. 4.23a. Because N = 1, there is a single feedback connection
+          from the output of the integrator to the input adder with coefficient a1 = 7. For N = 1, generally,
+          there are N + 1 = 2 feedforward connections. However, in this case, b0 = 0, and there is only
+          one feedforward connection with coefficient b1 = 5 from the output of the integrator to the
+          output adder. Because there is only one input signal to the output adder, we can do away with
+          the adder, as shown in Fig. 4.23a.
+               (b)
+                                                               s
+                                                     H(s) =
+                                                             s+7
+          In this first-order transfer function, b1 = 0. The realization is shown in Fig. 4.23b. Because
+          there is only one signal to be added at the output adder, we can discard the adder.
+               (c)
+                                                            s+5
+                                                    H(s) =
+                                                            s+7
+          The realization appears in Fig. 4.23c. Here H(s) is a first-order transfer function with a1 = 7
+          and b0 = 1, b1 = 5. There is a single feedback connection (with coefficient 7) from the
+          integrator output to the input adder. There are two feedforward connections (Fig. 4.23c).†
+
+
+          † When M = N (as in this case), H(s) can also be realized in another way by recognizing that
+
+                                                                   2
+                                                     H(s) = 1 −
+                                                                  s+7
+          We now realize H(s) as a parallel combination of two transfer functions, as indicated by this equation.
+
+[[PAGE page-393]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 393 — #64
+
+
+
+
+                                                                      4.6    System Realization   393
+
+        (d)
+                                                    4s + 28
+                                        H(s) =
+                                                  s2 + 6s + 5
+This is a second-order system with b0 = 0, b1 = 4, b2 = 28, a1 = 6, and a2 = 5. Figure 4.23d
+shows a realization with two feedback connections and two feedforward connections.
+
+ X(s)                                            X(s)                     Y(s)
+
+
+                   1                                                1
+                   s                                                s
+                         Y(s)
+              7          5                                    7
+                   (a)                                              (b)
+
+ X(s)                               Y(s)         X(s)
+
+
+                    1                                               1
+                    s                                               s
+                                                                                     Y(s)
+              7              5                                6           4
+                   (c)                                              1
+                                                                    s
+
+
+                                                               5           28
+                                                                    (d)
+
+Figure 4.23 Realizations of H(s) for Ex. 4.22.
+
+
+
+
+ D R I L L 4.11 Canonic Direct Form Realization
+ Give the canonic direct realization of
+                                                          2s
+                                           H(s) =
+                                                    s2 + 6s + 25

@@ -1,0 +1,56 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 406 — #77
+
+
+
+
+406   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      gain, which is reduced from 10,000 to 99. There is no dearth of forward gain (obtained by
+      cascading stages). But low sensitivity is extremely precious in precision systems.
+           Now, consider what happens when we add (instead of subtract) the signal fed back to the
+      input. Such addition means the sign on the feedback connection is + instead of − (which is same
+      as changing the sign of H in Fig. 4.34). Consequently,
+
+                                                         G
+                                                 T=
+                                                      1 − GH
+
+      If we let G = 10,000 as before and H = 0.9 × 10−4 , then
+                                                 10,000
+                                      T=                        = 100,000
+                                           1 − 0.9(104 )(10−4 )
+
+      Suppose that because of aging or replacement of some transistors, the gain of the forward amplifier
+      changes to 11,000. The new gain of the feedback amplifier is
+
+                                                11,000
+                                   T=                          = 1,100,000
+                                        1 − 0.9(11,000)(10−4 )
+
+      Observe that in this case, a mere 10% increase in the forward gain G caused 1000% increase
+      in the gain T (from 100,000 to 1,100,000). Clearly, the amplifier is very sensitive to parameter
+      variations. This behavior is exactly opposite of what was observed earlier, when the signal fed
+      back was subtracted from the input.
+           What is the difference between the two situations? Crudely speaking, the former case is called
+      the negative feedback and the latter is the positive feedback. The positive feedback increases
+      system gain but tends to make the system more sensitive to parameter variations. It can also lead to
+      instability. In our example, if G were to be 111,111, then GH = 1, T = ∞, and the system would
+      become unstable because the signal fed back was exactly equal to the input signal itself, since
+      GH = 1. Hence, once a signal has been applied, no matter how small and how short in duration,
+      it comes back to reinforce the input undiminished, which further passes to the output, and is fed
+      back again and again and again. In essence, the signal perpetuates itself forever. This perpetuation,
+      even when the input ceases to exist, is precisely the symptom of instability.
+           Generally speaking, a feedback system cannot be described in black and white terms, such as
+      positive or negative. Usually H is a frequency-dependent component, more accurately represented
+      by H(s); hence it varies with frequency. Consequently, what was negative feedback at lower
+      frequencies can turn into positive feedback at higher frequencies and may give rise to instability.
+      This is one of the serious aspects of feedback systems, which warrants a designer’s careful
+      attention.
+
+
+      4.7-1 Analysis of a Simple Control System
+      Figure 4.35a represents an automatic position control system, which can be used to control the
+      angular position of a heavy object (e.g., a tracking antenna, an anti-aircraft gun mount, or the
+      position of a ship). The input θi is the desired angular position of the object, which can be set
+      at any given value. The actual angular position θo of the object (the output) is measured by a
+      potentiometer whose wiper is mounted on the output shaft. The difference between the input θi

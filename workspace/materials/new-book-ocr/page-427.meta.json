@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": "Bode Plots 427",
+  "summary": "This page covers 4.9 (Bode Plots 427). OCR text begins with: 4.9 Bode Plots 427 T HE L OG M AGNITUDE The log amplitude is given by \u0018 2 \u0018\u0018 \u0018 ω jω log amplitude = −20 log \u0018\u00181 + 2jζ + \u0018 \u0018 (4.49)",
+  "keywords": [
+    "4.9",
+    "Bode Plots 427"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-427",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

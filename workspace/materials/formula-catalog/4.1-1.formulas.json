@@ -1,0 +1,25 @@
+{
+  "sectionId": "4.1-1",
+  "sectionTitle": "Finding the Inverse Transform",
+  "bookSource": "new",
+  "status": "draft_pdf_latex",
+  "verification": {
+    "method": "pdf_text_layer_and_section_ocr_partial_check",
+    "sourcePages": [
+      "page-338",
+      "page-339"
+    ],
+    "createdAt": "2026-06-14",
+    "note": "Contains draft formulas from PDF text layer; only per-formula status=verified entries are injected."
+  },
+  "formulas": [
+    {
+      "label": "(4.11)",
+      "name": "Partial-fraction inverse-transform example",
+      "latex": "X(s)=\\frac{5s+3}{s^2+3s+2}=\\frac{-2}{s+1}+\\frac{7}{s+2}",
+      "sourcePage": "page-339",
+      "role": "worked_example_intermediate",
+      "status": "draft_pdf_latex"
+    }
+  ]
+}

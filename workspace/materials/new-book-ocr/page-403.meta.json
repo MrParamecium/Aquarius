@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization 403",
+  "summary": "This page covers 4.6 (System Realization 403). OCR text begins with: 4.6 System Realization 403 The basic canonic realization is shown in Fig. 4.31a. The same realization with horizontal reorientation is shown in Fig. 4.31b. Signals at various points are also indicated in the realization. For convenience, we denote the output of the last integrator by W(s). Consequently, the signals at the inputs of the two integrators are sW(s) and s2 W(s), as shown in Figs. 4.31a and 4.31b. Op-amp e",
+  "keywords": [
+    "4.6",
+    "System Realization 403"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-403",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

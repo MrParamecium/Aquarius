@@ -1,0 +1,48 @@
+# Fourier section OCR
+section_id: 5.10-2
+source_pages: page-567, page-568
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.10-2 Transformation Basics
+Transformation of a continuous-time filter to a discrete-time filter begins with the desired
+continuous-time transfer function
+                                                %M
+                                  Y(s) B(s)           bk+N−M sM−k
+                           H(s) =     =      = k=0%N
+                                  X(s) A(s)          k=0 ak s
+                                                              N−k
+
+
+As a matter of convenience, H(s) is represented in factored form as
+                                               7
+                                           bN−M Mk=1 (s − zk )
+                                    H(s) =     7N                                              (5.56)
+                                                k=1 (s − pk )
+                                            a0
+
+where zk and pk are the system poles and zeros, respectively.
+     A mapping rule converts the rational function H(s) to a rational function H[z]. Requiring
+that the result be rational ensures that the system realization can proceed with only delay,
+sum, and multiplier blocks. There are many possible mapping rules. For obvious reasons, good
+transformations tend to map the ω axis to the unit circle, ω = 0 to z = 1, ω = ∞ to z = −1, and the
+left half-plane to the interior of the unit circle. Put another way, sinusoids map to sinusoids, zero
+frequency maps to zero frequency, high frequency maps to high frequency, and stable systems map
+to stable systems.
+
+[[PAGE page-568]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 568 — #81
+
+
+
+
+568   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           Section 5.9 suggests that the z-transform can be considered to be a Laplace transform with
+      a change of variable z = esT or s = (1/T) ln z, where T is the sampling interval. It is tempting,
+      therefore, to convert a continuous-time filter to a discrete-time filter by substituting s = (1/T) ln z
+      into H(s), or H[z] = H(s)|s=(1/T) ln z . This approach is impractical, however, since the resulting
+      H[z] is not rational and therefore cannot be implemented by using standard blocks. Although
+      not considered here, the so-called matched-z transformation relies on the relationship z = esT to
+      transform system poles and zeros, so the connection is not completely without merit.

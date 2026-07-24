@@ -1,0 +1,435 @@
+# Fourier section OCR
+section_id: 5.7
+source_pages: page-547, page-548, page-549, page-550, page-551, page-552, page-553, page-554
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.7 Digital Processing of Analog Signals     547
+
+
+
+ D R I L L 5.21 Highpass Filter by Pole-Zero Placement
+ Use the graphical argument to show that a filter with transfer function
+
+
+                                                         z − 0.9
+                                              H[z] =
+                                                            z
+
+ acts like a highpass filter. Make a rough sketch of the amplitude response.
+
+
+
+
+5.7 D IGITAL P ROCESSING OF A NALOG S IGNALS
+An analog (meaning continuous-time) signal can be processed digitally by sampling the analog
+signal and processing the samples by a digital (meaning discrete-time) processor. The output of
+the processor is then converted back to analog signal, as shown in Fig. 5.24a. We saw some simple
+cases of such processing in Exs. 3.8, 3.9, 5.14, and 5.15. In this section, we shall derive a criterion
+for designing such a digital processor for a general LTIC system.
+     Suppose that we wish to realize an equivalent of an analog system with transfer function
+Ha (s), shown in Fig. 5.24b. Let the digital processor transfer function in Fig. 5.24a that realizes
+this desired Ha (s) be H[z]. In other words, we wish to make the two systems in Fig. 5.24 equivalent
+(at least approximately).
+     By “equivalence” we mean that for a given input x(t), the systems in Fig. 5.24 yield the same
+output y(t). Therefore, y(nT), the samples of the output in Fig. 5.24b, are identical to y[n], the
+output of H[z] in Fig. 5.24a.
+
+
+
+
+      x(t)      Continuous to   x[n]     Discrete-time    y[n]       Discrete to   y(t)
+                  discrete,                 system                   continuous,
+                    C/D           a          H[z]           b           D/C
+
+
+
+                                             Ha(s)
+                                               (a)
+
+
+      x(t)                                                                         y(t)
+                                              Ha(s)
+
+
+                                               (b)
+      Figure 5.24 Analog filter realization with a digital filter.
+
+[[PAGE page-548]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 548 — #61
+
+
+
+
+548   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           For the sake of generality, we are assuming a noncausal system. The argument and the results
+      are also valid for causal systems. The output y(t) of the system in Fig. 5.24b is
+                          # ∞                                             ∞
+                                                                          "
+                 y(t) =         x(τ )ha (t − τ ) dτ             = lim            x(m τ )ha (t − m τ ) τ
+                          −∞                                       τ →0
+                                                                          m=−∞
+
+      For our purpose, it is convenient to use the notation T for          τ . Assuming T (the sampling interval)
+      to be small enough, such a change of notation yields
+                                                         ∞
+                                                         "
+                                            y(t) = T          x(mT)ha (t − mT)
+                                                       m=−∞
+
+      The response at the nth sampling instant is y(nT) obtained by setting t = nT in the equation is
+                                                         ∞
+                                                         "
+                                          y(nT) = T           x(mT)ha [(n − m)T]                              (5.42)
+                                                       m=−∞
+
+      In Fig. 5.24a, the input to H[z] is x(nT) = x[n]. If h[n] is the unit impulse response of H[z], then
+      y[n], the output of H[z], is given by
+                                                         ∞
+                                                         "
+                                                y[n] =          x[m]h[n − m]                                  (5.43)
+                                                         m=−∞
+
+      If the two systems are to be equivalent, y(nT) in Eq. (5.42) must be equal to y[n] in Eq. (5.43).
+      Therefore,
+                                               h[n] = Tha (nT)                                   (5.44)
+      This is the time-domain criterion for equivalence of the two systems.† According to this criterion,
+      h[n], the unit impulse response of H[z] in Fig. 5.24a, should be T times the samples of ha (t),
+      the unit impulse response of the system in Fig. 5.24b. This is known as the impulse invariance
+      criterion of filter design.
+           Strictly speaking, this realization guarantees the output equivalence only at the sampling
+      instants, that is, y(nT) = y[n], and that also requires the assumption that T → 0. Clearly, this
+      criterion leads to an approximate realization of Ha (s). However, it can be shown that when the
+      frequency response of |Ha (jω)| is bandlimited, the realization is exact [2], provided the sampling
+      rate is high enough to avoid any aliasing (T < 1/2fh ).
+
+      R EALIZATION OF R ATIONAL H(s)
+      If we wish to realize an analog filter with transfer function
+                                                                   c
+                                                       Ha (s) =
+                                                                  s−λ
+
+      † Because T is a constant, some authors ignore the factor T, which yields a simplified criterion h[n] = h (nT).
+                                                                                                               a
+      Ignoring T merely scales the amplitude response of the resulting filter.
+
+[[PAGE page-549]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 549 — #62
+
+
+
+
+                                                               5.7 Digital Processing of Analog Signals                 549
+
+The impulse response h(t), given by the inverse Laplace transform of Ha (s), is
+
+                                                        ha (t) = ceλt u(t)
+
+The corresponding digital filter unit impulse response h[n], per Eq. (5.44), is
+
+                                                h[n] = Tha (nT) = TcenλT
+
+Figure 5.25 shows ha (t) and h[n]. The corresponding H[z], the z-transform of h[n], as found from
+Table 5.1, is
+                                                  Tcz
+                                         H[z] =                                             (5.45)
+                                                z − eλT
+
+        c         ha(t)                                                     cT    h[n]
+
+
+
+
+                                                           t                                                       n
+                                       (a)                                                        (b)
+      Figure 5.25 Impulse response for analog and digital systems in the impulse invariance
+      method of filter design.
+
+
+TABLE 5.3        Select Impulse-Invariance Pairs
+
+No.     Ha (s)                     ha (t)                      h[n]                          H[z]
+
+1           K                      Kδ(t)                       TKδ[n]                        TK
+
+            1                                                                                 Tz
+2                                  u(t)                        Tu[n]
+            s                                                                                z−1
+            1                                                                                   T 2z
+3                                  t                           nT 2
+            s2                                                                               (z − 1)2
+            1                      t2                          k2 T 3                        T 3 z(z + 1)
+4
+            s3                     2                             2                            2(z − 1)3
+             1                                                                                  Tz
+5                                  eλt                         TeλnT
+            s−λ                                                                              z − eλT
+                1                                                                              T 2 zeλT
+6                                  teλt                        nT 2 eλnT
+            (s − λ)2                                                                         (z − eλT )2
+               As+B                                                                          Trz[z cos θ − e−aT cos(bT −θ )]
+7                                  Tre−at cos(bt+θ)            Tre−anT cos(bnT +θ)
+            s2 +2as+c                                                                         z2 −(2e−aT cos bT)z+e−2aT
+                               
+                                   A2 c + B2 − 2ABa              √                            Aa − B
+                          r=                        ,     b=          c − a2 ,   θ = tan−1    √
+                                         c − a2                                              A c − a2
+
+[[PAGE page-550]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 550 — #63
+
+
+
+
+550   CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          The procedure of finding H[z] can be systematized for any Nth-order system. First we express
+      an Nth-order analog transfer function Ha (s) as a sum of partial fractions as‡
+
+
+                                                            "
+                                                            n
+                                                                  ci
+                                                 Ha (s) =
+                                                            i=1
+                                                                s − λi
+
+
+      Then the corresponding H[z] is given by
+
+
+                                                           "
+                                                           n
+                                                                   ci z
+                                                H[z] = T
+                                                            i=1
+                                                                z − eλi T
+
+
+      This transfer function can be readily realized, as explained in Sec. 5.4. Table 5.3 lists several pairs
+      of Ha (s) and their corresponding H[z]. For instance, to realize a digital integrator, we examine its
+      Ha (s) = 1/s. From Table 5.3, corresponding to Ha (s) = 1/s (pair 2), we find H[z] = Tz/(z − 1).
+      This is exactly the result we obtained in Ex. 3.9 using another approach.
+           Note that the frequency response Ha (jω) of a practical analog filter cannot be bandlimited.
+      Consequently, all these realizations are approximate.
+
+
+      C HOOSING THE S AMPLING I NTERVAL T
+      The impulse-invariance criterion (5.44) was derived under the assumption that T → 0. Such an
+      assumption is neither practical nor necessary for satisfactory design. Avoiding of aliasing is the
+      most important consideration for the choice of T. In Eq. (5.39), we showed that for a sampling
+      interval T seconds, the highest frequency that can be sampled without aliasing is 1/2T Hz or
+      π/T radians per second. This implies that Ha (jω), the frequency response of the analog filter in
+      Fig. 5.24b should not have spectral components beyond frequency π/T radians per second. In
+      other words, to avoid aliasing, the frequency response of the system Ha (s) must be bandlimited to
+      π/T radians per second. We shall see later in Ch. 7 that frequency response of a realizable LTIC
+      system cannot be bandlimited; that is, the response generally exists for all frequencies up to ∞.
+      Therefore, it is impossible to digitally realize an LTIC system exactly without aliasing. The saving
+      grace is that the frequency response of every realizable LTIC system decays with frequency. This
+      allows for a compromise in digitally realizing an LTIC system with an acceptable level of aliasing.
+      The smaller the value of T, the smaller the aliasing, and the better the approximation. Since it is
+      impossible to make |Ha (jω)| zero, we are satisfied with making it negligible beyond the frequency
+      π/T. As a rule of thumb [3], we choose T such that |Ha (jω)| at the frequency ω = π/T is less than
+      a certain fraction (often taken as 1%) of the peak value of |Ha (jω)|. This ensures that aliasing is
+      negligible. The peak |Ha (jω)| usually occurs at ω = 0 for lowpass filters and at the band center
+      frequency ωc for bandpass filters.
+
+
+      ‡ Assuming H (s) has simple poles. For repeated poles, the form changes accordingly. Entry 6 in Table 5.3 is
+                    a
+      suitable for repeated poles.
+
+[[PAGE page-551]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 551 — #64
+
+
+
+
+                                                    5.7 Digital Processing of Analog Signals        551
+
+
+E X A M P L E 5.16 Butterworth Filter Design by the Impulse-Invariance
+Method
+
+    Design a digital filter to realize a first-order lowpass Butterworth filter with the transfer
+    function                                    ωc
+                                     Ha (s) =            ωc = 105                          (5.46)
+                                              s + ωc
+
+
+    For this filter, we find the corresponding H[z] according to Eq. (5.45) (or pair 5 in Table 5.3)
+    as
+                                                     ωc Tz
+                                            H[z] =                                            (5.47)
+                                                   z − e−ωc T
+    Next, we select the value of T by means of the criterion according to which the gain at ω = π/T
+    drops to 1% of the maximum filter gain. However, this choice results in such a good design that
+    aliasing is imperceptible. The resulting amplitude response is so close to the desired response
+    that we can hardly notice the aliasing effect in our plot. For the sake of demonstrating the
+    aliasing effect, we shall deliberately select a 10% criterion (instead of 1%). We have
+                                                                
+                                                        ωc      
+                                                                
+                                         |Ha (jω)| =           
+                                                      ω2 + ωc2 
+
+    In this case |Ha (jω)|max = 1, which occurs at ω = 0. Use of 10% criterion leads to |Ha (π/T)| =
+    0.1. Observe that                              ωc
+                                       |Ha (jω)| ≈         ω  ωc
+                                                    ω
+         Hence,
+                                         ωc
+                          |Ha (π/T)| ≈       = 0.1     ⇒ π/T = 10ωc = 106
+                                        π/T
+    Thus, the 10% criterion yields T = 10−6 π . The 1% criterion would have given T = 10−7 π .
+    Substitution of T = 10−6 π in Eq. (5.47) yields
+                                                      0.3142z
+                                           H[z] =                                              (5.48)
+                                                    z − 0.7304
+    A canonical realization of this filter is shown in Fig. 5.26a.
+        To find the frequency response of this digital filter, we rewrite H[z] as
+                                                     0.3142
+                                         H[z] =
+                                                  1 − 0.7304z−1
+    Therefore,
+                                   0.3142                       0.3142
+                 H[ejωT ] =               −jωT
+                                               =
+                              1 − 0.7304e        (1 − 0.7304 cos ωT) + j0.7304 sin ωT
+
+[[PAGE page-552]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 552 — #65
+
+
+
+
+552   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                     x[n]                      0.3142
+                                                        y[n]
+                                              1
+                                              z
+
+
+                                   0.7304
+                                      (a)
+         1    H
+
+
+
+
+                                                        H[e jvT]
+
+                       Ha( jv)
+
+               105                  5  105                          106      v
+                                      (b)
+
+       ⬔H
+               105                  5  105                      v
+
+                                                                     106
+
+                                   ⬔H[e jvT]
+
+
+
+
+                                   ⬔Ha( jv)
+
+      p2
+                                      (c)
+
+      Figure 5.26 An example of filter design by the impulse-invariance method: (a) filter
+      realization, (b) amplitude response, and (c) phase response.
+
+
+      The corresponding magnitude response is
+                                                                           0.3142
+                            |H[ejωT ]| = 
+                                              (1 − 0.7304 cos ωT)2 + (0.7304 sin ωT)2
+                                                     0.3142
+                                            =√                                          (5.49)
+                                               1.533 − 1.4608 cos ωT
+
+[[PAGE page-553]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 553 — #66
+
+
+
+
+                                                    5.7 Digital Processing of Analog Signals        553
+
+and the phase response is
+
+                                                         0.7304 sin ωT
+                               H[ejωT ] = − tan−1                                             (5.50)
+                                                       1 − 0.7304 cos ωT
+
+This frequency response differs from the desired response Ha (jω) because aliasing causes
+frequencies above π/T to appear as frequencies below π/T. This generally results in increased
+gain for frequencies below π/T. For instance, the realized filter gain at ω = 0 is H[ej0 ] = H[1].
+This value, as obtained from Eq. (5.48), is 1.1654 instead of the desired value 1. We can
+partly compensate for this distortion by multiplying H[z] or H[ejωT ] by a normalizing constant
+K = Ha (0)/H[1] = 1/1.1654 = 0.858. This forces the resulting gain of H[ejωT ] to be equal to
+1 at ω = 0. The normalized Hn [z] = 0.858H[z] = 0.858(0.1π z/(z − 0.7304)). The amplitude
+response in Eq. (5.49) is multiplied by K = 0.858 and plotted in Fig. 5.26b over the frequency
+range 0 ≤ ω ≤ π/T = 106 . The multiplying constant K has no effect on the phase response in
+Eq. (5.50), which is shown in Fig. 5.26c.
+     Also, the desired frequency response, according to Eq. (5.46) with ωc = 105 , is
+
+                                                   ωc      105
+                                    Ha (jω) =          =
+                                                jω + ωc jω + 105
+
+Therefore,
+
+                                     105                                              ω
+                 |Ha (jω)| = √                       and        Ha (jω) = − tan−1
+                                   ω2 + 1010                                         105
+
+This desired amplitude and phase response are plotted (dotted) in Figs. 5.26b and 5.26c for
+comparison with realized digital filter response. Observe that the amplitude response behavior
+of the analog and the digital filter is very close over the range ω ≤ ωc = 105 . However, for
+higher frequencies, there is considerable aliasing, especially in the phase spectrum. Had we
+used the 1% rule, the realized frequency response would have been closer over another decade
+of the frequency range.
+
+I MPULSE I NVARIANCE BY MATLAB
+We can readily use the MATLAB impinvar command to confirm our digital filter designed
+by the impulse-invariance method.
+>>   omegac = 10^5; Ba = [omegac]; Aa = [1 omegac]; Fs = 10^6/pi;
+>>   [B,A] = impinvar(Ba,Aa,Fs)
+     B = 0.3142
+     A = 1.0000 -0.7304
+This confirms our earlier result of Eq. (5.48) that the digital filter transfer function is
+
+                                                       0.3142z
+                                           H[z] =
+                                                     z − 0.7304
+
+[[PAGE page-554]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 554 — #67
+
+
+
+
+554   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+       D R I L L 5.22 Filter Design by the Impulse-Invariance Method
+       Design a digital filter to realize an analog transfer function
+                                                              20
+                                                 Ha (s) =
+                                                            s + 20
+
+
+       ANSWER
+                  20Tz              π
+       H[z] =             with T =
+                z − e−20T          2000

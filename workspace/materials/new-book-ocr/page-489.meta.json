@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": "The z-Transform 489",
+  "summary": "This page covers 5.1 (The z-Transform 489). OCR text begins with: 5.1 The z-Transform 489 As in the case of the Laplace transform, we need not worry about this integral at this point because inverse z-transforms of many signals of engineering interest can be found in a z-transform table. The direct and inverse z-transforms can be expressed symbolically as X[z] = Z{x[n]} and x[n] = Z −1 {X[z]} or simply as x[n] ⇐⇒ X[z]",
+  "keywords": [
+    "5.1",
+    "The z-Transform 489",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-489",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

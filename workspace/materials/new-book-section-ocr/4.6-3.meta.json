@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.6-3",
+  "sourcePages": [
+    "page-393",
+    "page-394",
+    "page-395",
+    "page-396"
+  ],
+  "usedPages": [
+    "page-393",
+    "page-394",
+    "page-395",
+    "page-396"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.6-3 Cascade and Parallel Realizations",
+  "foundEnd": true,
+  "endBeforeLine": "4.6-4 Transposed Realization",
+  "endBeforeCode": "4.6-4",
+  "charCount": 8522
+}

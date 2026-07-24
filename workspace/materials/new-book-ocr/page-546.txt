@@ -1,0 +1,62 @@
+                           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 546 — #59
+
+
+
+
+546       CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                                                          p2
+                                                      (v  500p)
+
+                                                     ja
+
+                                 p                                0
+                        (v  1000 p)                          (v  0)
+
+                                                     ja
+
+                                                     j
+
+
+                                               (a)
+
+
+
+          H [e jvT]
+
+
+                                             a  0.95
+      1
+
+
+                                            a  0.6
+
+
+                                              a  0.3
+
+
+
+
+          0                            p                             p
+                                       2                                   (vT )
+          0                       500p                             1000p        v
+                                               (b)
+
+
+                        1  a2
+                          2                                        y[n]
+
+                    x[n]
+                                               1
+                                               z
+
+
+
+                                               1
+                                               z
+
+                                      a2
+                                               (c)
+      Figure 5.23 Designing a notch (bandstop) filter.

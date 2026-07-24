@@ -1,0 +1,20 @@
+{
+  "sectionId": "5.10-8",
+  "sourcePages": [
+    "page-572",
+    "page-573",
+    "page-574"
+  ],
+  "usedPages": [
+    "page-572",
+    "page-573",
+    "page-574"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-8 Using Cascaded Second-Order Sections to Improve Design",
+  "foundEnd": true,
+  "endBeforeLine": "5.11 S UMMARY",
+  "endBeforeCode": "5.11",
+  "charCount": 4767
+}

@@ -1,0 +1,60 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 543 — #56
+
+
+
+
+                                                5.6 Frequency Response from Pole-Zero Locations                543
+
+where |γ | < 1 for stability. The closer γ is to the unit circle, the more sharply peaked is the
+response around ω = 250π . We also have zeros at ±1. Hence,
+
+                                           (z − 1)(z + 1)                     z2 − 1
+                        H[z] = K                                     = K     √
+                                   (z − |γ |ejπ/4 )(z − |γ |e−jπ/4 )     z2 − 2|γ |z + |γ |2
+For convenience, we shall choose K = 1. The amplitude response is given by
+
+                                                                  |ej2 − 1|
+                                   |H[ej ]| =
+                                                     |ej − |γ |ejπ/4 ||ej − |γ |e−jπ/4 |
+Now, by using Eq. (5.37), we obtain
+
+                                                     2(1 − cos 2)
+        |H[ej ]|2 =                                      !                              !
+                                                       π                               π
+                             1 + |γ |2 − 2|γ | cos  −       1 + |γ |2 − 2|γ | cos  +
+                                                       4                               4
+
+
+                                                            H [e j ]
+                                                                                             g   1
+
+
+                              z  e jp4
+                              (v  250p)             25.5                                    g   0.96
+                  g
+                   p4
+                                   z1                                                        g  0.83
+                                   (v  0)
+
+                                                     6.41
+
+
+                                                            0                        250p                  v
+
+                                                                                     p4
+            (a)                                                                               (b)
+
+                            x[n]                                         y[n]
+
+
+                                                       1
+                                                       z
+                                             2 g
+
+                                                       1
+                                                       z
+
+                                         g2              1
+                                                      (c)
+
+Figure 5.21 Designing a bandpass filter.

@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": "z-TRANSFORM SOLUTION OF LINEAR DIFFERENCE",
+  "summary": "This page covers 5.3 (z-TRANSFORM SOLUTION OF LINEAR DIFFERENCE). OCR text begins with: 510 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 5.3 z-T RANSFORM S OLUTION OF L INEAR D IFFERENCE E QUATIONS The time-shifting (left-shift or right-shift) property has set the stage for solving linear difference equations with constant coefficients. As in the case of the Laplace transform with differential equations, the z-transform converts difference equations into algebraic equations that are rea",
+  "keywords": [
+    "5.3",
+    "z-TRANSFORM SOLUTION OF LINEAR DIFFERENCE",
+    "difference equation",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-510",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

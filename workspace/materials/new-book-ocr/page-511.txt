@@ -1,0 +1,64 @@
+          “05-Lathi-C05” — 2017/9/25 — 15:54 — page 511 — #24
+
+
+
+
+                                5.3 z-Transform Solution of Linear Difference Equations         511
+
+We obtain                                                                       z
+                    x[n] = (2)−n u[n] = (2−1 )n u[n] = (0.5)n u[n] ⇐⇒
+                                                                             z − 0.5
+
+                          1               1 z               1
+           x[n − 1]u[n] ⇐⇒ X[z] + x[−1] =           +0 =
+                           z              z z − 0.5      z − 0.5
+                           1       1                 1                   1
+           x[n − 2]u[n] ⇐⇒ 2 X[z] + x[−1] + x[−2] = 2 X[z] + 0 + 0 =
+                          z        z                 z               z(z − 0.5)
+
+In general,
+                                                           1
+                                       x[n − r]u[n] ⇐⇒        X[z]
+                                                           zr
+Taking the z-transform of Eq. (5.21) and substituting the foregoing results, we obtain
+                                 !                    !
+                       1      11       1        11 37        3        5
+              Y[z] − 5 Y[z] +      + 6 2 Y[z] +   +     =        +
+                       z       6       z        6z 36     z − 0.5 z(z − 0.5)
+
+or
+                           5 6             11                    3        5
+                      1−    + 2 Y[z] − 3 −                =          +                    (5.22)
+                           z z              z                 z − 0.5 z(z − 0.5)
+from which we obtain
+
+                                                     z(3z2 − 9.5z + 10.5)
+                            (z2 − 5z + 6)Y[z] =
+                                                           (z − 0.5)
+
+so that
+                                               z(3z2 − 9.5z + 10.5)
+                                     Y[z] =
+                                              (z − 0.5)(z2 − 5z + 6)
+and
+                  Y[z]      3z2 − 9.5z + 10.5      (26/15) (7/3) (18/5)
+                       =                         =          −     +
+                   z     (z − 0.5)(z − 2)(z − 3)    z − 0.5   z−2   z−3
+Therefore,
+                                26       z      7        z    18         z
+                       Y[z] =                 −             +
+                                15    z − 0.5   3       z−2    5        z−3
+and
+                            y[n] =      26
+                                        15
+                                           (0.5)n − 73 (2)n + 18
+                                                              5
+                                                                 (3)n u[n]                (5.23)
+
+
+
+
+    This example demonstrates the ease with which linear difference equations with constant
+coefficients can be solved by the z-transform. This method is general: it can be used to solve a
+single difference equation or a set of simultaneous difference equations of any order as long as the
+equations are linear with constant coefficients.

@@ -1,0 +1,55 @@
+            “04-Lathi-C04” — 2017/9/25 — 19:46 — page 331 — #2
+
+
+
+
+                                                                        4.1 The Laplace Transform       331
+
+    It is also common practice to use a bidirectional arrow to indicate a Laplace transform pair, as
+    follows:
+                                             x(t) ⇐⇒ X(s)
+    The Laplace transform, defined in this way, can handle signals existing over the entire time
+    interval from −∞ to ∞ (causal and noncausal signals). For this reason it is called the bilateral (or
+    two-sided) Laplace transform. Later we shall consider a special case—the unilateral or one-sided
+    Laplace transform—which can handle only causal signals.
+
+    L INEARITY OF THE L APLACE T RANSFORM
+    We now prove that the Laplace transform is a linear operator by showing that the principle of
+    superposition holds, implying that if
+
+                                x1 (t) ⇐⇒ X1 (s)          and       x2 (t) ⇐⇒ X2 (s)
+
+    then
+                                   a1 x1 (t) + a2 x2 (t) ⇐⇒ a1 X1 (s) + a2 X2 (s)
+    The proof is simple. By definition,
+                                                    # ∞
+                      L [a1 x1 (t) + a2 x2 (t)] =    [a1 x1 (t) + a2 x2 (t)]e−st dt
+                                                    −∞
+                                                   # ∞                      # ∞
+                                                                −st
+                                              = a1      x1 (t)e dt + a2           x2 (t)e−st dt
+                                                      −∞                      −∞
+                                              = a1 X1 (s) + a2 X2 (s)                                  (4.3)
+
+    This result can be extended to any finite sum.
+
+    T HE R EGION OF C ONVERGENCE (ROC)
+    The region of convergence (ROC), also called the region of existence, for the Laplace transform,
+    X(s), is the set of values of s (the region in the complex plane) for which the integral in Eq. (4.1)
+    converges. This concept will become clear in the following example.
+
+
+E X A M P L E 4.1 Laplace Transform and ROC of a Causal Exponential
+
+    For a signal x(t) = e−at u(t), find the Laplace transform X(s) and its ROC.
+
+
+    By definition,                                  # ∞
+                                         X(s) =           e−at u(t)e−st dt
+                                                     −∞
+
+    Because u(t) = 0 for t < 0 and u(t) = 1 for t ≥ 0,
+                            # ∞                 # ∞                             
+                                                                     1 −(s+a)t ∞
+                    X(s) =       e−at e−st dt =     e−(s+a)t dt = −     e                          (4.4)
+                              0                  0                  s+a          0

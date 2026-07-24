@@ -1,0 +1,47 @@
+{
+  "sectionId": "4.8",
+  "sectionTitle": "Frequency Response of an LTIC System",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-412"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.40)",
+      "name": "Everlasting exponential response",
+      "latex": "e^{st}\\Rightarrow H(s)e^{st}",
+      "sourcePage": "page-412",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.41)",
+      "name": "Complex sinusoid response",
+      "latex": "e^{j\\omega t}\\Rightarrow H(j\\omega)e^{j\\omega t}",
+      "sourcePage": "page-412",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.42)",
+      "name": "Cosine response as real part",
+      "latex": "\\cos\\omega t\\Rightarrow \\operatorname{Re}\\{H(j\\omega)e^{j\\omega t}\\}",
+      "sourcePage": "page-412",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.43)",
+      "name": "Sinusoidal steady-state response",
+      "latex": "y(t)=|H(j\\omega)|\\cos[\\omega t+\\theta+\\angle H(j\\omega)]",
+      "sourcePage": "page-412",
+      "role": "system_response",
+      "status": "verified"
+    }
+  ]
+}

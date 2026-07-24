@@ -1,0 +1,61 @@
+          “05-Lathi-C05” — 2017/9/25 — 15:54 — page 539 — #52
+
+
+
+
+                                              5.6 Frequency Response from Pole-Zero Locations                               539
+
+
+
+                                                                                  Im
+                                            z plane
+                                                                                                          ej
+                  zi                                                                         d2
+  Im
+
+                               z ⴚ zi                                                       r2
+                                                                            u1
+                                                                  g1                                      r1
+          ⴚzi
+                                                                                 d1                             f1
+                                        z                           f2                                               Re
+                                                  1        z2                                            z1         1
+                         z                                                u2
+                                                                  g2
+
+      0                          Re
+
+
+
+
+                  (a)                                                                 (b)
+Figure 5.19 Vector representations of (a) complex numbers and (b) factors of H[z].
+
+
+Fig. 5.19b. Let r1 , r2 , . . . , rN be the lengths and φ1 , φ2 , . . . , φN be the angles, respectively, of the
+straight lines connecting z1 , z2 , . . . , zN to the point ej . Similarly, let d1 , d2 , . . . , dN be the lengths
+and θ1 , θ2 , . . . , θN be the angles, respectively, of the lines connecting γ1 , γ2 , . . . , γN to ej . Then
+
+                                                    (r1 ejφ1 )(r2 ejφ2 ) · · · (rN ejφN )
+                  H[ej ] = H[z]|z=ej = b0
+                                                    (d1 ejθ1 )(d2 ejθ2 ) · · · (dN ejθN )
+                                                    r1 r2 · · · rN j[(φ1 +φ2 +· · ·+φN )−(θ1 +θ2 +· · ·+θN )]
+                                               = b0                e
+                                                    d1 d2 · · · dN
+
+Therefore (assuming b0 > 0),
+
+                                  r1 r2 · · · rN      product of the distances of zeros to ej
+                |H[ej ]| = b0                   = b0                                                                     (5.41)
+                                  d1 d2 · · · dN        product of distances of poles to ej
+
+and
+
+                       H[ej ] = (φ1 + φ2 + · · · + φN ) − (θ1 + θ2 + · · · + θN )
+                               = sum of zero angles to ej − sum of pole angles to ej
+
+In this manner, we can compute the frequency response H[ej ] for any value of  by selecting the
+point on the unit circle at an angle . This point is ej . To compute the frequency response H[ej ],
+we connect all poles and zeros to this point and use the foregoing equations to determine |H[ej ]|
+and  H[ej ]. We repeat this procedure for all values of  from 0 to π to obtain the frequency
+response.

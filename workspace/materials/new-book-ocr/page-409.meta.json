@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": "Application to Feedback and Controls 409",
+  "summary": "This page covers 4.7 (Application to Feedback and Controls 409). OCR text begins with: 4.7 Application to Feedback and Controls 409 and \u0005 \u0006 θo (t) = 1 − 76 e−t + 16 e−7t u(t) This response, illustrated in Fig. 4.35c, shows that the system reaches the desired angle, but at a rather leisurely pace. To speed up the response let us increase the gain to, say, 80. For K = 80, 80 80",
+  "keywords": [
+    "4.7",
+    "Application to Feedback and Controls 409",
+    "unit step",
+    "characteristic roots"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-409",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

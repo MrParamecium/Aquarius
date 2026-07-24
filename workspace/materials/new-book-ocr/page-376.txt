@@ -1,0 +1,60 @@
+                               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 376 — #47
+
+
+
+
+376   CHAPTER 4                CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      I NITIAL C ONDITION G ENERATORS
+      The discussion in which we assumed zero initial conditions can be readily extended to the case
+      of nonzero initial conditions because the initial condition in a capacitor or an inductor can be
+      represented by an equivalent source. We now show that a capacitor C with an initial voltage v(0− )
+      (Fig. 4.11a) can be represented in the frequency domain by an uncharged capacitor of impedance
+      1/Cs in series with a voltage source of value v(0− )/s (Fig. 4.11b) or as the same uncharged
+      capacitor in parallel with a current source of value Cv(0− ) (Fig. 4.11c). Similarly, an inductor
+      L with an initial current i(0− ) (Fig. 4.11d) can be represented in the frequency domain by an
+      inductor of impedance Ls in series with a voltage source of value Li(0− ) (Fig. 4.11e) or by the
+      same inductor in parallel with a current source of value i(0− )/s (Fig. 4.11f).
+
+
+                    i(t)                            I(s)                              I(s)
+                                                                               
+                                                                 1
+                                                                 Cs
+                                
+                                                                                       1
+       v(t)                C         v(0)   V(s)                              V(s)                 Cv(0)
+                                                                 v(0)                 Cs
+                                                                  s
+
+
+                                                                               
+                     (a)                              (b)                                    (c)
+
+
+                    i(t)                            I(s)                              I(s)
+                                                                              
+
+                                                                Ls
+
+       v(t)                      L           V(s)                              V(s)          Ls     i(0)
+                                                                                                      s
+
+                                                                 Li(0)
+
+                                                                              
+              (d)                                     (e)                                    (f )
+
+
+      Figure 4.11 Initial condition generators for a capacitor and an inductor.
+
+
+
+              To prove this point, consider the terminal relationship of the capacitor in Fig. 4.11a:
+
+                                                                       dv(t)
+                                                            i(t) = C
+                                                                        dt
+      The Laplace transform of this equation yields
+
+                                                    I(s) = C[sV(s) − v(0− )]

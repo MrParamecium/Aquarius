@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": "5.1-1",
+  "title": null,
+  "summary": "This page covers 5.1-1. OCR text begins with: 496 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM From Table 5.1, pair 7, we obtain x[n] = [3(2)n−1 + 5(3)n−1 ]u[n − 1] (5.8) If we expand rational X[z] into partial fractions directly, we shall always obtain an answer that is multiplied by u[n − 1] because of the nature of pair 7 in Table 5.1. This form is rather awkward as well as inconvenient. We prefer the form that contains u[n] rather than u[n −",
+  "keywords": [
+    "5.1",
+    "5.1-1",
+    "unit impulse",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-496",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

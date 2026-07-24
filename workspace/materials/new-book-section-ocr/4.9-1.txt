@@ -1,0 +1,11 @@
+# Fourier section OCR
+section_id: 4.9-1
+source_pages: page-422
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.9-1 Constant Ka1 a2 /b1 b3
+      The log amplitude of the constant Ka1 a2 /b1 b2 term is also a constant, 20 log |Ka1 a2 /b1 b3 |. The
+      phase contribution from this term is zero for positive value and π for negative value of the constant
+      (complex constants can have different phases).

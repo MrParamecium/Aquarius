@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.3-2",
+  "sourcePages": [
+    "page-518",
+    "page-519"
+  ],
+  "usedPages": [
+    "page-518",
+    "page-519"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.3-2 Stability",
+  "foundEnd": true,
+  "endBeforeLine": "5.4 System Realization 519",
+  "endBeforeCode": "5.4",
+  "charCount": 2319
+}

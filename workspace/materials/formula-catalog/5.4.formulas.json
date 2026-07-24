@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.4",
+  "sectionTitle": "System Realization",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-521"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.29)",
+      "name": "General rational transfer function for realization",
+      "latex": "H[z]=\\frac{b_0z^N+b_1z^{N-1}+\\cdots+b_{N-1}z+b_N}{z^N+a_1z^{N-1}+\\cdots+a_{N-1}z+a_N}",
+      "sourcePage": "page-521",
+      "role": "core_model",
+      "status": "verified"
+    }
+  ]
+}

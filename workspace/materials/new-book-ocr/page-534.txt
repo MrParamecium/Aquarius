@@ -1,0 +1,62 @@
+                            “05-Lathi-C05” — 2017/9/25 — 15:54 — page 534 — #47
+
+
+
+
+534   CHAPTER 5             DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+                                           p
+                a
+
+
+
+
+                        2p        p          0        p            2p          3p          4p
+
+                                          p
+
+                                                       (a)
+
+
+
+               a
+                       p
+
+                     0.4p
+
+                        2p        p          0        p            2p          3p          4p
+                                                              1.6p        2.4p        3.6p
+
+                                                       (b)
+            Figure 5.17 (a) Actual frequency versus (b) apparent frequency.
+
+
+
+
+      A M AN N AMED R OBERT
+      To give an analogy, consider a fictitious person Mr. Robert Thompson. His mother calls him
+      Robby; his acquaintances call him Bob, his close friends call him by his nickname, Shorty. Yet,
+      Robert, Robby, Bob, and Shorty are one and the same person. However, we cannot say that only
+      Mr. Robert Thompson exists, or only Robby exists, or only Shorty exists, or only Bob exists. All
+      these four persons exist, although they are one and the same individual. In a same way, we cannot
+      say that the frequency π/2 exists and frequency 5π/2 does not exist; they are both the same entity,
+      called by different names.
+           It is in this sense that we have to admit the existence of frequencies beyond the fundamental
+      band. Indeed, mathematical expressions in the frequency domain automatically cater to this
+      need by their built-in periodicity. As seen earlier, the very structure of the frequency response
+      is 2π -periodic. We shall also see later, in Ch. 9, that discrete-time signal spectra are also
+      2π -periodic.
+           Admitting the existence of frequencies beyond π also serves mathematical and computational
+      convenience in digital signal-processing applications. Values of frequencies beyond π may also
+      originate naturally in the process of sampling continuous-time sinusoids. Because there is no upper
+      limit on the value of ω, there is no upper limit on the value of the resulting discrete-time frequency
+       = ωT either.†
+           The highest possible frequency is π and the lowest frequency is 0 (dc or constant). Clearly,
+      the high frequencies are those in the vicinity of  = (2m + 1)π and the low frequencies are those
+      in the vicinity of  = 2π m for all positive or negative integer values of m.
+
+
+
+      † However, if  goes beyond π , the resulting aliasing reduces the apparent frequency to  < π .
+                                                                                                a

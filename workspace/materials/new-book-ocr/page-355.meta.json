@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": null,
+  "title": "Some Properties of the Laplace Transform 355",
+  "summary": "This page covers 4.2 (Some Properties of the Laplace Transform 355). OCR text begins with: 4.2 Some Properties of the Laplace Transform 355 E X A M P L E 4.9 Laplace Transform and the Time-Differentiation Property Find the Laplace transform of the signal x(t) in Fig. 4.6a by using Table 4.1 and the time-differentiation and time-shifting properties of the Laplace transform. 2 x(t) 0 2 3 t",
+  "keywords": [
+    "4.2",
+    "Some Properties of the Laplace Transform 355",
+    "unit impulse",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-355",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

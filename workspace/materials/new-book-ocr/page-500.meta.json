@@ -1,0 +1,21 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": "5.1-2",
+  "title": null,
+  "summary": "This page covers 5.1-2. OCR text begins with: 500 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM To obtain a series expansion in powers of z−1 , we divide the numerator by the denominator as follows: −1 −2 −3 \u00067 + 9.9z + 11.23z + 11.87z + · · · z − 1.7z + 0.8z − 0.1 7z − 2z 3 2 3 2",
+  "keywords": [
+    "5.1",
+    "5.1-2",
+    "impulse response",
+    "unit impulse",
+    "discrete-time",
+    "LTIC system",
+    "LTID system"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-500",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

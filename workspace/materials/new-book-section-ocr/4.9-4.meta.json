@@ -1,0 +1,34 @@
+{
+  "sectionId": "4.9-4",
+  "sourcePages": [
+    "page-426",
+    "page-427",
+    "page-428",
+    "page-429",
+    "page-430",
+    "page-431",
+    "page-432",
+    "page-433",
+    "page-434",
+    "page-435"
+  ],
+  "usedPages": [
+    "page-426",
+    "page-427",
+    "page-428",
+    "page-429",
+    "page-430",
+    "page-431",
+    "page-432",
+    "page-433",
+    "page-434",
+    "page-435"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.9-4 Second-Order Pole (or Zero)",
+  "foundEnd": true,
+  "endBeforeLine": "4.9-5 The Transfer Function from the Frequency Response",
+  "endBeforeCode": "4.9-5",
+  "charCount": 24881
+}

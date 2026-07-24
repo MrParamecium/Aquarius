@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-8",
+  "title": "Using Cascaded Second-Order Sections to Improve Design",
+  "summary": "This page covers 5.10-8 (Using Cascaded Second-Order Sections to Improve Design). OCR text begins with: 572 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 1 Ideal FOBD Magnitude Response 0.8 BLT",
+  "keywords": [
+    "5.10",
+    "5.10-8",
+    "Using Cascaded Second-Order Sections to Improve Design",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-572",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

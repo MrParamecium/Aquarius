@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.11",
+  "sourcePages": [
+    "page-574",
+    "page-575"
+  ],
+  "usedPages": [
+    "page-574",
+    "page-575"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.11 S UMMARY",
+  "foundEnd": true,
+  "endBeforeLine": "5.1-1 Using the definition, compute the z-transform of y[n]",
+  "endBeforeCode": "5.1-1",
+  "charCount": 3559
+}

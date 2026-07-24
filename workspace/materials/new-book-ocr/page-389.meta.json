@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-1",
+  "title": "Direct Form IRealization",
+  "summary": "This page covers 4.6-1 (Direct Form IRealization). OCR text begins with: 4.6 System Realization 389 y(t) \u0005 \u00040 x(t)d(t) t x(t) X(s) Y(s) \u0005 1s X(s) 1 \u0004 s (a) (b)",
+  "keywords": [
+    "4.6",
+    "4.6-1",
+    "Direct Form IRealization",
+    "continuous-time",
+    "LTI system"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-389",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

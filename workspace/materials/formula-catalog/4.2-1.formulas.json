@@ -1,0 +1,23 @@
+{
+  "sectionId": "4.2-1",
+  "sectionTitle": "Time Shifting",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-349"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.12)",
+      "name": "Time-shifting property",
+      "latex": "x(t-t_0)\\Longleftrightarrow X(s)e^{-st_0},\\qquad t_0\\ge 0",
+      "sourcePage": "page-349",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

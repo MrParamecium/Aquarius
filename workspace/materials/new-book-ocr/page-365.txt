@@ -1,0 +1,64 @@
+         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 365 — #36
+
+
+
+
+                          4.3        Solution of Differential and Integro-Differential Equations               365
+
+
+                                                                              1H           2
+                 1H                       2
+
+          y(t)                                                                                       
+                                5
+                                                                                    y(t)              vC (t)
+10 V                                                              10u(t)                       1
+                                                   1
+                                                     F                                         5
+                                                                                                 F
+                                t0                5
+                                                                                                     
+
+
+                          (a)                                                       (b)
+
+                                                    2
+                                                         y(t)
+
+
+
+
+                                                    0                                  t
+
+
+                                                            (c)
+Figure 4.7 Analysis of a network with a switching action.
+
+       The loop equation of the circuit in Fig. 4.7b is
+                                                 # t
+                              dy(t)
+                                    + 2y(t) + 5       y(τ ) dτ = 10u(t)                              (4.25)
+                               dt                 −∞
+
+If
+                                                    y(t) ⇐⇒ Y(s)
+then
+                                    dy(t)
+                                          ⇐⇒ sY(s) − y(0− ) = sY(s) − 2
+                                     dt
+and [see Eq. (4.16)]
+                                    # t                  $ 0−
+                                                Y(s)          y(τ ) dτ
+                                  y(τ ) dτ ⇐⇒        + −∞
+                              −∞                 s             s
+                                                    $ 0−
+Because y(t) is the capacitor current, the integral −∞ y(τ ) dτ is qC (0− ), the capacitor charge
+at t = 0− , which is given by C times the capacitor voltage at t = 0− . Therefore,
+                          # 0−
+                                    y(τ ) dτ = qC (0− ) = CvC (0− ) = 15 (10) = 2
+                           −∞
+
+and                                       # t
+                                                                    Y(s) 2
+                                                   y(τ ) dτ ⇐⇒          +
+                                              −∞                     s    s

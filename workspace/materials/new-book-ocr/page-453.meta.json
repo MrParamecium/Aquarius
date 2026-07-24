@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.11",
+  "subsection": "4.11-2",
+  "title": null,
+  "summary": "This page covers 4.11-2. OCR text begins with: 4.11 The Bilateral Laplace Transform 453 E X A M P L E 4.33 Circuit Response to a Noncausal Input Find the current y(t) for the RC circuit in Fig. 4.60a if the voltage x(t) is x(t) = et u(t) + e2t u(−t) 1 x(t) y(t) 1F (a)",
+  "keywords": [
+    "4.11",
+    "4.11-2",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-453",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

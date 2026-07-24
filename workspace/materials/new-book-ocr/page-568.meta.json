@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-3",
+  "title": "Transformation by First-Order Backward Difference",
+  "summary": "This page covers 5.10-3 (Transformation by First-Order Backward Difference). OCR text begins with: 568 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Section 5.9 suggests that the z-transform can be considered to be a Laplace transform with a change of variable z = esT or s = (1/T) ln z, where T is the sampling interval. It is tempting, therefore, to convert a continuous-time filter to a discrete-time filter by substituting s = (1/T) ln z into H(s), or H[z] = H(s)|s=(1/T) ln z . This approach is imp",
+  "keywords": [
+    "5.10",
+    "5.10-3",
+    "Transformation by First-Order Backward Difference",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB",
+    "sampling",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-568",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

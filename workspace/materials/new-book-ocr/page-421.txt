@@ -1,0 +1,60 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 421 — #92
+
+
+
+
+                                                                                  4.9   Bode Plots          421
+
+denominator, its phase is subtracted. This makes it easy to plot the phase function  H(jω) as a
+function of ω. Computation of |H(jω)|, unlike that of the phase function, however, involves the
+multiplication and division of various terms. This is a formidable task, especially when we have
+to plot this function for the entire range of ω (0 to ∞).
+     We know that a log operation converts multiplication and division to addition and subtraction.
+So, instead of plotting |H(jω)|, why not plot log |H(jω)| to simplify our task? We can take
+advantage of the fact that logarithmic units are desirable in several applications, where the
+variables considered have a very large range of variation. This is particularly true in frequency
+response plots, where we may have to plot frequency response over a range from a very low
+frequency, near 0, to a very high frequency, in the range of 1010 or higher. A plot on a linear
+scale of frequencies for such a large range will bury much of the useful information at lower
+frequencies. Also, the amplitude response may have a very large dynamic range from a low of
+10−6 to a high of 106 . A linear plot would be unsuitable for such a situation. Therefore, logarithmic
+plots not only simplify our task of plotting, but, fortunately, they are also desirable in this
+situation.
+     There is another important reason for using logarithmic scale. The Weber–Fechner law (first
+observed by Weber in 1834) states that human senses (sight, touch, hearing, etc.) generally
+respond in a logarithmic way. For instance, when we hear sound at two different power levels,
+we judge one sound twice as loud when the ratio of the two sound powers is 10. Human senses
+respond to equal ratios of power, not equal increments in power [10]. This is clearly a logarithmic
+response.†
+     The logarithmic unit is the decibel and is equal to 20 times the logarithm of the quantity
+(log to the base 10). Therefore, 20 log10 |H(jω)| is simply the log amplitude in decibels (dB).‡
+Thus, instead of plotting |H(jω)|, we shall plot 20 log10 |H(jω)| as a function of ω. These plots
+(log amplitude and phase) are called Bode plots. For the transfer function in Eq. (4.45), the log
+amplitude is
+                                                                          
+                                   Ka1 a2              jω            jω 
+                                  
+          20 log |H(jω)| = 20 log                                 
+                                             + 20 log1 +  + 20 log1 +  − 20 log |jω|
+                                     b1 b3               a1               a2
+                                                                      
+                                          jω              jb2 ω (jω) 
+                                                                       2
+                           − 20 log1 +  − 20 log1 +         +                                      (4.47)
+                                           b   1                b   3b       3
+
+
+The term 20 log(Ka1 a2 /b1 b3 ) is a constant. We observe that the log amplitude is a sum of four
+basic terms corresponding to a constant, a pole or zero at the origin (20 log |jω|), a first-order pole
+or zero (20 log |1 + jω/a|), and complex-conjugate poles or zeros (20 log |1 + jωb2 /b3 + (jω)2 /b3 |).
+
+
+† Observe that the frequencies of musical notes are spaced logarithmically (not linearly). The octave is a ratio
+of 2. The frequencies of the same note in the successive octaves have a ratio of 2. On the Western musical
+scale, there are 12 distinct notes in each octave. The frequency of each note is about 6% higher than the
+frequency of the preceding note. Thus, the successive notes are separated not by some constant frequency,
+but by constant ratio of 1.06.
+‡ Originally, the unit bel (after the inventor of telephone, Alexander Graham Bell) was introduced to
+represent power ratio as log10 P2 /P1 bels. A tenth of this unit is a decibel, as in 10 log10 P2 /P1 decibels.
+Since the power ratio of two signals is proportional to the amplitude ratio squared, or |H(jω)|2 , we have
+10 log10 P2 /P1 = 10 log10 |H(jω)|2 = 20 log10 |H(jω)| dB.
