@@ -25,16 +25,16 @@
 
 ## 验收标准
 
-- [ ] 修改材料前，重构版基线 `npm run check` 通过。
-- [ ] 83 个第 4–5 章 section 和 226 个唯一映射页面被完整、唯一地纳入清单。
-- [ ] 876 个材料文件全部存在于目标目录，大小和 SHA-256 与 manifest 一致。
-- [ ] 每个映射页面都有 `.png`、`.txt`、`.meta.json`；每个 section OCR 文本与 metadata 双向配对。
-- [ ] section metadata 的 section ID 与 page 范围和主映射一致。
-- [ ] display map 与主映射一致；每个 anchor 页面属于对应 section，ratio 位于 `[0, 1]`。
-- [ ] 32 个公式目录 JSON 可解析、满足既有 schema，状态数量严格为目录 `27 verified / 5 draft`、公式 `76 verified / 9 draft`，且所有 `sourcePage` 都位于 226 页允许清单。
-- [ ] 第 4–5 章范围内不存在重复后缀、backup/debug 或 manifest 外意外文件。
-- [ ] `npm run check:chapter-materials` 和现有 `npm run check` 全部通过。
-- [ ] 服务端 `/health`、代表性第 4 章和第 5 章页面/OCR请求通过，浏览器 smoke check 无缺页和新增控制台错误。
+- [x] 修改材料前，重构版基线 `npm run check` 通过。
+- [x] 83 个第 4–5 章 section 和 226 个唯一映射页面被完整、唯一地纳入清单。
+- [x] 876 个材料文件全部存在于目标目录，大小和 SHA-256 与 manifest 一致。
+- [x] 每个映射页面都有 `.png`、`.txt`、`.meta.json`；每个 section OCR 文本与 metadata 双向配对。
+- [x] section metadata 的 section ID 与 page 范围和主映射一致。
+- [x] display map 与主映射一致；每个 anchor 页面属于对应 section，ratio 位于 `[0, 1]`。
+- [x] 32 个公式目录 JSON 可解析、满足既有 schema，状态数量严格为目录 `27 verified / 5 draft`、公式 `76 verified / 9 draft`，且所有 `sourcePage` 都位于 226 页允许清单。
+- [x] 第 4–5 章范围内不存在重复后缀、backup/debug 或 manifest 外意外文件。
+- [x] `npm run check:chapter-materials` 和现有 `npm run check` 全部通过。
+- [x] 服务端 `/health`、代表性第 4 章和第 5 章页面/OCR请求通过，浏览器 smoke check 无材料缺页和新增材料相关控制台错误。
 - [ ] PR 记录基线、数量、哈希验证、运行时证据和明确排除项，目标分支为 `main`。
 
 ## 停止与回滚条件
