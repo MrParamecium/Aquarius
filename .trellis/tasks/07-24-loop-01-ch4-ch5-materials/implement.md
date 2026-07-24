@@ -60,8 +60,8 @@ git diff --check
 - [x] 单独提交白名单材料和 manifest。
 - [x] 更新 Trellis 任务记录，写入最终数量、命令结果和已知排除项。
 - [x] 再跑完整验收并确认工作区只含本循环预期变更。
-- [ ] 推送 `codex/loop-01-ch4-ch5-materials`。
-- [ ] 创建目标为 `main` 的 PR，附基线、哈希、引用、运行时和浏览器证据。
+- [x] 推送 `codex/loop-01-ch4-ch5-materials`。
+- [x] 创建目标为 `main` 的 PR #137，附基线、哈希、引用、运行时和浏览器证据。
 
 ## 回滚点
 

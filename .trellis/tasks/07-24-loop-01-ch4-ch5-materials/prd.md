@@ -35,7 +35,7 @@
 - [x] 第 4–5 章范围内不存在重复后缀、backup/debug 或 manifest 外意外文件。
 - [x] `npm run check:chapter-materials` 和现有 `npm run check` 全部通过。
 - [x] 服务端 `/health`、代表性第 4 章和第 5 章页面/OCR请求通过，浏览器 smoke check 无材料缺页和新增材料相关控制台错误。
-- [ ] PR 记录基线、数量、哈希验证、运行时证据和明确排除项，目标分支为 `main`。
+- [x] PR 记录基线、数量、哈希验证、运行时证据和明确排除项，目标分支为 `main`。
 
 ## 停止与回滚条件
 

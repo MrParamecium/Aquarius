@@ -15,7 +15,7 @@
 
 ### Summary
 
-在 GitHub 重构版分支迁移 876 个白名单材料文件（83 个 section、226 页、32 个公式目录），新增 SHA-256 manifest 和默认检查门槛；确认公式状态为目录 27 verified/5 draft、公式 76 verified/9 draft；静态、运行时和浏览器教材页验收通过，待推送并创建 PR。
+在 GitHub 重构版分支迁移 876 个白名单材料文件（83 个 section、226 页、32 个公式目录），新增 SHA-256 manifest 和默认检查门槛；确认公式状态为目录 27 verified/5 draft、公式 76 verified/9 draft；静态、运行时和浏览器教材页验收通过，已创建 PR #137。
 
 ### 主要变更
 
@@ -43,9 +43,8 @@
 
 ### 状态
 
-[OK] **本地实现与验收完成，待 GitHub PR**
+[OK] **本地实现与验收完成，PR #137 待审阅**
 
 ### 下一步
 
-- 推送 `codex/loop-01-ch4-ch5-materials`。
-- 创建目标为 `main` 的 PR，等待审阅后再合并。
+- 审阅 PR #137，检查通过后再合并到 `main`。
