@@ -16,7 +16,7 @@
 
 - `schemaVersion`：当前为 `1`；
 - `chapters`：固定为 `[4, 5]`；
-- `counts`：section、page、公式目录和材料文件总数；
+- `counts`：总 section、分章 section、page、公式目录和材料文件总数；
 - `sections`、`pages`、`formulaCatalogs`：按自然顺序排列的允许清单；
 - `mapHashes`：三个映射文件的 SHA-256；
 - `files`：按相对路径排序，每项含 `path`、`size`、`sha256`。

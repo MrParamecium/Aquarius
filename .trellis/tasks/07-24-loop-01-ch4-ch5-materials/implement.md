@@ -13,9 +13,9 @@
 
 ## 阶段 1：验证基础设施
 
-- [ ] 新建 `tools/check-chapter-materials.js`，实现 manifest、映射、metadata、公式状态统计和意外文件检查。
-- [ ] 在 `package.json` 增加 `check:chapter-materials`，并将验证器纳入语法检查。
-- [ ] 先对尚未迁移的目标运行验证器，确认它以明确缺失路径失败，证明门槛不是空检查。
+- [x] 新建 `tools/check-chapter-materials.js`，实现 manifest、映射、metadata、公式状态统计和意外文件检查。
+- [x] 在 `package.json` 增加 `check:chapter-materials`，并将验证器纳入语法检查。
+- [x] 先对尚未迁移的目标运行验证器，确认它以明确缺失路径失败，证明门槛不是空检查。
 
 验证命令：
 
@@ -28,11 +28,11 @@ npm run check:chapter-materials
 
 ## 阶段 2：白名单迁移与 manifest
 
-- [ ] 从已确认映射生成稳定 section/page 允许清单。
-- [ ] 逐文件复制 226 张页面图、452 个逐页 OCR 文件、166 个 section OCR 文件和 32 个公式目录。
-- [ ] 复制时拒绝重复后缀、backup/debug、无效 JSON 和清单外路径。
-- [ ] 生成 `tools/chapter-4-5-materials.manifest.json`，按路径排序并记录大小、SHA-256、映射哈希和数量。
-- [ ] 再生成一次 manifest 并逐字节比较，证明生成结果确定。
+- [x] 从已确认映射生成稳定 section/page 允许清单。
+- [x] 逐文件复制 226 张页面图、452 个逐页 OCR 文件、166 个 section OCR 文件和 32 个公式目录。
+- [x] 复制时拒绝重复后缀、backup/debug、无效 JSON 和清单外路径。
+- [x] 生成 `tools/chapter-4-5-materials.manifest.json`，按路径排序并记录大小、SHA-256、映射哈希和数量。
+- [x] 再生成一次 manifest 并逐字节比较，证明生成结果确定。
 
 验证命令：
 
@@ -45,20 +45,20 @@ git diff --check
 
 ## 阶段 3：回归与运行时验证
 
-- [ ] 运行 `npm run check:chapter-materials`。
-- [ ] 运行 `npm run check`。
-- [ ] 启动本地服务，检查 `/health`。
-- [ ] 请求代表性第 4 章和第 5 章页面图片、逐页 OCR、section OCR 或现有对应 API。
-- [ ] 在浏览器进入代表性第 4 章与第 5 章 section，检查缺页、网络 404 和新增控制台错误。
-- [ ] 检查 Docker 构建上下文仍会包含 `workspace/materials/`，且没有新增根 `materials/` 镜像。
+- [x] 运行 `npm run check:chapter-materials`。
+- [x] 运行 `npm run check`。
+- [x] 启动本地服务，检查 `/health`。
+- [x] 请求代表性第 4 章和第 5 章页面图片、逐页 OCR、section OCR 或现有对应 API。
+- [x] 在浏览器进入代表性第 4 章与第 5 章 section，检查缺页、网络 404 和新增材料相关控制台错误。
+- [x] 检查 Docker 构建上下文仍会包含 `workspace/materials/`，且没有新增根 `materials/` 镜像。
 
 失败停止点：任何现有回归、404、解析错误或浏览器错误出现时，不进入提交与 PR。
 
 ## 阶段 4：提交与 PR
 
-- [ ] 提交验证基础设施与规划记录。
-- [ ] 单独提交白名单材料和 manifest。
-- [ ] 更新 Trellis 任务记录，写入最终数量、命令结果和已知排除项。
+- [x] 提交验证基础设施与规划记录。
+- [x] 单独提交白名单材料和 manifest。
+- [x] 更新 Trellis 任务记录，写入最终数量、命令结果和已知排除项。
 - [ ] 再跑完整验收并确认工作区只含本循环预期变更。
 - [ ] 推送 `codex/loop-01-ch4-ch5-materials`。
 - [ ] 创建目标为 `main` 的 PR，附基线、哈希、引用、运行时和浏览器证据。

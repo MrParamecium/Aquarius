@@ -23,6 +23,8 @@ const MAP_PATHS = [
 ];
 const EXPECTED_COUNTS = {
     sections: 83,
+    chapter4Sections: 49,
+    chapter5Sections: 34,
     pages: 226,
     pageImages: 226,
     pageOcrFiles: 452,
@@ -166,6 +168,14 @@ function deriveChapterScope(sectionMap) {
 function validateMaps(sectionMap, displayMap, anchorMap, scope, manifest) {
     if (scope.sections.length !== EXPECTED_COUNTS.sections) {
         addError(MAP_PATHS[0], `expected ${EXPECTED_COUNTS.sections} Chapter 4-5 sections, found ${scope.sections.length}`);
+    }
+    const chapter4Sections = scope.sections.filter(sectionId => sectionId === '4' || sectionId.startsWith('4.'));
+    const chapter5Sections = scope.sections.filter(sectionId => sectionId === '5' || sectionId.startsWith('5.'));
+    if (chapter4Sections.length !== EXPECTED_COUNTS.chapter4Sections) {
+        addError(MAP_PATHS[0], `expected ${EXPECTED_COUNTS.chapter4Sections} Chapter 4 sections, found ${chapter4Sections.length}`);
+    }
+    if (chapter5Sections.length !== EXPECTED_COUNTS.chapter5Sections) {
+        addError(MAP_PATHS[0], `expected ${EXPECTED_COUNTS.chapter5Sections} Chapter 5 sections, found ${chapter5Sections.length}`);
     }
     if (scope.pages.length !== EXPECTED_COUNTS.pages) {
         addError(MAP_PATHS[0], `expected ${EXPECTED_COUNTS.pages} unique Chapter 4-5 pages, found ${scope.pages.length}`);
