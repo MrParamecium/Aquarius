@@ -73,7 +73,7 @@ workspace/materials/
 - 确认每个 section OCR 文本都有对应 metadata，反向也成立；
 - 解析 section metadata，并确认页面范围与权威映射一致；
 - 解析三个映射文件，确认 anchor 指向 section 映射内的页面，且 ratio 位于 `[0, 1]`；
-- 解析所有第 4–5 章公式目录，要求满足预期 schema 且包含 `status: "verified"`，并确认每个 `sourcePage` 都在页面允许清单中；
+- 解析所有第 4–5 章公式目录，要求满足预期 schema；原样保留并严格核对目录状态 `27 verified / 5 draft_pdf_latex` 与公式状态 `76 verified / 9 draft_pdf_latex`，确认每个 `sourcePage` 都在页面允许清单中；运行时继续只注入公式级 `verified` 条目；
 - 拒绝带重复后缀、backup、debug 和 manifest 之外的意外文件；
 - 对比目标文件哈希与已提交 manifest；
 - 输出数量统计和精确相对路径级别的失败信息；
@@ -98,7 +98,7 @@ workspace/materials/
 
 - 所有映射引用都能解析到目标文件。
 - section metadata 和 anchor 与映射一致。
-- 公式 `sourcePage` 都能解析到目标页面。
+- 公式 `sourcePage` 都能解析到目标页面；4 条位于同章允许页但超出同名 section 窄映射的既有引用保持原样。
 - 不包含重复文件或范围外文件。
 
 ### 门槛 3：运行时解析
