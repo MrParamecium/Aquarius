@@ -1,0 +1,10 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "lessonPanelWidth": 1,
+  "pagerDisplay": "none",
+  "pagerBackdrop": "blur(18px) saturate(1.45)",
+  "legacyCornerCount": 0
+}
