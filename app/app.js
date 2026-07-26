@@ -964,8 +964,6 @@ if (learnTopbarActions && learnViewSelectorEl && !learnTopbarActions.contains(le
 } else if (!learnTopbarActions && learnToolbarCenter && learnViewSelectorEl && !learnToolbarCenter.contains(learnViewSelectorEl)) {
   learnToolbarCenter.appendChild(learnViewSelectorEl);
 }
-const lecturePrevOverlayBtn = document.getElementById('lecturePrevOverlayBtn');
-const lectureNextOverlayBtn = document.getElementById('lectureNextOverlayBtn');
 const lectureFocusOverlayBtn = document.getElementById('lectureFocusOverlayBtn');
 const learnExplainToggleBtn = document.getElementById('learnExplainToggleBtn');
 const learnExplainRestoreBtn = document.getElementById('learnExplainRestoreBtn');
@@ -1129,65 +1127,6 @@ function parseSectionTitleParts(value, fallbackCode = '', fallbackTitle = '') {
 
 
 
-
-
-function animateLectureNavButton(delta) {
-  const button = delta < 0 ? lecturePrevOverlayBtn : lectureNextOverlayBtn;
-  if (!button) return;
-  button.classList.remove('is-flipping');
-  void button.offsetWidth;
-  button.classList.add('is-flipping');
-  window.setTimeout(() => button.classList.remove('is-flipping'), 560);
-}
-
-function getLectureOverlayDeltaFromEvent(event) {
-  const target = event.target && event.target.closest
-    ? event.target.closest('#lecturePrevOverlayBtn, #lectureNextOverlayBtn')
-    : null;
-  if (target) return target.id === 'lecturePrevOverlayBtn' ? -1 : 1;
-
-  const pointX = Number(event.clientX);
-  const pointY = Number(event.clientY);
-  if (!Number.isFinite(pointX) || !Number.isFinite(pointY)) return 0;
-
-  const candidates = [
-    { button: lecturePrevOverlayBtn, delta: -1 },
-    { button: lectureNextOverlayBtn, delta: 1 }
-  ];
-  for (const { button, delta } of candidates) {
-    if (!button || button.classList.contains('hidden') || button.disabled) continue;
-    const rect = button.getBoundingClientRect();
-    const pad = 8;
-    if (
-      pointX >= rect.left - pad
-      && pointX <= rect.right + pad
-      && pointY >= rect.top - pad
-      && pointY <= rect.bottom + pad
-    ) {
-      return delta;
-    }
-  }
-  return 0;
-}
-
-let lastLectureOverlayNavAt = 0;
-
-function handleLectureOverlayNavEvent(event) {
-  const delta = getLectureOverlayDeltaFromEvent(event);
-  if (!delta) return;
-  const now = Date.now();
-  if (event.type === 'click' && now - lastLectureOverlayNavAt < 350) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    return;
-  }
-  const moved = moveLearnKnowledgePoint(delta);
-  if (!moved) return;
-  animateLectureNavButton(delta);
-  lastLectureOverlayNavAt = now;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-}
 
 
 function setChapterOverviewLayoutActive(active) {
@@ -1598,8 +1537,6 @@ function clearLearnRenderedContent(message = 'Preparing lesson...') {
   if (learnKpTitle) learnKpTitle.textContent = '';
   if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
   if (learnKpNextBtn) learnKpNextBtn.disabled = true;
-  if (lecturePrevOverlayBtn) lecturePrevOverlayBtn.disabled = true;
-  if (lectureNextOverlayBtn) lectureNextOverlayBtn.disabled = true;
 }
 
 function isCurrentLearnRequest(requestSeq, sectionId, sectionTitle, allowedModes = null) {
@@ -2671,8 +2608,6 @@ function _setLearnMode(mode) {
       learnChatColPanel.style.maxWidth = '100%';
     }
   }
-  if (lecturePrevOverlayBtn) lecturePrevOverlayBtn.classList.toggle('hidden', mode !== 'lecture' || !isLessonLikeLayout);
-  if (lectureNextOverlayBtn) lectureNextOverlayBtn.classList.toggle('hidden', mode !== 'lecture' || !isLessonLikeLayout);
   if (lectureFocusOverlayBtn) lectureFocusOverlayBtn.classList.add('hidden');
   applyLearnPanelFocusState();
   if (isLessonLikeLayout && learnPanelFocus === 'normal') {
@@ -2796,22 +2731,6 @@ if (learnKpNextBtn) {
     moveLearnKnowledgePoint(1);
   });
 }
-  if (lecturePrevOverlayBtn) {
-    lecturePrevOverlayBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      if (isLearnPageTurning) return;
-      if (moveLearnKnowledgePoint(-1)) animateLectureNavButton(-1);
-    });
-  }
-  if (lectureNextOverlayBtn) {
-    lectureNextOverlayBtn.addEventListener('click', (event) => {
-      event.preventDefault();
-      if (isLearnPageTurning) return;
-      if (moveLearnKnowledgePoint(1)) animateLectureNavButton(1);
-    });
-  }
-document.addEventListener('pointerdown', handleLectureOverlayNavEvent, true);
-document.addEventListener('click', handleLectureOverlayNavEvent, true);
 if (lectureFocusOverlayBtn) lectureFocusOverlayBtn.addEventListener('click', () => advanceLearnPanelFocus('qa'));
 if (learnExplainToggleBtn) learnExplainToggleBtn.addEventListener('click', () => advanceLearnPanelFocus('lecture'));
 if (learnExplainRestoreBtn) learnExplainRestoreBtn.addEventListener('click', () => advanceLearnPanelFocus('lecture'));
@@ -5907,4 +5826,3 @@ function updateSidebarNav(title) {
   const t = document.getElementById('tocHeaderTitle');
   if (t) t.textContent = title ? title : 'Table of Contents';
 }
-

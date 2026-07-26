@@ -19,9 +19,6 @@
 //   - parseBase64JsonAttr / decodeBase64Utf8 / decodeInlineMarkdownFragment
 //     (defined in app.js util island)
 //   - hydrateInteractiveDemos (dispatcher.js, loaded before app.js)
-//   - lecturePrevOverlayBtn / lectureNextOverlayBtn (DOM consts @ app.js — read
-//     by animateLectureNavButton which STAYS)
-//
 // State that moves WITH the engine (engine-exclusive writers; cross-scope reads
 // from app.js are safe at runtime):
 //   - learnPageTurnTimer / learnPageTurnMidTimer / isLearnPageTurning
@@ -1262,12 +1259,8 @@ function renderCurrentKnowledgePoint() {
   
   const learnKpPrevBtn = document.getElementById('learnKpPrevBtn');
   const learnKpNextBtn = document.getElementById('learnKpNextBtn');
-  const lecturePrevOverlayBtn = document.getElementById('lecturePrevOverlayBtn');
-  const lectureNextOverlayBtn = document.getElementById('lectureNextOverlayBtn');
   if (learnKpPrevBtn) learnKpPrevBtn.disabled = currentKnowledgePointIndex === 0;
   if (learnKpNextBtn) learnKpNextBtn.disabled = currentKnowledgePointIndex === learnKnowledgePoints.length - 1;
-  if (lecturePrevOverlayBtn) lecturePrevOverlayBtn.disabled = currentKnowledgePointIndex === 0;
-  if (lectureNextOverlayBtn) lectureNextOverlayBtn.disabled = currentKnowledgePointIndex === learnKnowledgePoints.length - 1;
 
   window.__ftutorRefreshPager?.();
 

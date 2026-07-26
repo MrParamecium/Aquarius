@@ -244,7 +244,6 @@ const OVERVIEW_PROBES = [
 //     `20% 8% ...0.86` + `82% 18% ...0.22`); the primary winner sentinel. NOT JS-inlined.
 //   • #learnBookOverlay position relative (L25131) / min-height 100% (L25135) / padding 0
 //     (L25137) — CSS-only winners, DISTINCT from base absolute / 0 / 12px 14px.
-//   • #lecturePrev/NextOverlayBtn display none (L25151) — Band-1-exclusive, CSS-only.
 // DELIBERATELY EXCLUDED (inline-masked — non-discriminating, design §2 AVOID list):
 //   #learnExplainContent display (JS sets it inline, app.js:2469) and #learnBookOverlay
 //   display (app.js:2460). padding-top is base-equal (L24029/L24886 force 0 at rest) — a
@@ -259,8 +258,6 @@ const S13_PROBES = [
     ['#learnBookOverlay', null, 'min-height'],         // 100% (L25135)
     ['#learnBookOverlay', null, 'padding'],            // 0px (L25137) vs base 12px 14px
     ['#learnBookOverlay', null, 'background-color'],   // transparent (L25139)
-    ['#lecturePrevOverlayBtn', null, 'display'],       // none (L25151) — Band-1-exclusive
-    ['#lectureNextOverlayBtn', null, 'display'],       // none (L25151)
 ];
 
 // ---------- A0 S14 .chapter-overview-active.learn-textbook-active (Band 2) — DROPPED ----------
@@ -624,52 +621,75 @@ const PROBE_STATES = [
         probes: FOLLOWUP_PROBES,
     },
     {
-        // S-page-corner — lecture page-turn overlay buttons (#lecturePrevOverlayBtn /
-        // #lectureNextOverlayBtn, static .lecture-page-corner.page-turner per index.html
-        // L694/697) in the resting lesson. Gate for the Phase 3.6 §6.2 page-corner
-        // de-double (27 over-specified #learnView#learnView rules). The .turner-content
-        // span rests at opacity:0 — INVISIBLE to pixel-diff — so computed-style probing is
-        // the only reliable way to verify those rules survive the de-double unchanged.
-        state: 'S-page-corner',
+        // S-lesson-pager — the only knowledge-point navigation surface left in a
+        // segmented lesson. Drive the production refresh path, then focus Next so
+        // the probe pins both the resting glass surface and keyboard focus state.
+        state: 'S-lesson-pager',
         enter: async (page) => {
             await resetLearnChrome(page);
-            // Buttons + .turner-content are static; the page-corner rules match
-            // unconditionally (only the .lecture-page-corner.page-turner classes gate them).
-            const ok = await page.evaluate(() => {
-                const prev = document.getElementById('lecturePrevOverlayBtn');
-                const next = document.getElementById('lectureNextOverlayBtn');
-                return !!prev && prev.matches('.lecture-page-corner.page-turner')
-                    && !!next && next.matches('.lecture-page-corner.page-turner')
-                    && !!prev.querySelector('.turner-content')
-                    && !!next.querySelector('.turner-content');
+            const ready = await page.evaluate(async () => {
+                if (typeof window.__ftutorRefreshPager !== 'function') return null;
+                window.__ftutorRefreshPager();
+                await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+                const pager = document.getElementById('learnExplainPager');
+                const prev = document.getElementById('learnPagerPrevBtn');
+                const next = document.getElementById('learnPagerNextBtn');
+                const position = document.getElementById('learnPagerPosition');
+                return {
+                    count: Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints.length : 0,
+                    visible: !!pager && !pager.classList.contains('hidden') && getComputedStyle(pager).display !== 'none',
+                    prevDisabled: !!prev?.disabled,
+                    nextEnabled: !!next && !next.disabled,
+                    position: position?.textContent || '',
+                };
             });
-            assertOrThrow(ok, 'S-page-corner: overlay buttons missing or lack .lecture-page-corner.page-turner / .turner-content child');
+            assertOrThrow(ready && ready.count >= 2 && ready.visible,
+                `S-lesson-pager: expected one visible pager in a segmented lesson (got ${JSON.stringify(ready)})`);
+            assertOrThrow(ready.prevDisabled && ready.nextEnabled && /^1 \/ \d+$/.test(ready.position),
+                `S-lesson-pager: first-page controls are inconsistent (got ${JSON.stringify(ready)})`);
+            await page.keyboard.press('Tab');
+            await page.locator('#learnPagerNextBtn').focus();
+            const winner = await page.evaluate(() => {
+                const pager = document.getElementById('learnExplainPager');
+                const next = document.getElementById('learnPagerNextBtn');
+                if (!pager || !next) return null;
+                const pagerStyle = getComputedStyle(pager);
+                return {
+                    backgroundColor: pagerStyle.backgroundColor,
+                    backdropFilter: pagerStyle.backdropFilter || pagerStyle.webkitBackdropFilter,
+                    borderWidth: pagerStyle.borderTopWidth,
+                    minHeight: getComputedStyle(next).minHeight,
+                    focusVisible: next.matches(':focus-visible'),
+                };
+            });
+            assertOrThrow(winner
+                && winner.backgroundColor !== 'rgb(255, 255, 255)'
+                && winner.backdropFilter && winner.backdropFilter !== 'none'
+                && winner.borderWidth === '1px'
+                && parseFloat(winner.minHeight) >= 44
+                && winner.focusVisible,
+                `S-lesson-pager: approved glass/focus winner is not active (got ${JSON.stringify(winner)})`);
         },
-        // NOTE on which probes are load-bearing: the visual treatment lives on
-        // the PSEUDO-elements + the inner span — ::before carries the gradient,
-        // ::after the noise data-URI (opacity:1), .turner-content the rest
-        // transform. On the BASE button, background-image/border-top-left-radius/
-        // box-shadow rest at their defaults (none/0px/none) in this state, so
-        // those three probes are change-detectors for an accidental ADDITION by
-        // the de-double, not witnesses of a preserved value. Both roles are
-        // wanted; the §6.2 de-double is proven equivalent only by the ::before/
-        // ::after/.turner-content probes, which pin real non-default values.
         probes: [
-            ['#lecturePrevOverlayBtn', null, 'background-image'],
-            ['#lecturePrevOverlayBtn', null, 'border-top-left-radius'],
-            ['#lecturePrevOverlayBtn', null, 'box-shadow'],
-            ['#lecturePrevOverlayBtn', '::after', 'background-image'],
-            ['#lecturePrevOverlayBtn', '::after', 'opacity'],
-            ['#lecturePrevOverlayBtn', '::before', 'background-image'],
-            ['#lecturePrevOverlayBtn .turner-content', null, 'opacity'],
-            ['#lecturePrevOverlayBtn .turner-content', null, 'transform'],
-            ['#lectureNextOverlayBtn', null, 'background-image'],
-            ['#lectureNextOverlayBtn', null, 'border-top-left-radius'],
-            ['#lectureNextOverlayBtn', null, 'box-shadow'],
-            ['#lectureNextOverlayBtn', '::after', 'background-image'],
-            ['#lectureNextOverlayBtn', '::after', 'opacity'],
-            ['#lectureNextOverlayBtn .turner-content', null, 'opacity'],
-            ['#lectureNextOverlayBtn .turner-content', null, 'transform'],
+            ['#learnExplainPager', null, 'display'],
+            ['#learnExplainPager', null, 'background-color'],
+            ['#learnExplainPager', null, 'backdrop-filter'],
+            ['#learnExplainPager', null, 'border-top-width'],
+            ['#learnExplainPager', null, 'border-top-color'],
+            ['#learnExplainPager', null, 'border-top-left-radius'],
+            ['#learnExplainPager', null, 'box-shadow'],
+            ['#learnPagerPrevBtn', null, 'min-height'],
+            ['#learnPagerPrevBtn', null, 'min-width'],
+            ['#learnPagerPrevBtn', null, 'background-color'],
+            ['#learnPagerPrevBtn', null, 'color'],
+            ['#learnPagerPrevBtn', null, 'opacity'],
+            ['#learnPagerNextBtn', null, 'min-height'],
+            ['#learnPagerNextBtn', null, 'min-width'],
+            ['#learnPagerNextBtn', null, 'letter-spacing'],
+            ['#learnPagerNextBtn', null, 'outline-width'],
+            ['#learnPagerNextBtn', null, 'outline-color'],
+            ['#learnPagerPosition', null, 'min-width'],
+            ['#learnPagerPosition', null, 'letter-spacing'],
         ],
     },
     {
