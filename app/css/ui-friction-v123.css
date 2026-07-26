@@ -7,7 +7,7 @@
  * keep this <link> AFTER style.css so the overrides remain authoritative.
  */
 
-/* --- Issue 1: Always-visible bottom pager bar --- */
+/* --- Issue 1: Single, discoverable lesson pager --- */
 #learnExplainPager {
   position: absolute;
   left: 50%;
@@ -16,12 +16,18 @@
   z-index: 55;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 14px;
-  background: #FFFFFF;
-  border: 2.5px solid #1E293B;
-  border-radius: 999px;
-  box-shadow: 3px 4px 0px #1E293B;
+  gap: 8px;
+  max-width: calc(100% - 24px);
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.88);
+  border-radius: 16px;
+  box-shadow:
+    0 18px 42px rgba(15, 23, 42, 0.16),
+    0 4px 12px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  backdrop-filter: blur(18px) saturate(145%);
   font-family: 'Quicksand', 'Nunito', sans-serif;
   pointer-events: auto;
   transition: opacity 0.18s ease;
@@ -30,49 +36,78 @@
 #learnExplainPager .pager-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  background: #F1F5F9;
-  border: 2px solid #1E293B;
-  border-radius: 14px;
+  min-height: 44px;
+  padding: 0 14px;
+  background: rgba(248, 250, 252, 0.76);
+  border: 1px solid rgba(100, 116, 139, 0.2);
+  border-radius: 10px;
   color: #1E293B;
   font-weight: 800;
   font-size: 14px;
-  padding: 8px 16px;
   cursor: pointer;
-  box-shadow: 0 3px 0px #1E293B;
-  transition: transform 0.08s ease, background 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
-  letter-spacing: 0.02em;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  transition:
+    transform 0.12s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    color 0.16s ease;
+  letter-spacing: 0px;
+  white-space: nowrap;
   font-family: inherit;
 }
+#learnExplainPager .pager-prev { min-width: 86px; }
+#learnExplainPager .pager-next { min-width: 128px; }
 #learnExplainPager .pager-btn:hover:not(:disabled) {
-  background: #38BDF8;
-  color: #FFFFFF;
+  background: rgba(236, 254, 255, 0.88);
+  border-color: rgba(8, 145, 178, 0.46);
+  color: #0E7490;
+  box-shadow:
+    0 6px 14px rgba(14, 116, 144, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
 }
 #learnExplainPager .pager-btn:active:not(:disabled) {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0px #1E293B;
+  transform: translateY(1px);
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.1),
+    inset 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+#learnExplainPager .pager-btn:focus-visible {
+  outline: 3px solid rgba(8, 145, 178, 0.42);
+  outline-offset: 2px;
 }
 #learnExplainPager .pager-btn:disabled {
-  background: #E2E8F0;
+  background: rgba(241, 245, 249, 0.56);
   color: #94A3B8;
-  cursor: not-allowed;
-  box-shadow: 0 2px 0px #94A3B8;
-  border-color: #94A3B8;
+  cursor: default;
+  border-color: rgba(148, 163, 184, 0.18);
+  box-shadow: none;
+  opacity: 0.72;
 }
 #learnExplainPager .pager-btn.is-next-topic {
-  background: #10B981;
-  color: #FFFFFF;
-  border-color: #059669;
-  box-shadow: 0 3px 0px #059669;
+  background: rgba(236, 253, 245, 0.86);
+  color: #047857;
+  border-color: rgba(5, 150, 105, 0.32);
+  box-shadow:
+    0 4px 12px rgba(5, 150, 105, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
 }
 #learnExplainPager .pager-btn.is-next-topic:hover:not(:disabled) {
-  background: #059669;
+  background: rgba(209, 250, 229, 0.92);
+  border-color: rgba(5, 150, 105, 0.52);
+  color: #065F46;
 }
 #learnExplainPager .pager-position {
+  min-width: 54px;
   font-size: 13px;
   font-weight: 700;
-  color: #475569;
-  letter-spacing: 0.04em;
+  color: #334155;
+  text-align: center;
+  letter-spacing: 0px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -84,6 +119,42 @@
  * the pager is hidden and the extra padding would leave dead space. */
 #learnView .learn-body:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainScroll {
   padding-bottom: 130px;
+}
+
+@media (max-width: 640px) {
+  #learnExplainPager {
+    bottom: 10px;
+    gap: 6px;
+    max-width: calc(100% - 16px);
+    padding: 5px;
+    border-radius: 14px;
+  }
+
+  #learnExplainPager .pager-btn {
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 13px;
+  }
+
+  #learnExplainPager .pager-prev { min-width: 76px; }
+  #learnExplainPager .pager-next { min-width: 112px; }
+  #learnExplainPager .pager-position {
+    min-width: 48px;
+    font-size: 12px;
+  }
+}
+
+@container lecture-panel (max-width: 279px) {
+  #learnExplainPager {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #learnExplainPager,
+  #learnExplainPager .pager-btn {
+    transition: none;
+  }
 }
 
 /* --- Issue 6: Make overflowing equations scrollable --- */

@@ -320,13 +320,13 @@
     if (!pager || !pagerPrevBtn || !pagerNextBtn) return;
     const learnView = document.getElementById('learnView');
     const learnVisible = learnView && !learnView.classList.contains('hidden') && inLessonMode();
-    if (!learnVisible) {
+    const { points, idx } = getKnowledgePointState();
+    if (!learnVisible || points.length < 2) {
       setClassIfChanged(pager, 'hidden', true);
       _lastAtEnd = false;
       return;
     }
-    const { points, idx } = getKnowledgePointState();
-    const total = Math.max(points.length, 1);
+    const total = points.length;
     const cur = Math.min(Math.max(idx, 0), total - 1);
     setClassIfChanged(pager, 'hidden', false);
     setTextIfChanged(pagerPos, (cur + 1) + ' / ' + total);
@@ -377,7 +377,6 @@
         if (delta > 0 && (id || title)) markCompleted(id, title);
         advanceSubsection(id, title, delta);
       }
-      animateLectureNavButton(delta);
       refreshPager();
     });
   }
