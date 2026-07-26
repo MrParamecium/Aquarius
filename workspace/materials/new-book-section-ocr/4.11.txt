@@ -1,0 +1,352 @@
+# Fourier section OCR
+section_id: 4.11
+source_pages: page-445, page-446, page-447, page-448, page-449, page-450, page-451
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.11    The Bilateral Laplace Transform      445
+
+     In a typical design procedure, Gp (minimum passband gain) and Gs (maximum stopband
+gain) are specified. Figure 4.55 shows the passband, the stopband, and the transition band for
+typical lowpass, bandpass, highpass, and bandstop filters. Fortunately, the highpass, bandpass, and
+bandstop filters can be obtained from a basic lowpass filter by simple frequency transformations.
+For example, replacing s with ωc /s in the lowpass filter transfer function results in a highpass filter.
+Similarly, other frequency transformations yield the bandpass and bandstop filters. Hence, it is
+necessary to develop a design procedure only for a basic lowpass filter. Then, by using appropriate
+transformations, we can design filters of other types. The design procedures are beyond our scope
+here and will not be discussed. The interested reader is referred to [1].
+
+
+
+4.11 T HE B ILATERAL L APLACE T RANSFORM
+Situations involving noncausal signals and/or systems cannot be handled by the (unilateral)
+Laplace transform discussed so far. These cases can be analyzed by the bilateral (or two-sided)
+Laplace transform defined by
+                                            # ∞
+                                     X(s) =     x(t)e−st dt
+                                                      −∞
+
+
+and x(t) can be obtained from X(s) by the inverse transformation
+
+                                                      # c+j∞
+                                                1
+                                     x(t) =                    X(s)est ds
+                                               2π j    c−j∞
+
+
+Observe that the unilateral Laplace transform discussed so far is a special case of the bilateral
+Laplace transform, where the signals are restricted to the causal type. Basically, the two transforms
+are the same. For this reason we use the same notation for the bilateral Laplace transform.
+     Earlier we showed that the Laplace transforms of e−at u(t) and of −e−at u(−t) are identical. The
+only difference is in their regions of convergence (ROC). The ROC for the former is Re s > −a;
+that for the latter is Re s < −a, as illustrated in Fig. 4.1. Clearly, the inverse Laplace transform
+of X(s) is not unique unless the ROC is specified. If we restrict all our signals to the causal type,
+however, this ambiguity does not arise. The inverse transform of 1/(s + a) is e−at u(t). Thus, in the
+unilateral Laplace transform, we can ignore the ROC in determining the inverse transform of X(s).
+     We now show that any bilateral transform can be expressed in terms of two unilateral
+transforms. It is, therefore, possible to evaluate bilateral transforms from a table of unilateral
+transforms.
+     Consider the function x(t) appearing in Fig. 4.56a. We separate x(t) into two components, x1 (t)
+and x2 (t), representing the positive time (causal) component and the negative time (anticausal)
+component of x(t), respectively (Figs. 4.56b and 4.56c):
+
+                           x1 (t) = x(t)u(t)          and       x2 (t) = x(t)u(−t)
+
+[[PAGE page-446]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 446 — #117
+
+
+
+
+446   CHAPTER 4    CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                                 x(t)
+
+
+
+
+                                 0                        t
+
+                             (a)
+
+
+                         x1(t)
+
+
+
+
+                                 0                        t
+
+                             (b)
+
+                                 x2(t)
+
+
+
+
+                                 0                        t
+
+                             (c)
+
+                        x2(t)
+
+
+
+
+                                 0                        t
+                                                                       Figure 4.56 Expressing a signal as a sum of
+                             (d)                                       causal and anticausal components.
+
+
+
+
+         The bilateral Laplace transform of x(t) is given by
+
+
+                                              # ∞
+                                     X(s) =          x(t)e−st dt
+                                               −∞
+                                              # 0−                         # ∞
+                                                              −st
+                                         =           x2 (t)e        dt +         x1 (t)e−st dt
+                                               −∞                          0−
+
+                                         = X2 (s) + X1 (s)                                                   (4.57)
+
+[[PAGE page-447]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 447 — #118
+
+
+
+
+                                                             4.11   The Bilateral Laplace Transform      447
+
+where X1 (s) is the Laplace transform of the causal component x1 (t), and X2 (s) is the Laplace
+transform of the anticausal component x2 (t). Consider X2 (s), given by
+                                           # 0−                     # ∞
+                                X2 (s) =          x2 (t)e−st dt =         x2 (−t)est dt
+                                            −∞                      0+
+
+Therefore,                                             # ∞
+                                         X2 (−s) =            x2 (−t)e−st dt
+                                                        0+
+
+If x(t) has any impulse or its derivative(s) at the origin, they are included in x1 (t). Consequently,
+x2 (t) = 0 at the origin; that is, x2 (0) = 0. Hence, the lower limit on the integration in the preceding
+equation can be taken as 0− instead of 0+ . Therefore,
+                                                   # ∞
+                                         X2 (−s) =      x2 (−t)e−st dt
+                                                        0−
+
+Because x2 (−t) is causal (Fig. 4.56d), X2 (−s) can be found from the unilateral transform table.
+Changing the sign of s in X2 (−s) yields X2 (s).
+     To summarize, the bilateral transform X(s) in Eq. (4.57) can be computed from the unilateral
+transforms in two steps:
+     1. Split x(t) into its causal and anticausal components, x1 (t) and x2 (t), respectively.
+     2. Since the signals x1 (t) and x2 (−t) are both causal, take the (unilateral) Laplace transform
+        of x1 (t) and add to it the (unilateral) Laplace transform of x2 (−t), with s replaced by −s.
+        This procedure gives the (bilateral) Laplace transform of x(t).
+     Since x1 (t) and x2 (−t) are both causal, X1 (s) and X2 (−s) are both unilateral Laplace
+transforms. Let σc1 and σc2 be the abscissas of convergence of X1 (s) and X2 (−s), respectively.
+This statement implies that X1 (s) exists for all s with Re s > σc1 , and X2 (−s) exists for all s with
+Re s > σc2 . Therefore, X2 (s) exists for all s with Re s < −σc2 .† Therefore, X(s) = X1 (s) + X2 (s)
+exists for all s such that
+                                          σc1 < Re s < −σc2
+     The regions of convergence of X1 (s), X2 (s), and X(s) are shown in Fig. 4.57. Because X(s) is
+finite for all values of s lying in the strip of convergence (σc1 < Re s < −σc2 ), poles of X(s) must
+lie outside this strip. The poles of X(s) arising from the causal component x1 (t) lie to the left of
+the strip (region) of convergence, and those arising from its anticausal component x2 (t) lie to its
+right (see Fig. 4.57). This fact is of crucial importance in finding the inverse bilateral transform.
+     This result can be generalized to left-sided and right-sided signals. We define a signal x(t) as
+a right-sided signal if x(t) = 0 for t < T1 for some finite positive or negative number T1 . A causal
+signal is always a right-sided signal, but the converse is not necessarily true. A signal is said to
+left-sided if it is zero for t > T2 for some finite, positive, or negative number T2 . An anticausal
+signal is always a left-sided signal, but the converse is not necessarily true. A two-sided signal is
+of infinite duration on both positive and negative sides of t and is neither right-sided nor left-sided.
+     We can show that the conclusions for ROC for causal signals also hold for right-sided signals,
+and those for anticausal signals hold for left-sided signals. In other words, if x(t) is causal or
+
+† For instance, if x(t) exists for all t > 10, then x(−t), its time-inverted form, exists for t < −10.
+
+[[PAGE page-448]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 448 — #119
+
+
+
+
+448   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+                                                              Figure 4.57 Regions of convergence for
+                                                              causal, anticausal, and combined signals.
+
+
+      right-sided, the poles of X(s) lie to the left of the ROC, and if x(t) is anticausal or left-sided, the
+      poles of X(s) lie to the right of the ROC.
+           To prove this generalization, we observe that a right-sided signal can be expressed as
+      x(t) + xf (t), where x(t) is a causal signal and xf (t) is some finite-duration signal. The ROC of
+      any finite-duration signal is the entire s-plane (no finite poles). Hence, the ROC of the right-sided
+      signal x(t) + xf (t) is the region common to the ROCs of x(t) and xf (t), which is same as the ROC
+      for x(t). This proves the generalization for right-sided signals. We can use a similar argument to
+      generalize the result for left-sided signals. Let us find the bilateral Laplace transform of
+
+                                            x(t) = ebt u(−t) + eat u(t)                               (4.58)
+
+      We already know the Laplace transform of the causal component
+
+                                                        1
+                                         eat u(t) ⇐⇒             Re s > a                             (4.59)
+                                                       s−a
+
+      For the anticausal component, x2 (t) = ebt u(−t), we have
+
+                                                            1
+                                  x2 (−t) = e−bt u(t) ⇐⇒              Re s > −b
+                                                           s+b
+
+      so that
+                                                  1     −1
+                                     X2 (s) =         =              Re s < b
+                                                −s + b s − b
+
+      Therefore,
+                                                        −1
+                                        ebt u(−t) ⇐⇒              Re s < b                            (4.60)
+                                                       s−b
+
+[[PAGE page-449]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 449 — #120
+
+
+
+
+                                                     4.11   The Bilateral Laplace Transform                  449
+
+and the Laplace transform of x(t) in Eq. (4.58) is
+
+                                      1        1
+                          X(s) = −        +           Re s > a and          Re s < b
+                                    s−b s−a
+                                      a−b
+                                =                   a < Re s < b                                          (4.61)
+                                  (s − b)(s − a)
+
+       Figure 4.58 shows x(t) and the ROC of X(s) for various values of a and b. Equation (4.61)
+indicates that the ROC of X(s) does not exist if a > b, which is precisely the case in Fig. 4.58f.
+Observe that the poles of X(s) are outside (on the edges) of the ROC. The poles of X(s) because of
+the anticausal component of x(t) lie to the right of the ROC, and those due to the causal component
+of x(t) lie to its left.
+       When X(s) is expressed as a sum of several terms, the ROC for   %X(s) is the intersection of
+(region common to) the ROCs of all the terms. In general, if x(t) = ki=1 xi (t), then the ROC for
+X(s) is the intersection of the ROCs (region common to all ROCs) for the transforms X1 (s), X2 (s),
+. . . , Xk (s).
+
+
+                                                                  x(t)                            jv
+        x(t)                         jv
+                                                                ebt          eat
+                eat
+                                                                                             a   0          b
+                                              s
+                                a   0                                 0            t
+            0         t
+                                                                                       (d)
+                          (a)
+
+                                                                          x(t)                    jv
+        x(t)                         jv                         ebt
+
+                                                                             eat
+                  eat
+                                              s                                              a   b 0
+                                    0     a                           0            t
+            0         t
+                                                                                       (e)
+                          (b)
+
+                                                                          x(t)                    jv
+        x(t)                         jv                         ebt
+                                                                                 ab
+                                                                                                     No region of
+                                                                                                     convergence
+                                                                             eat
+      ebt
+                                                                                                 0
+                                              s
+                                    0     b                           0            t
+            0         t
+                                                                                       (f)
+                          (c)
+Figure 4.58 Various two exponential signals and their regions of convergence.
+
+[[PAGE page-450]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 450 — #121
+
+
+
+
+450        CHAPTER 4         CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.32 Inverse Bilateral Laplace Transform
+
+           Find the inverse bilateral Laplace transform of
+                                                                   −3
+                                                     X(s) =
+                                                              (s + 2)(s − 1)
+           if the ROC is (a) −2 < Re s < 1, (b) Re s > 1, and (c) Re s < −2.
+
+
+                 (a)
+                                                               1   1
+                                                     X(s) =      −
+                                                              s+2 s−1
+           Now, X(s) has poles at −2 and 1. The strip of convergence is −2 < Re s < 1. The pole at −2,
+           being to the left of the strip of convergence, corresponds to a causal signal. The pole at 1, being
+           to the right of the strip of convergence, corresponds to an anticausal signal. Equations (4.59)
+           and (4.60) yield
+                                                 x(t) = e−2t u(t) + et u(−t)
+               (b) Both poles lie to the left of the ROC, so both poles correspond to causal signals.
+           Therefore,
+                                               x(t) = (e−2t − et )u(t)
+
+
+                                             x (t)
+                                                     1
+
+
+
+
+                       4                            0           2   t
+
+                                                 (a)
+
+              x(t)                                                               x(t)
+
+                                            4        4
+          0                             t                                               0   t
+
+
+
+
+                            (b)                                          (c)
+         Figure 4.59 Three possible inverse transforms of −3/((s + 2)(s − 1)).
+
+[[PAGE page-451]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 451 — #122
+
+
+
+
+                                                    4.11   The Bilateral Laplace Transform      451
+
+     (c) Both poles lie to the right of the region of convergence, so both poles correspond to
+anticausal signals, and
+                                    x(t) = (−e−2t + et )u(−t)
+     Figure 4.59 shows the three inverse transforms corresponding to the same X(s) but with
+different regions of convergence.

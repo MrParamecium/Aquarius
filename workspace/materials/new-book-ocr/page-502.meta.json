@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-1",
+  "title": null,
+  "summary": "This page covers 5.2-1. OCR text begins with: 502 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM x[n] 5 \u00025 0 5 n (a) x[n]u[n] 5",
+  "keywords": [
+    "5.2",
+    "5.2-1",
+    "unit impulse",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-502",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

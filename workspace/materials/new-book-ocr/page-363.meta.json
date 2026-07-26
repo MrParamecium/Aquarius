@@ -1,0 +1,22 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-1",
+  "title": "Comments on Initial Conditions at 0− and at 0+",
+  "summary": "This page covers 4.3-1 (Comments on Initial Conditions at 0− and at 0+). OCR text begins with: 4.3 Solution of Differential and Integro-Differential Equations 363 Z ERO -I NPUT AND Z ERO -S TATE C OMPONENTS OF R ESPONSE The Laplace transform method gives the total response, which includes zero-input and zero-state components. It is possible to separate the two components if we so desire. The initial condition terms in the response give rise to the zero-input response. For instance, in Ex. 4.12, the terms attri",
+  "keywords": [
+    "4.3",
+    "4.3-1",
+    "Comments on Initial Conditions at 0− and at 0+",
+    "zero-input response",
+    "zero-state response",
+    "unit impulse",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-363",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,56 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 526 — #39
+
+
+
+
+526   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      in a direct form (or its transpose), all the coefficients interact with each other, and a change in
+      any coefficient will be magnified through its repeated influence from feedback and feedforward
+      connections. In a parallel realization, in contrast, a change in a coefficient will affect only a
+      localized segment; the case of a cascade realization is similar. For this reason, the most popular
+      technique for minimizing finite wordlength effects is to design filters by using cascade or parallel
+      forms employing low-order filters. In practice, high-order filters are realized by using multiple
+      second-order sections in cascade, because second-order filters not only are easier to design but
+      are less susceptible to coefficient quantization and round-off errors, and their implementations
+      allow easier data word scaling to reduce the potential overflow effects of data word-size growth.
+      A cascaded system using second-order building blocks usually requires fewer multiplications for
+      a given filter frequency response [1].
+           There are several ways to pair the poles and zeros of an Nth-order H[z] into a cascade of
+      second-order sections, and several ways to order the resulting sections. Quantizing error will be
+      different for each combination. Although several papers published provide guidelines in predicting
+      and minimizing finite wordlength errors, it is advisable to resort to computer simulation of the filter
+      design. This way, one can vary filter hardware characteristic, such as coefficient wordlengths,
+      accumulator register sizes, sequencing of cascaded sections, and input signal sets. Such an
+      approach is both reliable and economical [1].
+
+
+
+      5.5 F REQUENCY R ESPONSE OF D ISCRETE -T IME S YSTEMS
+      For (asymptotically or BIBO-stable) continuous-time systems, we showed that the system
+      response to an input ejωt is H(jω)ejωt and that the response to an input cos ωt is |H(jω)| cos [ωt +
+       H(jω)]. Similar results hold for discrete-time systems. We now show that for an (asymptotically
+      or BIBO-stable) LTID system, the system response to an input ejn is H[ej ]ejn and the response
+       to an input cos n is |H[ej ]| cos (n +  H[ej ]).
+            The proof is similar to the one used for continuous-time systems. In Sec. 3.8-2, we showed
+       that an LTID system response to an (everlasting) exponential zn is also an (everlasting) exponential
+       H[z]zn . This result is valid only for values of z for which H[z], as defined in Eq. (5.11), exists
+       (converges). As usual, we represent this input–output relationship by a directed arrow notation as
+
+                                                    zn ⇒ H[z]zn                                       (5.30)
+
+      Setting z = ej in this relationship yields
+
+                                               ejn ⇒ H[ej ]ejn                                     (5.31)
+
+      Noting that cos n is the real part of ejn , use of Eq. (3.34) yields
+
+                                           cos n ⇒ Re {H[ej ]ejn }                                 (5.32)
+
+      Expressing H[ej ] in the polar form
+                                                                    j
+                                            H[ej ] = |H[ej ]|ej H[e ]
+
+      Eq. (5.32) can be expressed as
+
+                                    cos n ⇒ |H[ej ]| cos (n +  H[ej ])

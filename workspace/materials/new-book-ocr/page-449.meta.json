@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": null,
+  "summary": "This page covers 4.10-5. OCR text begins with: 4.11 The Bilateral Laplace Transform 449 and the Laplace transform of x(t) in Eq. (4.58) is 1 1 X(s) = − + Re s > a and Re s < b s−b s−a a−b = a < Re s < b (4.61)",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-449",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

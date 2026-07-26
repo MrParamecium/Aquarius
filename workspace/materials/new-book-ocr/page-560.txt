@@ -1,0 +1,55 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 560 — #73
+
+
+
+
+560   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      C ONVOLUTION
+                                           x1 [n] ∗ x2 [n] ⇐⇒ X1 [z]X2 [z]
+
+      The ROC for X1 [z]X2 [z] is the region common to (intersection of) the ROCs for X1 [z] and X2 [z].
+
+
+      M ULTIPLICATION BY γ n
+                                                                    !
+                                                            z
+                                                γ x[n] ⇐⇒ X
+                                                  n
+                                                            γ
+
+      If the ROC for X[z] is |γ1 | < |z| < |γ2 |, then the ROC for X[z/γ ] is |γ γ1 | < |z| < |γ γ2 |, indicating
+      that the ROC is scaled by the factor |γ |.
+
+
+      M ULTIPLICATION BY n
+                                                                 d
+                                             nx[n]u[n] ⇐⇒ −z        X[z]
+                                                                 dz
+
+      The ROC for −z(dX/dz) is the same as the ROC for X[z].
+
+
+      T IME R EVERSAL
+                                                 x[−n] ⇐⇒ X[1/z]
+
+      If the ROC for X[z] is |γ1 | < |z| < |γ2 |, then the ROC for X[1/z] is 1/|γ1 | > |z| > |1/γ2 |.
+
+
+      C OMPLEX C ONJUGATION
+                                                  x∗ [n] ⇐⇒ X ∗ [z∗ ]
+
+      The ROC for X ∗ [z∗ ] is the same as the ROC for X[z].
+
+
+
+      5.8-2 Using the Bilateral z-Transform for Analysis of LTID Systems
+      Because the bilateral z-transform can handle noncausal signals, we can use this transform to
+      analyze noncausal linear systems. The zero-state response y[n] is given by
+
+
+                                               y[n] = Z −1 {X[z]H[z]}
+
+
+      provided X[z]H[z] exists. The ROC of X[z]H[z] is the region in which both X[z] and H[z] exist,
+      which means that the region is the common part of the ROC of both X[z] and H[z].

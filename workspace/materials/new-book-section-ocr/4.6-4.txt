@@ -1,0 +1,142 @@
+# Fourier section OCR
+section_id: 4.6-4
+source_pages: page-396, page-397, page-398
+cut_start_found: yes
+cut_end_found: no
+
+--- OCR ---
+4.6-4 Transposed Realization
+        Two realizations are said to be equivalent if they have the same transfer function. A simple way
+        to generate an equivalent realization from a given realization is to use its transpose. To generate a
+        transpose of any realization, we change the given realization as follows:
+             1. Reverse all the arrow directions without changing the scalar multiplier values.
+             2. Replace pickoff nodes by adders and vice versa.
+             3. Replace the input X(s) with the output Y(s) and vice versa.
+             Figure 4.26a shows the transposed version of the canonic direct form realization in Fig. 4.22b
+        found according to the rules just listed. Figure 4.26b is Fig. 4.26a reoriented in the conventional
+        form so that the input X(s) appears at the left and the output Y(s) appears at the right. Observe that
+        this realization is also canonic.
+             Rather than prove the theorem on equivalence of the transposed realizations, we shall verify
+        that the transfer function of the realization in Fig. 4.26b is identical to that in Eq. (4.36).
+
+[[PAGE page-397]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 397 — #68
+
+
+
+
+                                                                   4.6    System Realization       397
+
+        Y(s)                   b0           X(s)    X(s)      b0                     Y(s)
+
+
+
+                         1                                           1
+                         s                                           s
+                a1            b1                             b1          a1
+
+
+                         1                                           1
+                         s                                           s
+
+
+                aN1         bN1                          bN1          aN1
+
+
+
+                         1                                           1
+                         s                                           s
+
+                aN           bN                              bN          aN
+
+
+                        (a)                                         (b)
+      Figure 4.26 Realization of an Nth-order LTI transfer function in the transposed form.
+
+
+     Figure 4.26b shows that Y(s) is being fed back through N paths. The fed-back signal appearing
+at the input of the top adder is
+                              −a1 −a2         −aN−1 −aN
+                                 + 2 + · · · + N−1 + N Y(s)
+                               s   s           s     s
+
+The signal X(s), fed to the top adder through N + 1 forward paths, contributes
+                                            b1          bN−1 bN
+                                     b0 +      + · · · + N−1 + N X(s)
+                                             s          s     s
+
+The output Y(s) is equal to the sum of these two signals (feed forward and feed back). Hence,
+                                     −a1 −a2           −aN−1 −aN
+                        Y(s) =          + 2 + · · · + N−1 + N Y(s)
+                                      s    s            s     s
+                                          b1         bN−1 bN
+                                    + b0 + + · · · + N−1 + N X(s)
+                                           s         s      s
+
+    Transporting all the Y(s) terms to the left side and multiplying throughout by sN , we obtain
+
+        (sN + a1 sN−1 + · · · + aN−1 s + aN )Y(s) = (b0 sN + b1 sN−1 + · · · + bN−1 s + bN )X(s)
+
+Consequently,
+                                    Y(s) b0 sN + b1 sN−1 + · · · + bN−1 s + bN
+                         H(s) =          = N
+                                    X(s)   s + a1 sN−1 + · · · + aN−1 s + aN
+Hence, the transfer function H(s) is identical to that in Eq. (4.36).
+
+[[PAGE page-398]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 398 — #69
+
+
+
+
+398       CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              We have essentially doubled the number of possible realizations. Every realization that was
+          found earlier has a transpose. Note that the transpose of a transpose results in the same realization.
+
+
+
+      E X A M P L E 4.24 Transposed Realizations
+
+           Find the transpose canonic direct realizations for parts (a) and (d) of Ex. 4.22 (Figs. 4.23c and
+           4.23d). The transfer functions are:
+                   s+5
+                 (a)
+                   s+7
+                      4s + 28
+               (b) 2
+                    s + 6s + 5
+           Both these realizations are special cases of the one in Fig. 4.26b.
+
+
+                (a) In this case, N = 1 with a1 = 7, b0 = 1, b1 = 5. The desired realization can be obtained
+           by transposing Fig. 4.23c. However, we already have the general model of the transposed
+           realization in Fig. 4.26b. The desired solution is a special case of Fig. 4.26b with N = 1 and
+           a1 = 7, b0 = 1, b1 = 5, as shown in Fig. 4.27a.
+                (b) In this case, N = 2 with b0 = 0, b1 = 4, b2 = 28, a1 = 6, a2 = 5. Using the model of
+           Fig. 4.26b, we obtain the desired realization, as shown in Fig. 4.27b.
+
+                                                                                  Y(s)
+
+
+                                                                     1
+                                                                     s
+
+          X(s)                           Y(s)       X(s)
+                                                              4            6
+
+                            1                                        1
+                            s                                        s
+
+
+                       5         7                           28           5
+                           (a)                                     (b)
+
+         Figure 4.27 Transposed canonic direct form realizations of (a) (s + 5)/(s + 7) and (b)
+         (4s + 28)/(s2 + 6s + 5).
+
+
+
+
+            D R I L L 4.13 Transposed Realizations
+            Find the transposed DFI and transposed canonic direct (TDFII) realizations of H(s) in Drill 4.11

@@ -1,0 +1,62 @@
+          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 363 — #34
+
+
+
+
+                         4.3    Solution of Differential and Integro-Differential Equations         363
+
+Z ERO -I NPUT AND Z ERO -S TATE C OMPONENTS OF R ESPONSE
+The Laplace transform method gives the total response, which includes zero-input and zero-state
+components. It is possible to separate the two components if we so desire. The initial condition
+terms in the response give rise to the zero-input response. For instance, in Ex. 4.12, the terms
+attributable to initial conditions y(0− ) = 2 and ẏ(0− ) = 1 in Eq. (4.23) generate the zero-input
+response. These initial condition terms are −(2s + 11), as seen in Eq. (4.23). The terms on the
+right-hand side are exclusively due to the input. Equation (4.23) is reproduced below with the
+proper labeling of the terms
+                                 2                            s+1
+                                  s + 5s + 6 Y(s) − (2s + 11) =
+                                                                s+4
+so that
+                           2                                               s+1
+                            s + 5s + 6 Y(s) =          (2s + 11) +
+                                                                           + 4
+                                                   initial condition terms  s 
+                                                                         input terms
+
+Therefore,
+                                   2s + 11       s+1
+                        Y(s) =                 +
+                                    (s + 4)(s+ 5s + 6)
+                                 s2 + 5s + 6      2
+
+                                    ZIR           ZSR
+                                            !                        !
+                                   7      5     −1/2       2     3/2
+                               =        −     +       +        −
+                                  s+2 s+3       s+2 s+3 s+4
+
+Taking the inverse transform of this equation yields
+                                                                        
+                    y(t) = 7e−2t − 5e−3t u(t) + − 12 e−2t + 2e−3t − 32 e−4t u(t)
+                                                                        
+                                     ZIR                              ZSR
+
+
+
+
+4.3-1 Comments on Initial Conditions at 0− and at 0+
+The initial conditions in Ex. 4.12 are y(0− ) = 2 and ẏ(0− ) = 1. If we let t = 0 in the total response
+in Eq. (4.24), we find y(0) = 2 and ẏ(0) = 2, which is at odds with the given initial conditions.
+Why? Because the initial conditions are given at t = 0− (just before the input is applied), when only
+the zero-input response is present. The zero-state response is the result of the input x(t) applied
+at t = 0. Hence, this component does not exist at t = 0− . Consequently, the initial conditions at
+t = 0− are satisfied by the zero-input response, not by the total response. We can readily verify in
+this example that the zero-input response does indeed satisfy the given initial conditions at t = 0− .
+It is the total response that satisfies the initial conditions at t = 0+ , which are generally different
+from the initial conditions at 0− .
+      There also exists a L+ version of the Laplace transform, which uses the initial conditions at
+t = 0+ rather than at 0− (as in our present L− version). The L+ version, which was in vogue till the
+early 1960s, is identical to the L− version except the limits of Laplace integral [Eq. (4.7)] are from
+0+ to ∞. Hence, by definition, the origin t = 0 is excluded from the domain. This version, still used
+in some math books, has some serious difficulties. For instance, the Laplace transform of δ(t) is
+zero because δ(t) = 0 for t ≥ 0+ . Moreover, this approach is rather clumsy in the theoretical study

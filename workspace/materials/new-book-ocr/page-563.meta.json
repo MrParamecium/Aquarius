@@ -1,0 +1,21 @@
+{
+  "chapter": "5",
+  "section": "5.9",
+  "subsection": null,
+  "title": "CONNECTING THE LAPLACE AND z-TRANSFORMS",
+  "summary": "This page covers 5.9 (CONNECTING THE LAPLACE AND z-TRANSFORMS). OCR text begins with: 5.9 Connecting the Laplace and z-Transforms 563 D R I L L 5.24 Zero-State Response by Bilateral z-Transform For the causal system in Ex. 5.19, find the zero-state response to input \u0005 \u0006n x[n] = 14 u[n] + 5(3)n u[−(n + 1)] ANSWER \u0005 \u0006n \u0005 \u0006n",
+  "keywords": [
+    "5.9",
+    "CONNECTING THE LAPLACE AND z-TRANSFORMS",
+    "zero-state response",
+    "unit impulse",
+    "discrete-time",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-563",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

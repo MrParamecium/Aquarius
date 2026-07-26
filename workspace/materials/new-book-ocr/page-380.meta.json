@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.4. OCR text begins with: 380 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.19 Transformed Analysis of a Coupled Inductive Network The switch in the circuit in Fig. 4.14a is at position a for a long time before t = 0, when it is moved instantaneously to position b. Determine the current y1 (t) and the output voltage v0 (t) for t ≥ 0. Just before switching, the values of the loop currents are 2 and 1, respectively, that is, y1 (0−",
+  "keywords": [
+    "4.4",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-380",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

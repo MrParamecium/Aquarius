@@ -1,0 +1,53 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 412 — #83
+
+
+
+
+412   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      the desired response and the actual response to a test input in steady state. The system should
+      also satisfy a specified sensitivity specifications to some system parameter variations, or to certain
+      disturbances. Above all, the system must remain stable under operating conditions. Discussion of
+      design procedures used to realize given specifications is beyond the scope of this book.
+
+
+
+      4.8 F REQUENCY R ESPONSE OF AN LTIC S YSTEM
+      Filtering is an important area of signal processing. Filtering characteristics of a system are
+      indicated by its response to sinusoids of various frequencies varying from 0 to ∞. Such
+      characteristics are called the frequency response of the system. In this section, we shall find the
+      frequency response of LTIC systems.
+           In Sec. 2.4-4 we showed that an LTIC system response to an everlasting exponential input
+      x(t) = est is also an everlasting exponential H(s)est . As before, we use an arrow directed from the
+      input to the output to represent an input–output pair:
+
+                                                   est ⇒ H(s)est                                     (4.40)
+
+      Setting s = jω in this relationship yields
+
+                                                 ejωt ⇒ H(jω)ejωt                                    (4.41)
+
+      Noting that cos ωt is the real part of ejωt , use of Eq. (2.31) yields
+
+                                             cos ωt ⇒ Re[H(jω)ejωt ]                                 (4.42)
+
+      We can express H(jω) in the polar form as
+                                                                  
+                                              H(jω) = |H(jω)|ej H(jω)
+
+      With this result, Eq. (4.42) becomes
+
+                                      cos ωt ⇒ |H(jω)| cos [ωt +  H(jω)]
+
+      In other words, the system response y(t) to a sinusoidal input cos ωt is given by
+
+                                         y(t) = |H(jω)| cos [ωt +  H(jω)]
+
+      Using a similar argument, we can show that the system response to a sinusoid cos (ωt + θ ) is
+
+                                       y(t) = |H(jω)| cos [ωt + θ +  H(jω)]                         (4.43)
+
+      This result is valid only for BIBO-stable systems. The frequency response is meaningless for
+      BIBO-unstable systems. This follows from the fact that the frequency response in Eq. (4.41) is
+      obtained by setting s = jω in Eq. (4.40). But, as shown in Sec. 2.4-4 [Eqs. (2.38) and (2.39)],
+      Eq. (4.40) applies only for the values of s for which H(s) exists. For BIBO-unstable systems, the

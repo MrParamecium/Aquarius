@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 345",
+  "summary": "This page covers 4.1 (The Laplace Transform 345). OCR text begins with: 4.1 The Laplace Transform 345 r = 3.5000-0.48113i 3.5000+0.48113i 1.0000 p = -0.5000+2.5981i -0.5000-2.5981i -2.0000",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 345",
+    "unit step",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-345",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

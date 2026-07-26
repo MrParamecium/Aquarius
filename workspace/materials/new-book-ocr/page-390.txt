@@ -1,0 +1,61 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 390 — #61
+
+
+
+
+390   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      X(s)       b0         W(s)                    Y(s)       X(s)       b0         W(s)                    Y(s)
+
+
+             1                                  1                     1                                  1
+             s                                  s                     s                                  s
+                 b1                     a1                               b1                     a1
+
+
+             1                                  1                     1                                  1
+             s                                  s                     s                                  s
+                 b2                     a2
+
+                                                                          bN1                   aN1
+             1                                  1
+             s                                  s
+                 b3                     a3
+                                                                      1                                  1
+                                                                      s                                  s
+                                                                          bN                   aN
+
+                             (a)                                                      (b)
+      Figure 4.21 Direct form I realization of an LTIC system: (a) third-order and (b) Nth-order.
+
+
+           We shall first realize H1 (s). Equation (4.37) shows that the output W(s) can be synthesized by
+      adding the input b0 X(s) to b1 (X(s)/s), b2 (X(s)/s2 ), and b3 (X(s)/s3 ). Because the transfer function
+      of an integrator is 1/s, the signals X(s)/s, X(s)/s2 , and X(s)/s3 can be obtained by successive
+      integration of the input x(t). The left-half section of Fig. 4.21a shows how W(s) can be synthesized
+      from X(s), according to Eq. (4.37). Hence, this section represents a realization of H1 (s).
+           To complete the picture, we shall realize H2 (s), which is specified by Eq. (4.38). We can
+      rearrange Eq. (4.38) as
+                                                        a
+                                                           1   a2 a3 
+                                       Y(s) = W(s) −         + 2 + 3 Y(s)                               (4.39)
+                                                          s     s     s
+      Hence, to obtain Y(s), we subtract a1 Y(s)/s, a2 Y(s)/s2 , and a3 Y(s)/s3 from W(s). We have already
+      obtained W(s) from the first step [output of H1 (s)]. To obtain signals Y(s)/s, Y(s)/s2 , and Y(s)/s3 ,
+      we assume that we already have the desired output Y(s). Successive integration of Y(s) yields the
+      needed signals Y(s)/s, Y(s)/s2 , and Y(s)/s3 . We now synthesize the final output Y(s) according
+      to Eq. (4.39), as seen in the right-half section of Fig. 4.21a.† The left-half section in Fig. 4.21a
+      represents H1 (s) and the right-half is H2 (s). We can generalize this procedure, known as the direct
+      form I (DFI) realization, for any value of N. This procedure requires 2N integrators to realize an
+      Nth-order transfer function, as shown in Fig. 4.21b.
+
+
+      4.6-2 Direct Form II Realization
+      In the direct form I, we realize H(s) by implementing H1 (s) followed by H2 (s), as shown in
+      Fig. 4.20a. We can also realize H(s), as shown in Fig. 4.20b, where H2 (s) is followed by H1 (s).
+
+      † It may seem odd that we first assumed the existence of Y(s), integrated it successively, and then in turn
+      generated Y(s) from W(s) and the three successive integrals of signal Y(s). This procedure poses a dilemma
+      similar to “Which came first, the chicken or the egg?” The problem here is satisfactorily resolved by writing
+      the expression for Y(s) at the output of the right-hand adder (at the top) in Fig. 4.21a and verifying that this
+      expression is indeed the same as Eq. (4.38).

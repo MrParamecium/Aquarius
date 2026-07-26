@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": "Bode Plots",
+  "summary": "This page covers 4.9 (Bode Plots). OCR text begins with: 4.9 Bode Plots 419 characteristic polynomial given by Q(s) = (s − λ1 )(s − λ2 ) · · · (s − λN ).† Hence, P(s) Y(s) = X(s)H(s) = (s − λ1 )(s − λ2 ) · · · (s − λN )(s − jω) In the partial fraction expansion of the right-hand side, let the coefficients corresponding to the N terms (s − λ1 ), (s − λ2 ), . . . , (s − λN ) be k1 , k2 , . . . , kN . The coefficient corresponding to the last",
+  "keywords": [
+    "4.9",
+    "Bode Plots",
+    "unit step",
+    "characteristic roots",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-419",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

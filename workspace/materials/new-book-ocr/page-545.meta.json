@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": "Frequency Response from Pole-Zero Locations 545",
+  "summary": "This page covers 5.6 (Frequency Response from Pole-Zero Locations 545). OCR text begins with: 5.6 Frequency Response from Pole-Zero Locations 545 E X A M P L E 5.15 Bandstop Filter by Pole-Zero Placement Design a second-order notch filter to have zero transmission at 250 Hz and a sharp recovery of gain to unity on both sides of 250 Hz. The highest significant frequency to be processed is fh = 400 Hz. In this case, T < 1/2fh = 1.25 × 10−3 . Let us choose T = 10−3 . For the frequency 250 Hz, \u0004 = 2π(250)T = π/2.",
+  "keywords": [
+    "5.6",
+    "Frequency Response from Pole-Zero Locations 545",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-545",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

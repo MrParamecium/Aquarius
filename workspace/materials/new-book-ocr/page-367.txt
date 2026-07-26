@@ -1,0 +1,59 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 367 — #38
+
+
+
+
+                         4.3    Solution of Differential and Integro-Differential Equations          367
+
+Moreover, the input x(t) is causal so that
+
+                          x(0− ) = ẋ(0− ) = ẍ(0− ) = · · · = x(N−1) (0− ) = 0
+
+Let
+                               y(t) ⇐⇒ Y(s)             and       x(t) ⇐⇒ X(s)
+Because of zero initial conditions,
+                                               dr
+                                      Dr y(t) =    y(t) ⇐⇒ sr Y(s)
+                                               dtr
+                                               dk
+                                      Dk x(t) = k x(t) ⇐⇒ sk X(s)
+                                               dt
+Therefore, the Laplace transform of Eq. (4.26) yields
+
+        (sN + a1 sN−1 + · · · + aN−1 s + aN )Y(s) = (b0 sN + b1 sN−1 + · · · + bN−1 s + bN )X(s)
+
+or
+                             b0 sN + b1 sN−1 + · · · + bN−1 s + bN        P(s)
+                    Y(s) =                                         X(s) =      X(s)
+                              s + a1 s
+                               N       N−1 + · · · + aN−1 s + aN          Q(s)
+But we have shown in Eq. (4.18) that Y(s) = H(s)X(s). Consequently,
+                                                           P(s)
+                                              H(s) =                                               (4.27)
+                                                           Q(s)
+This is the transfer function of a linear differential system specified in Eq. (4.26). The same result
+has been derived earlier in Eq. (2.41) using an alternate (time-domain) approach.
+     We have shown that Y(s), the Laplace transform of the zero-state response y(t), is the product
+of X(s) and H(s), where X(s) is the Laplace transform of the input x(t) and H(s) is the system
+transfer function [relating the particular output y(t) to the input x(t)].
+
+I NTUITIVE I NTERPRETATION OF THE L APLACE T RANSFORM
+So far we have treated the Laplace transform as a machine that converts linear integro-differential
+equations into algebraic equations. There is no physical understanding of how this is accomplished
+or what it means. We now discuss a more intuitive interpretation and meaning of the Laplace
+transform.
+     In Ch. 2, Eq. (2.38), we showed that LTI system response to an everlasting exponential est is
+H(s)est . If we could express every signal as a linear combination of everlasting exponentials of the
+form est , we could readily obtain the system response to any input. For example, if
+
+                                                    "
+                                                    K
+                                           x(t) =          X(si )esi t
+                                                    k=1
+
+the response of an LTIC system to such input x(t) is given by
+
+                                                  "
+                                                  K
+                                        y(t) =          X(si )H(si )esi t
+                                                  k=1

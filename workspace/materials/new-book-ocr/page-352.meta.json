@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.2. OCR text begins with: 352 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Observe the exponential term e−2s in the numerator of X(s), indicating time delay. In such a case, we should separate X(s) into terms with and without a delay factor, as s+3 5e−2s X(s) = + (s + 1)(s + 2) (s + 1)(s + 2) \u0019 \u001a\u001b",
+  "keywords": [
+    "4.2",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-352",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

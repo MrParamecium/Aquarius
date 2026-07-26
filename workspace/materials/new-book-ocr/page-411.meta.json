@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": "Application to Feedback and Controls 411",
+  "summary": "This page covers 4.7 (Application to Feedback and Controls 411). OCR text begins with: 4.7 Application to Feedback and Controls 411 Step Response 1 Amplitude 0.5 K=7 K=16 K=80",
+  "keywords": [
+    "4.7",
+    "Application to Feedback and Controls 411",
+    "unit step",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-411",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

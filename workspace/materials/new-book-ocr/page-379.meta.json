@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": "Analysis of Electrical Networks: The Transformed Network 379",
+  "summary": "This page covers 4.4 (Analysis of Electrical Networks: The Transformed Network 379). OCR text begins with: 4.4 Analysis of Electrical Networks: The Transformed Network 379 amperes. Therefore, when the switch is opened (at t = 0), the initial conditions are vC (0− ) = 16 and y2 (0− ) = 4. Figure 4.13b shows the transformed version of the circuit in Fig. 4.13a. We have used equivalent sources to account for the initial conditions. The initial capacitor voltage of 16 volts is represented by a series voltage of 16/s and the i",
+  "keywords": [
+    "4.4",
+    "Analysis of Electrical Networks: The Transformed Network 379",
+    "unit step"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-379",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

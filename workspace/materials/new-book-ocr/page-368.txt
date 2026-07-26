@@ -1,0 +1,48 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 368 — #39
+
+
+
+
+368   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Unfortunately, the class of signals that can be expressed in this form is very small. However,
+      we can express almost all signals of practical utility as a sum of everlasting exponentials over a
+      continuum of frequencies. This is precisely what the Laplace transform in Eq. (4.2) does.
+                                                    # c+j∞
+                                                 1
+                                        x(t) =               X(s)est ds                           (4.28)
+                                                2π j c−j∞
+
+      Invoking the linearity property of the Laplace transform, we can find the system response y(t) to
+      input x(t) in Eq. (4.28) as†
+                                                # c +j∞
+                                          1
+                                  y(t) =                   X(s)H(s)est ds = L−1 X(s)H(s)                        (4.29)
+                                         2π j    c −j∞
+
+      Clearly,
+                                                     Y(s) = X(s)H(s)
+      We can now represent the transformed version of the system, as depicted in Fig. 4.8a. The input
+      X(s) is the Laplace transform of x(t), and the output Y(s) is the Laplace transform of (the zero-input
+      response) y(t). The system is described by the transfer function H(s). The output Y(s) is the
+      product X(s)H(s).
+           Recall that s is the complex frequency of est . This explains why the Laplace transform
+      method is also called the frequency-domain method. Note that X(s), Y(s), and H(s) are the
+      frequency-domain representations of x(t), y(t), and h(t), respectively. We may view the boxes
+      marked L and L−1 in Fig. 4.8a as the interfaces that convert the time-domain entities into the
+      corresponding frequency-domain entities, and vice versa. All real-life signals begin in the time
+      domain, and the final answers must also be in the time domain. First, we convert the time-domain
+      input(s) into the frequency-domain counterparts. The problem itself is solved in the frequency
+      domain, resulting in the answer Y(s), also in the frequency domain. Finally, we convert Y(s) to
+      y(t). Solving the problem is relatively simpler in the frequency domain than in the time domain.
+      Henceforth, we shall omit the explicit representation of the interface boxes L and L−1 , representing
+      signals and systems in the frequency domain, as shown in Fig. 4.8b.
+
+
+
+
+             Figure 4.8 Alternate interpretation of the Laplace transform.
+
+
+      † Recall that H(s) has its own region of validity. Hence, the limits of integration for the integral in Eq. (4.28)
+      are modified in Eq. (4.29) to accommodate the region of existence (validity) of X(s) as well as H(s).

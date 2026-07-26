@@ -1,0 +1,53 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 380 — #51
+
+
+
+
+380       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.19 Transformed Analysis of a Coupled Inductive Network
+
+          The switch in the circuit in Fig. 4.14a is at position a for a long time before t = 0, when it is
+          moved instantaneously to position b. Determine the current y1 (t) and the output voltage v0 (t)
+          for t ≥ 0.
+
+
+          Just before switching, the values of the loop currents are 2 and 1, respectively, that is,
+          y1 (0− ) = 2 and y2 (0− ) = 1.
+               The equivalent circuits for two types of inductive coupling are illustrated in Figs. 4.14b and
+          4.14c. For our situation, the circuit in Fig. 4.14c applies. Figure 4.14d shows the transformed
+          version of the circuit in Fig. 4.14a after switching. Note that the inductors L1 + M, L2 + M,
+          and −M are 3, 4, and −1 henries with impedances 3s, 4s, and −s respectively. The initial
+          condition voltages in the three branches are (L1 + M)y1 (0− ) = 6, (L2 + M)y2 (0− ) = 4, and
+          −M[y1 (0− ) − y2 (0− )] = −1, respectively. The two loop equations of the circuit are
+
+                                                                        10
+                                       (2s + 3)Y1 (s) + (s − 1)Y2 (s) =    +5
+                                                                         s
+                                       (s − 1)Y1 (s) + (3s + 2)Y2 (s) = 5
+
+          or                                                  !            !           !
+                                            2s + 3    s−1         Y1 (s)       5s+10
+                                                                                 s
+                                             s−1     3s + 2       Y2 (s)        5
+          Solving for Y1 (s), we obtain
+
+                                           2s2 + 9s + 4  4    1         1
+                               Y1 (s) =                 = −        −
+                                          s(s + 3s + 1) s s + 0.382 s + 2.618
+                                             2
+
+
+
+          Therefore,
+                                          y1 (t) = (4 − e−0.382t − e−2.618t )u(t)
+          Similarly,
+                                           s2 + 2s + 2   2   1.618     0.618
+                               Y2 (s) =                 = −         +
+                                          s(s2 + 3s + 1) s s + 0.382 s + 2.618
+          and
+                                   y2 (t) = (2 − 1.618e−0.382t + 0.618e−2.618t )u(t)
+          The output voltage is therefore
+
+                               v0 (t) = y2 (t) = (2 − 1.618e−0.382t + 0.618e−2.618t )u(t)

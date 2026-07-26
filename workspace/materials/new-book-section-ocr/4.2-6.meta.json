@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.2-6",
+  "sourcePages": [
+    "page-357",
+    "page-358",
+    "page-359",
+    "page-360"
+  ],
+  "usedPages": [
+    "page-357",
+    "page-358",
+    "page-359",
+    "page-360"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.2-6 Time Convolution and Frequency Convolution",
+  "foundEnd": true,
+  "endBeforeLine": "4.3 S OLUTION OF D IFFERENTIAL AND",
+  "endBeforeCode": "4.3",
+  "charCount": 9524
+}

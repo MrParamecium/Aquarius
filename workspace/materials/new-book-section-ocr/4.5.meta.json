@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.5",
+  "sourcePages": [
+    "page-386",
+    "page-387",
+    "page-388"
+  ],
+  "usedPages": [
+    "page-386",
+    "page-387",
+    "page-388"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.5 B LOCK D IAGRAMS",
+  "foundEnd": true,
+  "endBeforeLine": "4.6 S YSTEM R EALIZATION",
+  "endBeforeCode": "4.6",
+  "charCount": 6471
+}

@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.9. OCR text begins with: 434 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS we have ωn = 10 and ζ = 0.1 Step 1. Draw an asymptote of −40 dB/decade (−12 dB/octave) starting at ω = 10 for the complex conjugate poles, and draw another asymptote of 20 dB/decade starting at ω = 100 for the (real) zero. Step 2. Add both asymptotes.",
+  "keywords": [
+    "4.9",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-434",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

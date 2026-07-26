@@ -1,0 +1,20 @@
+{
+  "sectionId": "5.5-2",
+  "sourcePages": [
+    "page-536",
+    "page-537",
+    "page-538"
+  ],
+  "usedPages": [
+    "page-536",
+    "page-537",
+    "page-538"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.5-2 Aliasing and Sampling Rate",
+  "foundEnd": true,
+  "endBeforeLine": "5.6 F REQUENCY R ESPONSE FROM P OLE -Z ERO L OCATIONS",
+  "endBeforeCode": "5.6",
+  "charCount": 7226
+}

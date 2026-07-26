@@ -1,0 +1,50 @@
+                         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 558 — #71
+
+
+
+
+558      CHAPTER 5          DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+              (b) In this case, |z| < 0.8, which is less than the magnitudes of both poles. Hence, both
+          terms correspond to anticausal sequences, and
+
+                                        x[n] = [−(0.8)n + 2(2)n ]u[−(n + 1)]
+
+          This sequence appears in Fig. 5.29b.
+              (c) In this case, 0.8 < |z| < 2; the part of X[z] corresponding to the pole at 0.8 is a causal
+          sequence, and the part corresponding to the pole at 2 is an anticausal sequence:
+
+                                        x[n] = (0.8)n u[n] + 2(2)n u[−(n + 1)]
+
+          This sequence appears in Fig. 5.29c.
+
+
+
+
+                                                 n                                               n
+                 0      5       10          15                              15    10      5       0
+          x[n]                                                                                           x[n]
+
+                                                                                                     20
+      5  105
+
+                                                                                                     40
+
+         106
+                                                                                                     60
+
+
+
+
+                                (a)                                               (b)
+
+                                                            1
+                                                                x[n]
+
+
+
+
+                                      10        5     0          5   10               n
+
+                                                        (c)
+      Figure 5.29 Three possible inverse transforms of X[z].

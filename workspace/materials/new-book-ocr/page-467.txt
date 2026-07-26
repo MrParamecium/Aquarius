@@ -1,0 +1,52 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 467 — #138
+
+
+
+
+                                                                          4.13 Summary            467
+
+equations. Therefore solving these integro-differential equations reduces to solving algebraic
+equations. The Laplace transform method cannot be used for time-varying-parameter systems or
+for nonlinear systems in general.
+      The transfer function H(s) of an LTIC system is the Laplace transform of its impulse response.
+It may also be defined as a ratio of the Laplace transform of the output to the Laplace transform
+of the input when all initial conditions are zero (system in zero state). If X(s) is the Laplace
+transform of the input x(t) and Y(s) is the Laplace transform of the corresponding output y(t)
+(when all initial conditions are zero), then Y(s) = X(s)H(s). For an LTIC system described by
+an Nth-order differential equation Q(D)y(t) = P(D)x(t), the transfer function H(s) = P(s)/Q(s).
+Like the impulse response h(t), the transfer function H(s) is also an external description of the
+system.
+      Electrical circuit analysis can also be carried out by using a transformed circuit method,
+in which all signals (voltages and currents) are represented by their Laplace transforms, all
+elements by their impedances (or admittances), and initial conditions by their equivalent sources
+(initial condition generators). In this method, a network can be analyzed as if it were a resistive
+circuit.
+      Large systems can be depicted by suitably interconnected subsystems represented by
+blocks. Each subsystem, being a smaller system, can be readily analyzed and represented by
+its input–output relationship, such as its transfer function. Analysis of large systems can be
+carried out with the knowledge of input–output relationships of its subsystems and the nature
+of interconnection of various subsystems.
+      LTIC systems can be realized by scalar multipliers, adders, and integrators. A given transfer
+function can be synthesized in many different ways, such as canonic, cascade, and parallel.
+Moreover, every realization has a transpose, which also has the same transfer function. In practice,
+all the building blocks (scalar multipliers, adders, and integrators) can be obtained from operational
+amplifiers.
+      The system response to an everlasting exponential est is also an everlasting exponential
+H(s)est . Consequently, the system response to an everlasting exponential ejωt is H(jω) ejωt . Hence,
+H(jω) is the frequency response of the system. For a sinusoidal input of unit amplitude and having
+frequency ω, the system response is also a sinusoid of the same frequency (ω) with amplitude
+|H(jω)|, and its phase is shifted by  H(jω) with respect to the input sinusoid. For this reason
+|H(jω)| is called the amplitude response (gain) and  H(jω) is called the phase response of the
+system. Amplitude and phase response of a system indicate the filtering characteristics of the
+system. The general nature of the filtering characteristics of a system can be quickly determined
+from a knowledge of the location of poles and zeros of the system transfer function.
+      Most of the input signals and practical systems are causal. Consequently we are required
+most of the time to deal with causal signals. When all signals must be causal, the Laplace
+transform analysis is greatly simplified; the region of convergence of a signal becomes irrelevant
+to the analysis process. This special case of the Laplace transform (which is restricted to
+causal signals) is called the unilateral Laplace transform. Much of the chapter deals with this
+variety of Laplace transform. Section 4.11 discusses the general Laplace transform (the bilateral
+Laplace transform), which can handle causal and noncausal signals and systems. In the bilateral
+transform, the inverse transform of X(s) is not unique but depends on the region of convergence
+of X(s). Thus, the region of convergence plays a very crucial role in the bilateral Laplace
+transform.

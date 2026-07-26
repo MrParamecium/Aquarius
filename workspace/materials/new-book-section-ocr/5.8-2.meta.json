@@ -1,0 +1,22 @@
+{
+  "sectionId": "5.8-2",
+  "sourcePages": [
+    "page-560",
+    "page-561",
+    "page-562",
+    "page-563"
+  ],
+  "usedPages": [
+    "page-560",
+    "page-561",
+    "page-562",
+    "page-563"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.8-2 Using the Bilateral z-Transform for Analysis of LTID Systems",
+  "foundEnd": true,
+  "endBeforeLine": "5.9 Connecting the Laplace and z-Transforms 563",
+  "endBeforeCode": "5.9",
+  "charCount": 5870
+}

@@ -1,0 +1,65 @@
+                               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 378 — #49
+
+
+
+
+378       CHAPTER 4            CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                                             1H                   2                                                         2
+                                                                                                           s                             2
+
+                                  y(0)  2
+                                                                                                                                              5
+                                                                                                                                             s
+                                                                          1                   10
+                  10u(t)                            y(t)                  5
+                                                                            F          10      s                           Y(s)
+                                                                                                                                            10
+                                                                                                                                              s
+
+
+                                                  (a)                                                                  (b)
+                  Figure 4.12 A circuit and its transformed version with initial-condition generators.
+
+
+
+
+      E X A M P L E 4.18 Transformed Analysis of a Circuit with a Switch
+
+          The switch in the circuit of Fig. 4.13a is in the closed position for a long time before t = 0,
+          when it is opened instantaneously. Find the currents y1 (t) and y2 (t) for t ≥ 0.
+
+
+
+                                              vC              y1(t)                              1
+                                                                                                                     vC (0)  16
+                                                 1F             4V                                                    y2(0)  4
+                                                                                1                                    1
+                                  20 V                                          5              y2(t)                 2
+                                                                                                                       H
+                                                                t0
+
+
+
+                                                                                    (a)
+
+                  16       1                                                                           1
+                   s       s                              1                                            s
+                                   a                                                                                   a
+                                                                                                                                  Z(s)
+                                             1                        s
+                                             5
+                                                                      2
+                       Y1(s)                            Y2(s)                             4                    Y1(s)               V(s)
+                                                                                          s
+             20
+              s
+                                                                      2
+                                   b                                                                                   b
+                           Z(s)
+                                       (b)                                                                     (c)
+          Figure 4.13 Using initial condition generators and Thévenin equivalent representation.
+
+              Inspection of this circuit shows that when the switch is closed and the steady-state
+          conditions are reached, the capacitor voltage vC = 16 volts, and the inductor current y2 = 4

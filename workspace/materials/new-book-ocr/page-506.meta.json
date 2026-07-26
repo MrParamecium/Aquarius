@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-4",
+  "title": "Time-Reversal Property",
+  "summary": "This page covers 5.2-4 (Time-Reversal Property). OCR text begins with: 506 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM 5.2-3 z-Domain Differentiation Property (Multiplication by n) Multiplying a signal by n in the time domain produces differentiation in the z-domain. That is, if x[n]u[n] ⇐⇒ X[z] then d nx[n]u[n] ⇐⇒ −z X[z] (5.18)",
+  "keywords": [
+    "5.2",
+    "5.2-4",
+    "Time-Reversal Property",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-506",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,31 @@
+{
+  "sectionId": "5.5-2",
+  "sectionTitle": "Aliasing and Sampling Rate",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-537"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.39)",
+      "name": "Sampling interval condition to avoid aliasing",
+      "latex": "f_h<\\frac{1}{2T}\\qquad\\text{or}\\qquad T<\\frac{1}{2f_h}",
+      "sourcePage": "page-537",
+      "role": "sampling_condition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.40)",
+      "name": "Sampling frequency condition to avoid aliasing",
+      "latex": "f_s=\\frac{1}{T}>2f_h\\qquad\\text{or}\\qquad f_h<\\frac{f_s}{2}",
+      "sourcePage": "page-537",
+      "role": "sampling_condition",
+      "status": "verified"
+    }
+  ]
+}

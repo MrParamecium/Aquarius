@@ -1,0 +1,54 @@
+                       “04-Lathi-C04” — 2017/12/5 — 19:19 — page 404 — #75
+
+
+
+
+404   CHAPTER 4         CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+                                                       Cf                                             Rf
+                                                                                    R
+                              R                        Rf                                            Cf
+                                                  –                                              –
+                                                  +                 +                            +          +
+                       X(s)                                        Y(s)        X(s) C                      Y(s)
+                                                                    –                                       –
+
+
+                                          (a)                                              (b)
+
+               Figure 4.32 Op-amp circuits for Drill 4.14.
+
+
+
+
+      4.7 A PPLICATION TO F EEDBACK AND C ONTROLS
+      Generally, systems are designed to produce a desired output y(t) for a given input x(t). Using
+      the given performance criteria, we can design a system, as shown in Fig. 4.33a. Ideally, such an
+      open-loop system should yield the desired output. In practice, however, the system characteristics
+      change with time, as a result of aging or replacement of some components, or because of changes
+      in the operating environment. Such variations cause changes in the output for the same input.
+      Clearly, this is undesirable in precision systems.
+
+           x(t)                                 y(t)
+                                  G(s)
+
+                                  (a)
+
+        x(t)          e(t)                                  y(t)
+                                  G(s)
+               
+
+
+                                                                     Figure 4.33 (a) Open-loop and (b) closed-loop
+                                  (b)                                (feedback) systems.
+
+
+           A possible solution to this problem is to add a signal component to the input that is not
+      a predetermined function of time but will change to counteract the effects of changing system
+      characteristics and the environment. In short, we must provide a correction at the system input
+      to account for the undesired changes just mentioned. Yet since these changes are generally
+      unpredictable, it is not clear how to preprogram appropriate corrections to the input. However,
+      the difference between the actual output and the desired output gives an indication of the suitable

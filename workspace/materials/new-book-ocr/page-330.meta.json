@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform",
+  "summary": "This page covers 4.1 (The Laplace Transform). OCR text begins with: CHAPTER 4 CONTINUOUS-TIME SYSTEM A NALYSIS U SING THE L APLACE T RANSFORM Because of the linearity (superposition) property of linear time-invariant systems, we can find the response of these systems by breaking the input x(t) into several components and then summing the system response to all the components of x(t). We have already used this procedure in time-domain",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform",
+    "continuous-time",
+    "LTI system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-330",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

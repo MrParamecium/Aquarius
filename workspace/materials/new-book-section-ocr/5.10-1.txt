@@ -1,0 +1,99 @@
+# Fourier section OCR
+section_id: 5.10-1
+source_pages: page-566, page-567
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.10-1 Frequency Response and Pole-Zero Plots
+      Frequency response and pole-zero plots help characterize filter behavior. Similar to
+      continuous-time systems, rational transfer functions for realizable LTID systems are represented
+      in the z-domain as
+
+                                                 %N        −k
+                                                                %N
+                                     Y[z] B[z]    k=0 bk z           bk zN−k
+                              H[z] =     =     = %N           = %k=0
+                                                                 N
+                                                                                                       (5.54)
+                                     X[z] A[z]             −k             N−k
+                                                  k=0 ak z       k=0 ak z
+
+
+
+      When only the first (N1 + 1) numerator coefficients are nonzero and only the first (N2 + 1)
+      denominator coefficients are nonzero, Eq. (5.54) simplifies to
+
+                                             % N1       −k
+                                                             % N1
+                                 Y[z] B[z]     k=0 bk z            bk zN1 −k N2 −N1
+                          H[z] =     =     = %N            = %k=0
+                                                               N2
+                                                                              z                        (5.55)
+                                 X[z] A[z]      2       −k              N2 −k
+                                               k=0 ak z        k=0 ak z
+
+
+
+      The form of Eq. (5.55) has many advantages. It can be more efficient than Eq. (5.54); it still
+      works when N1 = N2 = N; and it more closely conforms to the notation of built-in MATLAB
+      discrete-time signal-processing functions.
+           The right-hand side of Eq. (5.55) is a form that is convenient for MATLAB computations.
+      The frequency response H[ej ] is obtained by letting z = ej , where  has units of radians.
+      Often,  = ωT, where ω is the continuous-time frequency in radians per second and T is the
+      sampling period in seconds. Defining length-(N2 + 1) coefficient vector A = [a0 , a1 , . . . , aN2 ] and
+      length-(N1 +1) coefficient vector B = [b0 , b1 , . . . , bN1 ], program CH5MP1 computes H[ej ] by using
+      Eq. (5.55) for each frequency in the input vector .
+
+
+      function [H] = CH5MP1(B,A,Omega);
+      % CH5MP1.m : Chapter 5, MATLAB Program 1
+      % Function M-file computes frequency response for LTID systems
+      % INPUTS:   B = vector of feedforward coefficients
+      %           A = vector of feedback coefficients
+      %           Omega = vector of frequencies [rad], typically -pi<=Omega<=pi
+      % OUTPUTS: H = frequency response
+
+      N_1 = length(B)-1; N_2 = length(A)-1;
+      H = polyval(B,exp(1j*Omega))./polyval(A,exp(1j*Omega)).*...
+          exp(1j*Omega*(N_2-N_1));
+
+
+      Note that owing to MATLAB’s indexing scheme, A(k) corresponds to coefficient ak−1 and B(k)
+      corresponds to coefficient bk−1 . It is also possible to use the signal-processing toolbox function
+      freqz to evaluate the frequency response of a system described by Eq. (5.55). Under special
+      circumstances, the control system toolbox function bode can also be used.
+
+[[PAGE page-567]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 567 — #80
+
+
+
+
+                                               5.10   MATLAB: Discrete-Time IIR Filters           567
+
+     Program CH5MP2 computes and plots the poles and zeros of an LTID system described by
+Eq. (5.55), again using vectors B and A.
+function [p,z] = CH5MP2(B,A);
+% CH5MP2.m : Chapter 5, MATLAB Program 2
+% Function M-file computes and plots poles and zeros for LTID systems
+% INPUTS:   B = vector of feedforward coefficients
+%           A = vector of feedback coefficients
+
+N_1 = length(B)-1; N_2 = length(A)-1;
+p = roots([A,zeros(1,N_1-N_2)]); z = roots([B,zeros(1,N_2-N_1)]);
+ucirc = exp(1j*linspace(0,2*pi,200)); % Compute unit circle for plot
+plot(real(p),imag(p),’xk’,real(z),imag(z),’ok’,real(ucirc),imag(ucirc),’k:’);
+xlabel(’Real’); ylabel(’Imag’);
+ax = axis; dx = 0.05*(ax(2)-ax(1)); dy = 0.05*(ax(4)-ax(3));
+axis(ax+[-dx,dx,-dy,dy]); axis equal;
+
+The right-hand side of Eq. (5.55) helps explain how the roots are computed. When N1 = N2 , the
+term zN2 −N1 implies additional roots at the origin. If N1 > N2 , the roots are poles, which are added
+by concatenating A with zeros(N_1-N_2,1); since N2 − N1 ≤ 0, zeros(N_2-N_1,1) produces
+the empty set and B is unchanged. If N2 > N1 , the roots are zeros, which are added by concatenating
+B with zeros(N_2-N_1,1); since N1 − N2 ≤ 0, zeros(N_1-N_2,1) produces the empty set and
+A is unchanged. Poles and zeros are indicated with black x’s and o’s, respectively. For visual
+reference, the unit circle is also plotted. The last two lines in CH5MP2 expand the plot axis box so
+that root locations are not obscured and also ensure that the real and imaginary axes are drawn to
+the same scale.

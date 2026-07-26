@@ -1,0 +1,52 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 439 — #110
+
+
+
+
+                             4.10 Filter Design by Placement of Poles and Zeros of H(s)               439
+
+behavior in the vicinity of ω0 . This is because the gain in this case is K/dd , where d is the distance
+of a point jω from the conjugate pole −α − jω0 . Because the conjugate pole is far from jω0 , there
+is no dramatic change in the length d as ω varies in the vicinity of ω0 . There is a gradual increase
+in the value of d as ω increases, which leaves the frequency-selective behavior as it was originally,
+with only minor changes.
+
+G AIN S UPPRESSION BY A Z ERO
+Using the same argument, we observe that zeros at −α ± jω0 (Fig. 4.49d) will have exactly the
+opposite effect of suppressing the gain in the vicinity of ω0 , as shown in Fig. 4.49e). A zero on
+the imaginary axis at jω0 will totally suppress the gain (zero gain) at frequency ω0 . Repeated zeros
+will further enhance the effect. Also, a closely placed pair of a pole and a zero (dipole) tend to
+cancel out each other’s influence on the frequency response. Clearly, a proper placement of poles
+and zeros can yield a variety of frequency-selective behavior. We can use these observations to
+design lowpass, highpass, bandpass, and bandstop (or notch) filters.
+     Phase response can also be computed graphically. In Fig. 4.49a, angles formed by the complex
+conjugate poles −α ±jω0 at ω = 0 (the origin) are equal and opposite. As ω increases from 0 up, the
+angle θ1 (due to the pole −α + jω0 ), which has a negative value at ω = 0, is reduced in magnitude;
+the angle θ2 because of the pole −α − jω0 , which has a positive value at ω = 0, increases in
+magnitude. As a result, θ1 + θ2 , the sum of the two angles, increases continuously, approaching a
+value π as ω → ∞. The resulting phase response  H(jω) = −(θ1 + θ2 ) is illustrated in Fig. 4.49c.
+Similar arguments apply to zeros at −α ± jω0 . The resulting phase response  H(jω) = (φ1 + φ2 )
+is depicted in Fig. 4.49f.
+     We now focus on simple filters, using the intuitive insights gained in this discussion. The
+discussion is essentially qualitative.
+
+
+4.10-2 Lowpass Filters
+A typical lowpass filter has a maximum gain at ω = 0. Because a pole enhances the gain at
+frequencies in its vicinity, we need to place a pole (or poles) on the real axis opposite the origin
+(jω = 0), as shown in Fig. 4.50a. The transfer function of this system is
+                                                        ωc
+                                             H(s) =
+                                                      s + ωc
+We have chosen the numerator of H(s) to be ωc to normalize the dc gain H(0) to unity. If d is the
+distance from the pole −ωc to a point jω (Fig. 4.50a), then
+                                                         ωc
+                                             |H(jω)| =
+                                                         d
+with H(0) = 1. As ω increases, d increases and |H(jω)| decreases monotonically with ω, as
+illustrated in Fig. 4.50d with label N = 1. This is clearly a lowpass filter with gain enhanced
+in the vicinity of ω = 0.
+
+WALL OF P OLES
+An ideal lowpass filter characteristic (shaded in Fig. 4.50d) has a constant gain of unity up to
+frequency ωc . Then the gain drops suddenly to 0 for ω > ωc . To achieve the ideal lowpass

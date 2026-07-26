@@ -1,0 +1,62 @@
+                                “05-Lathi-C05” — 2017/9/25 — 15:54 — page 490 — #3
+
+
+
+
+490        CHAPTER 5            DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+      E X A M P L E 5.1 Bilateral z-Transform of a Causal Exponential
+
+           Find the z-transform and the corresponding ROC for the signal γ n u[n].
+
+
+           By definition,
+                                                                  ∞
+                                                                  "
+                                                         X[z] =           γ n u[n]z−n
+                                                                  n=0
+
+           Since u[n] = 1 for all n ≥ 0,
+                                          "∞        n                             2                  3
+                                              γ                   γ           γ                γ
+                                 X[z] =                 = 1+              +           +                  +· · ·+· · ·          (5.4)
+                                          n=0
+                                              z                   z           z                z
+
+           It is helpful to remember the geometric progression and its sum [see Sec. B.8-3]:
+                                                                            1
+                                          1 + x + x2 + x3 + · · · =                       if       |x| < 1
+                                                                           1−x
+           Applying this relationship to Eq. (5.4) yields
+                                                                               
+                                                                  1           γ 
+                                                    X[z] =                     <1
+                                                                      γ       z
+                                                               1−
+                                                                      z
+                                                                z
+                                                          =                   |z| > |γ |                                       (5.5)
+                                                               z−γ
+           Observe that X[z] exists only for |z| > |γ |. For |z| < |γ |, the sum in Eq. (5.4) does not converge;
+           it goes to infinity. Therefore, the ROC of X[z] is the shaded region outside the circle of radius
+           |γ |, centered at the origin, in the z-plane, as depicted in Fig. 5.1b.
+
+
+                                                                                          Im
+
+             g k u[n]
+
+
+
+
+                                                                                                   g
+                                                                                                                          Re
+
+
+
+
+            0 1         2   3    4   5    6     k                                                           Region of
+                                                                                                            convergence
+
+         Figure 5.1 γ n u[n] and the region of convergence of its z-transform.

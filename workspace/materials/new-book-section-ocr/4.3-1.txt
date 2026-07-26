@@ -1,0 +1,182 @@
+# Fourier section OCR
+section_id: 4.3-1
+source_pages: page-363, page-364, page-365, page-366
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.3-1 Comments on Initial Conditions at 0− and at 0+
+The initial conditions in Ex. 4.12 are y(0− ) = 2 and ẏ(0− ) = 1. If we let t = 0 in the total response
+in Eq. (4.24), we find y(0) = 2 and ẏ(0) = 2, which is at odds with the given initial conditions.
+Why? Because the initial conditions are given at t = 0− (just before the input is applied), when only
+the zero-input response is present. The zero-state response is the result of the input x(t) applied
+at t = 0. Hence, this component does not exist at t = 0− . Consequently, the initial conditions at
+t = 0− are satisfied by the zero-input response, not by the total response. We can readily verify in
+this example that the zero-input response does indeed satisfy the given initial conditions at t = 0− .
+It is the total response that satisfies the initial conditions at t = 0+ , which are generally different
+from the initial conditions at 0− .
+      There also exists a L+ version of the Laplace transform, which uses the initial conditions at
+t = 0+ rather than at 0− (as in our present L− version). The L+ version, which was in vogue till the
+early 1960s, is identical to the L− version except the limits of Laplace integral [Eq. (4.7)] are from
+0+ to ∞. Hence, by definition, the origin t = 0 is excluded from the domain. This version, still used
+in some math books, has some serious difficulties. For instance, the Laplace transform of δ(t) is
+zero because δ(t) = 0 for t ≥ 0+ . Moreover, this approach is rather clumsy in the theoretical study
+
+[[PAGE page-364]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 364 — #35
+
+
+
+
+364       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          of linear systems because the response obtained cannot be separated into zero-input and zero-state
+          components. As we know, the zero-state component represents the system response as an explicit
+          function of the input, and without knowing this component, it is not possible to assess the effect
+          of the input on the system response in a general way. The L+ version can separate the response
+          in terms of the natural and the forced components, which are not as interesting as the zero-input
+          and the zero-state components. Note that we can always determine the natural and the forced
+          components from the zero-input and the zero-state components [e.g., Eq. (2.44) from Eq. (2.43)],
+          but the converse is not true. Because of these and some other problems, electrical engineers
+          (wisely) started discarding the L+ version in the early 1960s.
+               It is interesting to note the time-domain duals of these two Laplace versions. The classical
+          method is the dual of the L+ method, and the convolution (zero-input/zero-state) method is the dual
+          of the L− method. The first pair uses the initial conditions at 0+ , and the second pair uses those at
+          t = 0− . The first pair (the classical method and the L+ version) is awkward in the theoretical study
+          of linear system analysis. It was no coincidence that the L− version was adopted immediately
+          after the introduction to the electrical engineering community of state-space analysis (which uses
+          zero-input/zero-state separation of the output).
+
+
+
+           D R I L L 4.7 Laplace Transform to Solve a Second-Order Linear
+           Differential Equation
+           Solve
+                                         d2 y(t)    dy(t)             dx(t)
+                                             2
+                                                 +4       + 3y(t) = 2       + x(t)
+                                          dt         dt                dt
+           for the input x(t) = u(t). The initial conditions are y(0− ) = 1 and ẏ(0− ) = 2.
+
+           ANSWER
+           y(t) = 13 (1 + 9e−t − 7e−3t )u(t)
+
+
+
+
+      E X A M P L E 4.13 Laplace Transform to Solve an Electric Circuit
+
+          In the circuit of Fig. 4.7a, the switch is in the closed position for a long time before t = 0, when
+          it is opened instantaneously. Find the inductor current y(t) for t ≥ 0.
+
+
+          When the switch is in the closed position (for a long time), the inductor current is 2 amperes
+          and the capacitor voltage is 10 volts. When the switch is opened, the circuit is equivalent to
+          that depicted in Fig. 4.7b, with the initial inductor current y(0− ) = 2 and the initial capacitor
+          voltage vC (0− ) = 10. The input voltage is 10 volts, starting at t = 0, and, therefore, can be
+          represented by 10u(t).
+
+[[PAGE page-365]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 365 — #36
+
+
+
+
+                          4.3        Solution of Differential and Integro-Differential Equations               365
+
+
+                                                                              1H           2
+                 1H                       2
+
+          y(t)                                                                                       
+                                5
+                                                                                    y(t)              vC (t)
+10 V                                                              10u(t)                       1
+                                                   1
+                                                     F                                         5
+                                                                                                 F
+                                t0                5
+                                                                                                     
+
+
+                          (a)                                                       (b)
+
+                                                    2
+                                                         y(t)
+
+
+
+
+                                                    0                                  t
+
+
+                                                            (c)
+Figure 4.7 Analysis of a network with a switching action.
+
+       The loop equation of the circuit in Fig. 4.7b is
+                                                 # t
+                              dy(t)
+                                    + 2y(t) + 5       y(τ ) dτ = 10u(t)                              (4.25)
+                               dt                 −∞
+
+If
+                                                    y(t) ⇐⇒ Y(s)
+then
+                                    dy(t)
+                                          ⇐⇒ sY(s) − y(0− ) = sY(s) − 2
+                                     dt
+and [see Eq. (4.16)]
+                                    # t                  $ 0−
+                                                Y(s)          y(τ ) dτ
+                                  y(τ ) dτ ⇐⇒        + −∞
+                              −∞                 s             s
+                                                    $ 0−
+Because y(t) is the capacitor current, the integral −∞ y(τ ) dτ is qC (0− ), the capacitor charge
+at t = 0− , which is given by C times the capacitor voltage at t = 0− . Therefore,
+                          # 0−
+                                    y(τ ) dτ = qC (0− ) = CvC (0− ) = 15 (10) = 2
+                           −∞
+
+and                                       # t
+                                                                    Y(s) 2
+                                                   y(τ ) dτ ⇐⇒          +
+                                              −∞                     s    s
+
+[[PAGE page-366]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 366 — #37
+
+
+
+
+366   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Using these results, the Laplace transform of Eq. (4.25) is
+
+                                                             5Y(s) 10 10
+                                    sY(s) − 2 + 2Y(s) +           +   =
+                                                               s    s   s
+      or                                                    !
+                                                          5
+                                                s+2+          Y(s) = 2
+                                                          s
+      and
+                                                               2s
+                                                Y(s) =
+                                                          s2 + 2s + 5
+      To find the inverse Laplace transform of Y(s), we use pair 10c (Table 4.1) with values A = 2,
+      B = 0, a = 1, and c = 5. This yields
+                               √                                        
+                     r = 204
+                             = 5, b = c − a2 = 2 and θ = tan−1 24 = 26.6◦
+
+      Therefore,                                √
+                                       y(t) =       5e−t cos (2t + 26.6◦ )u(t)
+      This response is shown in Fig. 4.7c.
+
+      Comment. In our discussion so far, we have multiplied input signals by u(t), implying that
+      the signals are zero prior to t = 0. This is needlessly restrictive. These signals can have any
+      arbitrary value prior to t = 0. As long as the initial conditions at t = 0 are specified, we need
+      only the knowledge of the input for t ≥ 0 to compute the response for t ≥ 0. Some authors use
+      the notation 1(t) to denote a function that is equal to u(t) for t ≥ 0 and that has arbitrary value
+      for negative t. We have abstained from this usage to avoid needless confusion caused by the
+      introduction of a new function, which is very similar to u(t).

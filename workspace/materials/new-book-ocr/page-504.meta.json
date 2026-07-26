@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.2. OCR text begins with: 504 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Proof. By definition, ∞ \" Z{x[n + m]u[n]} = x[n + m]z−n n=0 ∞",
+  "keywords": [
+    "5.2",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-504",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

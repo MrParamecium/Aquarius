@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": "4.9-5",
+  "title": "The Transfer Function from the Frequency Response",
+  "summary": "This page covers 4.9-5 (The Transfer Function from the Frequency Response). OCR text begins with: 4.9 Bode Plots 435 B ODE P LOTS WITH MATLAB Bode plots make it relatively simple to hand-draw straight-line approximations to a system’s magnitude and frequency responses. To produce exact Bode plots, we turn to MATLAB and its bode command. >> bode(tf([10 1000],[1 2 100]),’k-’); The resulting MATLAB plots, shown in Fig. 4.47, match the plots shown in Fig. 4.46.",
+  "keywords": [
+    "4.9",
+    "4.9-5",
+    "The Transfer Function from the Frequency Response",
+    "system response",
+    "MATLAB",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-435",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

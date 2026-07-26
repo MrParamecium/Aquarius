@@ -1,0 +1,57 @@
+            “04-Lathi-C04” — 2017/9/25 — 19:46 — page 395 — #66
+
+
+
+
+                                                                          4.6   System Realization            395
+
+    R EALIZATION OF C OMPLEX C ONJUGATE P OLES
+    The complex poles in H(s) should be realized as a second-order (quadratic) factor because we
+    cannot implement multiplication by complex numbers. Consider, for example,
+                                                  10s + 50
+                                     H(s) =
+                                            (s + 3)(s2 + 4s + 13)
+                                                       10s + 50
+                                          =
+                                            (s + 3)(s + 2 − j3)(s + 2 + j3)
+                                              2        1 + j2       1 − j2
+                                          =       −            −
+                                            s + 3 s + 2 − j3 s + 2 + j3
+    We cannot realize first-order transfer functions individually with the poles −2 ± j3 because they
+    require multiplication by complex numbers in the feedback and the feedforward paths. Therefore,
+    we need to combine the conjugate poles and realize them as a second-order transfer function.† In
+    the present example, we can create a cascade realization from H(s) expressed in product form as
+
+                                                    10           s+5
+                                        H(s) =
+                                                   s+3       s2 + 4s + 13
+    Similarly, we can create a parallel realization from H(s) expressed in sum form as
+                                                     2      2s − 8
+                                          H(s) =        −
+                                                   s + 3 s2 + 4s + 13
+
+    R EALIZATION OF R EPEATED P OLES
+    When repeated poles occur, the procedure for canonic and cascade realization is exactly the same
+    as before. For a parallel realization, however, the procedure requires special handling, as explained
+    in Ex. 4.23.
+
+
+E X A M P L E 4.23 Parallel Realization
+
+    Determine the parallel realization of
+
+                                     7s2 + 37s + 51       5     2       3
+                            H(s) =                    =      +     −
+                                     (s + 2)(s + 3) 2   s + 2 s + 3 (s + 3)2
+
+
+    This third-order transfer function should require no more than three integrators. But if we try to
+    realize each of the three partial fractions separately, we require four integrators because of the
+    one second-order term. This difficulty can be avoided by observing that the terms 1/(s +3) and
+
+
+
+
+    † It is possible to realize complex, conjugate poles indirectly by using a cascade of two first-order transfer
+    functions and feedback. A transfer function with poles −a ± jb can be realized by using a cascade of two
+    identical first-order transfer functions, each having a pole at −a (see Prob. 4.6-15).

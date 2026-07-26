@@ -1,0 +1,28 @@
+{
+  "sectionId": "4.11",
+  "sourcePages": [
+    "page-445",
+    "page-446",
+    "page-447",
+    "page-448",
+    "page-449",
+    "page-450",
+    "page-451"
+  ],
+  "usedPages": [
+    "page-445",
+    "page-446",
+    "page-447",
+    "page-448",
+    "page-449",
+    "page-450",
+    "page-451"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.11 The Bilateral Laplace Transform 445",
+  "foundEnd": true,
+  "endBeforeLine": "4.11-1 Properties of the Bilateral Laplace Transform",
+  "endBeforeCode": "4.11-1",
+  "charCount": 16767
+}

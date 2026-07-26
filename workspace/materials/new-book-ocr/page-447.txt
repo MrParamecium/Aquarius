@@ -1,0 +1,53 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 447 — #118
+
+
+
+
+                                                             4.11   The Bilateral Laplace Transform      447
+
+where X1 (s) is the Laplace transform of the causal component x1 (t), and X2 (s) is the Laplace
+transform of the anticausal component x2 (t). Consider X2 (s), given by
+                                           # 0−                     # ∞
+                                X2 (s) =          x2 (t)e−st dt =         x2 (−t)est dt
+                                            −∞                      0+
+
+Therefore,                                             # ∞
+                                         X2 (−s) =            x2 (−t)e−st dt
+                                                        0+
+
+If x(t) has any impulse or its derivative(s) at the origin, they are included in x1 (t). Consequently,
+x2 (t) = 0 at the origin; that is, x2 (0) = 0. Hence, the lower limit on the integration in the preceding
+equation can be taken as 0− instead of 0+ . Therefore,
+                                                   # ∞
+                                         X2 (−s) =      x2 (−t)e−st dt
+                                                        0−
+
+Because x2 (−t) is causal (Fig. 4.56d), X2 (−s) can be found from the unilateral transform table.
+Changing the sign of s in X2 (−s) yields X2 (s).
+     To summarize, the bilateral transform X(s) in Eq. (4.57) can be computed from the unilateral
+transforms in two steps:
+     1. Split x(t) into its causal and anticausal components, x1 (t) and x2 (t), respectively.
+     2. Since the signals x1 (t) and x2 (−t) are both causal, take the (unilateral) Laplace transform
+        of x1 (t) and add to it the (unilateral) Laplace transform of x2 (−t), with s replaced by −s.
+        This procedure gives the (bilateral) Laplace transform of x(t).
+     Since x1 (t) and x2 (−t) are both causal, X1 (s) and X2 (−s) are both unilateral Laplace
+transforms. Let σc1 and σc2 be the abscissas of convergence of X1 (s) and X2 (−s), respectively.
+This statement implies that X1 (s) exists for all s with Re s > σc1 , and X2 (−s) exists for all s with
+Re s > σc2 . Therefore, X2 (s) exists for all s with Re s < −σc2 .† Therefore, X(s) = X1 (s) + X2 (s)
+exists for all s such that
+                                          σc1 < Re s < −σc2
+     The regions of convergence of X1 (s), X2 (s), and X(s) are shown in Fig. 4.57. Because X(s) is
+finite for all values of s lying in the strip of convergence (σc1 < Re s < −σc2 ), poles of X(s) must
+lie outside this strip. The poles of X(s) arising from the causal component x1 (t) lie to the left of
+the strip (region) of convergence, and those arising from its anticausal component x2 (t) lie to its
+right (see Fig. 4.57). This fact is of crucial importance in finding the inverse bilateral transform.
+     This result can be generalized to left-sided and right-sided signals. We define a signal x(t) as
+a right-sided signal if x(t) = 0 for t < T1 for some finite positive or negative number T1 . A causal
+signal is always a right-sided signal, but the converse is not necessarily true. A signal is said to
+left-sided if it is zero for t > T2 for some finite, positive, or negative number T2 . An anticausal
+signal is always a left-sided signal, but the converse is not necessarily true. A two-sided signal is
+of infinite duration on both positive and negative sides of t and is neither right-sided nor left-sided.
+     We can show that the conclusions for ROC for causal signals also hold for right-sided signals,
+and those for anticausal signals hold for left-sided signals. In other words, if x(t) is causal or
+
+† For instance, if x(t) exists for all t > 10, then x(−t), its time-inverted form, exists for t < −10.

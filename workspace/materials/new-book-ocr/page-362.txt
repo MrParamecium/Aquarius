@@ -1,0 +1,57 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 362 — #33
+
+
+
+
+362   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      The equation is
+                                   d2 y(t)    dy(t)           dx(t)
+                                           +5       + 6y(t) =       + x(t)                   (4.22)
+                                    dt2        dt              dt
+      Let
+                                                    y(t) ⇐⇒ Y(s)
+      Then from Eq. (4.15),
+                                     dy(t)
+                                           ⇐⇒ sY(s) − y(0− ) = sY(s) − 2
+                                      dt
+      and
+                          d2 y(t)
+                                  ⇐⇒ s2 Y(s) − sy(0− ) − ẏ(0− ) = s2 Y(s) − 2s − 1
+                           dt2
+      Moreover, for x(t) = e−4t u(t),
+                             1               dx(t)                      s        s
+                   X(s) =            and           ⇐⇒ sX(s) − x(0− ) =     −0 =
+                            s+4               dt                       s+4      s+4
+      Taking the Laplace transform of Eq. (4.22), we obtain
+                                                                           s   1
+                         [s2 Y(s) − 2s − 1] + 5[sY(s) − 2] + 6Y(s) =         +
+                                                                          s+4 s+4
+      Collecting all the terms of Y(s) and the remaining terms separately on the left-hand side, we
+      obtain
+                                                                  s+1
+                                  (s2 + 5s + 6)Y(s) − (2s + 11) =                            (4.23)
+                                                                  s+4
+      Therefore,
+                                                                s + 1 2s2 + 20s + 45
+                         (s2 + 5s + 6)Y(s) = (2s + 11) +             =
+                                                                s+4        s+4
+      and
+                                        2s2 + 20s + 45             2s2 + 20s + 45
+                            Y(s) =                          =
+                                     (s2 + 5s + 6)(s + 4)       (s + 2)(s + 3)(s + 4)
+      Expanding the right-hand side into partial fractions yields
+                                                    13/2   3   3/2
+                                           Y(s) =        −   −
+                                                    s+2 s+3 s+4
+      The inverse Laplace transform of this equation yields
+                                          −2t                  
+                                  y(t) = 132
+                                             e − 3e−3t − 32 e−4t u(t)                        (4.24)
+
+
+
+
+           Example 4.12 demonstrates the ease with which the Laplace transform can solve linear
+      differential equations with constant coefficients. The method is general and can solve a linear
+      differential equation with constant coefficients of any order.

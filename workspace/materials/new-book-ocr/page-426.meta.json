@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": "4.9-4",
+  "title": "Second-Order Pole (or Zero)",
+  "summary": "This page covers 4.9-4 (Second-Order Pole (or Zero)). OCR text begins with: 426 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS 0 –0.5 –1 Error (dB) –1.5 –2",
+  "keywords": [
+    "4.9",
+    "4.9-4",
+    "Second-Order Pole (or Zero)",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-426",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.11",
+  "subsection": "4.11-2",
+  "title": "Using the Bilateral Transform for Linear System Analysis",
+  "summary": "This page covers 4.11-2 (Using the Bilateral Transform for Linear System Analysis). OCR text begins with: 452 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS T IME S CALING 1 s x(βt) ⇐⇒ X |β| β The ROC for X(s/β) is βa < Re s < βb. For β > 1, x(βt) represents time compression and the corresponding ROC expands by factor β. For 0 > β > 1, x(βt) represents time expansion and the",
+  "keywords": [
+    "4.11",
+    "4.11-2",
+    "Using the Bilateral Transform for Linear System Analysis",
+    "zero-state response",
+    "continuous-time",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-452",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

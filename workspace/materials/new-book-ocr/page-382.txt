@@ -1,0 +1,54 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 382 — #53
+
+
+
+
+382   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                √
+       y(t) = 10 2e−t cos (2t + 81.8◦ )u(t) and vC (t) = [24 + 31.62e−t cos (2t − 34.7◦ )]u(t)
+
+
+
+                    t0         2             1H
+
+                                                                  
+
+
+          24 V                      y(t)           0.2 F         vC (t)
+
+
+                                                                         Figure 4.15 Circuit for Drill 4.10.
+
+
+
+
+      4.4-1 Analysis of Active Circuits
+      Although we have considered examples of only passive networks so far, the circuit analysis
+      procedure using the Laplace transform is also applicable to active circuits. All that is needed is
+      to replace the active elements with their mathematical models (or equivalent circuits) and proceed
+      as before.
+           The operational amplifier (depicted by the triangular symbol in Fig. 4.16a) is a well-known
+      element in modern electronic circuits. The terminals with the positive and the negative signs
+      correspond to noninverting and inverting terminals, respectively. This means that the polarity of
+      the output voltage v2 is the same as that of the input voltage at the terminal marked by the positive
+      sign (noninverting). The opposite is true for the inverting terminal, marked by the negative sign.
+           Figure 4.16b shows the model (equivalent circuit) of the operational amplifier (op amp) in
+      Fig. 4.16a. A typical op amp has a very large gain. The output voltage v2 = −Av1 , where A is
+      typically 105 to 106 . The input impedance is very high, of the order of 1012 , and the output
+      impedance is very low (50–100 ). For most applications, we are justified in assuming the gain A
+      and the input impedance to be infinite and the output impedance to be zero. For this reason we see
+      an ideal voltage source at the output.
+           Consider now the operational amplifier with resistors Ra and Rb connected, as shown in
+      Fig. 4.16c. This configuration is known as the noninverting amplifier. Observe that the input
+      polarities in this configuration are inverted in comparison to those in Fig. 4.16a. We now show
+      that the output voltage v2 and the input voltage v1 in this case are related by
+
+                                           v2 = Kv1 ,      where K = 1 + RRba
+
+      First, we recognize that because the input impedance and the gain of the operational amplifier
+      approach infinity, the input current ix and the input voltage vx in Fig. 4.16c are infinitesimal and
+      may be taken as zero. The dependent source in this case is Avx instead of −Avx because of the input
+      polarity inversion. The dependent source Avx (see Fig. 4.16b) at the output will generate current
+      io , as illustrated in Fig. 4.16c. Now
+                                                   v2 = (Rb + Ra )io

@@ -1,0 +1,53 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 532 — #45
+
+
+
+
+532   CHAPTER 5     DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Comment: Figures 5.14 and 5.16 show amplitude and phase response plots as functions of
+      . These plots as well as Eqs. (5.35) and (5.36) indicate that the frequency response of a
+      discrete-time system is a continuous (rather than discrete) function of frequency . There is no
+      contradiction here. This behavior is merely an indication of the fact that the frequency variable
+       is continuous (takes on all possible values) and therefore the system response exists at every
+      value of .
+
+
+
+       D R I L L 5.18 Frequency Response of Difference Equation
+       For a system specified by the equation
+
+                                          y[n + 1] − 0.5y[n] = x[n]
+
+       find the amplitude and the phase response. Find the system response to sinusoidal input
+       cos [1000t − (π/3)] sampled every T = 0.5 ms.
+
+       ANSWER
+                                       1
+                    |H[ej ]| = √
+                                  1.25 − cos 
+                                                     !
+                                            sin 
+                     H[ej ] = − tan−1
+                                         cos  − 0.5
+                                                  π
+                        y[n] = 1.639 cos 0.5n − − 0.904 = 1.639 cos (0.5n − 1.951)
+                                                  3
+
+
+
+
+       D R I L L 5.19 Frequency Response of an Ideal Delay System
+       Show that for an ideal delay (H[z] = 1/z), the amplitude response |H[ej ]| = 1, and the
+       phase response  H[ej ] = −. Thus, a pure time delay does not affect the amplitude gain
+       of sinusoidal input, but it causes a phase shift (delay) of  radians in a discrete sinusoid of
+       frequency . Thus, for an ideal delay, the phase shift of the output sinusoid is proportional to
+       the frequency of the input sinusoid (linear phase shift).
+
+
+
+
+      5.5-1 The Periodic Nature of Frequency Response
+      In Ex. 5.10 and Fig. 5.14, we saw that the frequency response H[ej ] is a periodic function of
+      . This is not a coincidence. Unlike continuous-time systems, all LTID systems have periodic
+      frequency response. This is seen clearly from the nature of the expression of the frequency

@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.5",
+  "subsection": null,
+  "title": "Analysis of Electrical Networks: The Transformed Network 385",
+  "summary": "This page covers 4.5 (Analysis of Electrical Networks: The Transformed Network 385). OCR text begins with: 4.5 Analysis of Electrical Networks: The Transformed Network 385 The sum of all the three currents is zero. Therefore, Va (s) − Vi (s) Va (s) − Vb (s) + + [Va (s) − KVb (s)]C1 s = 0 R1 R2 or 1 1 1 1",
+  "keywords": [
+    "4.5",
+    "Analysis of Electrical Networks: The Transformed Network 385"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-385",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

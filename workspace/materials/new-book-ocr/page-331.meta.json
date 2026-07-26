@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 331",
+  "summary": "This page covers 4.1 (The Laplace Transform 331). OCR text begins with: 4.1 The Laplace Transform 331 It is also common practice to use a bidirectional arrow to indicate a Laplace transform pair, as follows: x(t) ⇐⇒ X(s) The Laplace transform, defined in this way, can handle signals existing over the entire time interval from −∞ to ∞ (causal and noncausal signals). For this reason it is called the bilateral (or two-sided) Laplace transform. Later we shall consider a special case—the unil",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 331",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-331",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-2",
+  "title": "z-Domain Scaling Property (Multiplication by γ n )",
+  "summary": "This page covers 5.2-2 (z-Domain Scaling Property (Multiplication by γ n )). OCR text begins with: 5.2 Some Properties of the z-Transform 505 We can now find the z-transform of the bracketed term by using the right-shift property [Eq. (5.13)]. Because u[n] ⇐⇒ z/(z − 1), 1 z 1 u[n − 6] ⇐⇒ = z6 z − 1 z5 (z − 1) Also, because nu[n] ⇐⇒ z/(z − 1)2 ,",
+  "keywords": [
+    "5.2",
+    "5.2-2",
+    "z-Domain Scaling Property (Multiplication by γ n )",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-505",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

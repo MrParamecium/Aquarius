@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.11",
+  "subsection": "4.11-2",
+  "title": null,
+  "summary": "This page covers 4.11-2. OCR text begins with: 454 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS s = 2 lies to the right of the ROC and thus represents an anticausal signal. Hence, y(t) = 16 e−t u(t) + 12 et u(t) + 23 e2t u(−t) Figure 4.60c shows y(t). Note that in this example, if x(t) = e−4t u(t) + e−2t u(−t) then the ROC of X(s) is −4 < Re s < −2. Here no region of convergence exists for X(s)H(s). Hence, the response y(t) goes to infinity.",
+  "keywords": [
+    "4.11",
+    "4.11-2",
+    "unit step",
+    "continuous-time",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-454",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

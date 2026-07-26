@@ -1,0 +1,139 @@
+# Fourier section OCR
+section_id: 4.7
+source_pages: page-404, page-405, page-406
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.7 A PPLICATION TO F EEDBACK AND C ONTROLS
+      Generally, systems are designed to produce a desired output y(t) for a given input x(t). Using
+      the given performance criteria, we can design a system, as shown in Fig. 4.33a. Ideally, such an
+      open-loop system should yield the desired output. In practice, however, the system characteristics
+      change with time, as a result of aging or replacement of some components, or because of changes
+      in the operating environment. Such variations cause changes in the output for the same input.
+      Clearly, this is undesirable in precision systems.
+
+           x(t)                                 y(t)
+                                  G(s)
+
+                                  (a)
+
+        x(t)          e(t)                                  y(t)
+                                  G(s)
+               
+
+
+                                                                     Figure 4.33 (a) Open-loop and (b) closed-loop
+                                  (b)                                (feedback) systems.
+
+
+           A possible solution to this problem is to add a signal component to the input that is not
+      a predetermined function of time but will change to counteract the effects of changing system
+      characteristics and the environment. In short, we must provide a correction at the system input
+      to account for the undesired changes just mentioned. Yet since these changes are generally
+      unpredictable, it is not clear how to preprogram appropriate corrections to the input. However,
+      the difference between the actual output and the desired output gives an indication of the suitable
+
+[[PAGE page-405]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 405 — #76
+
+
+
+
+                                              4.7   Application to Feedback and Controls           405
+
+correction to be applied to the system input. It may be possible to counteract the variations by
+feeding the output (or some function of output) back to the input.
+     We unconsciously apply this principle in daily life. Consider an example of marketing a
+certain product. The optimum price of the product is the value that maximizes the profit of a
+merchant. The output in this case is the profit, and the input is the price of the item. The output
+(profit) can be controlled (within limits) by varying the input (price). The merchant may price
+the product too high initially, in which case, he will sell too few items, reducing the profit. Using
+feedback of the profit (output), he adjusts the price (input), to maximize his profit. If there is a
+sudden or unexpected change in the business environment, such as a strike-imposed shutdown of
+a large factory in town, the demand for the item goes down, thus reducing his output (profit). He
+adjusts his input (reduces price) using the feedback of the output (profit) in a way that will optimize
+his profit in the changed circumstances. If the town suddenly becomes more prosperous because a
+new factory opens, he will increase the price to maximize the profit. Thus, by continuous feedback
+of the output to the input, he realizes his goal of maximum profit (optimum output) in any given
+circumstances. We observe thousands of examples of feedback systems around us in everyday life.
+Most social, economical, educational, and political processes are, in fact, feedback processes. A
+block diagram of such a system, called the feedback or closed-loop system, is shown in Fig. 4.33b.
+     A feedback system can address the problems arising because of unwanted disturbances such as
+random-noise signals in electronic systems, a gust of wind affecting a tracking antenna, a meteorite
+hitting a spacecraft, and the rolling motion of antiaircraft gun platforms mounted on ships or
+moving tanks. Feedback may also be used to reduce nonlinearities in a system or to control its
+rise time (or bandwidth). Feedback is used to achieve, with a given system, the desired objective
+within a given tolerance, despite partial ignorance of the system and the environment. A feedback
+system, thus, has an ability for supervision and self-correction in the face of changes in the system
+parameters and external disturbances (change in the environment).
+     Consider the feedback amplifier in Fig. 4.34. Let the forward amplifier gain G = 10,000.
+One-hundredth of the output is fed back to the input (H = 0.01). The gain T of the feedback
+amplifier is obtained by [see Eq. (4.35)]
+                                          G    10,000
+                                  T=         =        = 99.01
+                                       1 + GH 1 + 100
+Suppose that because of aging or replacement of some transistors, the gain G of the forward
+amplifier changes from 10,000 to 20,000. The new gain of the feedback amplifier is given by
+                                           G    20,000
+                                  T=          =        = 99.5
+                                        1 + GH 1 + 200
+Surprisingly, 100% variation in the forward gain G causes only 0.5% variation in the feedback
+amplifier gain T. Such reduced sensitivity to parameter variations is a must in precision amplifiers.
+In this example, we reduced the sensitivity of gain to parameter variations at the cost of forward
+
+  x(t)       e(t)                      y(t)
+                      G
+         
+                      H
+                                              Figure 4.34 Effects of negative and positive feedback.
+
+[[PAGE page-406]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 406 — #77
+
+
+
+
+406   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      gain, which is reduced from 10,000 to 99. There is no dearth of forward gain (obtained by
+      cascading stages). But low sensitivity is extremely precious in precision systems.
+           Now, consider what happens when we add (instead of subtract) the signal fed back to the
+      input. Such addition means the sign on the feedback connection is + instead of − (which is same
+      as changing the sign of H in Fig. 4.34). Consequently,
+
+                                                         G
+                                                 T=
+                                                      1 − GH
+
+      If we let G = 10,000 as before and H = 0.9 × 10−4 , then
+                                                 10,000
+                                      T=                        = 100,000
+                                           1 − 0.9(104 )(10−4 )
+
+      Suppose that because of aging or replacement of some transistors, the gain of the forward amplifier
+      changes to 11,000. The new gain of the feedback amplifier is
+
+                                                11,000
+                                   T=                          = 1,100,000
+                                        1 − 0.9(11,000)(10−4 )
+
+      Observe that in this case, a mere 10% increase in the forward gain G caused 1000% increase
+      in the gain T (from 100,000 to 1,100,000). Clearly, the amplifier is very sensitive to parameter
+      variations. This behavior is exactly opposite of what was observed earlier, when the signal fed
+      back was subtracted from the input.
+           What is the difference between the two situations? Crudely speaking, the former case is called
+      the negative feedback and the latter is the positive feedback. The positive feedback increases
+      system gain but tends to make the system more sensitive to parameter variations. It can also lead to
+      instability. In our example, if G were to be 111,111, then GH = 1, T = ∞, and the system would
+      become unstable because the signal fed back was exactly equal to the input signal itself, since
+      GH = 1. Hence, once a signal has been applied, no matter how small and how short in duration,
+      it comes back to reinforce the input undiminished, which further passes to the output, and is fed
+      back again and again and again. In essence, the signal perpetuates itself forever. This perpetuation,
+      even when the input ceases to exist, is precisely the symptom of instability.
+           Generally speaking, a feedback system cannot be described in black and white terms, such as
+      positive or negative. Usually H is a frequency-dependent component, more accurately represented
+      by H(s); hence it varies with frequency. Consequently, what was negative feedback at lower
+      frequencies can turn into positive feedback at higher frequencies and may give rise to instability.
+      This is one of the serious aspects of feedback systems, which warrants a designer’s careful
+      attention.

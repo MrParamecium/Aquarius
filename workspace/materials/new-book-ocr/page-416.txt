@@ -1,0 +1,48 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 416 — #87
+
+
+
+
+416       CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.28 Frequency Responses of Delay, Differentiator, and
+      Integrator Systems
+
+          Find and sketch the frequency responses (magnitude and phase) for (a) an ideal delay of T
+          seconds, (b) an ideal differentiator, and (c) an ideal integrator.
+
+
+              (a) Ideal delay of T seconds. The transfer function of an ideal delay is [see Eq. (4.30)]
+
+                                                    H(s) = e−sT
+
+          Therefore,
+                                                   H(jω) = e−jωT
+          Consequently,
+                                     |H(jω)| = 1      and         H(jω) = −ωT
+          These amplitude and phase responses are shown in Fig. 4.39a. The amplitude response is
+          constant (unity) for all frequencies. The phase shift increases linearly with frequency with a
+          slope of −T. This result can be explained physically by recognizing that if a sinusoid cos ωt
+          is passed through an ideal delay of T seconds, the output is cos ω(t − T). The output sinusoid
+          amplitude is the same as that of the input for all values of ω. Therefore, the amplitude response
+          (gain) is unity for all frequencies. Moreover, the output cos ω(t − T) = cos (ωt − ωT) has a
+          phase shift −ωT with respect to the input cos ωt. Therefore, the phase response is linearly
+          proportional to the frequency ω with a slope −T.
+               (b) An ideal differentiator. The transfer function of an ideal differentiator is [see
+          Eq. (4.31)]
+                                                       H(s) = s
+          Therefore,
+                                               H(jω) = jω = ωejπ/2
+          Consequently,
+                                                                             π
+                                      |H(jω)| = ω       and           H(jω) =
+                                                                             2
+          These amplitude and phase responses are depicted in Fig. 4.39b. The amplitude response
+          increases linearly with frequency, and phase response is constant (π/2) for all frequencies.
+          This result can be explained physically by recognizing that if a sinusoid cos ωt is passed
+          through an ideal differentiator, the output is −ω sin ωt = ω cos [ωt + (π/2)]. Therefore, the
+          output sinusoid amplitude is ω times the input amplitude; that is, the amplitude response (gain)
+          increases linearly with frequency ω. Moreover, the output sinusoid undergoes a phase shift
+          π/2 with respect to the input cos ωt. Therefore, the phase response is constant (π/2) with
+          frequency.

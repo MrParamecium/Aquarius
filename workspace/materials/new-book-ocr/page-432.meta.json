@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.9. OCR text begins with: 432 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS (d) The correction at ω = 100 because of the corner frequency at ω = 100 is 3 dB, and the corrections because of the other corner frequencies may be ignored. (e) In addition to the corrections at corner frequencies, we may consider corrections at intermediate points for more accurate plots. For instance, the corrections at ω = 4 because of corner frequencies at ω = 2 and",
+  "keywords": [
+    "4.9",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-432",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

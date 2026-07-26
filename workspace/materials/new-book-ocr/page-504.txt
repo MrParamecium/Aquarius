@@ -1,0 +1,63 @@
+                            “05-Lathi-C05” — 2017/9/25 — 15:54 — page 504 — #17
+
+
+
+
+504       CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          Proof. By definition,
+                                                         ∞
+                                                         "
+                                     Z{x[n + m]u[n]} =           x[n + m]z−n
+                                                         n=0
+                                                         ∞
+                                                         "
+                                                     =           x[r]z−(r−m)
+                                                         r=m
+                                                                 ∞
+                                                                 "
+                                                     =z      m
+                                                                       x[r]z−r
+                                                                 r=m
+                                                                  ∞
+                                                                  "                 "
+                                                                                    m−1              !
+                                                     = zm               x[r]z−r −          x[r]z−r
+                                                                  r=0                r=0
+
+                                                                            "
+                                                                            m−1
+                                                     = zm X[z] − zm                x[r]z−r
+                                                                             r=0
+
+
+
+
+      E X A M P L E 5.4 z-Transform Using the Right-Shift Property
+
+          Find the z-transform of the signal x[n] depicted in Fig. 5.5.
+
+
+
+
+             x[n]
+                    5
+
+
+
+
+               0        1    2   3   4    5              n
+                                                                        Figure 5.5 Signal for Ex. 5.4.
+
+
+
+              The signal x[n] can be expressed as a product of n and a gate pulse u[n] − u[n − 6].
+          Therefore,
+
+                                     x[n] = n{u[n] − u[n − 6]} = nu[n] − nu[n − 6]
+
+          We cannot find the z-transform of nu[n − 6] directly by using the right-shift property
+          [Eq. (5.13)]. So we rearrange it in terms of (n − 6)u[n − 6] as follows:
+
+                                      x[n] = nu[n] − (n − 6 + 6)u[n − 6]
+                                           = nu[n] − (n − 6)u[n − 6] − 6u[n − 6]

@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.9. OCR text begins with: 5.10 MATLAB: Discrete-Time IIR Filters 565 then Y(s) = H[esT ]X(s) (5.53) Also, ∞ \" X(s) = L x[n]δ(t − nT)",
+  "keywords": [
+    "5.9",
+    "impulse response",
+    "unit impulse",
+    "discrete-time",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-565",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

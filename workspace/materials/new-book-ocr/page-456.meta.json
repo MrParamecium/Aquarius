@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-1",
+  "title": "Frequency Response and Polynomial Evaluation",
+  "summary": "This page covers 4.12-1 (Frequency Response and Polynomial Evaluation). OCR text begins with: 456 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS A simple yet practical example demonstrates basic filtering concepts. Telephone voice signals are often lowpass-filtered to eliminate frequencies above a cutoff of 3 kHz, or ωc = 3000(2π ) ≈ 18,850 rad/s. Filtering maintains satisfactory speech quality and reduces signal bandwidth, thereby increasing the phone company’s call capacity. How, then, do we design and realize a",
+  "keywords": [
+    "4.12",
+    "4.12-1",
+    "Frequency Response and Polynomial Evaluation",
+    "continuous-time",
+    "LTIC system",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-456",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

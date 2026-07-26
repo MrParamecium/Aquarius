@@ -1,0 +1,176 @@
+# Fourier section OCR
+section_id: 4.6-3
+source_pages: page-393, page-394, page-395, page-396
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.6-3 Cascade and Parallel Realizations
+An Nth-order transfer function H(s) can be expressed as a product or a sum of N first-order transfer
+functions. Accordingly, we can also realize H(s) as a cascade (series) or parallel form of these N
+first-order transfer functions. Consider, for instance, the transfer function in part (d) of Ex. 4.22.
+                                                        4s + 28
+                                           H(s) =
+                                                    s2 + 6s + 5
+
+[[PAGE page-394]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 394 — #65
+
+
+
+
+394   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can express H(s) as
+
+
+                                               4s + 28          4s + 28  1
+                                   H(s) =                  =
+                                            (s + 1)(s + 5)       s+1    s+5
+                                                                    
+                                                                 H1 (s)           H2 (s)
+
+
+
+      We can also express H(s) as a sum of partial fractions as
+
+
+                                                  4s + 28        6       2
+                                     H(s) =                  =       −
+                                               (s + 1)(s + 5) s 
+                                                                 + 1 s 
+                                                                         + 5
+                                                                  H3 (s)      H4 (s)
+
+
+
+      These equations give us the option of realizing H(s) as a cascade of H1 (s) and H2 (s), as shown
+      in Fig. 4.24a, or a parallel of H3 (s) and H4 (s), as depicted in Fig. 4.24b. Each of the first-order
+      transfer functions in Fig. 4.24 can be implemented by using canonic direct realizations, discussed
+      earlier.
+           This discussion by no means exhausts all the possibilities. In the cascade form alone, there
+      are different ways of grouping the factors in the numerator and the denominator of H(s), and each
+      grouping can be realized in DFI or canonic direct form. Accordingly, several cascade forms are
+      possible. In Sec. 4.6-4, we shall discuss yet another form that essentially doubles the numbers of
+      realizations discussed so far.
+           From a practical viewpoint, parallel and cascade forms are preferable because parallel and
+      certain cascade forms are numerically less sensitive than canonic direct form to small parameter
+      variations in the system. Qualitatively, this difference can be explained by the fact that in a canonic
+      realization all the coefficients interact with each other, and a change in any coefficient will be
+      magnified through its repeated influence from feedback and feedforward connections. In a parallel
+      realization, in contrast, the change in a coefficient will affect only a localized segment; the case
+      with a cascade realization is similar.
+           In the examples of cascade and parallel realization, we have separated H(s) into first-order
+      factors. For H(s) of higher orders, we could group H(s) into factors, not all of which are necessarily
+      of the first order. For example, if H(s) is a third-order transfer function, we could realize this
+      function as a cascade (or a parallel) combination of a first-order and a second-order factor.
+
+
+                                                                            6
+                                                                           s1             
+            X(s)   4s  28          1       Y(s)      X(s)                                     Y(s)
+                    s1            s5
+                                                                            2              
+                                                                           s5
+
+                             (a)                                            (b)
+            Figure 4.24 Realization of (4s + 28)/[(s + 1)(s + 5)]: (a) cascade form and (b) parallel form.
+
+[[PAGE page-395]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 395 — #66
+
+
+
+
+                                                                          4.6   System Realization            395
+
+    R EALIZATION OF C OMPLEX C ONJUGATE P OLES
+    The complex poles in H(s) should be realized as a second-order (quadratic) factor because we
+    cannot implement multiplication by complex numbers. Consider, for example,
+                                                  10s + 50
+                                     H(s) =
+                                            (s + 3)(s2 + 4s + 13)
+                                                       10s + 50
+                                          =
+                                            (s + 3)(s + 2 − j3)(s + 2 + j3)
+                                              2        1 + j2       1 − j2
+                                          =       −            −
+                                            s + 3 s + 2 − j3 s + 2 + j3
+    We cannot realize first-order transfer functions individually with the poles −2 ± j3 because they
+    require multiplication by complex numbers in the feedback and the feedforward paths. Therefore,
+    we need to combine the conjugate poles and realize them as a second-order transfer function.† In
+    the present example, we can create a cascade realization from H(s) expressed in product form as
+
+                                                    10           s+5
+                                        H(s) =
+                                                   s+3       s2 + 4s + 13
+    Similarly, we can create a parallel realization from H(s) expressed in sum form as
+                                                     2      2s − 8
+                                          H(s) =        −
+                                                   s + 3 s2 + 4s + 13
+
+    R EALIZATION OF R EPEATED P OLES
+    When repeated poles occur, the procedure for canonic and cascade realization is exactly the same
+    as before. For a parallel realization, however, the procedure requires special handling, as explained
+    in Ex. 4.23.
+
+
+E X A M P L E 4.23 Parallel Realization
+
+    Determine the parallel realization of
+
+                                     7s2 + 37s + 51       5     2       3
+                            H(s) =                    =      +     −
+                                     (s + 2)(s + 3) 2   s + 2 s + 3 (s + 3)2
+
+
+    This third-order transfer function should require no more than three integrators. But if we try to
+    realize each of the three partial fractions separately, we require four integrators because of the
+    one second-order term. This difficulty can be avoided by observing that the terms 1/(s +3) and
+
+
+
+
+    † It is possible to realize complex, conjugate poles indirectly by using a cascade of two first-order transfer
+    functions and feedback. A transfer function with poles −a ± jb can be realized by using a cascade of two
+    identical first-order transfer functions, each having a pole at −a (see Prob. 4.6-15).
+
+[[PAGE page-396]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 396 — #67
+
+
+
+
+396     CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                         1                  5
+                        s2
+
+
+                                                                             
+      X(s)                                            2                            Y(s)
+                                                                        
+                                                                        
+
+
+                        1                        1         3
+                       s3                      s3
+
+      Figure 4.25 Parallel realization of (7s2 + 37s + 51)/((s + 2)(s + 3)2 ).
+
+
+
+        1/(s + 3)2 can be realized with a cascade of two subsystems, each having a transfer function
+        1/(s + 3), as shown in Fig. 4.25. Each of the three first-order transfer functions in Fig. 4.25
+        may now be realized as in Fig. 4.23.
+
+
+
+
+         D R I L L 4.12 Canonic, Cascade, and Parallel Realizations
+         Find the canonic, cascade, and parallel realization of
+
+                                                     s+3            s+3           1
+                                       H(s) =                 =
+                                                 s2 + 7s + 10       s+2          s+5

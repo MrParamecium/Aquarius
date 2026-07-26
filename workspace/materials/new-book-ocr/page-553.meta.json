@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": "Digital Processing of Analog Signals 553",
+  "summary": "This page covers 5.7 (Digital Processing of Analog Signals 553). OCR text begins with: 5.7 Digital Processing of Analog Signals 553 and the phase response is 0.7304 sin ωT \u0004 H[ejωT ] = − tan−1 (5.50) 1 − 0.7304 cos ωT This frequency response differs from the desired response Ha (jω) because aliasing causes frequencies above π/T to appear as frequencies below π/T. This generally results in increased",
+  "keywords": [
+    "5.7",
+    "Digital Processing of Analog Signals 553",
+    "MATLAB",
+    "digital filter"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-553",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

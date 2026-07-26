@@ -1,0 +1,65 @@
+                           “04-Lathi-C04” — 2017/9/25 — 19:46 — page 463 — #134
+
+
+
+
+                                                            4.12 MATLAB: Continuous-Time Filters           463
+
+                     3.5
+
+
+                      3
+
+
+                     2.5
+
+
+
+
+Magnitude Response
+                      2
+
+
+                     1.5
+
+
+                      1
+
+
+                     0.5
+
+
+                      0
+                           0        1000        2000            3000              4000   5000       6000
+                                                                f [Hz]
+Figure 4.68 Magnitude responses for Sallen–Key filter stages.
+
+
+Since all the component values are practical, this filter is possible to implement. Figure 4.68
+displays the magnitude responses for all five stages (solid lines). The total response (dotted line)
+confirms a 10th-order Butterworth response. Stage 5, which has the largest Q and implements the
+pair of conjugate poles nearest the ω axis, is the most peaked response. Stage 1, which has the
+smallest Q and implements the pair of conjugate poles furthest from the ω axis, is the least peaked
+response. In practice, it is best to order high-Q stages last; this reduces the risk that the high gains
+will saturate the filter hardware.
+
+
+4.12-4 Chebyshev Filters
+Like an order-N Butterworth lowpass filter (LPF), an order-N Chebyshev LPF is an all-pole filter
+that possesses many desirable characteristics. Compared with an equal-order Butterworth filter,
+the Chebyshev filter achieves better stopband attenuation and reduced transition bandwidth by
+allowing an adjustable amount of ripple within the passband.
+     The squared magnitude response of a Chebyshev filter is
+
+                                                                           1
+                                                 |HC (jω)|2 =
+                                                                1+       2 C 2 (ω/ω )
+                                                                            N      c
+
+
+where controls the passband ripple, CN (ω/ωc ) is a degree-N Chebyshev polynomial, and ωc is
+the radian cutoff frequency. Several characteristics of Chebyshev LPFs are noteworthy:
+
+                      • An order-N Chebyshev LPF is equi-ripple in the passband (|ω| ≤ ωc ), has a total of N
+                        maxima and minima over (0 ≤ ω ≤ ωc ), and is monotonic decreasing in the stopband
+                        (|ω| > ωc ).

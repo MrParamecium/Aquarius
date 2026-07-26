@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.5-1",
+  "sectionTitle": "The Periodic Nature of Frequency Response",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-533"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.38)",
+      "name": "Principal discrete-time frequency band",
+      "latex": "\\Omega_a=\\Omega-2\\pi m,\\qquad -\\pi\\le\\Omega_a<\\pi,\\quad m\\in\\mathbb{Z}",
+      "sourcePage": "page-533",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

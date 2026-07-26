@@ -1,0 +1,55 @@
+                         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 350 — #21
+
+
+
+
+350       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          Proof.
+
+                                                                # ∞
+                                   L [x(t − t0 )u(t − t0 )] =          x(t − t0 )u(t − t0 )e−st dt
+                                                                 0
+
+
+          Setting t − t0 = τ , we obtain
+                                                                 # ∞
+                                    L [x(t − t0 )u(t − t0 )] =             x(τ )u(τ )e−s(τ +t0 ) dτ
+                                                                     −t0
+
+          Because u(τ ) = 0 for τ < 0 and u(τ ) = 1 for τ ≥ 0, the limits of integration can be taken from 0
+          to ∞. Thus,
+                                                               # ∞
+                                    L [x(t − t0 )u(t − t0 )] =       x(τ )e−s(τ +t0 ) dτ
+                                                                0
+                                                                     # ∞
+                                                             = e−st0       x(τ )e−sτ dτ
+                                                                               0
+                                                                = X(s)e−st0
+
+          Note that x(t − t0 )u(t − t0 ) is the signal x(t)u(t) delayed by t0 seconds. The time-shifting property
+          states that delaying a signal by t0 seconds amounts to multiplying its transform e−st0 .
+               This property of the unilateral Laplace transform holds only for positive t0 because if t0 were
+          negative, the signal x(t − t0 )u(t − t0 ) may not be causal.
+               We can readily verify this property in Drill 4.1. If the signal in Fig. 4.2a is x(t)u(t), then
+          the signal in Fig. 4.2b is x(t − 2)u(t − 2). The Laplace transform for the pulse in Fig. 4.2a is
+          (1/s)(1 − e−2s ). Therefore, the Laplace transform for the pulse in Fig. 4.2b is (1/s)(1 − e−2s )e−2s .
+               The time-shifting property proves very convenient in finding the Laplace transform
+          of functions with different descriptions over different intervals, as the following example
+          demonstrates.
+
+
+
+      E X A M P L E 4.6 Laplace Transform and the Time-Shifting Property
+
+          Find the Laplace transform of x(t) depicted in Fig. 4.4a.
+
+
+          Describing mathematically a function such as the one in Fig. 4.4a is discussed in Sec. 1.4. The
+          function x(t) in Fig. 4.4a can be described as a sum of two components shown in Fig. 4.4b. The
+          equation for the first component is t − 1 over 1 ≤ t ≤ 2 so that this component can be described
+          by (t − 1)[u(t − 1) − u(t − 2)]. The second component can be described by u(t − 2) − u(t − 4).
+          Therefore,
+
+                            x(t) = (t − 1)[u(t − 1) − u(t − 2)] + [u(t − 2) − u(t − 4)]
+                                 = (t − 1)u(t − 1) − (t − 1)u(t − 2) + u(t − 2) − u(t − 4)             (4.13)

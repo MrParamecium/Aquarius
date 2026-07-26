@@ -1,0 +1,21 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": "4.8-1",
+  "title": "Steady-State Response to Causal Sinusoidal Inputs",
+  "summary": "This page covers 4.8-1 (Steady-State Response to Causal Sinusoidal Inputs). OCR text begins with: 418 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS with frequency.† Because its gain is 1/ω, the ideal integrator suppresses higher-frequency components but enhances lower-frequency components with ω < 1. Consequently, noise signals (if they do not contain an appreciable amount of very-low-frequency components) are suppressed (smoothed out) by an integrator. D R I L L 4.15 Sinusoidal Response of an LTIC System Find the re",
+  "keywords": [
+    "4.8",
+    "4.8-1",
+    "Steady-State Response to Causal Sinusoidal Inputs",
+    "unit step",
+    "continuous-time",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-418",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

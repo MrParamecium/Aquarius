@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": "4.2-6",
+  "title": "Time Convolution and Frequency Convolution",
+  "summary": "This page covers 4.2-6 (Time Convolution and Frequency Convolution). OCR text begins with: 4.2 Some Properties of the Laplace Transform 357 Therefore, X(s) G(s) = s or # t X(s)",
+  "keywords": [
+    "4.2",
+    "4.2-6",
+    "Time Convolution and Frequency Convolution",
+    "convolution",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-357",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

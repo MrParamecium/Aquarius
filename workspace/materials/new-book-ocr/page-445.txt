@@ -1,0 +1,53 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 445 — #116
+
+
+
+
+                                                        4.11    The Bilateral Laplace Transform      445
+
+     In a typical design procedure, Gp (minimum passband gain) and Gs (maximum stopband
+gain) are specified. Figure 4.55 shows the passband, the stopband, and the transition band for
+typical lowpass, bandpass, highpass, and bandstop filters. Fortunately, the highpass, bandpass, and
+bandstop filters can be obtained from a basic lowpass filter by simple frequency transformations.
+For example, replacing s with ωc /s in the lowpass filter transfer function results in a highpass filter.
+Similarly, other frequency transformations yield the bandpass and bandstop filters. Hence, it is
+necessary to develop a design procedure only for a basic lowpass filter. Then, by using appropriate
+transformations, we can design filters of other types. The design procedures are beyond our scope
+here and will not be discussed. The interested reader is referred to [1].
+
+
+
+4.11 T HE B ILATERAL L APLACE T RANSFORM
+Situations involving noncausal signals and/or systems cannot be handled by the (unilateral)
+Laplace transform discussed so far. These cases can be analyzed by the bilateral (or two-sided)
+Laplace transform defined by
+                                            # ∞
+                                     X(s) =     x(t)e−st dt
+                                                      −∞
+
+
+and x(t) can be obtained from X(s) by the inverse transformation
+
+                                                      # c+j∞
+                                                1
+                                     x(t) =                    X(s)est ds
+                                               2π j    c−j∞
+
+
+Observe that the unilateral Laplace transform discussed so far is a special case of the bilateral
+Laplace transform, where the signals are restricted to the causal type. Basically, the two transforms
+are the same. For this reason we use the same notation for the bilateral Laplace transform.
+     Earlier we showed that the Laplace transforms of e−at u(t) and of −e−at u(−t) are identical. The
+only difference is in their regions of convergence (ROC). The ROC for the former is Re s > −a;
+that for the latter is Re s < −a, as illustrated in Fig. 4.1. Clearly, the inverse Laplace transform
+of X(s) is not unique unless the ROC is specified. If we restrict all our signals to the causal type,
+however, this ambiguity does not arise. The inverse transform of 1/(s + a) is e−at u(t). Thus, in the
+unilateral Laplace transform, we can ignore the ROC in determining the inverse transform of X(s).
+     We now show that any bilateral transform can be expressed in terms of two unilateral
+transforms. It is, therefore, possible to evaluate bilateral transforms from a table of unilateral
+transforms.
+     Consider the function x(t) appearing in Fig. 4.56a. We separate x(t) into two components, x1 (t)
+and x2 (t), representing the positive time (causal) component and the negative time (anticausal)
+component of x(t), respectively (Figs. 4.56b and 4.56c):
+
+                           x1 (t) = x(t)u(t)          and       x2 (t) = x(t)u(−t)

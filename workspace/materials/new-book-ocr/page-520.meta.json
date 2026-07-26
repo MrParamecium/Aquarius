@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": "5.3-3",
+  "title": null,
+  "summary": "This page covers 5.3-3. OCR text begins with: 520 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM The block diagram representations of the basic operations, such as an adder, a scalar multiplier, unit delay, and pickoff points, is shown in Fig. 3.13. In our development, the unit delay, which is represented by a box marked D in Fig. 3.13, will be represented by its transfer function 1/z. All the signals will also be represented in terms of their z-t",
+  "keywords": [
+    "5.3",
+    "5.3-3",
+    "discrete-time",
+    "LTID system"
+  ],
+  "has_math": false,
+  "page_type": "text",
+  "book_page": "page-520",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

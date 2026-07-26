@@ -1,0 +1,54 @@
+           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 561 — #74
+
+
+
+
+                                                                 5.8   The Bilateral z-Transform   561
+
+
+E X A M P L E 5.19 Zero-State Response by Bilateral z-Transform
+
+    For a causal system specified by the transfer function
+
+                                                         z
+                                             H[z] =
+                                                      z − 0.5
+
+    find the zero-state response to input
+
+                               x[n] = (0.8)n u[n] + 2(2)n u[−(n + 1)]
+                                         z         2z       −z(z + 0.4)
+                               X[z] =          −       =
+                                      z − 0.8 z − 2 (z − 0.8)(z − 2)
+
+
+
+    The ROC corresponding to the causal term is |z| > 0.8, and that corresponding to the anticausal
+    term is |z| < 2. Hence, the ROC for X[z] is the common region, given by 0.8 < |z| < 2. Hence,
+
+                                          −z(z + 0.4)
+                               X[z] =                           0.8 < |z| < 2
+                                        (z − 0.8)(z − 2)
+
+    Therefore,
+                                                        −z2 (z + 0.4)
+                              Y[z] = X[z]H[z] =
+                                                  (z − 0.5)(z − 0.8)(z − 2)
+    Since the system is causal, the ROC of H[z] is |z| > 0.5. The ROC of X[z] is 0.8 < |z| < 2. The
+    common region of convergence for X[z] and H[z] is 0.8 < |z| < 2. Therefore,
+
+                                         −z2 (z + 0.4)
+                          Y[z] =                                     0.8 < |z| < 2
+                                   (z − 0.5)(z − 0.8)(z − 2)
+
+    Expanding Y[z] into modified partial fractions yields
+
+                                 z     8       z      8         z
+                   Y[z] = −          +              −                       0.8 < |z| < 2
+                              z − 0.5 3     z − 0.8   3        z−2
+
+    Since the ROC extends outward from the pole at 0.8, both poles at 0.5 and 0.8 correspond to
+    causal sequence. The ROC extends inward from the pole at 2. Hence, the pole at 2 corresponds
+    to anticausal sequence. Therefore,
+
+                         y[n] = −(0.5)n + 83 (0.8)n u[n] + 83 (2)n u[−(n + 1)]

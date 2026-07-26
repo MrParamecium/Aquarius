@@ -1,0 +1,59 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 356 — #27
+
+
+
+
+356   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      The Laplace transform of this equation yields
+
+                                      d2 x(t)
+                                 L              = L [δ(t) − 3δ(t − 2) + 2δ(t − 3)]
+                                       dt2
+
+      Using the time-differentiation property of Eq. (4.15), the time-shifting property of Eq. (4.12),
+      and the facts that x(0− ) = ẋ(0− ) = 0, and δ(t) ⇐⇒ 1, we obtain
+
+                                       s2 X(s) − 0 − 0 = 1 − 3e−2s + 2e−3s
+
+      Therefore,
+                                                1
+                                           X(s) = (1 − 3e−2s + 2e−3s )
+                                               s2
+      which confirms the earlier result in Drill 4.4.
+
+
+
+
+      4.2-4 The Time-Integration Property
+      The time-integration property states that if†
+
+                                                      x(t) ⇐⇒ X(s)
+
+      then
+                # t                                      # t                           $ 0−
+                                X(s)                                     X(s)           −∞ x(τ ) dτ
+                    x(τ ) dτ ⇐⇒                 and          x(τ ) dτ ⇐⇒      +                              (4.16)
+                 0−              s                        −∞              s                   s
+
+      Proof. To prove the first part of Eq. (4.16), we define
+                                                      # t
+                                               g(t) =     x(τ ) dτ
+                                                               0−
+
+      so that
+                                        d
+                                           g(t) = x(t)         and        g(0− ) = 0
+                                        dt
+      Now, if
+                                                      g(t) ⇐⇒ G(s)
+      then                                           !
+                                              d
+                                     X(s) = L    g(t) = sG(s) − g(0− ) = sG(s)
+                                              dt
+
+      † The dual of the time-integration property is the frequency-integration property, which states that
+                                                               # ∞
+                                                  x(t)
+                                                       ⇐⇒            X(z) dz
+                                                   t            s

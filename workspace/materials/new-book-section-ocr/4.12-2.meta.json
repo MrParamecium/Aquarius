@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.12-2",
+  "sourcePages": [
+    "page-459",
+    "page-460",
+    "page-461"
+  ],
+  "usedPages": [
+    "page-459",
+    "page-460",
+    "page-461"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.12-2 Butterworth Filters and the Find Command",
+  "foundEnd": true,
+  "endBeforeLine": "4.12-3 Using Cascaded Second-Order Sections",
+  "endBeforeCode": "4.12-3",
+  "charCount": 5075
+}

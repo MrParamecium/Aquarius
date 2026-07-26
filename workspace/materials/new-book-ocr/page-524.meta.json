@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.4",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.4. OCR text begins with: 524 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM D R I L L 5.16 Realization of a Second-Order Transfer Function Realize the transfer function 2z H[z] = z2 + 6z + 25 R EALIZATION OF F INITE I MPULSE R ESPONSE (FIR) F ILTERS",
+  "keywords": [
+    "5.4",
+    "impulse response",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-524",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,103 @@
+# Fourier section OCR
+section_id: 4.6-1
+source_pages: page-389, page-390
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.6-1 Direct Form I Realization
+Rather than realize the general Nth-order system described by Eq. (4.36), we begin with a specific
+case of the following third-order system and then extend the results to the Nth-order case:
+
+                                                             b1 b2 b3
+                              b0 s3 + b1 s2 + b2 s + b3 b0 + s + s2 + s3
+                        H(s) = 3                       =    a1 a2 a3
+                               s + a1 s2 + a2 s + a3     1+ + 2 + 3
+                                                             s  s    s
+    We can express H(s) as
+                                                                ⎛                             ⎞
+                                             b1 b2 b3 ⎜           1        ⎟
+                        H(s) = b0 +              + 2+ 3 ⎝      a    a2 a3 ⎠
+                                              s      s s        1
+                                                       1 + s + s2 + s3
+                                                H1 (s)                  
+                                                                             H2 (s)
+
+
+We can realize H(s) as a cascade of transfer function H1 (s) followed by H2 (s), as depicted in
+Fig. 4.20a, where the output of H1 (s) is denoted by W(s). Because of the commutative property of
+LTI system transfer functions in cascade, we can also realize H(s) as a cascade of H2 (s) followed
+by H1 (s), as illustrated in Fig. 4.20b, where the (intermediate) output of H2 (s) is denoted by V(s).
+
+
+      X(s)             W(s)                 Y(s)         X(s)                     V(s)               Y(s)
+               H1(s)             H2(s)                             H2(s)                  H1(s)
+
+
+                        (a)                                                       (b)
+      Figure 4.20 Realization of a transfer function in two steps.
+
+
+
+    The output of H1 (s) in Fig. 4.20a is given by W(s) = H1 (s)X(s). Hence,
+
+                                                       b1 b2 b3
+                                        W(s) = b0 +       + 2 + 3 X(s)                                        (4.37)
+                                                        s  s   s
+
+Also, the output Y(s) and the input W(s) of H2 (s) in Fig. 4.20a are related by Y(s) = H2 (s)W(s).
+Hence,                                      a1 a2 a3 
+                                W(s) = 1 + + 2 + 3 Y(s)                                      (4.38)
+                                              s     s    s
+
+[[PAGE page-390]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 390 — #61
+
+
+
+
+390   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      X(s)       b0         W(s)                    Y(s)       X(s)       b0         W(s)                    Y(s)
+
+
+             1                                  1                     1                                  1
+             s                                  s                     s                                  s
+                 b1                     a1                               b1                     a1
+
+
+             1                                  1                     1                                  1
+             s                                  s                     s                                  s
+                 b2                     a2
+
+                                                                          bN1                   aN1
+             1                                  1
+             s                                  s
+                 b3                     a3
+                                                                      1                                  1
+                                                                      s                                  s
+                                                                          bN                   aN
+
+                             (a)                                                      (b)
+      Figure 4.21 Direct form I realization of an LTIC system: (a) third-order and (b) Nth-order.
+
+
+           We shall first realize H1 (s). Equation (4.37) shows that the output W(s) can be synthesized by
+      adding the input b0 X(s) to b1 (X(s)/s), b2 (X(s)/s2 ), and b3 (X(s)/s3 ). Because the transfer function
+      of an integrator is 1/s, the signals X(s)/s, X(s)/s2 , and X(s)/s3 can be obtained by successive
+      integration of the input x(t). The left-half section of Fig. 4.21a shows how W(s) can be synthesized
+      from X(s), according to Eq. (4.37). Hence, this section represents a realization of H1 (s).
+           To complete the picture, we shall realize H2 (s), which is specified by Eq. (4.38). We can
+      rearrange Eq. (4.38) as
+                                                        a
+                                                           1   a2 a3 
+                                       Y(s) = W(s) −         + 2 + 3 Y(s)                               (4.39)
+                                                          s     s     s
+      Hence, to obtain Y(s), we subtract a1 Y(s)/s, a2 Y(s)/s2 , and a3 Y(s)/s3 from W(s). We have already
+      obtained W(s) from the first step [output of H1 (s)]. To obtain signals Y(s)/s, Y(s)/s2 , and Y(s)/s3 ,
+      we assume that we already have the desired output Y(s). Successive integration of Y(s) yields the
+      needed signals Y(s)/s, Y(s)/s2 , and Y(s)/s3 . We now synthesize the final output Y(s) according
+      to Eq. (4.39), as seen in the right-half section of Fig. 4.21a.† The left-half section in Fig. 4.21a
+      represents H1 (s) and the right-half is H2 (s). We can generalize this procedure, known as the direct
+      form I (DFI) realization, for any value of N. This procedure requires 2N integrators to realize an
+      Nth-order transfer function, as shown in Fig. 4.21b.

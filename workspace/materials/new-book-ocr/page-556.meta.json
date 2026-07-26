@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.8. OCR text begins with: 556 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Assuming all the elements in xf [n] are finite, we observe that Xf [z] has two poles at z = ∞ because of terms xf [−2]z2 + xf [−1]z and one pole at z = 0 because of term xf [1]/z. Thus, a finite-duration sequence could have poles at z = 0 and z = ∞. Observe that Xf [z] converges for all values of z except possibly z = 0 and z = ∞. This means that the R",
+  "keywords": [
+    "5.8",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-556",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

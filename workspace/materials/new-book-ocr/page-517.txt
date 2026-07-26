@@ -1,0 +1,56 @@
+              “05-Lathi-C05” — 2017/9/25 — 15:54 — page 517 — #30
+
+
+
+
+                                      5.3 z-Transform Solution of Linear Difference Equations                 517
+
+    Therefore,
+
+                         Y[z]          (z + 0.32)               (z + 0.32)
+                              = 2                       =
+                          z     (z + z + 0.16)(z + 0.5) (z + 0.2)(z + 0.8)(z + 0.5)
+                                  2/3       8/3        2
+                              =         −         +
+                                z + 0.2 z + 0.8 z + 0.5
+
+    so that
+
+                                      2       z      8           z          z
+                             Y[z] =                −                  +2
+                                      3    z + 0.2   3        z + 0.8    z + 0.5
+
+    and
+
+                               y[n] =     2
+                                          3
+                                            (−0.2)n − 83 (−0.8)n + 2(−0.5)n      u[n]
+
+
+
+
+E X A M P L E 5.7 Transfer Function of a Unit Delay
+
+    Show that the transfer function of a unit delay is 1/z.
+
+
+    If the input to the unit delay is x[n]u[n], then its output (Fig. 5.7) is given by
+
+                                             y[n] = x[n − 1]u[n − 1]
+
+    The z-transform of this equation yields [see Eq. (5.12)]
+                                                  1
+                                            Y[z] = X[z] = H[z]X[z]
+                                                  z
+    It follows that the transfer function of the unit delay is
+                                                               1
+                                                     H[z] =
+                                                               z
+
+
+
+              x[n]u[n]                     x[n  1]u[n  1]
+                                 1
+                                 z                                 Figure 5.7 Ideal unit delay and its transfer
+               X[z]                               1
+                                           Y[z]  z X[z]           function.

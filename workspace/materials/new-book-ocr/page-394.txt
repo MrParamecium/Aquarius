@@ -1,0 +1,61 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 394 — #65
+
+
+
+
+394   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can express H(s) as
+
+
+                                               4s + 28          4s + 28  1
+                                   H(s) =                  =
+                                            (s + 1)(s + 5)       s+1    s+5
+                                                                    
+                                                                 H1 (s)           H2 (s)
+
+
+
+      We can also express H(s) as a sum of partial fractions as
+
+
+                                                  4s + 28        6       2
+                                     H(s) =                  =       −
+                                               (s + 1)(s + 5) s 
+                                                                 + 1 s 
+                                                                         + 5
+                                                                  H3 (s)      H4 (s)
+
+
+
+      These equations give us the option of realizing H(s) as a cascade of H1 (s) and H2 (s), as shown
+      in Fig. 4.24a, or a parallel of H3 (s) and H4 (s), as depicted in Fig. 4.24b. Each of the first-order
+      transfer functions in Fig. 4.24 can be implemented by using canonic direct realizations, discussed
+      earlier.
+           This discussion by no means exhausts all the possibilities. In the cascade form alone, there
+      are different ways of grouping the factors in the numerator and the denominator of H(s), and each
+      grouping can be realized in DFI or canonic direct form. Accordingly, several cascade forms are
+      possible. In Sec. 4.6-4, we shall discuss yet another form that essentially doubles the numbers of
+      realizations discussed so far.
+           From a practical viewpoint, parallel and cascade forms are preferable because parallel and
+      certain cascade forms are numerically less sensitive than canonic direct form to small parameter
+      variations in the system. Qualitatively, this difference can be explained by the fact that in a canonic
+      realization all the coefficients interact with each other, and a change in any coefficient will be
+      magnified through its repeated influence from feedback and feedforward connections. In a parallel
+      realization, in contrast, the change in a coefficient will affect only a localized segment; the case
+      with a cascade realization is similar.
+           In the examples of cascade and parallel realization, we have separated H(s) into first-order
+      factors. For H(s) of higher orders, we could group H(s) into factors, not all of which are necessarily
+      of the first order. For example, if H(s) is a third-order transfer function, we could realize this
+      function as a cascade (or a parallel) combination of a first-order and a second-order factor.
+
+
+                                                                            6
+                                                                           s1             
+            X(s)   4s  28          1       Y(s)      X(s)                                     Y(s)
+                    s1            s5
+                                                                            2              
+                                                                           s5
+
+                             (a)                                            (b)
+            Figure 4.24 Realization of (4s + 28)/[(s + 1)(s + 5)]: (a) cascade form and (b) parallel form.

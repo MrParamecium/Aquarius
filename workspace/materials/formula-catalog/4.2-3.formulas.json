@@ -1,0 +1,23 @@
+{
+  "sectionId": "4.2-3",
+  "sectionTitle": "The Time-Differentiation Property",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-354"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.15)",
+      "name": "Time differentiation property",
+      "latex": "\\frac{d^n x(t)}{dt^n}\\Longleftrightarrow s^nX(s)-\\sum_{k=1}^{n}s^{n-k}x^{(k-1)}(0^-)",
+      "sourcePage": "page-354",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

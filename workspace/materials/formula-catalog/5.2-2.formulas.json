@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.2-2",
+  "sectionTitle": "z-Domain Scaling Property (Multiplication by gamma^n)",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-505"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.17)",
+      "name": "z-domain scaling property",
+      "latex": "\\gamma^n x[n]u[n]\\Longleftrightarrow X\\left[\\frac{z}{\\gamma}\\right]",
+      "sourcePage": "page-505",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

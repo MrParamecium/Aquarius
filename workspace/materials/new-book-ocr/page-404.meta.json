@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": "Application To Feedback And Controls",
+  "summary": "This page covers 4.7 (Application To Feedback And Controls). OCR text begins with: 404 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Cf Rf R R Rf Cf – – + + + + X(s) Y(s) X(s) C Y(s)",
+  "keywords": [
+    "4.7",
+    "Application To Feedback And Controls",
+    "continuous-time"
+  ],
+  "has_math": false,
+  "page_type": "figure",
+  "book_page": "page-404",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

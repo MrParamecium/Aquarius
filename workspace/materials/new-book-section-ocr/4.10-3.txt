@@ -1,0 +1,14 @@
+# Fourier section OCR
+section_id: 4.10-3
+source_pages: page-441
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.10-3 Bandpass Filters
+The shaded characteristic in Fig. 4.51b shows the ideal bandpass filter gain. In the bandpass
+filter, the gain is enhanced over the entire passband. Our earlier discussion indicates that this
+can be realized by a wall of poles opposite the imaginary axis in front of the passband centered
+at ω0 . (There is also a wall of conjugate poles opposite −ω0 .) Ideally, an infinite number of
+poles is required. In practice, we compromise by using a finite number of poles and accepting
+less-than-ideal characteristics (Fig. 4.51).

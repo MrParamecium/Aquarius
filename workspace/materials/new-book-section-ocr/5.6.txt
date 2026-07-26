@@ -1,0 +1,500 @@
+# Fourier section OCR
+section_id: 5.6
+source_pages: page-538, page-539, page-540, page-541, page-542, page-543, page-544, page-545, page-546, page-547
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.6 F REQUENCY R ESPONSE FROM P OLE -Z ERO L OCATIONS
+          The frequency responses (amplitude and phase responses) of a system are determined by pole-zero
+          locations of the transfer function H[z]. Just as in continuous-time systems, it is possible to
+          determine quickly the amplitude and the phase response and to obtain physical insight into the filter
+          characteristics of a discrete-time system by using a graphical technique. The general Nth-order
+          transfer function H[z] in Eq. (5.26) can be expressed in factored form as
+
+                                                          (z − z1 )(z − z2 ) · · · (z − zN )
+                                             H[z] = b0
+                                                          (z − γ1 )(z − γ2 ) · · · (z − γN )
+
+          We can compute H[z] graphically by using the concepts discussed in Sec. 4.10. The directed line
+          segment from zi to z in the complex plane (Fig. 5.19a) represents the complex number z − zi . The
+          length of this segment is |z − zi | and its angle with the horizontal axis is  (z − zi ).
+               To compute the frequency response H[ej ] we evaluate H[z] at z = ej . But for z = ej , |z| = 1
+          and  z =  so that z = ej represents a point on the unit circle at an angle  with the horizontal. We
+          now connect all zeros (z1 , z2 , . . . , zN ) and all poles (γ1 , γ2 , . . . , γN ) to the point ej , as indicated in
+
+[[PAGE page-539]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 539 — #52
+
+
+
+
+                                              5.6 Frequency Response from Pole-Zero Locations                               539
+
+
+
+                                                                                  Im
+                                            z plane
+                                                                                                          ej
+                  zi                                                                         d2
+  Im
+
+                               z ⴚ zi                                                       r2
+                                                                            u1
+                                                                  g1                                      r1
+          ⴚzi
+                                                                                 d1                             f1
+                                        z                           f2                                               Re
+                                                  1        z2                                            z1         1
+                         z                                                u2
+                                                                  g2
+
+      0                          Re
+
+
+
+
+                  (a)                                                                 (b)
+Figure 5.19 Vector representations of (a) complex numbers and (b) factors of H[z].
+
+
+Fig. 5.19b. Let r1 , r2 , . . . , rN be the lengths and φ1 , φ2 , . . . , φN be the angles, respectively, of the
+straight lines connecting z1 , z2 , . . . , zN to the point ej . Similarly, let d1 , d2 , . . . , dN be the lengths
+and θ1 , θ2 , . . . , θN be the angles, respectively, of the lines connecting γ1 , γ2 , . . . , γN to ej . Then
+
+                                                    (r1 ejφ1 )(r2 ejφ2 ) · · · (rN ejφN )
+                  H[ej ] = H[z]|z=ej = b0
+                                                    (d1 ejθ1 )(d2 ejθ2 ) · · · (dN ejθN )
+                                                    r1 r2 · · · rN j[(φ1 +φ2 +· · ·+φN )−(θ1 +θ2 +· · ·+θN )]
+                                               = b0                e
+                                                    d1 d2 · · · dN
+
+Therefore (assuming b0 > 0),
+
+                                  r1 r2 · · · rN      product of the distances of zeros to ej
+                |H[ej ]| = b0                   = b0                                                                     (5.41)
+                                  d1 d2 · · · dN        product of distances of poles to ej
+
+and
+
+                       H[ej ] = (φ1 + φ2 + · · · + φN ) − (θ1 + θ2 + · · · + θN )
+                               = sum of zero angles to ej − sum of pole angles to ej
+
+In this manner, we can compute the frequency response H[ej ] for any value of  by selecting the
+point on the unit circle at an angle . This point is ej . To compute the frequency response H[ej ],
+we connect all poles and zeros to this point and use the foregoing equations to determine |H[ej ]|
+and  H[ej ]. We repeat this procedure for all values of  from 0 to π to obtain the frequency
+response.
+
+[[PAGE page-540]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 540 — #53
+
+
+
+
+540   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      C ONTROLLING G AIN BY P LACEMENT OF P OLES AND Z EROS
+      The nature of the influence of pole and zero locations on the frequency response is similar to that
+      observed in continuous-time systems, with minor differences. In place of the imaginary axis of the
+      continuous-time systems, we have the unit circle in the discrete-time case. The nearer the pole (or
+      zero) is to a point ej (on the unit circle) representing some frequency , the more influence that
+      pole (or zero) wields on the amplitude response at that frequency because the length of the vector
+      joining that pole (or zero) to the point ej is small. The proximity of a pole (or a zero) has a similar
+      effect on the phase response. From Eq. (5.41), it is clear that to enhance the amplitude response at
+      a frequency , we should place a pole as close as possible to the point ej (which is on the unit
+      circle).† Similarly, to suppress the amplitude response at a frequency , we should place a zero
+      as close as possible to the point ej on the unit circle. Placing repeated poles or zeros will further
+      enhance their influence.
+           Total suppression of signal transmission at any frequency can be achieved by placing a zero
+      on the unit circle at a point corresponding to that frequency. This observation is used in the notch
+      (bandstop) filter design.
+           Placing a pole or a zero at the origin does not influence the amplitude response because the
+      length of the vector connecting the origin to any point on the unit circle is unity. However, a pole
+      (or a zero) at the origin adds angle − (or ) to  H[ej ]. Hence, the phase spectrum − (or )
+      is a linear function of frequency and therefore represents a pure time delay (or time advance) of
+      T seconds (see Drill 5.19). Therefore, a pole (a zero) at the origin causes a time delay (or a time
+      advance) of T seconds in the response. There is no change in the amplitude response.
+           For a stable system, all the poles must be located inside the unit circle. The zeros may lie
+      anywhere. Also, for a physically realizable system, H[z] must be a proper fraction, that is, N ≥ M.
+      If, to achieve a certain amplitude response, we require M > N, we can still make the system
+      realizable by placing a sufficient number of poles at the origin to make N = M. This will not
+      change the amplitude response, but it will increase the time delay of the response.
+           In general, a pole at a point has the opposite effect of a zero at that point. Placing a zero closer
+      to a pole tends to cancel the effect of that pole on the frequency response.
+
+      L OWPASS F ILTERS
+      A lowpass filter generally has a maximum gain at or near  = 0, which corresponds to point
+      ej0 = 1 on the unit circle. Clearly, placing a pole inside the unit circle near the point z = 1
+      (Fig. 5.20a) would result in a lowpass response.‡ The corresponding amplitude and phase response
+      appear in Fig. 5.20a. For smaller values of , the point ej (a point on the unit circle at an angle
+      ) is closer to the pole, and consequently the gain is higher. As  increases, the distance of
+      the point ej from the pole increases. Consequently the gain decreases, resulting in a lowpass
+      characteristic. Placing a zero at the origin does not change the amplitude response but it does
+      modify the phase response, as illustrated in Fig. 5.20b. Placing a zero at z = −1, however, changes
+      both the amplitude and the phase response (Fig. 5.20c). The point z = −1 corresponds to frequency
+
+      † The closest we can place a pole is on the unit circle at the point representing . This choice would lead to
+      infinite gain, but should be avoided because it will render the system marginally stable (BIBO-unstable). The
+      closer the point to the unit circle, the more sensitive the system gain to parameter variations.
+      ‡ Placing the pole at z = 1 results in maximum (infinite) gain but renders the system BIBO-unstable, hence
+      should be avoided.
+
+[[PAGE page-541]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 541 — #54
+
+
+
+
+                               5.6 Frequency Response from Pole-Zero Locations               541
+
+                                                             H
+
+
+
+
+                                                      0                         p
+                                                                                     (vT )
+                                                    p
+                                       (a)                                  ⬔H
+
+                                                             H
+
+
+
+
+                                                      0                         p
+                                                                                     (vT)
+                                       (b)                           ⬔H
+
+
+
+
+                                                             H
+
+
+
+
+                                                     0                          p
+                                                 p/2                                (vT)
+                                                                            ⬔H
+                                       (c)
+
+                                                             H
+
+                                                                        Ideal
+
+
+
+                                                     0                          p
+                                                3p/2                                (vT)
+                                                                            ⬔H
+                                       (d)
+
+
+                                                                        Ideal
+                                                            H
+
+                                                  3p/2
+
+
+                                                      0                          p
+                                                                                     (vT)
+                                                                       ⬔H
+                                       (e)
+Figure 5.20 Various pole-zero configurations and the corresponding frequency responses.
+
+[[PAGE page-542]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 542 — #55
+
+
+
+
+542       CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           = π (z = ej = ejπ = −1). Consequently, the amplitude response now becomes more attenuated
+          at higher frequencies, with a zero gain at  = π . We can approach ideal lowpass characteristics
+          by using more poles staggered near z = 1 (but within the unit circle). Figure 5.20d shows a
+          third-order lowpass filter with three poles near z = 1 and a third-order zero at z = −1, with
+          corresponding amplitude and phase response. For an ideal lowpass filter, we need an enhanced
+          gain at every frequency in the band (0, c ). This can be achieved by placing a continuous wall of
+          poles (requiring an infinite number of poles) opposite this band.
+
+          H IGHPASS F ILTERS
+          A highpass filter has a small gain at lower frequencies and a high gain at higher frequencies. Such
+          a characteristic can be realized by placing a pole or poles near z = −1 because we want the gain
+          at  = π to be the highest. Placing a zero at z = 1 further enhances suppression of gain at lower
+          frequencies. Figure 5.20e shows a possible pole-zero configuration of the third-order highpass
+          filter with corresponding amplitude and phase responses.
+                In the following two examples, we shall realize analog filters by using digital processors and
+          suitable interface devices (C/D and D/C), as shown in Fig. 3.2. At this point, we shall examine the
+          design of a digital processor with the transfer function H[z] for the purpose of realizing bandpass
+          and bandstop filters in the following examples.
+                As Fig. 3.2 shows, the C/D device samples the continuous-time input x(t) to yield a
+          discrete-time signal x[n], which serves as the input to H[z]. The output y[n] of H[z] is converted
+          to a continuous-time signal y(t) by a D/C device. We also saw in Eq. (5.34) that a continuous-time
+          sinusoid of frequency ω, when sampled, results in a discrete-time sinusoid  = ωT.
+
+
+      E X A M P L E 5.14 Bandpass Filter by Pole-Zero Placement
+
+          By trial and error, design a tuned (bandpass) analog filter with zero transmission at 0 Hz and
+          also at the highest frequency fh = 500 Hz. The resonant frequency is required to be 125 Hz.
+
+
+          Because fh = 500, we require T < 1/1000 [see Eq. (5.39)]. Let us select T = 10−3 .† Recall that
+          the analog frequencies ω correspond to digital frequencies  = ωT. Hence, analog frequencies
+          ω = 0 and 1000π correspond to  = 0 and π , respectively. The gain is required to be zero at
+          these frequencies. Hence, we need to place zeros at ej corresponding to  = 0 and  = π . For
+           = 0, z = ej = 1; for  = π , ej = −1. Hence, there must be zeros at z = ±1. Moreover, we
+          need enhanced response at the resonant frequency ω = 250π , which corresponds to  = π/4,
+          which, in turn, corresponds to z = ej = ejπ/4 . Therefore, to enhance the frequency response
+          at ω = 250π , we place a pole in the vicinity of ejπ/4 . Because this is a complex pole, we also
+          need its conjugate near e−jπ/4 , as indicated in Fig. 5.21a. Let us choose these poles γ1 and γ2
+          as
+                                    γ1 = |γ |ejπ/4       and      γ2 = |γ |e−jπ/4
+
+
+
+          † Strictly speaking, we need T < 0.001. However, we shall show in Ch. 8 that if the input does not contain
+          a finite amplitude component of 500 Hz, T = 0.001 is adequate. Generally, practical signals satisfy this
+          condition.
+
+[[PAGE page-543]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 543 — #56
+
+
+
+
+                                                5.6 Frequency Response from Pole-Zero Locations                543
+
+where |γ | < 1 for stability. The closer γ is to the unit circle, the more sharply peaked is the
+response around ω = 250π . We also have zeros at ±1. Hence,
+
+                                           (z − 1)(z + 1)                     z2 − 1
+                        H[z] = K                                     = K     √
+                                   (z − |γ |ejπ/4 )(z − |γ |e−jπ/4 )     z2 − 2|γ |z + |γ |2
+For convenience, we shall choose K = 1. The amplitude response is given by
+
+                                                                  |ej2 − 1|
+                                   |H[ej ]| =
+                                                     |ej − |γ |ejπ/4 ||ej − |γ |e−jπ/4 |
+Now, by using Eq. (5.37), we obtain
+
+                                                     2(1 − cos 2)
+        |H[ej ]|2 =                                      !                              !
+                                                       π                               π
+                             1 + |γ |2 − 2|γ | cos  −       1 + |γ |2 − 2|γ | cos  +
+                                                       4                               4
+
+
+                                                            H [e j ]
+                                                                                             g   1
+
+
+                              z  e jp4
+                              (v  250p)             25.5                                    g   0.96
+                  g
+                   p4
+                                   z1                                                        g  0.83
+                                   (v  0)
+
+                                                     6.41
+
+
+                                                            0                        250p                  v
+
+                                                                                     p4
+            (a)                                                                               (b)
+
+                            x[n]                                         y[n]
+
+
+                                                       1
+                                                       z
+                                             2 g
+
+                                                       1
+                                                       z
+
+                                         g2              1
+                                                      (c)
+
+Figure 5.21 Designing a bandpass filter.
+
+[[PAGE page-544]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 544 — #57
+
+
+
+
+544   CHAPTER 5                DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Figure 5.21b shows the amplitude response as a function of ω, as well as  = ωT = 10−3 ω
+      for values of |γ | = 0.83, 0.96, and 1. As expected, the gain is zero at ω = 0 and at 500 Hz
+      (ω = 1000π ). The gain peaks at about 125 Hz (ω = 250π ). The resonance (peaking) becomes
+      pronounced as |γ | approaches 1. Figure 5.21c shows a canonical realization of this filter, which
+      follows from the transfer function H[z].
+
+      M ULTIPLE M AGNITUDE R ESPONSE C URVES U SING MATLAB
+      By defining an anonymous function of the two variables z and γ in MATLAB, it is
+      straightforward to duplicate the three magnitude response curves in Fig. 5.21b, corresponding
+      to the cases γ = 0.83, 0.96, and 1.
+
+
+      >>            Omega = linspace(0,pi,400);
+      >>            H = @(z,gamma_m) (z.^2-1)./(z.^2-sqrt(2)*gamma_m*z+gamma_m^2);
+      >>            plot(Omega,abs(H(exp(1j*Omega),0.83)),...
+      >>                Omega,abs(H(exp(1j*Omega),0.96)),...
+      >>                Omega,abs(H(exp(1j*Omega),0.99)));
+      >>            text(.27*pi,35,’|\gamma|=1’);
+      >>            text(.28*pi,25.5,’|\gamma|=0.96’);
+      >>            text(.35*pi,6.41,’|\gamma|=0.83’);
+      >>            set(gca,’xtick’,0:pi/4:pi,’ytick’,[0 6.41,25.5]);
+      >>            axis([0 pi 0 40]); xlabel(’\Omega’); ylabel(’|H[e^{j \Omega}]|’);
+
+
+      The result, shown in Fig. 5.22, confirms the earlier result of Fig. 5.21b. Phase response curves
+      can be generated with minor modification to the MATLAB code.
+
+
+
+
+                                              |γ|=1
+
+
+                    25.5                           |γ|=0.96
+
+       |H[e j Ω]|
+
+
+                    6.41                                  |γ|=0.83
+
+                       0
+                           0             0 .7854                     1.5708   2.3562               3.1416
+                                                                       Ω
+
+      Figure 5.22 MATLAB-generated magnitude response curves for Ex. 5.14.
+
+[[PAGE page-545]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 545 — #58
+
+
+
+
+                                          5.6 Frequency Response from Pole-Zero Locations                545
+
+
+E X A M P L E 5.15 Bandstop Filter by Pole-Zero Placement
+
+    Design a second-order notch filter to have zero transmission at 250 Hz and a sharp recovery
+    of gain to unity on both sides of 250 Hz. The highest significant frequency to be processed is
+    fh = 400 Hz.
+
+
+    In this case, T < 1/2fh = 1.25 × 10−3 . Let us choose T = 10−3 . For the frequency 250 Hz,
+     = 2π(250)T = π/2. Thus, the frequency 250 Hz is represented by a point ej = ejπ/2 = j on
+    the unit circle, as depicted in Fig. 5.23a. Since we need zero transmission at this frequency, we
+    must place a zero at z = ejπ/2 = j and its conjugate at z = e−jπ/2 = −j. We also require a sharp
+    recovery of gain on both sides of frequency 250 Hz. To accomplish this goal, we place two
+    poles close to the two zeros, to cancel out the effect of the two zeros as we move away from
+    the point j (corresponding to frequency 250 Hz). For this reason, let us use poles at ±ja with
+    a < 1 for stability. The closer the poles are to zeros (the closer the a to 1), the faster is the gain
+    recovery on either side of 250 Hz. The resulting transfer function is
+
+                                               (z − j)(z + j)     z2 + 1
+                                   H[z] = K                    =K 2
+                                              (z − ja)(z + ja)   z + a2
+
+    The dc gain (gain at  = 0, or z = 1 ) of this filter is
+
+                                                           2
+                                              H[1] = K
+                                                         1 + a2
+
+    Because we require a dc gain of unity, we must select K = (1 + a2 )/2. The transfer function is
+    therefore
+
+                                                  (1 + a2 )(z2 + 1)
+                                         H[z] =
+                                                     2(z2 + a2 )
+
+    and according to Eq. (5.37),
+
+                                          (1 + a2 )2 (ej2 + 1)(e−j2 + 1)
+                              |H[ej ]|2 =
+                                              4      (ej2 + a2 )(e−j2 + a2 )
+                                          (1 + a ) (1 + cos 2)
+                                                 2 2
+                                        =
+                                          2(1 + a4 + 2a2 cos 2)
+
+    Figure 5.23b shows |H[ej ]| for values of a = 0.3, 0.6, and 0.95. Figure 5.23c shows a
+    realization of this filter.
+
+[[PAGE page-546]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 546 — #59
+
+
+
+
+546       CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                                                          p2
+                                                      (v  500p)
+
+                                                     ja
+
+                                 p                                0
+                        (v  1000 p)                          (v  0)
+
+                                                     ja
+
+                                                     j
+
+
+                                               (a)
+
+
+
+          H [e jvT]
+
+
+                                             a  0.95
+      1
+
+
+                                            a  0.6
+
+
+                                              a  0.3
+
+
+
+
+          0                            p                             p
+                                       2                                   (vT )
+          0                       500p                             1000p        v
+                                               (b)
+
+
+                        1  a2
+                          2                                        y[n]
+
+                    x[n]
+                                               1
+                                               z
+
+
+
+                                               1
+                                               z
+
+                                      a2
+                                               (c)
+      Figure 5.23 Designing a notch (bandstop) filter.
+
+[[PAGE page-547]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 547 — #60

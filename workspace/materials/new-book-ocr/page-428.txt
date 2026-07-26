@@ -1,0 +1,65 @@
+                                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 428 — #99
+
+
+
+
+428   CHAPTER 4                      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                              20
+
+                                                                               z  0.1
+                              10                                                  0.2
+                                                      Asymptote
+                                                                                  0.3
+
+                               0
+                                                                                                                    v
+
+
+
+          20 log H (dB)
+                                                                                           Asymptote
+                            10                                          0.5
+                                                                       0.707
+                            20                                        z1
+
+
+
+                            30
+
+
+                            40
+                             0.1vn       0.2vn          0.5vn         vn                 2vn           5vn   10vn
+                                                                      (a)
+
+                              0
+                                                                                                                    v
+                                                                                    Asymptote
+                                                                                z  0.1
+                            30
+                                                                                     0.2
+                                             0.5                                     0.3
+                            60            0.707
+                                            z1
+
+      Phase                 90
+
+
+                   120
+
+
+                   150
+
+                                                    Asymptote
+                   180
+                      0.1vn              0.2vn          0.5vn         vn                 2vn           5vn   10vn
+                                                                      (b)
+      Figure 4.43 Amplitude and phase response of a second-order pole.
+
+
+      For ω  ωn ,
+                                                               H(jω) ≃ −180◦
+
+      Hence, the phase → −180◦ as ω → ∞. As in the case of amplitude, we also have a family of
+      phase plots for various values of ζ , as illustrated in Fig. 4.43b. A convenient asymptote for the
+      phase of complex-conjugate poles is a step function that is 0◦ for ω < ωn and −180◦ for ω > ωn .

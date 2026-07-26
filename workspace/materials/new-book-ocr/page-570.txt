@@ -1,0 +1,53 @@
+                      “05-Lathi-C05” — 2017/9/25 — 15:54 — page 570 — #83
+
+
+
+
+570   CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+            MATLAB program CH5MP4 converts a continuous-time filter described by coefficient vectors
+      A = [a0 , a1 , . . . , aN ] and B = [bN−M , bN−M+1 , . . . , bN ] into a discrete-time filter by using the bilinear
+      transformation of Eq. (5.58). The form of the discrete-time filter follows Eq. (5.55). If available,
+      it is also possible to use the signal-processing toolbox function bilinear to perform the bilinear
+      transformation.
+
+      function [Bd,Ad] = CH5MP4(B,A,T);
+      % CH5MP4.m : Chapter 5, MATLAB Program 4
+      % Function M-file bilinear transformation of a continuous-time filter
+      % described by vectors B and A into a discrete-time filter.
+      % Length of B must not exceed A.
+      % INPUTS:   B = vector of continuous-time filter feedforward coefficients
+      %           A = vector of continuous-time filter feedback coefficients
+      %           T = sampling interval
+      % OUTPUTS: Bd = vector of discrete-time filter feedforward coefficients
+      %           Ad = vector of discrete-time filter feedback coefficients
+
+      if (length(B)>length(A)),
+          disp(’Numerator order must not exceed denominator order.’);
+          return
+      end
+      z = roots(B); p = roots(A); % s-domain roots
+      gain = real(B(1)/A(1)*prod(2/T-z)/prod(2/T-p));
+      zd = (1+z*T/2)./(1-z*T/2); pd = (1+p*T/2)./(1-p*T/2); % z-domain roots
+      Bd = gain*poly([zd;-ones(length(A)-length(B),1)]); Ad = poly(pd);
+
+      As with most high-level languages, MATLAB supports general if-structures:
+           if expression,
+                   statements;
+           elseif expression,
+                   statements;
+           else,
+                   statements;
+           end
+      In the program CH5MP4, the if statement tests M > N. When true, an error message is displayed
+      and the return command terminates program execution to prevent errors.
+
+
+
+      5.10-5 Bilinear Transformation with Prewarping
+      The bilinear transformation maps the entire infinite-length ω axis onto the finite-length unit circle
+      (z = ej ) according to ω = (2/T) tan (/2) (see Prob. 5.6-18b). Equivalently,  = 2 arctan(ωT/2).
+      The nonlinearity of the tangent function causes a frequency compression, commonly called
+      frequency warping, that distorts the transformation.
+           To illustrate the warping effect, consider the bilinear transformation of a continuous-time
+      lowpass filter with cutoff frequency ωc = 2π 3000 rad/s. If the target digital system uses a sampling

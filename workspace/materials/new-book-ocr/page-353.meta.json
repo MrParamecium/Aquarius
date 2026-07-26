@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.2",
+  "subsection": "4.2-2",
+  "title": "Frequency Shifting",
+  "summary": "This page covers 4.2-2 (Frequency Shifting). OCR text begins with: 4.2 Some Properties of the Laplace Transform 353 D R I L L 4.5 Inverse Laplace Transform and the Time-Shifting Property 3e−2s Find the inverse Laplace transform of X(s) = . (s − 1)(s + 2) ANSWER",
+  "keywords": [
+    "4.2",
+    "4.2-2",
+    "Frequency Shifting",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-353",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,21 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-2",
+  "title": "Zero-State Response",
+  "summary": "This page covers 4.3-2 (Zero-State Response). OCR text begins with: 366 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Using these results, the Laplace transform of Eq. (4.25) is 5Y(s) 10 10 sY(s) − 2 + 2Y(s) + + = s s s or ! 5",
+  "keywords": [
+    "4.3",
+    "4.3-2",
+    "Zero-State Response",
+    "unit step",
+    "continuous-time",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-366",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

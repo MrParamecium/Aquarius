@@ -1,0 +1,61 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 494 — #7
+
+
+
+
+494   CHAPTER 5     DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      This geometric sum simplifies [see Sec. B.8-3] to
+                                                                         
+                                                        1               1
+                                          X[z] =                         <1
+                                                            1           z
+                                                    1−
+                                                            z
+                                                     z
+                                                =                   |z| > 1
+                                                    z−1
+
+      Therefore,
+                                                         z
+                                          u[n] ⇐⇒                       |z| > 1
+                                                        z−1
+          (c) Recall that cos βn = (ejβn + e−jβn )/2. Moreover, according to Eq. (5.5),
+
+                                                       z
+                                e±jβn u[n] ⇐⇒                           |z| > |e±jβ | = 1
+                                                    z − e±jβ
+
+      Therefore,                                !
+                             1    z       z           z(z − cos β)
+                      X[z] =          +           = 2                                         |z| > 1
+                             2 z − ejβ z − e−jβ    z − 2z cos β + 1
+          (d) Here x[0] = x[1] = x[2] = x[3] = x[4] = 1 and x[5] = x[6] = · · · = 0. Therefore,
+      according to Eq. (5.7),
+
+                                1 1   1  1  z4 + z3 + z2 + z + 1
+                   X[z] = 1 +    + 2+ 3+ 4=                                                 for all z = 0
+                                z z  z  z            z4
+
+      We can also express this result in a more compact form by summing the geometric progression
+      on the right-hand side of the foregoing equation. From the result in Sec. B.8-3 with r = 1/z, m =
+      0, and n = 4, we obtain
+
+                                                5               0
+                                            1               1
+                                                    −
+                                            z               z            z
+                                 X[z] =                             =       (1 − z−5 )
+                                                1                       z−1
+                                                  −1
+                                                z
+
+
+
+
+       D R I L L 5.1 Bilateral z-Transform
+
+           (a) Find the z-transform of a signal shown in Fig. 5.3.
+                                                                                √
+           (b) Use pair 12a (Table 5.1) to find the z-transform of x[n] = 20.65( 2)n cos [(π/4)n −
+               1.415]u[n].

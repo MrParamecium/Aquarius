@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.3-1",
+  "sourcePages": [
+    "page-363",
+    "page-364",
+    "page-365",
+    "page-366"
+  ],
+  "usedPages": [
+    "page-363",
+    "page-364",
+    "page-365",
+    "page-366"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.3-1 Comments on Initial Conditions at 0− and at 0+",
+  "foundEnd": true,
+  "endBeforeLine": "4.3-2 Zero-State Response",
+  "endBeforeCode": "4.3-2",
+  "charCount": 9580
+}

@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.5",
+  "subsection": null,
+  "title": "Block Diagrams",
+  "summary": "This page covers 4.5 (Block Diagrams). OCR text begins with: 386 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS 4.5 B LOCK D IAGRAMS Large systems may consist of an enormous number of components or elements. As anyone who has seen the circuit diagram of a radio or a television receiver can appreciate, analyzing such systems all at once could be next to impossible. In such cases, it is convenient to represent a system by suitably interconnected subsystems, each of which can be readi",
+  "keywords": [
+    "4.5",
+    "Block Diagrams",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-386",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

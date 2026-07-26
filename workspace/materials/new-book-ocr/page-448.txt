@@ -1,0 +1,46 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 448 — #119
+
+
+
+
+448   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+                                                              Figure 4.57 Regions of convergence for
+                                                              causal, anticausal, and combined signals.
+
+
+      right-sided, the poles of X(s) lie to the left of the ROC, and if x(t) is anticausal or left-sided, the
+      poles of X(s) lie to the right of the ROC.
+           To prove this generalization, we observe that a right-sided signal can be expressed as
+      x(t) + xf (t), where x(t) is a causal signal and xf (t) is some finite-duration signal. The ROC of
+      any finite-duration signal is the entire s-plane (no finite poles). Hence, the ROC of the right-sided
+      signal x(t) + xf (t) is the region common to the ROCs of x(t) and xf (t), which is same as the ROC
+      for x(t). This proves the generalization for right-sided signals. We can use a similar argument to
+      generalize the result for left-sided signals. Let us find the bilateral Laplace transform of
+
+                                            x(t) = ebt u(−t) + eat u(t)                               (4.58)
+
+      We already know the Laplace transform of the causal component
+
+                                                        1
+                                         eat u(t) ⇐⇒             Re s > a                             (4.59)
+                                                       s−a
+
+      For the anticausal component, x2 (t) = ebt u(−t), we have
+
+                                                            1
+                                  x2 (−t) = e−bt u(t) ⇐⇒              Re s > −b
+                                                           s+b
+
+      so that
+                                                  1     −1
+                                     X2 (s) =         =              Re s < b
+                                                −s + b s − b
+
+      Therefore,
+                                                        −1
+                                        ebt u(−t) ⇐⇒              Re s < b                            (4.60)
+                                                       s−b

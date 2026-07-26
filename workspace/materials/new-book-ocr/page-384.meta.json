@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.4",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.4. OCR text begins with: 384 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Figure 4.17 (a) Sallen–Key circuit and (b) its equivalent. We are required to find Vo (s) H(s) = Vi (s) assuming all initial conditions to be zero.",
+  "keywords": [
+    "4.4",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-384",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

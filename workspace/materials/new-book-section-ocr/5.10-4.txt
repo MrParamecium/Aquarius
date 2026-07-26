@@ -1,0 +1,98 @@
+# Fourier section OCR
+section_id: 5.10-4
+source_pages: page-569, page-570
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.10-4 Bilinear Transformation
+The bilinear transformation is based on a better approximation than first-order backward
+differences. Again, consider the continuous-time integrator
+                                                         d
+                                                y(t) =      x(t)
+                                                         dt
+Represent signal x(t) as                  # t
+                                                d
+                                 x(t) =           x(τ ) dτ + x(t − T)
+                                           t−T dτ
+Letting t = nT and replacing the integral with a trapezoidal approximation yield
+                                                             !
+                                T d              d
+                       x(nT) =         x(nT) + x(nT − T) + x(nT − T)
+                                 2 dt           dt
+Substituting y(t) for (d/dt)x(t), the equivalent discrete-time system is
+                                        T
+                               x[n] =     (y[n] + y[n − 1]) + x[n − 1]
+                                        2
+From z-transforms, the transfer function is
+                                                Y[z]   2(1 − z−1 )
+                                    H[z] =           =
+                                                X[z] T(1 + z−1 )
+
+The implied change of variable s = 2(1 − z−1 )/T(1 + z−1 ) or z = (1 + sT/2)/(1 − sT/2) is called
+the bilinear transformation. Not only does the bilinear transformation result in a rational function
+H[z], the ω axis is correctly mapped to the unit circle (see Prob. 5.6-18a).
+     After some algebra, substituting s = 2(1 − z−1 )/T(1 + z−1 ) into Eq. (5.56) yields
+                      8       7                  9 7M          k T/2 −1
+                                                                         
+                        bN−M M      (2/T − z   )    k=1  1 − 1+z
+                                                             1−z  T/2
+                                                                      z
+                                                                          (1 + z−1 )N−M
+                                             k
+                                                   7N 
+                                                                k
+               H[z] =       7
+                                k=1
+                                                                                              (5.58)
+                         a0 Nk=1 (2/T − pk )                 1+pk T/2 −1
+                                                    k=1 1 − 1−pk T/2 z
+
+In addition to the M zeros at (1 + zk T/2)/(1 − zk T/2) and N poles at (1 + pk T/2)/(1 − pk T/2),
+there are N −M zeros at minus 1. Since practical continuous-time filters require M ≤ N for stability,
+the number of added zeros is thankfully always nonnegative.
+
+[[PAGE page-570]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 570 — #83
+
+
+
+
+570   CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+            MATLAB program CH5MP4 converts a continuous-time filter described by coefficient vectors
+      A = [a0 , a1 , . . . , aN ] and B = [bN−M , bN−M+1 , . . . , bN ] into a discrete-time filter by using the bilinear
+      transformation of Eq. (5.58). The form of the discrete-time filter follows Eq. (5.55). If available,
+      it is also possible to use the signal-processing toolbox function bilinear to perform the bilinear
+      transformation.
+
+      function [Bd,Ad] = CH5MP4(B,A,T);
+      % CH5MP4.m : Chapter 5, MATLAB Program 4
+      % Function M-file bilinear transformation of a continuous-time filter
+      % described by vectors B and A into a discrete-time filter.
+      % Length of B must not exceed A.
+      % INPUTS:   B = vector of continuous-time filter feedforward coefficients
+      %           A = vector of continuous-time filter feedback coefficients
+      %           T = sampling interval
+      % OUTPUTS: Bd = vector of discrete-time filter feedforward coefficients
+      %           Ad = vector of discrete-time filter feedback coefficients
+
+      if (length(B)>length(A)),
+          disp(’Numerator order must not exceed denominator order.’);
+          return
+      end
+      z = roots(B); p = roots(A); % s-domain roots
+      gain = real(B(1)/A(1)*prod(2/T-z)/prod(2/T-p));
+      zd = (1+z*T/2)./(1-z*T/2); pd = (1+p*T/2)./(1-p*T/2); % z-domain roots
+      Bd = gain*poly([zd;-ones(length(A)-length(B),1)]); Ad = poly(pd);
+
+      As with most high-level languages, MATLAB supports general if-structures:
+           if expression,
+                   statements;
+           elseif expression,
+                   statements;
+           else,
+                   statements;
+           end
+      In the program CH5MP4, the if statement tests M > N. When true, an error message is displayed
+      and the return command terminates program execution to prevent errors.

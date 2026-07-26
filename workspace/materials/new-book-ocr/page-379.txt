@@ -1,0 +1,63 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 379 — #50
+
+
+
+
+                       4.4 Analysis of Electrical Networks: The Transformed Network              379
+
+amperes. Therefore, when the switch is opened (at t = 0), the initial conditions are vC (0− ) = 16
+and y2 (0− ) = 4. Figure 4.13b shows the transformed version of the circuit in Fig. 4.13a. We
+have used equivalent sources to account for the initial conditions. The initial capacitor voltage
+of 16 volts is represented by a series voltage of 16/s and the initial inductor current of 4
+amperes is represented by a source of value Ly2 (0− ) = 2.
+    From Fig. 4.13b, the loop equations can be written directly in the frequency domain as
+                                    Y1 (s) 1                        4
+                                             + [Y1 (s) − Y2 (s)] =
+                                      s        5                    s
+                                  1            6         s
+                                 − Y1 (s) + Y2 (s) + Y2 (s) = 2
+                                  5            5       ! 2      !       !
+                                     1
+                                        +    1
+                                                  − 1
+                                                         Y1 (s)       4
+                                      s      5      5             =   s
+                                        − 15     6
+                                                 5
+                                                   + 2s Y2 (s)        2
+      Application of Cramer’s rule to this equation yields
+                                  24(s + 2)     24(s + 2)    −24    48
+                     Y1 (s) =               =              =     +
+                                s2 + 7s + 12 (s + 3)(s + 4) s + 3 s + 4
+and
+                                   y1 (t) = (−24e−3t + 48e−4t )u(t)
+Similarly, we obtain
+                                             4(s + 7)          16   12
+                                Y2 (s) =                  =       −
+                                           s2 + 7s + 12       s+3 s+4
+and
+                                    y2 (t) = (16e−3t − 12e−4t )u(t)
+     We also could have used Thévenin’s theorem to compute Y1 (s) and Y2 (s) by replacing
+the circuit to the right of the capacitor (right of terminals ab) with its Thévenin equivalent, as
+shown in Fig. 4.13c. Figure 4.13b shows that the Thévenin impedance Z(s) and the Thévenin
+source V(s) are
+                                           1 s      
+                                                 +1       s+2
+                                  Z(s) = 5 2           =
+                                           1 s           5s + 12
+                                             + +1
+                                           5 2
+                                                 1
+                                              −             −4
+                                  V(s) =         5     2=
+                                           1 s            5s + 12
+                                             + +1
+                                           5 2
+According to Fig. 4.13c, the current Y1 (s) is given by
+                                       4
+                                         − V(s)    24(s + 2)
+                              Y1 (s) = s        = 2
+                                       1          s + 7s + 12
+                                         + Z(s)
+                                       s
+which confirms the earlier result. We may determine Y2 (s) in a similar manner.

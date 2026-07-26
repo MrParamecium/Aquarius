@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": "4.9-2",
+  "title": "Pole (or Zero) at the Origin",
+  "summary": "This page covers 4.9-2 (Pole (or Zero) at the Origin). OCR text begins with: 422 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS We can sketch these four basic terms as functions of ω and use them to construct the log-amplitude plot of any desired transfer function. Let us discuss each of the terms. 4.9-1 Constant Ka1 a2 /b1 b3 The log amplitude of the constant Ka1 a2 /b1 b2 term is also a constant, 20 log |Ka1 a2 /b1 b3 |. The phase contribution from this term is zero for positive value and π for",
+  "keywords": [
+    "4.9",
+    "4.9-2",
+    "Pole (or Zero) at the Origin",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-422",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

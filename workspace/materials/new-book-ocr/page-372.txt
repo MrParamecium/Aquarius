@@ -1,0 +1,53 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 372 — #43
+
+
+
+
+372       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          are two good reasons to avoid improper systems (M > N). In our future discussion, we shall
+          implicitly assume that the systems are proper, unless stated otherwise.
+               If P(s) and Q(s) do not have common factors, then the denominator of H(s) is identical to
+          Q(s), the characteristic polynomial of the system. In this case, we can determine internal stability
+          by using the criterion described in Sec. 2.5. Thus, if P(s) and Q(s) have no common factors,
+          the asymptotic stability criterion in Sec. 2.5 can be restated in terms of the poles of the transfer
+          function of a system, as follows:
+              1. An LTIC system is asymptotically stable if and only if all the poles of its transfer function
+                 H(s) are in the LHP. The poles may be simple or repeated.
+              2. An LTIC system is unstable if and only if either one or both of the following conditions
+                 exist: (i) at least one pole of H(s) is in the RHP; (ii) there are repeated poles of H(s) on the
+                 imaginary axis.
+              3. An LTIC system is marginally stable if and only if there are no poles of H(s) in the RHP
+                 and some unrepeated poles on the imaginary axis.
+          The locations of zeros of H(s) have no role in determining the system stability.
+
+
+
+      E X A M P L E 4.16 BIBO and Asymptotic Stability
+
+          Figure 4.9a shows a cascade connection of two LTIC systems S1 followed by S2 . The transfer
+          functions of these systems are H1 (s) = 1/(s − 1) and H2 (s) = (s − 1)/(s + 1), respectively.
+          Determine the BIBO and asymptotic stability of the composite (cascade) system.
+
+
+
+
+             x(t)     1           s–1     y(t)
+                     s1          s1
+
+                            (a)
+
+             x(t)                         y(t)
+                            1
+                           s1
+                                                 Figure 4.9 Distinction between BIBO and asymptotic
+                            (b)                  stability.
+
+              If the impulse responses of S1 and S2 are h1 (t) and h2 (t), respectively, then the impulse
+          response of the cascade system is h(t) = h1 (t) ∗ h2 (t). Hence, H(s) = H1 (s)H2 (s). In the present
+          case,
+                                                    1        s−1           1
+                                        H(s) =                        =
+                                                  s−1        s+1         s+1
+          The pole of S1 at s = 1 cancels with the zero at s = 1 of S2 . This results in a composite system
+          having a single pole at s = −1. If the composite cascade system were to be enclosed inside a

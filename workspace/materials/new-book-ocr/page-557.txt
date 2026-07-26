@@ -1,0 +1,55 @@
+              “05-Lathi-C05” — 2017/9/25 — 15:54 — page 557 — #70
+
+
+
+
+                                                                  5.8    The Bilateral z-Transform         557
+
+
+
+                                                                           Im               z plane
+
+                            x[n]
+                    1
+
+
+
+                                                                                      0.9             Re
+                                                                                      1.2
+
+
+
+
+      15               0           15      25
+                                             n
+
+
+                        (a)                                                     (b)
+Figure 5.28 (a) Signal x[n] and (b) ROC of X[z].
+
+
+
+
+E X A M P L E 5.18 Inverse Bilateral z-Transform
+
+      Find the inverse bilateral z-transform of
+
+                                                      −z(z + 0.4)
+                                           X[z] =
+                                                    (z − 0.8)(z − 2)
+
+      if the ROC is (a) |z| > 2, (b) |z| < 0.8, and (c) 0.8 < |z| < 2.
+
+
+            (a)
+                                   X[z]      −(z + 0.4)       1      2
+                                        =                 =       −
+                                    z     (z − 0.8)(z − 2) z − 0.8 z − 2
+      and                                              z        z
+                                           X[z] =           −2
+                                                    z − 0.8    z−2
+      Since the ROC is |z| > 2, both terms correspond to causal sequences and
+
+                                         x[n] = [(0.8)n − 2(2)n ]u[n]
+
+      This sequence appears in Fig. 5.29a.

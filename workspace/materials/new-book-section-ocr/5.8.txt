@@ -1,0 +1,320 @@
+# Fourier section OCR
+section_id: 5.8
+source_pages: page-554, page-555, page-556, page-557, page-558, page-559
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.8 T HE B ILATERAL z-T RANSFORM
+      Situations involving noncausal signals or systems cannot be handled by the (unilateral) z-transform
+      discussed so far. Such cases can be analyzed by the bilateral (or two-sided) z-transform defined in
+      Eq. (5.1) as
+                                                     "∞
+                                             X[z] =       x[n]z−n
+                                                        n=−∞
+
+      As in Eq. (5.2), the inverse z-transform is given by
+                                                        5
+                                                     1
+                                            x[n] =        X[z]zn−1 dz
+                                                   2π j
+      These equations define the bilateral z-transform. Earlier, we showed that
+                                                         z
+                                        γ n u[n] ⇐⇒                  |z| > |γ |                    (5.51)
+                                                        z−γ
+      In contrast, the z-transform of the signal −γ n u[−(n + 1)], illustrated in Fig. 5.27a, is
+                                                 −1
+                                                 "                   −1
+                                                                     "            n
+                                                                              γ
+                         Z{−γ n u[−(n + 1)]} =          −γ n z−n =        −
+                                                  −∞                 −∞
+                                                                              z
+                                                                                
+                                                                     2
+                                                    z      z          z 3
+                                               =−     +         +         +· · ·
+                                                    γ      γ          γ
+                                                                                       
+                                                          z       z 2     z 3
+                                               = 1− 1+ +                +        +· · ·
+                                                         γ       γ        γ
+                                                                  
+                                                      1          z
+                                               = 1−               <1
+                                                        z        γ 
+                                                    1−
+                                                        γ
+                                                  z
+                                               =           |z| < |γ |
+                                                 z−γ
+
+[[PAGE page-555]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 555 — #68
+
+
+
+
+                                                                 5.8   The Bilateral z-Transform          555
+
+
+                                                                                              z plane
+                                          g nu[(n  1)]
+
+             7      5     3      1
+                                                                                        g
+                                          n
+
+
+                                                                           Region of convergence
+
+
+
+
+      Figure 5.27 (a) −γ n u[−(n + 1)] and (b) the region of convergence (ROC) of its z-transform.
+
+
+Therefore,
+                                                            z
+                             Z{−γ n u[−(n + 1)]} =                     |z| < |γ |                       (5.52)
+                                                           z−γ
+
+     A comparison of Eqs. (5.51) and (5.52) shows that the z-transform of γ n u[n] is identical to
+that of −γ n u[−(n + 1)]. The regions of convergence, however, are different. In the former case,
+X[z] converges for |z| > |γ |; in the latter, X[z] converges for |z| < |γ | (see Fig. 5.27b). Clearly,
+the inverse transform of X[z] is not unique unless the region of convergence is specified. If we
+add the restriction that all our signals be causal, however, this ambiguity does not arise. The
+inverse transform of z/(z − γ ) is γ n u[n] even without specifying the ROC. Thus, in the unilateral
+transform, we can ignore the ROC in determining the inverse z-transform  % of X[z].
+     As in the case of the bilateral Laplace transform, if x[n] = ki=1 xi [n], then the ROC
+for X[z] is the intersection of the ROCs (region common to all ROCs) for the transforms
+X1 [z], X2 [z], . . . , Xk [z].
+     The preceding results lead to the conclusion (similar to that for the Laplace transform) that
+if z = β is the largest magnitude pole for a causal sequence, its ROC is |z| > |β|. If z = α is the
+smallest magnitude nonzero pole for an anticausal sequence, its ROC is |z| < |α|.
+
+R EGION OF C ONVERGENCE FOR L EFT-S IDED
+AND R IGHT-S IDED S EQUENCES
+Let us first consider a finite duration sequence xf [n], defined as a sequence that is nonzero for
+N1 ≤ n ≤ N2 , where both N1 and N2 are finite numbers and N2 > N1 . Also,
+
+                                                    "
+                                                    N2
+                                         Xf [z] =          xf [n]z−n
+                                                    n=N1
+
+
+For example, if N1 = −2 and N2 = 1, then
+
+                                                                           xf [1]
+                            Xf [z] = xf [−2]z2 + xf [−1]z + xf [0] +
+                                                                              z
+
+[[PAGE page-556]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 556 — #69
+
+
+
+
+556       CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          Assuming all the elements in xf [n] are finite, we observe that Xf [z] has two poles at z = ∞ because
+          of terms xf [−2]z2 + xf [−1]z and one pole at z = 0 because of term xf [1]/z. Thus, a finite-duration
+          sequence could have poles at z = 0 and z = ∞. Observe that Xf [z] converges for all values of z
+          except possibly z = 0 and z = ∞.
+                This means that the ROC of a general signal x[n] + xf [n] is the same as the ROC of x[n] with
+          the possible exception of z = 0 and z = ∞.
+                A right-sided sequence is zero for n < N2 < ∞ and a left-sided sequence is zero for n > N1 >
+          −∞. A causal sequence is always a right-sided sequence, but the converse is not necessarily true.
+          An anticausal sequence is always a left-sided sequence, but the converse is not necessarily true. A
+          two-sided sequence is of infinite duration and is neither right-sided nor left-sided.
+                A right-sided sequence xr [n] can be expressed as xr [n] = xc [n] + xf [n], where xc [n] is a causal
+          signal and xf [n] is a finite-duration signal. Therefore, the ROC for xr [n] is the same as the ROC for
+          xc [n] except possibly z = ∞. If z = β is the largest magnitude pole for a right-sided sequence xr [n],
+          its ROC is |β| < |z| ≤ ∞. Similarly, a left-sided sequence can be expressed as xl [n] = xa [n] + xf [n],
+          where xa [n] is an anticausal sequence and xf [n] is a finite-duration signal. Therefore, the ROC for
+          xl [n] is the same as the ROC for xa [n] except possibly z = 0. Thus, if z = α is the smallest magnitude
+          nonzero pole for a left-sided sequence, its ROC is 0 ≤ |z| < |α|.
+
+
+
+
+      E X A M P L E 5.17 Bilateral z-Transform
+
+          Determine the bilateral z-transform of
+
+                                        x[n] = (0.9)n u[n] + (1.2)n u[−(n + 1)]
+                                                                      
+                                                    x1 [n]           x2 [n]
+
+
+
+
+          From the results in Eqs. (5.51) and (5.52), we have
+                                                         z
+                                             X1 [z] =              |z| > 0.9
+                                                      z − 0.9
+                                                        −z
+                                             X2 [z] =              |z| < 1.2
+                                                      z − 1.2
+          The common region where both X1 [z] and X2 [z] converge is 0.9 < |z| < 1.2 (Fig. 5.28b). Hence,
+
+                                    X[z] = X1 [z] + X2 [z]
+                                               z           z
+                                         =          −
+                                           z − 0.9 z − 1.2
+                                                  −0.3z
+                                         =                           0.9 < |z| < 1.2
+                                           (z − 0.9)(z − 1.2)
+          The sequence x[n] and the ROC of X[z] are depicted in Fig. 5.28.
+
+[[PAGE page-557]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 557 — #70
+
+
+
+
+                                                                  5.8    The Bilateral z-Transform         557
+
+
+
+                                                                           Im               z plane
+
+                            x[n]
+                    1
+
+
+
+                                                                                      0.9             Re
+                                                                                      1.2
+
+
+
+
+      15               0           15      25
+                                             n
+
+
+                        (a)                                                     (b)
+Figure 5.28 (a) Signal x[n] and (b) ROC of X[z].
+
+
+
+
+E X A M P L E 5.18 Inverse Bilateral z-Transform
+
+      Find the inverse bilateral z-transform of
+
+                                                      −z(z + 0.4)
+                                           X[z] =
+                                                    (z − 0.8)(z − 2)
+
+      if the ROC is (a) |z| > 2, (b) |z| < 0.8, and (c) 0.8 < |z| < 2.
+
+
+            (a)
+                                   X[z]      −(z + 0.4)       1      2
+                                        =                 =       −
+                                    z     (z − 0.8)(z − 2) z − 0.8 z − 2
+      and                                              z        z
+                                           X[z] =           −2
+                                                    z − 0.8    z−2
+      Since the ROC is |z| > 2, both terms correspond to causal sequences and
+
+                                         x[n] = [(0.8)n − 2(2)n ]u[n]
+
+      This sequence appears in Fig. 5.29a.
+
+[[PAGE page-558]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 558 — #71
+
+
+
+
+558      CHAPTER 5          DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+              (b) In this case, |z| < 0.8, which is less than the magnitudes of both poles. Hence, both
+          terms correspond to anticausal sequences, and
+
+                                        x[n] = [−(0.8)n + 2(2)n ]u[−(n + 1)]
+
+          This sequence appears in Fig. 5.29b.
+              (c) In this case, 0.8 < |z| < 2; the part of X[z] corresponding to the pole at 0.8 is a causal
+          sequence, and the part corresponding to the pole at 2 is an anticausal sequence:
+
+                                        x[n] = (0.8)n u[n] + 2(2)n u[−(n + 1)]
+
+          This sequence appears in Fig. 5.29c.
+
+
+
+
+                                                 n                                               n
+                 0      5       10          15                              15    10      5       0
+          x[n]                                                                                           x[n]
+
+                                                                                                     20
+      5  105
+
+                                                                                                     40
+
+         106
+                                                                                                     60
+
+
+
+
+                                (a)                                               (b)
+
+                                                            1
+                                                                x[n]
+
+
+
+
+                                      10        5     0          5   10               n
+
+                                                        (c)
+      Figure 5.29 Three possible inverse transforms of X[z].
+
+[[PAGE page-559]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 559 — #72
+
+
+
+
+                                                              5.8   The Bilateral z-Transform   559
+
+
+
+ D R I L L 5.23 Inverse Bilateral z-Transform
+ Find the inverse bilateral z-transform of
+                                              z
+                               X[z] =                        1
+                                                               > |z| > 13
+                                        z2 + 56 z + 16       2
+
+
+
+
+ ANSWER
+        n           n
+     − 13 u[n] + 6 − 12 u[−(n + 1)]
+
+
+
+I NVERSE T RANSFORM BY E XPANSION OF X[z] IN P OWER S ERIES OF z
+We have
+                                                  "
+                                         X[z] =          x[n]z−n
+                                                    n
+
+For an anticausal sequence, which exists only for n ≤ −1, this equation becomes
+
+                            X[z] = x[−1]z + x[−2]z2 + x[−3]z3 + · · ·
+
+We can find the inverse z-transform of X[z] by dividing the numerator polynomial by the
+denominator polynomial, both in ascending powers of z, to obtain a polynomial in ascending
+powers of z. Thus, to find the inverse transform of z/(z − 0.5) (when the ROC is |z| < 0.5), we
+divide z by −0.5+z to obtain −2z−4z2 −8z3 −· · · . Hence, x[−1] = −2, x[−2] = −4, x[−3] = −8,
+and so on.

@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.2-2",
+  "sourcePages": [
+    "page-505",
+    "page-506"
+  ],
+  "usedPages": [
+    "page-505",
+    "page-506"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.2-2 z-Domain Scaling Property (Multiplication by γ n )",
+  "foundEnd": true,
+  "endBeforeLine": "5.2-3 z-Domain Differentiation Property (Multiplication by n)",
+  "endBeforeCode": "5.2-3",
+  "charCount": 1552
+}

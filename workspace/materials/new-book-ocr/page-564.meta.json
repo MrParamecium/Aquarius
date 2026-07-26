@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.9. OCR text begins with: 564 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM x(t) x[n] x(t) n t x[n] y[n] x(t) y(t) H[z] H [e sT] y[n] y(t)",
+  "keywords": [
+    "5.9",
+    "unit impulse",
+    "discrete-time",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-564",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

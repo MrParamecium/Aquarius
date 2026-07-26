@@ -1,0 +1,57 @@
+{
+  "sectionId": "4.2-6",
+  "sectionTitle": "Time Convolution and Frequency Convolution",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-357",
+      "page-358",
+      "page-359"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.17)",
+      "name": "Time-convolution property",
+      "latex": "x_1(t)*x_2(t)\\Longleftrightarrow X_1(s)X_2(s)",
+      "sourcePage": "page-357",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.18)",
+      "name": "LTIC zero-state response in the s-domain",
+      "latex": "Y(s)=X(s)H(s)",
+      "sourcePage": "page-358",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "(4.19)",
+      "name": "LTIC transfer function as response/input ratio",
+      "latex": "H(s)=\\frac{Y(s)}{X(s)}=\\frac{\\mathcal{L}[\\text{zero-state response}]}{\\mathcal{L}[\\text{input}]}",
+      "sourcePage": "page-358",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.20)",
+      "name": "Initial value theorem",
+      "latex": "x(0^+)=\\lim_{s\\to\\infty}sX(s)",
+      "sourcePage": "page-359",
+      "role": "core_theorem",
+      "status": "verified"
+    },
+    {
+      "label": "(4.21)",
+      "name": "Final value theorem",
+      "latex": "\\lim_{t\\to\\infty}x(t)=\\lim_{s\\to0}sX(s)",
+      "sourcePage": "page-359",
+      "role": "core_theorem",
+      "status": "verified"
+    }
+  ]
+}

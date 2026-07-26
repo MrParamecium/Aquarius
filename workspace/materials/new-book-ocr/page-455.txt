@@ -1,0 +1,53 @@
+              “04-Lathi-C04” — 2017/9/25 — 19:46 — page 455 — #126
+
+
+
+
+                                                      4.12 MATLAB: Continuous-Time Filters          455
+
+
+E X A M P L E 4.35 System Response to a Noncausal Input
+
+    Find the response y(t) of a system with the transfer function
+                                                   1
+                                        H(s) =               Re s > −5
+                                                  s+5
+    and the input
+                                         x(t) = e−t u(t) + e−2t u(−t)
+
+
+
+    The input x(t) is of the type depicted in Fig. 4.58f, and the region of convergence for X(s) does
+    not exist. In this case, we must determine separately the system response to each of the two
+    input components, x1 (t) = e−t u(t) and x2 (t) = e−2t u(−t).
+                                                  1
+                                       X1 (s) =              Re s > −1
+                                                s+1
+                                                 −1
+                                       X2 (s) =              Re s < −2
+                                                s+2
+    If y1 (t) and y2 (t) are the system responses to x1 (t) and x2 (t), respectively, then
+                                          1         1/4   1/4
+                         Y1 (s) =                 =     −                    Re s > −1
+                                    (s + 1)(s + 5) s + 1 s + 5
+    so that
+                                          y1 (t) = 14 (e−t − e−5t )u(t)
+    and
+                                     −1          −1/3   1/3
+                     Y2 (s) =                  =      +                   −5 < Re s < −2
+                                (s + 2)(s + 5)   s+2 s+5
+    so that
+                                      y2 (t) = 13 [e−2t u(−t) + e−5t u(t)]
+    Therefore,                                                                  
+                         y(t) = y1 (t) + y2 (t) = 13 e−2t u(−t) + 14 e−t + 12
+                                                                           1 −5t
+                                                                              e    u(t)
+
+
+
+
+    4.12 MATLAB: C ONTINUOUS -T IME F ILTERS
+    Continuous-time filters are essential to many if not most engineering systems, and MATLAB
+    is an excellent assistant for filter design and analysis. Although a comprehensive treatment of
+    continuous-time filter techniques is outside the scope of this book, quality filters can be designed
+    and realized with minimal additional theory.

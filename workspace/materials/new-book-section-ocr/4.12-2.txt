@@ -1,0 +1,114 @@
+# Fourier section OCR
+section_id: 4.12-2
+source_pages: page-459, page-460, page-461
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.12-2 Butterworth Filters and the Find Command
+The pole location of a first-order lowpass filter is necessarily fixed by the cutoff frequency. There
+is little reason, however, to place all the poles of a 10th-order filter at one location. Better pole
+placement will improve our filter’s magnitude response. One strategy, discussed in Sec. 4.10, is to
+place a wall of poles opposite the passband frequencies. A semicircular wall of poles leads to the
+Butterworth family of filters, and a semi-elliptical shape leads to the Chebyshev family of filters.
+Butterworth filters are considered first.
+      To begin, notice that a transfer function H(s) with real coefficients has a squared magnitude
+response given by |H(jω)|2 = H(jω)H ∗ (jω) = H(jω)H(−jω) = H(s)H(−s)|s=jω . Thus, half the
+poles of |H(jω)|2 correspond to the filter H(s) and the other half correspond to H(−s). Filters that
+are both stable and causal require H(s) to include only left-half-plane poles.
+      The squared magnitude response of a Butterworth filter is
+                                                                 1
+                                          |HBW (jω)|2 =
+                                                          1 + (jω/jωc )2N
+This function has the same appealing characteristics as the first-order RC filter: a gain that is unity
+at ω = 0 and monotonically decreases to zero as ω → ∞. By construction, the half-power gain
+
+[[PAGE page-460]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 460 — #131
+
+
+
+
+460   CHAPTER 4                         CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                              2
+
+                            1.5
+
+                              1
+
+
+
+
+       Imaginary (3 104)
+                            0.5
+
+                              0
+
+                           – 0.5
+
+                             –1
+
+                           –1.5
+
+                             –2
+                                   –2 –1.5 –1 – 0.5   0   0.5   1   1.5   2   Figure 4.65 Roots of |HBW (jω)|2 for N = 10 and
+                                                Real (3 104)                  ωc = 3000(2π ).
+
+
+      occurs at ωc . Perhaps most importantly, however, the first 2N − 1 derivatives of |HBW (jω)| with
+      respect to ω are zero at ω = 0. Put another way, the passband is constrained to be very flat for low
+      frequencies. For this reason, Butterworth filters are sometimes called maximally flat filters.
+           As discussed in Sec. B.7, the roots of minus 1 must lie equally spaced on a circle centered
+      at the origin. Thus, the 2N poles of |HBW (jω)|2 naturally lie equally spaced on a circle of radius
+      ωc centered at the origin. Figure 4.65 displays the 20 poles corresponding to the case N = 10 and
+      ωc = 3000(2π ) rad/s. An Nth-order Butterworth filter that is both causal and stable uses the N
+      left-half-plane poles of |HBW (jω)|2 .
+           To design a 10th-order Butterworth filter, we first compute the 20 poles of |HBW (jω)|2 :
+
+      >>                   N=10; poles = roots([(1j*omega_c)^(-2*N),zeros(1,2*N-1),1]);
+
+      The find command is a powerful and useful function that returns the indices of a vector’s nonzero
+      elements. Combined with relational operators, the find command allows us to extract the 10
+      left-half-plane roots that correspond to the poles of our Butterworth filter.
+
+      >>                   BW_poles = poles(find(real(poles)<0));
+
+      To compute the magnitude response, these roots are converted to coefficient vector A.
+
+      >>                   A = poly(BW_poles); A = A/A(end); Hmag_BW = abs(CH4MP1(B,A,f*2*pi));
+      >>                   plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_BW,’k--’);
+      >>                   axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+      >>                   legend(’Ideal’,’Tenth-order Butterworth’,’location’,’best’);
+
+           The magnitude response plot of the Butterworth filter is shown in Fig. 4.66. The Butterworth
+      response closely approximates the brick-wall function and provides excellent filter characteristics:
+      flat passband, rapid transition to the stopband, and excellent stopband attenuation (>40 dB at
+      5 kHz).
+
+[[PAGE page-461]]
+“04-Lathi-C04” — 2017/12/5 — 19:19 — page 461 — #132
+
+
+
+
+                                                            4.12   MATLAB: Continuous-Time Filters                 461
+
+                     1
+                                                                                   Ideal
+                    0.8                                                            Tenth-order Butterworth
+
+
+
+      |H(j2 π f)|
+                    0.6
+
+                    0.4
+
+                    0.2
+
+                     0
+                          0        0.2     0.4      0.6     0.8      1      1.2     1.4        1.6           1.8     2
+                                                                   f [Hz]                                          ×104
+      Figure 4.66 Magnitude response |HBW (j2π f )| of a tenth-order Butterworth filter.

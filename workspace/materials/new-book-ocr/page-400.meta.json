@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-5",
+  "title": null,
+  "summary": "This page covers 4.6-5. OCR text begins with: 400 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS T HE S CALAR M ULTIPLIER If we use a resistor Rf in the feedback and a resistor R at the input (Fig. 4.29a), then Zf (s) = Rf , Z(s) = R, and Rf H(s) = − R",
+  "keywords": [
+    "4.6",
+    "4.6-5",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-400",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,53 @@
+                       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 430 — #101
+
+
+
+
+430       CHAPTER 4     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.29 Bode Plots for Second-Order Transfer Function with
+      Real Roots
+
+          Sketch Bode plots for the transfer function
+
+                                                         20s(s + 100)
+                                              H(s) =
+                                                        (s + 2)(s + 10)
+
+
+          M AGNITUDE P LOT
+          First, we write the transfer function in normalized form
+                                                         s                          s
+                                              s 1+                         s 1+
+                                 20 × 100               100                        100
+                        H(s) =                                   = 100
+                                  2 × 10       s            s                  s          s
+                                            1+          1+                1+       1+
+                                               2           10                  2         10
+
+          Here, the constant term is 100; that is, 40 dB (20 log 100 = 40). This term can be added to the
+          plot by simply relabeling the horizontal axis (from which the asymptotes begin) as the 40 dB
+          line (see Fig. 4.45a). Such a step implies shifting the horizontal axis upward by 40 dB. This is
+          precisely what is desired.
+               In addition, we have two first-order poles at −2 and −10, one zero at the origin, and one
+          zero at −100.
+
+          Step 1. For each of these terms, we draw an asymptotic plot as follows (shown in Fig. 4.45a
+          by dashed lines):
+              (a) For the zero at the origin, draw a straight line with a slope of 20 dB/decade passing
+                  through ω = 1.
+              (b) For the pole at −2, draw a straight line with a slope of −20 dB/decade (for ω > 2)
+                  beginning at the corner frequency ω = 2.
+              (c) For the pole at −10, draw a straight line with a slope of −20 dB/decade beginning at
+                  the corner frequency ω = 10.
+              (d) For the zero at −100, draw a straight line with a slope of 20 dB/decade beginning at
+                  the corner frequency ω = 100.
+
+          Step 2. Add all the asymptotes, as depicted in Fig. 4.45a by solid line segments.
+
+          Step 3. Apply the following corrections (see Fig. 4.42a):
+              (a) The correction at ω = 1 because of the corner frequency at ω = 2 is −1 dB. The
+                  correction at ω = 1 because of the corner frequencies at ω = 10 and ω = 100 is quite
+                  small (see Fig. 4.42a) and may be ignored. Hence, the net correction at ω = 1 is
+                  −1 dB.

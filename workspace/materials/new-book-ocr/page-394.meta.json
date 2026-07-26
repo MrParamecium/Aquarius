@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": "4.6-3",
+  "title": null,
+  "summary": "This page covers 4.6-3. OCR text begins with: 394 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS We can express H(s) as 4s + 28 4s + 28 1 H(s) = = (s + 1)(s + 5) s+1 s+5 \u0019 \u001a\u001b \u0019 \u001a\u001b",
+  "keywords": [
+    "4.6",
+    "4.6-3",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-394",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

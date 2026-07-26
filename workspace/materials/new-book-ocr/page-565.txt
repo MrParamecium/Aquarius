@@ -1,0 +1,66 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 565 — #78
+
+
+
+
+                                                    5.10     MATLAB: Discrete-Time IIR Filters         565
+
+then
+                                              Y(s) = H[esT ]X(s)                                    (5.53)
+Also,                                             ∞                     
+                                                   "
+                                       X(s) = L           x[n]δ(t − nT)
+                                                    n=0
+
+Now because the Laplace transform of δ(t − nT) is e−snT ,
+                                ∞
+                                "                                         ∞
+                                                                          "
+                       X(s) =         x[n]e−snT      and        Y(s) =          y[n]e−snT
+                                n=0                                       n=0
+
+Substitution of these expressions into Eq. (5.53) yields
+                               ∞
+                                                      ∞           
+                              "                        "
+                                       −snT                   −snT
+                                 y[n]e      = H[e ]
+                                                  sT
+                                                         x[n]e
+                                n=0                            n=0
+
+By introducing a new variable z = esT , this equation can be expressed as
+                                      ∞
+                                      "                       ∞
+                                                              "
+                                             y[n]z−n = H[z]         x[n]z−n
+                                       n=0                    n=0
+
+or
+                                                Y[z] = H[z]X[z]
+where
+                                  ∞
+                                  "                                       ∞
+                                                                          "
+                         X[z] =         x[n]z−n      and        Y[z] =          y[n]z−n
+                                  n=0                                     n=0
+
+It is clear from this discussion that the z-transform can be considered to be the Laplace transform
+with a change of variable z = esT or s = (1/T) ln z. Note that the transformation z = esT transforms
+the imaginary axis in the s plane (s = jω) into a unit circle in the z plane (z = esT = ejωT , or |z| = 1).
+The LHP and RHP in the s-plane map into the inside and the outside, respectively, of the unit circle
+in the z plane.
+
+
+
+5.10 MATLAB: D ISCRETE -T IME IIR F ILTERS
+Recent technological advancements have dramatically increased the popularity of discrete-time
+filters. Unlike their continuous-time counterparts, the performance of discrete-time filters is not
+affected by component variations, temperature, humidity, or age. Furthermore, digital hardware is
+easily reprogrammed, which allows convenient change of device function. For example, certain
+digital hearing aids are individually programmed to match the required response of a user.
+      Typically, discrete-time filters are categorized as infinite-impulse response (IIR) or
+finite-impulse response (FIR). A popular method to obtain a discrete-time IIR filter is by
+transformation of a corresponding continuous-time filter design. MATLAB greatly assists this
+process. Although discrete-time IIR filter design is the emphasis of this section, methods for
+discrete-time FIR filter design are considered in Sec. 9.7.

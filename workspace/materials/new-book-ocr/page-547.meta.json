@@ -1,0 +1,21 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": "Digital Processing Of Analog Signals",
+  "summary": "This page covers 5.7 (Digital Processing Of Analog Signals). OCR text begins with: 5.7 Digital Processing of Analog Signals 547 D R I L L 5.21 Highpass Filter by Pole-Zero Placement Use the graphical argument to show that a filter with transfer function z − 0.9 H[z] = z acts like a highpass filter. Make a rough sketch of the amplitude response.",
+  "keywords": [
+    "5.7",
+    "Digital Processing Of Analog Signals",
+    "discrete-time",
+    "continuous-time",
+    "LTIC system",
+    "sampling",
+    "digital filter"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-547",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

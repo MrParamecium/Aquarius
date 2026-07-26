@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.4",
+  "subsection": null,
+  "title": "System Realization 521",
+  "summary": "This page covers 5.4 (System Realization 521). OCR text begins with: 5.4 System Realization 521 system is H1 [z] + H2 [z]. For a feedback system (as in Fig. 4.18d), the transfer function is G[z]/(1 + G[z]H[z]). We now consider a systematic method for realization (or simulation) of an arbitrary Nth-order LTID transfer function. Since realization is basically a synthesis problem, there is no unique way of realizing a system. A given transfer function can be realized in many different wa",
+  "keywords": [
+    "5.4",
+    "System Realization 521",
+    "LTIC system",
+    "LTID system"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-521",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

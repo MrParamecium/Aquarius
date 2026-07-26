@@ -1,0 +1,63 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 419 — #90
+
+
+
+
+                                                                                              4.9   Bode Plots   419
+
+characteristic polynomial given by Q(s) = (s − λ1 )(s − λ2 ) · · · (s − λN ).† Hence,
+
+                                                                     P(s)
+                       Y(s) = X(s)H(s) =
+                                                   (s − λ1 )(s − λ2 ) · · · (s − λN )(s − jω)
+
+In the partial fraction expansion of the right-hand side, let the coefficients corresponding to the N
+terms (s − λ1 ), (s − λ2 ), . . . , (s − λN ) be k1 , k2 , . . . , kN . The coefficient corresponding to the last
+term (s − jω) is P(s)/Q(s)|s=jω = H(jω). Hence,
+
+                                                      "
+                                                      n
+                                                             ki       H(jω)
+                                          Y(s) =                    +
+                                                       i=1
+                                                           s −  λ i   s − jω
+
+and
+                                          "
+                                          n
+                               y(t) =         ki eλi t u(t) + H(jω)ejωt u(t)
+                                                                                 
+                                          i=1
+                                                         steady-state component yss (t)
+                                        transient component ytr (t)
+
+
+For an asymptotically stable system, the characteristic mode terms eλi t decay with time, and,
+therefore, constitute the so-called transient component of the response. The last term H(jω)ejωt
+persists forever, and is the steady-state component of the response given by
+
+                                              yss (t) = H(jω)ejωt u(t)
+
+This result also explains why an everlasting exponential input ejωt results in the total response
+H(jω)ejωt for BIBO systems. Because the input started at t = −∞, at any finite time the decaying
+transient component has long vanished, leaving only the steady-state component. Hence, the total
+response appears to be H(jω)ejωt .
+     From the argument that led to Eq. (4.43), it follows that for a causal sinusoidal input cos ωt,
+the steady-state response yss (t) is given by
+
+                                  yss (t) = |H(jω)| cos [ωt +  H(jω)]u(t)
+
+    In summary, |H(jω)| cos [ωt +  H(jω)] is the total response to everlasting sinusoid cos ωt. In
+contrast, it is the steady-state response to the same input applied at t = 0.
+
+
+
+4.9 B ODE P LOTS
+Sketching frequency response plots (|H(jω)| and  H(jω) versus ω) is considerably facilitated by
+the use of logarithmic scales. The amplitude and phase response plots as a function of ω on a
+logarithmic scale are known as Bode plots. By using the asymptotic behavior of the amplitude and
+the phase responses, we can sketch these plots with remarkable ease, even for higher-order transfer
+functions.
+
+† For simplicity, we have assumed nonrepeating characteristic roots. The procedure is readily modified for
+repeated roots, and the same conclusion results.

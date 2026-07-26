@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.4",
+  "subsection": null,
+  "title": "System Realization 525",
+  "summary": "This page covers 5.4 (System Realization 525). OCR text begins with: 5.4 System Realization 525 For H[z], b0 = 1, b1 = 4, b2 = 5, and b3 = 2. Hence, we obtain the canonic direct realization, shown in Fig. 5.13a. We have shown the horizontal orientation because it is easier to see that this filter is basically a tapped delay line. That is why this structure is also known as a tapped delay line or transversal filter. Figure 5.13b shows the corresponding transposed implementation. C ASCA",
+  "keywords": [
+    "5.4",
+    "System Realization 525",
+    "LTIC system",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-525",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

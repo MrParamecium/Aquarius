@@ -1,0 +1,59 @@
+                       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 444 — #115
+
+
+
+
+444   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      4.10-5 Practical Filters and Their Speciﬁcations
+      For ideal filters, everything is black and white; the gains are either zero or unity over certain bands.
+      As we saw earlier, real life does not permit such a worldview. Things have to be gray or shades
+      of gray. In practice, we can realize a variety of filter characteristics that can only approach ideal
+      characteristics.
+           An ideal filter has a passband (unity gain) and a stopband (zero gain) with a sudden transition
+      from the passband to the stopband. There is no transition band. For practical (or realizable) filters,
+      on the other hand, the transition from the passband to the stopband (or vice versa) is gradual and
+      takes place over a finite band of frequencies. Moreover, for realizable filters, the gain cannot be
+      zero over a finite band (Paley–Wiener condition). As a result, there can be no true stopband for
+      practical filters. We therefore define a stopband to be a band over which the gain is below some
+      small number Gs , as illustrated in Fig. 4.55. Similarly, we define a passband to be a band over
+      which the gain is between 1 and some number Gp (Gp < 1), as shown in Fig. 4.55. We have
+      selected the passband gain of unity for convenience. It could be any constant. Usually the gains
+      are specified in terms of decibels. This is simply 20 times the log (to base 10) of the gain. Thus,
+
+                                              Ĝ(dB) = 20 log10 G
+                                             √
+      A gain of unity is 0 dB and a gain of 2 is 3.01 dB, usually approximated by 3 dB. Sometimes
+      the specification
+                 √      may be in terms of attenuation, which is the negative of the gain in dB. Thus, a
+      gain of 1/ 2, that is, 0.707, is −3 dB, but is an attenuation of 3 dB.
+
+
+            H( jv)                                      H( jv)
+              1                                             1
+             Gp                                            Gp
+
+
+
+
+             Gs                                            Gs
+
+               0          vp      vs                         0        vs1    vp1       vp2 vs2
+                                                v                                                v
+                                (a)                                           (b)
+
+
+            H( jv)                                      H( jv)
+
+              1                                             1
+             Gp                                            Gp
+
+
+
+
+             Gs                                            Gs
+
+               0                 vs       vp                 0        vp1    vs1     vs2 vp2
+                                                v                                                v
+                                (c)                                           (d)
+            Figure 4.55 Passband, stopband, and transition band in filters of various types.

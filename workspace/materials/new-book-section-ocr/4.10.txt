@@ -1,0 +1,11 @@
+# Fourier section OCR
+section_id: 4.10
+source_pages: page-436
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.10 F ILTER D ESIGN BY P LACEMENT OF P OLES
+      AND Z EROS OF H(s)
+      In this section we explore the strong dependence of frequency response on the location of poles
+      and zeros of H(s). This dependence points to a simple intuitive procedure to filter design.

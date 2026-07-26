@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.8. OCR text begins with: 562 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM E X A M P L E 5.20 Zero-State Response for an Input with No z-Transform For the system in Ex. 5.19, find the zero-state response to input x[n] = (0.8)n u[n] + (0.6)n u[−(n + 1)] \u0019 \u001a\u001b \u0019 \u001a\u001b x1 [n] x2 [n]",
+  "keywords": [
+    "5.8",
+    "zero-state response",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-562",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

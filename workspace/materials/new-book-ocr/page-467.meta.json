@@ -1,0 +1,23 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-4",
+  "title": "Summary",
+  "summary": "This page covers 4.12-4 (Summary). OCR text begins with: 4.13 Summary 467 equations. Therefore solving these integro-differential equations reduces to solving algebraic equations. The Laplace transform method cannot be used for time-varying-parameter systems or for nonlinear systems in general. The transfer function H(s) of an LTIC system is the Laplace transform of its impulse response. It may also be defined as a ratio of the Laplace transform of the output to the Laplac",
+  "keywords": [
+    "4.12",
+    "4.12-4",
+    "Summary",
+    "zero-state response",
+    "impulse response",
+    "differential equation",
+    "continuous-time",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "summary",
+  "book_page": "page-467",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

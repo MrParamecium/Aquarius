@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.11",
+  "subsection": "4.11-2",
+  "title": null,
+  "summary": "This page covers 4.11-2. OCR text begins with: 4.12 MATLAB: Continuous-Time Filters 455 E X A M P L E 4.35 System Response to a Noncausal Input Find the response y(t) of a system with the transfer function 1 H(s) = Re s > −5 s+5 and the input",
+  "keywords": [
+    "4.11",
+    "4.11-2",
+    "unit step",
+    "continuous-time",
+    "system response",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-455",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

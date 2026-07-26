@@ -1,0 +1,60 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 437 — #108
+
+
+
+
+                                    4.10 Filter Design by Placement of Poles and Zeros of H(s)            437
+
+                           p                                             p
+                                      Im                                                Im
+            p  zi
+                                p
+                                                           d1
+         zi
+                                                                    d2        r1
+                                                            u1                           r2
+                     zi                             l1
+
+                                                                                   f1              f2
+
+                                       Re                                     z1                z2 Re
+
+                                                            u2
+                                                    l2
+
+                          (a)                                                (b)
+      Figure 4.48 Vector representations of (a) complex numbers and (b) factors of H(s).
+
+
+respectively, of the vector p − λi . Now from Eq. (4.53) it follows that
+
+                                           (r1 ejφ1 )(r2 ejφ2 ) · · · (rN ejφN )
+                           H(s)|s=p = b0
+                                           (d1 ejθ1 )(d2 ejθ2 ) · · · (dN ejθN )
+                                           r1 r2 · · · rN j[(φ1 +φ2 +· · ·+φN )−(θ1 +θ2 +· · ·+θN )]
+                                      = b0                e
+                                           d1 d2 · · · dN
+Therefore
+                                       r1 r2 · · · rN      product of distances of zeros to p
+                      |H(s)|s=p = b0                  = b0                                              (4.54)
+                                       d1 d2 · · · dN      product of distances of poles to p
+and
+                    H(s)|s=p = (φ1 + φ2 + · · · + φN ) − (θ1 + θ2 + · · · + θN )
+                              = sum of angles of zeros to p − sum of angles of poles to p               (4.55)
+
+Here, we have assumed positive b0 . If b0 is negative, there is an additional phase π . Using this
+procedure, we can determine H(s) for any value of s. To compute the frequency response H(jω),
+we use s = jω (a point on the imaginary axis), connect all poles and zeros to the point jω, and
+determine |H(jω)| and  H(jω) from Eqs. (4.54) and (4.55). We repeat this procedure for all values
+of ω from 0 to ∞ to obtain the frequency response.
+
+G AIN E NHANCEMENT BY A P OLE
+To understand the effect of poles and zeros on the frequency response, consider a hypothetical case
+of a single pole −α + jω0 , as depicted in Fig. 4.49a. To find the amplitude response |H(jω)| for a
+certain value of ω, we connect the pole to the point jω (Fig. 4.49a). If the length of this line is d,
+then |H(jω)| is proportional to 1/d,
+                                                       K
+                                            |H(jω)| =                                          (4.56)
+                                                       d
+where the exact value of constant K is not important at this point. As ω increases from zero,
+d decreases progressively until ω reaches the value ω0 . As ω increases beyond ω0 , d increases

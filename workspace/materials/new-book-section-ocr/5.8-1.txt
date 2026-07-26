@@ -1,0 +1,67 @@
+# Fourier section OCR
+section_id: 5.8-1
+source_pages: page-559, page-560
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.8-1 Properties of the Bilateral z-Transform
+Properties of the bilateral z-transform are similar to those of the unilateral transform. We shall
+merely state the properties here, without proofs, for xi [n] ⇐⇒ Xi [z].
+
+L INEARITY
+                            a1 x1 [n] + a2 x2 [n] ⇐⇒ a1 X1 [z] + a2 X2 [z]
+
+The ROC for a1 X1 [z] + a2 X2 [z] is the region common to (intersection of) the ROCs for X1 [z] and
+X2 [z].
+
+S HIFT
+                                   1
+                    x[n − m] ⇐⇒      X[z]         m is positive or negative integer
+                                  zm
+The ROC for X[z]/zm is the ROC for X[z] except for the addition or deletion of z = 0 or z = ∞
+caused by the factor 1/zm .
+
+[[PAGE page-560]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 560 — #73
+
+
+
+
+560   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      C ONVOLUTION
+                                           x1 [n] ∗ x2 [n] ⇐⇒ X1 [z]X2 [z]
+
+      The ROC for X1 [z]X2 [z] is the region common to (intersection of) the ROCs for X1 [z] and X2 [z].
+
+
+      M ULTIPLICATION BY γ n
+                                                                    !
+                                                            z
+                                                γ x[n] ⇐⇒ X
+                                                  n
+                                                            γ
+
+      If the ROC for X[z] is |γ1 | < |z| < |γ2 |, then the ROC for X[z/γ ] is |γ γ1 | < |z| < |γ γ2 |, indicating
+      that the ROC is scaled by the factor |γ |.
+
+
+      M ULTIPLICATION BY n
+                                                                 d
+                                             nx[n]u[n] ⇐⇒ −z        X[z]
+                                                                 dz
+
+      The ROC for −z(dX/dz) is the same as the ROC for X[z].
+
+
+      T IME R EVERSAL
+                                                 x[−n] ⇐⇒ X[1/z]
+
+      If the ROC for X[z] is |γ1 | < |z| < |γ2 |, then the ROC for X[1/z] is 1/|γ1 | > |z| > |1/γ2 |.
+
+
+      C OMPLEX C ONJUGATION
+                                                  x∗ [n] ⇐⇒ X ∗ [z∗ ]
+
+      The ROC for X ∗ [z∗ ] is the same as the ROC for X[z].

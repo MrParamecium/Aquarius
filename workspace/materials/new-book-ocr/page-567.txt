@@ -1,0 +1,59 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 567 — #80
+
+
+
+
+                                               5.10   MATLAB: Discrete-Time IIR Filters           567
+
+     Program CH5MP2 computes and plots the poles and zeros of an LTID system described by
+Eq. (5.55), again using vectors B and A.
+function [p,z] = CH5MP2(B,A);
+% CH5MP2.m : Chapter 5, MATLAB Program 2
+% Function M-file computes and plots poles and zeros for LTID systems
+% INPUTS:   B = vector of feedforward coefficients
+%           A = vector of feedback coefficients
+
+N_1 = length(B)-1; N_2 = length(A)-1;
+p = roots([A,zeros(1,N_1-N_2)]); z = roots([B,zeros(1,N_2-N_1)]);
+ucirc = exp(1j*linspace(0,2*pi,200)); % Compute unit circle for plot
+plot(real(p),imag(p),’xk’,real(z),imag(z),’ok’,real(ucirc),imag(ucirc),’k:’);
+xlabel(’Real’); ylabel(’Imag’);
+ax = axis; dx = 0.05*(ax(2)-ax(1)); dy = 0.05*(ax(4)-ax(3));
+axis(ax+[-dx,dx,-dy,dy]); axis equal;
+
+The right-hand side of Eq. (5.55) helps explain how the roots are computed. When N1 = N2 , the
+term zN2 −N1 implies additional roots at the origin. If N1 > N2 , the roots are poles, which are added
+by concatenating A with zeros(N_1-N_2,1); since N2 − N1 ≤ 0, zeros(N_2-N_1,1) produces
+the empty set and B is unchanged. If N2 > N1 , the roots are zeros, which are added by concatenating
+B with zeros(N_2-N_1,1); since N1 − N2 ≤ 0, zeros(N_1-N_2,1) produces the empty set and
+A is unchanged. Poles and zeros are indicated with black x’s and o’s, respectively. For visual
+reference, the unit circle is also plotted. The last two lines in CH5MP2 expand the plot axis box so
+that root locations are not obscured and also ensure that the real and imaginary axes are drawn to
+the same scale.
+
+
+5.10-2 Transformation Basics
+Transformation of a continuous-time filter to a discrete-time filter begins with the desired
+continuous-time transfer function
+                                                %M
+                                  Y(s) B(s)           bk+N−M sM−k
+                           H(s) =     =      = k=0%N
+                                  X(s) A(s)          k=0 ak s
+                                                              N−k
+
+
+As a matter of convenience, H(s) is represented in factored form as
+                                               7
+                                           bN−M Mk=1 (s − zk )
+                                    H(s) =     7N                                              (5.56)
+                                                k=1 (s − pk )
+                                            a0
+
+where zk and pk are the system poles and zeros, respectively.
+     A mapping rule converts the rational function H(s) to a rational function H[z]. Requiring
+that the result be rational ensures that the system realization can proceed with only delay,
+sum, and multiplier blocks. There are many possible mapping rules. For obvious reasons, good
+transformations tend to map the ω axis to the unit circle, ω = 0 to z = 1, ω = ∞ to z = −1, and the
+left half-plane to the interior of the unit circle. Put another way, sinusoids map to sinusoids, zero
+frequency maps to zero frequency, high frequency maps to high frequency, and stable systems map
+to stable systems.

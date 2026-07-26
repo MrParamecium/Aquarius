@@ -1,0 +1,421 @@
+# Fourier section OCR
+section_id: 5.1
+source_pages: page-488, page-489, page-490, page-491, page-492, page-493, page-494, page-495
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.1 T HE z-T RANSFORM
+      We define X[z], the direct z-transform of x[n], as
+                                                      ∞
+                                                      "
+                                             X[z] =          x[n]z−n                                  (5.1)
+                                                      n=−∞
+
+      where z is a complex variable. The signal x[n], which is the inverse z-transform of X[z], can be
+      obtained from X[z] by using the following inverse z-transformation:
+                                                       5
+                                                   1
+                                           x[n] =        X[z]zn−1 dz                                  (5.2)
+                                                  2π j
+                   6
+      The symbol indicates an integration in counterclockwise direction around a closed path in the
+      complex plane (see Fig. 5.1). We derive this z-transform pair later, in Ch. 9, as an extension of the
+      discrete-time Fourier transform pair.
+
+
+488
+
+[[PAGE page-489]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 489 — #2
+
+
+
+
+                                                                       5.1 The z-Transform         489
+
+     As in the case of the Laplace transform, we need not worry about this integral at this point
+because inverse z-transforms of many signals of engineering interest can be found in a z-transform
+table. The direct and inverse z-transforms can be expressed symbolically as
+
+                           X[z] = Z{x[n]}        and        x[n] = Z −1 {X[z]}
+
+or simply as
+                                             x[n] ⇐⇒ X[z]
+Note that
+                     Z −1 [Z{x[n]}] = x[n]         and       Z[Z −1 {X[z]}] = X[z]
+
+L INEARITY OF THE z-T RANSFORM
+Like the Laplace transform, the z-transform is a linear operator. If
+
+                           x1 [n] ⇐⇒ X1 [z]        and       x2 [n] ⇐⇒ X2 [z]
+
+then
+                              a1 x1 [n] + a2 x2 [n] ⇐⇒ a1 X1 [z] + a2 X2 [z]
+The proof is trivial and follows from the definition of the z-transform. This result can be extended
+to finite sums.
+
+T HE U NILATERAL z-T RANSFORM
+For the same reasons discussed in Ch. 4, we find it convenient to consider the unilateral
+z-transform. As seen for the Laplace case, the bilateral transform has some complications because
+of the non-uniqueness of the inverse transform. In contrast, the unilateral transform has a unique
+inverse. This fact simplifies the analysis problem considerably, but at a price: the unilateral version
+can handle only causal signals and systems. Fortunately, most of the practical cases are causal. The
+more general bilateral z-transform is discussed later, in Sec. 5.8. In practice, the term z-transform
+generally means the unilateral z-transform.
+     In a basic sense, there is no difference between the unilateral and the bilateral z-transform.
+The unilateral transform is the bilateral transform that deals with a subclass of signals starting at
+n = 0 (causal signals). Hence, the definition of the unilateral transform is the same as that of the
+bilateral [Eq. (5.1)], except that the limits of the sum are from 0 to ∞:
+                                                   ∞
+                                                   "
+                                          X[z] =         x[n]z−n                                 (5.3)
+                                                   n=0
+
+The expression for the inverse z-transform in Eq. (5.2) remains valid for the unilateral case also.
+
+T HE R EGION OF C ONVERGENCE (ROC) OF X[z]
+The sum in Eq. (5.1) [or Eq. (5.3)] defining the direct z-transform X[z] may not converge (exist)
+for all values of z. The values of z (the region in the complex plane) for which the sum in
+Eq. (5.1) converges (or exists) are called the region of existence, or more commonly the region
+of convergence (ROC), for X[z]. This concept will become clear in the following example.
+
+[[PAGE page-490]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 490 — #3
+
+
+
+
+490        CHAPTER 5            DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+      E X A M P L E 5.1 Bilateral z-Transform of a Causal Exponential
+
+           Find the z-transform and the corresponding ROC for the signal γ n u[n].
+
+
+           By definition,
+                                                                  ∞
+                                                                  "
+                                                         X[z] =           γ n u[n]z−n
+                                                                  n=0
+
+           Since u[n] = 1 for all n ≥ 0,
+                                          "∞        n                             2                  3
+                                              γ                   γ           γ                γ
+                                 X[z] =                 = 1+              +           +                  +· · ·+· · ·          (5.4)
+                                          n=0
+                                              z                   z           z                z
+
+           It is helpful to remember the geometric progression and its sum [see Sec. B.8-3]:
+                                                                            1
+                                          1 + x + x2 + x3 + · · · =                       if       |x| < 1
+                                                                           1−x
+           Applying this relationship to Eq. (5.4) yields
+                                                                               
+                                                                  1           γ 
+                                                    X[z] =                     <1
+                                                                      γ       z
+                                                               1−
+                                                                      z
+                                                                z
+                                                          =                   |z| > |γ |                                       (5.5)
+                                                               z−γ
+           Observe that X[z] exists only for |z| > |γ |. For |z| < |γ |, the sum in Eq. (5.4) does not converge;
+           it goes to infinity. Therefore, the ROC of X[z] is the shaded region outside the circle of radius
+           |γ |, centered at the origin, in the z-plane, as depicted in Fig. 5.1b.
+
+
+                                                                                          Im
+
+             g k u[n]
+
+
+
+
+                                                                                                   g
+                                                                                                                          Re
+
+
+
+
+            0 1         2   3    4   5    6     k                                                           Region of
+                                                                                                            convergence
+
+         Figure 5.1 γ n u[n] and the region of convergence of its z-transform.
+
+[[PAGE page-491]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 491 — #4
+
+
+
+
+                                                                             5.1 The z-Transform          491
+
+     Later in Eq. (5.52), we show that the z-transform of another signal, −γ n u[−(n + 1)], is
+also z/(z − γ ). However, the ROC in this case is |z| < |γ |. Clearly, the inverse z-transform of
+z/(z − γ ) is not unique. However, if we restrict the inverse transform to be causal, then the
+inverse transform is unique, namely, γ n u[n].
+
+
+
+     The ROC is required for evaluating x[n] from X[z], according to Eq. (5.2). The integral in
+Eq. (5.2) is a contour integral, implying integration in a counterclockwise direction along a closed
+path centered at the origin and satisfying the condition |z| > |γ |. Thus, any circular path centered at
+the origin and with a radius greater than |γ | (Fig. 5.1b) will suffice. We can show that the integral
+in Eq. (5.2) along any such path (with a radius greater than |γ |) yields the same result, namely,
+x[n].† Such integration in the complex plane requires a background in the theory of functions of
+complex variables. We can avoid this integration by compiling a table of z-transforms (Table 5.1),
+where z-transform pairs are tabulated for a variety of signals. To find the inverse z-transform of
+say, z/(z − γ ), instead of using the complex integration in Eq. (5.2), we consult the table and find
+the inverse z-transform of z/(z − γ ) as γ n u[n]. Because of the uniqueness property of the unilateral
+z-transform, there is only one inverse for each X[z]. Although the table given here is rather short,
+it comprises the functions of most practical interest.
+     The situation of the z-transform regarding the uniqueness of the inverse transform is parallel to
+that of the Laplace transform. For the bilateral case, the inverse z-transform is not unique unless the
+ROC is specified. For the unilateral case, the inverse transform is unique; the region of convergence
+need not be specified to determine the inverse z-transform. For this reason, we shall ignore the ROC
+in the unilateral z-transform Table 5.1.
+
+E XISTENCE OF THE z-T RANSFORM
+By definition,
+                                               ∞
+                                               "                  ∞
+                                                                  " x[n]
+                                      X[z] =         x[n]z−n =
+                                               n=0                n=0
+                                                                        zn
+
+The existence of the z-transform is guaranteed if
+
+                                                     ∞
+                                                     " |x[n]|
+                                         |X[z]| ≤                 <∞
+                                                     n=0
+                                                           |z|n
+
+for some |z|. Any signal x[n] that grows no faster than an exponential signal r0n , for some r0 ,
+satisfies this condition. Thus, if
+
+                                       |x[n]| ≤ r0n        for some r0                                  (5.6)
+
+
+† Indeed, the path need not even be circular. It can have any odd shape, as long as it encloses the pole(s) of
+X[z] and the path of integration is counterclockwise.
+
+[[PAGE page-492]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 492 — #5
+
+
+
+
+492   CHAPTER 5    DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      TABLE 5.1   Select (Unilateral) z-Transform Pairs
+
+      No.                 x[n]                                      X[z]
+
+       1                  δ[n − k]                                  z−k
+                                                                      z
+       2                  u[n]
+                                                                    z−1
+                                                                        z
+       3                  nu[n]
+                                                                    (z − 1)2
+                                                                    z(z + 1)
+       4                  n2 u[n]
+                                                                    (z − 1)3
+                                                                    z(z2 + 4z + 1)
+       5                  n3 u[n]
+                                                                       (z − 1)4
+                                                                      z
+       6                  γ n u[n]
+                                                                    z−γ
+                                                                      1
+       7                  γ n−1 u[n − 1]
+                                                                    z−γ
+                                                                       γz
+       8                  nγ n u[n]
+                                                                    (z − γ )2
+                                                                    γ z(z + γ )
+       9                  n2 γ n u[n]
+                                                                     (z − γ )3
+                          n(n − 1)(n − 2) · · · (n − m + 1) n            z
+      10                                                   γ u[n]
+                                      γ m m!                        (z − γ )m+1
+                                                                           z(z − |γ | cos β)
+      11a                 |γ |n cos βn u[n]
+                                                                    z2 − (2|γ | cos β)z + |γ |2
+                                                                            z|γ | sin β
+      11b                 |γ |n sin βn u[n]
+                                                                    z2 − (2|γ | cos β)z + |γ |2
+                                                                    rz[z cos θ − |γ | cos (β − θ )]
+      12a                 r|γ |n cos (βn + θ)u[n]
+                                                                     z2 − (2|γ | cos β)z + |γ |2
+                                                                    (0.5rejθ )z (0.5re−jθ )z
+      12b                 r|γ |n cos (βn + θ)u[n]    γ = |γ |ejβ               +
+                                                                      z−γ         z−γ∗
+                                                                       z(Az + B)
+      12c                 r|γ |n cos (βn + θ)u[n]
+                                                                    z2 + 2az + |γ |2
+                                    
+                                   A2 |γ |2 + B2 − 2AaB
+                             r=
+                                          |γ |2 − a2
+                                        −a
+                             β = cos−1
+                                        |γ |
+                                        Aa − B
+                             θ = tan−1 
+                                      A |γ |2 − a2
+
+[[PAGE page-493]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 493 — #6
+
+
+
+
+                                                                                   5.1 The z-Transform       493
+
+    then
+
+
+                                                   "∞        n
+                                                       r0              1
+                                        |X[z]| ≤                 =         r0    |z| > r0
+                                                   n=0
+                                                       |z|           1−
+                                                                           |z|
+
+
+    Therefore, X[z] exists for |z| > r0 . Almost all practical signals satisfy Eq. (5.6) and are therefore
+                                                      2
+    z-transformable. Some signal models (e.g., γ n ) grow faster than the exponential signal r0n (for
+    any r0 ) and do not satisfy Eq. (5.6) and therefore are not z-transformable. Fortunately, such
+    signals are of little practical or theoretical interest. Even such signals over a finite interval are
+    z-transformable.
+
+
+
+E X A M P L E 5.2 Bilateral z-Transform
+
+    Find the z-transforms of: (a) δ[n], (b) u[n], (c) cos βn u[n], and (d) the signal shown in Fig. 5.2.
+
+
+
+
+                    x[n]
+               1
+
+
+
+
+                0      1   2    3   4              n
+                                                           Figure 5.2 Signal for Ex. 5.2d.
+
+
+
+           Recall that by definition
+                                        ∞
+                                        "                        x[1] x[2] x[3]
+                               X[z] =         x[n]z−n = x[0] +       + 2 + 3 +· · ·                      (5.7)
+                                        n=0
+                                                                  z    z    z
+
+           (a) For x[n] = δ[n], x[0] = 1 and x[2] = x[3] = x[4] = · · · = 0. Therefore,
+
+                                                 δ[n] ⇐⇒ 1           for all z
+
+           (b) For x[n] = u[n], x[0] = x[1] = x[3] = · · · = 1. Therefore,
+                                                           1 1    1
+                                              X[z] = 1 +    + 2 + 3 +· · ·
+                                                           z z   z
+
+[[PAGE page-494]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 494 — #7
+
+
+
+
+494   CHAPTER 5     DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      This geometric sum simplifies [see Sec. B.8-3] to
+                                                                         
+                                                        1               1
+                                          X[z] =                         <1
+                                                            1           z
+                                                    1−
+                                                            z
+                                                     z
+                                                =                   |z| > 1
+                                                    z−1
+
+      Therefore,
+                                                         z
+                                          u[n] ⇐⇒                       |z| > 1
+                                                        z−1
+          (c) Recall that cos βn = (ejβn + e−jβn )/2. Moreover, according to Eq. (5.5),
+
+                                                       z
+                                e±jβn u[n] ⇐⇒                           |z| > |e±jβ | = 1
+                                                    z − e±jβ
+
+      Therefore,                                !
+                             1    z       z           z(z − cos β)
+                      X[z] =          +           = 2                                         |z| > 1
+                             2 z − ejβ z − e−jβ    z − 2z cos β + 1
+          (d) Here x[0] = x[1] = x[2] = x[3] = x[4] = 1 and x[5] = x[6] = · · · = 0. Therefore,
+      according to Eq. (5.7),
+
+                                1 1   1  1  z4 + z3 + z2 + z + 1
+                   X[z] = 1 +    + 2+ 3+ 4=                                                 for all z = 0
+                                z z  z  z            z4
+
+      We can also express this result in a more compact form by summing the geometric progression
+      on the right-hand side of the foregoing equation. From the result in Sec. B.8-3 with r = 1/z, m =
+      0, and n = 4, we obtain
+
+                                                5               0
+                                            1               1
+                                                    −
+                                            z               z            z
+                                 X[z] =                             =       (1 − z−5 )
+                                                1                       z−1
+                                                  −1
+                                                z
+
+
+
+
+       D R I L L 5.1 Bilateral z-Transform
+
+           (a) Find the z-transform of a signal shown in Fig. 5.3.
+                                                                                √
+           (b) Use pair 12a (Table 5.1) to find the z-transform of x[n] = 20.65( 2)n cos [(π/4)n −
+               1.415]u[n].
+
+[[PAGE page-495]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 495 — #8
+
+
+
+
+                                                                      5.1 The z-Transform          495
+
+
+     ANSWERS
+                      z5 + z4 + +z3 + z2 + z + 1             z
+          (a) X[z] =                                 or         (z−4 − z−10 )
+                                  z9                        z−1
+              z(3.2z + 17.2)
+          (b)
+                z2 − 2z + 2
+
+
+               x[n]
+           1
+
+
+
+
+           0                4   5   6   7   8   9   n        Figure 5.3 Signal for Drill 5.1a.

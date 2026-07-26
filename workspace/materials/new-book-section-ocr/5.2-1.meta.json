@@ -1,0 +1,24 @@
+{
+  "sectionId": "5.2-1",
+  "sourcePages": [
+    "page-501",
+    "page-502",
+    "page-503",
+    "page-504",
+    "page-505"
+  ],
+  "usedPages": [
+    "page-501",
+    "page-502",
+    "page-503",
+    "page-504",
+    "page-505"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.2-1 Time-Shifting Properties",
+  "foundEnd": true,
+  "endBeforeLine": "5.2-2 z-Domain Scaling Property (Multiplication by γ n )",
+  "endBeforeCode": "5.2-2",
+  "charCount": 10174
+}

@@ -1,0 +1,53 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 527 — #40
+
+
+
+
+                                       5.5   Frequency Response of Discrete-Time Systems                 527
+
+In other words, the system response y[n] to a sinusoidal input cos n is given by
+
+                                   y[n] = |H[ej ]| cos (n +  H[ej ])
+
+Following the same argument, the system response to a sinusoid cos (n + θ ) is
+
+                                y[n] = |H[ej ]| cos (n + θ +  H[ej ])                             (5.33)
+
+This result is valid only for BIBO-stable or asymptotically stable systems. The frequency response
+is meaningless for BIBO-unstable systems (which include marginally stable and asymptotically
+unstable systems). This follows from the fact that the frequency response in Eq. (5.31) is obtained
+by setting z = ej in Eq. (5.30). But, as shown in Sec. 3.8-2 [Eqs. (3.38) and (3.39)], the relationship
+of Eq. (5.30) applies only for values of z for which H[z] exists. For BIBO-unstable systems, the
+ROC for H[z] does not include the unit circle where z = ej . This means, for BIBO-unstable
+systems, that H[z] is meaningless when z = ej .†
+     This important result shows that the response of an asymptotically or BIBO-stable LTID
+system to a discrete-time sinusoidal input of frequency  is also a discrete-time sinusoid of the
+same frequency. The amplitude of the output sinusoid is |H[ej ]| times the input amplitude, and
+the phase of the output sinusoid is shifted by  H[ej ] with respect to the input phase. Clearly,
+|H[ej ]| is the amplitude gain, and a plot of |H[ej ]| versus  is the amplitude response of the
+discrete-time system. Similarly,  H[ej ] is the phase response of the system, and a plot of  H[ej ]
+versus  shows how the system modifies or shifts the phase of the input sinusoid. Note that
+H[ej ] incorporates the information of both amplitude and phase responses and therefore is called
+the frequency responses of the system.
+
+S TEADY-S TATE R ESPONSE TO C AUSAL S INUSOIDAL I NPUT
+As in the case of continuous-time systems, we can show that the response of an LTID system to a
+causal sinusoidal input cos n u[n] is y[n] in Eq. (5.33), plus a natural component consisting of the
+characteristic modes (see Prob. 5.5-9). For a stable system, all the modes decay exponentially, and
+only the sinusoidal component in Eq. (5.33) persists. For this reason, this component is called the
+sinusoidal steady-state response of the system. Thus, yss [n], the steady-state response of a system
+to a causal sinusoidal input cos n u[n], is
+
+                               yss [n] = |H[ej ]| cos (n +  H[ej ])u[n]
+
+S YSTEM R ESPONSE TO S AMPLED C ONTINUOUS -T IME S INUSOIDS
+So far we have considered the response of a discrete-time system to a discrete-time sinusoid cos n
+(or exponential ejn ). In practice, the input may be a sampled continuous-time sinusoid cos ωt (or
+an exponential ejωt ). When a sinusoid cos ωt is sampled with sampling interval T, the resulting
+
+† This may also be argued as follows. For BIBO-unstable systems, the zero-input response contains
+nondecaying natural mode terms of the form cos 0 n or γ n cos 0 n (γ > 1). Hence, the response of such
+a system to a sinusoid cos n will contain not just the sinusoid of frequency  but also nondecaying natural
+modes, rendering the concept of frequency response meaningless. Alternately, we can argue that when z = ej ,
+a BIBO-unstable system violates the dominance condition |γi | < |ej | for all i, where γi represents ith
+characteristic root of the system.

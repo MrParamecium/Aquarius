@@ -1,0 +1,26 @@
+{
+  "sectionId": "5.8",
+  "sourcePages": [
+    "page-554",
+    "page-555",
+    "page-556",
+    "page-557",
+    "page-558",
+    "page-559"
+  ],
+  "usedPages": [
+    "page-554",
+    "page-555",
+    "page-556",
+    "page-557",
+    "page-558",
+    "page-559"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.8 T HE B ILATERAL z-T RANSFORM",
+  "foundEnd": true,
+  "endBeforeLine": "5.8-1 Properties of the Bilateral z-Transform",
+  "endBeforeCode": "5.8-1",
+  "charCount": 14132
+}

@@ -1,0 +1,65 @@
+                 “04-Lathi-C04” — 2017/9/25 — 19:46 — page 429 — #100
+
+
+
+
+                                                                             4.9     Bode Plots          429
+
+                14
+
+
+
+                10
+                                                           z  0.1
+                                                              0.2
+                                                              0.3
+
+
+Error (dB)
+                 5
+
+
+
+
+                 0
+                                                                                                         v
+                                  0.5
+                                 0.707
+               5                 z1
+               6
+                0.1vn    0.2vn           0.5vn   v  vn        2vn                  5vn           10vn
+                                                  (a)
+
+               90
+                                                                     z1
+                                                                      0.707
+               60                                                     0.5
+                                                                         0.3
+                                                                            0.2
+                                                                                   0.1
+               30
+
+
+
+Phase error
+                0
+                                                                                                         v
+
+              30
+
+
+              60
+
+
+              90
+                0.1vn    0.2vn           0.5vn   v  vn        2vn                  5vn           10vn
+                                                  (b)
+Figure 4.44 Errors in the asymptotic approximation of a second-order pole.
+
+
+
+Error plots for such an asymptote are shown in Fig. 4.44 for various values of ζ . The exact phase
+is the asymptotic value plus the error.
+     For complex-conjugate zeros, the amplitude and phase plots are mirror images of those for
+complex conjugate-poles.
+     We shall demonstrate the application of these techniques with two examples.

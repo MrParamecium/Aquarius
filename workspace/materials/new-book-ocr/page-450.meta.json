@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": null,
+  "summary": "This page covers 4.10-5. OCR text begins with: 450 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.32 Inverse Bilateral Laplace Transform Find the inverse bilateral Laplace transform of −3 X(s) = (s + 2)(s − 1) if the ROC is (a) −2 < Re s < 1, (b) Re s > 1, and (c) Re s < −2.",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-450",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

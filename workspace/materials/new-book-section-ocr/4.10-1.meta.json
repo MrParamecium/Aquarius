@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.10-1",
+  "sourcePages": [
+    "page-436",
+    "page-437",
+    "page-438",
+    "page-439"
+  ],
+  "usedPages": [
+    "page-436",
+    "page-437",
+    "page-438",
+    "page-439"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.10-1 Dependence of Frequency Response on Poles",
+  "foundEnd": true,
+  "endBeforeLine": "4.10-2 Lowpass Filters",
+  "endBeforeCode": "4.10-2",
+  "charCount": 10205
+}

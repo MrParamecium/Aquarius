@@ -1,0 +1,39 @@
+{
+  "sectionId": "5.7",
+  "sectionTitle": "Digital Processing of Analog Signals",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-548"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.42)",
+      "name": "Analog-system output sampled at nT",
+      "latex": "y(nT)=T\\sum_{m=-\\infty}^{\\infty}x(mT)h_a[(n-m)T]",
+      "sourcePage": "page-548",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "(5.43)",
+      "name": "Discrete-time convolution output",
+      "latex": "y[n]=\\sum_{m=-\\infty}^{\\infty}x[m]h[n-m]",
+      "sourcePage": "page-548",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "(5.44)",
+      "name": "Impulse-invariance time-domain criterion",
+      "latex": "h[n]=Th_a(nT)",
+      "sourcePage": "page-548",
+      "role": "core_condition",
+      "status": "verified"
+    }
+  ]
+}

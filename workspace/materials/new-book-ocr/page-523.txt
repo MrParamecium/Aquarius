@@ -1,0 +1,59 @@
+              “05-Lathi-C05” — 2017/9/25 — 15:54 — page 523 — #36
+
+
+
+
+                                                                                  5.4   System Realization   523
+
+        (c)
+                                                               z
+                                                    H[z] =
+                                                              z+7
+Here N = 1 and b0 = 1, b1 = 0 and a1 = 7. Figure 5.11 shows the direct and the transposed
+realizations. Observe that the realizations are almost alike.
+
+
+
+ X[z]                         Y [z]   X[z]                        Y[z]
+
+
+                        1
+                        z                       1
+                                                z
+                  7
+                                                     7
+                  (a)                                (b)
+
+Figure 5.11 Realization of z/(z + 7): (a) canonic direct form and (b) its transpose.
+
+
+
+
+        (d)
+                                                             4z + 28
+                                                H[z] =
+                                                           z2 + 6z + 5
+This is a second-order system (N = 2) with b0 = 0, b1 = 4, b2 = 28, a1 = 6, a2 = 5. Figure 5.12
+shows the canonic direct and transposed canonic direct realizations.
+
+
+
+                                                                                              Y[z]
+ X[z]
+                                                                              1
+                                                                              z
+                        1
+                        z
+                                             Y[z]          X[z]
+
+                  6            4                                    4                  6
+                        1
+                        z                                                     1
+                                                                              z
+
+                  5             28
+                                                                         28             5
+                        (a)                                                   (b)
+
+Figure 5.12 Realization of (4z + 28)/(z + 6z + 5): (a) canonic direct form and (b) its transpose.
+                                               2

@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": null,
+  "summary": "This page covers 4.10-5. OCR text begins with: 448 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Figure 4.57 Regions of convergence for causal, anticausal, and combined signals. right-sided, the poles of X(s) lie to the left of the ROC, and if x(t) is anticausal or left-sided, the poles of X(s) lie to the right of the ROC. To prove this generalization, we observe that a right-sided signal can be expressed as x(t) + xf (t), where x(t) is a causal signal and xf (t) is",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-448",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

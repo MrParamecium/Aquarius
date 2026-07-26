@@ -1,0 +1,22 @@
+{
+  "chapter": "5",
+  "section": "5.10",
+  "subsection": "5.10-2",
+  "title": "Transformation Basics",
+  "summary": "This page covers 5.10-2 (Transformation Basics). OCR text begins with: 5.10 MATLAB: Discrete-Time IIR Filters 567 Program CH5MP2 computes and plots the poles and zeros of an LTID system described by Eq. (5.55), again using vectors B and A. function [p,z] = CH5MP2(B,A); % CH5MP2.m : Chapter 5, MATLAB Program 2 % Function M-file computes and plots poles and zeros for LTID systems % INPUTS: B = vector of feedforward coefficients",
+  "keywords": [
+    "5.10",
+    "5.10-2",
+    "Transformation Basics",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "MATLAB",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-567",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": "The z-Transform 491",
+  "summary": "This page covers 5.1 (The z-Transform 491). OCR text begins with: 5.1 The z-Transform 491 Later in Eq. (5.52), we show that the z-transform of another signal, −γ n u[−(n + 1)], is also z/(z − γ ). However, the ROC in this case is |z| < |γ |. Clearly, the inverse z-transform of z/(z − γ ) is not unique. However, if we restrict the inverse transform to be causal, then the inverse transform is unique, namely, γ n u[n]. The ROC is required for evaluating x[n] from X[z], according to Eq",
+  "keywords": [
+    "5.1",
+    "The z-Transform 491",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-491",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.10-1",
+  "sourcePages": [
+    "page-566",
+    "page-567"
+  ],
+  "usedPages": [
+    "page-566",
+    "page-567"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-1 Frequency Response and Pole-Zero Plots",
+  "foundEnd": true,
+  "endBeforeLine": "5.10-2 Transformation Basics",
+  "endBeforeCode": "5.10-2",
+  "charCount": 5102
+}

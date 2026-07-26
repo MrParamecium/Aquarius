@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.7. OCR text begins with: 410 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS There is a trade-off between undesirable overshoot and rise time. Reducing overshoots leads to higher rise time (sluggish system). In practice, a small overshoot, which is still faster than the critical damping, may be acceptable. Note that percent overshoot PO and peak time tp are meaningless for the overdamped or critically damped cases. In addition to adjusting gain K,",
+  "keywords": [
+    "4.7",
+    "unit step",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-410",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

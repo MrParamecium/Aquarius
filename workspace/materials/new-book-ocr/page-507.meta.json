@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.2",
+  "subsection": "5.2-5",
+  "title": "Convolution Property",
+  "summary": "This page covers 5.2-5 (Convolution Property). OCR text begins with: 5.2 Some Properties of the z-Transform 507 Changing the sign of the dummy variable n yields ∞ \" Z{x[−n]} = x[n]zn n=−∞ \"∞",
+  "keywords": [
+    "5.2",
+    "5.2-5",
+    "Convolution Property",
+    "convolution",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-507",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.12",
+  "sourcePages": [
+    "page-455",
+    "page-456"
+  ],
+  "usedPages": [
+    "page-455",
+    "page-456"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.12 MATLAB: Continuous-Time Filters 455",
+  "foundEnd": true,
+  "endBeforeLine": "4.12-1 Frequency Response and Polynomial Evaluation",
+  "endBeforeCode": "4.12-1",
+  "charCount": 3046
+}

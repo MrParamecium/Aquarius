@@ -1,0 +1,55 @@
+                       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 530 — #43
+
+
+
+
+530   CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+            (b) For x[n] = cos [(π/6)n − 0.2],  = π/6. According to Eqs. (5.35) and (5.36),
+                                                    1
+                             |H[ejπ/6 ]| =                    = 1.983
+                                                             π
+                                             1.64 − 1.6 cos
+                                                             6
+                                                   ⎡           π ⎤
+                                                       0.8 sin
+                                                   ⎢
+                              H[ejπ/6 ] = − tan−1 ⎣           6 ⎥ = −0.916 rad
+                                                                 π⎦
+                                                     1 − 0.8 cos
+                                                                 6
+      These values also can be read directly from Figs. 5.14a and 5.14b, respectively, corresponding
+      to  = π/6. Therefore,
+
+                                          π                             π
+                       y[n] = 1.983 cos     n − 0.2 − 0.916 = 1.983 cos   n − 1.116
+                                          6                             6
+
+      Figure 5.15 shows the input x[n] and the corresponding system response.
+
+
+
+                                2
+
+                                                                         y[n]
+
+
+
+                                                    x[n]
+
+                  6                           6                           18
+      11                           0                       12                        24
+                                                                                      n
+
+
+
+
+      Figure 5.15 Sinusoidal input and the corresponding output of the LTID system.
+
+
+
+          (c) A sinusoid cos 1500t sampled every T seconds (t = nT) results in a discrete-time
+      sinusoid
+                                        x[n] = cos 1500nT
+      For T = 0.001, the input is
+                                               x[n] = cos (1.5n)

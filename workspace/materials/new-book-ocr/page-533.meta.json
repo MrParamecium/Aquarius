@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 533",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 533). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 533 response of an LTID system. Because e±j2πm = 1 for all integer values of m [see Eq. (B.10)], H[ej\u0004 ] = H ej(\u0004+2πm) m integer Therefore, the frequency response H[ej\u0004 ] is a periodic function of \u0004 with a period 2π . This is the mathematical explanation of the periodic behavior. The physical explanation that follows provides a much better insight into the periodic beha",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 533",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-533",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

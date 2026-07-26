@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.10-4",
+  "sourcePages": [
+    "page-569",
+    "page-570"
+  ],
+  "usedPages": [
+    "page-569",
+    "page-570"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-4 Bilinear Transformation",
+  "foundEnd": true,
+  "endBeforeLine": "5.10-5 Bilinear Transformation with Prewarping",
+  "endBeforeCode": "5.10-5",
+  "charCount": 4955
+}

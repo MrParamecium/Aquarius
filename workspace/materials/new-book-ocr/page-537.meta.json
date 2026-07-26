@@ -1,0 +1,19 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 537",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 537). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 537 a continuous-time signal that contains two distinct components of frequencies ω1 and ω2 . The samples of these components appear as discrete-time sinusoids of frequencies \u00041 = ω1 T and \u00042 = ω2 T. If \u00041 and \u00042 happen to differ by an integer multiple of 2π (if ω2 − ω1 = 2kπ/T), the two frequencies will be read as the same (lower of the two) frequency by the digital pr",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 537",
+    "discrete-time",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-537",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

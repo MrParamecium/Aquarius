@@ -1,0 +1,23 @@
+# Fourier section OCR
+section_id: 4.2-5
+source_pages: page-357
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.2-5 The Scaling Property
+The scaling property states that if
+                                                 x(t) ⇐⇒ X(s)
+
+then for a > 0
+                                                    1  s
+                                            x(at) ⇐⇒ X
+                                                    a  a
+The proof is given in Ch. 7. Note that a is restricted to positive values because if x(t) is causal,
+then x(at) is anticausal (is zero for t ≥ 0) for negative a, and anticausal signals are not permitted
+in the (unilateral) Laplace transform.
+     Recall that x(at) is the signal x(t) time-compressed by the factor a, and X( as ) is X(s) expanded
+along the s scale by the same factor a (see Sec. 1.2-2). The scaling property states that time
+compression of a signal by a factor a causes expansion of its Laplace transform in the s scale
+by the same factor. Similarly, time expansion x(t) causes compression of X(s) in the s scale by the
+same factor.

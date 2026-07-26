@@ -1,0 +1,52 @@
+         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 405 — #76
+
+
+
+
+                                              4.7   Application to Feedback and Controls           405
+
+correction to be applied to the system input. It may be possible to counteract the variations by
+feeding the output (or some function of output) back to the input.
+     We unconsciously apply this principle in daily life. Consider an example of marketing a
+certain product. The optimum price of the product is the value that maximizes the profit of a
+merchant. The output in this case is the profit, and the input is the price of the item. The output
+(profit) can be controlled (within limits) by varying the input (price). The merchant may price
+the product too high initially, in which case, he will sell too few items, reducing the profit. Using
+feedback of the profit (output), he adjusts the price (input), to maximize his profit. If there is a
+sudden or unexpected change in the business environment, such as a strike-imposed shutdown of
+a large factory in town, the demand for the item goes down, thus reducing his output (profit). He
+adjusts his input (reduces price) using the feedback of the output (profit) in a way that will optimize
+his profit in the changed circumstances. If the town suddenly becomes more prosperous because a
+new factory opens, he will increase the price to maximize the profit. Thus, by continuous feedback
+of the output to the input, he realizes his goal of maximum profit (optimum output) in any given
+circumstances. We observe thousands of examples of feedback systems around us in everyday life.
+Most social, economical, educational, and political processes are, in fact, feedback processes. A
+block diagram of such a system, called the feedback or closed-loop system, is shown in Fig. 4.33b.
+     A feedback system can address the problems arising because of unwanted disturbances such as
+random-noise signals in electronic systems, a gust of wind affecting a tracking antenna, a meteorite
+hitting a spacecraft, and the rolling motion of antiaircraft gun platforms mounted on ships or
+moving tanks. Feedback may also be used to reduce nonlinearities in a system or to control its
+rise time (or bandwidth). Feedback is used to achieve, with a given system, the desired objective
+within a given tolerance, despite partial ignorance of the system and the environment. A feedback
+system, thus, has an ability for supervision and self-correction in the face of changes in the system
+parameters and external disturbances (change in the environment).
+     Consider the feedback amplifier in Fig. 4.34. Let the forward amplifier gain G = 10,000.
+One-hundredth of the output is fed back to the input (H = 0.01). The gain T of the feedback
+amplifier is obtained by [see Eq. (4.35)]
+                                          G    10,000
+                                  T=         =        = 99.01
+                                       1 + GH 1 + 100
+Suppose that because of aging or replacement of some transistors, the gain G of the forward
+amplifier changes from 10,000 to 20,000. The new gain of the feedback amplifier is given by
+                                           G    20,000
+                                  T=          =        = 99.5
+                                        1 + GH 1 + 200
+Surprisingly, 100% variation in the forward gain G causes only 0.5% variation in the feedback
+amplifier gain T. Such reduced sensitivity to parameter variations is a must in precision amplifiers.
+In this example, we reduced the sensitivity of gain to parameter variations at the cost of forward
+
+  x(t)       e(t)                      y(t)
+                      G
+         
+                      H
+                                              Figure 4.34 Effects of negative and positive feedback.

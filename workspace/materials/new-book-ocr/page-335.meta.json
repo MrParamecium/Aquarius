@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 335",
+  "summary": "This page covers 4.1 (The Laplace Transform 335). OCR text begins with: 4.1 The Laplace Transform 335 Equation (4.5) shows that lim e−(s+a)t = 0 Re (s + a) < 0 t→−∞ Hence, 1 X(s) = Re s < −a",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 335",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-335",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

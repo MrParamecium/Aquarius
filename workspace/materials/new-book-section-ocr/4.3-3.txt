@@ -1,0 +1,97 @@
+# Fourier section OCR
+section_id: 4.3-3
+source_pages: page-371, page-372, page-373
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.3-3 Stability
+Equation (4.27) shows that the denominator of H(s) is Q(s), which is apparently identical to the
+characteristic polynomial Q(λ) defined in Ch. 2. Does this mean that the denominator of H(s)
+is the characteristic polynomial of the system? This may or may not be the case, since if P(s)
+and Q(s) in Eq. (4.27) have any common factors, they cancel out, and the effective denominator
+of H(s) is not necessarily equal to Q(s). Recall also that the system transfer function H(s), like
+h(t), is defined in terms of measurements at the external terminals. Consequently, H(s) and h(t)
+are both external descriptions of the system. In contrast, the characteristic polynomial Q(s) is an
+internal description. Clearly, we can determine only external stability, that is, BIBO stability, from
+H(s). If all the poles of H(s) are in LHP, all the terms in h(t) are decaying exponentials, and h(t)
+is absolutely integrable [see Eq. (2.45)].† Consequently, the system is BIBO-stable. Otherwise the
+system is BIBO-unstable.
+
+
+
+
+                                     Beware of right half-plane poles!
+
+     So far, we have assumed that H(s) is a proper function, that is, M ≤ N. We now show that
+if H(s) is improper, that is, if M > N, the system is BIBO-unstable. In such a case, using long
+division, we obtain H(s) = R(s) + H  (s), where R(s) is an (M − N)th-order polynomial and H  (s)
+is a proper transfer function. For example,
+                                          s3 + 4s2 + 4s + 5       s2 + 2s + 5
+                                 H(s) =                     = s +
+                                             s2 + 3s + 2          s2 + 3s + 2
+As shown in Eq. (4.31), the term s is the transfer function of an ideal differentiator. If we apply step
+function (bounded input) to this system, the output will contain an impulse (unbounded output).
+Clearly, the system is BIBO-unstable. Moreover, such a system greatly amplifies noise because
+differentiation enhances higher frequencies, which generally predominate in a noise signal. These
+
+† Values of s for which H(s) is ∞ are the poles of H(s). Thus, poles of H(s) are the values of s for which the
+denominator of H(s) is zero.
+
+[[PAGE page-372]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 372 — #43
+
+
+
+
+372       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          are two good reasons to avoid improper systems (M > N). In our future discussion, we shall
+          implicitly assume that the systems are proper, unless stated otherwise.
+               If P(s) and Q(s) do not have common factors, then the denominator of H(s) is identical to
+          Q(s), the characteristic polynomial of the system. In this case, we can determine internal stability
+          by using the criterion described in Sec. 2.5. Thus, if P(s) and Q(s) have no common factors,
+          the asymptotic stability criterion in Sec. 2.5 can be restated in terms of the poles of the transfer
+          function of a system, as follows:
+              1. An LTIC system is asymptotically stable if and only if all the poles of its transfer function
+                 H(s) are in the LHP. The poles may be simple or repeated.
+              2. An LTIC system is unstable if and only if either one or both of the following conditions
+                 exist: (i) at least one pole of H(s) is in the RHP; (ii) there are repeated poles of H(s) on the
+                 imaginary axis.
+              3. An LTIC system is marginally stable if and only if there are no poles of H(s) in the RHP
+                 and some unrepeated poles on the imaginary axis.
+          The locations of zeros of H(s) have no role in determining the system stability.
+
+
+
+      E X A M P L E 4.16 BIBO and Asymptotic Stability
+
+          Figure 4.9a shows a cascade connection of two LTIC systems S1 followed by S2 . The transfer
+          functions of these systems are H1 (s) = 1/(s − 1) and H2 (s) = (s − 1)/(s + 1), respectively.
+          Determine the BIBO and asymptotic stability of the composite (cascade) system.
+
+
+
+
+             x(t)     1           s–1     y(t)
+                     s1          s1
+
+                            (a)
+
+             x(t)                         y(t)
+                            1
+                           s1
+                                                 Figure 4.9 Distinction between BIBO and asymptotic
+                            (b)                  stability.
+
+              If the impulse responses of S1 and S2 are h1 (t) and h2 (t), respectively, then the impulse
+          response of the cascade system is h(t) = h1 (t) ∗ h2 (t). Hence, H(s) = H1 (s)H2 (s). In the present
+          case,
+                                                    1        s−1           1
+                                        H(s) =                        =
+                                                  s−1        s+1         s+1
+          The pole of S1 at s = 1 cancels with the zero at s = 1 of S2 . This results in a composite system
+          having a single pole at s = −1. If the composite cascade system were to be enclosed inside a
+
+[[PAGE page-373]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 373 — #44

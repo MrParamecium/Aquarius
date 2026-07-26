@@ -1,0 +1,57 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 435 — #106
+
+
+
+
+                                                                           4.9   Bode Plots        435
+
+B ODE P LOTS WITH MATLAB
+Bode plots make it relatively simple to hand-draw straight-line approximations to a system’s
+magnitude and frequency responses. To produce exact Bode plots, we turn to MATLAB and
+its bode command.
+
+>>   bode(tf([10 1000],[1 2 100]),’k-’);
+
+The resulting MATLAB plots, shown in Fig. 4.47, match the plots shown in Fig. 4.46.
+
+
+
+Comment. These two examples demonstrate that actual frequency response plots are very close
+to asymptotic plots, which are so easy to construct. Thus, by mere inspection of H(s) and its poles
+and zeros, one can rapidly construct a mental image of the frequency response of a system. This is
+the principal virtue of Bode plots.
+
+P OLES AND Z EROS IN THE R IGHT H ALF -P LANE
+In our discussion so far, we have assumed the poles and zeros of the transfer function to be in the
+left half-plane. What if some of the poles and/or zeros of H(s) lie in the RHP? If there is a pole in
+the RHP, the system is unstable. Such systems are useless for any signal-processing application.
+For this reason, we shall consider only the case of the RHP zero. The term corresponding to RHP
+zero at s = a is (s/a) − 1, and the corresponding frequency response is (jω/a) − 1. The amplitude
+response is
+                                            
+                                       jω                 1/2
+                                       − 1 = ω + 1
+                                                     2
+
+                                      a          a2
+This shows that the amplitude response of an RHP zero at s = a is identical to that of an LHP zero
+or s = −a. Therefore, the log amplitude plots remain unchanged whether the zeros are in the LHP
+or the RHP. However, the phase corresponding to the RHP zero at s = a is
+
+                   jω             jω                          −ω                    ω
+                     −1 =  − 1−             = π + tan−1           = π − tan−1
+                    a              a                           a                    a
+
+whereas the phase corresponding to the LHP zero at s = −a is tan−1 (ω/a).
+     The complex-conjugate zeros in the RHP give rise to a term s2 −2ζ ωn s+ωn2 , which is identical
+to the term s2 + 2ζ ωn s + ωn2 with a sign change in ζ . Hence, from Eqs. (4.51) and (4.52), it follows
+that the amplitudes are identical, but the phases are of opposite signs for the two terms.
+     Systems whose poles and zeros are restricted to the LHP are classified as minimum phase
+systems. Minimum phase systems are particularly desirable because the system and its inverse are
+both stable.
+
+
+4.9-5 The Transfer Function from the Frequency Response
+In the preceding section we were given the transfer function of a system. From a knowledge of
+the transfer function, we developed techniques for determining the system response to sinusoidal
+inputs. We can also reverse the procedure to determine the transfer function of a minimum phase

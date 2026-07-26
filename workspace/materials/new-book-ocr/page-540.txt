@@ -1,0 +1,52 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 540 — #53
+
+
+
+
+540   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      C ONTROLLING G AIN BY P LACEMENT OF P OLES AND Z EROS
+      The nature of the influence of pole and zero locations on the frequency response is similar to that
+      observed in continuous-time systems, with minor differences. In place of the imaginary axis of the
+      continuous-time systems, we have the unit circle in the discrete-time case. The nearer the pole (or
+      zero) is to a point ej (on the unit circle) representing some frequency , the more influence that
+      pole (or zero) wields on the amplitude response at that frequency because the length of the vector
+      joining that pole (or zero) to the point ej is small. The proximity of a pole (or a zero) has a similar
+      effect on the phase response. From Eq. (5.41), it is clear that to enhance the amplitude response at
+      a frequency , we should place a pole as close as possible to the point ej (which is on the unit
+      circle).† Similarly, to suppress the amplitude response at a frequency , we should place a zero
+      as close as possible to the point ej on the unit circle. Placing repeated poles or zeros will further
+      enhance their influence.
+           Total suppression of signal transmission at any frequency can be achieved by placing a zero
+      on the unit circle at a point corresponding to that frequency. This observation is used in the notch
+      (bandstop) filter design.
+           Placing a pole or a zero at the origin does not influence the amplitude response because the
+      length of the vector connecting the origin to any point on the unit circle is unity. However, a pole
+      (or a zero) at the origin adds angle − (or ) to  H[ej ]. Hence, the phase spectrum − (or )
+      is a linear function of frequency and therefore represents a pure time delay (or time advance) of
+      T seconds (see Drill 5.19). Therefore, a pole (a zero) at the origin causes a time delay (or a time
+      advance) of T seconds in the response. There is no change in the amplitude response.
+           For a stable system, all the poles must be located inside the unit circle. The zeros may lie
+      anywhere. Also, for a physically realizable system, H[z] must be a proper fraction, that is, N ≥ M.
+      If, to achieve a certain amplitude response, we require M > N, we can still make the system
+      realizable by placing a sufficient number of poles at the origin to make N = M. This will not
+      change the amplitude response, but it will increase the time delay of the response.
+           In general, a pole at a point has the opposite effect of a zero at that point. Placing a zero closer
+      to a pole tends to cancel the effect of that pole on the frequency response.
+
+      L OWPASS F ILTERS
+      A lowpass filter generally has a maximum gain at or near  = 0, which corresponds to point
+      ej0 = 1 on the unit circle. Clearly, placing a pole inside the unit circle near the point z = 1
+      (Fig. 5.20a) would result in a lowpass response.‡ The corresponding amplitude and phase response
+      appear in Fig. 5.20a. For smaller values of , the point ej (a point on the unit circle at an angle
+      ) is closer to the pole, and consequently the gain is higher. As  increases, the distance of
+      the point ej from the pole increases. Consequently the gain decreases, resulting in a lowpass
+      characteristic. Placing a zero at the origin does not change the amplitude response but it does
+      modify the phase response, as illustrated in Fig. 5.20b. Placing a zero at z = −1, however, changes
+      both the amplitude and the phase response (Fig. 5.20c). The point z = −1 corresponds to frequency
+
+      † The closest we can place a pole is on the unit circle at the point representing . This choice would lead to
+      infinite gain, but should be avoided because it will render the system marginally stable (BIBO-unstable). The
+      closer the point to the unit circle, the more sensitive the system gain to parameter variations.
+      ‡ Placing the pole at z = 1 results in maximum (infinite) gain but renders the system BIBO-unstable, hence
+      should be avoided.

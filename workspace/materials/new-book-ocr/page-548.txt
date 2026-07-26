@@ -1,0 +1,57 @@
+                      “05-Lathi-C05” — 2017/9/25 — 15:54 — page 548 — #61
+
+
+
+
+548   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           For the sake of generality, we are assuming a noncausal system. The argument and the results
+      are also valid for causal systems. The output y(t) of the system in Fig. 5.24b is
+                          # ∞                                             ∞
+                                                                          "
+                 y(t) =         x(τ )ha (t − τ ) dτ             = lim            x(m τ )ha (t − m τ ) τ
+                          −∞                                       τ →0
+                                                                          m=−∞
+
+      For our purpose, it is convenient to use the notation T for          τ . Assuming T (the sampling interval)
+      to be small enough, such a change of notation yields
+                                                         ∞
+                                                         "
+                                            y(t) = T          x(mT)ha (t − mT)
+                                                       m=−∞
+
+      The response at the nth sampling instant is y(nT) obtained by setting t = nT in the equation is
+                                                         ∞
+                                                         "
+                                          y(nT) = T           x(mT)ha [(n − m)T]                              (5.42)
+                                                       m=−∞
+
+      In Fig. 5.24a, the input to H[z] is x(nT) = x[n]. If h[n] is the unit impulse response of H[z], then
+      y[n], the output of H[z], is given by
+                                                         ∞
+                                                         "
+                                                y[n] =          x[m]h[n − m]                                  (5.43)
+                                                         m=−∞
+
+      If the two systems are to be equivalent, y(nT) in Eq. (5.42) must be equal to y[n] in Eq. (5.43).
+      Therefore,
+                                               h[n] = Tha (nT)                                   (5.44)
+      This is the time-domain criterion for equivalence of the two systems.† According to this criterion,
+      h[n], the unit impulse response of H[z] in Fig. 5.24a, should be T times the samples of ha (t),
+      the unit impulse response of the system in Fig. 5.24b. This is known as the impulse invariance
+      criterion of filter design.
+           Strictly speaking, this realization guarantees the output equivalence only at the sampling
+      instants, that is, y(nT) = y[n], and that also requires the assumption that T → 0. Clearly, this
+      criterion leads to an approximate realization of Ha (s). However, it can be shown that when the
+      frequency response of |Ha (jω)| is bandlimited, the realization is exact [2], provided the sampling
+      rate is high enough to avoid any aliasing (T < 1/2fh ).
+
+      R EALIZATION OF R ATIONAL H(s)
+      If we wish to realize an analog filter with transfer function
+                                                                   c
+                                                       Ha (s) =
+                                                                  s−λ
+
+      † Because T is a constant, some authors ignore the factor T, which yields a simplified criterion h[n] = h (nT).
+                                                                                                               a
+      Ignoring T merely scales the amplitude response of the resulting filter.

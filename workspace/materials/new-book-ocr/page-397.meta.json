@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization 397",
+  "summary": "This page covers 4.6 (System Realization 397). OCR text begins with: 4.6 System Realization 397 Y(s) b0 X(s) X(s) b0 Y(s) 1 1 s s \u0002a1 b1 b1 \u0002a1 1 1 s s",
+  "keywords": [
+    "4.6",
+    "System Realization 397",
+    "LTI system"
+  ],
+  "has_math": true,
+  "page_type": "figure",
+  "book_page": "page-397",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

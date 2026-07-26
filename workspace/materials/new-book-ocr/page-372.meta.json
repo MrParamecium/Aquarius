@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-3",
+  "title": null,
+  "summary": "This page covers 4.3-3. OCR text begins with: 372 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS are two good reasons to avoid improper systems (M > N). In our future discussion, we shall implicitly assume that the systems are proper, unless stated otherwise. If P(s) and Q(s) do not have common factors, then the denominator of H(s) is identical to Q(s), the characteristic polynomial of the system. In this case, we can determine internal stability by using the criteri",
+  "keywords": [
+    "4.3",
+    "4.3-3",
+    "continuous-time",
+    "LTIC system",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-372",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

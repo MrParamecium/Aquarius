@@ -1,0 +1,30 @@
+{
+  "sectionId": "5.4",
+  "sourcePages": [
+    "page-519",
+    "page-520",
+    "page-521",
+    "page-522",
+    "page-523",
+    "page-524",
+    "page-525",
+    "page-526"
+  ],
+  "usedPages": [
+    "page-519",
+    "page-520",
+    "page-521",
+    "page-522",
+    "page-523",
+    "page-524",
+    "page-525",
+    "page-526"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.4 System Realization 519",
+  "foundEnd": true,
+  "endBeforeLine": "5.3-3 Inverse Systems",
+  "endBeforeCode": "5.3-3",
+  "charCount": 371
+}

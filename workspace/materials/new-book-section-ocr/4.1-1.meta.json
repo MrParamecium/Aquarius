@@ -1,0 +1,38 @@
+{
+  "sectionId": "4.1-1",
+  "sourcePages": [
+    "page-338",
+    "page-339",
+    "page-340",
+    "page-341",
+    "page-342",
+    "page-343",
+    "page-344",
+    "page-345",
+    "page-346",
+    "page-347",
+    "page-348",
+    "page-349"
+  ],
+  "usedPages": [
+    "page-338",
+    "page-339",
+    "page-340",
+    "page-341",
+    "page-342",
+    "page-343",
+    "page-344",
+    "page-345",
+    "page-346",
+    "page-347",
+    "page-348",
+    "page-349"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.1-1 Finding the Inverse Transform",
+  "foundEnd": true,
+  "endBeforeLine": "4.2 Some Properties of the Laplace Transform 349",
+  "endBeforeCode": "4.2",
+  "charCount": 29369
+}

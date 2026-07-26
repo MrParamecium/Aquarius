@@ -1,0 +1,195 @@
+# Fourier section OCR
+section_id: 4.2-6
+source_pages: page-357, page-358, page-359, page-360
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.2-6 Time Convolution and Frequency Convolution
+Another pair of properties states that if
+
+                           x1 (t) ⇐⇒ X1 (s)          and            x2 (t) ⇐⇒ X2 (s)
+
+then (time-convolution property)
+
+                                      x1 (t) ∗ x2 (t) ⇐⇒ X1 (s)X2 (s)                           (4.17)
+
+[[PAGE page-358]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 358 — #29
+
+
+
+
+358       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          and (frequency-convolution property)
+
+                                                                1
+                                             x1 (t)x2 (t) ⇐⇒        [X1 (s) ∗ X2 (s)]
+                                                               2π j
+
+          Observe the symmetry (or duality) between the two properties. Proofs of these properties are
+          postponed to Ch. 7.
+               Equation (2.39) indicates that H(s), the transfer function of an LTIC system, is the Laplace
+          transform of the system’s impulse response h(t); that is,
+
+                                                        h(t) ⇐⇒ H(s)
+
+          If the system is causal, h(t) is causal, and, according to Eq. (2.39), H(s) is the unilateral Laplace
+          transform of h(t). Similarly, if the system is noncausal, h(t) is noncausal, and H(s) is the bilateral
+          transform of h(t).
+               We can apply the time-convolution property to the LTIC input–output relationship y(t) =
+          x(t) ∗ h(t) to obtain
+                                                        Y(s) = X(s)H(s)                                  (4.18)
+
+          The response y(t) is the zero-state response of the LTIC system to the input x(t). From Eq. (4.18),
+          it follows that
+                                                  Y(s) L[zero-state response]
+                                        H(s) =         =                                                 (4.19)
+                                                  X(s)       L[input]
+
+          This may be considered an alternate definition of the LTIC system transfer function H(s). It is the
+          ratio of the transform of zero-state response to the transform of the input.
+
+
+
+
+      E X A M P L E 4.10 Time-Convolution Property
+
+          Use the time-convolution property of the Laplace transform to determine c(t) = eat u(t)∗ebt u(t).
+
+
+          From Eq. (4.17), it follows that
+                                                                                        !
+                                               1          1     1     1
+                                  C(s) =               =           −
+                                         (s − a)(s − b) a − b s − a s − b
+
+          The inverse transform of this equation yields
+                                                         1
+                                               c(t) =       (eat − ebt )u(t)
+                                                        a−b
+
+[[PAGE page-359]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 359 — #30
+
+
+
+
+                                         4.2 Some Properties of the Laplace Transform            359
+
+I NITIAL AND F INAL VALUES
+In certain applications, it is desirable to know the values of x(t) as t → 0 and t → ∞ [initial
+and final values of x(t)] from the knowledge of its Laplace transform X(s). Initial and final value
+theorems provide such information.
+     The initial value theorem states that if x(t) and its derivative dx/dt are both Laplace
+transformable, then
+                                         x(0+ ) = lim sX(s)                                  (4.20)
+                                                 s→∞
+
+provided the limit on the right-hand side of Eq. (4.20) exists.
+    The final value theorem states that if both x(t) and dx/dt are Laplace transformable, then
+
+                                        lim x(t) = lim sX(s)                                  (4.21)
+                                       t→∞          s→0
+
+provided sX(s) has no poles in the RHP or on the imaginary axis. To prove these theorems, we
+begin by setting n = 1 in Eq. (4.15). Using the definition of the Laplace transform, we see that
+                                        # ∞
+                                              dx(t) −st
+                       sX(s) − x(0− ) =              e dt
+                                          0−    dt
+                                        # 0+                   # ∞
+                                               dx(t) −st            dx(t) −st
+                                      =              e dt +              e dt
+                                          0−     dt             0+    dt
+                                                    # ∞
+                                             0+         dx(t) −st
+                                      = x(t)0− +              e dt
+                                                       +  dt
+                                                      0
+                                                           # ∞
+                                                                 dx(t) −st
+                                      = x(0+ ) − x(0− ) +              e dt
+                                                             0+    dt
+Therefore,                                          # ∞
+                                                       dx(t) −st
+                                 sX(s) = x(0+ ) +           e dt
+                                                    0+  dt
+and
+                                                    # ∞
+                                                         dx(t) −st
+                           lim sX(s) = x(0+ ) + lim            e dt
+                          s→∞                   s→∞ 0+     dt
+                                                # ∞
+                                                    dx(t)          
+                                     = x(0+ ) +             lim e−st dt
+                                                 0+  dt s→∞
+                                          +
+                                     = x(0 )
+
+Comment. The initial value theorem applies only if X(s) is strictly proper (M < N), because for
+M ≥ N, lims→∞ sX(s) does not exist, and the theorem does not apply. In such a case, we can still
+find the answer by using long division to express X(s) as a polynomial in s plus a strictly proper
+fraction, where M < N. For example, by using long division, we can express
+
+                             s3 + 3s2 + s + 1               2s
+                                              = (s + 1) − 2
+                                s2 + 2s + 1              s + 2s + 1
+The inverse transform of the polynomial in s is in terms of δ(t), and its derivatives, which are zero
+at t = 0+ . In the foregoing case, the inverse transform of s + 1 is δ̇(t) + δ(t). Hence, the desired
+
+[[PAGE page-360]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 360 — #31
+
+
+
+
+360       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          x(0+ ) is the value of the remainder (strictly proper) fraction, for which the initial value theorem
+          applies. In the present case,
+                                                             −2s2
+                                           x(0+ ) = lim 2              = −2
+                                                     s→∞ s + 2s + 1
+
+              To prove the final value theorem, we let n = 1 and s → 0 in Eq. (4.15) to obtain
+                                                        # ∞                # ∞
+                                                             dx(t) −st          dx(t)
+                              lim[sX(s) − x(0− )] = lim           e dt =              dt
+                              s→0                   s→0 0−    dt            0−   dt
+                                                        ∞
+                                                  = x(t)0− = lim x(t) − x(0− )
+                                                                t→∞
+
+          a deduction that leads to the desired result, Eq. (4.21).
+
+          Comment. The final value theorem applies only if the poles of X(s) are in the LHP (including
+          s = 0). If X(s) has a pole in the RHP, x(t) contains an exponentially growing term and x(∞) does
+          not exist. If there is a pole on the imaginary axis, then x(t) contains an oscillating term and x(∞)
+          does not exist. However, if there is a pole at the origin, then x(t) contains a constant term, and
+          hence, x(∞) exists and is a constant.
+
+
+      E X A M P L E 4.11 Initial and Final Values
+
+          Determine the initial and final values of y(t) if its Laplace transform Y(s) is given by
+
+                                                           10(2s + 3)
+                                                Y(s) =
+                                                         s(s2 + 2s + 5)
+
+
+          Equations (4.20) and (4.21) yield
+
+                                                                  10(2s + 3)
+                                    y(0+ ) = lim sY(s) = lim                   =0
+                                              s→∞          s→∞ (s2 + 2s + 5)
+                                                                10(2s + 3)
+                                    y(∞) = lim sY(s) = lim                     =6
+                                              s→0          s→0 (s2 + 2s + 5)
+
+
+
+
+              Table 4.2 summarizes the most important unilateral Laplace transform properties.

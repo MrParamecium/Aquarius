@@ -1,0 +1,54 @@
+               “04-Lathi-C04” — 2017/9/25 — 19:46 — page 351 — #22
+
+
+
+
+                                                              4.2 Some Properties of the Laplace Transform       351
+
+        x(t)                                          x1(t)                              x2(t)
+   1                                             1                                   1
+                                                                             
+
+   0       1   2         3     4   t             0        1     2     t              0           2     4     t
+
+
+                                                              t1
+
+                   (a)                                                            (b)
+   Figure 4.4 Finding a piecewise representation of a signal x(t).
+
+       The first term on the right-hand side is the signal tu(t) delayed by 1 second. Also, the third
+       and fourth terms are the signal u(t) delayed by 2 and 4 seconds, respectively. The second term,
+       however, cannot be interpreted as a delayed version of any entry in Table 4.1. For this reason,
+       we rearrange it as
+
+                             (t − 1)u(t − 2) = (t − 2 + 1)u(t − 2) = (t − 2)u(t − 2) + u(t − 2)
+
+       We have now expressed the second term in the desired form as tu(t) delayed by 2 seconds plus
+       u(t) delayed by 2 seconds. With this result, Eq. (4.13) can be expressed as
+
+                                       x(t) = (t − 1)u(t − 1) − (t − 2)u(t − 2) − u(t − 4)
+
+       Application of the time-shifting property to tu(t) ⇐⇒ 1/s2 yields
+                                                     1 −s                                            1 −2s
+                         (t − 1)u(t − 1) ⇐⇒             e            and     (t − 2)u(t − 2) ⇐⇒         e
+                                                     s2                                              s2
+       Also
+                                                     1                                1
+                                         u(t) ⇐⇒               and         u(t − 4) ⇐⇒ e−4s
+                                                     s                                s
+       Therefore,
+                                                              1 −s 1 −2s 1 −4s
+                                                X(s) =           e − 2e − e
+                                                              s2    s    s
+
+
+
+
+E X A M P L E 4.7 Inverse Laplace Transform and the Time-Shifting
+Property
+
+       Find the inverse Laplace transform of
+                                                                    s + 3 + 5e−2s
+                                                         X(s) =
+                                                                    (s + 1)(s + 2)

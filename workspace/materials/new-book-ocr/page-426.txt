@@ -1,0 +1,62 @@
+                              “04-Lathi-C04” — 2017/9/25 — 19:46 — page 426 — #97
+
+
+
+
+426   CHAPTER 4               CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                       0
+                     –0.5
+                      –1
+
+
+      Error (dB)
+                     –1.5
+                      –2
+                     –2.5
+                      –3
+                                                                                                             v
+                       0.1a     0.2a            0.5a           va           2a                5a         10a
+                                                                (a)
+
+                       6
+
+                       4
+
+                       2
+
+
+
+       Phase error
+                       0
+
+                     2
+
+                     4
+
+                     6                                                                                     v
+                      0.01a      0.05a   0.1a          0.5a v  a                 5a     10a        50a   100a
+                                                                (b)
+      Figure 4.42 Errors in asymptotic approximation of a first-order pole at s = −a.
+
+
+          The phase for a zero at −a (shown dotted in Fig. 4.41b) is identical to that of the pole at −a
+      with a sign change, and therefore is the mirror image (about the 0◦ line) of the phase plot for a
+      pole at −a.
+
+
+      4.9-4 Second-Order Pole (or Zero)
+      Let us consider the second-order pole in Eq. (4.44). The denominator term is s2 + b2 s + b3 . We
+      shall introduce the often-used standard form s2 + 2ζ ωn s + ωn2 instead of s2 + b2 s + b3 . With this
+      form, the log amplitude function for the second-order term in Eq. (4.47) becomes
+                                                         
+                                                                                 2 
+                                                                  ω    jω            
+                                                −20 log 1 + 2jζ    +               
+                                                                  ωn   ωn
+
+      and the phase function is                                                 
+                                                                             2
+                                                                   ω    jω
+                                                 −        1 + 2jζ    +                                      (4.48)
+                                                                   ωn   ωn

@@ -1,0 +1,54 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 424 — #95
+
+
+
+
+424   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      4.9-3 First-Order Pole (or Zero)
+      T HE L OG M AGNITUDE
+      The log amplitude of a first-order pole at −a is −20 log |1+jω/a|. Let us investigate the asymptotic
+      behavior of this function for extreme values of ω (ω  a and ω  a).
+      (a) For ω  a,                                    
+                                                     jω 
+                                          −20 log1 +  ≈ −20 log 1 = 0
+                                                       a
+      Hence, the log-amplitude function → 0 asymptotically for ω  a (Fig. 4.41a).
+      (a) For the other extreme case, where ω  a,
+                                   
+                               jω           ω
+                            
+                   −20 log1 +  ≈ −20 log         = −20 log ω + 20 log a = −20u + 20 log a
+                                 a             a
+      This represents a straight line (when plotted as a function of u, the log of ω) with a slope of −20
+      dB/decade (or −6 dB/octave). When ω = a, the log amplitude is zero. Hence, this line crosses the
+      ω axis at ω = a, as illustrated in Fig. 4.41a. Note that the asymptotes in (a) and (b) meet at ω = a.
+          The exact log amplitude for this pole is
+                                         
+                                      jω                  ω2 1/2                   ω2
+                        −20 log1 +  = −20 log 1 + 2              = −10 log 1 + 2
+                                        a                   a                         a
+      This exact log magnitude function also appears in Fig. 4.41a. Observe that the actual and the
+      asymptotic plots are very close. A maximum error of 3 dB occurs at ω = a. This frequency is
+      known as the corner frequency or break frequency. The error everywhere else is less than 3 dB.
+      A plot of the error as a function of ω is shown in Fig. 4.42a. This figure shows that the error at 1
+      octave above or below the corner frequency is 1 dB and the error at 2 octaves above or below the
+      corner frequency is 0.3 dB. The actual plot can be obtained by adding the error to the asymptotic
+      plot.
+           The amplitude response for a zero at −a (shown dotted in Fig. 4.41a) is identical to that of
+      the pole at −a with a sign change and therefore is the mirror image (about the 0 dB line) of the
+      amplitude plot for a pole at −a.
+
+      P HASE
+      The phase for the first-order pole at −a is
+                                                          jω                   ω
+                                      H(jω) = −   1+             = − tan−1
+                                                           a                   a
+      Let us investigate the asymptotic behavior of this function. For ω  a,
+                                                              ω
+                                                − tan−1            ≈0
+                                                              a
+      and, for ω  a,
+                                                          ω
+                                              − tan−1             ≈ −90◦
+                                                          a

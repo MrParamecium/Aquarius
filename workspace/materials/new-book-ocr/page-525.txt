@@ -1,0 +1,54 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 525 — #38
+
+
+
+
+                                                                5.4   System Realization         525
+
+For H[z], b0 = 1, b1 = 4, b2 = 5, and b3 = 2. Hence, we obtain the canonic direct realization,
+shown in Fig. 5.13a. We have shown the horizontal orientation because it is easier to see
+that this filter is basically a tapped delay line. That is why this structure is also known as
+a tapped delay line or transversal filter. Figure 5.13b shows the corresponding transposed
+implementation.
+
+
+
+
+C ASCADE AND PARALLEL R EALIZATIONS ,
+C OMPLEX AND R EPEATED P OLES
+The considerations and observations for cascade and parallel realizations as well as complex and
+multiple poles are identical to those discussed for LTIC systems in Sec. 4.6-3.
+
+
+
+ D R I L L 5.17 Cascade and Parallel Realizations of a Transfer
+ Function
+ Find canonic direct realizations of the following transfer function by using the cascade and
+ parallel forms. The specific cascade decomposition is as follows:
+
+                                          z+3          z+3       1
+                             H[z] =                =
+                                      z2 + 7z + 10     z+2      z+5
+
+
+
+D O A LL R EALIZATIONS L EAD TO THE S AME P ERFORMANCE ?
+For a given transfer function, we have presented here several possible different realizations (DFI,
+canonic form DFII, and its transpose). There are also cascade and parallel versions, and there
+are many possible grouping of the factors in the numerator and the denominator of H[z], leading
+to different realizations. We can also use various combinations of these forms in implementing
+different subsections of a system. Moreover, the transpose of each version doubles the number.
+However, this discussion by no means exhausts all the possibilities. Transforming variables affords
+limitless potential realizations of the same transfer function.
+      Theoretically, all these realizations are equivalent; that is, they lead to the same transfer
+function. This, however, is true only when we implement them with infinite precision. In practice,
+finite wordlength restriction causes each realization to behave differently in terms of sensitivity
+to parameter variation, stability, frequency response distortion error, and so on. These effects
+are serious for higher-order transfer functions, which require correspondingly higher numbers of
+delay elements. The finite wordlength errors that plague these implementations are coefficient
+quantization, overflow errors, and round-off errors. From a practical viewpoint, parallel and
+cascade forms using low-order filters minimize the effects of finite wordlength. Parallel and certain
+cascade forms are numerically less sensitive than the canonic direct form to small parameter
+variations in the system. In the canonic direct form structure with large N, a small change in a
+filter coefficient due to parameter quantization results in a large change in the location of the
+poles and the zeros of the system. Qualitatively, this difference can be explained by the fact that

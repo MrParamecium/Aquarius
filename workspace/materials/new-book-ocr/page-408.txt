@@ -1,0 +1,63 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 408 — #79
+
+
+
+
+408   CHAPTER 4          CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              Input                                                                      Output
+          potentiometer                                                               potentiometer
+                                                                                                  uo   uo
+                             ui
+                                                   dc
+                                                                              Em(s)
+                                                 amplifier
+
+
+
+
+                                                                      (a)
+
+                                           Amplifier                Motor and load
+               ui                                                                           uo
+                                                  K                          G(s)
+
+                         
+
+
+                                                                      (b)
+
+
+                    1.2
+                                       K  80
+                     1
+
+                                         K  16
+
+                    uo
+                                            K7
+
+
+
+
+                                                                                                       t
+                                  tp                            2                                 4
+                                                                      (c)
+
+                                                                            0.1
+
+                    uo
+
+                                                Desired
+
+
+                                                             Actual
+
+
+
+
+                                                                                              t
+                                                                      (d)
+
+          Figure 4.35 (a) An automatic position control system. (b) Its block diagram. (c) The unit
+          step response. (d) The unit ramp response.

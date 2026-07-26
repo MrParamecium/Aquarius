@@ -1,0 +1,24 @@
+{
+  "sectionId": "5.1-1",
+  "sourcePages": [
+    "page-495",
+    "page-496",
+    "page-497",
+    "page-498",
+    "page-499"
+  ],
+  "usedPages": [
+    "page-495",
+    "page-496",
+    "page-497",
+    "page-498",
+    "page-499"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.1-1 Inverse Transform by Partial Fraction Expansion and Tables",
+  "foundEnd": true,
+  "endBeforeLine": "5.1-2 Inverse z-Transform by Power Series Expansion",
+  "endBeforeCode": "5.1-2",
+  "charCount": 11279
+}

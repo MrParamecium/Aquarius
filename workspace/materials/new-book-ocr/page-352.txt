@@ -1,0 +1,50 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 352 — #23
+
+
+
+
+352   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Observe the exponential term e−2s in the numerator of X(s), indicating time delay. In such a
+      case, we should separate X(s) into terms with and without a delay factor, as
+                                                   s+3            5e−2s
+                                     X(s) =                  +
+                                               (s + 1)(s + 2) (s + 1)(s + 2)
+                                                                    
+                                                      X1 (s)             X2 (s)e−2s
+
+      where
+                                                 s+3          2     1
+                                    X1 (s) =               =     −
+                                             (s + 1)(s + 2) s + 1 s + 2
+                                                   5          5     5
+                                    X2 (s) =               =     −
+                                             (s + 1)(s + 2) s + 1 s + 2
+      Therefore,
+                                              x1 (t) = (2e−t − e−2t )u(t)
+                                              x2 (t) = 5(e−t − e−2t )u(t)
+      Also, because
+                                           X(s) = X1 (s) + X2 (s)e−2s
+      we can write
+                           x(t) = x1 (t) + x2 (t − 2)
+                                 = (2e−t − e−2t )u(t) + 5 e−(t−2) − e−2(t−2) u(t − 2)
+
+
+
+
+       D R I L L 4.4 Laplace Transform and the Time-Shifting Property
+       Find the Laplace transform of the signal illustrated in Fig. 4.5.
+
+       ANSWER
+       1
+          (1 − 3e−2s + 2e−3s )
+       s2
+
+           x(t)
+
+              2
+
+
+
+
+              0        1       2       3          t            Figure 4.5 Signal for Drill 4.4.

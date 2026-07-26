@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-1",
+  "title": "Dependence of Frequency Response on Poles",
+  "summary": "This page covers 4.10-1 (Dependence of Frequency Response on Poles). OCR text begins with: 436 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS system from the system’s response to sinusoids. This application has significant practical utility. If we are given a system in a black box with only the input and output terminals available, the transfer function has to be determined by experimental measurements at the input and output terminals. The frequency response to sinusoidal inputs is one of the possibilities tha",
+  "keywords": [
+    "4.10",
+    "4.10-1",
+    "Dependence of Frequency Response on Poles",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-436",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

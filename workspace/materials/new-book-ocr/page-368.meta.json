@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.3. OCR text begins with: 368 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Unfortunately, the class of signals that can be expressed in this form is very small. However, we can express almost all signals of practical utility as a sum of everlasting exponentials over a continuum of frequencies. This is precisely what the Laplace transform in Eq. (4.2) does. # c+j∞ 1 x(t) = X(s)est ds (4.28)",
+  "keywords": [
+    "4.3",
+    "zero-input response",
+    "continuous-time",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-368",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

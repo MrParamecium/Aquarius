@@ -1,0 +1,54 @@
+                         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 528 — #41
+
+
+
+
+528       CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          signal is a discrete-time sinusoid cos ωnT, obtained by setting t = nT in cos ωt. Therefore, all the
+          results developed in this section apply if we substitute ωT for :
+
+                                                            = ωT                                      (5.34)
+
+
+
+      E X A M P L E 5.10 Sinusoidal Response of a Difference Equation System
+
+          For a system specified by the equation
+
+                                              y[n + 1] − 0.8y[n] = x[n + 1]
+
+          find the system response to the inputs
+                (a) 1n = 1
+                        'π        (
+                (b) cos    n − 0.2
+                         6
+                (c) a sampled sinusoid cos 1500t with sampling interval T = 0.001
+
+
+          The system equation can be expressed as
+
+                                                  (E − 0.8)y[n] = Ex[n]
+
+          Therefore, the transfer function of the system is
+                                                          z        1
+                                              H[z] =          =
+                                                       z − 0.8 1 − 0.8z−1
+          The frequency response is
+                                                  1                     1
+                               H[ej ] =             −j
+                                                         =
+                                             1 − 0.8e      (1 − 0.8 cos ) + j0.8 sin 
+          Therefore,
+                                                       1                               1
+                        |H[ej ]| =                                      =√                        (5.35)
+                                        (1 − 0.8 cos )2 + (0.8 sin )2          1.64 − 1.6 cos 
+
+          and                                                                    !
+                                                                   0.8 sin 
+                                            H[ej ] = − tan−1                                      (5.36)
+                                                                 1 − 0.8 cos 
+               The amplitude response |H[ej ]| can also be obtained by observing that |H|2 = HH ∗ . Since
+          our system is real, we therefore see that
+
+                                   |H[ej ]|2 = H[ej ]H ∗ [ej ] = H[ej ]H[e−j ]                 (5.37)

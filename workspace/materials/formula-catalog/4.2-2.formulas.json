@@ -1,0 +1,23 @@
+{
+  "sectionId": "4.2-2",
+  "sectionTitle": "Frequency Shifting",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-353"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.14)",
+      "name": "Frequency-shifting property",
+      "latex": "x(t)e^{s_0t}\\Longleftrightarrow X(s-s_0)",
+      "sourcePage": "page-353",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

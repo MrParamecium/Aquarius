@@ -1,0 +1,57 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 514 — #27
+
+
+
+
+514   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      5.3-1 Zero-State Response of LTID Systems: The Transfer Function
+      Consider an Nth-order LTID system specified by the difference equation
+
+                                                Q[E]y[n] = P[E]x[n]
+
+      or
+
+                               (EN + a1 EN−1 + · · · + aN−1 E + aN )y[n]
+                                     = (b0 EN + b1 EN−1 + · · · + bN−1 E + bN )x[n]
+
+      or
+
+                            y[n + N] + a1 y[n + N − 1] + · · · + aN−1 y[n + 1] + aN y[n]
+                                 = b0 x[n + N] + · · · + bN−1 x[n + 1] + bN x[n]                   (5.24)
+
+      We now derive the general expression for the zero-state response: that is, the system response to
+      input x[n] when all the initial conditions y[−1] = y[−2] = · · · = y[−N] = 0 (zero state). The input
+      x[n] is assumed to be causal so that x[−1] = x[−2] = · · · = x[−N] = 0.
+           Equation (5.24) can be expressed in delay form as
+
+                                 y[n] + a1 y[n − 1] + · · · + aN y[n − N]
+                                        = b0 x[n] + b1 x[n − 1] + · · · + bN x[n − N]              (5.25)
+
+      Because y[−r] = x[−r] = 0 for r = 1, 2, . . . , N,
+
+                                                 1
+                                 y[n − m]u[n] ⇐⇒   Y[z]
+                                                zm
+                                                 1
+                                 x[n − m]u[n] ⇐⇒ m X[z]            m = 1, 2, . . . , N
+                                                z
+      Now the z-transform of Eq. (5.25) is given by
+
+                            a1 a2           aN            b1 b2         bN
+                       1+      + 2 + · · · + N Y[z] = b0 + + 2 + · · · + N X[z]
+                             z  z           z              z z          z
+
+      Multiplication of both sides by zN yields
+
+                                (zN + a1 zN−1 + · · · + aN−1 z + aN )Y[z]
+                                      = (b0 zN + b1 zN−1 + · · · + bN−1 z + bN )X[z]
+
+      Therefore,
+
+                                       b0 zN + b1 zN−1 + · · · + bN−1 z + bN
+                               Y[z] =                                        X[z]
+                                        zN + a1 zN−1 + · · · + aN−1 z + aN
+                                      P[z]
+                                    =      X[z]
+                                      Q[z]

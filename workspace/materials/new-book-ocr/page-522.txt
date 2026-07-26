@@ -1,0 +1,57 @@
+                         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 522 — #35
+
+
+
+
+522   CHAPTER 5          DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      We use Fig. 5.8 as our model and reduce it to the case of N = 1. Figure 5.9a shows the canonic
+      direct (DFII) form, and Fig. 5.9b its transpose. The two realizations are almost the same. The
+      minor difference is that in the DFII form, the gain 2 is provided at the output, and in the
+      transpose, the same gain is provided at the input.
+
+                                                                                 Y[z]
+      X[z]
+
+                                                                     1
+                            1                                        z
+                            z
+                                    Y[z]                                                  Figure 5.9 Realization
+                                                 X[z]                                     of transfer function 2/(z + 5):
+                    5              2                      2                5            (a) canonic direct form and (b)
+                      (a)                                        (b)                      its transpose.
+
+              In a similar way, we realize the remaining transfer functions.
+              (b)
+                                                         4z + 28
+                                                 H[z] =
+                                                           z+1
+      In this case also, the transfer function is of the first order (N = 1); therefore, we need only one
+      delay for its realization. The feedback and feedforward coefficients are
+
+                                              a1 = 1           and          b0 = 4,     b1 = 28
+
+      Figure 5.10 illustrates the canonic direct and its transpose for this case.†
+
+       X[z]                             4               Y[z]             X[z]     4                      Y[z]
+
+
+                                1
+                                z                                                          1
+                                                                                           z
+
+                      1                 28
+
+                                                                                 28               1
+                            (a)                                                           (b)
+
+      Figure 5.10 Realization of (4z + 28)/(z + 1): (a) canonic direct form and (b) its transpose.
+
+
+
+      † Transfer functions with N = M may also be expressed as a sum of a constant and a strictly proper
+      transfer function. For example,
+                                                                4z + 28       24
+                                                    H[z] =              = 4+
+                                                                 z+1         z+1
+      Hence, this transfer function can also be realized as two transfer functions in parallel.

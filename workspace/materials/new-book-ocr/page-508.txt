@@ -1,0 +1,62 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 508 — #21
+
+
+
+
+508   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Interchanging the order of summation, we have
+                                                      ∞
+                                                      "                ∞
+                                                                       "
+                               Z[x1 [n] ∗ x2 [n]] =          x1 [m]          x2 [n − m]z−n
+                                                      m=−∞            n=−∞
+                                                       "∞              "∞
+                                                 =           x1 [m]          x2 [r]z−(r+m)
+                                                      m=−∞            r=−∞
+                                                       "∞                   ∞
+                                                                            "
+                                                                       −m
+                                                 =           x1 [m]z               x2 [r]z−r
+                                                      m=−∞                  r=−∞
+
+                                                 = X1 [z]X2 [z]
+
+      LTID S YSTEM R ESPONSE
+      It is interesting to apply the time-convolution property to the LTID input–output equation y[n] =
+      x[n] ∗ h[n]. Since h[n] ⇐⇒ H[z], it follows from Eq. (5.19) that
+
+                                                 Y[z] = X[z]H[z]                                     (5.20)
+
+
+
+
+       D R I L L 5.9 Using the Convolution Property
+       Use the time-convolution property and appropriate pairs in Table 5.1 to show that
+       u[n] ∗ u[n − 1] = nu[n].
+
+
+
+      I NITIAL AND F INAL VALUES
+      For a causal x[n], the initial value theorem states that
+
+                                                 x[0] = lim X[z]
+                                                          z→∞
+
+      This result follows immediately from Eq. (5.7).
+          If (z − 1)X[z] has no poles outside the unit circle, then the final value theorem states that
+
+                                            lim x[N] = lim(z − 1)X[z]
+                                           N→∞            z→1
+
+      This can be shown from the fact that
+                                                       
+                                                      1          (z − 1)X[z]
+                               x[n] − x[n − 1] ⇐⇒ 1 −     X[z] =
+                                                      z               z
+
+      and
+                                                   "∞
+                                    (z − 1)X[z]
+                                                =      {x[n] − x[n − 1]}z−n
+                                         z        n=−∞

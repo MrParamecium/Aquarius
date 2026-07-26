@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.4-1",
+  "sourcePages": [
+    "page-382",
+    "page-383",
+    "page-384",
+    "page-385"
+  ],
+  "usedPages": [
+    "page-382",
+    "page-383",
+    "page-384",
+    "page-385"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.4-1 Analysis of Active Circuits",
+  "foundEnd": true,
+  "endBeforeLine": "4.5 Analysis of Electrical Networks: The Transformed Network 385",
+  "endBeforeCode": "4.5",
+  "charCount": 6412
+}

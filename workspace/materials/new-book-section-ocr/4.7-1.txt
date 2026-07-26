@@ -1,0 +1,328 @@
+# Fourier section OCR
+section_id: 4.7-1
+source_pages: page-406, page-407, page-408, page-409, page-410, page-411, page-412
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.7-1 Analysis of a Simple Control System
+      Figure 4.35a represents an automatic position control system, which can be used to control the
+      angular position of a heavy object (e.g., a tracking antenna, an anti-aircraft gun mount, or the
+      position of a ship). The input θi is the desired angular position of the object, which can be set
+      at any given value. The actual angular position θo of the object (the output) is measured by a
+      potentiometer whose wiper is mounted on the output shaft. The difference between the input θi
+
+[[PAGE page-407]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 407 — #78
+
+
+
+
+                                               4.7   Application to Feedback and Controls            407
+
+(set at the desired output position) and the output θo (actual position) is amplified; the amplified
+output, which is proportional to θi − θo , is applied to the motor input. If θi − θo = 0 (the output
+being equal to the desired angle), there is no input to the motor, and the motor stops. But if θo = θi ,
+there will be a nonzero input to the motor, which will turn the shaft until θo = θi . It is evident that
+by setting the input potentiometer at a desired position in this system, we can control the angular
+position of a heavy remote object.
+     The block diagram of this system is shown in Fig. 4.35b. The amplifier gain is K, where K is
+adjustable. Let the motor (with load) transfer function that relates the output angle θo to the motor
+input voltage be G(s) [for a starting point, see Eq. (1.32)]. This feedback arrangement is identical
+to that in Fig. 4.18d with H(s) = 1. Hence, T(s), the (closed-loop) system transfer function relating
+the output θo to the input θi , is
+
+                                     o (s)            KG(s)
+                                            = T(s) =
+                                     i (s)          1 + KG(s)
+
+From this equation, we shall investigate the behavior of the automatic position control system in
+Fig. 4.35a for a step and a ramp input.
+
+S TEP I NPUT
+If we desire to change the angular position of the object instantaneously, we need to apply a step
+input. We may then want to know how long the system takes to position itself at the desired
+angle, whether it reaches the desired angle, and whether it reaches the desired position smoothly
+(monotonically) or oscillates about the final position. If the system oscillates, we may want to
+know how long it takes for the oscillations to settle down. All these questions can be readily
+answered by finding the output θo (t) when the input θi (t) = u(t). A step input implies instantaneous
+change in the angle. This input would be one of the most difficult to follow; if the system can
+perform well for this input, it is likely to give a good account of itself under most other expected
+situations. This is why we test control systems for a step input.
+     For the step input θi (t) = u(t), i (s) = 1/s and
+
+                                           1           KG(s)
+                                   o (s) = T(s) =
+                                           s       s[1 + KG(s)]
+
+Let the motor (with load) transfer function relating the load angle θo (t) to the motor input voltage
+be G(s) = 1/(s(s + 8)). This yields
+
+                                             K
+                                         s(s + 8)           K
+                             o (s) =                != 2
+                                               K       s(s + 8s + K)
+                                      s 1+
+                                            s(s + 8)
+
+Let us investigate the system behavior for three different values of gain K.
+    For K = 7,
+                                                                 7    1
+                                   7               7         1
+                  o (s) =                 =               =   − 6
+                                                                   +  6
+                             s(s2 + 8s + 7) s(s + 1)(s + 7) s s + 1 s + 7
+
+[[PAGE page-408]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 408 — #79
+
+
+
+
+408   CHAPTER 4          CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              Input                                                                      Output
+          potentiometer                                                               potentiometer
+                                                                                                  uo   uo
+                             ui
+                                                   dc
+                                                                              Em(s)
+                                                 amplifier
+
+
+
+
+                                                                      (a)
+
+                                           Amplifier                Motor and load
+               ui                                                                           uo
+                                                  K                          G(s)
+
+                         
+
+
+                                                                      (b)
+
+
+                    1.2
+                                       K  80
+                     1
+
+                                         K  16
+
+                    uo
+                                            K7
+
+
+
+
+                                                                                                       t
+                                  tp                            2                                 4
+                                                                      (c)
+
+                                                                            0.1
+
+                    uo
+
+                                                Desired
+
+
+                                                             Actual
+
+
+
+
+                                                                                              t
+                                                                      (d)
+
+          Figure 4.35 (a) An automatic position control system. (b) Its block diagram. (c) The unit
+          step response. (d) The unit ramp response.
+
+[[PAGE page-409]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 409 — #80
+
+
+
+
+                                                  4.7   Application to Feedback and Controls                 409
+
+and                                                               
+                                      θo (t) = 1 − 76 e−t + 16 e−7t u(t)
+This response, illustrated in Fig. 4.35c, shows that the system reaches the desired angle, but at a
+rather leisurely pace. To speed up the response let us increase the gain to, say, 80.
+     For K = 80,
+                                           80                   80
+                          o (s) =                  =
+                                     s(s2 + 8s + 80) s(s + 4 − j8)(s + 4 + j8)
+                                           √             √
+                                       5 j153      ◦
+                                                 5 −j153           ◦
+                                  1     e         e
+                                 = + 4        + 4
+                                  s s + 4 − j8 s + 4 + j8
+and                                      '   √                        (
+                                 θo (t) = 1 + 25 e−4t cos (8t + 153◦ ) u(t)
+
+This response, also depicted in Fig. 4.35c, achieves the goal of reaching the final position at a
+faster rate than that in the earlier case (K = 7). Unfortunately the improvement is achieved at the
+cost of ringing (oscillations) with high overshoot. In the present case, the percent overshoot (PO) is
+21%. The response reaches its peak value at peak time tp = 0.393 second. The rise time, defined as
+the time required for the response to rise from 10% to 90% of its steady-state value, indicates the
+speed of response.† In the present case tr = 0.175 second. The steady-state value of the response
+is unity so that the steady-state error is zero. Theoretically it takes infinite time for the response to
+reach the desired value of unity. In practice, however, we may consider the response to have settled
+to the final value if it closely approaches the final value. A widely accepted measure of closeness
+is within 2% of the final value. The time required for the response to reach and stay within 2% of
+the final value is called the settling time ts .‡ In Fig. 4.35c, we find ts ≈ 1 second (when K = 80). A
+good system has a small overshoot, small tr and ts and a small steady-state error.
+     A large overshoot, as in the present case, may be unacceptable in many applications. Let
+us try to determine K (the gain) that yields the fastest response without oscillations. Complex
+characteristic roots lead to oscillations; to avoid oscillations, the characteristic roots should be
+real. In the present case, the characteristic polynomial is s2 + 8s + K. For K > 16, the characteristic
+roots are complex; for K < 16, the roots are real. The fastest response without oscillations is
+obtained by choosing K = 16. We now consider this case.
+     For K = 16,
+                                      16            16     1   1       4
+                     o (s) =                  =          = −     −
+                                s(s2 + 8s + 16) s(s + 4)2  s s + 4 (s + 4)2
+and
+                                       θo (t) = [1 − (4t + 1)e−4t ]u(t)
+This response also appears in Fig. 4.35c. The system with K > 16 is said to be underdamped
+(oscillatory response), whereas the system with K < 16 is said to be overdamped. For K = 16, the
+system is said to be critically damped.
+
+† Delay time t , defined as the time required for the response to reach 50% of its steady-state value, is another
+              d
+indication of speed. For the present case, td = 0.141 second.
+‡ Typical percentage values used are 2 to 5% for t .
+                                                    s
+
+[[PAGE page-410]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 410 — #81
+
+
+
+
+410       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              There is a trade-off between undesirable overshoot and rise time. Reducing overshoots leads
+          to higher rise time (sluggish system). In practice, a small overshoot, which is still faster than
+          the critical damping, may be acceptable. Note that percent overshoot PO and peak time tp are
+          meaningless for the overdamped or critically damped cases. In addition to adjusting gain K, we
+          may need to augment the system with some type of compensator if the specifications on overshoot
+          and the speed of response are too stringent.
+
+          R AMP I NPUT
+          If the anti-aircraft gun in Fig. 4.35a is tracking an enemy plane moving with a uniform velocity,
+          the gun-position angle must increase linearly with t. Hence, the input in this case is a ramp; that
+          is, θi (t) = tu(t). Let us find the response of the system to this input when K = 80. In this case,
+          i (s) = 1/s2 , and
+
+                                                 80                0.1 1   0.1(s − 2)
+                               o (s) =                       =−      + 2+ 2
+                                          s2 (s2 + 8s + 80)         s  s  s + 8s + 80
+
+          Use of Table 4.1 yields
+
+                                    θo (t) = −0.1 + t + 18 e−8t cos (8t + 36.87◦ ) u(t)
+
+          This response, sketched in Fig. 4.35d, shows that there is a steady-state error er = 0.1 radian. In
+          many cases such a small steady-state error may be tolerable. If, however, a zero steady-state error
+          to a ramp input is required, this system in its present form is unsatisfactory. We must add some
+          form of compensator to the system.
+
+
+
+      E X A M P L E 4.26 Step and Ramp Responses of Feedback Systems Using
+      MATLAB
+
+          Using the feedback system of Fig. 4.18d with G(s) = K/(s(s + 8)) and H(s) = 1, determine
+          the step response for each of the following cases: (a) K = 7, (b) K = 16, and (c) K = 80.
+          Additionally, find the unit ramp response when (d) K = 80.
+
+
+          Example 4.21 computes the transfer functions of these feedback systems in a simple way. In
+          this example, the conv command is used to demonstrate polynomial multiplication of the two
+          denominator factors of G(s). Step responses are computed by using the step command.
+               (a–c)
+          >>   H = tf(1,1); K = 7; G = tf([K],conv([1 0],[1 8])); Ha = feedback(G,H);
+          >>   H = tf(1,1); K = 16; G = tf([K],conv([1 0],[1 8])); Hb = feedback(G,H);
+          >>   H = tf(1,1); K = 80; G = tf([K],conv([1 0],[1 8])); Hc = feedback(G,H);
+          >>   clf; step(Ha,’k-’,Hb,’k--’,Hc,’k-.’);
+          >>   legend(’K = 7’,’K = 16’,’K = 80’,’Location’,’best’);
+
+[[PAGE page-411]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 411 — #82
+
+
+
+
+                                                           4.7   Application to Feedback and Controls     411
+
+
+                                                       Step Response
+
+
+
+              1
+
+
+Amplitude
+            0.5                                                                                 K=7
+                                                                                                K=16
+                                                                                                K=80
+
+
+                     0                     2                           4                   6
+                                                       Time (seconds)
+Figure 4.36 Step responses for Ex. 4.26.
+
+             (d) The unit ramp response is equivalent to the integral of the unit step response. We
+        can obtain the ramp response by taking the step response of the system in cascade with an
+        integrator. To help highlight waveform detail, we compute the ramp response over the short
+        time interval of 0 ≤ t ≤ 1.5.
+
+        >>               t = 0:.001:1.5; Hd = series(Hc,tf([1],[1 0]));
+        >>               step(Hd,’k-’,t); title(’Unit Ramp Response’);
+
+
+
+                                                       Unit Ramp Response
+                         1.5
+
+
+
+                          1
+
+
+             Amplitude
+                         0.5
+
+
+
+
+                               0                 0.5                           1                        1.5
+                                                           Time (seconds)
+             Figure 4.37 Ramp response for Ex. 4.26 with K = 80.
+
+
+
+
+       D ESIGN S PECIFICATIONS
+       Now the reader has some idea of the various specifications a control system might require.
+       Generally, a control system is designed to meet given transient specifications, steady-state error
+       specifications, and sensitivity specifications. Transient specifications include overshoot, rise time,
+       and settling time of the response to step input. The steady-state error is the difference between
+
+[[PAGE page-412]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 412 — #83
+
+
+
+
+412   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      the desired response and the actual response to a test input in steady state. The system should
+      also satisfy a specified sensitivity specifications to some system parameter variations, or to certain
+      disturbances. Above all, the system must remain stable under operating conditions. Discussion of
+      design procedures used to realize given specifications is beyond the scope of this book.

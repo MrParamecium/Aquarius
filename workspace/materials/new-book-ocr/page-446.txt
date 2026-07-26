@@ -1,0 +1,60 @@
+                  “04-Lathi-C04” — 2017/9/25 — 19:46 — page 446 — #117
+
+
+
+
+446   CHAPTER 4    CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                                 x(t)
+
+
+
+
+                                 0                        t
+
+                             (a)
+
+
+                         x1(t)
+
+
+
+
+                                 0                        t
+
+                             (b)
+
+                                 x2(t)
+
+
+
+
+                                 0                        t
+
+                             (c)
+
+                        x2(t)
+
+
+
+
+                                 0                        t
+                                                                       Figure 4.56 Expressing a signal as a sum of
+                             (d)                                       causal and anticausal components.
+
+
+
+
+         The bilateral Laplace transform of x(t) is given by
+
+
+                                              # ∞
+                                     X(s) =          x(t)e−st dt
+                                               −∞
+                                              # 0−                         # ∞
+                                                              −st
+                                         =           x2 (t)e        dt +         x1 (t)e−st dt
+                                               −∞                          0−
+
+                                         = X2 (s) + X1 (s)                                                   (4.57)

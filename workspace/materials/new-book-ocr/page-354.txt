@@ -1,0 +1,60 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 354 — #25
+
+
+
+
+354   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          We are now ready to consider the two most important properties of the Laplace transform:
+      time differentiation and time integration.
+
+
+      4.2-3 The Time-Differentiation Property
+      The time-differentiation property states that if†
+
+                                                        x(t) ⇐⇒ X(s)
+
+      then
+                                          dx(t)
+                                                ⇐⇒ sX(s) − x(0− )
+                                           dt
+      Repeating this property a second time (differentiating twice) yields
+
+                                         d2 x(t)
+                                                 ⇐⇒ s2 X(s) − sx(0− ) − ẋ(0− )
+                                          dt2
+      Repeated differentiation yields
+                          dn x(t)
+                                  ⇐⇒ sn X(s) − sn−1 x(0− ) − sn−2 ẋ(0− ) − · · · − x(n−1) (0− )
+                           dtn
+                                              "
+                                              n
+                                  = sn X(s) −   sn−k x(k−1) (0− )                                              (4.15)
+                                                 k=1
+
+      where x(r) (0− ) is dr x/dtr at t = 0− .
+      Proof.                                         ! # ∞
+                                               dx(t)       dx(t) −st
+                                             L        =         e dt
+                                                dt      0−  dt
+      Integrating by parts, we obtain
+                                               !                    # ∞
+                                         dx(t)              ∞
+                                     L           = x(t)e−st 0− + s     x(t)e−st dt
+                                          dt                         0−
+
+
+      For the Laplace integral to converge [i.e., for X(s) to exist], it is necessary that x(t)e−st → 0 as
+      t → ∞ for the values of s in the ROC for X(s). Thus,
+                                                  !
+                                           dx(t)
+                                        L           = −x(0− ) + sX(s)
+                                             dt
+      Repeated application of this procedure yields Eq. (4.15).
+
+
+
+      † The dual of the time-differentiation property is the frequency-differentiation property, which states that
+                                                                    d
+                                                       tx(t) ⇐⇒ −      X(s)
+                                                                    ds

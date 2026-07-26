@@ -1,0 +1,32 @@
+{
+  "sectionId": "5.8",
+  "sectionTitle": "The Bilateral z-Transform",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-554",
+      "page-555"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.51)",
+      "name": "Right-sided exponential z-transform",
+      "latex": "\\gamma^n u[n]\\Longleftrightarrow \\frac{z}{z-\\gamma},\\qquad |z|>|\\gamma|",
+      "sourcePage": "page-554",
+      "role": "canonical_pair",
+      "status": "verified"
+    },
+    {
+      "label": "(5.52)",
+      "name": "Left-sided exponential z-transform",
+      "latex": "-\\gamma^n u[-(n+1)]\\Longleftrightarrow \\frac{z}{z-\\gamma},\\qquad |z|<|\\gamma|",
+      "sourcePage": "page-555",
+      "role": "canonical_pair",
+      "status": "verified"
+    }
+  ]
+}

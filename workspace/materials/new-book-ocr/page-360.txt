@@ -1,0 +1,61 @@
+                        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 360 — #31
+
+
+
+
+360       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          x(0+ ) is the value of the remainder (strictly proper) fraction, for which the initial value theorem
+          applies. In the present case,
+                                                             −2s2
+                                           x(0+ ) = lim 2              = −2
+                                                     s→∞ s + 2s + 1
+
+              To prove the final value theorem, we let n = 1 and s → 0 in Eq. (4.15) to obtain
+                                                        # ∞                # ∞
+                                                             dx(t) −st          dx(t)
+                              lim[sX(s) − x(0− )] = lim           e dt =              dt
+                              s→0                   s→0 0−    dt            0−   dt
+                                                        ∞
+                                                  = x(t)0− = lim x(t) − x(0− )
+                                                                t→∞
+
+          a deduction that leads to the desired result, Eq. (4.21).
+
+          Comment. The final value theorem applies only if the poles of X(s) are in the LHP (including
+          s = 0). If X(s) has a pole in the RHP, x(t) contains an exponentially growing term and x(∞) does
+          not exist. If there is a pole on the imaginary axis, then x(t) contains an oscillating term and x(∞)
+          does not exist. However, if there is a pole at the origin, then x(t) contains a constant term, and
+          hence, x(∞) exists and is a constant.
+
+
+      E X A M P L E 4.11 Initial and Final Values
+
+          Determine the initial and final values of y(t) if its Laplace transform Y(s) is given by
+
+                                                           10(2s + 3)
+                                                Y(s) =
+                                                         s(s2 + 2s + 5)
+
+
+          Equations (4.20) and (4.21) yield
+
+                                                                  10(2s + 3)
+                                    y(0+ ) = lim sY(s) = lim                   =0
+                                              s→∞          s→∞ (s2 + 2s + 5)
+                                                                10(2s + 3)
+                                    y(∞) = lim sY(s) = lim                     =6
+                                              s→0          s→0 (s2 + 2s + 5)
+
+
+
+
+              Table 4.2 summarizes the most important unilateral Laplace transform properties.
+
+
+
+          4.3 S OLUTION OF D IFFERENTIAL AND
+          I NTEGRO -D IFFERENTIAL E QUATIONS
+          The time-differentiation property of the Laplace transform has set the stage for solving linear
+          differential (or integro-differential) equations with constant coefficients. Because dk y/dtk ⇐⇒
+          sk Y(s), the Laplace transform of a differential equation is an algebraic equation that can be readily

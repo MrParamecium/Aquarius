@@ -1,0 +1,48 @@
+{
+  "sectionId": "5.3-1",
+  "sectionTitle": "Zero-State Response of LTID Systems: The Transfer Function",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-514",
+      "page-515"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.24)",
+      "name": "General LTID difference equation using advance operator",
+      "latex": "y[n+N]+a_1y[n+N-1]+\\cdots+a_{N-1}y[n+1]+a_Ny[n]=b_0x[n+N]+\\cdots+b_{N-1}x[n+1]+b_Nx[n]",
+      "sourcePage": "page-514",
+      "role": "core_model",
+      "status": "verified"
+    },
+    {
+      "label": "(5.25)",
+      "name": "General LTID difference equation using delays",
+      "latex": "y[n]+a_1y[n-1]+\\cdots+a_Ny[n-N]=b_0x[n]+b_1x[n-1]+\\cdots+b_Nx[n-N]",
+      "sourcePage": "page-514",
+      "role": "core_model",
+      "status": "verified"
+    },
+    {
+      "label": "(5.26)",
+      "name": "Discrete-time transfer function polynomial ratio",
+      "latex": "H[z]=\\frac{P[z]}{Q[z]}=\\frac{b_0z^N+b_1z^{N-1}+\\cdots+b_{N-1}z+b_N}{z^N+a_1z^{N-1}+\\cdots+a_{N-1}z+a_N}",
+      "sourcePage": "page-515",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.28)",
+      "name": "Inverse z-transform superposition",
+      "latex": "x[n]=\\frac{1}{2\\pi j}\\oint X[z]z^{n-1},dz",
+      "sourcePage": "page-515",
+      "role": "interpretation_formula",
+      "status": "verified"
+    }
+  ]
+}

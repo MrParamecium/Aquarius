@@ -1,0 +1,56 @@
+                          “05-Lathi-C05” — 2017/9/25 — 15:54 — page 510 — #23
+
+
+
+
+510       CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+          5.3 z-T RANSFORM S OLUTION OF L INEAR D IFFERENCE
+          E QUATIONS
+          The time-shifting (left-shift or right-shift) property has set the stage for solving linear difference
+          equations with constant coefficients. As in the case of the Laplace transform with differential
+          equations, the z-transform converts difference equations into algebraic equations that are readily
+          solved to find the solution in the z domain. Taking the inverse z-transform of the z-domain solution
+          yields the desired time-domain solution. The following examples demonstrate the procedure.
+
+
+      E X A M P L E 5.5 z-Transform Solution of a Linear Difference Equation
+
+          Solve
+                                     y[n + 2] − 5y[n + 1] + 6y[n] = 3x[n + 1] + 5x[n]
+          if the initial conditions are y[−1] = 11/6, y[−2] = 37/36, and the input x[n] = (2)−n u[n].
+
+
+          As we shall see, difference equations can be solved by using the right-shift or the left-
+          shift property. Because the difference equation here is in advance form, the use of the left-shift
+          property in Eq. (5.16) may seem appropriate for its solution. Unfortunately, this left-shift
+          property requires a knowledge of auxiliary conditions y[0], y[1], . . . , y[N − 1] rather than of
+          the initial conditions y[−1], y[−2], . . . , y[−n], which are generally given. This difficulty can
+          be overcome by expressing the difference equation in delay form (obtained by replacing n with
+          n − 2) and then using the right-shift property.† The resulting delay-form difference equation is
+
+                                   y[n] − 5y[n − 1] + 6y[n − 2] = 3x[n − 1] + 5x[n − 2]                           (5.21)
+
+          We now use the right-shift property to take the z-transform of this equation. But before
+          proceeding, we must be clear about the meaning of a term like y[n − 1] here. Does it mean
+          y[n − 1]u[n − 1] or y[n − 1]u[n]? In any equation, we must have some time reference n = 0,
+          and every term is referenced from this instant. Hence, y[n − k] means y[n − k]u[n]. Remember
+          also that although we are considering the situation for n ≥ 0, y[n] is present even before n = 0
+          (in the form of initial conditions). Now
+
+                               y[n]u[n] ⇐⇒ Y[z]
+                                           1              1       11
+                           y[n − 1]u[n] ⇐⇒ Y[z] + y[−1] = Y[z] +
+                                           z              z        6
+                                           1       1                 1       11 37
+                           y[n − 2]u[n] ⇐⇒ 2 Y[z] + y[−1] + y[−2] = 2 Y[z] +   +
+                                           z       z                 z       6z 36
+          Noting that for causal input x[n],
+
+                                             x[−1] = x[−2] = · · · = x[−n] = 0
+
+
+
+          † Another approach is to find y[0], y[1], y[2], . . . , y[N − 1] from y[−1], y[−2], . . . , y[−n] iteratively, as in
+          Sec. 3.5-1, and then apply the left-shift property to the advance-form difference equation.

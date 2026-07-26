@@ -1,0 +1,24 @@
+{
+  "sectionId": "5.5-1",
+  "sourcePages": [
+    "page-532",
+    "page-533",
+    "page-534",
+    "page-535",
+    "page-536"
+  ],
+  "usedPages": [
+    "page-532",
+    "page-533",
+    "page-534",
+    "page-535",
+    "page-536"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.5-1 The Periodic Nature of Frequency Response",
+  "foundEnd": true,
+  "endBeforeLine": "5.5-2 Aliasing and Sampling Rate",
+  "endBeforeCode": "5.5-2",
+  "charCount": 10646
+}

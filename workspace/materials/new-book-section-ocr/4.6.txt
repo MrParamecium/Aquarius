@@ -1,0 +1,41 @@
+# Fourier section OCR
+section_id: 4.6
+source_pages: page-388, page-389
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.6 S YSTEM R EALIZATION
+      We now develop a systematic method for realization (or implementation) of an arbitrary Nth-order
+      transfer function. The most general transfer function with M = N is given by
+
+                                           b0 sN + b1 sN−1 + · · · + bN−1 s + bN
+                                  H(s) =                                                            (4.36)
+                                            sN + a1 sN−1 + · · · + aN−1 s + aN
+
+      Since realization is basically a synthesis problem, there is no unique way of realizing a system.
+      A given transfer function can be realized in many different ways. A transfer function H(s) can be
+      realized by using integrators or differentiators along with adders and multipliers. We avoid use of
+      differentiators for practical reasons discussed in Secs. 2.1 and 4.3-3. Hence, in our implementation,
+      we shall use integrators along with scalar multipliers and adders. We are already familiar with
+      representation of all these elements except the integrator. The integrator can be represented by a
+      box with integral sign (time-domain representation, Fig. 4.19a) or by a box with transfer function
+      1/s (frequency-domain representation, Fig. 4.19b).
+
+[[PAGE page-389]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 389 — #60
+
+
+
+
+                                                                              4.6        System Realization     389
+
+
+                              y(t)  0 x(t)d(t)
+                                        t
+       x(t)                                            X(s)                         Y(s)  1s X(s)
+                                                                     1
+                                                                    s
+
+                        (a)                                                 (b)
+      Figure 4.19 (a) Time-domain and (b) frequency-domain representations of an integrator.

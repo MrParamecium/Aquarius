@@ -1,0 +1,16 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.1. OCR text begins with: 490 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM E X A M P L E 5.1 Bilateral z-Transform of a Causal Exponential Find the z-transform and the corresponding ROC for the signal γ n u[n]. By definition, ∞ \" X[z] = γ n u[n]z−n",
+  "keywords": [
+    "5.1",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-490",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

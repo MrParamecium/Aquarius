@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-4",
+  "title": null,
+  "summary": "This page covers 4.10-4. OCR text begins with: 4.10 Filter Design by Placement of Poles and Zeros of H(s) 443 MATLAB easily computes and plots the magnitude response curves of Fig. 4.52b. To illustrate, let us plot the magnitude response using θ = 60◦ over a frequency range of 0 ≤ f ≤ 150 Hz. The result, shown in Fig. 4.53, matches the θ = 60◦ case of Fig. 4.52b. >> f = (0:.01:150); omega0 = 2*pi*60; theta = 60*pi/180; >> H = @(s) (s.^2+omega0^2)./(s.^2+2*omega0*",
+  "keywords": [
+    "4.10",
+    "4.10-4",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-443",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

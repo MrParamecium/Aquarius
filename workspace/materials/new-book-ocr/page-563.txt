@@ -1,0 +1,55 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 563 — #76
+
+
+
+
+                                             5.9    Connecting the Laplace and z-Transforms       563
+
+
+
+ D R I L L 5.24 Zero-State Response by Bilateral z-Transform
+ For the causal system in Ex. 5.19, find the zero-state response to input
+                                       n
+                              x[n] = 14 u[n] + 5(3)n u[−(n + 1)]
+
+ ANSWER
+     n    n
+   − 14 + 3 12 u[n] + 6(3)n u[−(n + 1)]
+
+
+
+
+5.9 C ONNECTING THE L APLACE AND z-T RANSFORMS
+We now show that discrete-time systems also can be analyzed by means of the Laplace transform.
+In fact, we shall see that the z-transform is the Laplace transform in disguise and that discrete-time
+systems can be analyzed as if they were continuous-time systems.
+     So far we have considered the discrete-time signal as a sequence of numbers and not as
+an electrical signal (voltage or current). Similarly, we considered a discrete-time system as a
+mechanism that processes a sequence of numbers (input) to yield another sequence of numbers
+(output). The system was built by using delays (along with adders and multipliers) that delay
+sequences of numbers. A digital computer is a perfect example: every signal is a sequence of
+numbers, and the processing involves delaying sequences of numbers (along with addition and
+multiplication).
+     Now suppose we have a discrete-time system with transfer function H[z] and input x[n].
+Consider a continuous-time signal x(t) such that its nth sample value is x[n], as shown in Fig. 5.30.†
+Let the sampled signal be x(t), consisting of impulses spaced T seconds apart with the nth impulse
+of strength x[n]. Thus,
+                                               "∞
+                                        x(t) =     x[n]δ(t − nT)
+                                                   n=0
+
+
+     Figure 5.30 shows x[n] and the corresponding x(t). The signal x[n] is applied to the input of
+a discrete-time system with transfer function H[z], which is generally made up of delays, adders,
+and scalar multipliers. Hence, processing x[n] through H[z] amounts to operating on the sequence
+x[n] by means of delays, adders, and scalar multipliers. Suppose for x(t) samples, we perform
+operations identical to those performed on the samples of x[n] by H[z]. For this purpose, we need a
+continuous-time system with transfer function H(s) that is identical in structure to the discrete-time
+system H[z] except that the delays in H[z] are replaced by elements that delay continuous-time
+signals (such as voltages or currents). There is no other difference between realizations of H[z]
+and H(s). If a continuous-time impulse δ(t) is applied to such a delay of T seconds, the output will
+be δ(t − T). The continuous-time transfer function of such a delay is e−sT [see Eq. (4.30)]. Hence,
+the delay elements with transfer function 1/z in the realization of H[z] will be replaced by the delay
+elements with transfer function e−sT in the realization of the corresponding H(s). This is the same
+
+† We can construct such x(t) from the sample values, as will be explained in Ch. 8.

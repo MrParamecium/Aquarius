@@ -1,0 +1,62 @@
+                                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 458 — #129
+
+
+
+
+458   CHAPTER 4                     CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                           1
+                                                                                                   Ideal
+                          0.8                                                                      First-order RC
+
+
+
+            |H(j2 π f)|
+                          0.6
+
+                          0.4
+
+                          0.2
+
+                           0
+                                0          0.2   0.4     0.6     0.8       1      1.2       1.4   1.6          1.8      2
+                                                                         f [Hz]                                      ×104
+            Figure 4.62 Magnitude response |HRC (j2π f )| of a first-order RC filter.
+
+
+
+
+                                                 –                                           –
+                                R                                          R
+                                                 +                                           +
+             +                                                                                           +
+            x(t)                       C                                          C                     y(t)
+             –                                                                                           –
+
+            Figure 4.63 A cascaded RC filter.
+
+
+
+
+      A C ASCADED RC F ILTER AND P OLYNOMIAL E XPANSION
+      A first-order RC filter is destined for poor performance; one pole is simply insufficient to obtain
+      good results. A cascade of RC circuits increases the number of poles and improves the filter
+      response. To simplify the analysis and prevent loading between stages, we employ op-amp
+      followers to buffer the output of each stage, as shown in Fig. 4.63. A cascade of N stages results
+      in an Nth-order filter with transfer function given by
+
+                                                  Hcascade (s) = [HRC (s)]N = (RCs + 1)−N
+
+           Upon choosing
+                 √                    10 stages and C = 1 nF, a 3 kHz cutoff frequency is obtained by
+                         a cascade of √
+      setting R = 21/10 − 1/(Cωc ) = 21/10 − 1/(6π(10)−6 ).
+
+      >>   R = sqrt(2^(1/10)-1)/(C*omega_c)
+           R = 1.4213e+004
+
+          This cascaded filter has a 10th-order pole at λ = −1/RC and no finite zeros. To compute
+      the magnitude response, polynomial coefficient vectors A and B are needed. Setting B = [1]
+      ensures there are no finite zeros or, equivalently, that all zeros are at infinity. The poly command,
+      which expands a vector of roots into a corresponding vector of polynomial coefficients, is used to
+      obtain A.

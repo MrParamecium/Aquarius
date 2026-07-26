@@ -1,0 +1,55 @@
+            “04-Lathi-C04” — 2017/9/25 — 19:46 — page 413 — #84
+
+
+
+
+                                                   4.8 Frequency Response of an LTIC System                   413
+
+    ROC for H(s) does not include the ω axis where s = jω [see Eq. (4.10)]. This means that H(s)
+     when s = jω is meaningless for BIBO-unstable systems.†
+          Equation (4.43) shows that for a sinusoidal input of radian frequency ω, the system response
+     is also a sinusoid of the same frequency ω. The amplitude of the output sinusoid is |H(jω)| times
+     the input amplitude, and the phase of the output sinusoid is shifted by  H(jω) with respect to
+     the input phase (see later Fig. 4.38 in Ex. 4.27). For instance, a certain system with |H(j10)| = 3
+     and  H(j10) = −30◦ amplifies a sinusoid of frequency ω = 10 by a factor of 3 and delays its
+     phase by 30◦ . The system response to an input 5 cos (10t + 50◦ ) is 3 × 5 cos (10t + 50◦ − 30◦ ) =
+     15 cos (10t + 20◦ ).
+          Clearly |H(jω)| is the amplitude gain of the system, and a plot of |H(jω)| versus ω shows the
+     amplitude gain as a function of frequency ω. We shall call |H(jω)| the amplitude response. It also
+     goes under the name magnitude response.‡ Similarly,  H(jω) is the phase response, and a plot of
+     H(jω) versus ω shows how the system modifies or changes the phase of the input sinusoid. Plots
+    of the magnitude response |H(jω)| and phase response  H(jω) show at a glance how a system
+     responds to sinusoids of various frequencies. Observe that H(jω) has the information of |H(jω)|
+     and  H(jω) and is therefore termed the frequency response of the system. Clearly, the frequency
+     response of a system represents its filtering characteristics.
+
+
+
+E X A M P L E 4.27 Frequency Response
+
+    Find the frequency response (amplitude and phase responses) of a system whose transfer
+    function is
+                                               s + 0.1
+                                        H(s) =
+                                                s+5
+    Also, find the system response y(t) if the input x(t) is
+         (a) cos 2t
+         (b) cos (10t − 50◦ )
+
+
+    In this case,
+                                                         jω + 0.1
+                                               H(jω) =
+                                                          jω + 5
+
+
+
+    † This may also be argued as follows. For BIBO-unstable systems, the zero-input response contains
+    nondecaying natural mode terms of the form cos ω0 t or eat cos ω0 t (a > 0). Hence, the response of such a
+    system to a sinusoid cos ωt will contain not just the sinusoid of frequency ω, but also nondecaying natural
+    modes, rendering the concept of frequency response meaningless.
+    ‡ Strictly speaking, |H(ω)| is magnitude response. There is a fine distinction between amplitude and
+    magnitude. Amplitude A can be positive and negative. In contrast, the magnitude |A| is always nonnegative.
+    We refrain from relying on this useful distinction between amplitude and magnitude in the interest of
+    avoiding proliferation of essentially similar entities. This is also why we shall use the “amplitude” (instead
+    of “magnitude”) spectrum for |H(ω)|.

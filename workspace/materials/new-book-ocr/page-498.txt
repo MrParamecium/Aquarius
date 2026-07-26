@@ -1,0 +1,52 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 498 — #11
+
+
+
+
+498   CHAPTER 5     DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      and
+                                  z                        z                          z
+                      X[z] = 2       + (1.6e−j2.246 )            + (1.6ej2.246 )
+                                 z−1                  z − 3 − j4                 z − 3 + j4
+      The inverse transform of the first term on the right-hand side is 2u[n]. The inverse transform of
+      the remaining two terms (complex conjugate poles) can be obtained from pair 12b (Table 5.1)
+      by identifying r/2 = 1.6, θ = −2.246 rad, γ = 3 + j4 = 5ej0.927 , so that |γ | = 5, β = 0.927.
+      Therefore,
+                                 x[n] = [2 + 3.2(5)n cos (0.927n − 2.246)]u[n]
+
+
+      M ETHOD OF Q UADRATIC FACTORS
+                           X[z]        2(3z + 17)         2      Az + B
+                                =                      =     +
+                            z     (z − 1)(z2 − 6z + 25) z − 1 z2 − 6z + 25
+      Multiplying both sides by z and letting z → ∞, we find
+                                             0 = 2 + A ⇒ A = −2
+      and
+                                      2(3z + 17)         2     −2z + B
+                                                      =     +
+                                 (z − 1)(z2 − 6z + 25) z − 1 z2 − 6z + 25
+      To find B, we let z take any convenient value, say, z = 0. This step yields
+                                         −34        B
+                                             = −2 +    ⇒ B = 16
+                                          25        25
+      Therefore,
+                                          X[z]     2    −2z + 16
+                                               =      +
+                                           z     z − 1 z2 − 6z + 25
+      and
+                                                     2z   z(−2z + 16)
+                                          X[z] =        +
+                                                   z − 1 z2 − 6z + 25
+      We now use pair 12c, where we identify A = −2, B = 16, |γ | = 5, and a = −3. Therefore,
+                         
+                           100 + 256 − 192                        3
+                     r=                     = 3.2, β = cos−1          = 0.927 rad
+                                25 − 9                            5
+      and
+                                                   
+                                         θ = tan−1 −10
+                                                   −8
+                                                       = −2.246 rad
+      so that
+                                 x[n] = [2 + 3.2(5)n cos (0.927n − 2.246)]u[n]

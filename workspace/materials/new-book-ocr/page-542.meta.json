@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.6. OCR text begins with: 542 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM \u0004 = π (z = ej\u0004 = ejπ = −1). Consequently, the amplitude response now becomes more attenuated at higher frequencies, with a zero gain at \u0004 = π . We can approach ideal lowpass characteristics by using more poles staggered near z = 1 (but within the unit circle). Figure 5.20d shows a third-order lowpass filter with three poles near z = 1 and a third-order",
+  "keywords": [
+    "5.6",
+    "discrete-time",
+    "continuous-time",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-542",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

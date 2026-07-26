@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization 401",
+  "summary": "This page covers 4.6 (System Realization 401). OCR text begins with: 4.6 System Realization 401 Figure 4.30 Op-amp summing and amplifying circuit. T HE A DDER Consider now the circuit in Fig. 4.30a with r inputs X1 (s), X2 (s), . . . , Xr (s). As usual, the input voltage Vx (s) ≃ 0 because the op-amp gain → ∞. Moreover, the current going into the op amp is very small (≃ 0) because the input impedance → ∞. Therefore, the total current in the feedback resistor Rf is I1 (s) + I2 (s) + ·",
+  "keywords": [
+    "4.6",
+    "System Realization 401"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-401",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,23 @@
+{
+  "sectionId": "5.2",
+  "sectionTitle": "Some Properties of the z-Transform",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-500"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.11)",
+      "name": "Transfer function as impulse-response z-transform",
+      "latex": "H[z]=\\sum_{n=0}^{\\infty}h[n]z^{-n}",
+      "sourcePage": "page-500",
+      "role": "core_definition",
+      "status": "verified"
+    }
+  ]
+}

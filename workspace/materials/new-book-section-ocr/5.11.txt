@@ -1,0 +1,58 @@
+# Fourier section OCR
+section_id: 5.11
+source_pages: page-574, page-575
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.11 S UMMARY
+      In this chapter we discussed the analysis of linear, time-invariant, discrete-time (LTID) systems by
+      means of the z-transform. The z-transform changes the difference equations of LTID systems into
+      algebraic equations. Therefore, solving these difference equations reduces to solving algebraic
+      equations.
+           The transfer function H[z] of an LTID system is equal to the ratio of the z-transform of the
+      output to the z-transform of the input when all initial conditions are zero. Therefore, if X[z] is
+      the z-transform of the input x[n] and Y[z] is the z-transform of the corresponding output y[n]
+
+[[PAGE page-575]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 575 — #88
+
+
+
+
+                                                                                               Problems          575
+
+           (when all initial conditions are zero), then Y[z] = H[z]X[z]. For an LTID system specified by
+           the difference equation Q[E]y[n] = P[E]x[n], the transfer function H[z] = P[z]/Q[z]. Moreover,
+           H[z] is the z-transform of the system impulse response h[n]. We showed in Ch. 3 that the system
+           response to an everlasting exponential zn is H[z]zn .
+                We may also view the z-transform as a tool that expresses a signal x[n] as a sum of
+           exponentials of the form zn over a continuum of the values of z. Using the fact that an LTID
+           system response to zn is H[z]zn , we find the system response to x[n] as a sum of the system’s
+           responses to all the components of the form zn over the continuum of values of z.
+                LTID systems can be realized by scalar multipliers, adders, and time delays. A given transfer
+           function can be synthesized in many different ways. We discussed canonical, transposed canonical,
+           cascade, and parallel forms of realization. The realization procedure is identical to that for
+           continuous-time systems with 1/s (integrator) replaced by 1/z (unit delay).
+                The majority of the input signals and practical systems are causal. Consequently, we are
+           required to deal with causal signals most of the time. Restricting all signals to the causal type
+           greatly simplifies z-transform analysis; the ROC of a signal becomes irrelevant to the analysis
+           process. This special case of z-transform (which is restricted to causal signals) is called the
+           unilateral z-transform. Much of the chapter deals with this transform. Section 5.8 discusses the
+           general variety of the z-transform (bilateral z-transform), which can handle causal and noncausal
+           signals and systems. In the bilateral transform, the inverse transform of X[z] is not unique, but
+           depends on the ROC of X[z]. Thus, the ROC plays a crucial role in the bilateral z-transform.
+                In Sec. 5.9, we showed that discrete-time systems can be analyzed by the Laplace transform
+           as if they were continuous-time systems. In fact, we showed that the z-transform is the Laplace
+           transform with a change in variable.
+
+
+           REFERENCES
+           1.   Lyons, R. G. Understanding Digital Signal Processing. Addison-Wesley, Reading, MA, 1997.
+           2.   Oppenheim, A. V., and R. W. Schafer. Discrete-Time Signal Processing, 2nd ed. Prentice-Hall, Upper
+                Saddle River, NJ, 1999.
+           3.   Mitra, S. K. Digital Signal Processing, 2nd ed. McGraw-Hill, New York, 2001.
+
+
+
+        PROBLEMS

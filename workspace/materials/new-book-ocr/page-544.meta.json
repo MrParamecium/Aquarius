@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.6. OCR text begins with: 544 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Figure 5.21b shows the amplitude response as a function of ω, as well as \u0004 = ωT = 10−3 ω for values of |γ | = 0.83, 0.96, and 1. As expected, the gain is zero at ω = 0 and at 500 Hz (ω = 1000π ). The gain peaks at about 125 Hz (ω = 250π ). The resonance (peaking) becomes pronounced as |γ | approaches 1. Figure 5.21c shows a canonical realization of thi",
+  "keywords": [
+    "5.6",
+    "discrete-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-544",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

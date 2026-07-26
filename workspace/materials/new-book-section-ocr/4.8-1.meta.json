@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.8-1",
+  "sourcePages": [
+    "page-418",
+    "page-419"
+  ],
+  "usedPages": [
+    "page-418",
+    "page-419"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.8-1 Steady-State Response to Causal Sinusoidal Inputs",
+  "foundEnd": true,
+  "endBeforeLine": "4.9 Bode Plots 419",
+  "endBeforeCode": "4.9",
+  "charCount": 2058
+}

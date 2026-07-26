@@ -1,0 +1,57 @@
+             “04-Lathi-C04” — 2017/9/25 — 19:46 — page 375 — #46
+
+
+
+
+                                  4.4 Analysis of Electrical Networks: The Transformed Network          375
+
+    divider rules, Thévenin and Norton theorems—can be applied to general electrical networks. The
+    following examples demonstrate these concepts.
+
+
+
+E X A M P L E 4.17 Transform Analysis of a Simple Circuit
+
+    Find the loop current i(t) in the circuit shown in Fig. 4.10a if all the initial conditions are zero.
+
+
+
+
+                       1H               3                                 s           3
+
+
+
+
+    10u(t)                    i(t)                1
+                                                    F     10                   I(s)            2
+                                                  2        s                                   s
+
+
+
+
+                            (a)                                               (b)
+    Figure 4.10 (a) A circuit and (b) its transformed version.
+
+
+
+         In the first step, we represent the circuit in the frequency domain, as illustrated in
+    Fig. 4.10b. All the voltages and currents are represented by their Laplace transforms. The
+    voltage 10u(t) is represented by 10/s and the (unknown) current i(t) is represented by its
+    Laplace transform I(s). All the circuit elements are represented by their respective impedances.
+    The inductor of 1 henry is represented by s, the capacitor of 1/2 farad is represented by
+    2/s, and the resistor of 3 ohms is represented by 3. We now consider the frequency-domain
+    representation of voltages and currents. The voltage across any element is I(s) times its
+    impedance. Therefore, the total voltage drop in the loop is I(s) times the total loop impedance,
+    and it must be equal to V(s), (transform of) the input voltage. The total impedance in the loop
+    is
+                                                    2 s2 + 3s + 2
+                                     Z(s) = s + 3 + =
+                                                    s          s
+    The input“voltage” is V(s) = 10/s. Therefore, the “loop current” I(s) is
+
+                      V(s)     10/s          10            10         10    10
+             I(s) =        = 2           = 2        =              =     −
+                      Z(s) (s + 3s + 2)/s s + 3s + 2 (s + 1)(s + 2) s + 1 s + 2
+    The inverse transform of this equation yields the desired result:
+
+                                             i(t) = 10(e−t − e−2t )u(t)

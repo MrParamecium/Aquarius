@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.8",
+  "subsection": null,
+  "title": "The Bilateral z-Transform 561",
+  "summary": "This page covers 5.8 (The Bilateral z-Transform 561). OCR text begins with: 5.8 The Bilateral z-Transform 561 E X A M P L E 5.19 Zero-State Response by Bilateral z-Transform For a causal system specified by the transfer function z H[z] = z − 0.5 find the zero-state response to input",
+  "keywords": [
+    "5.8",
+    "The Bilateral z-Transform 561",
+    "zero-state response",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-561",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

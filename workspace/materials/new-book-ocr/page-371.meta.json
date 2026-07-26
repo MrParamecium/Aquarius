@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-3",
+  "title": "Stability",
+  "summary": "This page covers 4.3-3 (Stability). OCR text begins with: 4.3 Solution of Differential and Integro-Differential Equations 371 4.3-3 Stability Equation (4.27) shows that the denominator of H(s) is Q(s), which is apparently identical to the characteristic polynomial Q(λ) defined in Ch. 2. Does this mean that the denominator of H(s) is the characteristic polynomial of the system? This may or may not be the case, since if P(s) and Q(s) in Eq. (4.27) have any common factors, the",
+  "keywords": [
+    "4.3",
+    "4.3-3",
+    "Stability"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-371",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,270 @@
+# Fourier section OCR
+section_id: 5.2-1
+source_pages: page-501, page-502, page-503, page-504, page-505
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.2-1 Time-Shifting Properties
+In the following discussion of the shift property, we deal with shifted signals x[n]u[n], x[n−k]u[n−
+k], x[n − k]u[n], and x[n + k]u[n]. Unless we physically understand the meaning of such shifts, our
+understanding of the shift property remains mechanical rather than intuitive or heuristic. For this
+reason, using a hypothetical signal x[n], we have illustrated various shifted signals for k = 1 in
+Fig. 5.4.
+
+R IGHT S HIFT (D ELAY )
+If
+                                           x[n]u[n] ⇐⇒ X[z]
+then
+                                                         1
+                                      x[n − 1]u[n − 1] ⇐⇒ X[z]                               (5.12)
+                                                         z
+In general,
+                                                             1
+                                      x[n − m]u[n − m] ⇐⇒      X[z]                          (5.13)
+                                                            zm
+Moreover,
+                                                1
+                                x[n − 1]u[n] ⇐⇒ X[z] + x[−1]                                 (5.14)
+                                                z
+Repeated application of this property yields
+                                              !
+                              1 1                        1       1
+          x[n − 2]u[n] ⇐⇒         X[z] + x[−1] + x[−2] = 2 X[z] + x[−1] + x[−2]
+                              z z                       z        z
+In general, for integer value of m,
+                                                              "
+                                                              m
+                           x[n − m]u[n] ⇐⇒ z−m X[z] + z−m           x[−n]zn                  (5.15)
+                                                              n=1
+
+[[PAGE page-502]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 502 — #15
+
+
+
+
+502   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+                          x[n]
+                      5
+
+
+
+
+           5             0              5     n
+                       (a)
+
+
+                          x[n]u[n]
+                      5
+
+
+
+
+           5             0              5     n
+                       (b)
+
+
+                          x[n  1]u[n  1]
+                      5
+
+
+
+
+              4          0                  6 n
+
+                       (c)
+
+
+                          x[n  1]u[n]
+                      5
+
+
+
+
+              4          0                  6 n
+
+                       (d)
+
+
+                          x[n  1]u[n]
+                          5
+
+
+
+
+         6               0          4         n
+                       (e)                         Figure 5.4 A signal x[n] and its shifted versions.
+
+
+
+
+           A look at Eqs. (5.12) and (5.14) shows that they are identical except for the extra term x[−1]
+      in Eq. (5.14). We see from Figs. 5.4c and 5.4d that x[n − 1]u[n] is the same as x[n − 1]u[n − 1]
+      plus x[−1]δ[n]. Hence, the difference between their transforms is x[−1].
+
+[[PAGE page-503]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 503 — #16
+
+
+
+
+                                                  5.2 Some Properties of the z-Transform             503
+
+Proof. For the integer value of m,
+                                                       ∞
+                                                       "
+                         Z{x[n − m]u[n − m]} =               x[n − m]u[n − m]z−n
+                                                       n=0
+
+Recall that x[n − m]u[n − m] = 0 for n < m so that the limits on the summation on the right-hand
+side can be taken from n = m to ∞. Therefore,
+                                                       ∞
+                                                       "
+                         Z{x[n − m]u[n − m]} =               x[n − m]z−n
+                                                       n=m
+                                                       ∞
+                                                       "
+                                                  =          x[r]z−(r+m)
+                                                       r=0
+                                                             ∞
+                                                        1 "             1
+                                                  =           x[r]z−r = m X[z]
+                                                       zm r=0          z
+
+
+
+To prove Eq. (5.15), we have
+                                          ∞
+                                          "                            ∞
+                                                                       "
+                      Z{x[n − m]u[n]} =          x[n − m]z−n =                    x[r]z−(r+m)
+                                          n=0                          r=−m
+                                                  −1                     ∞
+                                                                                               
+                                                  "                       "
+                                            −m                   −r                       −r
+                                       =z                x[r]z        +           x[r]z
+                                                 r=−m                       r=0
+                                                 "
+                                                 m
+                                       = z−m           x[−n]zn + z−m X[z]
+                                                 n=1
+
+
+L EFT S HIFT (A DVANCE )
+If
+                                        x[n]u[n] ⇐⇒ X[z]
+
+then
+                                  x[n + 1]u[n] ⇐⇒ zX[z] − zx[0]
+
+Repeated application of this property yields
+
+               x[n + 2]u[n] ⇐⇒ z{z(X[z] − zx[0]) − x[1]} = z2 X[z] − z2 x[0] − zx[1]
+
+and for the integer value of m,
+
+                                                                   "
+                                                                   m−1
+                            x[n + m]u[n] ⇐⇒ zm X[z] − zm                    x[n]z−n                (5.16)
+                                                                      n=0
+
+[[PAGE page-504]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 504 — #17
+
+
+
+
+504       CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          Proof. By definition,
+                                                         ∞
+                                                         "
+                                     Z{x[n + m]u[n]} =           x[n + m]z−n
+                                                         n=0
+                                                         ∞
+                                                         "
+                                                     =           x[r]z−(r−m)
+                                                         r=m
+                                                                 ∞
+                                                                 "
+                                                     =z      m
+                                                                       x[r]z−r
+                                                                 r=m
+                                                                  ∞
+                                                                  "                 "
+                                                                                    m−1              !
+                                                     = zm               x[r]z−r −          x[r]z−r
+                                                                  r=0                r=0
+
+                                                                            "
+                                                                            m−1
+                                                     = zm X[z] − zm                x[r]z−r
+                                                                             r=0
+
+
+
+
+      E X A M P L E 5.4 z-Transform Using the Right-Shift Property
+
+          Find the z-transform of the signal x[n] depicted in Fig. 5.5.
+
+
+
+
+             x[n]
+                    5
+
+
+
+
+               0        1    2   3   4    5              n
+                                                                        Figure 5.5 Signal for Ex. 5.4.
+
+
+
+              The signal x[n] can be expressed as a product of n and a gate pulse u[n] − u[n − 6].
+          Therefore,
+
+                                     x[n] = n{u[n] − u[n − 6]} = nu[n] − nu[n − 6]
+
+          We cannot find the z-transform of nu[n − 6] directly by using the right-shift property
+          [Eq. (5.13)]. So we rearrange it in terms of (n − 6)u[n − 6] as follows:
+
+                                      x[n] = nu[n] − (n − 6 + 6)u[n − 6]
+                                           = nu[n] − (n − 6)u[n − 6] − 6u[n − 6]
+
+[[PAGE page-505]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 505 — #18
+
+
+
+
+                                                   5.2 Some Properties of the z-Transform     505
+
+We can now find the z-transform of the bracketed term by using the right-shift property
+[Eq. (5.13)]. Because u[n] ⇐⇒ z/(z − 1),
+                                                 1 z           1
+                                u[n − 6] ⇐⇒              =
+                                                 z6 z − 1 z5 (z − 1)
+
+Also, because nu[n] ⇐⇒ z/(z − 1)2 ,
+                                                  1      z          1
+                           (n − 6)u[n − 6] ⇐⇒                =
+                                                  z6 (z − 1)2 z5 (z − 1)2
+Therefore,
+                                 z          1          6       z6 − 6z + 5
+                   X[z] =            −           −           =
+                             (z − 1)2 z5 (z − 1)2 z5 (z − 1)    z5 (z − 1)2
+
+
+
+
+ D R I L L 5.5 z-Transform Using the Right-Shift Property
+ Using only the fact that u[n] ⇐⇒ z/(z − 1) and the right-shift property [Eq. (5.13)], find the
+ z-transforms of the signals in Figs. 5.2 and 5.3.
+
+ ANSWERS
+ See Ex. 5.2d and Drill 5.1a.

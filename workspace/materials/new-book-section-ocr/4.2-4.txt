@@ -1,0 +1,68 @@
+# Fourier section OCR
+section_id: 4.2-4
+source_pages: page-356, page-357
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.2-4 The Time-Integration Property
+      The time-integration property states that if†
+
+                                                      x(t) ⇐⇒ X(s)
+
+      then
+                # t                                      # t                           $ 0−
+                                X(s)                                     X(s)           −∞ x(τ ) dτ
+                    x(τ ) dτ ⇐⇒                 and          x(τ ) dτ ⇐⇒      +                              (4.16)
+                 0−              s                        −∞              s                   s
+
+      Proof. To prove the first part of Eq. (4.16), we define
+                                                      # t
+                                               g(t) =     x(τ ) dτ
+                                                               0−
+
+      so that
+                                        d
+                                           g(t) = x(t)         and        g(0− ) = 0
+                                        dt
+      Now, if
+                                                      g(t) ⇐⇒ G(s)
+      then                                           !
+                                              d
+                                     X(s) = L    g(t) = sG(s) − g(0− ) = sG(s)
+                                              dt
+
+      † The dual of the time-integration property is the frequency-integration property, which states that
+                                                               # ∞
+                                                  x(t)
+                                                       ⇐⇒            X(z) dz
+                                                   t            s
+
+[[PAGE page-357]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 357 — #28
+
+
+
+
+                                             4.2 Some Properties of the Laplace Transform          357
+
+Therefore,
+                                                           X(s)
+                                                 G(s) =
+                                                            s
+or                                       # t
+                                                                    X(s)
+                                                 x(τ ) dτ ⇐⇒
+                                            0−                       s
+To prove the second part of Eq. (4.16), observe that
+                             # t                  # 0−                # t
+                                     x(τ ) dτ =          x(τ ) dτ +             x(τ ) dτ
+                               −∞                  −∞                      0−
+
+Note that the first term on the right-hand side is a constant for t ≥ 0. Taking the Laplace transform
+of the foregoing equation and using the first part of Eq. (4.16), we obtain
+
+                               # t                       $ 0−
+                                                          −∞ x(τ ) dτ            X(s)
+                                      x(τ ) dτ ⇐⇒                          +
+                                −∞                              s                 s

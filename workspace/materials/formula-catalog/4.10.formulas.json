@@ -1,0 +1,32 @@
+{
+  "sectionId": "4.10",
+  "sectionTitle": "Filter Design by Placement of Poles and Zeros",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-436",
+      "page-437"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.54)",
+      "name": "Pole-zero magnitude from vector distances",
+      "latex": "|H(s)|_{s=p}=b_0\\frac{r_1r_2\\cdots r_M}{d_1d_2\\cdots d_N}",
+      "sourcePage": "page-437",
+      "role": "pole_zero_geometry",
+      "status": "verified"
+    },
+    {
+      "label": "(4.55)",
+      "name": "Pole-zero phase from vector angles",
+      "latex": "\\angle H(s)|_{s=p}=\\text{sum of angles of zeros to }p-\\text{sum of angles of poles to }p",
+      "sourcePage": "page-437",
+      "role": "pole_zero_geometry",
+      "status": "verified"
+    }
+  ]
+}

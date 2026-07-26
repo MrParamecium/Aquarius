@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.12-1",
+  "sourcePages": [
+    "page-456",
+    "page-457",
+    "page-458",
+    "page-459"
+  ],
+  "usedPages": [
+    "page-456",
+    "page-457",
+    "page-458",
+    "page-459"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.12-1 Frequency Response and Polynomial Evaluation",
+  "foundEnd": true,
+  "endBeforeLine": "4.12-2 Butterworth Filters and the Find Command",
+  "endBeforeCode": "4.12-2",
+  "charCount": 9651
+}

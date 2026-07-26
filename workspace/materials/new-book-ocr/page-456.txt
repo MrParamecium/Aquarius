@@ -1,0 +1,59 @@
+                    “04-Lathi-C04” — 2017/9/25 — 19:46 — page 456 — #127
+
+
+
+
+456   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+           A simple yet practical example demonstrates basic filtering concepts. Telephone voice signals
+      are often lowpass-filtered to eliminate frequencies above a cutoff of 3 kHz, or ωc = 3000(2π ) ≈
+      18,850 rad/s. Filtering maintains satisfactory speech quality and reduces signal bandwidth, thereby
+      increasing the phone company’s call capacity. How, then, do we design and realize an acceptable
+      3 kHz lowpass filter?
+
+
+      4.12-1 Frequency Response and Polynomial Evaluation
+      Magnitude response plots help assess a filter’s performance and quality. The magnitude response
+      of an ideal filter is a brick-wall function with unity passband gain and perfect stopband attenuation.
+      For a lowpass filter with cutoff frequency ωc , the ideal magnitude response is
+                                                           
+                                                            1    |ω| ≤ ωc
+                                           |Hideal (jω)| =
+                                                            0    |ω| > ωc
+
+      Unfortunately, ideal filters cannot be implemented in practice. Realizable filters require
+      compromises, although good designs will closely approximate the desired brick-wall response.
+          A realizable LTIC system often has a rational transfer function that is represented in the
+      s-domain as
+                                                        %M
+                                                           bk+N−M sM−k
+                                         Y(s) B(s) k=0
+                                  H(s) =      =       =
+                                         X(s) A(s)         % N−k
+                                                            N
+                                                              ak s
+                                                                k=0
+
+      Frequency response H(jω) is obtained by letting s = jω, where frequency ω is in radians per
+      second.
+          MATLAB is ideally suited to evaluate frequency response functions. Defining a length-(N +
+      1) coefficient vector A = [a0 , a1 , . . . , aN ] and a length-(M + 1) coefficient vector B =
+      [bN−M , bN−M+1 , . . . , bN ], program CH4MP1 computes H(jω) for each frequency in the input vector
+      ω.
+
+      function [H] = CH4MP1(B,A,omega);
+      % CH4MP1.m : Chapter 4, MATLAB Program 1
+      % Function M-file computes frequency response for LTIC system
+      % INPUTS:   B = vector of feedforward coefficients
+      %           A = vector of feedback coefficients
+      %           omega = vector of frequencies [rad/s].
+      % OUTPUTS: H = frequency response
+
+      H = polyval(B,j*omega)./polyval(A,j*omega);
+
+      The function polyval efficiently evaluates simple polynomials and makes the program nearly
+      trivial. For example, when A is the vector of coefficients [a0 , a1 , . . . , aN ], polyval (A,j*omega)
+      computes
+                                                 "N
+                                                     ak (jω)N−k
+                                                  k=0

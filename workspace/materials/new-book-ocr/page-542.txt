@@ -1,0 +1,54 @@
+                         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 542 — #55
+
+
+
+
+542       CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           = π (z = ej = ejπ = −1). Consequently, the amplitude response now becomes more attenuated
+          at higher frequencies, with a zero gain at  = π . We can approach ideal lowpass characteristics
+          by using more poles staggered near z = 1 (but within the unit circle). Figure 5.20d shows a
+          third-order lowpass filter with three poles near z = 1 and a third-order zero at z = −1, with
+          corresponding amplitude and phase response. For an ideal lowpass filter, we need an enhanced
+          gain at every frequency in the band (0, c ). This can be achieved by placing a continuous wall of
+          poles (requiring an infinite number of poles) opposite this band.
+
+          H IGHPASS F ILTERS
+          A highpass filter has a small gain at lower frequencies and a high gain at higher frequencies. Such
+          a characteristic can be realized by placing a pole or poles near z = −1 because we want the gain
+          at  = π to be the highest. Placing a zero at z = 1 further enhances suppression of gain at lower
+          frequencies. Figure 5.20e shows a possible pole-zero configuration of the third-order highpass
+          filter with corresponding amplitude and phase responses.
+                In the following two examples, we shall realize analog filters by using digital processors and
+          suitable interface devices (C/D and D/C), as shown in Fig. 3.2. At this point, we shall examine the
+          design of a digital processor with the transfer function H[z] for the purpose of realizing bandpass
+          and bandstop filters in the following examples.
+                As Fig. 3.2 shows, the C/D device samples the continuous-time input x(t) to yield a
+          discrete-time signal x[n], which serves as the input to H[z]. The output y[n] of H[z] is converted
+          to a continuous-time signal y(t) by a D/C device. We also saw in Eq. (5.34) that a continuous-time
+          sinusoid of frequency ω, when sampled, results in a discrete-time sinusoid  = ωT.
+
+
+      E X A M P L E 5.14 Bandpass Filter by Pole-Zero Placement
+
+          By trial and error, design a tuned (bandpass) analog filter with zero transmission at 0 Hz and
+          also at the highest frequency fh = 500 Hz. The resonant frequency is required to be 125 Hz.
+
+
+          Because fh = 500, we require T < 1/1000 [see Eq. (5.39)]. Let us select T = 10−3 .† Recall that
+          the analog frequencies ω correspond to digital frequencies  = ωT. Hence, analog frequencies
+          ω = 0 and 1000π correspond to  = 0 and π , respectively. The gain is required to be zero at
+          these frequencies. Hence, we need to place zeros at ej corresponding to  = 0 and  = π . For
+           = 0, z = ej = 1; for  = π , ej = −1. Hence, there must be zeros at z = ±1. Moreover, we
+          need enhanced response at the resonant frequency ω = 250π , which corresponds to  = π/4,
+          which, in turn, corresponds to z = ej = ejπ/4 . Therefore, to enhance the frequency response
+          at ω = 250π , we place a pole in the vicinity of ejπ/4 . Because this is a complex pole, we also
+          need its conjugate near e−jπ/4 , as indicated in Fig. 5.21a. Let us choose these poles γ1 and γ2
+          as
+                                    γ1 = |γ |ejπ/4       and      γ2 = |γ |e−jπ/4
+
+
+
+          † Strictly speaking, we need T < 0.001. However, we shall show in Ch. 8 that if the input does not contain
+          a finite amplitude component of 500 Hz, T = 0.001 is adequate. Generally, practical signals satisfy this
+          condition.

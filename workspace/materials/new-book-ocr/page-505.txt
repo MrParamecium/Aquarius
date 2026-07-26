@@ -1,0 +1,60 @@
+         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 505 — #18
+
+
+
+
+                                                   5.2 Some Properties of the z-Transform     505
+
+We can now find the z-transform of the bracketed term by using the right-shift property
+[Eq. (5.13)]. Because u[n] ⇐⇒ z/(z − 1),
+                                                 1 z           1
+                                u[n − 6] ⇐⇒              =
+                                                 z6 z − 1 z5 (z − 1)
+
+Also, because nu[n] ⇐⇒ z/(z − 1)2 ,
+                                                  1      z          1
+                           (n − 6)u[n − 6] ⇐⇒                =
+                                                  z6 (z − 1)2 z5 (z − 1)2
+Therefore,
+                                 z          1          6       z6 − 6z + 5
+                   X[z] =            −           −           =
+                             (z − 1)2 z5 (z − 1)2 z5 (z − 1)    z5 (z − 1)2
+
+
+
+
+ D R I L L 5.5 z-Transform Using the Right-Shift Property
+ Using only the fact that u[n] ⇐⇒ z/(z − 1) and the right-shift property [Eq. (5.13)], find the
+ z-transforms of the signals in Figs. 5.2 and 5.3.
+
+ ANSWERS
+ See Ex. 5.2d and Drill 5.1a.
+
+
+
+
+5.2-2 z-Domain Scaling Property (Multiplication by γ n )
+Scaling in the z-domain is equivalent to multiplying a time-domain signal by an exponential. That
+is, if
+                                        x[n]u[n] ⇐⇒ X[z]
+then                                                                 !
+                                                                 z
+                                      γ n x[n]u[n] ⇐⇒ X                                     (5.17)
+                                                                 γ
+Proof.                                                                                !
+                                     ∞
+                                     "                       ∞
+                                                             "            −n
+                                                      −n              z           z
+                  Z{γ x[n]u[n]} =
+                       n
+                                            γ x[n]z
+                                             n
+                                                           =     x[n]          =X
+                                      n=0                    n=0
+                                                                      γ           γ
+
+
+
+ D R I L L 5.6 Using the z-Domain Scaling Property
+ Use Eq. (5.17) to derive pairs 6 and 8 in Table 5.1 from pairs 2 and 3, respectively.

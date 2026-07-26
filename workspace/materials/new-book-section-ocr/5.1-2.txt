@@ -1,0 +1,94 @@
+# Fourier section OCR
+section_id: 5.1-2
+source_pages: page-499, page-500, page-501
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.1-2 Inverse z-Transform by Power Series Expansion
+By definition,
+
+                                  ∞
+                                  "
+                         X[z] =         x[n]z−n
+                                  n=0
+                                        x[1] x[2] x[3]
+                               = x[0] +     + 2 + 3 +· · ·
+                                         z     z     z
+                               = x[0]z + x[1]z + x[2]z−2 + x[3]z−3 + · · ·
+                                      0       −1
+
+
+
+
+This result is a power series in z−1 . Therefore, if we can expand X[z] into the power series in z−1 ,
+the coefficients of this power series can be identified as x[0], x[1], x[2], x[3], . . .. A rational X[z]
+can be expanded into a power series of z−1 by dividing its numerator by the denominator. Consider,
+for example,
+
+                                     z2 (7z − 2)              7z3 − 2z2
+                     X[z] =                            = 3
+                              (z − 0.2)(z − 0.5)(z − 1) z − 1.7z2 + 0.8z − 0.1
+
+[[PAGE page-500]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 500 — #13
+
+
+
+
+500   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      To obtain a series expansion in powers of z−1 , we divide the numerator by the denominator as
+      follows:
+                                                      −1         −2         −3
+                                           7 + 9.9z + 11.23z + 11.87z + · · ·
+                      z − 1.7z + 0.8z − 0.1 7z − 2z
+                       3      2               3       2
+
+                                            7z3 − 11.9z2 + 5.60z − 0.7
+                                                     9.9z2 − 5.60z + 0.7
+                                                     9.9z2 − 16.83z + 7.92 − 0.99z−1
+                                                             11.23z − 7.22 + 0.99z−1
+                                                             11.23z − 19.09 + 8.98z−1
+                                                                      11.87 − 7.99z−1
+
+      Thus,
+                                   z2 (7z − 2)
+                   X[z] =                             = 7 + 9.9z−1 + 11.23z−2 + 11.87z−3 + · · ·
+                            (z − 0.2)(z − 0.5)(z − 1)
+
+      Therefore,
+                               x[0] = 7, x[1] = 9.9, x[2] = 11.23, x[3] = 11.87, . . .
+
+           Although this procedure yields x[n] directly, it does not provide a closed-form solution. For
+      this reason, it is not very useful unless we want to know only the first few terms of the sequence
+      x[n].
+
+
+
+       D R I L L 5.3 Inverse z-Transform by Long Division
+       Using long division to find the power series in z−1 , show that the inverse z-transform of
+       z/(z − 0.5) is (0.5)n u[n] or (2)−n u[n].
+
+
+
+      R ELATIONSHIP B ETWEEN h[n] AND H[z]
+      For an LTID system, if h[n] is its unit impulse response, then from Eq. (3.39), where we defined
+      H[z], the system transfer function, we write
+
+                                                        ∞
+                                                        "
+                                               H[z] =          h[n]z−n                             (5.11)
+                                                        n=−∞
+
+
+      For causal systems, the limits on the sum are from n = 0 to ∞. This equation shows that the
+      transfer function H[z] is the z-transform of the impulse response h[n] of an LTID system; that is,
+
+                                                  h[n] ⇐⇒ H[z]
+
+      This important result relates the time-domain specification h[n] of a system to H[z], the
+      frequency-domain specification of a system. The result is parallel to that for LTIC systems.
+
+[[PAGE page-501]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 501 — #14

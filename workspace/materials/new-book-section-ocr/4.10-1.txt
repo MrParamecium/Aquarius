@@ -1,0 +1,189 @@
+# Fourier section OCR
+section_id: 4.10-1
+source_pages: page-436, page-437, page-438, page-439
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.10-1 Dependence of Frequency Response on Poles
+      and Zeros of H(s)
+      Frequency response of a system is basically the information about the filtering capability of the
+      system. A system transfer function can be expressed as
+
+                                          P(s)       (s − z1 )(s − z2 ) · · · (s − zN )
+                                 H(s) =        = b0
+                                          Q(s)      (s − λ1 )(s − λ2 ) · · · (s − λN )
+
+      where z1 , z2 , . . . , zN are λ1 , λ2 , . . . , λN are the poles of H(s). Now the value of the transfer
+      function H(s) at some frequency s = p is
+
+                                                    (p − z1 )(p − z2 ) · · · (p − zN )
+                                   H(s)|s=p = b0                                                         (4.53)
+                                                   (p − λ1 )(p − λ2 ) · · · (p − λN )
+
+       This equation consists of factors of the form p−zi and p−λi . The factor p−zi is a complex number
+      represented by a vector drawn from point z to the point p in the complex plane, as illustrated in
+      Fig. 4.48a. The length of this line segment is |p − zi |, the magnitude of p − zi . The angle of this
+      directed line segment (with the horizontal axis) is  (p − zi ). To compute H(s) at s = p, we draw
+      line segments from all poles and zeros of H(s) to the point p, as shown in Fig. 4.48b. The vector
+      connecting a zero zi to the point p is p − zi . Let the length of this vector be ri , and let its angle
+      with the horizontal axis be φi . Then p − zi = ri ejφi . Similarly, the vector connecting a pole λi to the
+      point p is p − λi = di ejθi , where di and θi are the length and the angle (with the horizontal axis),
+
+[[PAGE page-437]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 437 — #108
+
+
+
+
+                                    4.10 Filter Design by Placement of Poles and Zeros of H(s)            437
+
+                           p                                             p
+                                      Im                                                Im
+            p  zi
+                                p
+                                                           d1
+         zi
+                                                                    d2        r1
+                                                            u1                           r2
+                     zi                             l1
+
+                                                                                   f1              f2
+
+                                       Re                                     z1                z2 Re
+
+                                                            u2
+                                                    l2
+
+                          (a)                                                (b)
+      Figure 4.48 Vector representations of (a) complex numbers and (b) factors of H(s).
+
+
+respectively, of the vector p − λi . Now from Eq. (4.53) it follows that
+
+                                           (r1 ejφ1 )(r2 ejφ2 ) · · · (rN ejφN )
+                           H(s)|s=p = b0
+                                           (d1 ejθ1 )(d2 ejθ2 ) · · · (dN ejθN )
+                                           r1 r2 · · · rN j[(φ1 +φ2 +· · ·+φN )−(θ1 +θ2 +· · ·+θN )]
+                                      = b0                e
+                                           d1 d2 · · · dN
+Therefore
+                                       r1 r2 · · · rN      product of distances of zeros to p
+                      |H(s)|s=p = b0                  = b0                                              (4.54)
+                                       d1 d2 · · · dN      product of distances of poles to p
+and
+                    H(s)|s=p = (φ1 + φ2 + · · · + φN ) − (θ1 + θ2 + · · · + θN )
+                              = sum of angles of zeros to p − sum of angles of poles to p               (4.55)
+
+Here, we have assumed positive b0 . If b0 is negative, there is an additional phase π . Using this
+procedure, we can determine H(s) for any value of s. To compute the frequency response H(jω),
+we use s = jω (a point on the imaginary axis), connect all poles and zeros to the point jω, and
+determine |H(jω)| and  H(jω) from Eqs. (4.54) and (4.55). We repeat this procedure for all values
+of ω from 0 to ∞ to obtain the frequency response.
+
+G AIN E NHANCEMENT BY A P OLE
+To understand the effect of poles and zeros on the frequency response, consider a hypothetical case
+of a single pole −α + jω0 , as depicted in Fig. 4.49a. To find the amplitude response |H(jω)| for a
+certain value of ω, we connect the pole to the point jω (Fig. 4.49a). If the length of this line is d,
+then |H(jω)| is proportional to 1/d,
+                                                       K
+                                            |H(jω)| =                                          (4.56)
+                                                       d
+where the exact value of constant K is not important at this point. As ω increases from zero,
+d decreases progressively until ω reaches the value ω0 . As ω increases beyond ω0 , d increases
+
+[[PAGE page-438]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 438 — #109
+
+
+
+
+438   CHAPTER 4            CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                             Im
+                  u1                       H( jv)
+                            jv0
+                                                                              ⬔H( jv)
+                  d
+                             jv
+
+
+
+
+                                  Re                                      0                       v
+             a              0
+                      d               0         v0            v       p
+
+                      u2
+
+                           (a)                        (b)                               (c)
+
+
+                             Im
+                   f1
+                            jv0            H( jv)
+
+                   r         jv
+                                                                              ⬔H( jv)
+
+                                                                         p
+                                  Re
+             a              0
+                      r               0         v0            v          0                       v
+
+                   f2
+
+
+                           (d)                        (e)                               (f )
+            Figure 4.49 The role of poles and zeros in determining the frequency response of an LTIC system.
+
+
+
+      progressively. Therefore, according to Eq. (4.56), the amplitude response |H(jω)| increases from
+      ω = 0 until ω = ω0 , and it decreases continuously as ω increases beyond ω0 , as illustrated in
+      Fig. 4.49b. Therefore, a pole at −α + jω0 results in a frequency-selective behavior that enhances
+      the gain at the frequency ω0 (resonance). Moreover, as the pole moves closer to the imaginary axis
+      (as α is reduced), this enhancement (resonance) becomes more pronounced. This is because α,
+      the distance between the pole and jω0 (d corresponding to jω0 ), becomes smaller, which increases
+      the gain K/d. In the extreme case, when α = 0 (pole on the imaginary axis), the gain at ω0 goes
+      to infinity. Repeated poles further enhance the frequency-selective effect. To summarize, we can
+      enhance a gain at a frequency ω0 by placing a pole opposite the point jω0 . The closer the pole is
+      to jω0 , the higher is the gain at ω0 , and the gain variation is more rapid (more frequency selective)
+      in the vicinity of frequency ω0 . Note that a pole must be placed in the LHP for stability.
+           Here we have considered the effect of a single complex pole on the system gain. For a
+      real system, a complex pole −α + jω0 must accompany its conjugate −α − jω0 . We can readily
+      show that the presence of the conjugate pole does not appreciably change the frequency-selective
+
+[[PAGE page-439]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 439 — #110
+
+
+
+
+                             4.10 Filter Design by Placement of Poles and Zeros of H(s)               439
+
+behavior in the vicinity of ω0 . This is because the gain in this case is K/dd , where d is the distance
+of a point jω from the conjugate pole −α − jω0 . Because the conjugate pole is far from jω0 , there
+is no dramatic change in the length d as ω varies in the vicinity of ω0 . There is a gradual increase
+in the value of d as ω increases, which leaves the frequency-selective behavior as it was originally,
+with only minor changes.
+
+G AIN S UPPRESSION BY A Z ERO
+Using the same argument, we observe that zeros at −α ± jω0 (Fig. 4.49d) will have exactly the
+opposite effect of suppressing the gain in the vicinity of ω0 , as shown in Fig. 4.49e). A zero on
+the imaginary axis at jω0 will totally suppress the gain (zero gain) at frequency ω0 . Repeated zeros
+will further enhance the effect. Also, a closely placed pair of a pole and a zero (dipole) tend to
+cancel out each other’s influence on the frequency response. Clearly, a proper placement of poles
+and zeros can yield a variety of frequency-selective behavior. We can use these observations to
+design lowpass, highpass, bandpass, and bandstop (or notch) filters.
+     Phase response can also be computed graphically. In Fig. 4.49a, angles formed by the complex
+conjugate poles −α ±jω0 at ω = 0 (the origin) are equal and opposite. As ω increases from 0 up, the
+angle θ1 (due to the pole −α + jω0 ), which has a negative value at ω = 0, is reduced in magnitude;
+the angle θ2 because of the pole −α − jω0 , which has a positive value at ω = 0, increases in
+magnitude. As a result, θ1 + θ2 , the sum of the two angles, increases continuously, approaching a
+value π as ω → ∞. The resulting phase response  H(jω) = −(θ1 + θ2 ) is illustrated in Fig. 4.49c.
+Similar arguments apply to zeros at −α ± jω0 . The resulting phase response  H(jω) = (φ1 + φ2 )
+is depicted in Fig. 4.49f.
+     We now focus on simple filters, using the intuitive insights gained in this discussion. The
+discussion is essentially qualitative.

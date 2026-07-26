@@ -1,0 +1,17 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.1. OCR text begins with: 492 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM TABLE 5.1 Select (Unilateral) z-Transform Pairs No. x[n] X[z] 1 δ[n − k] z−k z 2 u[n] z−1",
+  "keywords": [
+    "5.1",
+    "unit impulse",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-492",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

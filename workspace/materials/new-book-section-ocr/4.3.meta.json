@@ -1,0 +1,22 @@
+{
+  "sectionId": "4.3",
+  "sourcePages": [
+    "page-360",
+    "page-361",
+    "page-362",
+    "page-363"
+  ],
+  "usedPages": [
+    "page-360",
+    "page-361",
+    "page-362",
+    "page-363"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.3 S OLUTION OF D IFFERENTIAL AND",
+  "foundEnd": true,
+  "endBeforeLine": "4.3-1 Comments on Initial Conditions at 0− and at 0+",
+  "endBeforeCode": "4.3-1",
+  "charCount": 9488
+}

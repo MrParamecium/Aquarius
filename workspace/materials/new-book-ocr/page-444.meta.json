@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-5",
+  "title": "Practical Filters and Their Speciﬁcations",
+  "summary": "This page covers 4.10-5 (Practical Filters and Their Speciﬁcations). OCR text begins with: 444 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS 4.10-5 Practical Filters and Their Speciﬁcations For ideal filters, everything is black and white; the gains are either zero or unity over certain bands. As we saw earlier, real life does not permit such a worldview. Things have to be gray or shades of gray. In practice, we can realize a variety of filter characteristics that can only approach ideal characteristics. An id",
+  "keywords": [
+    "4.10",
+    "4.10-5",
+    "Practical Filters and Their Speciﬁcations",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-444",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

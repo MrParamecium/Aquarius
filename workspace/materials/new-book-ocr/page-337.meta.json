@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 337",
+  "summary": "This page covers 4.1 (The Laplace Transform 337). OCR text begins with: 4.1 The Laplace Transform 337 (b) To find the Laplace transform of u(t), recall that u(t) = 1 for t ≥ 0. Therefore, # ∞ # ∞ \u0018 −st −st 1 −st \u0018\u0018∞ L [u(t)] = u(t)e dt = e dt = − e \u0018 0− 0− s 0− 1",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 337",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-337",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,54 @@
+                           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 538 — #51
+
+
+
+
+538       CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+      E X A M P L E 5.12 Maximum Sampling Interval
+
+          Determine the maximum sampling interval T that can be used in a discrete-time oscillator that
+          generates a sinusoid of 50 kHz.
+
+
+          Here the highest significant frequency fh = 50 kHz. Therefore from Eq. (5.39),
+                                                                1
+                                                         T<        = 10 µs
+                                                               2fh
+          The sampling interval must be less than 10 µs. The sampling frequency is fs = 1/T > 100 kHz.
+
+
+
+
+      E X A M P L E 5.13 Maximum Frequency Without Aliasing
+
+          A discrete-time amplifier uses a sampling interval T = 25 µs. What is the highest frequency of
+          a signal that can be processed with this amplifier without aliasing?
+
+
+          From Eq. (5.39)
+                                                                1
+                                                        fh <      = 20 kHz
+                                                               2T
+
+
+
+
+          5.6 F REQUENCY R ESPONSE FROM P OLE -Z ERO L OCATIONS
+          The frequency responses (amplitude and phase responses) of a system are determined by pole-zero
+          locations of the transfer function H[z]. Just as in continuous-time systems, it is possible to
+          determine quickly the amplitude and the phase response and to obtain physical insight into the filter
+          characteristics of a discrete-time system by using a graphical technique. The general Nth-order
+          transfer function H[z] in Eq. (5.26) can be expressed in factored form as
+
+                                                          (z − z1 )(z − z2 ) · · · (z − zN )
+                                             H[z] = b0
+                                                          (z − γ1 )(z − γ2 ) · · · (z − γN )
+
+          We can compute H[z] graphically by using the concepts discussed in Sec. 4.10. The directed line
+          segment from zi to z in the complex plane (Fig. 5.19a) represents the complex number z − zi . The
+          length of this segment is |z − zi | and its angle with the horizontal axis is  (z − zi ).
+               To compute the frequency response H[ej ] we evaluate H[z] at z = ej . But for z = ej , |z| = 1
+          and  z =  so that z = ej represents a point on the unit circle at an angle  with the horizontal. We
+          now connect all zeros (z1 , z2 , . . . , zN ) and all poles (γ1 , γ2 , . . . , γN ) to the point ej , as indicated in

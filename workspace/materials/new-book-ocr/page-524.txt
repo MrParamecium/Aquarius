@@ -1,0 +1,60 @@
+                           “05-Lathi-C05” — 2017/9/25 — 15:54 — page 524 — #37
+
+
+
+
+524       CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+           D R I L L 5.16 Realization of a Second-Order Transfer Function
+           Realize the transfer function
+                                                                                 2z
+                                                                H[z] =
+                                                                             z2 + 6z + 25
+
+
+
+          R EALIZATION OF F INITE I MPULSE R ESPONSE (FIR) F ILTERS
+          So far we have been quite general in our development of realization techniques. They can be
+          applied to infinite impulse response (IIR) or FIR filters. For FIR filters, the coefficients ai = 0 for
+          all i = 0.† Hence, FIR filters can be readily implemented by means of the schemes developed so
+          far by eliminating all branches with ai coefficients. The condition ai = 0 implies that all the poles
+          of a FIR filter are at z = 0.
+
+
+
+      E X A M P L E 5.9 Realization of an FIR Filter
+
+          Realize H[z] = (z3 + 4z2 + 5z + 2)/z3 using canonic direct and transposed forms.
+
+
+          We can express H[z] as
+                                                                     z3 + 4z2 + 5z + 2
+                                                          H[z] =
+                                                                             z3
+
+
+
+
+                    X[z]                4                  5             2             Y[z]
+                               1                1                1
+                               z                z                z
+
+                                                    (a)
+
+                             Y[z]
+
+
+             X[z]
+                                    1                       1                      1
+                                    z                       z                      z
+                                            4                        5                   2
+                                                                                              Figure 5.13 Realization of
+                                                    (b)                                       (z3 + 4z2 + 5z + 2)/z3 .
+
+
+
+
+          † This statement is true for all i  = 0 because a is assumed to be unity.
+                                                            0

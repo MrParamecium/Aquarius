@@ -1,0 +1,67 @@
+{
+  "sectionId": "5.1",
+  "sectionTitle": "The z-Transform",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-488",
+      "page-489",
+      "page-490",
+      "page-491",
+      "page-493"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(5.1)",
+      "name": "Bilateral z-transform",
+      "latex": "X[z]=\\sum_{n=-\\infty}^{\\infty}x[n]z^{-n}",
+      "sourcePage": "page-488",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.2)",
+      "name": "Inverse z-transform",
+      "latex": "x[n]=\\frac{1}{2\\pi j}\\oint X[z]z^{n-1},dz",
+      "sourcePage": "page-488",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.3)",
+      "name": "Unilateral z-transform",
+      "latex": "X[z]=\\sum_{n=0}^{\\infty}x[n]z^{-n}",
+      "sourcePage": "page-489",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.5)",
+      "name": "Causal exponential z-transform",
+      "latex": "\\gamma^n u[n]\\Longleftrightarrow \\frac{z}{z-\\gamma},\\qquad |z|>|\\gamma|",
+      "sourcePage": "page-490",
+      "role": "canonical_pair",
+      "status": "verified"
+    },
+    {
+      "label": "(5.6)",
+      "name": "z-transform exponential-order condition",
+      "latex": "|x[n]|\\le r_0^n\\qquad \\text{for some }r_0",
+      "sourcePage": "page-491",
+      "role": "core_condition",
+      "status": "verified"
+    },
+    {
+      "label": "(5.7)",
+      "name": "Unilateral z-transform power series",
+      "latex": "X[z]=\\sum_{n=0}^{\\infty}x[n]z^{-n}=x[0]+\\frac{x[1]}{z}+\\frac{x[2]}{z^2}+\\frac{x[3]}{z^3}+\\cdots",
+      "sourcePage": "page-493",
+      "role": "core_definition",
+      "status": "verified"
+    }
+  ]
+}

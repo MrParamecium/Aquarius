@@ -1,0 +1,59 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 507 — #20
+
+
+
+
+                                                       5.2 Some Properties of the z-Transform     507
+
+Changing the sign of the dummy variable n yields
+                                                       ∞
+                                                       "
+                                     Z{x[−n]} =                    x[n]zn
+                                                       n=−∞
+                                                        "∞
+                                                   =               x[n](1/z)−n
+                                                       n=−∞
+
+                                                   = X[1/z]
+
+The region of convergence is also inverted; that is, if the ROC of x[n] is |z| > |γ |, then the ROC of
+x[−n] is |z| < 1/|γ |.
+
+
+
+ D R I L L 5.8 Using the Time-Reversal Property
+ Use the time-reversal property and pair 2 in Table 5.1 to show that u[−n] ⇐⇒ −1/(z − 1) with
+ the ROC |z| < 1.
+
+
+
+
+5.2-5 Convolution Property
+The time-convolution property states that if‡
+
+                            x1 [n] ⇐⇒ X1 [z]           and            x2 [n] ⇐⇒ X2 [z],
+
+then (time convolution)
+                                      x1 [n] ∗ x2 [n] ⇐⇒ X1 [z]X2 [z]                           (5.19)
+
+Proof. This property applies to causal as well as noncausal sequences. We shall prove it for the
+more general case of noncausal sequences, where the convolution sum ranges from −∞ to ∞.
+    We have
+                                               ∞                    
+                                                "
+                       Z{x1 [n] ∗ x2 [n]} = Z       x1 [m]x2 [n − m]
+                                                       m=−∞
+                                                   ∞
+                                                   "                ∞
+                                                                    "
+                                                              −n
+                                             =            z                 x1 [m]x2 [n − m]
+                                                 n=−∞              m=−∞
+
+
+
+‡ There is also the frequency-convolution property, which states that
+                                                          5                 'z(
+                                                    1
+                                 x1 [n]x2 [n] ⇐⇒              X1 [u]X2            u−1 du
+                                                   2π j                      u

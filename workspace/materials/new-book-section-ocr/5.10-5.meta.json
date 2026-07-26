@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.10-5",
+  "sourcePages": [
+    "page-570",
+    "page-571"
+  ],
+  "usedPages": [
+    "page-570",
+    "page-571"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.10-5 Bilinear Transformation with Prewarping",
+  "foundEnd": true,
+  "endBeforeLine": "5.10-6 Example: Butterworth Filter Transformation",
+  "endBeforeCode": "5.10-6",
+  "charCount": 1382
+}

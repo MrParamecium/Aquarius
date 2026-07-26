@@ -1,0 +1,58 @@
+          “04-Lathi-C04” — 2017/9/25 — 19:46 — page 417 — #88
+
+
+
+
+                                                 4.8 Frequency Response of an LTIC System              417
+
+             Ideal Delay                    Ideal Differentiator                    Ideal Integrator
+
+
+                                                                                   H( jv)
+       H( jv)                             H( jv)
+
+  1
+
+
+  0                        v                                     v          0                      v
+                                       0
+
+
+                                            ⬔H( jv)
+       ⬔H( jv)                                                                   ⬔H( jv)
+                                     p2
+                           v                                                                       v
+   0                                    0                        v           0
+                                                                        p2
+
+                  (a)                                  (b)                                 (c)
+
+
+Figure 4.39 Frequency response of an ideal (a) delay, (b) differentiator, and (c) integrator.
+
+
+
+
+     In an ideal differentiator, the amplitude response (gain) is proportional to frequency
+[|H(jω)| = ω] so that the higher-frequency components are enhanced (see Fig. 4.39b). All
+practical signals are contaminated with noise, which, by its nature, is a broadband (rapidly
+varying) signal containing components of very high frequencies. A differentiator can increase
+the noise disproportionately to the point of drowning out the desired signal. This is why ideal
+differentiators are avoided in practice.
+     (c) An ideal integrator. The transfer function of an ideal integrator is [see Eq. (4.32)]
+                                                             1
+                                                 H(s) =
+                                                             s
+Therefore,
+                                                 1   −j  1
+                                    H(jω) =        =    = e−jπ/2
+                                                jω   ω   ω
+Consequently,
+                                      1                            π
+                               |H(jω)| =      and       H(jω) = −
+                                      ω                             2
+These amplitude and phase responses are illustrated in Fig. 4.39c. The amplitude response is
+inversely proportional to frequency, and the phase shift is constant (−π/2) with frequency.
+This result can be explained physically by recognizing that if a sinusoid cos ωt is passed
+through an ideal integrator, the output is (1/ω) sin ωt = (1/ω) cos [ωt − (π/2)]. Therefore, the
+amplitude response is inversely proportional to ω, and the phase response is constant (−π/2)

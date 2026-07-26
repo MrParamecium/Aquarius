@@ -1,0 +1,74 @@
+{
+  "sectionId": "4.3-2",
+  "sectionTitle": "Zero-State Response",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-366",
+      "page-367",
+      "page-368",
+      "page-370"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.26)",
+      "name": "General LTIC differential equation operator form",
+      "latex": "(D^N+a_1D^{N-1}+\\cdots+a_{N-1}D+a_N)y(t)=(b_0D^N+b_1D^{N-1}+\\cdots+b_{N-1}D+b_N)x(t)",
+      "sourcePage": "page-366",
+      "role": "core_model",
+      "status": "verified"
+    },
+    {
+      "label": "(4.27)",
+      "name": "Continuous-time transfer function polynomial ratio",
+      "latex": "H(s)=\\frac{P(s)}{Q(s)}=\\frac{b_0s^N+b_1s^{N-1}+\\cdots+b_{N-1}s+b_N}{s^N+a_1s^{N-1}+\\cdots+a_{N-1}s+a_N}",
+      "sourcePage": "page-367",
+      "role": "core_definition",
+      "status": "verified"
+    },
+    {
+      "label": "(4.28)",
+      "name": "Input as inverse Laplace superposition",
+      "latex": "x(t)=\\frac{1}{2\\pi j}\\int_{c-j\\infty}^{c+j\\infty}X(s)e^{st}\\,ds",
+      "sourcePage": "page-368",
+      "role": "interpretation_formula",
+      "status": "verified"
+    },
+    {
+      "label": "(4.29)",
+      "name": "Output as filtered inverse Laplace superposition",
+      "latex": "y(t)=\\frac{1}{2\\pi j}\\int_{c' -j\\infty}^{c' +j\\infty}X(s)H(s)e^{st}\\,ds=\\mathcal{L}^{-1}\\{X(s)H(s)\\}",
+      "sourcePage": "page-368",
+      "role": "system_response",
+      "status": "verified"
+    },
+    {
+      "label": "(4.30)",
+      "name": "Ideal delay transfer function",
+      "latex": "H(s)=\\frac{Y(s)}{X(s)}=e^{-sT}",
+      "sourcePage": "page-370",
+      "role": "canonical_system",
+      "status": "verified"
+    },
+    {
+      "label": "(4.31)",
+      "name": "Ideal differentiator transfer function",
+      "latex": "H(s)=\\frac{Y(s)}{X(s)}=s",
+      "sourcePage": "page-370",
+      "role": "canonical_system",
+      "status": "verified"
+    },
+    {
+      "label": "(4.32)",
+      "name": "Ideal integrator transfer function",
+      "latex": "H(s)=\\frac{1}{s}",
+      "sourcePage": "page-370",
+      "role": "canonical_system",
+      "status": "verified"
+    }
+  ]
+}

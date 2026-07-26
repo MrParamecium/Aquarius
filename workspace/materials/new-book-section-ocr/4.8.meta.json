@@ -1,0 +1,28 @@
+{
+  "sectionId": "4.8",
+  "sourcePages": [
+    "page-412",
+    "page-413",
+    "page-414",
+    "page-415",
+    "page-416",
+    "page-417",
+    "page-418"
+  ],
+  "usedPages": [
+    "page-412",
+    "page-413",
+    "page-414",
+    "page-415",
+    "page-416",
+    "page-417",
+    "page-418"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.8 F REQUENCY R ESPONSE OF AN LTIC S YSTEM",
+  "foundEnd": true,
+  "endBeforeLine": "4.8-1 Steady-State Response to Causal Sinusoidal Inputs",
+  "endBeforeCode": "4.8-1",
+  "charCount": 16914
+}

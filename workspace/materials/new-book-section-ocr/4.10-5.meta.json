@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.10-5",
+  "sourcePages": [
+    "page-444",
+    "page-445"
+  ],
+  "usedPages": [
+    "page-444",
+    "page-445"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.10-5 Practical Filters and Their Speciﬁcations",
+  "foundEnd": true,
+  "endBeforeLine": "4.11 The Bilateral Laplace Transform 445",
+  "endBeforeCode": "4.11",
+  "charCount": 3085
+}

@@ -1,0 +1,55 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 366 — #37
+
+
+
+
+366   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Using these results, the Laplace transform of Eq. (4.25) is
+
+                                                             5Y(s) 10 10
+                                    sY(s) − 2 + 2Y(s) +           +   =
+                                                               s    s   s
+      or                                                    !
+                                                          5
+                                                s+2+          Y(s) = 2
+                                                          s
+      and
+                                                               2s
+                                                Y(s) =
+                                                          s2 + 2s + 5
+      To find the inverse Laplace transform of Y(s), we use pair 10c (Table 4.1) with values A = 2,
+      B = 0, a = 1, and c = 5. This yields
+                               √                                        
+                     r = 204
+                             = 5, b = c − a2 = 2 and θ = tan−1 24 = 26.6◦
+
+      Therefore,                                √
+                                       y(t) =       5e−t cos (2t + 26.6◦ )u(t)
+      This response is shown in Fig. 4.7c.
+
+      Comment. In our discussion so far, we have multiplied input signals by u(t), implying that
+      the signals are zero prior to t = 0. This is needlessly restrictive. These signals can have any
+      arbitrary value prior to t = 0. As long as the initial conditions at t = 0 are specified, we need
+      only the knowledge of the input for t ≥ 0 to compute the response for t ≥ 0. Some authors use
+      the notation 1(t) to denote a function that is equal to u(t) for t ≥ 0 and that has arbitrary value
+      for negative t. We have abstained from this usage to avoid needless confusion caused by the
+      introduction of a new function, which is very similar to u(t).
+
+
+
+
+      4.3-2 Zero-State Response
+      Consider an Nth-order LTIC system specified by the equation
+
+                                                Q(D)y(t) = P(D)x(t)
+
+      or
+
+           (DN + a1 DN−1 + · · · + aN−1 D + aN )y(t) = (b0 DN + b1 DN−1 + · · · + bN−1 D + bN )x(t)   (4.26)
+
+           We shall now find the general expression for the zero-state response of an LTIC system.
+      Zero-state response y(t), by definition, is the system response to an input when the system is
+      initially relaxed (in zero state). Therefore, y(t) satisfies Eq. (4.26) with zero initial conditions
+
+                                 y(0− ) = ẏ(0− ) = ÿ(0− ) = · · · = y(N−1) (0− ) = 0

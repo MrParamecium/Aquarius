@@ -1,0 +1,20 @@
+{
+  "sectionId": "5.2-5",
+  "sourcePages": [
+    "page-507",
+    "page-508",
+    "page-509"
+  ],
+  "usedPages": [
+    "page-507",
+    "page-508",
+    "page-509"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.2-5 Convolution Property",
+  "foundEnd": false,
+  "endBeforeLine": "",
+  "endBeforeCode": "",
+  "charCount": 8504
+}

@@ -1,0 +1,46 @@
+                        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 516 — #29
+
+
+
+
+516       CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+
+                Figure 5.6 The transformed representation of an LTID system.
+
+
+
+          representing all signals by their z-transforms and all system components (or elements) by their
+          transfer functions, as shown in Fig. 5.6b.
+               The result Y[z] = H[z]X[z] greatly facilitates derivation of the system response to a given
+          input. We shall demonstrate this assertion by an example.
+
+
+
+      E X A M P L E 5.6 Transfer Function to Find the Zero-State Response
+
+          Find the response y[n] of an LTID system described by the difference equation
+
+                               y[n + 2] + y[n + 1] + 0.16y[n] = x[n + 1] + 0.32x[n]
+
+          or
+                                       (E2 + E + 0.16)y[n] = (E + 0.32)x[n]
+          for the input x[n] = (−2)−n u[n] and with all the initial conditions zero (system in the zero
+          state).
+
+
+          From the difference equation, we find
+                                                    P[z]    z + 0.32
+                                           H[z] =        =
+                                                    Q[z] z2 + z + 0.16
+
+          For the input x[n] = (−2)−n u[n] = [(−2)−1 ]n u(n) = (−0.5)n u[n],
+                                                                z
+                                                    X[z] =
+                                                             z + 0.5
+          and
+                                                               z(z + 0.32)
+                                    Y[z] = X[z]H[z] =
+                                                        (z2 + z + 0.16)(z + 0.5)

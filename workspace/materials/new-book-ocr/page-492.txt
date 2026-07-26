@@ -1,0 +1,64 @@
+                   “05-Lathi-C05” — 2017/9/25 — 15:54 — page 492 — #5
+
+
+
+
+492   CHAPTER 5    DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      TABLE 5.1   Select (Unilateral) z-Transform Pairs
+
+      No.                 x[n]                                      X[z]
+
+       1                  δ[n − k]                                  z−k
+                                                                      z
+       2                  u[n]
+                                                                    z−1
+                                                                        z
+       3                  nu[n]
+                                                                    (z − 1)2
+                                                                    z(z + 1)
+       4                  n2 u[n]
+                                                                    (z − 1)3
+                                                                    z(z2 + 4z + 1)
+       5                  n3 u[n]
+                                                                       (z − 1)4
+                                                                      z
+       6                  γ n u[n]
+                                                                    z−γ
+                                                                      1
+       7                  γ n−1 u[n − 1]
+                                                                    z−γ
+                                                                       γz
+       8                  nγ n u[n]
+                                                                    (z − γ )2
+                                                                    γ z(z + γ )
+       9                  n2 γ n u[n]
+                                                                     (z − γ )3
+                          n(n − 1)(n − 2) · · · (n − m + 1) n            z
+      10                                                   γ u[n]
+                                      γ m m!                        (z − γ )m+1
+                                                                           z(z − |γ | cos β)
+      11a                 |γ |n cos βn u[n]
+                                                                    z2 − (2|γ | cos β)z + |γ |2
+                                                                            z|γ | sin β
+      11b                 |γ |n sin βn u[n]
+                                                                    z2 − (2|γ | cos β)z + |γ |2
+                                                                    rz[z cos θ − |γ | cos (β − θ )]
+      12a                 r|γ |n cos (βn + θ)u[n]
+                                                                     z2 − (2|γ | cos β)z + |γ |2
+                                                                    (0.5rejθ )z (0.5re−jθ )z
+      12b                 r|γ |n cos (βn + θ)u[n]    γ = |γ |ejβ               +
+                                                                      z−γ         z−γ∗
+                                                                       z(Az + B)
+      12c                 r|γ |n cos (βn + θ)u[n]
+                                                                    z2 + 2az + |γ |2
+                                    
+                                   A2 |γ |2 + B2 − 2AaB
+                             r=
+                                          |γ |2 − a2
+                                        −a
+                             β = cos−1
+                                        |γ |
+                                        Aa − B
+                             θ = tan−1 
+                                      A |γ |2 − a2

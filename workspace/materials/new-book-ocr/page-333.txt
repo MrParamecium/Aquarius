@@ -1,0 +1,53 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 333 — #4
+
+
+
+
+                                                                     4.1 The Laplace Transform       333
+
+R EGION OF C ONVERGENCE FOR F INITE -D URATION S IGNALS
+A finite-duration signal xf (t) is a signal that is nonzero only for t1 ≤ t ≤ t2 , where both t1 and t2
+are finite numbers and t2 > t1 . For a finite-duration, absolutely integrable signal, the ROC is the
+entire s plane. This is clear from the fact that if xf (t) is absolutely integrable and a finite-duration
+signal, then x(t)e−σ t is also absolutely integrable for any value of σ because the integration is over
+the finite range of t only. Hence, the Laplace transform of such a signal converges for every value
+of s. This means that the ROC of a general signal x(t) remains unaffected by the addition of any
+absolutely integrable, finite-duration signal xf (t) to x(t). In other words, if R represents the ROC
+of a signal x(t), then the ROC of a signal x(t) + xf (t) is also R.
+
+R OLE OF THE R EGION OF C ONVERGENCE
+The ROC is required for evaluating the inverse Laplace transform x(t) from X(s), as defined by
+Eq. (4.2). The operation of finding the inverse transform requires an integration in the complex
+plane, which needs some explanation. The path of integration is along c + jω, with ω varying from
+−∞ to ∞.† Moreover, the path of integration must lie in the ROC (or existence) for X(s). For
+the signal e−at u(t), this is possible if c > −a. One possible path of integration is shown (dotted)
+in Fig. 4.1a. Thus, to obtain x(t) from X(s), the integration in Eq. (4.2) is performed along this
+path. When we integrate [1/(s + a)]est along this path, the result is e−at u(t). Such integration in
+the complex plane requires a background in the theory of functions of complex variables. We can
+avoid this integration by compiling a table of Laplace transforms (Table 4.1), where the Laplace
+transform pairs are tabulated for a variety of signals. To find the inverse Laplace transform of,
+say, 1/(s + a), instead of using the complex integral of Eq. (4.2), we look up the table and find
+the inverse Laplace transform to be e−at u(t) (assuming that the ROC is Re s > −a). Although
+the table given here is rather short, it comprises the functions of most practical interest. A more
+comprehensive table appears in Doetsch [2].
+
+T HE U NILATERAL L APLACE T RANSFORM
+To understand the need for defining unilateral transform, let us find the Laplace transform of signal
+x(t) illustrated in Fig. 4.1b:
+                                        x(t) = −e−at u(−t)
+
+The Laplace transform of this signal is
+                                              # ∞
+                                     X(s) =          −e−at u(−t)e−st dt
+                                               −∞
+
+Because u(−t) = 1 for t < 0 and u(−t) = 0 for t > 0,
+                          # 0                        # 0                              
+                                  −at −st                  −(s+a)t         1 −(s+a)t 0
+                 X(s) =         −e    e     dt = −         e         dt =     e       
+                           −∞                         −∞                  s+a           −∞
+
+
+† The discussion about the path of convergence is rather complicated, requiring the concepts of contour
+integration and understanding of the theory of complex variables. For this reason, the discussion here is
+somewhat simplified.

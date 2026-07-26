@@ -1,0 +1,26 @@
+{
+  "sectionId": "4.6-5",
+  "sourcePages": [
+    "page-399",
+    "page-400",
+    "page-401",
+    "page-402",
+    "page-403",
+    "page-404"
+  ],
+  "usedPages": [
+    "page-399",
+    "page-400",
+    "page-401",
+    "page-402",
+    "page-403",
+    "page-404"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.6-5 Using Operational Ampliﬁers for System Realization",
+  "foundEnd": true,
+  "endBeforeLine": "4.7 A PPLICATION TO F EEDBACK AND C ONTROLS",
+  "endBeforeCode": "4.7",
+  "charCount": 15089
+}

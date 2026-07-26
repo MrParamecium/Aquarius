@@ -1,0 +1,56 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 339 — #10
+
+
+
+
+                                                                  4.1 The Laplace Transform             339
+
+Therefore,
+                                           7s − 6       4     3
+                              X(s) =                 =     +                                      (4.11)
+                                       (s + 2)(s − 3) s + 2 s − 3
+
+C HECKING THE A NSWER
+It is easy to make a mistake in partial fraction computations. Fortunately it is simple to check
+the answer by recognizing that X(s) and its partial fractions must be equal for every value of s
+if the partial fractions are correct. Let us verify this assertion in Eq. (4.11) for some convenient
+value, say, s = 0. Substitution of s = 0 in Eq. (4.11) yields†
+
+                                            1 = 2−1 = 1
+
+We can now be sure of our answer with a high margin of confidence. Using pair 5 of Table 4.1
+in Eq. (4.11), we obtain
+                                        4   3
+                         x(t) = L−1       +                = (4e−2t + 3e3t )u(t)
+                                       s+2 s−3
+      (b)
+                                           2s2 + 5            2s2 + 5
+                                X(s) =                 =
+                                         s2 + 3s + 2       (s + 1)(s + 2)
+Observe that X(s) is an improper function with M = N. In such a case, we can express
+X(s) as a sum of the coefficient of the highest power in the numerator plus partial fractions
+corresponding to the poles of X(s) (see Sec. B.5-5). In the present case, the coefficient of the
+highest power in the numerator is 2. Therefore,
+                                                      k1   k2
+                                      X(s) = 2 +         +
+                                                     s+1 s+2
+where                                              
+                                        2s2 + 5         2+5
+                              k1 =                     =       =7
+                                     (s + 1)(s + 2) s=−1 −1 + 2
+and                                               
+                                      2s2 + 5          8+5
+                            k2 =                       =       = −13
+                                   (s + 1)(s + 2) s=−2 −2 + 1
+Therefore,
+                                                      7   13
+                                      X(s) = 2 +        −
+                                                     s+1 s+2
+From Table 4.1, pairs 1 and 5, we obtain
+
+                                 x(t) = 2δ(t) + (7e−t − 13e−2t )u(t)
+
+† Because X(s) = ∞ at its poles, we should avoid the pole values (−2 and 3 in the present case) for
+checking. The answers may check even if partial fractions are wrong. This situation can occur when two
+or more errors cancel their effects. But the chances of this problem arising for randomly selected values
+of s are extremely small.

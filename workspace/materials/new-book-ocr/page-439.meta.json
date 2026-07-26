@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.10",
+  "subsection": "4.10-2",
+  "title": "Lowpass Filters",
+  "summary": "This page covers 4.10-2 (Lowpass Filters). OCR text begins with: 4.10 Filter Design by Placement of Poles and Zeros of H(s) 439 behavior in the vicinity of ω0 . This is because the gain in this case is K/dd\u0016 , where d\u0016 is the distance of a point jω from the conjugate pole −α − jω0 . Because the conjugate pole is far from jω0 , there is no dramatic change in the length d\u0016 as ω varies in the vicinity of ω0 . There is a gradual increase in the value of d\u0016 as ω increases, which leaves",
+  "keywords": [
+    "4.10",
+    "4.10-2",
+    "Lowpass Filters"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-439",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

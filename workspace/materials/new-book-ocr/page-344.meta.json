@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 344 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.4 Inverse Laplace Transform with MATLAB Using the MATLAB residue command, determine the inverse Laplace transform of each of the following functions: 2s2 + 5 (a) Xa (s) = s2 + 3s + 2",
+  "keywords": [
+    "4.1",
+    "unit impulse",
+    "unit step",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-344",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

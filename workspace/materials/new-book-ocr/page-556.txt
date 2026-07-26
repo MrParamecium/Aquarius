@@ -1,0 +1,56 @@
+                         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 556 — #69
+
+
+
+
+556       CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          Assuming all the elements in xf [n] are finite, we observe that Xf [z] has two poles at z = ∞ because
+          of terms xf [−2]z2 + xf [−1]z and one pole at z = 0 because of term xf [1]/z. Thus, a finite-duration
+          sequence could have poles at z = 0 and z = ∞. Observe that Xf [z] converges for all values of z
+          except possibly z = 0 and z = ∞.
+                This means that the ROC of a general signal x[n] + xf [n] is the same as the ROC of x[n] with
+          the possible exception of z = 0 and z = ∞.
+                A right-sided sequence is zero for n < N2 < ∞ and a left-sided sequence is zero for n > N1 >
+          −∞. A causal sequence is always a right-sided sequence, but the converse is not necessarily true.
+          An anticausal sequence is always a left-sided sequence, but the converse is not necessarily true. A
+          two-sided sequence is of infinite duration and is neither right-sided nor left-sided.
+                A right-sided sequence xr [n] can be expressed as xr [n] = xc [n] + xf [n], where xc [n] is a causal
+          signal and xf [n] is a finite-duration signal. Therefore, the ROC for xr [n] is the same as the ROC for
+          xc [n] except possibly z = ∞. If z = β is the largest magnitude pole for a right-sided sequence xr [n],
+          its ROC is |β| < |z| ≤ ∞. Similarly, a left-sided sequence can be expressed as xl [n] = xa [n] + xf [n],
+          where xa [n] is an anticausal sequence and xf [n] is a finite-duration signal. Therefore, the ROC for
+          xl [n] is the same as the ROC for xa [n] except possibly z = 0. Thus, if z = α is the smallest magnitude
+          nonzero pole for a left-sided sequence, its ROC is 0 ≤ |z| < |α|.
+
+
+
+
+      E X A M P L E 5.17 Bilateral z-Transform
+
+          Determine the bilateral z-transform of
+
+                                        x[n] = (0.9)n u[n] + (1.2)n u[−(n + 1)]
+                                                                      
+                                                    x1 [n]           x2 [n]
+
+
+
+
+          From the results in Eqs. (5.51) and (5.52), we have
+                                                         z
+                                             X1 [z] =              |z| > 0.9
+                                                      z − 0.9
+                                                        −z
+                                             X2 [z] =              |z| < 1.2
+                                                      z − 1.2
+          The common region where both X1 [z] and X2 [z] converge is 0.9 < |z| < 1.2 (Fig. 5.28b). Hence,
+
+                                    X[z] = X1 [z] + X2 [z]
+                                               z           z
+                                         =          −
+                                           z − 0.9 z − 1.2
+                                                  −0.3z
+                                         =                           0.9 < |z| < 1.2
+                                           (z − 0.9)(z − 1.2)
+          The sequence x[n] and the ROC of X[z] are depicted in Fig. 5.28.

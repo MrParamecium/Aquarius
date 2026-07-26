@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 333",
+  "summary": "This page covers 4.1 (The Laplace Transform 333). OCR text begins with: 4.1 The Laplace Transform 333 R EGION OF C ONVERGENCE FOR F INITE -D URATION S IGNALS A finite-duration signal xf (t) is a signal that is nonzero only for t1 ≤ t ≤ t2 , where both t1 and t2 are finite numbers and t2 > t1 . For a finite-duration, absolutely integrable signal, the ROC is the entire s plane. This is clear from the fact that if xf (t) is absolutely integrable and a finite-duration signal, then x(t)e−σ t",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 333",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-333",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

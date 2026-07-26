@@ -1,0 +1,56 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 457 — #128
+
+
+
+
+                                               4.12 MATLAB: Continuous-Time Filters            457
+
+for each value of the frequency vector omega. It is also possible to compute frequency responses
+by using the signal-processing toolbox function freqs.
+
+
+D ESIGN AND E VALUATION OF A S IMPLE RC F ILTER
+One of the simplest lowpass filters is realized by using an RC circuit, as shown in Fig. 4.61.
+                                                                       −1
+This one-pole system has transfer  function HRC (s) = (RCs + 1) and magnitude response
+                         −1
+|HRC (jω)| = |(jωRC + 1) | = 1/ 1 + (RCω) . Independent of component values R and C, this
+                                                 2
+
+circuit has many desirable characteristics, such as unity gain at ω = 0 and magnitude response that
+monotonically decreases to zero as ω → ∞.
+
+
+           R
+ +                       +
+x(t)           C        y(t)
+ –                       –     Figure 4.61 An RC filter.
+
+
+
+
+    Components R and C are chosen to set the desired 3 kHz cutoff frequency. For √   many filter
+types, the cutoff frequency corresponds to the half-power point, or |HRC (jωc )| = 1/ 
+                                                                                      2. Assign
+Ca realistic capacitance of 1 nF, then the required resistance is computed by R = 1/ C2 ωc2 =
+1/ (10−9 )2 (2π 3000)2 .
+
+>>     omega_c = 2*pi*3000; C = 1e-9; R = 1/sqrt(C^2*omega_c^2)
+       R = 5.3052e+004
+
+The root of this first-order RC filter is directly related to the cutoff frequency, λ = −1/RC =
+−18,850 = −ωc .
+    To evaluate the RC filter performance, the magnitude response is plotted over the mostly
+audible frequency range (0 ≤ f ≤ 20 kHz).
+
+>>     f = linspace(0,20000,200); Hmag_RC = abs(CH4MP1([1],[R*C 1],f*2*pi));
+>>     plot(f,abs(f*2*pi)<=omega_c,’k-’,f,Hmag_RC,’k--’);
+>>     axis([0 20000 -0.05 1.05]); xlabel(’f [Hz]’); ylabel(’|H(j2\pi f)|’);
+>>     legend(’Ideal’,’First-order RC’,’location’,’best’);
+
+The linspace(X1,X2,N) command generates an N-length vector of linearly spaced points
+between X1 and X2.
+     As shown in Fig. 4.62, the first-order RC response is indeed lowpass with a half-power
+cutoff frequency equal to 3 kHz. It rather poorly approximates the desired brick-wall response:
+the passband is not very flat, and stopband attenuation increases very slowly to less than 20 dB at
+20 kHz.

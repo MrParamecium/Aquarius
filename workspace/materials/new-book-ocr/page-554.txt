@@ -1,0 +1,67 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 554 — #67
+
+
+
+
+554   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+       D R I L L 5.22 Filter Design by the Impulse-Invariance Method
+       Design a digital filter to realize an analog transfer function
+                                                              20
+                                                 Ha (s) =
+                                                            s + 20
+
+
+       ANSWER
+                  20Tz              π
+       H[z] =             with T =
+                z − e−20T          2000
+
+
+
+
+      5.8 T HE B ILATERAL z-T RANSFORM
+      Situations involving noncausal signals or systems cannot be handled by the (unilateral) z-transform
+      discussed so far. Such cases can be analyzed by the bilateral (or two-sided) z-transform defined in
+      Eq. (5.1) as
+                                                     "∞
+                                             X[z] =       x[n]z−n
+                                                        n=−∞
+
+      As in Eq. (5.2), the inverse z-transform is given by
+                                                        5
+                                                     1
+                                            x[n] =        X[z]zn−1 dz
+                                                   2π j
+      These equations define the bilateral z-transform. Earlier, we showed that
+                                                         z
+                                        γ n u[n] ⇐⇒                  |z| > |γ |                    (5.51)
+                                                        z−γ
+      In contrast, the z-transform of the signal −γ n u[−(n + 1)], illustrated in Fig. 5.27a, is
+                                                 −1
+                                                 "                   −1
+                                                                     "            n
+                                                                              γ
+                         Z{−γ n u[−(n + 1)]} =          −γ n z−n =        −
+                                                  −∞                 −∞
+                                                                              z
+                                                                                
+                                                                     2
+                                                    z      z          z 3
+                                               =−     +         +         +· · ·
+                                                    γ      γ          γ
+                                                                                       
+                                                          z       z 2     z 3
+                                               = 1− 1+ +                +        +· · ·
+                                                         γ       γ        γ
+                                                                  
+                                                      1          z
+                                               = 1−               <1
+                                                        z        γ 
+                                                    1−
+                                                        γ
+                                                  z
+                                               =           |z| < |γ |
+                                                 z−γ

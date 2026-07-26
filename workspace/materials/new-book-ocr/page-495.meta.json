@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.1",
+  "subsection": "5.1-1",
+  "title": "Inverse Transform by Partial Fraction Expansion and Tables",
+  "summary": "This page covers 5.1-1 (Inverse Transform by Partial Fraction Expansion and Tables). OCR text begins with: 5.1 The z-Transform 495 ANSWERS z5 + z4 + +z3 + z2 + z + 1 z (a) X[z] = or (z−4 − z−10 ) z9 z−1 z(3.2z + 17.2) (b)",
+  "keywords": [
+    "5.1",
+    "5.1-1",
+    "Inverse Transform by Partial Fraction Expansion and Tables",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-495",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

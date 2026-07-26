@@ -1,0 +1,53 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 348 — #19
+
+
+
+
+348   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      hardly a textbook today mentions his name or credits him with contributions. Nevertheless, his
+      studies had a major impact on many aspects of modern electrical engineering. It was Heaviside
+      who made transatlantic communication possible by inventing cable loading, but few mention him
+      as a pioneer or an innovator in telephony. It was Heaviside who suggested the use of inductive
+      cable loading, but the credit is given to M. Pupin, who was not even responsible for building the
+      first loading coil.† In addition, Heaviside was [6]:
+
+          • The first to find a solution to the distortionless transmission line.
+          • The innovator of lowpass filters.
+          • The first to write Maxwell’s equations in modern form.
+          • The codiscoverer of rate energy transfer by an electromagnetic field.
+          • An early champion of the now-common phasor analysis.
+          • An important contributor to the development of vector analysis. In fact, he essentially
+            created the subject independently of Gibbs [7].
+          • An originator of the use of operational mathematics used to solve linear integro-differential
+            equations, which eventually led to rediscovery of the ignored Laplace transform.
+          • The first to theorize (along with Kennelly of Harvard) that a conducting layer (the
+            Kennelly–Heaviside layer) of atmosphere exists, which allows radio waves to follow earth’s
+            curvature instead of traveling off into space in a straight line.
+          • The first to posit that an electrical charge would increase in mass as its velocity increases,
+            an anticipation of an aspect of Einstein’s special theory of relativity [8]. He also forecast
+            the possibility of superconductivity.
+
+           Heaviside was a self-made, self-educated man. Although his formal education ended with
+      elementary school, he eventually became a pragmatically successful mathematical physicist. He
+      began his career as a telegrapher, but increasing deafness forced him to retire at the age of 24.
+      He then devoted himself to the study of electricity. His creative work was disdained by many
+      professional mathematicians because of his lack of formal education and his unorthodox methods.
+           Heaviside had the misfortune to be criticized both by mathematicians, who faulted him for
+      lack of rigor, and by men of practice, who faulted him for using too much mathematics and
+      thereby confusing students. Many mathematicians, trying to find solutions to the distortionless
+      transmission line, failed because no rigorous tools were available at the time. Heaviside
+      succeeded because he used mathematics not with rigor, but with insight and intuition. Using
+      his much maligned operational method, Heaviside successfully attacked problems that the rigid
+      mathematicians could not solve, problems such as the flow-of-heat in a body of spatially varying
+      conductivity. Heaviside brilliantly used this method in 1895 to demonstrate a fatal flaw in Lord
+      Kelvin’s determination of the geological age of the earth by secular cooling; he used the same
+      flow-of-heat theory as for his cable analysis. Yet the mathematicians of the Royal Society remained
+      unmoved and were not the least impressed by the fact that Heaviside had found the answer to
+      problems no one else could solve. Many mathematicians who examined his work dismissed it
+
+
+      † Heaviside developed the theory for cable loading, George Campbell built the first loading coil, and the
+      telephone circuits using Campbell’s coils were in operation before Pupin published his paper. In the legal
+      fight over the patent, however, Pupin won the battle: he was a shrewd self-promoter, and Campbell had poor
+      legal support.

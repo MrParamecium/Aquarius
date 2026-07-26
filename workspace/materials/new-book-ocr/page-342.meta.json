@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 342 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS We can determine A by eliminating B on the right-hand side. This step can be accomplished by multiplying both sides of the equation for X(s) by s and then letting s → ∞. This procedure yields 0 = 6+A ⇒ A = −6 Therefore, 6(s + 34) 6 −6s + B",
+  "keywords": [
+    "4.1",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-342",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

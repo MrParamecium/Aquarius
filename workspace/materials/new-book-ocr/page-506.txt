@@ -1,0 +1,57 @@
+                     “05-Lathi-C05” — 2017/9/25 — 15:54 — page 506 — #19
+
+
+
+
+506   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      5.2-3 z-Domain Differentiation Property (Multiplication by n)
+      Multiplying a signal by n in the time domain produces differentiation in the z-domain. That is, if
+
+                                                  x[n]u[n] ⇐⇒ X[z]
+
+      then
+                                                                         d
+                                               nx[n]u[n] ⇐⇒ −z              X[z]                   (5.18)
+                                                                         dz
+      Proof.
+
+
+                                                           ∞
+                                          d            d "
+                                     −z      X[z] = −z        x[n]z−n
+                                          dz           dz n=0
+                                                        ∞
+                                                        "
+                                                 = −z            −nx[n]z−n−1
+                                                           n=0
+                                                     ∞
+                                                     "
+                                                 =         nx[n]z−n = Z{nx[n]u[n]}
+                                                     n=0
+
+
+
+
+       D R I L L 5.7 Using the z-Domain Differentiation Property
+       Use Eq. (5.18) to derive pairs 3 and 4 in Table 5.1 from pair 2. Similarly, derive pairs 8 and 9
+       from pair 6.
+
+
+
+      5.2-4 Time-Reversal Property
+      If
+                                                     x[n] ⇐⇒ X[z]
+      then†
+                                                  x[−n] ⇐⇒ X[1/z]
+
+      Proof.
+                                                                 ∞
+                                                                 "
+                                             Z{x[−n]} =                 x[−n]z−n
+                                                                 n=−∞
+
+
+      † For complex signal x[n], the time-reversal property is modified as follows:
+
+                                                 x∗ [−n] ⇐⇒ X ∗ [1/z∗ ]

@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.8",
+  "subsection": null,
+  "title": "Frequency Response of an LTIC System 415",
+  "summary": "This page covers 4.8 (Frequency Response of an LTIC System 415). OCR text begins with: 4.8 Frequency Response of an LTIC System 415 We also could have read these values directly from the frequency response plots in Fig. 4.38a corresponding to ω = 2. This result means that for a sinusoidal input with frequency ω = 2, the amplitude gain of the system is 0.372, and the phase shift is 65.3◦ . In other words, the output amplitude is 0.372 times the input amplitude, and the phase of the output is shifted wit",
+  "keywords": [
+    "4.8",
+    "Frequency Response of an LTIC System 415",
+    "LTIC system",
+    "system response",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-415",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

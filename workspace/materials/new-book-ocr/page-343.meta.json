@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": "The Laplace Transform 343",
+  "summary": "This page covers 4.1 (The Laplace Transform 343). OCR text begins with: 4.1 The Laplace Transform 343 We now clear fractions by multiplying both sides of the equation by (s + 1)(s + 2)3 . This procedure yields† 8s + 10 = 2(s + 2)3 + 6(s + 1) + a1 (s + 1)(s + 2) + a2 (s + 1)(s + 2)2 = (2 + a2 )s3 + (12 + a1 + 5a2 )s2 + (30 + 3a1 + 8a2 )s + (22 + 2a1 + 4a2 ) Equating coefficients of s3 and s2 on both sides, we obtain 0 = (2 + a2 ) ⇒ a2 = −2",
+  "keywords": [
+    "4.1",
+    "The Laplace Transform 343"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-343",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

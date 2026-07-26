@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.6. OCR text begins with: 540 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM C ONTROLLING G AIN BY P LACEMENT OF P OLES AND Z EROS The nature of the influence of pole and zero locations on the frequency response is similar to that observed in continuous-time systems, with minor differences. In place of the imaginary axis of the continuous-time systems, we have the unit circle in the discrete-time case. The nearer the pole (or z",
+  "keywords": [
+    "5.6",
+    "discrete-time",
+    "continuous-time",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-540",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

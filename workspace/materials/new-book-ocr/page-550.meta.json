@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 5.7. OCR text begins with: 550 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM The procedure of finding H[z] can be systematized for any Nth-order system. First we express an Nth-order analog transfer function Ha (s) as a sum of partial fractions as‡ \" n ci Ha (s) =",
+  "keywords": [
+    "5.7",
+    "discrete-time",
+    "LTIC system",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-550",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

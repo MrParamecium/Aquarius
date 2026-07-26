@@ -1,0 +1,64 @@
+                                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 434 — #105
+
+
+
+
+434   CHAPTER 4                       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      we have
+                                                     ωn = 10     and          ζ = 0.1
+
+      Step 1. Draw an asymptote of −40 dB/decade (−12 dB/octave) starting at ω = 10 for the
+      complex conjugate poles, and draw another asymptote of 20 dB/decade starting at ω = 100
+      for the (real) zero.
+
+      Step 2. Add both asymptotes.
+
+      Step 3. Apply the correction at ω = 100, where the correction because of the corner frequency
+      ω = 100 is 3 dB. The correction because of the corner frequency ω = 10, as seen from
+      Fig. 4.44a for ζ = 0.1, can be safely ignored. Next, the correction at ω = 10 because of the
+      corner frequency ω = 10 is 13.90 dB (see Fig. 4.44a for ζ = 0.1). The correction because of
+      the real zero at −100 can be safely ignored at ω = 10. We may find corrections at a few more
+      points. The resulting plot is illustrated in Fig. 4.46a.
+
+      P HASE P LOT
+      The asymptote for the complex conjugate poles is a step function with a jump of −180◦ at
+      ω = 10. The asymptote for the zero at s = −100 is zero for ω ≤ 10 and is a straight line with a
+      slope of 45◦ /decade, starting at ω = 10 and going to ω = 1000. For ω ≥ 1000, the asymptote
+      is 90◦ . The two asymptotes add to give the sawtooth shown in Fig. 4.46b. We now apply the
+      corrections from Figs. 4.42b and 4.44b to obtain the exact plot.
+
+                                                                Bode Diagram
+                                 40
+
+                                 20
+
+
+
+
+               Magnitude (dB)
+                                  0
+
+                                –20
+
+                                –40
+
+                                –60
+
+
+
+                                  0
+
+                                –45
+
+
+
+        Phase (deg)
+                                –90
+
+                          –135
+
+                          –180
+                             10 0                 10 1                 10 2             10 3       10 4
+                                                               Frequency (rad/s)
+       Figure 4.47 MATLAB-generated Bode plots for Ex. 4.30.

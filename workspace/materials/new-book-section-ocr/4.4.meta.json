@@ -1,0 +1,34 @@
+{
+  "sectionId": "4.4",
+  "sourcePages": [
+    "page-373",
+    "page-374",
+    "page-375",
+    "page-376",
+    "page-377",
+    "page-378",
+    "page-379",
+    "page-380",
+    "page-381",
+    "page-382"
+  ],
+  "usedPages": [
+    "page-373",
+    "page-374",
+    "page-375",
+    "page-376",
+    "page-377",
+    "page-378",
+    "page-379",
+    "page-380",
+    "page-381",
+    "page-382"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.4 Analysis of Electrical Networks: The Transformed Network 373",
+  "foundEnd": true,
+  "endBeforeLine": "4.3-4 Inverse Systems",
+  "endBeforeCode": "4.3-4",
+  "charCount": 1842
+}

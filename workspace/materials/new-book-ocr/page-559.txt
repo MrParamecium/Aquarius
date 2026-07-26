@@ -1,0 +1,58 @@
+         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 559 — #72
+
+
+
+
+                                                              5.8   The Bilateral z-Transform   559
+
+
+
+ D R I L L 5.23 Inverse Bilateral z-Transform
+ Find the inverse bilateral z-transform of
+                                              z
+                               X[z] =                        1
+                                                               > |z| > 13
+                                        z2 + 56 z + 16       2
+
+
+
+
+ ANSWER
+        n           n
+     − 13 u[n] + 6 − 12 u[−(n + 1)]
+
+
+
+I NVERSE T RANSFORM BY E XPANSION OF X[z] IN P OWER S ERIES OF z
+We have
+                                                  "
+                                         X[z] =          x[n]z−n
+                                                    n
+
+For an anticausal sequence, which exists only for n ≤ −1, this equation becomes
+
+                            X[z] = x[−1]z + x[−2]z2 + x[−3]z3 + · · ·
+
+We can find the inverse z-transform of X[z] by dividing the numerator polynomial by the
+denominator polynomial, both in ascending powers of z, to obtain a polynomial in ascending
+powers of z. Thus, to find the inverse transform of z/(z − 0.5) (when the ROC is |z| < 0.5), we
+divide z by −0.5+z to obtain −2z−4z2 −8z3 −· · · . Hence, x[−1] = −2, x[−2] = −4, x[−3] = −8,
+and so on.
+
+
+5.8-1 Properties of the Bilateral z-Transform
+Properties of the bilateral z-transform are similar to those of the unilateral transform. We shall
+merely state the properties here, without proofs, for xi [n] ⇐⇒ Xi [z].
+
+L INEARITY
+                            a1 x1 [n] + a2 x2 [n] ⇐⇒ a1 X1 [z] + a2 X2 [z]
+
+The ROC for a1 X1 [z] + a2 X2 [z] is the region common to (intersection of) the ROCs for X1 [z] and
+X2 [z].
+
+S HIFT
+                                   1
+                    x[n − m] ⇐⇒      X[z]         m is positive or negative integer
+                                  zm
+The ROC for X[z]/zm is the ROC for X[z] except for the addition or deletion of z = 0 or z = ∞
+caused by the factor 1/zm .

@@ -1,0 +1,312 @@
+# Fourier section OCR
+section_id: 4.6-5
+source_pages: page-399, page-400, page-401, page-402, page-403, page-404
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.6-5 Using Operational Ampliﬁers for System Realization
+In this section, we discuss practical implementation of the realizations described in Sec. 4.6-4.
+Earlier we saw that the basic elements required for the synthesis of an LTIC system (or a given
+transfer function) are (scalar) multipliers, integrators, and adders. All these elements can be
+realized by operational amplifier (op-amp) circuits.
+
+O PERATIONAL A MPLIFIER C IRCUITS
+Figure 4.28 shows an op-amp circuit in the frequency domain (the transformed circuit). Because
+the input impedance of the op amp is infinite (very high), all the current I(s) flows in the feedback
+path, as illustrated. Moreover Vx (s), the voltage at the input of the op amp, is zero (very small)
+because of the infinite (very large) gain of the op amp. Therefore, for all practical purposes,
+
+                                            Y(s) = −I(s)Zf (s)
+
+Moreover, because vx ≈ 0,
+                                                        X(s)
+                                               I(s) =
+                                                        Z(s)
+
+Substitution of the second equation in the first yields
+
+                                                       Zf (s)
+                                            Y(s) = −          X(s)
+                                                       Z(s)
+
+Therefore, the op-amp circuit in Fig. 4.28 has the transfer function
+
+                                                         Zf (s)
+                                             H(s) = −
+                                                         Z(s)
+
+By properly choosing Z(s) and Zf (s), we can obtain a variety of transfer functions, as the following
+development shows.
+
+
+                                  Z f (s)
+                  I(s)
+
+
+         Z(s)                      –
+                I(s)        
+                         Vx (s)
+                                  +           
+      X(s)
+                                              Y(s)
+
+                                               
+                                                     Figure 4.28 A basic inverting configuration
+                                                     op-amp circuit.
+
+[[PAGE page-400]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 400 — #71
+
+
+
+
+400   CHAPTER 4          CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      T HE S CALAR M ULTIPLIER
+      If we use a resistor Rf in the feedback and a resistor R at the input (Fig. 4.29a), then Zf (s) = Rf ,
+      Z(s) = R, and
+                                                           Rf
+                                                 H(s) = −
+                                                            R
+      The system acts as a scalar multiplier (or an amplifier) with a negative gain Rf /R. A positive
+      gain can be obtained by using two such multipliers in cascade or by using a single noninverting
+      amplifier, as depicted in Fig. 4.16c. Figure 4.29a also shows the compact symbol used in circuit
+      diagrams for a scalar multiplier.
+
+      T HE I NTEGRATOR
+      If we use a capacitor C in the feedback and a resistor R at the input (Fig. 4.29b), then Zf (s) = 1/Cs,
+      Z(s) = R, and
+                                                            1 1
+                                               H(s) = −
+                                                           RC s
+      The system acts as an ideal integrator with a gain −1/RC. Figure 4.29b also shows the compact
+      symbol used in circuit diagrams for an integrator.
+
+                                            Rf
+
+
+                          R
+                                          –
+                                          +               
+                                                                          F(s)                Y(s)
+                  F(s)                                                           k
+                                                          Y(s)
+
+                                                                                             Rf
+                                                                                         k
+                                                                                               R
+
+                                                    (a)
+
+                                           1
+                                           Cs
+
+
+                         R
+                                          –
+                                          +               
+                                                                          F(s)       k        Y(s)
+                  F(s)
+                                                          Y(s)                       s
+
+                                                                                             1
+                                                                                         k
+                                                                                               RC
+
+
+                                                    (b)
+            Figure 4.29 (a) Op-amp inverting amplifier. (b) Integrator.
+
+[[PAGE page-401]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 401 — #72
+
+
+
+
+                                                                              4.6   System Realization   401
+
+
+
+
+            Figure 4.30 Op-amp summing and amplifying circuit.
+
+    T HE A DDER
+    Consider now the circuit in Fig. 4.30a with r inputs X1 (s), X2 (s), . . . , Xr (s). As usual, the input
+    voltage Vx (s) ≃ 0 because the op-amp gain → ∞. Moreover, the current going into the op amp is
+    very small (≃ 0) because the input impedance → ∞. Therefore, the total current in the feedback
+    resistor Rf is I1 (s) + I2 (s) + · · · + Ir (s). Moreover, because Vx (s) = 0,
+                                                   Xj (s)
+                                        Ij (s) =              j = 1, 2, . . . , r
+                                                    Rj
+    Also,
+                              Y(s) = −Rf [I1 (s) + I2 (s) + · · · + Ir (s)]
+                                                                                       !
+                                         Rf            Rf                   Rf
+                                   =−        X1 (s) + X2 (s) + · · · + Xr (s)
+                                         R1            R2                   Rr
+                                   = k1 X1 (s) + k2 X2 (s) + · · · + kr Xr (s)
+    where
+                                                             −Rf
+                                                      ki =
+                                                              Ri
+    Clearly, the circuit in Fig. 4.30 serves an adder and an amplifier with any desired gain for each of
+    the input signals. Figure 4.30b shows the compact symbol used in circuit diagrams for an adder
+    with r inputs.
+
+E X A M P L E 4.25 Op-Amp Realization
+
+    Use op-amp circuits to realize the canonic direct form of the transfer function
+                                                            2s + 5
+                                            H(s) =
+                                                        s2 + 4s + 10
+
+[[PAGE page-402]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 402 — #73
+
+
+
+
+402       CHAPTER 4               CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+      X(s)               s2W(s)
+                                                                                                                        2
+                              1
+                              s                                    X(s)           s2W(s)             sW(s)              W(s)            Y(s)
+                                                                                                1                  1
+                                                                                                s                  s            5
+                 sW(s)               2             Y(s)
+                  4                                                                        4
+                              1
+                              s
+                                                                                                     10
+
+                 10         W(s)     5
+                              (a)                                                                            (b)
+
+
+
+
+                                                                                                     1
+
+
+               X(s)                                                                                                2           Y(s)
+                             1
+                                             s2W(s)                      sW(s)                           W(s)
+                             10                              1                                1                 5
+                             4
+
+                                              1
+
+
+
+                                                                          (c)
+
+
+
+                                                                                            100 k
+                                                                                100 k
+                                                                                                
+                                                                                                
+
+                                                                                                                        100 k
+                                    100 k                 10 F                         10 F
+                                                                                                           50 k
+       X(s)      100 k                                                                                                      
+                                              100 k                                                                                 
+                      10 k                                                                                                          Y(s)
+                                                                          100 k                            20 k
+                                            10 k                                                                                        
+                      25 k
+
+                                                         10 k
+                                               
+
+
+
+                                                                          (d)
+
+      Figure 4.31 Op-amp realization of a second-order transfer function (2s + 5)/(s2 + 4s + 10).
+
+[[PAGE page-403]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 403 — #74
+
+
+
+
+                                                                      4.6   System Realization            403
+
+     The basic canonic realization is shown in Fig. 4.31a. The same realization with horizontal
+reorientation is shown in Fig. 4.31b. Signals at various points are also indicated in the
+realization. For convenience, we denote the output of the last integrator by W(s). Consequently,
+the signals at the inputs of the two integrators are sW(s) and s2 W(s), as shown in Figs. 4.31a
+and 4.31b. Op-amp elements (multipliers, integrators, and adders) change the polarity of the
+output signals. To incorporate this fact, we modify the canonic realization in Fig. 4.31b to that
+depicted in Fig. 4.31c. In Fig. 4.31b, the successive outputs of the adder and the integrators
+are s2 W(s), sW(s), and W(s), respectively. Because of polarity reversals in op-amp circuits,
+these outputs are −s2 W(s), sW(s), and −W(s), respectively, in Fig. 4.31c. This polarity
+reversal requires corresponding modifications in the signs of feedback and feedforward gains.
+According to Fig. 4.31b,
+
+                                 s2 W(s) = X(s) − 4sW(s) − 10W(s)
+
+Therefore,
+                               −s2 W(s) = −X(s) + 4sW(s) + 10W(s)
+Because the adder gains are always negative (see Fig. 4.30b), we rewrite the foregoing equation
+as
+                      −s2 W(s) = −1[X(s)] − 4[−sW(s)] − 10[−W(s)]
+Figure 4.31c shows the implementation of this equation. The hardware realization appears in
+Fig. 4.31d. Both integrators have a unity gain, which requires RC = 1. We have used R = 100
+k and C = 10 µF. The gain of 10 in the outer feedback path is obtained in the adder by
+choosing the feedback resistor of the adder to be 100 k and an input resistor of 10 k.
+Similarly, the gain of 4 in the inner feedback path is obtained by using the corresponding input
+resistor of 25 k. The gains of 2 and 5, required in the feedforward connections, are obtained
+by using a feedback resistor of 100 k and input resistors of 50 and 20 k, respectively.†
+     The op-amp realization in Fig. 4.31 is not necessarily the one that uses the fewest op
+amps. This example is given just to illustrate a systematic procedure for designing an op-amp
+circuit of an arbitrary transfer function. There are more efficient circuits (such as Sallen–Key
+or biquad) that use fewer op amps to realize a second-order transfer function.
+
+
+
+
+ D R I L L 4.14 Transfer Functions of Op-Amp Circuits
+ Show that the transfer functions of the op-amp circuits in Figs. 4.32a and 4.32b are H1 (s) and
+ H2 (s), respectively, where
+
+                                    −Rf       a                 1
+                           H1 (s) =                       a=
+                                     R       s+a              Rf Cf
+                                      C      s+b                1              1
+                           H2 (s) = −                      a=           b=
+                                      Cf     s+a              Rf Cf           RC
+
+
+† It is possible to avoid the two inverting op amps (with gain −1) in Fig. 4.31d by adding signal sW(s) to the
+input and output adders directly, using the noninverting amplifier configuration in Fig. 4.16d.
+
+[[PAGE page-404]]
+“04-Lathi-C04” — 2017/12/5 — 19:19 — page 404 — #75
+
+
+
+
+404   CHAPTER 4         CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+
+
+                                                       Cf                                             Rf
+                                                                                    R
+                              R                        Rf                                            Cf
+                                                  –                                              –
+                                                  +                 +                            +          +
+                       X(s)                                        Y(s)        X(s) C                      Y(s)
+                                                                    –                                       –
+
+
+                                          (a)                                              (b)
+
+               Figure 4.32 Op-amp circuits for Drill 4.14.

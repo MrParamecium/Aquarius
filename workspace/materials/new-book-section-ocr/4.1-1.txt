@@ -1,0 +1,625 @@
+# Fourier section OCR
+section_id: 4.1-1
+source_pages: page-338, page-339, page-340, page-341, page-342, page-343, page-344, page-345, page-346, page-347, page-348, page-349
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.1-1 Finding the Inverse Transform
+          Finding the inverse Laplace transform by using Eq. (4.2) requires integration in the complex plane,
+          a subject beyond the scope of this book (but see, e.g., [3]). For our purpose, we can find the inverse
+          transforms from Table 4.1. All we need is to express X(s) as a sum of simpler functions of the forms
+          listed in the table. Most of the transforms X(s) of practical interest are rational functions, that is,
+          ratios of polynomials in s. Such functions can be expressed as a sum of simpler functions by using
+          partial fraction expansion (see Sec. B.5).
+               Values of s for which X(s) = 0 are called the zeros of X(s); the values of s for which X(s) → ∞
+          are called the poles of X(s). If X(s) is a rational function of the form P(s)/Q(s), the roots of P(s)
+          are the zeros and the roots of Q(s) are the poles of X(s).
+
+
+
+      E X A M P L E 4.3 Inverse Unilateral Laplace Transform
+
+          Find the inverse unilateral Laplace transforms of
+                     7s − 6
+               (a)
+                   s2 − s − 6
+                     2s2 + 5
+               (b) 2
+                   s + 3s + 2
+                       6(s + 34)
+               (c)
+                   s(s2 + 10s + 34)
+                       8s + 10
+               (d)
+                   (s + 1)(s + 2)3
+
+
+          In no case is the inverse transform of these functions directly available in Table 4.1. Rather,
+          we need to expand these functions into partial fractions, as discussed in Sec. B.5-1. Today,
+          it is very easy to find partial fractions via software such as MATLAB. However, just as the
+          availability of a calculator does not obviate the need for learning the mechanics of arithmetical
+          operations (addition, multiplication, etc.), the widespread availability of computers does not
+          eliminate the need to learn the mechanics of partial fraction expansion.
+                (a)
+                                                    7s − 6         k1       k2
+                                        X(s) =                 =        +
+                                                (s + 2)(s − 3) s + 2 s − 3
+          To determine k1 , corresponding to the term (s + 2), we cover up (conceal) the term (s + 2) in
+          X(s) and substitute s = −2 (the value of s that makes s + 2 = 0) in the remaining expression
+          (see Sec. B.5-2):                             
+                                              7s − 6           −14 − 6
+                                    k1 =                     =          =4
+                                                        
+                                         (s + 2)(s − 3) s=−2     −2 − 3
+          Similarly, to determine k2 corresponding to the term (s − 3), we cover up the term (s − 3) in
+          X(s) and substitute s = 3 in the remaining expression
+                                                            
+                                                 7s − 6     
+                                       k2 =                  = 21 − 6 = 3
+                                             (s + 2)(s − 3) s=3 3+2
+
+[[PAGE page-339]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 339 — #10
+
+
+
+
+                                                                  4.1 The Laplace Transform             339
+
+Therefore,
+                                           7s − 6       4     3
+                              X(s) =                 =     +                                      (4.11)
+                                       (s + 2)(s − 3) s + 2 s − 3
+
+C HECKING THE A NSWER
+It is easy to make a mistake in partial fraction computations. Fortunately it is simple to check
+the answer by recognizing that X(s) and its partial fractions must be equal for every value of s
+if the partial fractions are correct. Let us verify this assertion in Eq. (4.11) for some convenient
+value, say, s = 0. Substitution of s = 0 in Eq. (4.11) yields†
+
+                                            1 = 2−1 = 1
+
+We can now be sure of our answer with a high margin of confidence. Using pair 5 of Table 4.1
+in Eq. (4.11), we obtain
+                                        4   3
+                         x(t) = L−1       +                = (4e−2t + 3e3t )u(t)
+                                       s+2 s−3
+      (b)
+                                           2s2 + 5            2s2 + 5
+                                X(s) =                 =
+                                         s2 + 3s + 2       (s + 1)(s + 2)
+Observe that X(s) is an improper function with M = N. In such a case, we can express
+X(s) as a sum of the coefficient of the highest power in the numerator plus partial fractions
+corresponding to the poles of X(s) (see Sec. B.5-5). In the present case, the coefficient of the
+highest power in the numerator is 2. Therefore,
+                                                      k1   k2
+                                      X(s) = 2 +         +
+                                                     s+1 s+2
+where                                              
+                                        2s2 + 5         2+5
+                              k1 =                     =       =7
+                                     (s + 1)(s + 2) s=−1 −1 + 2
+and                                               
+                                      2s2 + 5          8+5
+                            k2 =                       =       = −13
+                                   (s + 1)(s + 2) s=−2 −2 + 1
+Therefore,
+                                                      7   13
+                                      X(s) = 2 +        −
+                                                     s+1 s+2
+From Table 4.1, pairs 1 and 5, we obtain
+
+                                 x(t) = 2δ(t) + (7e−t − 13e−2t )u(t)
+
+† Because X(s) = ∞ at its poles, we should avoid the pole values (−2 and 3 in the present case) for
+checking. The answers may check even if partial fractions are wrong. This situation can occur when two
+or more errors cancel their effects. But the chances of this problem arising for randomly selected values
+of s are extremely small.
+
+[[PAGE page-340]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 340 — #11
+
+
+
+
+340   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+           (c)
+                                        6(s + 34)             6(s + 34)
+                               X(s) =                =
+                                    s(s2 + 10s + 34) s(s + 5 − j3)(s + 5 + j3)
+                                    k1        k2         k2∗
+                                   = +              +
+                                     s    s + 5 − j3 s + 5 + j3
+          Note that the coefficients (k2 and k2∗ ) of the conjugate terms must also be conjugate (see
+      Sec. B.5). Now
+                                             
+                                6(s + 34)    
+                      k1 = 2                  = 6 × 34 = 6
+                           s(s + 10s + 34) s=0           34
+                                                        
+                                    6(s + 34)                     29 + j3
+                      k2 =                                    =           = −3 + j4
+                           s (s + 5 − j3)(s + 5 + j3)   s=−5+j3  −3 − j5
+
+      Therefore,
+                                                 k2∗ = −3 − j4
+      To use pair 10b of Table 4.1, we need to express k2 and k2∗ in polar form.
+                                                    −1               −1
+                            −3 + j4 = 32 + 42 ej tan (4/−3) = 5ej tan (4/−3)
+
+      Observe that tan−1 (4/−3) = tan−1 (−4/3). This fact is evident in Fig. 4.3. For further
+      discussion of this topic, see Ex. B.1.
+
+
+
+
+           3  j4        j4
+
+                      5        126.9
+
+                 3             53.1
+
+
+                                   3  j4
+
+
+      Figure 4.3 Visualizing tan−1 (−4/3)  = tan−1 (4/−3).
+
+
+
+           From Fig. 4.3, we observe that
+                                                                   ◦
+                                            k2 = −3 + j4 = 5ej126.9
+
+      so
+                                                               ◦
+                                                 k2∗ = 5e−j126.9
+
+[[PAGE page-341]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 341 — #12
+
+
+
+
+                                                                4.1 The Laplace Transform     341
+
+Therefore,
+                                                      ◦              ◦
+                                        6   5ej126.9   5e−j126.9
+                              X(s) =      +          +
+                                        s s + 5 − j3 s + 5 + j3
+From Table 4.1 (pairs 2 and 10b), we obtain
+
+                            x(t) = [6 + 10e−5t cos (3t + 126.9◦ )]u(t)
+
+A LTERNATIVE M ETHOD U SING Q UADRATIC FACTORS
+The foregoing procedure involves considerable manipulation of complex numbers. Pair 10c
+(Table 4.1) indicates that the inverse transform of quadratic terms (with complex conjugate
+poles) can be found directly without having to find first-order partial fractions. We discussed
+such a procedure in Sec. B.5-2. For this purpose, we shall express X(s) as
+                                    6(s + 34)             k1     As + B
+                        X(s) =                        =      + 2
+                                 s(s2 + 10s + 34)          s  s + 10s + 34
+We have already determined that k1 = 6 by the (Heaviside) “cover-up” method. Therefore,
+                                 6(s + 34)          6     As + B
+                                                =     + 2
+                             s(s2 + 10s + 34)       s s + 10s + 34
+
+Clearing the fractions by multiplying both sides by s(s2 + 10s + 34) yields
+
+                           6(s + 34) = (6 + A)s2 + (60 + B)s + 204
+
+Now, equating the coefficients of s2 and s on both sides yields
+
+                                 A = −6         and        B = −54
+
+and
+                                             6   −6s − 54
+                                   X(s) =      +
+                                             s s2 + 10s + 34
+We now use pairs 2 and 10c to find the inverse
+                                          √ Laplace transform. The parameters for pair 10c
+are A = −6, B = −54, a = 5, c = 34, b = c − a2 = 3, and
+                  
+                    A2 c + B2 − 2ABa                      Aa − B
+              r=                       = 10    θ = tan−1 √        = 126.9◦
+                          c − a2                        A c − a2
+Therefore,
+                            x(t) = [6 + 10e−5t cos (3t + 126.9◦ )]u(t)
+which agrees with the earlier result.
+
+S HORTCUTS
+The partial fractions with quadratic terms also can be obtained by using shortcuts. We have
+                                     6(s + 34)    6    As + B
+                        X(s) =                   = +
+                                 s(s2 + 10s + 34) s s2 + 10s + 34
+
+[[PAGE page-342]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 342 — #13
+
+
+
+
+342   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      We can determine A by eliminating B on the right-hand side. This step can be accomplished
+      by multiplying both sides of the equation for X(s) by s and then letting s → ∞. This procedure
+      yields
+                                        0 = 6+A       ⇒ A = −6
+      Therefore,
+                                       6(s + 34)    6    −6s + B
+                                                   = +
+                                   s(s2 + 10s + 34) s s2 + 10s + 34
+      To find B, we let s take on any convenient value, say, s = 1, in this equation to obtain
+                                    210      B−6
+                                        = 6+              ⇒     B = −54
+                                     45       45
+      a result that agrees with the answer found earlier.
+           (d)
+                                   8s + 10        k1      a0     a1      a2
+                       X(s) =                 =        +     +        +
+                               (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+      where
+                                                     
+                                         8s + 10     
+                               k1 =                      =2
+                                    (s + 1)(s + 2) s=−1
+                                                   3
+                                                     
+                                         8s + 10     
+                               a0 =                      =6
+                                                   3
+                                    (s + 1)(s + 2) s=−2
+                                    )                    .
+                                       d       8s + 10
+                               a1 =                               = −2
+                                      ds (s + 1)(s + 2)3
+                                                             s=−2
+                                      )                     .
+                                    1 d2          8s + 10
+                               a2 =                                 = −2
+                                    2 ds2 (s + 1)(s + 2)3
+                                                                  s=−2
+
+      Therefore,
+                                           2       6           2        2
+                                X(s) =        +          −           −
+                                         s + 1 (s + 2) 3   (s + 2) 2   s+2
+      and
+                                   x(t) = [2e−t + (3t2 − 2t − 2)e−2t ]u(t)
+
+      A LTERNATIVE M ETHOD : A H YBRID OF H EAVISIDE
+      AND C LEARING F RACTIONS
+      In this method, the simpler coefficients k1 and a0 are determined by the Heaviside
+      “cover-up” procedure, as discussed earlier. To determine the remaining coefficients, we use the
+      clearing-fraction method. Using the values k1 = 2 and a0 = 6 obtained earlier by the Heaviside
+      “cover-up” method, we have
+                              8s + 10          2       6          a1        a2
+                                           =      +          +           +
+                          (s + 1)(s + 2) 3   s + 1 (s + 2) 3   (s + 2) 2   s+2
+
+[[PAGE page-343]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 343 — #14
+
+
+
+
+                                                                4.1 The Laplace Transform         343
+
+We now clear fractions by multiplying both sides of the equation by (s + 1)(s + 2)3 . This
+procedure yields†
+
+      8s + 10 = 2(s + 2)3 + 6(s + 1) + a1 (s + 1)(s + 2) + a2 (s + 1)(s + 2)2
+               = (2 + a2 )s3 + (12 + a1 + 5a2 )s2 + (30 + 3a1 + 8a2 )s + (22 + 2a1 + 4a2 )
+
+Equating coefficients of s3 and s2 on both sides, we obtain
+
+                         0 = (2 + a2 )      ⇒     a2 = −2
+                         0 = 12 + a1 + 5a2 = 2 + a1         ⇒     a1 = −2
+
+We can stop here if we wish, since the two desired coefficients a1 and a2 have already been
+found. However, equating the coefficients of s1 and s0 serves as a check on our answers. This
+step yields
+
+                                          8 = 30 + 3a1 + 8a2
+                                         10 = 22 + 2a1 + 4a2
+
+Substitution of a1 = a2 = −2, obtained earlier, satisfies these equations. This step confirms the
+correctness of our answers.
+
+A NOTHER A LTERNATIVE : A H YBRID OF H EAVISIDE
+AND S HORTCUTS
+In this method, the simpler coefficients k1 and a0 are determined by the Heaviside “cover-up”
+procedure, as discussed earlier. The usual shortcuts are then used to determine the remaining
+coefficients. Using the values k1 = 2 and a0 = 6, determined earlier by the Heaviside method,
+we have
+                         8s + 10         2         6         a1        a2
+                                    =        +          +          +
+                     (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+There are two unknowns, a1 and a2 . If we multiply both sides by s and then let s → ∞, we
+eliminate a1 . This procedure yields
+
+                                  0 = 2 + a2       ⇒   a2 = −2
+
+Therefore,
+                         8s + 10       2       6       a1      2
+                                    =     +        +        −
+                     (s + 1)(s + 2)3 s + 1 (s + 2)3 (s + 2)2 s + 2
+There is now only one unknown, a1 . This value can be determined readily by setting s equal to
+any convenient value, say, s = 0. This step yields
+                             10     3 a1
+                                = 2+ + −1               ⇒ a1 = −2
+                              8     4 4
+† We could have cleared fractions without finding k and a . This alternative, however, proves more
+                                                   1      0
+laborious because it increases the number of unknowns to 4. By predetermining k1 and a0 , we reduce
+the unknowns to 2. Moreover, this method provides a convenient check on the solution. This hybrid
+procedure achieves the best of both methods.
+
+[[PAGE page-344]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 344 — #15
+
+
+
+
+344       CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.4 Inverse Laplace Transform with MATLAB
+
+          Using the MATLAB residue command, determine the inverse Laplace transform of each of
+          the following functions:
+                              2s2 + 5
+               (a) Xa (s) =
+                            s2 + 3s + 2
+                              2s2 + 7s + 4
+               (b) Xb (s) =
+                            (s + 1)(s + 2)2
+                              8s2 + 21s + 19
+               (c) Xc (s) =
+                            (s + 2)(s2 + s + 7)
+
+
+          In each case, we use the MATLAB residue command to perform the necessary partial fraction
+          expansions. The inverse Laplace transform follows using Table 4.1.
+               (a)
+          >>   num = [2 0 5]; den = [1 3 2];
+          >>   [r, p, k] = residue(num,den)
+               r = -13
+                     7
+               p = -2
+                    -1
+               k =   2
+          Therefore, Xa (s) = −13/(s + 2) + 7/(s + 1) + 2 and xa (t) = (−13e−2t + 7e−t )u(t) + 2δ(t).
+               (b)
+          >>   num = [2 7 4]; den = [conv([1 1],conv([1 2],[1 2]))];
+          >>   [r, p, k] = residue(num,den)
+               r = 3
+                    2
+                   -1
+               p = -2
+                   -2
+                   -1
+               k = []
+          Therefore, Xb (s) = 3/(s + 2) + 2/(s + 2)2 − 1/(s + 1) and xb (t) = (3e−2t + 2te−2t − e−t )u(t).
+
+               (c) In this case, a few calculations are needed beyond the results of the residue command
+          so that pair 10b of Table 4.1 can be utilized.
+          >>   num = [8 21 19]; den = [conv([1 2],[1 1 7])];
+          >>   [r, p, k]= residue(num,den)
+
+[[PAGE page-345]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 345 — #16
+
+
+
+
+                                                                   4.1 The Laplace Transform          345
+
+          r =  3.5000-0.48113i
+               3.5000+0.48113i
+               1.0000
+          p = -0.5000+2.5981i
+              -0.5000-2.5981i
+              -2.0000
+          k = []
+    >>    ang = angle(r), mag = abs(r)
+          ang = -0.13661
+                 0.13661
+                 0
+          mag = 3.5329
+                 3.5329
+                 1.0000
+
+    Thus,
+                                      1    3.5329e−j0.13661   3.5329ej0.13661
+                         Xc (s) =        +                  +
+                                    s + 2 s + 0.5 − j2.5981 s + 0.5 + j2.5981
+    and
+                         xc (t) = [e−2t + 1.7665e−0.5t cos(2.5981t − 0.1366)]u(t).
+
+
+
+E X A M P L E 4.5 Symbolic Laplace and Inverse Laplace Transforms
+with MATLAB
+
+    Using MATLAB’s symbolic math toolbox, determine the following:
+          (a) the direct unilateral Laplace transform of xa (t) = sin (at) + cos (bt)
+          (b) the inverse unilateral Laplace transform of Xb (s) = as2 /(s2 + b2 )
+
+
+          (a) Here, we use the sym command to symbolically define our variables and expression for
+    xa (t), and then we use the laplace command to compute the (unilateral) Laplace transform.
+
+    >>    syms a b t; x_a = sin(a*t)+cos(b*t);
+    >>    X_a = laplace(x_a);
+          X_a = a/(a^2 + s^2) + s/(b^2 + s^2)
+
+    Therefore, Xa (s) = s2 +a
+                           a
+                             2 + s2 +b2 . It is also easy to use MATLAB to determine Xa (s) in standard
+                                    s
+
+    rational form.
+
+    >>    X_a = collect(X_a)
+          X_a = (a^2*s + a*b^2 + a*s^2 + s^3)/(s^4 + (a^2 + b^2)*s^2 + a^2*b^2)
+                                        3   2   2
+                                        +as +a s+ab 2
+    Thus, we also see that Xa (s) = s4s+(a2 +b2 )s2 +a2 b2
+       (b) A similar approach is taken for the inverse Laplace transform, except that the
+    ilaplace command is used rather than the laplace command.
+
+[[PAGE page-346]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 346 — #17
+
+
+
+
+346   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      >>   syms a b s; X_b = (a*s^2)/(s^2+b^2);
+      >>   x_b = ilaplace(X_b)
+           x_b = a*dirac(t) - a*b*sin(b*t)
+
+      Therefore, xb (t) = aδ(t) − ab sin (bt)u(t).
+
+
+
+
+       D R I L L 4.2 Laplace Transform
+       Show that the Laplace transform of 10e−3t cos (4t + 53.13◦ ) is (6s − 14)/(s2 + 6s + 25). Use
+       Table 4.1.
+
+
+
+
+       D R I L L 4.3 Inverse Laplace Transform
+       Find the inverse Laplace transform of the following:
+                    s + 17
+            (a)
+                  s2 + 4s − 5
+                       3s − 5
+            (b)
+                (s + 1)(s2 + 2s + 5)
+                   16s + 43
+            (c)
+                (s − 2)(s + 3)2
+
+       ANSWERS
+            (a) (3et − 2e−5t )u(t)
+            (b) −2e−t + 52 e−t cos (2t − 36.87◦ ) u(t)
+            (c) [3e2t + (t − 3)e−3t ]u(t)
+
+
+
+      A H ISTORICAL N OTE : M ARQUIS P IERRE -S IMON DE L APLACE
+      (1749–1827)
+      The Laplace transform is named after the great French mathematician and astronomer Laplace,
+      who first presented the transform and its applications to differential equations in a paper published
+      in 1779.
+           Laplace developed the foundations of potential theory and made important contributions to
+      special functions, probability theory, astronomy, and celestial mechanics. In his Exposition du
+      système du monde (1796), Laplace formulated a nebular hypothesis of cosmic origin and tried to
+      explain the universe as a pure mechanism. In his Traité de mécanique céleste (celestial mechanics),
+      which completed the work of Newton, Laplace used mathematics and physics to subject the solar
+      system and all heavenly bodies to the laws of motion and the principle of gravitation. Newton had
+
+[[PAGE page-347]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 347 — #18
+
+
+
+
+                                                            4.1 The Laplace Transform            347
+
+
+
+
+                          Pierre-Simon de Laplace and Oliver Heaviside
+
+
+been unable to explain the irregularities of some heavenly bodies; in desperation, he concluded
+that God himself must intervene now and then to prevent such catastrophes as Jupiter eventually
+falling into the sun (and the moon into the earth), as predicted by Newton’s calculations. Laplace
+proposed to show that these irregularities would correct themselves periodically and that a little
+patience—in Jupiter’s case, 929 years—would see everything returning automatically to order;
+thus there was no reason why the solar and the stellar systems could not continue to operate by the
+laws of Newton and Laplace to the end of time [4].
+     Laplace presented a copy of Mécanique céleste to Napoleon, who, after reading the book,
+took Laplace to task for not including God in his scheme: “You have written this huge book on the
+system of the world without once mentioning the author of the universe.” “Sire,” Laplace retorted,
+“I had no need of that hypothesis.” Napoleon was not amused, and when he reported this reply to
+another great mathematician-astronomer, Louis de Lagrange, the latter remarked, “Ah, but that is
+a fine hypothesis. It explains so many things” [5].
+     Napoleon, following his policy of honoring and promoting scientists, made Laplace the
+minister of the interior. To Napoleon’s dismay, however, the new appointee attempted to bring
+“the spirit of infinitesimals” into administration, and so Laplace was transferred hastily to the
+Senate.
+
+O LIVER H EAVISIDE (1850–1925)
+Although Laplace published his transform method to solve differential equations in 1779, the
+method did not catch on until a century later. It was rediscovered independently in a rather
+awkward form by an eccentric British engineer, Oliver Heaviside (1850–1925), one of the tragic
+figures in the history of science and engineering. Despite his prolific contributions to electrical
+engineering, he was severely criticized during his lifetime and was neglected later to the point that
+
+[[PAGE page-348]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 348 — #19
+
+
+
+
+348   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      hardly a textbook today mentions his name or credits him with contributions. Nevertheless, his
+      studies had a major impact on many aspects of modern electrical engineering. It was Heaviside
+      who made transatlantic communication possible by inventing cable loading, but few mention him
+      as a pioneer or an innovator in telephony. It was Heaviside who suggested the use of inductive
+      cable loading, but the credit is given to M. Pupin, who was not even responsible for building the
+      first loading coil.† In addition, Heaviside was [6]:
+
+          • The first to find a solution to the distortionless transmission line.
+          • The innovator of lowpass filters.
+          • The first to write Maxwell’s equations in modern form.
+          • The codiscoverer of rate energy transfer by an electromagnetic field.
+          • An early champion of the now-common phasor analysis.
+          • An important contributor to the development of vector analysis. In fact, he essentially
+            created the subject independently of Gibbs [7].
+          • An originator of the use of operational mathematics used to solve linear integro-differential
+            equations, which eventually led to rediscovery of the ignored Laplace transform.
+          • The first to theorize (along with Kennelly of Harvard) that a conducting layer (the
+            Kennelly–Heaviside layer) of atmosphere exists, which allows radio waves to follow earth’s
+            curvature instead of traveling off into space in a straight line.
+          • The first to posit that an electrical charge would increase in mass as its velocity increases,
+            an anticipation of an aspect of Einstein’s special theory of relativity [8]. He also forecast
+            the possibility of superconductivity.
+
+           Heaviside was a self-made, self-educated man. Although his formal education ended with
+      elementary school, he eventually became a pragmatically successful mathematical physicist. He
+      began his career as a telegrapher, but increasing deafness forced him to retire at the age of 24.
+      He then devoted himself to the study of electricity. His creative work was disdained by many
+      professional mathematicians because of his lack of formal education and his unorthodox methods.
+           Heaviside had the misfortune to be criticized both by mathematicians, who faulted him for
+      lack of rigor, and by men of practice, who faulted him for using too much mathematics and
+      thereby confusing students. Many mathematicians, trying to find solutions to the distortionless
+      transmission line, failed because no rigorous tools were available at the time. Heaviside
+      succeeded because he used mathematics not with rigor, but with insight and intuition. Using
+      his much maligned operational method, Heaviside successfully attacked problems that the rigid
+      mathematicians could not solve, problems such as the flow-of-heat in a body of spatially varying
+      conductivity. Heaviside brilliantly used this method in 1895 to demonstrate a fatal flaw in Lord
+      Kelvin’s determination of the geological age of the earth by secular cooling; he used the same
+      flow-of-heat theory as for his cable analysis. Yet the mathematicians of the Royal Society remained
+      unmoved and were not the least impressed by the fact that Heaviside had found the answer to
+      problems no one else could solve. Many mathematicians who examined his work dismissed it
+
+
+      † Heaviside developed the theory for cable loading, George Campbell built the first loading coil, and the
+      telephone circuits using Campbell’s coils were in operation before Pupin published his paper. In the legal
+      fight over the patent, however, Pupin won the battle: he was a shrewd self-promoter, and Campbell had poor
+      legal support.
+
+[[PAGE page-349]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 349 — #20

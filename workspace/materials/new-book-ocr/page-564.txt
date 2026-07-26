@@ -1,0 +1,55 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 564 — #77
+
+
+
+
+564   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                                                                                  x(t)
+
+        x[n]                                                       x(t)
+
+
+
+
+                                         n                                                      t
+
+
+
+
+                   x[n]                      y[n]                        x(t)                  y(t)
+                                  H[z]                                             H [e sT]
+
+
+
+
+        y[n]                                                      y(t)
+
+
+
+
+                                         n                                                      t
+
+                            (a)                                                          (b)
+
+      Figure 5.30 Connection between the Laplace transform and the z-transform.
+
+
+      as z being replaced by esT . Therefore, H(s) = H[esT ]. Let us now apply x[n] to the input of H[z] and
+      apply x(t) at the input of H[esT ]. Whatever operations are performed by the discrete-time system
+      H[z] on x[n] (Fig. 5.30a) are also performed by the corresponding continuous-time system H[esT ]
+      on the impulse sequence x(t) (Fig. 5.30b). The delaying of a sequence in H[z] would amount to
+      delaying of an impulse train in H[esT ]. Adding and multiplying operations are the same in both
+      cases. In other words, one-to-one correspondence of the two systems is preserved in every aspect.
+      Therefore if y[n] is the output of the discrete-time system in Fig. 5.30a, then y(t), the output of the
+      continuous-time system in Fig. 5.30b, would be a sequence of impulse whose nth impulse strength
+      is y[n]. Thus,
+                                                    "∞
+                                             y(t) =     y[n]δ(t − nT)
+                                                    n=0
+
+      The system in Fig. 5.30b, being a continuous-time system, can be analyzed via the Laplace
+      transform. If
+                                x(t) ⇐⇒ X(s)     and     y(t) ⇐⇒ Y(s)

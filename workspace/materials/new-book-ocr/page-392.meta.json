@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.6. OCR text begins with: 392 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS E X A M P L E 4.22 Canonic Direct Form Realizations Find the canonic direct form realization of the following transfer functions: 5 (a) s+7 s",
+  "keywords": [
+    "4.6",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-392",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

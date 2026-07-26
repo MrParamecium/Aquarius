@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.10-4",
+  "sourcePages": [
+    "page-441",
+    "page-442",
+    "page-443"
+  ],
+  "usedPages": [
+    "page-441",
+    "page-442",
+    "page-443"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.10-4 Notch (Bandstop) Filters",
+  "foundEnd": false,
+  "endBeforeLine": "",
+  "endBeforeCode": "",
+  "charCount": 6738
+}

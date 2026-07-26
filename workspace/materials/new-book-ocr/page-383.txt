@@ -1,0 +1,57 @@
+            “04-Lathi-C04” — 2017/9/25 — 19:46 — page 383 — #54
+
+
+
+
+                                      4.4 Analysis of Electrical Networks: The Transformed Network                     383
+
+                                                                                       
+                          v1(t)                                               v1(t)
+                                                                                                             
+                                                          v2(t)                                               v2(t)
+                                                                                               Av1(t)
+                                                                                                                 
+
+
+                                            (a)                                                (b)
+
+                  ix(t)           b
+                                        
+                            vx 
+                                                        io(t)                                              
+          v1(t)                                                                           
+                                                                  v2(t)           v1(t)             Kv1(t)   v2(t)
+                                                  Rb                                      
+                                       Ra
+                                                                                                             
+
+
+
+                                            (c)                                               (d)
+          Figure 4.16 Operational amplifier and its equivalent circuit.
+
+
+
+    and also
+
+                                                         v1 = vx + Ra io = Ra io
+
+    Therefore,
+
+                                                       v2 Rb + Ra      Rb
+                                                          =       = 1+    =K
+                                                       v1   Ra         Ra
+
+    or
+
+                                                             v2 (t) = Kv1 (t)
+
+    The equivalent circuit of the noninverting amplifier is depicted in Fig. 4.16d.
+
+
+
+E X A M P L E 4.20 Transform Analysis of a Sallen–Key Circuit
+
+    The circuit in Fig. 4.17a is called the Sallen–Key circuit, which is frequently used in filter
+    design. Find the transfer function H(s) relating the output voltage vo (t) to the input voltage
+    vi (t).

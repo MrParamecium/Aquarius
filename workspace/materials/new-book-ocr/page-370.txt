@@ -1,0 +1,56 @@
+                      “04-Lathi-C04” — 2017/9/25 — 19:46 — page 370 — #41
+
+
+
+
+370   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+            Therefore,
+                                                       Y(s)
+                                              H(s) =        = e−sT                                   (4.30)
+                                                       X(s)
+           (b) Ideal Differentiator. For an ideal differentiator, the input x(t) and the output y(t) are
+      related by
+                                                       dx(t)
+                                               y(t) =
+                                                         dt
+      The Laplace transform of this equation yields
+
+                               Y(s) = sX(s)       [x(0− ) = 0 for a causal signal]
+
+      and
+                                                         Y(s)
+                                                H(s) =        =s                                     (4.31)
+                                                         X(s)
+            (c) Ideal Integrator. For an ideal integrator with zero initial state, that is, y(0− ) = 0,
+                                          # t
+                                                                      1
+                                   y(t) =     x(τ ) dτ and Y(s) = X(s)
+                                           0                          s
+      Therefore,
+                                                             1
+                                                    H(s) =                                           (4.32)
+                                                             s
+
+
+
+
+       D R I L L 4.8 Differential Equation and Zero-State Response
+       from a System Transfer Function
+       For an LTIC system with transfer function,
+                                                             s+5
+                                                H(s) =
+                                                         s2 + 4s + 3
+
+
+             (a) Describe the differential equation relating the input x(t) and output y(t).
+             (b) Find the system response y(t) to the input x(t) = e−2t u(t) if the system is initially in
+                 zero state.
+
+
+       ANSWERS
+                 d2 y(t)    dy(t)            dx(t)
+             (a)      2
+                         +4       + 3y(t) =        + 5x(t)
+                   dt         dt               dt
+             (b) y(t) = (2e−t − 3e−2t + e−3t )u(t)

@@ -1,0 +1,67 @@
+                   “04-Lathi-C04” — 2017/9/25 — 19:46 — page 334 — #5
+
+
+
+
+334   CHAPTER 4    CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      TABLE 4.1   Select (Unilateral) Laplace Transform Pairs
+
+      No.                x(t)                                         X(s)
+
+       1                 δ(t)                                         1
+
+                                                                      1
+       2                 u(t)
+                                                                      s
+                                                                      1
+       3                 tu(t)
+                                                                      s2
+                                                                       n!
+       4                 tn u(t)
+                                                                      sn+1
+                                                                       1
+       5                 eλt u(t)
+                                                                      s−λ
+                                                                          1
+       6                 teλt u(t)
+                                                                      (s − λ)2
+                                                                           n!
+       7                 tn eλt u(t)
+                                                                      (s − λ)n+1
+                                                                         s
+       8a                cos bt u(t)
+                                                                      s2 + b2
+                                                                         b
+       8b                sin bt u(t)
+                                                                      s2 + b2
+                                                                          s+a
+       9a                e−at cos bt u(t)
+                                                                      (s + a)2 + b2
+                                                                            b
+       9b                e−at sin bt u(t)
+                                                                      (s + a)2 + b2
+                                                                      (r cos θ)s + (ar cos θ − br sin θ )
+      10a                re−at cos (bt + θ) u(t)
+                                                                             s2 + 2as + (a2 + b2 )
+                                                                        0.5rejθ   0.5re−jθ
+      10b                re−at cos (bt + θ) u(t)                                +
+                                                                      s + a − jb s + a + jb
+                                                                         As + B
+      10c                re−at cos (bt + θ) u(t)
+                                                                      s2 + 2as + c
+                                   
+                                        A2 c + B2 − 2ABa
+                            r=
+                                              c − a2
+                                              Aa − B
+                            θ = tan−1         √
+                                             A c − a2
+                                    √
+                            b=          c − a2
+                                                              !
+                                                 B − Aa                    As + B
+      10d                e−at A cos bt +                sin bt u(t)
+                                                   b                  s2 + 2as + c
+                                    √
+                            b=          c − a2

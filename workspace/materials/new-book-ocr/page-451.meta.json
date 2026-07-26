@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.11",
+  "subsection": "4.11-1",
+  "title": "Properties of the Bilateral Laplace Transform",
+  "summary": "This page covers 4.11-1 (Properties of the Bilateral Laplace Transform). OCR text begins with: 4.11 The Bilateral Laplace Transform 451 (c) Both poles lie to the right of the region of convergence, so both poles correspond to anticausal signals, and x(t) = (−e−2t + et )u(−t) Figure 4.59 shows the three inverse transforms corresponding to the same X(s) but with different regions of convergence. 4.11-1 Properties of the Bilateral Laplace Transform",
+  "keywords": [
+    "4.11",
+    "4.11-1",
+    "Properties of the Bilateral Laplace Transform",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-451",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

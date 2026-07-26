@@ -1,0 +1,24 @@
+# Fourier section OCR
+section_id: 5.2
+source_pages: page-501
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.2 Some Properties of the z-Transform         501
+
+
+
+ D R I L L 5.4 Impulse Response by Inverse z-Transform
+ Redo Drill 3.14 by taking the inverse z-transform of H[z], as given by Eq. (3.41).
+
+
+
+
+5.2 S OME P ROPERTIES OF THE z-T RANSFORM
+The z-transform properties are useful in the derivation of z-transforms of many functions and also
+in the solution of linear difference equations with constant coefficients. Here we consider a few
+important properties of the z-transform.
+     In our discussion, the variable n appearing in signals, such as x[n] and y[n], may or may not
+stand for time. However, in most applications of our interest, n is proportional to time. For this
+reason, we shall loosely refer to the variable n as time.

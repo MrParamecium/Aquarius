@@ -1,0 +1,20 @@
+{
+  "sectionId": "4.9-3",
+  "sourcePages": [
+    "page-424",
+    "page-425",
+    "page-426"
+  ],
+  "usedPages": [
+    "page-424",
+    "page-425",
+    "page-426"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.9-3 First-Order Pole (or Zero)",
+  "foundEnd": true,
+  "endBeforeLine": "4.9-4 Second-Order Pole (or Zero)",
+  "endBeforeCode": "4.9-4",
+  "charCount": 7508
+}

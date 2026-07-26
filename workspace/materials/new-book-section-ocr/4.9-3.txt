@@ -1,0 +1,173 @@
+# Fourier section OCR
+section_id: 4.9-3
+source_pages: page-424, page-425, page-426
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.9-3 First-Order Pole (or Zero)
+      T HE L OG M AGNITUDE
+      The log amplitude of a first-order pole at −a is −20 log |1+jω/a|. Let us investigate the asymptotic
+      behavior of this function for extreme values of ω (ω  a and ω  a).
+      (a) For ω  a,                                    
+                                                     jω 
+                                          −20 log1 +  ≈ −20 log 1 = 0
+                                                       a
+      Hence, the log-amplitude function → 0 asymptotically for ω  a (Fig. 4.41a).
+      (a) For the other extreme case, where ω  a,
+                                   
+                               jω           ω
+                            
+                   −20 log1 +  ≈ −20 log         = −20 log ω + 20 log a = −20u + 20 log a
+                                 a             a
+      This represents a straight line (when plotted as a function of u, the log of ω) with a slope of −20
+      dB/decade (or −6 dB/octave). When ω = a, the log amplitude is zero. Hence, this line crosses the
+      ω axis at ω = a, as illustrated in Fig. 4.41a. Note that the asymptotes in (a) and (b) meet at ω = a.
+          The exact log amplitude for this pole is
+                                         
+                                      jω                  ω2 1/2                   ω2
+                        −20 log1 +  = −20 log 1 + 2              = −10 log 1 + 2
+                                        a                   a                         a
+      This exact log magnitude function also appears in Fig. 4.41a. Observe that the actual and the
+      asymptotic plots are very close. A maximum error of 3 dB occurs at ω = a. This frequency is
+      known as the corner frequency or break frequency. The error everywhere else is less than 3 dB.
+      A plot of the error as a function of ω is shown in Fig. 4.42a. This figure shows that the error at 1
+      octave above or below the corner frequency is 1 dB and the error at 2 octaves above or below the
+      corner frequency is 0.3 dB. The actual plot can be obtained by adding the error to the asymptotic
+      plot.
+           The amplitude response for a zero at −a (shown dotted in Fig. 4.41a) is identical to that of
+      the pole at −a with a sign change and therefore is the mirror image (about the 0 dB line) of the
+      amplitude plot for a pole at −a.
+
+      P HASE
+      The phase for the first-order pole at −a is
+                                                          jω                   ω
+                                      H(jω) = −   1+             = − tan−1
+                                                           a                   a
+      Let us investigate the asymptotic behavior of this function. For ω  a,
+                                                              ω
+                                                − tan−1            ≈0
+                                                              a
+      and, for ω  a,
+                                                          ω
+                                              − tan−1             ≈ −90◦
+                                                          a
+
+[[PAGE page-425]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 425 — #96
+
+
+
+
+                                                                                              4.9   Bode Plots          425
+
+
+                     18
+                                                  For s  a
+
+                     12                                               1dB
+
+                                                           3dB
+                      6               Asymptote
+
+
+ 20 log H (dB)
+                                                   1dB
+                                                                                Asymptotes
+
+                      0
+                                                                                                                        v
+
+                    6                             1dB
+                                                           3dB
+
+                   12                                                1dB
+                                                         1
+                                                   For s  a
+                   18
+
+                     0.01a              0.1a              va                           10a                      100a
+                                                            (a)
+
+                    90
+                                                         For s  a
+
+
+                    45                                               Asymptote
+
+                                     Asymptote
+
+
+Phase
+                     0
+                                                                                                                        v
+
+
+                   45                                                     Asymptote
+
+
+                                                                  1
+                                                         For s  a
+                   90
+                     0.01a              0.1a              va                           10a                      100a
+                                                           (b)
+
+        Figure 4.41 (a) Amplitude and (b) phase responses of a first-order pole or zero at s = −a.
+
+
+
+
+        The actual plot along with the asymptotes is depicted in Fig. 4.41b. In this case, we use a three-line
+        segment asymptotic plot for greater accuracy. The asymptotes are a phase angle of 0◦ for ω ≤ a/10,
+        a phase angle of −90◦ for ω ≥ 10a, and a straight line with a slope −45◦ /decade connecting
+        these two asymptotes (from ω = a/10 to 10a) crossing the ω axis at ω = a/10. It can be seen
+        from Fig. 4.41b that the asymptotes are very close to the curve and the maximum error is 5.7◦ .
+        Figure 4.42b plots the error as a function of ω; the actual plot can be obtained by adding the error
+        to the asymptotic plot.
+
+[[PAGE page-426]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 426 — #97
+
+
+
+
+426   CHAPTER 4               CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                       0
+                     –0.5
+                      –1
+
+
+      Error (dB)
+                     –1.5
+                      –2
+                     –2.5
+                      –3
+                                                                                                             v
+                       0.1a     0.2a            0.5a           va           2a                5a         10a
+                                                                (a)
+
+                       6
+
+                       4
+
+                       2
+
+
+
+       Phase error
+                       0
+
+                     2
+
+                     4
+
+                     6                                                                                     v
+                      0.01a      0.05a   0.1a          0.5a v  a                 5a     10a        50a   100a
+                                                                (b)
+      Figure 4.42 Errors in asymptotic approximation of a first-order pole at s = −a.
+
+
+          The phase for a zero at −a (shown dotted in Fig. 4.41b) is identical to that of the pole at −a
+      with a sign change, and therefore is the mirror image (about the 0◦ line) of the phase plot for a
+      pole at −a.

@@ -1,0 +1,369 @@
+# Fourier section OCR
+section_id: 5.5
+source_pages: page-526, page-527, page-528, page-529, page-530, page-531, page-532
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.5 F REQUENCY R ESPONSE OF D ISCRETE -T IME S YSTEMS
+      For (asymptotically or BIBO-stable) continuous-time systems, we showed that the system
+      response to an input ejωt is H(jω)ejωt and that the response to an input cos ωt is |H(jω)| cos [ωt +
+       H(jω)]. Similar results hold for discrete-time systems. We now show that for an (asymptotically
+      or BIBO-stable) LTID system, the system response to an input ejn is H[ej ]ejn and the response
+       to an input cos n is |H[ej ]| cos (n +  H[ej ]).
+            The proof is similar to the one used for continuous-time systems. In Sec. 3.8-2, we showed
+       that an LTID system response to an (everlasting) exponential zn is also an (everlasting) exponential
+       H[z]zn . This result is valid only for values of z for which H[z], as defined in Eq. (5.11), exists
+       (converges). As usual, we represent this input–output relationship by a directed arrow notation as
+
+                                                    zn ⇒ H[z]zn                                       (5.30)
+
+      Setting z = ej in this relationship yields
+
+                                               ejn ⇒ H[ej ]ejn                                     (5.31)
+
+      Noting that cos n is the real part of ejn , use of Eq. (3.34) yields
+
+                                           cos n ⇒ Re {H[ej ]ejn }                                 (5.32)
+
+      Expressing H[ej ] in the polar form
+                                                                    j
+                                            H[ej ] = |H[ej ]|ej H[e ]
+
+      Eq. (5.32) can be expressed as
+
+                                    cos n ⇒ |H[ej ]| cos (n +  H[ej ])
+
+[[PAGE page-527]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 527 — #40
+
+
+
+
+                                       5.5   Frequency Response of Discrete-Time Systems                 527
+
+In other words, the system response y[n] to a sinusoidal input cos n is given by
+
+                                   y[n] = |H[ej ]| cos (n +  H[ej ])
+
+Following the same argument, the system response to a sinusoid cos (n + θ ) is
+
+                                y[n] = |H[ej ]| cos (n + θ +  H[ej ])                             (5.33)
+
+This result is valid only for BIBO-stable or asymptotically stable systems. The frequency response
+is meaningless for BIBO-unstable systems (which include marginally stable and asymptotically
+unstable systems). This follows from the fact that the frequency response in Eq. (5.31) is obtained
+by setting z = ej in Eq. (5.30). But, as shown in Sec. 3.8-2 [Eqs. (3.38) and (3.39)], the relationship
+of Eq. (5.30) applies only for values of z for which H[z] exists. For BIBO-unstable systems, the
+ROC for H[z] does not include the unit circle where z = ej . This means, for BIBO-unstable
+systems, that H[z] is meaningless when z = ej .†
+     This important result shows that the response of an asymptotically or BIBO-stable LTID
+system to a discrete-time sinusoidal input of frequency  is also a discrete-time sinusoid of the
+same frequency. The amplitude of the output sinusoid is |H[ej ]| times the input amplitude, and
+the phase of the output sinusoid is shifted by  H[ej ] with respect to the input phase. Clearly,
+|H[ej ]| is the amplitude gain, and a plot of |H[ej ]| versus  is the amplitude response of the
+discrete-time system. Similarly,  H[ej ] is the phase response of the system, and a plot of  H[ej ]
+versus  shows how the system modifies or shifts the phase of the input sinusoid. Note that
+H[ej ] incorporates the information of both amplitude and phase responses and therefore is called
+the frequency responses of the system.
+
+S TEADY-S TATE R ESPONSE TO C AUSAL S INUSOIDAL I NPUT
+As in the case of continuous-time systems, we can show that the response of an LTID system to a
+causal sinusoidal input cos n u[n] is y[n] in Eq. (5.33), plus a natural component consisting of the
+characteristic modes (see Prob. 5.5-9). For a stable system, all the modes decay exponentially, and
+only the sinusoidal component in Eq. (5.33) persists. For this reason, this component is called the
+sinusoidal steady-state response of the system. Thus, yss [n], the steady-state response of a system
+to a causal sinusoidal input cos n u[n], is
+
+                               yss [n] = |H[ej ]| cos (n +  H[ej ])u[n]
+
+S YSTEM R ESPONSE TO S AMPLED C ONTINUOUS -T IME S INUSOIDS
+So far we have considered the response of a discrete-time system to a discrete-time sinusoid cos n
+(or exponential ejn ). In practice, the input may be a sampled continuous-time sinusoid cos ωt (or
+an exponential ejωt ). When a sinusoid cos ωt is sampled with sampling interval T, the resulting
+
+† This may also be argued as follows. For BIBO-unstable systems, the zero-input response contains
+nondecaying natural mode terms of the form cos 0 n or γ n cos 0 n (γ > 1). Hence, the response of such
+a system to a sinusoid cos n will contain not just the sinusoid of frequency  but also nondecaying natural
+modes, rendering the concept of frequency response meaningless. Alternately, we can argue that when z = ej ,
+a BIBO-unstable system violates the dominance condition |γi | < |ej | for all i, where γi represents ith
+characteristic root of the system.
+
+[[PAGE page-528]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 528 — #41
+
+
+
+
+528       CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+          signal is a discrete-time sinusoid cos ωnT, obtained by setting t = nT in cos ωt. Therefore, all the
+          results developed in this section apply if we substitute ωT for :
+
+                                                            = ωT                                      (5.34)
+
+
+
+      E X A M P L E 5.10 Sinusoidal Response of a Difference Equation System
+
+          For a system specified by the equation
+
+                                              y[n + 1] − 0.8y[n] = x[n + 1]
+
+          find the system response to the inputs
+                (a) 1n = 1
+                        'π        (
+                (b) cos    n − 0.2
+                         6
+                (c) a sampled sinusoid cos 1500t with sampling interval T = 0.001
+
+
+          The system equation can be expressed as
+
+                                                  (E − 0.8)y[n] = Ex[n]
+
+          Therefore, the transfer function of the system is
+                                                          z        1
+                                              H[z] =          =
+                                                       z − 0.8 1 − 0.8z−1
+          The frequency response is
+                                                  1                     1
+                               H[ej ] =             −j
+                                                         =
+                                             1 − 0.8e      (1 − 0.8 cos ) + j0.8 sin 
+          Therefore,
+                                                       1                               1
+                        |H[ej ]| =                                      =√                        (5.35)
+                                        (1 − 0.8 cos )2 + (0.8 sin )2          1.64 − 1.6 cos 
+
+          and                                                                    !
+                                                                   0.8 sin 
+                                            H[ej ] = − tan−1                                      (5.36)
+                                                                 1 − 0.8 cos 
+               The amplitude response |H[ej ]| can also be obtained by observing that |H|2 = HH ∗ . Since
+          our system is real, we therefore see that
+
+                                   |H[ej ]|2 = H[ej ]H ∗ [ej ] = H[ej ]H[e−j ]                 (5.37)
+
+[[PAGE page-529]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 529 — #42
+
+
+
+
+                                        5.5       Frequency Response of Discrete-Time Systems             529
+
+Substituting for H[ej ], it follows that
+
+                                       1                       1                         1
+                  |H[ej ]|2 =                                                =
+                                  1 − 0.8e−j              1 − 0.8ej             1.64 − 1.6 cos 
+
+which matches the result found earlier.
+    Figure 5.14 shows plots of amplitude and phase response as functions of . We now
+compute the amplitude and the phase response for the various inputs.
+
+
+
+                                          5
+             H [e j ]
+
+
+
+
+         2p              p                  0                  p                      2p           3p
+                                                       (a)
+
+                                                  53.13
+             ⬔H [e j ]
+
+
+
+
+       2p                p                  0                 p                       2p           3p
+
+
+
+                                    53.13
+                                                       (b)
+  Figure 5.14 Frequency response of the LTID system.
+
+
+
+    (a) Since 1n = (ej )n with  = 0, the amplitude response is H[ej0 ]. From Eq. (5.35) we
+obtain
+                                        1               1
+                     H[ej0 ] = √                    =√      = 5 = 5 0
+                                 1.64 − 1.6 cos (0)    0.04
+Therefore,
+                                 |H[ej0 ]| = 5         and               H[ej0 ] = 0
+These values also can be read directly from Figs. 5.14a and 5.14b, respectively, corresponding
+to  = 0. Therefore, the system response to input 1 is
+
+                                     y[n] = 5(1n ) = 5                   for all n
+
+[[PAGE page-530]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 530 — #43
+
+
+
+
+530   CHAPTER 5        DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+            (b) For x[n] = cos [(π/6)n − 0.2],  = π/6. According to Eqs. (5.35) and (5.36),
+                                                    1
+                             |H[ejπ/6 ]| =                    = 1.983
+                                                             π
+                                             1.64 − 1.6 cos
+                                                             6
+                                                   ⎡           π ⎤
+                                                       0.8 sin
+                                                   ⎢
+                              H[ejπ/6 ] = − tan−1 ⎣           6 ⎥ = −0.916 rad
+                                                                 π⎦
+                                                     1 − 0.8 cos
+                                                                 6
+      These values also can be read directly from Figs. 5.14a and 5.14b, respectively, corresponding
+      to  = π/6. Therefore,
+
+                                          π                             π
+                       y[n] = 1.983 cos     n − 0.2 − 0.916 = 1.983 cos   n − 1.116
+                                          6                             6
+
+      Figure 5.15 shows the input x[n] and the corresponding system response.
+
+
+
+                                2
+
+                                                                         y[n]
+
+
+
+                                                    x[n]
+
+                  6                           6                           18
+      11                           0                       12                        24
+                                                                                      n
+
+
+
+
+      Figure 5.15 Sinusoidal input and the corresponding output of the LTID system.
+
+
+
+          (c) A sinusoid cos 1500t sampled every T seconds (t = nT) results in a discrete-time
+      sinusoid
+                                        x[n] = cos 1500nT
+      For T = 0.001, the input is
+                                               x[n] = cos (1.5n)
+
+[[PAGE page-531]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 531 — #44
+
+
+
+
+                                                      5.5   Frequency Response of Discrete-Time Systems   531
+
+In this case,  = 1.5. According to Eqs. (5.35) and (5.36),
+                                             1
+                     |H[ej1.5 ]| = √                       = 0.809
+                                     1.64 − 1.6 cos (1.5)
+                                                              !
+                                               0.8 sin (1.5)
+                      H[ej1.5 ] = − tan−1                      = −0.702 rad
+                                            1 − 0.8 cos (1.5)
+    These values also could be read directly from Fig. 5.14 corresponding to  = 1.5.
+Therefore,
+                            y[n] = 0.809 cos (1.5n − 0.702)
+
+F REQUENCY R ESPONSE P LOTS U SING MATLAB
+MATLAB makes it easy to compute and plot magnitude and phase responses directly using
+a system’s transfer function. As the following code demonstrates, there is no need to derive
+separate expressions for the magnitude and phase responses.
+>>   Omega = linspace(-pi,pi,400); H = @(z) z./(z-0.8);
+>>   subplot(1,2,1); plot(Omega,abs(H(exp(1j*Omega))),’k’); axis tight;
+>>   xlabel(’\Omega’); ylabel(’|H[e^{j \Omega}]|’);
+>>   subplot(1,2,2); plot(Omega,angle(H(exp(1j*Omega))*180/pi),’k’); axis tight;
+>>   xlabel(’\Omega’); ylabel(’\angle H[e^{j \Omega}] [deg]’);
+
+The resulting plots, shown in Fig. 5.16, confirm the earlier results of Fig. 5.14.
+
+
+                                            4
+
+                                            3
+
+
+                               |H[e j Ω]|   2
+
+                                            1
+
+                                                 –3    –2     –1    0     1    2     3
+                                                                    Ω
+
+                                            50
+
+
+
+
+                         H[e j Ω] [deg]
+                                             0
+
+
+
+
+                                          –50
+                                                 –3    –2     –1    0     1     2    3
+                                                                    Ω
+
+Figure 5.16 MATLAB-generated magnitude and phase responses for Ex. 5.10.
+
+[[PAGE page-532]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 532 — #45
+
+
+
+
+532   CHAPTER 5     DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+      Comment: Figures 5.14 and 5.16 show amplitude and phase response plots as functions of
+      . These plots as well as Eqs. (5.35) and (5.36) indicate that the frequency response of a
+      discrete-time system is a continuous (rather than discrete) function of frequency . There is no
+      contradiction here. This behavior is merely an indication of the fact that the frequency variable
+       is continuous (takes on all possible values) and therefore the system response exists at every
+      value of .
+
+
+
+       D R I L L 5.18 Frequency Response of Difference Equation
+       For a system specified by the equation
+
+                                          y[n + 1] − 0.5y[n] = x[n]
+
+       find the amplitude and the phase response. Find the system response to sinusoidal input
+       cos [1000t − (π/3)] sampled every T = 0.5 ms.
+
+       ANSWER
+                                       1
+                    |H[ej ]| = √
+                                  1.25 − cos 
+                                                     !
+                                            sin 
+                     H[ej ] = − tan−1
+                                         cos  − 0.5
+                                                  π
+                        y[n] = 1.639 cos 0.5n − − 0.904 = 1.639 cos (0.5n − 1.951)
+                                                  3
+
+
+
+
+       D R I L L 5.19 Frequency Response of an Ideal Delay System
+       Show that for an ideal delay (H[z] = 1/z), the amplitude response |H[ej ]| = 1, and the
+       phase response  H[ej ] = −. Thus, a pure time delay does not affect the amplitude gain
+       of sinusoidal input, but it causes a phase shift (delay) of  radians in a discrete sinusoid of
+       frequency . Thus, for an ideal delay, the phase shift of the output sinusoid is proportional to
+       the frequency of the input sinusoid (linear phase shift).

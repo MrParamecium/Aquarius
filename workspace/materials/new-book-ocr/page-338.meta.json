@@ -1,0 +1,19 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": "4.1-1",
+  "title": "Finding the Inverse Transform",
+  "summary": "This page covers 4.1-1 (Finding the Inverse Transform). OCR text begins with: 338 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS 4.1-1 Finding the Inverse Transform Finding the inverse Laplace transform by using Eq. (4.2) requires integration in the complex plane, a subject beyond the scope of this book (but see, e.g., [3]). For our purpose, we can find the inverse transforms from Table 4.1. All we need is to express X(s) as a sum of simpler functions of the forms listed in the table. Most of the t",
+  "keywords": [
+    "4.1",
+    "4.1-1",
+    "Finding the Inverse Transform",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-338",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

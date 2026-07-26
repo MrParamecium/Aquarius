@@ -1,0 +1,54 @@
+       “05-Lathi-C05” — 2017/9/25 — 15:54 — page 553 — #66
+
+
+
+
+                                                    5.7 Digital Processing of Analog Signals        553
+
+and the phase response is
+
+                                                         0.7304 sin ωT
+                               H[ejωT ] = − tan−1                                             (5.50)
+                                                       1 − 0.7304 cos ωT
+
+This frequency response differs from the desired response Ha (jω) because aliasing causes
+frequencies above π/T to appear as frequencies below π/T. This generally results in increased
+gain for frequencies below π/T. For instance, the realized filter gain at ω = 0 is H[ej0 ] = H[1].
+This value, as obtained from Eq. (5.48), is 1.1654 instead of the desired value 1. We can
+partly compensate for this distortion by multiplying H[z] or H[ejωT ] by a normalizing constant
+K = Ha (0)/H[1] = 1/1.1654 = 0.858. This forces the resulting gain of H[ejωT ] to be equal to
+1 at ω = 0. The normalized Hn [z] = 0.858H[z] = 0.858(0.1π z/(z − 0.7304)). The amplitude
+response in Eq. (5.49) is multiplied by K = 0.858 and plotted in Fig. 5.26b over the frequency
+range 0 ≤ ω ≤ π/T = 106 . The multiplying constant K has no effect on the phase response in
+Eq. (5.50), which is shown in Fig. 5.26c.
+     Also, the desired frequency response, according to Eq. (5.46) with ωc = 105 , is
+
+                                                   ωc      105
+                                    Ha (jω) =          =
+                                                jω + ωc jω + 105
+
+Therefore,
+
+                                     105                                              ω
+                 |Ha (jω)| = √                       and        Ha (jω) = − tan−1
+                                   ω2 + 1010                                         105
+
+This desired amplitude and phase response are plotted (dotted) in Figs. 5.26b and 5.26c for
+comparison with realized digital filter response. Observe that the amplitude response behavior
+of the analog and the digital filter is very close over the range ω ≤ ωc = 105 . However, for
+higher frequencies, there is considerable aliasing, especially in the phase spectrum. Had we
+used the 1% rule, the realized frequency response would have been closer over another decade
+of the frequency range.
+
+I MPULSE I NVARIANCE BY MATLAB
+We can readily use the MATLAB impinvar command to confirm our digital filter designed
+by the impulse-invariance method.
+>>   omegac = 10^5; Ba = [omegac]; Aa = [1 omegac]; Fs = 10^6/pi;
+>>   [B,A] = impinvar(Ba,Aa,Fs)
+     B = 0.3142
+     A = 1.0000 -0.7304
+This confirms our earlier result of Eq. (5.48) that the digital filter transfer function is
+
+                                                       0.3142z
+                                           H[z] =
+                                                     z − 0.7304

@@ -1,0 +1,52 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 489 — #2
+
+
+
+
+                                                                       5.1 The z-Transform         489
+
+     As in the case of the Laplace transform, we need not worry about this integral at this point
+because inverse z-transforms of many signals of engineering interest can be found in a z-transform
+table. The direct and inverse z-transforms can be expressed symbolically as
+
+                           X[z] = Z{x[n]}        and        x[n] = Z −1 {X[z]}
+
+or simply as
+                                             x[n] ⇐⇒ X[z]
+Note that
+                     Z −1 [Z{x[n]}] = x[n]         and       Z[Z −1 {X[z]}] = X[z]
+
+L INEARITY OF THE z-T RANSFORM
+Like the Laplace transform, the z-transform is a linear operator. If
+
+                           x1 [n] ⇐⇒ X1 [z]        and       x2 [n] ⇐⇒ X2 [z]
+
+then
+                              a1 x1 [n] + a2 x2 [n] ⇐⇒ a1 X1 [z] + a2 X2 [z]
+The proof is trivial and follows from the definition of the z-transform. This result can be extended
+to finite sums.
+
+T HE U NILATERAL z-T RANSFORM
+For the same reasons discussed in Ch. 4, we find it convenient to consider the unilateral
+z-transform. As seen for the Laplace case, the bilateral transform has some complications because
+of the non-uniqueness of the inverse transform. In contrast, the unilateral transform has a unique
+inverse. This fact simplifies the analysis problem considerably, but at a price: the unilateral version
+can handle only causal signals and systems. Fortunately, most of the practical cases are causal. The
+more general bilateral z-transform is discussed later, in Sec. 5.8. In practice, the term z-transform
+generally means the unilateral z-transform.
+     In a basic sense, there is no difference between the unilateral and the bilateral z-transform.
+The unilateral transform is the bilateral transform that deals with a subclass of signals starting at
+n = 0 (causal signals). Hence, the definition of the unilateral transform is the same as that of the
+bilateral [Eq. (5.1)], except that the limits of the sum are from 0 to ∞:
+                                                   ∞
+                                                   "
+                                          X[z] =         x[n]z−n                                 (5.3)
+                                                   n=0
+
+The expression for the inverse z-transform in Eq. (5.2) remains valid for the unilateral case also.
+
+T HE R EGION OF C ONVERGENCE (ROC) OF X[z]
+The sum in Eq. (5.1) [or Eq. (5.3)] defining the direct z-transform X[z] may not converge (exist)
+for all values of z. The values of z (the region in the complex plane) for which the sum in
+Eq. (5.1) converges (or exists) are called the region of existence, or more commonly the region
+of convergence (ROC), for X[z]. This concept will become clear in the following example.

@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.1",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.1. OCR text begins with: 332 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Note that s is complex and as t → ∞, the term e−(s+a)t does not necessarily vanish. Here we recall that for a complex number z = α + jβ, e−zt = e−(α+jβ)t = e−αt e−jβt Now |e−jβt | = 1 regardless of the value of βt. Therefore, as t → ∞, e−zt → 0 only if α > 0, and e−zt → ∞ if α < 0. Thus, \u0007",
+  "keywords": [
+    "4.1",
+    "unit step",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-332",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

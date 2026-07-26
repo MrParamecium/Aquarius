@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.9",
+  "subsection": null,
+  "title": null,
+  "summary": "This page covers 4.9. OCR text begins with: 420 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS Let us consider a system with the transfer function K(s + a1 )(s + a2 ) H(s) = (4.44) s(s + b1 )(s2 + b2 s + b3 ) where the second-order factor (s2 + b2 s + b3 ) is assumed to have complex conjugate roots.† We shall rearrange Eq. (4.44) in the form",
+  "keywords": [
+    "4.9",
+    "continuous-time",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-420",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

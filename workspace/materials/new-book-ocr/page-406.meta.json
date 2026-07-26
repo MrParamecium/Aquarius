@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.7",
+  "subsection": "4.7-1",
+  "title": "Analysis of a Simple Control System",
+  "summary": "This page covers 4.7-1 (Analysis of a Simple Control System). OCR text begins with: 406 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS gain, which is reduced from 10,000 to 99. There is no dearth of forward gain (obtained by cascading stages). But low sensitivity is extremely precious in precision systems. Now, consider what happens when we add (instead of subtract) the signal fed back to the input. Such addition means the sign on the feedback connection is + instead of − (which is same as changing the s",
+  "keywords": [
+    "4.7",
+    "4.7-1",
+    "Analysis of a Simple Control System",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-406",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-3",
+  "title": null,
+  "summary": "This page covers 4.12-3. OCR text begins with: 462 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS C1 R1 R2 + + x(t) – + C2",
+  "keywords": [
+    "4.12",
+    "4.12-3",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-462",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

@@ -1,0 +1,21 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": null,
+  "title": "Solution of Differential and Integro-Differential Equations 367",
+  "summary": "This page covers 4.3 (Solution of Differential and Integro-Differential Equations 367). OCR text begins with: 4.3 Solution of Differential and Integro-Differential Equations 367 Moreover, the input x(t) is causal so that x(0− ) = ẋ(0− ) = ẍ(0− ) = · · · = x(N−1) (0− ) = 0 Let y(t) ⇐⇒ Y(s) and x(t) ⇐⇒ X(s) Because of zero initial conditions, dr",
+  "keywords": [
+    "4.3",
+    "Solution of Differential and Integro-Differential Equations 367",
+    "zero-state response",
+    "continuous-time",
+    "LTI system",
+    "LTIC system",
+    "system response"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-367",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

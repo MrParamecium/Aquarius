@@ -1,0 +1,17 @@
+{
+  "chapter": "4",
+  "section": "4.3",
+  "subsection": "4.3-4",
+  "title": null,
+  "summary": "This page covers 4.3-4. OCR text begins with: 374 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS integro-differential equations. This procedure is considerably simpler because it permits us to treat an electrical network as if it were a resistive network. For this purpose, we need to represent a network in the “frequency domain” where all the voltages and currents are represented by their Laplace transforms. For the sake of simplicity, let us first discuss the case w",
+  "keywords": [
+    "4.3",
+    "4.3-4",
+    "continuous-time"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-374",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

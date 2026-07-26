@@ -1,0 +1,18 @@
+# Fourier section OCR
+section_id: 5.4
+source_pages: page-519, page-520, page-521, page-522, page-523, page-524, page-525, page-526
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.4   System Realization        519
+
+    3. An LTID system is marginally stable if and only if there are no poles of H[z] outside the
+       unit circle, and there are some simple poles on the unit circle.
+
+
+
+
+ D R I L L 5.14 Transfer Function to Determine Stability
+ Show that an accumulator whose impulse response is h[n] = u[n] is marginally stable but
+ BIBO-unstable.

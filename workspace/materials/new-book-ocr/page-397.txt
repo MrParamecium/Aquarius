@@ -1,0 +1,62 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 397 — #68
+
+
+
+
+                                                                   4.6    System Realization       397
+
+        Y(s)                   b0           X(s)    X(s)      b0                     Y(s)
+
+
+
+                         1                                           1
+                         s                                           s
+                a1            b1                             b1          a1
+
+
+                         1                                           1
+                         s                                           s
+
+
+                aN1         bN1                          bN1          aN1
+
+
+
+                         1                                           1
+                         s                                           s
+
+                aN           bN                              bN          aN
+
+
+                        (a)                                         (b)
+      Figure 4.26 Realization of an Nth-order LTI transfer function in the transposed form.
+
+
+     Figure 4.26b shows that Y(s) is being fed back through N paths. The fed-back signal appearing
+at the input of the top adder is
+                              −a1 −a2         −aN−1 −aN
+                                 + 2 + · · · + N−1 + N Y(s)
+                               s   s           s     s
+
+The signal X(s), fed to the top adder through N + 1 forward paths, contributes
+                                            b1          bN−1 bN
+                                     b0 +      + · · · + N−1 + N X(s)
+                                             s          s     s
+
+The output Y(s) is equal to the sum of these two signals (feed forward and feed back). Hence,
+                                     −a1 −a2           −aN−1 −aN
+                        Y(s) =          + 2 + · · · + N−1 + N Y(s)
+                                      s    s            s     s
+                                          b1         bN−1 bN
+                                    + b0 + + · · · + N−1 + N X(s)
+                                           s         s      s
+
+    Transporting all the Y(s) terms to the left side and multiplying throughout by sN , we obtain
+
+        (sN + a1 sN−1 + · · · + aN−1 s + aN )Y(s) = (b0 sN + b1 sN−1 + · · · + bN−1 s + bN )X(s)
+
+Consequently,
+                                    Y(s) b0 sN + b1 sN−1 + · · · + bN−1 s + bN
+                         H(s) =          = N
+                                    X(s)   s + a1 sN−1 + · · · + aN−1 s + aN
+Hence, the transfer function H(s) is identical to that in Eq. (4.36).

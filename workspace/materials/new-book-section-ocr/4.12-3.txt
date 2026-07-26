@@ -1,0 +1,150 @@
+# Fourier section OCR
+section_id: 4.12-3
+source_pages: page-461, page-462, page-463
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.12-3 Using Cascaded Second-Order Sections
+for Butterworth Filter Realization
+For our RC filters, realization preceded design. For our Butterworth filter, however, design has
+preceded realization. For our Butterworth filter to be useful, we must be able to implement it.
+     Since the transfer function HBW (s) is known, the differential equation is also known.
+Therefore, it is possible to try to implement the design by using op-amp integrators, summers, and
+scalar multipliers. Unfortunately, this approach will not work well. To understand why, consider
+the denominator coefficients a0 = 1.766 × 10−43 and a10 = 1. The smallest coefficient is 43 orders
+of magnitude smaller than the largest coefficient! It is practically impossible to accurately realize
+such a broad range in scale values. To understand this, skeptics should try to find realistic resistors
+such that Rf /R = 1.766×10−43 . Additionally, small component variations will cause large changes
+in actual pole location.
+     A better approach is to cascade five second-order sections, where each section implements
+one complex conjugate pair of poles. By pairing poles in complex conjugate pairs, each of the
+resulting second-order sections has real coefficients. With this approach, the smallest coefficients
+are only about nine orders of magnitude smaller than the largest coefficients. Furthermore, pole
+placement is typically less sensitive to component variations for cascaded structures.
+     The Sallen–Key circuit shown in Fig. 4.67 provides a good way to realize a pair of
+complex-conjugate poles.† The transfer function of this circuit is
+
+                                                          1
+                                                     R1 R2 C1 C2                       ω2
+                              HSK (s) =                                     =       0
+                                                 1       1             1              ω0
+                                        s2 +        +          s+               s2 +      s + ω02
+                                               R1 C1 R2 C1        R1 R2 C1 C2         Q
+
+Geometrically, ω0 is the distance from the origin to the poles and Q = 1/2 cos ψ, where ψ is
+the angle between the negative real axis and the pole. Termed the “quality factor” of a circuit, Q
+
+
+† A more general version of the Sallen–Key circuit has a resistor R from the negative terminal to ground and
+                                                                    a
+a resistor Rb between the negative terminal and the output. In Fig. 4.67, Ra = ∞ and Rb = 0.
+
+[[PAGE page-462]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 462 — #133
+
+
+
+
+462   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+                                             C1
+
+                  R1         R2
+                                                  +
+            +
+           x(t)                                   –           +
+                                     C2
+            –                                                y(t)
+                                                              –
+
+                                                                     Figure 4.67 Sallen–Key filter stage.
+
+
+      provides a measure of the peakedness of the response. High-Q filters have poles close to the ω
+      axis, which boost the magnitude response near those frequencies.
+           Although many ways exist to determine suitable component values, a simple method is to
+      assign R1 a realistic value and then let R2 = R1 , C1 = 2Q/ω0 R1 , and C2 = 1/2Qω0 R2 . Butterworth
+      poles are a distance ωc from the origin, so ω0 = ωc . For our 10th-order Butterworth filter, the angles
+      ψ are regularly spaced at 9, 27, 45, 63, and 81 degrees. MATLAB program CH4MP2 automates the
+      task of computing component values and magnitude responses for each stage.
+      % CH4MP2.m : Chapter 4, MATLAB Program 2
+      % Script M-file computes Sallen-Key component values and magnitude
+      % responses for each of the five cascaded second-order filter sections.
+
+      omega_0 = 3000*2*pi; % Filter cut-off frequency
+      psi = [9 27 45 63 81]*pi/180; % Butterworth pole angles
+      f = linspace(0,6000,200); % Frequency range for magnitude response calculations
+      Hmag_SK = zeros(5,200); % Pre-allocate array for magnitude responses
+      for stage = 1:5,
+          Q = 1/(2*cos(psi(stage))); % Compute Q for current stage
+          % Compute and display filter components to the screen:
+          disp([’Stage ’,num2str(stage),...
+                  ’ (Q = ’,num2str(Q),...
+                  ’): R1 = R2 = ’,num2str(56000),...
+                  ’, C1 = ’,num2str(2*Q/(omega_0*56000)),...
+                  ’, C2 = ’,num2str(1/(2*Q*omega_0*56000))]);
+          B = omega_0^2; A = [1 omega_0/Q omega_0^2]; % Compute filter coefficients
+          Hmag_SK(stage,:) = abs(CH4MP1(B,A,2*pi*f)); % Compute magnitude response
+      end
+      plot(f,Hmag_SK,’k’,f,prod(Hmag_SK),’k:’)
+      xlabel(’f [Hz]’); ylabel(’Magnitude Response’)
+
+      The disp command displays a character string to the screen. Character strings must be enclosed
+      in single quotation marks. The num2str command converts numbers to character strings and
+      facilitates the formatted display of information. The prod command multiplies along the columns
+      of a matrix; it computes the total magnitude response as the product of the magnitude responses
+      of the five stages.
+           Executing the program produces the following output:
+      >>     CH4MP2
+             Stage 1 (Q = 0.50623): R1 = R2 = 56000, C1 = 9.5916e-10, C2 = 9.3569e-10
+             Stage 2 (Q = 0.56116): R1 = R2 = 56000, C1 = 1.0632e-09, C2 = 8.441e-10
+             Stage 3 (Q = 0.70711): R1 = R2 = 56000, C1 = 1.3398e-09, C2 = 6.6988e-10
+             Stage 4 (Q = 1.1013): R1 = R2 = 56000, C1 = 2.0867e-09, C2 = 4.3009e-10
+             Stage 5 (Q = 3.1962): R1 = R2 = 56000, C1 = 6.0559e-09, C2 = 1.482e-10
+
+[[PAGE page-463]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 463 — #134
+
+
+
+
+                                                            4.12 MATLAB: Continuous-Time Filters           463
+
+                     3.5
+
+
+                      3
+
+
+                     2.5
+
+
+
+
+Magnitude Response
+                      2
+
+
+                     1.5
+
+
+                      1
+
+
+                     0.5
+
+
+                      0
+                           0        1000        2000            3000              4000   5000       6000
+                                                                f [Hz]
+Figure 4.68 Magnitude responses for Sallen–Key filter stages.
+
+
+Since all the component values are practical, this filter is possible to implement. Figure 4.68
+displays the magnitude responses for all five stages (solid lines). The total response (dotted line)
+confirms a 10th-order Butterworth response. Stage 5, which has the largest Q and implements the
+pair of conjugate poles nearest the ω axis, is the most peaked response. Stage 1, which has the
+smallest Q and implements the pair of conjugate poles furthest from the ω axis, is the least peaked
+response. In practice, it is best to order high-Q stages last; this reduces the risk that the high gains
+will saturate the filter hardware.

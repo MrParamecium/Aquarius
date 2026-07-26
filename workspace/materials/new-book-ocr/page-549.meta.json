@@ -1,0 +1,20 @@
+{
+  "chapter": "5",
+  "section": "5.7",
+  "subsection": null,
+  "title": "Digital Processing of Analog Signals 549",
+  "summary": "This page covers 5.7 (Digital Processing of Analog Signals 549). OCR text begins with: 5.7 Digital Processing of Analog Signals 549 The impulse response h(t), given by the inverse Laplace transform of Ha (s), is ha (t) = ceλt u(t) The corresponding digital filter unit impulse response h[n], per Eq. (5.44), is h[n] = Tha (nT) = TcenλT Figure 5.25 shows ha (t) and h[n]. The corresponding H[z], the z-transform of h[n], as found from Table 5.1, is",
+  "keywords": [
+    "5.7",
+    "Digital Processing of Analog Signals 549",
+    "impulse response",
+    "unit impulse",
+    "unit step",
+    "digital filter"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-549",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

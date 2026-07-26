@@ -1,0 +1,62 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 423 — #94
+
+
+
+
+                                                                                     4.9   Bode Plots             423
+
+                    30
+
+                    20
+
+                    10
+
+
+
+20 log H (dB)
+                     0
+                                                                                                              v
+                  10
+
+                  20
+
+                  30
+                     0.01      0.05      0.1            0.5    v1          5      10            50       100
+                  (u  2)            (u  1)                (u  0)           (u  1)                 (u  2)
+                                                                (a)
+
+
+                  150
+                   90
+                   50
+    Phase           0
+                                                                                                              v
+                  50
+                  90
+              150
+                     0.01      0.05      0.1            0.5    v1          5      10            50     100
+                  (u  2)            (u  1)                (u  0)           (u  1)               (u  2)
+                                                                (b)
+Figure 4.40 (a) Amplitude and (b) phase responses of a pole or a zero at the origin.
+
+
+
+     Note that equal increments in u are equivalent to equal ratios on the ω scale. Thus, 1 unit along
+the u scale is the same as one decade along the ω scale. This means that the amplitude plot has a
+slope of −20 dB/decade or −20(0.3010) = −6.02 dB/octave (commonly stated as −6 dB/octave).
+Moreover, the amplitude plot crosses the ω axis at ω = 1, since u = log10 ω = 0 when ω = 1.
+     For the case of a zero at the origin, the log-amplitude term is 20 log ω. This is a straight line
+passing through ω = 1 and having a slope of 20 dB/decade (or 6 dB/octave). This plot is a mirror
+image about the ω axis of the plot for a pole at the origin and is shown dashed in Fig. 4.40a.
+
+
+ P HASE
+The phase function corresponding to the pole at the origin is − jω [see Eq. (4.46)]. Thus,
+
+
+                                                    H(jω) = − jω = −90◦
+
+
+The phase is constant (−90◦ ) for all values of ω, as depicted in Fig. 4.40b. For a zero at the origin,
+the phase is  jω = 90◦ . This is a mirror image of the phase plot for a pole at the origin and is
+shown dashed in Fig. 4.40b.

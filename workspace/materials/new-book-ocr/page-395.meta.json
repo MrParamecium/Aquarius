@@ -1,0 +1,16 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization 395",
+  "summary": "This page covers 4.6 (System Realization 395). OCR text begins with: 4.6 System Realization 395 R EALIZATION OF C OMPLEX C ONJUGATE P OLES The complex poles in H(s) should be realized as a second-order (quadratic) factor because we cannot implement multiplication by complex numbers. Consider, for example, 10s + 50 H(s) = (s + 3)(s2 + 4s + 13)",
+  "keywords": [
+    "4.6",
+    "System Realization 395"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-395",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

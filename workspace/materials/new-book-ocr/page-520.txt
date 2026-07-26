@@ -1,0 +1,59 @@
+                        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 520 — #33
+
+
+
+
+520   CHAPTER 5         DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+           The block diagram representations of the basic operations, such as an adder, a scalar
+      multiplier, unit delay, and pickoff points, is shown in Fig. 3.13. In our development, the unit delay,
+      which is represented by a box marked D in Fig. 3.13, will be represented by its transfer function
+      1/z. All the signals will also be represented in terms of their z-transforms. Thus, the input and the
+      output will be labeled X[z] and Y[z], respectively.
+           When two systems with transfer functions H1 [z] and H2 [z] are connected in cascade (as
+      in Fig. 4.18b), the transfer function of the composite system is H1 [z]H2 [z]. If the same two
+      systems are connected in parallel (as in Fig. 4.18c), the transfer function of the composite
+
+
+             X[z]       b0       W[z]                         Y[z]             X[z]                        b0     Y[z]
+
+
+                    1                                   1                                            1
+                    z                                   z                                            z
+                        b1                     a1                                           a1           b1
+
+                    1                                   1                                            1
+                    z                                   z                                            z
+
+                        bN1                   aN1                                         aN1         bN1
+
+                    1                                   1                                            1
+                    z                                   z                                            z
+                        bN                     aN                                           aN           bN
+
+                                  (a)                                                                (b)
+
+                                        X[z]           b0                             Y[z]
+
+
+                                                                     1
+                                                                     z
+                                                       b1                a1
+
+
+                                                                     1
+                                                                     z
+
+
+                                                       bN1              aN1
+
+
+                                                                     1
+                                                                     z
+
+                                                       bN                aN
+
+
+                                                                 (c)
+            Figure 5.8 Realization of an Nth-order causal LTID system transfer function by using
+            (a) DFI, (b) canonic direct (DFII), and (c) the transpose form of DFII.

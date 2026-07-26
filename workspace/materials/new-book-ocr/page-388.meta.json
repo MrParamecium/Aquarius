@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization",
+  "summary": "This page covers 4.6 (System Realization). OCR text begins with: 388 CHAPTER 4 CONTINUOUS-TIME SYSTEM ANALYSIS (a) >> H = tf(1,1); K = 7; G = tf([0 0 K],[1 8 0]); TFa = feedback(G,H) Ha = 7 ------------- s^2 + 8 s + 7",
+  "keywords": [
+    "4.6",
+    "System Realization",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-388",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

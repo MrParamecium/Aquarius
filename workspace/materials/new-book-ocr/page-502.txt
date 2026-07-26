@@ -1,0 +1,64 @@
+                    “05-Lathi-C05” — 2017/9/25 — 15:54 — page 502 — #15
+
+
+
+
+502   CHAPTER 5      DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+                          x[n]
+                      5
+
+
+
+
+           5             0              5     n
+                       (a)
+
+
+                          x[n]u[n]
+                      5
+
+
+
+
+           5             0              5     n
+                       (b)
+
+
+                          x[n  1]u[n  1]
+                      5
+
+
+
+
+              4          0                  6 n
+
+                       (c)
+
+
+                          x[n  1]u[n]
+                      5
+
+
+
+
+              4          0                  6 n
+
+                       (d)
+
+
+                          x[n  1]u[n]
+                          5
+
+
+
+
+         6               0          4         n
+                       (e)                         Figure 5.4 A signal x[n] and its shifted versions.
+
+
+
+
+           A look at Eqs. (5.12) and (5.14) shows that they are identical except for the extra term x[−1]
+      in Eq. (5.14). We see from Figs. 5.4c and 5.4d that x[n − 1]u[n] is the same as x[n − 1]u[n − 1]
+      plus x[−1]δ[n]. Hence, the difference between their transforms is x[−1].

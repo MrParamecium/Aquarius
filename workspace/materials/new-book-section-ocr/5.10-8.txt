@@ -1,0 +1,140 @@
+# Fourier section OCR
+section_id: 5.10-8
+source_pages: page-572, page-573, page-574
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.10-8 Using Cascaded Second-Order Sections to Improve Design
+      The dynamic range of high-degree polynomial coefficients is often large. Adding the difficulties
+      associated with factoring a high-degree polynomial, it is little surprise that high-order designs are
+      difficult.
+           As with continuous-time filters, performance is improved by using a cascade of second-order
+      sections to design and realize a discrete-time filter. Cascades of second-order sections are also
+      more robust to the coefficient quantization that occurs when discrete-time filters are implemented
+      on fixed-point digital hardware.
+           To illustrate the performance possible with a cascade of second-order sections, consider
+      a 180th-order transformed Butterworth discrete-time filter with cutoff frequency c = 0.6π ≈
+      1.8850. Program CH5MP5 completes this design, taking care to initially locate poles and zeros
+      without root computations.
+
+[[PAGE page-573]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 573 — #86
+
+
+
+
+                                                5.10     MATLAB: Discrete-Time IIR Filters          573
+
+
+               1
+
+
+
+             0.5
+
+
+
+
+      Imag     0
+
+
+
+             –0.5
+
+
+
+              –1
+
+                     –1        –0.5        0           0.5       1
+                                         Real
+      Figure 5.32 Pole-zero plot computed by using roots.
+
+
+% CH5MP5.m : Chapter 5, MATLAB Program 5
+% Script M-file designs a 180th-order Butterworth lowpass discrete-time filter
+% with cutoff Omega_c = 0.6*pi using 90 cascaded second-order filter sections.
+
+omega_0 = 1; % Use normalized cutoff frequency for analog prototype
+psi = [0.5:1:90]*pi/180; % Butterworth pole angles
+Omega_c = 0.6*pi; % Discrete-time cutoff frequency
+Omega = linspace(0,pi,1000); % Frequency range for magnitude response
+Hmag = zeros(90,1000); p = zeros(1,180); z = zeros(1,180); % Pre-allocation
+for stage = 1:90,
+    Q = 1/(2*cos(psi(stage))); % Compute Q for stage
+    B = omega_0^2; A = [1 omega_0/Q omega_0^2]; % Compute stage coefficients
+    [B1,A1] = CH5MP4(B,A,2/omega_0*tan(0.6*pi/2)); % Transform stage to DT
+    p(stage*2-1:stage*2) = roots(A1); % Compute z-domain poles for stage
+    z(stage*2-1:stage*2) = roots(B1); % Compute z-domain zeros for stage
+    Hmag(stage,:) = abs(CH5MP1(B1,A1,Omega)); % Compute stage mag response
+end
+ucirc = exp(j*linspace(0,2*pi,200)); % Compute unit circle for pole-zero plot
+figure;
+plot(real(p),imag(p),’kx’,real(z),imag(z),’ok’,real(ucirc),imag(ucirc),’k:’);
+axis equal; xlabel(’Real’); ylabel(’Imag’);
+figure; plot(Omega,prod(Hmag),’k’); axis([0 pi -0.05 1.05]);
+xlabel(’\Omega [rad]’); ylabel(’Magnitude Response’);
+
+The figure command preceding each plot command opens a separate window for each plot.
+      The filter’s pole-zero plot is shown in Fig. 5.33, along with the unit circle, for reference. All
+180 zeros of the cascaded design are properly located at minus 1. The wall of poles provides an
+amazing approximation to the desired brick-wall response, as shown by the magnitude response
+in Fig. 5.34. It is virtually impossible to realize such high-order designs with continuous-time
+filters, which adds another reason for the popularity of discrete-time filters. Still, the design is not
+
+[[PAGE page-574]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 574 — #87
+
+
+
+
+574   CHAPTER 5                            DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM
+
+
+
+                                 0.8
+
+                                 0.6
+
+                                 0.4
+
+                                 0.2
+
+            Imag                   0
+
+                                 –0.2
+
+                                 –0.4
+
+                                 –0.6
+
+                                 –0.8
+
+
+                                              –1         –0.5       0   0.5             1
+                                                                Real
+            Figure 5.33 Pole-zero plot for 180th-order discrete-time Butterworth filter.
+
+
+                                   1
+
+
+
+
+            Magnitude Response
+                                 0.8
+
+                                 0.6
+
+                                 0.4
+
+                                 0.2
+
+                                   0
+                                       0           0.5          1        1.5                2   2.5   3
+                                                                              Ω [rad]
+            Figure 5.34 Magnitude response for a 180th-order discrete-time Butterworth filter.
+
+
+      trivial; even functions from the MATLAB signal-processing toolbox fail to properly design such a
+      high-order discrete-time Butterworth filter.

@@ -1,0 +1,34 @@
+# Fourier section OCR
+section_id: 4.4
+source_pages: page-373, page-374, page-375, page-376, page-377, page-378, page-379, page-380, page-381, page-382
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+4.4 Analysis of Electrical Networks: The Transformed Network              373
+
+black box with only the input and the output terminals accessible, any measurement from these
+external terminals would show that the transfer function of the system is 1/(s + 1), without any
+hint of the fact that the system is housing an unstable system (Fig. 4.9b).
+     The impulse response of the cascade system is h(t) = e−t u(t), which is absolutely
+integrable. Consequently, the system is BIBO-stable.
+     To determine the asymptotic stability, we note that S1 has one characteristic root at 1, and
+S2 also has one root at −1. Recall that the two systems are independent (one does not load the
+other), and the characteristic modes generated in each subsystem are independent of the other.
+Clearly, the mode et will not be eliminated by the presence of S2 . Hence, the composite system
+has two characteristic roots, located at ±1, and the system is asymptotically unstable, though
+BIBO-stable.
+     Interchanging the positions of S1 and S2 makes no difference in this conclusion. This
+example shows that BIBO stability can be misleading. If a system is asymptotically unstable,
+it will destroy itself (or, more likely, lead to saturation condition) because of unchecked growth
+of the response due to intended or unintended stray initial conditions. BIBO stability is not
+going to save the system. Control systems are often compensated to realize certain desirable
+characteristics. One should never try to stabilize an unstable system by canceling its RHP
+pole(s) with RHP zero(s). Such a misguided attempt will fail, not because of the practical
+impossibility of exact cancellation but for the more fundamental reason, as just explained.
+
+
+
+
+ D R I L L 4.9 BIBO and Asymptotic Stability
+ Show that an ideal integrator is marginally stable but BIBO-unstable.

@@ -1,0 +1,20 @@
+{
+  "sectionId": "5.9",
+  "sourcePages": [
+    "page-563",
+    "page-564",
+    "page-565"
+  ],
+  "usedPages": [
+    "page-563",
+    "page-564",
+    "page-565"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.9 Connecting the Laplace and z-Transforms 563",
+  "foundEnd": true,
+  "endBeforeLine": "5.10 MATLAB: Discrete-Time IIR Filters 565",
+  "endBeforeCode": "5.10",
+  "charCount": 5277
+}

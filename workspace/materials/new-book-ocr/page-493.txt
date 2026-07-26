@@ -1,0 +1,60 @@
+              “05-Lathi-C05” — 2017/9/25 — 15:54 — page 493 — #6
+
+
+
+
+                                                                                   5.1 The z-Transform       493
+
+    then
+
+
+                                                   "∞        n
+                                                       r0              1
+                                        |X[z]| ≤                 =         r0    |z| > r0
+                                                   n=0
+                                                       |z|           1−
+                                                                           |z|
+
+
+    Therefore, X[z] exists for |z| > r0 . Almost all practical signals satisfy Eq. (5.6) and are therefore
+                                                      2
+    z-transformable. Some signal models (e.g., γ n ) grow faster than the exponential signal r0n (for
+    any r0 ) and do not satisfy Eq. (5.6) and therefore are not z-transformable. Fortunately, such
+    signals are of little practical or theoretical interest. Even such signals over a finite interval are
+    z-transformable.
+
+
+
+E X A M P L E 5.2 Bilateral z-Transform
+
+    Find the z-transforms of: (a) δ[n], (b) u[n], (c) cos βn u[n], and (d) the signal shown in Fig. 5.2.
+
+
+
+
+                    x[n]
+               1
+
+
+
+
+                0      1   2    3   4              n
+                                                           Figure 5.2 Signal for Ex. 5.2d.
+
+
+
+           Recall that by definition
+                                        ∞
+                                        "                        x[1] x[2] x[3]
+                               X[z] =         x[n]z−n = x[0] +       + 2 + 3 +· · ·                      (5.7)
+                                        n=0
+                                                                  z    z    z
+
+           (a) For x[n] = δ[n], x[0] = 1 and x[2] = x[3] = x[4] = · · · = 0. Therefore,
+
+                                                 δ[n] ⇐⇒ 1           for all z
+
+           (b) For x[n] = u[n], x[0] = x[1] = x[3] = · · · = 1. Therefore,
+                                                           1 1    1
+                                              X[z] = 1 +    + 2 + 3 +· · ·
+                                                           z z   z

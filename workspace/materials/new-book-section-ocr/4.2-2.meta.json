@@ -1,0 +1,18 @@
+{
+  "sectionId": "4.2-2",
+  "sourcePages": [
+    "page-353",
+    "page-354"
+  ],
+  "usedPages": [
+    "page-353",
+    "page-354"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "4.2-2 Frequency Shifting",
+  "foundEnd": true,
+  "endBeforeLine": "4.2-3 The Time-Differentiation Property",
+  "endBeforeCode": "4.2-3",
+  "charCount": 1742
+}

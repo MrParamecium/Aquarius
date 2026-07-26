@@ -1,0 +1,18 @@
+{
+  "chapter": "5",
+  "section": "5.3",
+  "subsection": null,
+  "title": "z-Transform Solution of Linear Difference Equations 511",
+  "summary": "This page covers 5.3 (z-Transform Solution of Linear Difference Equations 511). OCR text begins with: 5.3 z-Transform Solution of Linear Difference Equations 511 We obtain z x[n] = (2)−n u[n] = (2−1 )n u[n] = (0.5)n u[n] ⇐⇒ z − 0.5 1 1 z 1 x[n − 1]u[n] ⇐⇒ X[z] + x[−1] = +0 = z z z − 0.5 z − 0.5",
+  "keywords": [
+    "5.3",
+    "z-Transform Solution of Linear Difference Equations 511",
+    "difference equation",
+    "discrete-time"
+  ],
+  "has_math": true,
+  "page_type": "example",
+  "book_page": "page-511",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

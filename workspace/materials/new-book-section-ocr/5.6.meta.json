@@ -1,0 +1,34 @@
+{
+  "sectionId": "5.6",
+  "sourcePages": [
+    "page-538",
+    "page-539",
+    "page-540",
+    "page-541",
+    "page-542",
+    "page-543",
+    "page-544",
+    "page-545",
+    "page-546",
+    "page-547"
+  ],
+  "usedPages": [
+    "page-538",
+    "page-539",
+    "page-540",
+    "page-541",
+    "page-542",
+    "page-543",
+    "page-544",
+    "page-545",
+    "page-546",
+    "page-547"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.6 F REQUENCY R ESPONSE FROM P OLE -Z ERO L OCATIONS",
+  "foundEnd": true,
+  "endBeforeLine": "5.7 Digital Processing of Analog Signals 547",
+  "endBeforeCode": "5.7",
+  "charCount": 24355
+}

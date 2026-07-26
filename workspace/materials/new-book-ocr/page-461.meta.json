@@ -1,0 +1,20 @@
+{
+  "chapter": "4",
+  "section": "4.12",
+  "subsection": "4.12-3",
+  "title": "Using Cascaded Second-Order Sections",
+  "summary": "This page covers 4.12-3 (Using Cascaded Second-Order Sections). OCR text begins with: 4.12 MATLAB: Continuous-Time Filters 461 1 Ideal 0.8 Tenth-order Butterworth |H(j2 π f)| 0.6 0.4",
+  "keywords": [
+    "4.12",
+    "4.12-3",
+    "Using Cascaded Second-Order Sections",
+    "differential equation",
+    "continuous-time",
+    "MATLAB"
+  ],
+  "has_math": true,
+  "page_type": "matlab",
+  "book_page": "page-461",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

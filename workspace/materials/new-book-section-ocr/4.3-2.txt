@@ -1,0 +1,248 @@
+# Fourier section OCR
+section_id: 4.3-2
+source_pages: page-366, page-367, page-368, page-369, page-370
+cut_start_found: yes
+cut_end_found: no
+
+--- OCR ---
+4.3-2 Zero-State Response
+      Consider an Nth-order LTIC system specified by the equation
+
+                                                Q(D)y(t) = P(D)x(t)
+
+      or
+
+           (DN + a1 DN−1 + · · · + aN−1 D + aN )y(t) = (b0 DN + b1 DN−1 + · · · + bN−1 D + bN )x(t)   (4.26)
+
+           We shall now find the general expression for the zero-state response of an LTIC system.
+      Zero-state response y(t), by definition, is the system response to an input when the system is
+      initially relaxed (in zero state). Therefore, y(t) satisfies Eq. (4.26) with zero initial conditions
+
+                                 y(0− ) = ẏ(0− ) = ÿ(0− ) = · · · = y(N−1) (0− ) = 0
+
+[[PAGE page-367]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 367 — #38
+
+
+
+
+                         4.3    Solution of Differential and Integro-Differential Equations          367
+
+Moreover, the input x(t) is causal so that
+
+                          x(0− ) = ẋ(0− ) = ẍ(0− ) = · · · = x(N−1) (0− ) = 0
+
+Let
+                               y(t) ⇐⇒ Y(s)             and       x(t) ⇐⇒ X(s)
+Because of zero initial conditions,
+                                               dr
+                                      Dr y(t) =    y(t) ⇐⇒ sr Y(s)
+                                               dtr
+                                               dk
+                                      Dk x(t) = k x(t) ⇐⇒ sk X(s)
+                                               dt
+Therefore, the Laplace transform of Eq. (4.26) yields
+
+        (sN + a1 sN−1 + · · · + aN−1 s + aN )Y(s) = (b0 sN + b1 sN−1 + · · · + bN−1 s + bN )X(s)
+
+or
+                             b0 sN + b1 sN−1 + · · · + bN−1 s + bN        P(s)
+                    Y(s) =                                         X(s) =      X(s)
+                              s + a1 s
+                               N       N−1 + · · · + aN−1 s + aN          Q(s)
+But we have shown in Eq. (4.18) that Y(s) = H(s)X(s). Consequently,
+                                                           P(s)
+                                              H(s) =                                               (4.27)
+                                                           Q(s)
+This is the transfer function of a linear differential system specified in Eq. (4.26). The same result
+has been derived earlier in Eq. (2.41) using an alternate (time-domain) approach.
+     We have shown that Y(s), the Laplace transform of the zero-state response y(t), is the product
+of X(s) and H(s), where X(s) is the Laplace transform of the input x(t) and H(s) is the system
+transfer function [relating the particular output y(t) to the input x(t)].
+
+I NTUITIVE I NTERPRETATION OF THE L APLACE T RANSFORM
+So far we have treated the Laplace transform as a machine that converts linear integro-differential
+equations into algebraic equations. There is no physical understanding of how this is accomplished
+or what it means. We now discuss a more intuitive interpretation and meaning of the Laplace
+transform.
+     In Ch. 2, Eq. (2.38), we showed that LTI system response to an everlasting exponential est is
+H(s)est . If we could express every signal as a linear combination of everlasting exponentials of the
+form est , we could readily obtain the system response to any input. For example, if
+
+                                                    "
+                                                    K
+                                           x(t) =          X(si )esi t
+                                                    k=1
+
+the response of an LTIC system to such input x(t) is given by
+
+                                                  "
+                                                  K
+                                        y(t) =          X(si )H(si )esi t
+                                                  k=1
+
+[[PAGE page-368]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 368 — #39
+
+
+
+
+368   CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Unfortunately, the class of signals that can be expressed in this form is very small. However,
+      we can express almost all signals of practical utility as a sum of everlasting exponentials over a
+      continuum of frequencies. This is precisely what the Laplace transform in Eq. (4.2) does.
+                                                    # c+j∞
+                                                 1
+                                        x(t) =               X(s)est ds                           (4.28)
+                                                2π j c−j∞
+
+      Invoking the linearity property of the Laplace transform, we can find the system response y(t) to
+      input x(t) in Eq. (4.28) as†
+                                                # c +j∞
+                                          1
+                                  y(t) =                   X(s)H(s)est ds = L−1 X(s)H(s)                        (4.29)
+                                         2π j    c −j∞
+
+      Clearly,
+                                                     Y(s) = X(s)H(s)
+      We can now represent the transformed version of the system, as depicted in Fig. 4.8a. The input
+      X(s) is the Laplace transform of x(t), and the output Y(s) is the Laplace transform of (the zero-input
+      response) y(t). The system is described by the transfer function H(s). The output Y(s) is the
+      product X(s)H(s).
+           Recall that s is the complex frequency of est . This explains why the Laplace transform
+      method is also called the frequency-domain method. Note that X(s), Y(s), and H(s) are the
+      frequency-domain representations of x(t), y(t), and h(t), respectively. We may view the boxes
+      marked L and L−1 in Fig. 4.8a as the interfaces that convert the time-domain entities into the
+      corresponding frequency-domain entities, and vice versa. All real-life signals begin in the time
+      domain, and the final answers must also be in the time domain. First, we convert the time-domain
+      input(s) into the frequency-domain counterparts. The problem itself is solved in the frequency
+      domain, resulting in the answer Y(s), also in the frequency domain. Finally, we convert Y(s) to
+      y(t). Solving the problem is relatively simpler in the frequency domain than in the time domain.
+      Henceforth, we shall omit the explicit representation of the interface boxes L and L−1 , representing
+      signals and systems in the frequency domain, as shown in Fig. 4.8b.
+
+
+
+
+             Figure 4.8 Alternate interpretation of the Laplace transform.
+
+
+      † Recall that H(s) has its own region of validity. Hence, the limits of integration for the integral in Eq. (4.28)
+      are modified in Eq. (4.29) to accommodate the region of existence (validity) of X(s) as well as H(s).
+
+[[PAGE page-369]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 369 — #40
+
+
+
+
+                              4.3    Solution of Differential and Integro-Differential Equations        369
+
+
+E X A M P L E 4.14 Laplace Transform to Find the Zero-State Response
+
+    Find the response y(t) of an LTIC system described by the equation
+                                    d2 y(t)    dy(t)           dx(t)
+                                        2
+                                            +5       + 6y(t) =       + x(t)
+                                     dt         dt              dt
+    if the input x(t) = 3e−5t u(t) and all the initial conditions are zero; that is, the system is in the
+    zero state.
+
+
+    The system equation is
+                                      (D2 + 5D + 6) y(t) = (D + 1) x(t)
+                                                         
+                                             Q(D)               P(D)
+
+    Therefore,
+                                                    P(s)     s+1
+                                         H(s) =          = 2
+                                                    Q(s) s + 5s + 6
+    Also,
+                                                                   3
+                                         X(s) = L[3e−5t u(t)] =
+                                                                  s+5
+    and
+                                                     3(s + 1)
+                          Y(s) = X(s)H(s) =
+                                               (s + 5)(s2 + 5s + 6)
+                                        3(s + 1)            −2      1   3
+                                =                       =        −    +
+                                  (s + 5)(s + 2)(s + 3) s + 5 s + 2 s + 3
+    The inverse Laplace transform of this equation is
+                                      y(t) = (−2e−5t − e−2t + 3e−3t )u(t)
+
+
+
+
+E X A M P L E 4.15 Laplace Transform to Find System Transfer Functions
+
+    Show that the transfer function of:
+          (a) an ideal delay of T seconds is e−sT
+          (b) an ideal differentiator is s
+          (c) an ideal integrator is 1/s
+
+
+          (a) Ideal Delay. For an ideal delay of T seconds, the input x(t) and output y(t) are related
+    by
+                       y(t) = x(t − T)    and       Y(s) = X(s)e−sT     [see Eq. (4.12)]
+
+[[PAGE page-370]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 370 — #41
+
+
+
+
+370   CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+            Therefore,
+                                                       Y(s)
+                                              H(s) =        = e−sT                                   (4.30)
+                                                       X(s)
+           (b) Ideal Differentiator. For an ideal differentiator, the input x(t) and the output y(t) are
+      related by
+                                                       dx(t)
+                                               y(t) =
+                                                         dt
+      The Laplace transform of this equation yields
+
+                               Y(s) = sX(s)       [x(0− ) = 0 for a causal signal]
+
+      and
+                                                         Y(s)
+                                                H(s) =        =s                                     (4.31)
+                                                         X(s)
+            (c) Ideal Integrator. For an ideal integrator with zero initial state, that is, y(0− ) = 0,
+                                          # t
+                                                                      1
+                                   y(t) =     x(τ ) dτ and Y(s) = X(s)
+                                           0                          s
+      Therefore,
+                                                             1
+                                                    H(s) =                                           (4.32)
+                                                             s
+
+
+
+
+       D R I L L 4.8 Differential Equation and Zero-State Response
+       from a System Transfer Function
+       For an LTIC system with transfer function,
+                                                             s+5
+                                                H(s) =
+                                                         s2 + 4s + 3
+
+
+             (a) Describe the differential equation relating the input x(t) and output y(t).
+             (b) Find the system response y(t) to the input x(t) = e−2t u(t) if the system is initially in
+                 zero state.
+
+
+       ANSWERS
+                 d2 y(t)    dy(t)            dx(t)
+             (a)      2
+                         +4       + 3y(t) =        + 5x(t)
+                   dt         dt               dt
+             (b) y(t) = (2e−t − 3e−2t + e−3t )u(t)

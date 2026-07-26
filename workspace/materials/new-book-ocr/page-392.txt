@@ -1,0 +1,58 @@
+                         “04-Lathi-C04” — 2017/9/25 — 19:46 — page 392 — #63
+
+
+
+
+392       CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+      E X A M P L E 4.22 Canonic Direct Form Realizations
+
+          Find the canonic direct form realization of the following transfer functions:
+                     5
+               (a)
+                   s+7
+                      s
+               (b)
+                   s+7
+                   s+5
+               (c)
+                   s+7
+                     4s + 28
+               (d) 2
+                   s + 6s + 5
+          All four of these transfer functions are special cases of H(s) in Eq. (4.36).
+
+
+              (a) The transfer function 5/(s + 7) is of the first order (N = 1); therefore, we need only
+          one integrator for its realization. The feedback and feedforward coefficients are
+
+                                          a1 = 7       and      b0 = 0,    b1 = 5
+
+          The realization is depicted in Fig. 4.23a. Because N = 1, there is a single feedback connection
+          from the output of the integrator to the input adder with coefficient a1 = 7. For N = 1, generally,
+          there are N + 1 = 2 feedforward connections. However, in this case, b0 = 0, and there is only
+          one feedforward connection with coefficient b1 = 5 from the output of the integrator to the
+          output adder. Because there is only one input signal to the output adder, we can do away with
+          the adder, as shown in Fig. 4.23a.
+               (b)
+                                                               s
+                                                     H(s) =
+                                                             s+7
+          In this first-order transfer function, b1 = 0. The realization is shown in Fig. 4.23b. Because
+          there is only one signal to be added at the output adder, we can discard the adder.
+               (c)
+                                                            s+5
+                                                    H(s) =
+                                                            s+7
+          The realization appears in Fig. 4.23c. Here H(s) is a first-order transfer function with a1 = 7
+          and b0 = 1, b1 = 5. There is a single feedback connection (with coefficient 7) from the
+          integrator output to the input adder. There are two feedforward connections (Fig. 4.23c).†
+
+
+          † When M = N (as in this case), H(s) can also be realized in another way by recognizing that
+
+                                                                   2
+                                                     H(s) = 1 −
+                                                                  s+7
+          We now realize H(s) as a parallel combination of two transfer functions, as indicated by this equation.

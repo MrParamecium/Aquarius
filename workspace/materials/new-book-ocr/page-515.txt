@@ -1,0 +1,57 @@
+        “05-Lathi-C05” — 2017/9/25 — 15:54 — page 515 — #28
+
+
+
+
+                                 5.3 z-Transform Solution of Linear Difference Equations                515
+
+We have shown in Eq. (5.20) that Y[z] = X[z]H[z]. Hence, it follows that
+
+                                   P[z] b0 zN + b1 zN−1 + · · · + bN−1 z + bN
+                          H[z] =        = N                                                          (5.26)
+                                   Q[z]   z + a1 zN−1 + · · · + aN−1 z + aN
+     As in the case of LTIC systems, this result leads to an alternative definition of the LTID system
+transfer function as the ratio of Y[z] to X[z] (assuming all initial conditions zero).
+                                         Y[z] Z[zero-state response]
+                                H[z] ≡        =
+                                         X[z]       Z[input]
+
+A LTERNATE I NTERPRETATION OF THE z-T RANSFORM
+So far we have treated the z-transform as a machine that converts linear difference equations into
+algebraic equations. There is no physical understanding of how this is accomplished or what it
+means. We now discuss more intuitive interpretation and meaning of the z-transform.
+     In Ch. 3, Eq. (3.38), we showed that the LTID system response to an everlasting exponential
+zn is H[z]zn . If we could express every discrete-time signal as a linear combination of everlasting
+exponentials of the form zn , we could readily obtain the system response to any input. For
+example, if
+                                                 "K
+                                         x[n] =      X[zk ]znk                                (5.27)
+                                                    k=1
+
+the response of an LTID system to this input is given by
+
+                                                  "
+                                                  K
+                                         y[n] =         X[zk ]H[zk ]znk
+                                                  k=1
+
+Unfortunately, a very small class of signals can be expressed in the form of Eq. (5.27). However,
+we can express almost all signals of practical utility as a sum of everlasting exponentials over a
+continuum of values of z. This is precisely what the z-transform in Eq. (5.2) does.
+                                                 5
+                                             1
+                                     x[n] =        X[z]zn−1 dz                              (5.28)
+                                            2π j
+Invoking the linearity property of the z-transform, we can find the system response y[n] to input
+x[n] in Eq. (5.28) as†
+                                     5
+                                 1
+                         y[n] =         X[z]H[z]zn−1 dz = Z −1 {X[z]H[z]}
+                                2π j
+Clearly,
+                                             Y[z] = X[z]H[z]
+This viewpoint of finding the response of LTID system is illustrated in Fig. 5.6a. Just as in
+continuous-time systems, we can model discrete-time systems in the transformed manner by
+
+† In computing y[n], the contour along which the integration is performed is modified to consider the ROC of
+X[z] as well as H[z]. We ignore this consideration in this intuitive discussion.

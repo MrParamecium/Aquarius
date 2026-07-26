@@ -1,0 +1,23 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": "5.5-1",
+  "title": "The Periodic Nature of Frequency Response",
+  "summary": "This page covers 5.5-1 (The Periodic Nature of Frequency Response). OCR text begins with: 532 CHAPTER 5 DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM Comment: Figures 5.14 and 5.16 show amplitude and phase response plots as functions of \u0004. These plots as well as Eqs. (5.35) and (5.36) indicate that the frequency response of a discrete-time system is a continuous (rather than discrete) function of frequency \u0004. There is no contradiction here. This behavior is merely an indication of the fact that the",
+  "keywords": [
+    "5.5",
+    "5.5-1",
+    "The Periodic Nature of Frequency Response",
+    "difference equation",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response",
+    "sampling"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-532",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

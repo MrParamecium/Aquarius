@@ -1,0 +1,40 @@
+# Fourier section OCR
+section_id: 5.2-2
+source_pages: page-505, page-506
+cut_start_found: yes
+cut_end_found: yes
+
+--- OCR ---
+5.2-2 z-Domain Scaling Property (Multiplication by γ n )
+Scaling in the z-domain is equivalent to multiplying a time-domain signal by an exponential. That
+is, if
+                                        x[n]u[n] ⇐⇒ X[z]
+then                                                                 !
+                                                                 z
+                                      γ n x[n]u[n] ⇐⇒ X                                     (5.17)
+                                                                 γ
+Proof.                                                                                !
+                                     ∞
+                                     "                       ∞
+                                                             "            −n
+                                                      −n              z           z
+                  Z{γ x[n]u[n]} =
+                       n
+                                            γ x[n]z
+                                             n
+                                                           =     x[n]          =X
+                                      n=0                    n=0
+                                                                      γ           γ
+
+
+
+ D R I L L 5.6 Using the z-Domain Scaling Property
+ Use Eq. (5.17) to derive pairs 6 and 8 in Table 5.1 from pairs 2 and 3, respectively.
+
+[[PAGE page-506]]
+“05-Lathi-C05” — 2017/9/25 — 15:54 — page 506 — #19
+
+
+
+
+506   CHAPTER 5       DISCRETE-TIME SYSTEM ANALYSIS USING THE Z-TRANSFORM

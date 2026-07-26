@@ -1,0 +1,63 @@
+        “04-Lathi-C04” — 2017/9/25 — 19:46 — page 381 — #52
+
+
+
+
+                               4.4 Analysis of Electrical Networks: The Transformed Network                                   381
+
+
+                                                          M                                             R1  2, R2  R3  1
+                                                                                                        M  1, L1  2, L 2  3
+                                    R1
+                 a t0
+                                                     L1                    L2                     
+                          b
+
+ 5V           10 V                       y1(t)            R2           y2(t)                  v0(t)
+                                                                                    R3
+                                                                                                  
+
+
+                                                                (a)
+
+
+          M                         L1  M       L2  M                                                 L1  M     L2  M
+
+
+                                                                                M
+   L1                L2                                               L1                 L2
+                                                 M                                                               M
+                                                                                             
+
+
+
+                              (b)                                                                 (c)
+
+
+                                    2        6             3s               4            4s
+
+
+
+                                                                 s
+
+                 10                                                                                 1
+                  s                          Y1(s)              1              Y2(s)
+
+
+                                                                 1
+
+
+
+
+                                                                (d)
+Figure 4.14 Solution of a coupled inductive network by the transformed circuit method.
+
+
+
+
+ D R I L L 4.10 Transformed Analysis of an RLC Circuit with a Switch
+ For the RLC circuit in Fig. 4.15, the input is switched on at t = 0. The initial conditions are
+ y(0− ) = 2 amperes and vC (0− ) = 50 volts. Find the loop current y(t) and the capacitor voltage
+ vC (t) for t ≥ 0.
+
+ ANSWERS

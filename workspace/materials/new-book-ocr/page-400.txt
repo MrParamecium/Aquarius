@@ -1,0 +1,61 @@
+                     “04-Lathi-C04” — 2017/9/25 — 19:46 — page 400 — #71
+
+
+
+
+400   CHAPTER 4          CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      T HE S CALAR M ULTIPLIER
+      If we use a resistor Rf in the feedback and a resistor R at the input (Fig. 4.29a), then Zf (s) = Rf ,
+      Z(s) = R, and
+                                                           Rf
+                                                 H(s) = −
+                                                            R
+      The system acts as a scalar multiplier (or an amplifier) with a negative gain Rf /R. A positive
+      gain can be obtained by using two such multipliers in cascade or by using a single noninverting
+      amplifier, as depicted in Fig. 4.16c. Figure 4.29a also shows the compact symbol used in circuit
+      diagrams for a scalar multiplier.
+
+      T HE I NTEGRATOR
+      If we use a capacitor C in the feedback and a resistor R at the input (Fig. 4.29b), then Zf (s) = 1/Cs,
+      Z(s) = R, and
+                                                            1 1
+                                               H(s) = −
+                                                           RC s
+      The system acts as an ideal integrator with a gain −1/RC. Figure 4.29b also shows the compact
+      symbol used in circuit diagrams for an integrator.
+
+                                            Rf
+
+
+                          R
+                                          –
+                                          +               
+                                                                          F(s)                Y(s)
+                  F(s)                                                           k
+                                                          Y(s)
+
+                                                                                             Rf
+                                                                                         k
+                                                                                               R
+
+                                                    (a)
+
+                                           1
+                                           Cs
+
+
+                         R
+                                          –
+                                          +               
+                                                                          F(s)       k        Y(s)
+                  F(s)
+                                                          Y(s)                       s
+
+                                                                                             1
+                                                                                         k
+                                                                                               RC
+
+
+                                                    (b)
+            Figure 4.29 (a) Op-amp inverting amplifier. (b) Integrator.

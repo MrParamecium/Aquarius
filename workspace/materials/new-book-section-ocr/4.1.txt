@@ -1,0 +1,447 @@
+# Fourier section OCR
+section_id: 4.1
+source_pages: page-330, page-331, page-332, page-333, page-334, page-335, page-336, page-337
+cut_start_found: yes
+cut_end_found: no
+
+--- OCR ---
+4.1 T HE L APLACE T RANSFORM
+      For a signal x(t), its Laplace transform X(s) is defined by
+                                                     # ∞
+                                              X(s) =      x(t)e−st dt                               (4.1)
+                                                      −∞
+
+      The signal x(t) is said to be the inverse Laplace transform of X(s). It can be shown that
+                                                      # c+j∞
+                                                   1
+                                           x(t) =            X(s)est ds                             (4.2)
+                                                  2π j c−j∞
+      where c is a constant chosen to ensure the convergence of the integral in Eq. (4.1), as explained
+      later. See also [1].
+           This pair of equations is known as the bilateral Laplace transform pair, where X(s) is the
+      direct Laplace transform of x(t) and x(t) is the inverse Laplace transform of X(s). Symbolically,
+
+                                 X(s) = L[x(t)]       and      x(t) = L−1 [X(s)]
+
+      Note that
+                            L−1 {L[x(t)]} = x(t)      and      L{L−1 [X(s)]} = X(s)
+
+
+330
+
+[[PAGE page-331]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 331 — #2
+
+
+
+
+                                                                        4.1 The Laplace Transform       331
+
+    It is also common practice to use a bidirectional arrow to indicate a Laplace transform pair, as
+    follows:
+                                             x(t) ⇐⇒ X(s)
+    The Laplace transform, defined in this way, can handle signals existing over the entire time
+    interval from −∞ to ∞ (causal and noncausal signals). For this reason it is called the bilateral (or
+    two-sided) Laplace transform. Later we shall consider a special case—the unilateral or one-sided
+    Laplace transform—which can handle only causal signals.
+
+    L INEARITY OF THE L APLACE T RANSFORM
+    We now prove that the Laplace transform is a linear operator by showing that the principle of
+    superposition holds, implying that if
+
+                                x1 (t) ⇐⇒ X1 (s)          and       x2 (t) ⇐⇒ X2 (s)
+
+    then
+                                   a1 x1 (t) + a2 x2 (t) ⇐⇒ a1 X1 (s) + a2 X2 (s)
+    The proof is simple. By definition,
+                                                    # ∞
+                      L [a1 x1 (t) + a2 x2 (t)] =    [a1 x1 (t) + a2 x2 (t)]e−st dt
+                                                    −∞
+                                                   # ∞                      # ∞
+                                                                −st
+                                              = a1      x1 (t)e dt + a2           x2 (t)e−st dt
+                                                      −∞                      −∞
+                                              = a1 X1 (s) + a2 X2 (s)                                  (4.3)
+
+    This result can be extended to any finite sum.
+
+    T HE R EGION OF C ONVERGENCE (ROC)
+    The region of convergence (ROC), also called the region of existence, for the Laplace transform,
+    X(s), is the set of values of s (the region in the complex plane) for which the integral in Eq. (4.1)
+    converges. This concept will become clear in the following example.
+
+
+E X A M P L E 4.1 Laplace Transform and ROC of a Causal Exponential
+
+    For a signal x(t) = e−at u(t), find the Laplace transform X(s) and its ROC.
+
+
+    By definition,                                  # ∞
+                                         X(s) =           e−at u(t)e−st dt
+                                                     −∞
+
+    Because u(t) = 0 for t < 0 and u(t) = 1 for t ≥ 0,
+                            # ∞                 # ∞                             
+                                                                     1 −(s+a)t ∞
+                    X(s) =       e−at e−st dt =     e−(s+a)t dt = −     e                          (4.4)
+                              0                  0                  s+a          0
+
+[[PAGE page-332]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 332 — #3
+
+
+
+
+332   CHAPTER 4      CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      Note that s is complex and as t → ∞, the term e−(s+a)t does not necessarily vanish. Here we
+      recall that for a complex number z = α + jβ,
+                                                  e−zt = e−(α+jβ)t = e−αt e−jβt
+      Now |e−jβt | = 1 regardless of the value of βt. Therefore, as t → ∞, e−zt → 0 only if α > 0,
+      and e−zt → ∞ if α < 0. Thus,
+                                                   
+                                                    0      Re z > 0
+                                        lim e−zt =                                            (4.5)
+                                       t→∞          ∞      Re z < 0
+      Clearly,                                              
+                                                             0       Re(s + a) > 0
+                                         lim e−(s+a)t =
+                                         t→∞                  ∞      Re(s + a) < 0
+      Use of this result in Eq. (4.4) yields
+                                                        1
+                                              X(s) =              Re(s + a) > 0
+                                                       s+a
+      or
+                                                             1
+                                             e−at u(t) ⇐⇒              Re s > −a                                  (4.6)
+                                                            s+a
+      The ROC of X(s) is Re s > −a, as shown in the shaded area in Fig. 4.1a. This fact means that
+      the integral defining X(s) in Eq. (4.4) exists only for the values of s in the shaded region in
+      Fig. 4.1a. For other values of s, the integral in Eq. (4.4) does not converge. For this reason, the
+      shaded region is called the ROC (or the region of existence) for X(s).
+                   Signal x(t)                                                         Region of convergence
+
+                     1
+                                                                                         Im         cj
+                              eatu(t)
+
+                                              t                                               0     c
+                                                                                  a                       Real
+
+
+
+                                                           (a)                                    cj
+
+
+
+                                                                                              Im
+                         0               t
+                         1                                                       a          0            Real
+
+            eatu(t)
+                                                           (b)
+
+      Figure 4.1 Signals (a) e−at u(t) and (b) −e−at u(−t) have the same Laplace transform but
+      different regions of convergence.
+
+[[PAGE page-333]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 333 — #4
+
+
+
+
+                                                                     4.1 The Laplace Transform       333
+
+R EGION OF C ONVERGENCE FOR F INITE -D URATION S IGNALS
+A finite-duration signal xf (t) is a signal that is nonzero only for t1 ≤ t ≤ t2 , where both t1 and t2
+are finite numbers and t2 > t1 . For a finite-duration, absolutely integrable signal, the ROC is the
+entire s plane. This is clear from the fact that if xf (t) is absolutely integrable and a finite-duration
+signal, then x(t)e−σ t is also absolutely integrable for any value of σ because the integration is over
+the finite range of t only. Hence, the Laplace transform of such a signal converges for every value
+of s. This means that the ROC of a general signal x(t) remains unaffected by the addition of any
+absolutely integrable, finite-duration signal xf (t) to x(t). In other words, if R represents the ROC
+of a signal x(t), then the ROC of a signal x(t) + xf (t) is also R.
+
+R OLE OF THE R EGION OF C ONVERGENCE
+The ROC is required for evaluating the inverse Laplace transform x(t) from X(s), as defined by
+Eq. (4.2). The operation of finding the inverse transform requires an integration in the complex
+plane, which needs some explanation. The path of integration is along c + jω, with ω varying from
+−∞ to ∞.† Moreover, the path of integration must lie in the ROC (or existence) for X(s). For
+the signal e−at u(t), this is possible if c > −a. One possible path of integration is shown (dotted)
+in Fig. 4.1a. Thus, to obtain x(t) from X(s), the integration in Eq. (4.2) is performed along this
+path. When we integrate [1/(s + a)]est along this path, the result is e−at u(t). Such integration in
+the complex plane requires a background in the theory of functions of complex variables. We can
+avoid this integration by compiling a table of Laplace transforms (Table 4.1), where the Laplace
+transform pairs are tabulated for a variety of signals. To find the inverse Laplace transform of,
+say, 1/(s + a), instead of using the complex integral of Eq. (4.2), we look up the table and find
+the inverse Laplace transform to be e−at u(t) (assuming that the ROC is Re s > −a). Although
+the table given here is rather short, it comprises the functions of most practical interest. A more
+comprehensive table appears in Doetsch [2].
+
+T HE U NILATERAL L APLACE T RANSFORM
+To understand the need for defining unilateral transform, let us find the Laplace transform of signal
+x(t) illustrated in Fig. 4.1b:
+                                        x(t) = −e−at u(−t)
+
+The Laplace transform of this signal is
+                                              # ∞
+                                     X(s) =          −e−at u(−t)e−st dt
+                                               −∞
+
+Because u(−t) = 1 for t < 0 and u(−t) = 0 for t > 0,
+                          # 0                        # 0                              
+                                  −at −st                  −(s+a)t         1 −(s+a)t 0
+                 X(s) =         −e    e     dt = −         e         dt =     e       
+                           −∞                         −∞                  s+a           −∞
+
+
+† The discussion about the path of convergence is rather complicated, requiring the concepts of contour
+integration and understanding of the theory of complex variables. For this reason, the discussion here is
+somewhat simplified.
+
+[[PAGE page-334]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 334 — #5
+
+
+
+
+334   CHAPTER 4    CONTINUOUS-TIME SYSTEM ANALYSIS
+
+      TABLE 4.1   Select (Unilateral) Laplace Transform Pairs
+
+      No.                x(t)                                         X(s)
+
+       1                 δ(t)                                         1
+
+                                                                      1
+       2                 u(t)
+                                                                      s
+                                                                      1
+       3                 tu(t)
+                                                                      s2
+                                                                       n!
+       4                 tn u(t)
+                                                                      sn+1
+                                                                       1
+       5                 eλt u(t)
+                                                                      s−λ
+                                                                          1
+       6                 teλt u(t)
+                                                                      (s − λ)2
+                                                                           n!
+       7                 tn eλt u(t)
+                                                                      (s − λ)n+1
+                                                                         s
+       8a                cos bt u(t)
+                                                                      s2 + b2
+                                                                         b
+       8b                sin bt u(t)
+                                                                      s2 + b2
+                                                                          s+a
+       9a                e−at cos bt u(t)
+                                                                      (s + a)2 + b2
+                                                                            b
+       9b                e−at sin bt u(t)
+                                                                      (s + a)2 + b2
+                                                                      (r cos θ)s + (ar cos θ − br sin θ )
+      10a                re−at cos (bt + θ) u(t)
+                                                                             s2 + 2as + (a2 + b2 )
+                                                                        0.5rejθ   0.5re−jθ
+      10b                re−at cos (bt + θ) u(t)                                +
+                                                                      s + a − jb s + a + jb
+                                                                         As + B
+      10c                re−at cos (bt + θ) u(t)
+                                                                      s2 + 2as + c
+                                   
+                                        A2 c + B2 − 2ABa
+                            r=
+                                              c − a2
+                                              Aa − B
+                            θ = tan−1         √
+                                             A c − a2
+                                    √
+                            b=          c − a2
+                                                              !
+                                                 B − Aa                    As + B
+      10d                e−at A cos bt +                sin bt u(t)
+                                                   b                  s2 + 2as + c
+                                    √
+                            b=          c − a2
+
+[[PAGE page-335]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 335 — #6
+
+
+
+
+                                                                   4.1 The Laplace Transform               335
+
+Equation (4.5) shows that
+
+                                   lim e−(s+a)t = 0         Re (s + a) < 0
+                                  t→−∞
+
+Hence,
+                                                 1
+                                       X(s) =              Re s < −a
+                                                s+a
+The signal −e−at u(−t) and its ROC (Re s < −a) are depicted in Fig. 4.1b. Note that the Laplace
+transforms for the signals e−at u(t) and −e−at u(−t) are identical except for their regions of
+convergence. Therefore, for a given X(s), there may be more than one inverse transform, depending
+on the ROC. In other words, unless the ROC is specified, there is no one-to-one correspondence
+between X(s) and x(t). This fact increases the complexity in using the Laplace transform. The
+complexity is the result of trying to handle causal as well as noncausal signals. If we restrict all
+our signals to the causal type, such an ambiguity does not arise. There is only one inverse transform
+of X(s) = 1/(s + a), namely, e−at u(t). To find x(t) from X(s), we need not even specify the ROC.
+In summary, if all signals are restricted to the causal type, then, for a given X(s), there is only one
+inverse transform x(t).†
+     The unilateral Laplace transform is a special case of the bilateral Laplace transform in which
+all signals are restricted to being causal; consequently, the limits of integration for the integral in
+Eq. (4.1) can be taken from 0 to ∞. Therefore, the unilateral Laplace transform X(s) of a signal
+x(t) is defined as
+                                                # ∞
+                                        X(s) =       x(t)e−st dt                                   (4.7)
+                                                     0−
+
+We choose 0− (rather than 0+ used in some texts) as the lower limit of integration. This convention
+not only ensures inclusion of an impulse function at t = 0, but also allows us to use initial
+conditions at 0− (rather than at 0+ ) in the solution of differential equations via the Laplace
+transform. In practice, we are likely to know the initial conditions before the input is applied
+(at 0− ), not after the input is applied (at 0+ ). Indeed, the very meaning of the term “initial
+conditions” implies conditions at t = 0− (conditions before the input is applied). Detailed analysis
+of desirability of using t = 0− appears in Sec. 4.3.
+     The unilateral Laplace transform simplifies the system analysis problem considerably because
+of its uniqueness property, which says that for a given X(s), there is a unique inverse transform.
+But there is a price for this simplification: we cannot analyze noncausal systems or use noncausal
+inputs. However, in most practical problems, this restriction is of little consequence. For this
+reason, we shall first consider the unilateral Laplace transform and its application to system
+analysis. (The bilateral Laplace transform is discussed later, in Sec. 4.11.)
+     Basically there is no difference between the unilateral and the bilateral Laplace transform. The
+unilateral transform is the bilateral transform that deals with a subclass of signals starting at t = 0
+(causal signals). Therefore, the expression [Eq. (4.2)] for the inverse Laplace transform remains
+unchanged. In practice, the term Laplace transform means the unilateral Laplace transform.
+
+† Actually, X(s) specifies x(t) within a null function n(t), which has the property that the area under |n(t)|2
+is zero over any finite interval 0 to t (t > 0) (Lerch’s theorem). For example, if two functions are identical
+everywhere except at finite number of points, they differ by a null function.
+
+[[PAGE page-336]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 336 — #7
+
+
+
+
+336       CHAPTER 4       CONTINUOUS-TIME SYSTEM ANALYSIS
+
+          E XISTENCE OF THE L APLACE T RANSFORM
+          The variable s in the Laplace transform is complex in general, and it can be expressed as s = σ +jω.
+          By definition,
+                                             # ∞              # ∞
+                                                      −st
+                                     X(s) =      x(t)e dt =       [x(t)e−σ t ]e−jωt dt
+                                                0−                   0−
+
+          Because |ejωt | = 1, the integral on the right-hand side of this equation converges if
+                                                  # ∞
+                                                                 
+                                                       x(t)e−σ t  dt < ∞                                        (4.8)
+                                                     0−
+
+          Hence the existence of the Laplace transform is guaranteed if the integral in Eq. (4.8) is finite for
+          some value of σ . Any signal that grows no faster than an exponential signal Meσ0 t for some M and
+          σ0 satisfies the condition of Eq. (4.8). Thus, if for some M and σ0 ,
+
+                                                          |x(t)| ≤ Meσ0 t                                         (4.9)
+                                                                                 2
+          we can choose σ > σ0 to satisfy Eq. (4.8).† The signal et , in contrast, grows at a rate faster
+          than eσ0 t , and consequently is not Laplace–transformable.‡ Fortunately such signals (which are not
+          Laplace–transformable) are of little consequence from either a practical or a theoretical viewpoint.
+          If σ0 is the smallest value of σ for which the integral in Eq. (4.8) is finite, σ0 is called the abscissa
+          of convergence and the ROC of X(s) is Re s > σ0 . The abscissa of convergence for e−at u(t) is −a
+          (the ROC is Re s > −a).
+
+
+
+      E X A M P L E 4.2 Bilateral Laplace Transform of Common Causal Signals
+
+          Determine the Laplace transform of the following: (a) δ(t), (b) u(t), and (c) cos ω0 t u(t).
+
+
+               (a)                                           # ∞
+                                                 L[δ(t)] =         δ(t)e−st dt
+                                                              0−
+
+          Using the sampling property [Eq. (1.11) with T = 0], we obtain
+
+                                                 L[δ(t)] = 1         for all s
+
+          that is,
+                                                  δ(t) ⇐⇒ 1         for all s
+
+
+
+          † The condition of Eq. (4.9) is sufficient but not necessary for the existence of the Laplace transform. For
+                             √                                                                                 √
+          example, x(t) =√1/ t is infinite at t = 0, and Eq. (4.9) cannot be satisfied; but the transform of 1/ t exists
+          and is given by π/s.
+          ‡ However, if we consider a truncated (finite-duration) signal et2 , the Laplace transform exists.
+
+[[PAGE page-337]]
+“04-Lathi-C04” — 2017/9/25 — 19:46 — page 337 — #8
+
+
+
+
+                                                                         4.1 The Laplace Transform        337
+
+     (b) To find the Laplace transform of u(t), recall that u(t) = 1 for t ≥ 0. Therefore,
+                                 # ∞              # ∞                      
+                                          −st            −st        1 −st ∞
+                      L [u(t)] =     u(t)e dt =         e dt = − e 
+                                  0−               0−               s        0−
+                                 1
+                               =       Re s > 0
+                                 s
+We also could have obtained this result from Eq. (4.6) by letting a = 0.
+    (c) Because cos ω0 t u(t) = 12 [ejω0 t + e−jω0 t ]u(t), we know that
+
+                                  L [cos ω0 t u(t)] = 12 L[ejω0 t u(t) + e−jω0 t u(t)]
+
+From Eq. (4.6), it follows that
+                                                        !
+                                      1    1       1
+                L[cos ω0 t u(t)] =             +                         Re (s ± jω) = Re s > 0
+                                      2 s − jω0 s + jω0
+                                         s
+                                     = 2         Re s > 0                                            (4.10)
+                                      s + ω0 2
+
+
+      For the unilateral Laplace transform, there is a unique inverse transform of X(s); consequently,
+there is no need to specify the ROC explicitly. For this reason, we shall generally ignore any
+mention of the ROC for unilateral transforms. Recall, also, that in the unilateral Laplace transform
+it is understood that every signal x(t) is zero for t < 0, and it is appropriate to indicate this fact by
+multiplying the signal by u(t).
+
+ D R I L L 4.1 Bilateral Laplace Transform of Gate Functions
+ By direct integration, find the Laplace transform X(s) and the region of convergence of X(s) for
+ the gate functions shown in Fig. 4.2.
+
+                x(t)                                             x(t)
+            1                                                1
+
+
+
+
+            0           2                     t              0           2          4    t
+                            (a)                                              (b)
+        Figure 4.2 Gate functions for Drill 4.1.
+
+
+ ANSWERS
+         1
+      (a)   (1 − e−2s ) for all s
+         s
+          1
+      (b) (1 − e−2s )e−2s for all s
+          s

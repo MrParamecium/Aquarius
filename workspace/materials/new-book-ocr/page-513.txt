@@ -1,0 +1,74 @@
+         “05-Lathi-C05” — 2017/9/25 — 15:54 — page 513 — #26
+
+
+
+
+                                   5.3 z-Transform Solution of Linear Difference Equations              513
+
+Therefore,
+                                      5 6             11    (3z + 5)
+                               1−      +   Y[z] = 3 −    +
+                                      z z2             z   z(z − 0.5)
+                                                      
+                                                                  IC terms           input terms
+
+
+Multiplying both sides by z2 yields
+
+                                                                z(3z + 5)
+                               (z2 − 5z + 6)Y[z] = z(3z − 11) +
+                                                     
+                                                      IC terms   z −0.5 
+                                                                                   input terms
+
+
+and
+                                             z(3z − 11)          z(3z + 5)
+                              Y[z] =                     +
+                                            z −5z + 6 (z − 0.5)(z2 − 5z + 6)
+                                              2
+                                                                            
+                                            zero-input response       zero-state response
+
+We expand both terms on the right-hand side into modified partial fractions to yield
+                                     !                                                 !
+                   z             z         26      z        22       z       28      z
+      Y[z] = 5           −2            +                 −                +
+                  z−2          z−3         15 z − 0.5        3 z−2            5 z−3
+                                                                                
+                      zero-input response                                         zero-state response
+
+
+and
+                                                                             
+                 y[n] = (5(2)n − 2(3)n ) u[n] + 26  (0.5)n − 22 (2)n + 28 (3)n u[n]
+                                            15           3
+                                                                     5
+                                                                                  
+                                zero-input response                          zero-state response
+
+                      =     − 73 (2)n + 18
+                                         5
+                                           (3)n + 26
+                                                  15
+                                                     (0.5)n            u[n]
+
+which agrees with the result in Eq. (5.23).
+
+
+
+ D R I L L 5.12 Separating Zero-Input and Zero-State Responses
+ Solve
+                           y[n + 2] − 56 y[n + 1] + 16 y[n] = 5x[n + 1] − x[n]
+ if the initial conditions are y[−1] = 2, y[−2] = 0, and the input x[n] = u[n]. Separate the
+ response into zero-input and zero-state responses.
+
+ ANSWER
+                           n     n                n    n 
+                   y[n] = 3 12 − 43 13    u[n] + 12 − 18 12 + 6 13    u[n]
+                                                                  
+                                    zero-input response                       zero-state response
+                         '        n      1 n (
+                        = 12 − 15 12 + 14
+                                       3 3
+                                                   u[n]

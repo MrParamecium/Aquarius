@@ -1,0 +1,32 @@
+{
+  "sectionId": "4.2-4",
+  "sectionTitle": "The Time-Integration Property",
+  "bookSource": "new",
+  "status": "verified",
+  "verification": {
+    "method": "pdf_text_layer_and_page_ocr_cross_check",
+    "sourcePages": [
+      "page-356",
+      "page-357"
+    ],
+    "verifiedAt": "2026-06-14"
+  },
+  "formulas": [
+    {
+      "label": "(4.16a)",
+      "name": "Time integration from 0-",
+      "latex": "\\int_{0^-}^{t}x(\\tau)\\,d\\tau\\Longleftrightarrow \\frac{X(s)}{s}",
+      "sourcePage": "page-356",
+      "role": "core_property",
+      "status": "verified"
+    },
+    {
+      "label": "(4.16b)",
+      "name": "Time integration from negative infinity",
+      "latex": "\\int_{-\\infty}^{t}x(\\tau)\\,d\\tau\\Longleftrightarrow \\frac{X(s)}{s}+\\frac{\\int_{-\\infty}^{0^-}x(\\tau)\\,d\\tau}{s}",
+      "sourcePage": "page-356",
+      "role": "core_property",
+      "status": "verified"
+    }
+  ]
+}

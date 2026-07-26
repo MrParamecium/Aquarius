@@ -1,0 +1,24 @@
+{
+  "chapter": "5",
+  "section": "5.5",
+  "subsection": null,
+  "title": "Frequency Response of Discrete-Time Systems 527",
+  "summary": "This page covers 5.5 (Frequency Response of Discrete-Time Systems 527). OCR text begins with: 5.5 Frequency Response of Discrete-Time Systems 527 In other words, the system response y[n] to a sinusoidal input cos \u0004n is given by y[n] = |H[ej\u0004 ]| cos (\u0004n + \u0004 H[ej\u0004 ]) Following the same argument, the system response to a sinusoid cos (\u0004n + θ ) is y[n] = |H[ej\u0004 ]| cos (\u0004n + θ + \u0004 H[ej\u0004 ]) (5.33) This result is valid only for BIBO-stable or asymptotically stable systems. The frequency response is meaningless for B",
+  "keywords": [
+    "5.5",
+    "Frequency Response of Discrete-Time Systems 527",
+    "zero-input response",
+    "characteristic roots",
+    "discrete-time",
+    "continuous-time",
+    "LTID system",
+    "system response",
+    "sampling",
+    "stability"
+  ],
+  "has_math": true,
+  "page_type": "math_heavy",
+  "book_page": "page-527",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}

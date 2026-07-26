@@ -1,0 +1,61 @@
+                       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 438 — #109
+
+
+
+
+438   CHAPTER 4            CONTINUOUS-TIME SYSTEM ANALYSIS
+
+
+                             Im
+                  u1                       H( jv)
+                            jv0
+                                                                              ⬔H( jv)
+                  d
+                             jv
+
+
+
+
+                                  Re                                      0                       v
+             a              0
+                      d               0         v0            v       p
+
+                      u2
+
+                           (a)                        (b)                               (c)
+
+
+                             Im
+                   f1
+                            jv0            H( jv)
+
+                   r         jv
+                                                                              ⬔H( jv)
+
+                                                                         p
+                                  Re
+             a              0
+                      r               0         v0            v          0                       v
+
+                   f2
+
+
+                           (d)                        (e)                               (f )
+            Figure 4.49 The role of poles and zeros in determining the frequency response of an LTIC system.
+
+
+
+      progressively. Therefore, according to Eq. (4.56), the amplitude response |H(jω)| increases from
+      ω = 0 until ω = ω0 , and it decreases continuously as ω increases beyond ω0 , as illustrated in
+      Fig. 4.49b. Therefore, a pole at −α + jω0 results in a frequency-selective behavior that enhances
+      the gain at the frequency ω0 (resonance). Moreover, as the pole moves closer to the imaginary axis
+      (as α is reduced), this enhancement (resonance) becomes more pronounced. This is because α,
+      the distance between the pole and jω0 (d corresponding to jω0 ), becomes smaller, which increases
+      the gain K/d. In the extreme case, when α = 0 (pole on the imaginary axis), the gain at ω0 goes
+      to infinity. Repeated poles further enhance the frequency-selective effect. To summarize, we can
+      enhance a gain at a frequency ω0 by placing a pole opposite the point jω0 . The closer the pole is
+      to jω0 , the higher is the gain at ω0 , and the gain variation is more rapid (more frequency selective)
+      in the vicinity of frequency ω0 . Note that a pole must be placed in the LHP for stability.
+           Here we have considered the effect of a single complex pole on the system gain. For a
+      real system, a complex pole −α + jω0 must accompany its conjugate −α − jω0 . We can readily
+      show that the presence of the conjugate pole does not appreciably change the frequency-selective

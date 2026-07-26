@@ -1,0 +1,56 @@
+                           “04-Lathi-C04” — 2017/9/25 — 19:46 — page 398 — #69
+
+
+
+
+398       CHAPTER 4        CONTINUOUS-TIME SYSTEM ANALYSIS
+
+              We have essentially doubled the number of possible realizations. Every realization that was
+          found earlier has a transpose. Note that the transpose of a transpose results in the same realization.
+
+
+
+      E X A M P L E 4.24 Transposed Realizations
+
+           Find the transpose canonic direct realizations for parts (a) and (d) of Ex. 4.22 (Figs. 4.23c and
+           4.23d). The transfer functions are:
+                   s+5
+                 (a)
+                   s+7
+                      4s + 28
+               (b) 2
+                    s + 6s + 5
+           Both these realizations are special cases of the one in Fig. 4.26b.
+
+
+                (a) In this case, N = 1 with a1 = 7, b0 = 1, b1 = 5. The desired realization can be obtained
+           by transposing Fig. 4.23c. However, we already have the general model of the transposed
+           realization in Fig. 4.26b. The desired solution is a special case of Fig. 4.26b with N = 1 and
+           a1 = 7, b0 = 1, b1 = 5, as shown in Fig. 4.27a.
+                (b) In this case, N = 2 with b0 = 0, b1 = 4, b2 = 28, a1 = 6, a2 = 5. Using the model of
+           Fig. 4.26b, we obtain the desired realization, as shown in Fig. 4.27b.
+
+                                                                                  Y(s)
+
+
+                                                                     1
+                                                                     s
+
+          X(s)                           Y(s)       X(s)
+                                                              4            6
+
+                            1                                        1
+                            s                                        s
+
+
+                       5         7                           28           5
+                           (a)                                     (b)
+
+         Figure 4.27 Transposed canonic direct form realizations of (a) (s + 5)/(s + 7) and (b)
+         (4s + 28)/(s2 + 6s + 5).
+
+
+
+
+            D R I L L 4.13 Transposed Realizations
+            Find the transposed DFI and transposed canonic direct (TDFII) realizations of H(s) in Drill 4.11

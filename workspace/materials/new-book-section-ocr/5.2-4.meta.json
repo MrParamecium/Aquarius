@@ -1,0 +1,18 @@
+{
+  "sectionId": "5.2-4",
+  "sourcePages": [
+    "page-506",
+    "page-507"
+  ],
+  "usedPages": [
+    "page-506",
+    "page-507"
+  ],
+  "missingPages": [],
+  "foundStart": true,
+  "startLine": "5.2-4 Time-Reversal Property",
+  "foundEnd": true,
+  "endBeforeLine": "5.2-5 Convolution Property",
+  "endBeforeCode": "5.2-5",
+  "charCount": 1663
+}

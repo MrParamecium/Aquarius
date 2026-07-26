@@ -1,0 +1,67 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 359 — #30
+
+
+
+
+                                         4.2 Some Properties of the Laplace Transform            359
+
+I NITIAL AND F INAL VALUES
+In certain applications, it is desirable to know the values of x(t) as t → 0 and t → ∞ [initial
+and final values of x(t)] from the knowledge of its Laplace transform X(s). Initial and final value
+theorems provide such information.
+     The initial value theorem states that if x(t) and its derivative dx/dt are both Laplace
+transformable, then
+                                         x(0+ ) = lim sX(s)                                  (4.20)
+                                                 s→∞
+
+provided the limit on the right-hand side of Eq. (4.20) exists.
+    The final value theorem states that if both x(t) and dx/dt are Laplace transformable, then
+
+                                        lim x(t) = lim sX(s)                                  (4.21)
+                                       t→∞          s→0
+
+provided sX(s) has no poles in the RHP or on the imaginary axis. To prove these theorems, we
+begin by setting n = 1 in Eq. (4.15). Using the definition of the Laplace transform, we see that
+                                        # ∞
+                                              dx(t) −st
+                       sX(s) − x(0− ) =              e dt
+                                          0−    dt
+                                        # 0+                   # ∞
+                                               dx(t) −st            dx(t) −st
+                                      =              e dt +              e dt
+                                          0−     dt             0+    dt
+                                                    # ∞
+                                             0+         dx(t) −st
+                                      = x(t)0− +              e dt
+                                                       +  dt
+                                                      0
+                                                           # ∞
+                                                                 dx(t) −st
+                                      = x(0+ ) − x(0− ) +              e dt
+                                                             0+    dt
+Therefore,                                          # ∞
+                                                       dx(t) −st
+                                 sX(s) = x(0+ ) +           e dt
+                                                    0+  dt
+and
+                                                    # ∞
+                                                         dx(t) −st
+                           lim sX(s) = x(0+ ) + lim            e dt
+                          s→∞                   s→∞ 0+     dt
+                                                # ∞
+                                                    dx(t)          
+                                     = x(0+ ) +             lim e−st dt
+                                                 0+  dt s→∞
+                                          +
+                                     = x(0 )
+
+Comment. The initial value theorem applies only if X(s) is strictly proper (M < N), because for
+M ≥ N, lims→∞ sX(s) does not exist, and the theorem does not apply. In such a case, we can still
+find the answer by using long division to express X(s) as a polynomial in s plus a strictly proper
+fraction, where M < N. For example, by using long division, we can express
+
+                             s3 + 3s2 + s + 1               2s
+                                              = (s + 1) − 2
+                                s2 + 2s + 1              s + 2s + 1
+The inverse transform of the polynomial in s is in terms of δ(t), and its derivatives, which are zero
+at t = 0+ . In the foregoing case, the inverse transform of s + 1 is δ̇(t) + δ(t). Hence, the desired

@@ -1,0 +1,63 @@
+       “04-Lathi-C04” — 2017/9/25 — 19:46 — page 449 — #120
+
+
+
+
+                                                     4.11   The Bilateral Laplace Transform                  449
+
+and the Laplace transform of x(t) in Eq. (4.58) is
+
+                                      1        1
+                          X(s) = −        +           Re s > a and          Re s < b
+                                    s−b s−a
+                                      a−b
+                                =                   a < Re s < b                                          (4.61)
+                                  (s − b)(s − a)
+
+       Figure 4.58 shows x(t) and the ROC of X(s) for various values of a and b. Equation (4.61)
+indicates that the ROC of X(s) does not exist if a > b, which is precisely the case in Fig. 4.58f.
+Observe that the poles of X(s) are outside (on the edges) of the ROC. The poles of X(s) because of
+the anticausal component of x(t) lie to the right of the ROC, and those due to the causal component
+of x(t) lie to its left.
+       When X(s) is expressed as a sum of several terms, the ROC for   %X(s) is the intersection of
+(region common to) the ROCs of all the terms. In general, if x(t) = ki=1 xi (t), then the ROC for
+X(s) is the intersection of the ROCs (region common to all ROCs) for the transforms X1 (s), X2 (s),
+. . . , Xk (s).
+
+
+                                                                  x(t)                            jv
+        x(t)                         jv
+                                                                ebt          eat
+                eat
+                                                                                             a   0          b
+                                              s
+                                a   0                                 0            t
+            0         t
+                                                                                       (d)
+                          (a)
+
+                                                                          x(t)                    jv
+        x(t)                         jv                         ebt
+
+                                                                             eat
+                  eat
+                                              s                                              a   b 0
+                                    0     a                           0            t
+            0         t
+                                                                                       (e)
+                          (b)
+
+                                                                          x(t)                    jv
+        x(t)                         jv                         ebt
+                                                                                 ab
+                                                                                                     No region of
+                                                                                                     convergence
+                                                                             eat
+      ebt
+                                                                                                 0
+                                              s
+                                    0     b                           0            t
+            0         t
+                                                                                       (f)
+                          (c)
+Figure 4.58 Various two exponential signals and their regions of convergence.

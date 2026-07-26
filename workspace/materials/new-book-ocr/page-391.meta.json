@@ -1,0 +1,18 @@
+{
+  "chapter": "4",
+  "section": "4.6",
+  "subsection": null,
+  "title": "System Realization 391",
+  "summary": "This page covers 4.6 (System Realization 391). OCR text begins with: 4.6 System Realization 391 X(s) V(s) b0 Y(s) X(s) b0 Y(s) 1 1 1 s s s \u0002a1 b1 \u0002a1 b1 1 1 1 s s s",
+  "keywords": [
+    "4.6",
+    "System Realization 391",
+    "differential equation",
+    "LTIC system"
+  ],
+  "has_math": true,
+  "page_type": "text",
+  "book_page": "page-391",
+  "figures": [],
+  "metadata_model": "local-pdftotext-pymupdf-2026-05-09"
+}
