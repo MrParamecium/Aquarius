@@ -23,7 +23,7 @@ const FILE = path.join(__dirname, '..', 'app', 'style.css');
 const css = fs.readFileSync(FILE, 'utf8');
 const decls = parseDeclarations(css);
 
-const VIEWS = ['#feedbackView', '.sidebar'];  // ← set to surfaces currently under strip (see header)
+const VIEWS = ['.sidebar'];  // ← set to surfaces currently under strip (see header)
 
 for (const view of VIEWS) {
   // !important decls whose selector mentions this view ID

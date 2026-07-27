@@ -1,0 +1,3 @@
+{"file":".trellis/spec/app/architecture.md","reason":"验收删除后的运行边界，确认只移除 Feedback Board，认证、用户记忆、会话和教学链路保持完整。"}
+{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"复核 Feedback Board 样式删除没有改变其他页面的选择器集合、特异性和级联结果。"}
+{"file":".trellis/spec/css/verification.md","reason":"按仓库规定复核 CSS Probe、视觉基线、截图有效性和剩余视图回归。"}

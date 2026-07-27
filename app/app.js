@@ -172,7 +172,6 @@ function maybeBootRestoreLastLocation() {
       welcome: showWelcome,
       settings: showSettingsView,
       preference: showPreferenceView,
-      feedback: showFeedbackView,
       courseTracker: showCourseTrackerView,
       mistakeNotebook: showMistakeNotebookView
     };
@@ -593,7 +592,6 @@ const welcomeScreen = document.getElementById('welcomeScreen');
 const answerScreen  = document.getElementById('answerScreen');
 const learnView     = document.getElementById('learnView');
 const settingsView  = document.getElementById('settingsView');
-const feedbackView = document.getElementById('feedbackView');
 const courseTrackerView = document.getElementById('courseTrackerView');
 const loginView     = document.getElementById('loginView');
 const appShell      = document.querySelector('.app');
@@ -602,17 +600,10 @@ const topbarBreadcrumb = document.getElementById('topbarBreadcrumb');
 const navHomeBtn = document.getElementById('navHomeBtn');
 const navSyllabusBtn = document.getElementById('navSyllabusBtn');
 const navCourseTrackerBtn = document.getElementById('navCourseTrackerBtn');
-const navFeedbackBtn = document.getElementById('navFeedbackBtn');
 const navSettingsBtn = document.getElementById('sidebarSettingsBtn');
 const sidebarSyllabusPanel = document.getElementById('sidebarSyllabusPanel');
 const welcomeCoverBtn = document.getElementById('welcomeCoverBtn');
 const settingsPageBackBtn = document.getElementById('settingsPageBackBtn');
-const feedbackCloseBtn = document.getElementById('feedbackCloseBtn');
-const feedbackSubmitBtn = document.getElementById('feedbackSubmitBtn');
-const feedbackRefreshBtn = document.getElementById('feedbackRefreshBtn');
-// feedbackNameInput/TitleInput/BodyInput, feedbackList, feedbackStatus moved to
-// feedback-board.js (only that module reads them).
-
 const courseTrackerCloseBtn = document.getElementById('courseTrackerCloseBtn');
 const courseTrackerResetBtn = document.getElementById('courseTrackerResetBtn');
 const courseTrackerTableBody = document.getElementById('courseTrackerTableBody');
@@ -715,9 +706,6 @@ if (navMistakeNotebookBtn) {
 if (navPreferenceBtn) {
   navPreferenceBtn.addEventListener('click', showPreferenceView);
 }
-if (navFeedbackBtn) {
-  navFeedbackBtn.addEventListener('click', showFeedbackView);
-}
 if (welcomeCoverBtn) {
   welcomeCoverBtn.addEventListener('click', () => toggleSyllabusPanel(true));
 }
@@ -730,15 +718,6 @@ if (preferencePageBackBtn) {
   preferencePageBackBtn.addEventListener('click', () => {
     showWelcome();
   });
-}
-if (feedbackCloseBtn) {
-  feedbackCloseBtn.addEventListener('click', showWelcome);
-}
-if (feedbackRefreshBtn) {
-  feedbackRefreshBtn.addEventListener('click', loadFeedbackBoard);
-}
-if (feedbackSubmitBtn) {
-  feedbackSubmitBtn.addEventListener('click', submitFeedbackItem);
 }
 if (courseTrackerCloseBtn) {
   courseTrackerCloseBtn.addEventListener('click', showWelcome);
@@ -4332,7 +4311,6 @@ function showWelcome() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4353,7 +4331,6 @@ function showAnswer(question) {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4370,7 +4347,6 @@ function showLearnView() {
   learnView.classList.remove('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4387,7 +4363,6 @@ function showSettingsView() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.remove('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4406,7 +4381,6 @@ function showPreferenceView() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.remove('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4417,25 +4391,6 @@ function showPreferenceView() {
   recordLastLocation('preference');
 }
 
-function showFeedbackView() {
-  if (appShell) appShell.classList.remove('hidden');
-  welcomeScreen.classList.add('hidden');
-  answerScreen.classList.add('hidden');
-  learnView.classList.add('hidden');
-  if (settingsView) settingsView.classList.add('hidden');
-  if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.remove('hidden');
-  if (courseTrackerView) courseTrackerView.classList.add('hidden');
-  if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
-  if (loginView) loginView.classList.add('hidden');
-  if (topbar) topbar.classList.add('hidden');
-  setWorkspaceAccountBarVisible(false);
-  clearToc();
-  updateSidebarNavActive('feedback');
-  loadFeedbackBoard();
-  recordLastLocation('feedback');
-}
-
 function showCourseTrackerView() {
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
@@ -4443,7 +4398,6 @@ function showCourseTrackerView() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.remove('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4462,7 +4416,6 @@ function showMistakeNotebookView() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.remove('hidden');
   if (loginView) loginView.classList.add('hidden');
@@ -4494,7 +4447,6 @@ function showLoginView() {
   learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
   if (preferenceView) preferenceView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (loginView) loginView.classList.remove('hidden');
@@ -4521,7 +4473,6 @@ function updateSidebarNavActive(key) {
   if (navCourseTrackerBtn) navCourseTrackerBtn.classList.toggle('active', key === 'course-tracker');
   if (navMistakeNotebookBtn) navMistakeNotebookBtn.classList.toggle('active', key === 'mistake-notebook');
   if (navPreferenceBtn) navPreferenceBtn.classList.toggle('active', key === 'preference');
-  if (navFeedbackBtn) navFeedbackBtn.classList.toggle('active', key === 'feedback');
   if (navSettingsBtn) navSettingsBtn.classList.toggle('active', key === 'settings');
 }
 

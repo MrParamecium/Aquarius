@@ -71,12 +71,7 @@ module.exports = function createPgStore(deps) {
             messages   JSONB NOT NULL DEFAULT '[]',
             created_at TIMESTAMPTZ NOT NULL, updated_at TIMESTAMPTZ NOT NULL
         )`,
-        `CREATE INDEX IF NOT EXISTS chat_sessions_uid_updated ON chat_sessions (uid, updated_at DESC)`,
-        `CREATE TABLE IF NOT EXISTS feedback_items (
-            id         TEXT  PRIMARY KEY,
-            data       JSONB NOT NULL,
-            created_at TIMESTAMPTZ NOT NULL
-        )`
+        `CREATE INDEX IF NOT EXISTS chat_sessions_uid_updated ON chat_sessions (uid, updated_at DESC)`
     ];
 
     const JSONB_CAP_BYTES = 64 * 1024;
@@ -277,54 +272,6 @@ module.exports = function createPgStore(deps) {
         }
     }
 
-    async function readFeedbackBoard() {
-        try {
-            const result = await pool.query('SELECT data FROM feedback_items ORDER BY created_at DESC');
-            return { items: result.rows.map((row) => row.data) };
-        } catch (e) {
-            console.warn('[db] readFeedbackBoard failed:', e.message);
-            return { items: [] };
-        }
-    }
-
-    // Returns true when the whole-board replace committed, false otherwise.
-    async function writeFeedbackBoard(board) {
-        const items = Array.isArray(board && board.items) ? board.items : [];
-        let client;
-        try {
-            client = await pool.connect();
-        } catch (e) {
-            console.warn('[db] writeFeedbackBoard failed:', e.message);
-            return false;
-        }
-        try {
-            await client.query('BEGIN');
-            await client.query('DELETE FROM feedback_items');
-            const rows = items.filter((item) => item && item.id);
-            if (rows.length) {
-                // One multi-row INSERT via unnest instead of up-to-300
-                // sequential round-trips — posting feedback is user-facing
-                // latency.
-                await client.query(
-                    'INSERT INTO feedback_items (id, data, created_at) SELECT * FROM unnest($1::text[], $2::jsonb[], $3::timestamptz[])',
-                    [
-                        rows.map((item) => item.id),
-                        rows.map((item) => JSON.stringify(item)),
-                        rows.map((item) => item.createdAt || new Date().toISOString()),
-                    ]
-                );
-            }
-            await client.query('COMMIT');
-            return true;
-        } catch (e) {
-            try { await client.query('ROLLBACK'); } catch (_) {}
-            console.warn('[db] writeFeedbackBoard failed:', e.message);
-            return false;
-        } finally {
-            client.release();
-        }
-    }
-
     return {
         init,
         readUserMemory,
@@ -333,7 +280,5 @@ module.exports = function createPgStore(deps) {
         readSessionFile,
         writeSessionFile,
         deleteSessionForUid,
-        readFeedbackBoard,
-        writeFeedbackBoard,
     };
 };

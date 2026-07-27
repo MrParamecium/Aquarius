@@ -70,21 +70,17 @@ tools/
 ├── css-probe.js                   (computed-style floor probe; run by `npm run check`)
 ├── css-probe-baseline.json        (committed proof artifact for css-probe --check)
 ├── css-probe-report.md            (last css-probe run output; regenerated each run, git-ignored)
-├── .harness-state/                (seeded-fixture backups for views 14b/03b; files exist only
-│                                   between seed and restore, git-ignored)
 ├── find-dead-redeclarations.js    (dead-redeclaration validator; `npm run check`)
 ├── check-harness-exports.js       (asserts required window.* exports; `npm run check`)
 ├── test-lesson-open-no-hang.js    (legacy Playwright regression: lesson open must not hang)
 ├── test-ui-friction-v123.js       (legacy UI friction regression)
 ├── test-data-modules-shape.js     (assertion suite for app/data/*.js exports)
-├── fixtures/                      (committed test fixtures, e.g. feedback-board.populated.json)
 ├── _extract-view-important.js     ┐  Phase-3.6 !important-strip arbiter toolchain.
 ├── _strip-view-important.js       │  Excluded from `npm run check` by design (see CLAUDE.md)
 ├── _grow-keep-from-report.js      │  but documented in .trellis/spec/css/* as the reusable
-├── _view-cascade-probe.js         │  strip procedure and still named in open backlog items
-├── _probe-harness-gap.js          ┘  (docs/phase3_deferred.md) — NOT spent scaffolding.
+├── _view-cascade-probe.js         ┘  strip procedure and still named in open backlog items
 ├── _keep-important.json           ┐  committed load-bearing cascade state (see .gitignore
-├── _view-important.json           ┘  comments); required by css-probe.js and the strip loop.
+├── _view-important.json           ┘  comments); required by the reusable strip loop.
 ├── _view-cascade-baseline.json    (~360M regenerated baseline; git-ignored)
 ├── _view-cascade-report.md        ┐  arbiter flip reports; regenerated each
 ├── _allstrip-flips.md             │  arbiter run (git-ignored)

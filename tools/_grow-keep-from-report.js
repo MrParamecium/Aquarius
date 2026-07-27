@@ -40,9 +40,9 @@ for (const [view, list] of Object.entries(cand)) {
   for (const d of list) candidates.push({ view, ...d });
 }
 
-// CSS-token word-boundary regex. A token is `.sidebar`, `#feedbackView`, etc.;
+// CSS-token word-boundary regex. A token is `.sidebar`, `#settingsView`, etc.;
 // it must NOT match `.sidebar-collapsed`, `.sidebar-toggle`, `.app-sidebar`,
-// or `#feedbackSubmitBtnIcon`. CSS identifier chars are [A-Za-z0-9_-]; a token
+// or `#settingsSaveBtnIcon`. CSS identifier chars are [A-Za-z0-9_-]; a token
 // match ends at any non-ident char (space, `.`, `#`, `:`, `>`, `+`, `~`, `,`,
 // `[`, `{`, end-of-string). The leading boundary is start-of-string or any
 // non-ident char EXCEPT `.`/`#` (those are part of token's own leading char).
@@ -63,7 +63,7 @@ if (FORCE_MIXED) {
   let mixedAdded = 0;
   for (const c of candidates) {
     const arms = c.selector.split(',').map(s => s.trim()).filter(Boolean);
-    const target = c.view;          // e.g. '.sidebar' or '#feedbackView'
+    const target = c.view;          // e.g. '.sidebar' or '#settingsView'
     // Use word-boundary matching: `.sidebar-collapsed` arm is NOT a `.sidebar`
     // arm (different element). `:root[data-theme=...]` and `@media` wrappers
     // count as target-arms (they affect the same subtree's cascade context).
@@ -82,7 +82,7 @@ if (FORCE_MIXED) {
 // over-keep wildly (any candidate selector containing `div` matches every
 // flipping div). #id and .class tokens are precise enough.
 //
-// `viewRoot` is the candidate's c.view (e.g. `.sidebar` or `#feedbackView`) —
+// `viewRoot` is the candidate's c.view (e.g. `.sidebar` or `#settingsView`) —
 // for tagless elements, that's the only safe fallback so the sentinel matches
 // the view's own root rules instead of being hardcoded to feedback.
 function tokensOf(desc, viewRoot) {
@@ -96,8 +96,7 @@ function tokensOf(desc, viewRoot) {
   // For tagless elements (e.g. plain `div`), fall back to the surface's own
   // root token — a plain `div` flip without identifying classes IS the view
   // root or a structural wrapper styled via the view's root selector. The
-  // sentinel was previously hardcoded to `#feedbackView`, which broke convergence
-  // on tagless sidebar flips.
+  // A hardcoded view root breaks convergence on tagless flips from other surfaces.
   if (tokens.size === 0) tokens.add(viewRoot);
   return tokens;
 }
@@ -129,12 +128,11 @@ const PSEUDO_PROPS = new Set([
   'display', 'top', 'left', 'right', 'bottom', 'position',
 ]);
 
-// `desc` lives in a state row like `feedback | dawn | 1280 | rest | [N] desc`;
+// `desc` lives in a state row like `sidebar-expanded | dawn | 1280 | rest | [N] desc`;
 // derive the candidate-view from the state's first segment so tagless fallback
 // uses the right view root. The state-prefix is the probe's view.id (e.g.
-// `feedback`, `sidebar-expanded`, `sidebar-collapsed`) while `c.view` is the
-// candidate selector (e.g. `#feedbackView`, `.sidebar`). They typically share
-// a descriptive substring — `feedback` ⊂ `#feedbackView`, `sidebar` ⊂ `.sidebar`.
+// `sidebar-expanded`, `sidebar-collapsed`) while `c.view` is the candidate
+// selector (for example `.sidebar`). They typically share a descriptive substring.
 // Match by case-insensitive substring containment so a contributor adding a
 // new view doesn't have to update this mapping. Sort candidate views by stripped-
 // length DESC so the LONGEST-matching candidate wins (avoids `sidebar` losing to

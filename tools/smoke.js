@@ -80,7 +80,7 @@ const checks = [
     { name: 'api-read-endpoints-non-5xx',
       kind: 'solo',
       run: async () => {
-          const endpoints = ['/api/feedback', '/api/sessions'];
+          const endpoints = ['/api/sessions'];
           const failures = [];
           for (const ep of endpoints) {
               const r = await fetch(`${BASE}${ep}`).catch(e => ({ status: 'err', _err: e.message }));

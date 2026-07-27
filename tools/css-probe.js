@@ -66,7 +66,6 @@ const {
     resetLessonChromeState,
     settleLesson,
     assertOrThrow,
-    FEEDBACK_FIXTURE_POPULATED_PATH,
 } = require('./test-utils.js');
 
 // Separate port from visual-diff.js (:9125) so the two harnesses can run
@@ -124,15 +123,8 @@ async function resetLearnChrome(page) {
         // S2-S12 all rest without .learn-textbook-active). When it DOES fire it cleans up after a
         // textbook state — clears .learn-textbook-active + restores the inline styles
         // _setLearnMode wrote on #learnBookOverlay / #learnExplainContent (app.js:2460/2469).
-        // NOTE: in the CURRENT ordering this branch is DORMANT — nothing calls resetLearnChrome
-        // after S13 (S13 is the last resetLearnChrome state; the S-feedback-* block uses
-        // openFeedbackBoard, which does not reset learn chrome). It is defensive cover that only
-        // activates if a future learn-chrome state is inserted after a textbook state.
-        // ORDERING CONTRACT: S13 must stay the last learn-chrome state. Its textbook class +
-        // inline styles persist across the cross-view nav into #feedbackView (benign today — the
-        // feedback probes read only #feedbackView nodes, proven byte-identical by --check), so any
-        // learn-chrome state appended AFTER the feedback block would inherit leaked textbook mode
-        // unless it resets first. Kept LOCAL to css-probe → zero visual-diff blast radius;
+        // This cleanup is defensive cover for any future learn-chrome state inserted after a
+        // textbook state. Kept LOCAL to css-probe so it carries zero visual-diff blast radius;
         // typeof-guarded so a rename fails LOUD in S13's winner sentinel, not silently here.
         try {
             const lb = document.getElementById('learnBody');
@@ -371,183 +363,6 @@ function bandState(id, width, sentinel) {
         },
         probes: NARROW_PROBES,
     };
-}
-
-// ---------- #feedbackView floor guard (D1, REFACTOR_DONE §A0) ----------
-// The committed durable guard for the feedback `!important` floor (#118 left 0
-// feedback states here, so the 472-decl floor was previously unguarded against
-// future edits). These states render the seeded multi-tone board (route-intercepted
-// — no disk write, so the gitignored live board `app/users/feedback-board.json` is
-// never touched and there is no restore step) and pin the LITERAL cascade-winning
-// value of every floor-carrying property, on representative tone / is-left|right /
-// reply-context nodes. They are the FIRST cross-view-navigating states, so they are
-// appended LAST in PROBE_STATES (after N4): any learn/band state running after a
-// feedback nav would find #learnView hidden → __MISSING__.
-const FEEDBACK_FIXTURE = require(FEEDBACK_FIXTURE_POPULATED_PATH);
-// Stringified once at load — the route handler reuses this body for every intercepted
-// request instead of re-serialising the fixture per navigation.
-const FEEDBACK_FIXTURE_BODY = JSON.stringify(FEEDBACK_FIXTURE);
-
-// The 55 floor-carrying property names (extracted by _extract-view-important.js with
-// its VIEWS const = ['#feedbackView']; the committed tools/_view-important.json is its
-// output). Rest probes are DERIVED from this so the guard covers every floor property
-// and stays tied to the actual floor declarations (the mutation check exercises this).
-const FEEDBACK_FLOOR = require('./_view-important.json')['#feedbackView'];
-// Fail loud, not cryptic: this durable guard derives its entire rest-probe set from the
-// frozen `#feedbackView` floor list. If _view-important.json is ever regenerated for
-// another surface (the strip pipeline rotates VIEWS), this key goes undefined and the
-// guard would otherwise die with "undefined is not iterable" at buildFeedbackRestProbes.
-if (!Array.isArray(FEEDBACK_FLOOR)) {
-    throw new Error(
-        'css-probe: tools/_view-important.json no longer carries the "#feedbackView" key. '
-        + 'The durable feedback guard needs that frozen floor list; do not regenerate '
-        + '_view-important.json for another surface without giving this guard its own snapshot.');
-}
-
-// Selectors whose cascade state the populated REST board does not render (they belong
-// to dedicated focus/hover/disabled states below, or to nodes absent when the board is
-// populated): non-rest pseudo-classes, the runtime `.is-target` class, the data-kind
-// status variants, the empty-board node, and the dusk/dark theme override. Excluded
-// from the rest probe set so the baseline does not fail closed on a __MISSING__ element.
-// COVERAGE NOTE (dusk/dark `data-theme` box-shadow, e.g. L27385/L27386): this guard runs
-// dawn only, so the THEMED box-shadow variants are not directly pinned here; the box-shadow
-// PROPERTY is still covered by the 17 dawn rest probes (e.g. .feedback-thread / .feedback-reply),
-// and the themed lines are backed by the D2 arbiter's documented 3-theme matrix {dawn,dusk,dark}.
-// A dawn-only guard is the proportionate durable guard (design.md §2.4); the arbiter is the
-// exhaustive strip gate — so a dusk-only probe state is intentionally NOT added.
-const FEEDBACK_NONREST_RE = /:hover|:active|:disabled|:focus|is-target|data-kind|feedback-empty|data-theme/;
-
-// Build the rest probe list programmatically: take each floor declaration's first
-// comma-part as a representative node, lift any trailing pseudo-element, and skip the
-// cross-view L24702 part (its first part names #learnView — absent on the feedback
-// page) in favour of the feedback close button that SHARES the rule. Deduped by
-// (selector, pseudo, property). Covers the 52 rest-reachable floor properties; the
-// remaining 3 (outline / cursor / filter) are covered by the focus + disabled states.
-function buildFeedbackRestProbes() {
-    const seen = new Set();
-    const probes = [];
-    for (const decl of FEEDBACK_FLOOR) {
-        if (FEEDBACK_NONREST_RE.test(decl.selector)) continue;
-        let first = decl.selector.split(',')[0].trim();
-        // L24702 cross-view grouped rule — its first comma-part is the (absent)
-        // #learnView close button. Probe the feedback close button instead, which is
-        // in the SAME grouped rule, so the shared `border` floor value is still pinned.
-        if (first.startsWith('#learnView')) first = '#feedbackView #feedbackCloseBtn.feature-close-btn';
-        let pseudo = null;
-        const pm = first.match(/::(before|after|placeholder)$/);
-        if (pm) { pseudo = pm[0]; first = first.slice(0, pm.index); }
-        const key = `${first}||${pseudo || ''}||${decl.prop}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        probes.push([first, pseudo, decl.prop]);
-    }
-    return probes;
-}
-const FEEDBACK_REST_PROBES = buildFeedbackRestProbes();
-
-// Open the feedback view on the seeded multi-tone board. Route-interception (mechanism
-// A, design.md §2.2): stub GET /api/feedback with the populated fixture BEFORE nav, so
-// the production loadFeedbackBoard → renderFeedbackBoard path runs against it and no
-// on-disk file is touched. (showFeedbackView re-runs loadFeedbackBoard on every nav, so
-// any localStorage / pre-render injection would be clobbered — route-interception is the
-// only mechanism that survives the navigation fetch without a disk write.)
-async function openFeedbackBoard(page) {
-    // Register the GET /api/feedback stub once per page (each feedback state calls this;
-    // stacking identical handlers is harmless but the guard keeps it to a single route).
-    if (!page.__feedbackRouteRegistered) {
-        await page.route('**/api/feedback', (route) => route.fulfill({
-            contentType: 'application/json',
-            body: FEEDBACK_FIXTURE_BODY,
-        }));
-        page.__feedbackRouteRegistered = true;
-    }
-    // showFeedbackView() re-runs loadFeedbackBoard() on navigation, re-rendering the
-    // board from scratch. But #feedbackSubmitBtn lives in the STATIC shell (not the
-    // rendered list), so a prior state's `disabled=true` would persist — and hover is
-    // pointer-driven. Floor the interaction state explicitly so each feedback state
-    // starts clean regardless of order: un-disable the submit button, blur, move the
-    // mouse off any control. (Idempotent; harmless on the first entry.)
-    await page.mouse.move(0, 0).catch(() => {});
-    await page.evaluate(() => {
-        document.activeElement?.blur?.();
-        const btn = document.getElementById('feedbackSubmitBtn');
-        if (btn) btn.disabled = false;
-    });
-    await page.click('#navFeedbackBtn');
-    await page.waitForSelector('#feedbackView:not(.hidden)', { timeout: 8000 });
-    await page.waitForFunction(
-        () => document.querySelectorAll('#feedbackView .feedback-thread').length > 0,
-        { timeout: 8000 });
-    await page.waitForTimeout(200);
-}
-
-// Jump every running CSS transition/animation on the page to its end state, then settle
-// a frame, so a hover-state probe reads the SETTLED cascade-determined transform — not a
-// mid-tween frame (the refresh/submit hover transforms animate via `transition` floor
-// decls). Chromium exposes CSS transitions through getAnimations(), so .finish() lands
-// them on the cascade-determined target regardless of specificity / !important; the
-// duration wait is a belt-and-braces fallback for any transition .finish() cannot reach.
-async function settleFeedbackHover(page) {
-    await page.waitForTimeout(260); // > the 170-180ms hover transition durations
-    await page.evaluate(() => {
-        document.getAnimations().forEach((a) => { try { a.finish(); } catch (_) {} });
-    });
-    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
-}
-
-// Single-property winner sentinel (R8) for the focus/disabled/hover interaction states:
-// read `prop` on `sel` and fail closed unless it equals the discriminating floor value
-// `expected`, so the baseline cannot bake an inactive floor that --check forever-passes.
-// `ref` names the floor source line + pseudo-class for the failure message. One uniform
-// getPropertyValue read replaces the per-state ad-hoc .outlineStyle/.cursor/.transform
-// accessors. (Probes are unchanged — this only gates whether the state is trusted.)
-async function assertFeedbackSentinel(page, label, sel, prop, expected, ref) {
-    const got = await page.evaluate(([s, p]) => {
-        const el = document.querySelector(s);
-        return el ? getComputedStyle(el).getPropertyValue(p) : '__MISSING__';
-    }, [sel, prop]);
-    assertOrThrow(got === expected,
-        `${label}: ${sel} { ${prop} } is "${got}", expected "${expected}" (${ref}). The floor !important rule is not winning — baseline invalid.`);
-}
-
-// Winner sentinel (R8 — non-negotiable, mirrors assertFollowupBarWinner / S12): assert
-// that REAL floor `!important` declarations are the live cascade winners BEFORE any probe
-// is trusted, so the baseline cannot bake an inactive/wrong floor and --check forever-pass
-// a broken guard (fail-open). Discriminating literals (verified against the live board):
-//   • is-left ::before  left  = -5px   (L25067) — base .feedback-reply::before is -9px (L20917)
-//   • is-right ::before right = -5px   (L25071)
-//   • tone[class*] thread ::after width = 4px (L25001) AND its background carries the
-//     tone-0 token `56, 189, 248` (L25003) — proves the tone rule won, not a base rule
-//   • tone reply-context border-color = rgba(45, 212, 191, 0.22) (L24984) — tone-2 token,
-//     proves the tone+reply-context floor rule won
-//   • close button border-top-width = 0px (L24702 shared cross-view rule)
-async function assertFeedbackFloorWinner(page, label) {
-    const v = await page.evaluate(() => {
-        const cs = (sel, pseudo, prop) => {
-            const el = document.querySelector(sel);
-            return el ? getComputedStyle(el, pseudo || undefined).getPropertyValue(prop) : '__MISSING__';
-        };
-        return {
-            isLeftBeforeLeft: cs('#feedbackView .feedback-reply.is-left', '::before', 'left'),
-            isRightBeforeRight: cs('#feedbackView .feedback-reply.is-right', '::before', 'right'),
-            toneRailWidth: cs('#feedbackView .feedback-thread[class*="tone-"]', '::after', 'width'),
-            toneRailBg: cs('#feedbackView .feedback-thread[class*="tone-"]', '::after', 'background-image'),
-            toneCtxBorder: cs('#feedbackView .feedback-reply[class*="tone-"] .feedback-reply-context', null, 'border-color'),
-            closeBorder: cs('#feedbackView #feedbackCloseBtn.feature-close-btn', null, 'border-top-width'),
-        };
-    });
-    assertOrThrow(v.isLeftBeforeLeft === '-5px',
-        `${label}: .feedback-reply.is-left::before { left } is "${v.isLeftBeforeLeft}", expected "-5px" (L25067 is-left lane floor). The is-left !important rule is not winning — baseline invalid.`);
-    assertOrThrow(v.isRightBeforeRight === '-5px',
-        `${label}: .feedback-reply.is-right::before { right } is "${v.isRightBeforeRight}", expected "-5px" (L25071 is-right lane floor). The is-right !important rule is not winning — baseline invalid.`);
-    assertOrThrow(v.toneRailWidth === '4px',
-        `${label}: tone thread ::after { width } is "${v.toneRailWidth}", expected "4px" (L25001 tone accent rail floor). The tone !important rule is not winning — baseline invalid.`);
-    assertOrThrow(v.toneRailBg.includes('56, 189, 248'),
-        `${label}: tone thread ::after background lacks the tone-0 token "56, 189, 248" (got "${v.toneRailBg}"). The tone !important rule is not winning — baseline invalid.`);
-    assertOrThrow(v.toneCtxBorder === 'rgba(45, 212, 191, 0.22)',
-        `${label}: tone reply-context { border-color } is "${v.toneCtxBorder}", expected "rgba(45, 212, 191, 0.22)" (L24984 tone-2 reply-context floor). The tone+reply-context !important rule is not winning — baseline invalid.`);
-    assertOrThrow(v.closeBorder === '0px',
-        `${label}: feedback close button { border } is "${v.closeBorder}", expected "0px" (L24702 cross-view close-button floor). The shared !important rule is not winning — baseline invalid.`);
 }
 
 const PROBE_STATES = [
@@ -800,7 +615,7 @@ const PROBE_STATES = [
 
     // ---- A0 S4–S11 composer / explain-rail / overview states (REFACTOR_DONE §A0
     // gate 2 for A4). In-lesson (they mutate the one open §1.1-1 page) so they slot
-    // AFTER the N-band states and BEFORE the cross-view feedback block. Composer/
+    // AFTER the N-band states and BEFORE the final S13 textbook state. Composer/
     // explain states (S4/S6/S7/S9) run first in NORMAL mode; the overview states
     // (S10/S11) run LAST so their _learnLayoutMode / inline-style residue cannot leak
     // into a composer state (belt; resetLearnChrome's _learnLayoutMode floor is the
@@ -1070,113 +885,6 @@ const PROBE_STATES = [
         probes: S13_PROBES,
     },
 
-    // ---- #feedbackView floor guard (D1). Appended LAST — these are the FIRST
-    // cross-view-navigating states (they leave the lesson page for #feedbackView). ----
-    // CONTRACT: do NOT append a learn-chrome state after this block. S13 leaves
-    // .learn-textbook-active + textbook inline styles on the (now-hidden) lesson DOM, and the
-    // feedback states use openFeedbackBoard (no resetLearnChrome), so a later learn state would
-    // start from leaked textbook mode. New learn-chrome states belong BEFORE S13; see the S13
-    // cleanup floor in resetLearnChrome for the full rationale.
-    {
-        // S-feedback-rest — the populated multi-tone board at desktop rest. Pins the
-        // literal cascade-winning value of every rest-reachable floor property (52 of
-        // the 55) on representative tone-0..5 / is-left|right / reply-context nodes;
-        // the remaining 3 (outline / cursor / filter) are covered by the focus +
-        // disabled states below. Probes derived from _view-important.json so the guard
-        // stays tied to the actual floor declarations.
-        state: 'S-feedback-rest',
-        enter: async (page) => {
-            await openFeedbackBoard(page);
-            await assertFeedbackFloorWinner(page, 'S-feedback-rest');
-        },
-        probes: FEEDBACK_REST_PROBES,
-    },
-    {
-        // S-feedback-input-focus — covers the focus floor `outline: none !important`
-        // (L27177) on the compose name input. The sentinel proves the focused-input
-        // rule won (a global `input:focus { outline }` would otherwise paint a ring).
-        state: 'S-feedback-input-focus',
-        enter: async (page) => {
-            await openFeedbackBoard(page);
-            await page.focus('#feedbackView .feedback-input');
-            await assertFeedbackSentinel(page, 'S-feedback-input-focus',
-                '#feedbackView .feedback-input', 'outline-style', 'none', 'L27177 :focus floor');
-        },
-        probes: [
-            ['#feedbackView .feedback-input', null, 'outline'],
-            ['#feedbackView .feedback-textarea', null, 'outline'],
-        ],
-    },
-    {
-        // S-feedback-submit-disabled — covers the disabled-state floor props `cursor:
-        // wait` (L25244) and `filter: saturate(0.82)` (L25246), the only two floor
-        // properties carried solely by #feedbackSubmitBtn:disabled. css-probe can
-        // render this state (set .disabled on the button) even though the arbiter
-        // deliberately cannot (synthetic disabled gave false positives) — that is
-        // exactly why the durable guard probes it. Sentinel: cursor === 'wait'.
-        state: 'S-feedback-submit-disabled',
-        enter: async (page) => {
-            await openFeedbackBoard(page);
-            await page.evaluate(() => {
-                const btn = document.getElementById('feedbackSubmitBtn');
-                if (btn) btn.disabled = true;
-            });
-            await assertFeedbackSentinel(page, 'S-feedback-submit-disabled',
-                '#feedbackSubmitBtn', 'cursor', 'wait', 'L25244 :disabled floor');
-        },
-        probes: [
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'cursor'],
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'filter'],
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'opacity'], // 0.74 (L25245) — same disabled rule
-        ],
-    },
-    {
-        // S-feedback-refresh-hover — the refresh icon button's hover floor (transform /
-        // border-color / box-shadow, L20962-20964 + the icon rotate L20971). These are
-        // the load-bearing hover floor decls most exposed to a global interactive rule.
-        state: 'S-feedback-refresh-hover',
-        enter: async (page) => {
-            await openFeedbackBoard(page);
-            await page.hover('#feedbackView .feedback-refresh-icon-btn');
-            // The hover transform is animated by a `transition` floor decl (L20949).
-            // Jump every running transition/animation to its end state so the probe
-            // reads the SETTLED cascade-determined value, not a mid-tween frame.
-            await settleFeedbackHover(page);
-            // translateY(-1px) → matrix(1, 0, 0, 1, 0, -1)
-            await assertFeedbackSentinel(page, 'S-feedback-refresh-hover',
-                '#feedbackView .feedback-refresh-icon-btn', 'transform', 'matrix(1, 0, 0, 1, 0, -1)',
-                'L20962 :hover translateY(-1px) floor');
-        },
-        probes: [
-            ['#feedbackView .feedback-refresh-icon-btn', null, 'transform'],
-            ['#feedbackView .feedback-refresh-icon-btn', null, 'border-color'],
-            ['#feedbackView .feedback-refresh-icon-btn', null, 'box-shadow'],
-            ['#feedbackView .feedback-refresh-icon-btn i', null, 'transform'],
-        ],
-    },
-    {
-        // S-feedback-submit-hover — the submit button's hover floor (transform /
-        // border-color / box-shadow, L25225-25227 + the icon transform L25235). Same
-        // role as refresh-hover for the primary CTA.
-        state: 'S-feedback-submit-hover',
-        enter: async (page) => {
-            await openFeedbackBoard(page);
-            await page.hover('#feedbackView #feedbackSubmitBtn');
-            // Settle the animated hover transform (transition floor decl L25221) so the
-            // probe reads the settled end value, not a mid-tween frame.
-            await settleFeedbackHover(page);
-            // translateY(-2px) → matrix(1, 0, 0, 1, 0, -2)
-            await assertFeedbackSentinel(page, 'S-feedback-submit-hover',
-                '#feedbackView #feedbackSubmitBtn', 'transform', 'matrix(1, 0, 0, 1, 0, -2)',
-                'L25225 :hover translateY(-2px) floor');
-        },
-        probes: [
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'transform'],
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'border-color'],
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn', null, 'box-shadow'],
-            ['#feedbackView #feedbackSubmitBtn.feedback-primary-btn i', null, 'transform'],
-        ],
-    },
 ];
 
 // Read every probe tuple's resolved computed value for one state.

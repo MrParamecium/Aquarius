@@ -27,55 +27,20 @@ opens the view and asserts it is active, and list **every property touched by a 
 the visible pixel). State-setting code lives at `app.js` L2686-2738 (`openLearnMode` / `applyLearnPanelFocusState`)
 and L3990-3992 (`is-chat-active`); DOM IDs at `index.html` L655/674/713/732/760/1495.
 
-### Authoring a cross-view probe state (the `#feedbackView` precedent)
+### 添加跨顶层视图的探针状态
 
-Every pre-existing probe state mutates the **same lesson page** the runner opens once at startup. A state that
-**navigates to a different top-level view** (the feedback board was the first such state added) carries four extra
-contracts, learned building the permanent `#feedbackView` floor guard:
+现有探针会复用启动时打开的同一个课程页。若以后新增会跳转到其他顶层视图的状态，必须遵守四条约束：
 
-1. **Append it LAST in `PROBE_STATES`.** The runner enters guest mode + opens a subtopic once, then loops the states
-   in array order. A cross-view-nav state hides `#learnView`; any in-lesson state running *after* it reads
-   `__MISSING__` and the run fails closed. All cross-view states go after the last in-lesson state (`N4`).
-2. **Assert a WINNER sentinel, not presence.** The `enter()` assert-as-entered must pin a **discriminating floor
-   value the `!important` actually wins** — e.g. `getComputedStyle(isLeftBefore,'::before').left === '-5px'` (the
-   `!important` rule) vs the base `-9px` it beats — NOT a presence check like `.feedback-thread count > 0`. A
-   presence assert **fails open**: the baseline bakes whatever value is live (even a broken or inactive floor) and
-   `--check` forever-passes it. Derive the sentinel from `_extract-view-important.js` output so it pins a real
-   load-bearing decl that has a known competitor.
-3. **Server-fetched data → `page.route` interception, never localStorage.** If the view re-fetches its data on every
-   navigation (feedback: `showFeedbackView()` → `loadFeedbackBoard()` → `fetch('/api/feedback')`), any localStorage
-   or pre-render injection is clobbered by the nav fetch. Register
-   `await page.route('**/api/<endpoint>', r => r.fulfill({ contentType:'application/json', body: JSON.stringify(fixture) }))`
-   **before** the nav click. This touches no disk, so there is **no restore step and no restore failure mode.**
-4. **Settle hover/focus transforms before snapshot.** A `:hover`/`:focus` state whose floor decl carries a
-   `transition` reads **mid-tween** at snapshot (`translateY(-0.9px)` instead of the resting `-2px`). Wait past the
-   transition duration, then `el.getAnimations().forEach(a => a.finish())` + a double-`requestAnimationFrame` before
-   probing — distinct from the `animation:none` freeze used for CSS `@keyframes` states above.
+1. **放在 `PROBE_STATES` 最后。** 顶层跳转会隐藏 `#learnView`，后续课程探针会读到 `__MISSING__`。
+2. **断言真正的级联胜者，而不是只检查元素存在。** 进入状态后应验证一个能区分竞争规则的具体计算值，避免把错误状态写进基线。
+3. **服务端数据用 `page.route` 拦截。** 在导航前返回固定夹具，不写本地运行时文件；若确实必须写文件，则要做字节级备份与恢复验证。
+4. **等待交互动画完全结束。** `:hover`、`:focus` 等状态应等待 transition 后执行 `getAnimations().forEach(a => a.finish())` 和双 `requestAnimationFrame`，再读取计算样式。
 
-> **Additive-only ≠ restore proof.** After adding a state, `git diff tools/css-probe-baseline.json` showing only the
-> new keys proves *no shared-chrome leak within the snapshot* — it does **NOT** prove any seeded fixture was
-> restored. A view's live data file may be **gitignored** (feedback: `app/users/feedback-board.json`), so a missed
-> restore is invisible to `git status` and `git checkout`. Guarantee restoration by *mechanism* (route interception
-> writes nothing) or by an explicit filesystem byte-equality assertion — never by `git status`.
-
-> **Gotcha — `_extract-view-important.js` writes its output.** Running it to read a view's floor property list
-> **overwrites `tools/_view-important.json`** as a side-effect (and a fresh extract may differ from the committed
-> copy — e.g. `.sidebar` 656→620). For inspection, read its stdout; after any intentional-or-accidental regen,
-> `git checkout tools/_view-important.json` to keep the change set scoped — `css-probe.js` consumes only the
-> `#feedbackView` key, so the `.sidebar` drift is correctness-neutral for a feedback task.
-
-> **Gotcha — regenerating `_view-important.json` after a strip silently shrinks css-probe coverage.**
-> `css-probe.js` derives its rest-probe set from `_view-important.json['#feedbackView']`. After a strip removes
-> `!important` from a decl, a fresh `_extract-view-important.js` run drops that decl from the floor list — so
-> re-extracting **and** re-baselining together would silently remove that property's probe from the durable guard
-> (e.g. the 7 D2 `border-radius` probes). The committed stale `_view-important.json` is currently **fail-closed
-> and beneficial** (it keeps those probes; a run missing them yields `__MISSING__` ≠ baseline → `--check` FAIL).
-> **Rule:** never regenerate `_view-important.json` + re-baseline `css-probe` in the same step without confirming
-> every previously-stripped property still appears in the rest-probe set.
+> `_extract-view-important.js` 会覆盖 `tools/_view-important.json`。当前该文件只保存侧栏声明；每次重新生成后都要确认目标表面、声明数量和行号有效性，再提交结果。
 
 ## visual-diff — spatial identity (catch-all)
 
-`visual-diff --check` is the layout/positioning catch-all. 35 views cover live chrome. Render-neutral = 0.000% on
+`visual-diff --check` is the layout/positioning catch-all. 33 views cover live chrome. Render-neutral = 0.000% on
 the relevant views.
 
 **Noise floor caveat (do not chase literal 0.000% everywhere):** `--check` is NOT 0.000% on every view even for a
@@ -116,13 +81,6 @@ needs **all five**:
    `setAttribute('style'` writing the stripped property on the affected elements (a JS inline write would
    interact with the cascade change), and confirm the stripped prop's `@media` breakpoints fall within the
    probed viewports {1280,1180,980,820,760}.
-
-> **Worked example (`#feedbackView` D2):** stripped 7 `border-radius !important` (4 NOCOMP, 1
-> higher-spec-same-value, 2 same-value-`!important`-competitor; **all competitors top-level**). All five gates
-> green; feedback `!important` 472 → 465. The 2 same-value-`!important` cases are the subtle ones: removing
-> `!important` drops the rule out of the important tier, but the cascade then picks the *later of the equal-spec
-> surviving `!important` rules* (same value), not a lower different-valued rule — provable only because every
-> competitor is top-level.
 
 ## Sequencing (per tranche)
 

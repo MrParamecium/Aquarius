@@ -39,9 +39,6 @@ const {
     resolveLessonCachePath,
     closeFeaturePopovers,
     maskLessonSidebar,
-    seedFeedbackFixture,
-    restoreFeedbackBoard,
-    FEEDBACK_FIXTURE_POPULATED_PATH,
     runFlow,
 } = require('./test-utils.js');
 
@@ -145,12 +142,9 @@ const COVERAGE_REPORT_PATH = path.join(TOOLS, 'visual-diff-coverage.json');
 // + docs/phase3_deferred.md §7d.8.
 //
 // Numbering convention for state-variant additions to an existing view: use
-// the existing view's NN with a lowercase letter suffix (NN[a-z]). Example:
-// view 14 captures the EMPTY feedback-board state and 14b captures the
-// POPULATED state — same page-key, adjacent semantic surface, no number
-// shift to the views after 14. A new view that does NOT share an existing
-// surface should take the next free integer (26, 27, …) instead. This
-// convention was set when adding 14b for Phase 3.5 v3 §9a (see PR #69).
+// the existing view's NN with a lowercase letter suffix (NN[a-z]). A new view
+// that does not share an existing surface should take the next free integer.
+// Existing view numbers stay stable when a surface is removed.
 
 // Pagination helper used by Phase 3.5 v2 views 21 + 22 to walk the lesson
 // pager until a sentinel selector lands in the current KP. Watches
@@ -218,10 +212,9 @@ const sharedViews = [
     } },
     // View 03 — Page A — mistake notebook EMPTY landing. Idempotent
     // localStorage clear at the top defends against a sibling view that
-    // might seed mistakes BEFORE this view (parallels the feedback-board
-    // restoreFeedbackBoard pattern at view 14). The harness's chromium
-    // context starts each run with empty localStorage so the clear is
-    // a no-op on clean runs.
+    // might seed mistakes before this view. The harness's Chromium context
+    // starts each run with empty localStorage, so the clear is a no-op on
+    // clean runs.
     //
     // INVARIANTS for the mistake-notebook localStorage key. None of these
     // are machine-enforced (the JS comment is the only contract); a
@@ -596,376 +589,6 @@ const sharedViews = [
             { timeout: 5000 }
         );
         await page.waitForTimeout(200);
-    } },
-    // View 14 — Page B — feedback board EMPTY resting state. loadFeedbackBoard()
-    // is async; wait until the "Loading suggestions..." placeholder is gone.
-    // Idempotent restore at top: if a prior --check run (or crashed --baseline)
-    // left tools/fixtures/feedback-board.populated.json seeded into app/users/,
-    // view 14b's content would leak into view 14. restoreFeedbackBoard deletes
-    // the seeded file ONLY when its content matches a known fixture (so real
-    // dev data is preserved — see test-utils.js for the safety contract).
-    //
-    // INVARIANT (PR #69 review finding #17): any future view that seeds the
-    // feedback board MUST run AFTER view 14, OR call restoreFeedbackBoard()
-    // in its own setup() prologue. View 14's assertOrThrow on .feedback-empty
-    // depends on this — a sibling view seeding feedback before 14 would fail
-    // the assertion in a misleading way.
-    { name: '14-feedback-board', page: 'B', setup: async (page) => {
-        restoreFeedbackBoard();
-        await page.click('#navFeedbackBtn');
-        await page.waitForSelector('#feedbackView:not(.hidden)', { timeout: 5000 });
-        await page.waitForFunction(() => {
-            const v = document.getElementById('feedbackView');
-            if (!v || v.classList.contains('hidden')) return false;
-            return !v.textContent.includes('Loading suggestions');
-        }, { timeout: 10000 });
-        // Confirm empty-state chrome — defends against the fixture leaking
-        // via a future code path that bypasses restoreFeedbackBoard.
-        const empty = await page.evaluate(() =>
-            !!document.querySelector('#feedbackView .feedback-empty')
-        );
-        assertOrThrow(empty, 'view 14: feedback board did not render the empty-state placeholder — fixture may have leaked from a prior run');
-        await page.waitForTimeout(300);
-    } },
-    // View 14b — Page B — POPULATED feedback board (Phase 3.5 v3 §9a). Seeds
-    // tools/fixtures/feedback-board.populated.json into app/users/feedback-
-    // board.json so the bridge's /api/feedback GET returns 2 threads + 6
-    // replies covering:
-    //   - tone-0..5 across thread 1 (toneForAuthor in feedback-board.js round-
-    //     robins per author per item; thread 1 has 6 distinct authors so
-    //     all 6 tones materialize)
-    //   - is-left + is-right reply lanes (laneForAuthor alternates each NEW
-    //     reply author starting at right)
-    //   - .feedback-reply.is-left .feedback-reply-context (Bravo has replyTo)
-    //   - .feedback-reply.is-right .feedback-reply-context (Charlie has replyTo)
-    //   - inter-thread spacing on .feedback-list (thread 2 sits below thread 1
-    //     so margin/gap regressions on the list container produce pixel diff)
-    //   - .feedback-replies gap rule, .feedback-thread-pin, .feedback-reply-count
-    // Then exercises BOTH .is-target variants by clicking once in each thread:
-    //   - Thread 1: Charlie's reply → .feedback-reply.is-target
-    //   - Thread 2: thread-head     → .feedback-thread-click-target.is-target
-    //     (the deferred-doc §9a entry-point asked for the head-click variant)
-    //
-    // Retroactively pixel-verifies G.3.2 (PR #64, 121 lines of #feedbackView
-    // deletions) and unlocks deferred §3a.i (feedback-author-tones 5-banner
-    // cascade collapse, ~140 lines) since tone-1..5 are now under harness
-    // coverage. Cleanup runs in the IIFE finally — see restoreFeedbackBoard
-    // call there. Path constant FEEDBACK_FIXTURE_POPULATED_PATH lives in
-    // test-utils.js so a sibling view (14c, …) shares one resolution site.
-    { name: '14b-feedback-board-populated', page: 'B', setup: async (page) => {
-        seedFeedbackFixture(FEEDBACK_FIXTURE_POPULATED_PATH);
-        // #feedbackRefreshBtn → loadFeedbackBoard() → fetch /api/feedback →
-        // renderFeedbackBoard(items). Refresh (rather than nav away + back)
-        // keeps Page B sticky and avoids re-running view 12/13 setup churn.
-        await page.click('#feedbackRefreshBtn');
-        await page.waitForSelector('#feedbackView .feedback-thread', { timeout: 5000 });
-        // The first .feedback-thread shows up before the SECOND thread + all
-        // replies render. renderFeedbackBoard is synchronous in the page tick
-        // following the fetch resolve, so a single rAF settle is enough.
-        // (Avoid page.waitForFunction here — its second-arg-options form is
-        // unreliable in this codebase's Playwright version, defaulting to a
-        // 30s timeout when no convergence happens.)
-        await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
-        const counts = await page.evaluate(() => ({
-            threads: document.querySelectorAll('#feedbackView .feedback-thread').length,
-            replies: document.querySelectorAll('#feedbackView .feedback-thread .feedback-reply').length,
-        }));
-        assertOrThrow(
-            counts.threads === 2 && counts.replies === 6,
-            `view 14b: expected 2 threads + 6 replies, got ${counts.threads} threads + ${counts.replies} replies`,
-        );
-        // Two .is-target variants are reachable via click:
-        //   - .feedback-reply.feedback-click-reply.is-target (click a reply)
-        //   - .feedback-thread-body.feedback-click-reply.is-target (click thread body <p>)
-        // Note: .feedback-thread-click-target.is-target IS NOT reachable —
-        // setFeedbackReplyTarget (feedback-board.js) looks up
-        // [data-feedback-reply-anchor="${target.id}"]; the thread-head
-        // binding passes target.id = item.id (the fixture's thread id), but
-        // the click-target div carries data-feedback-reply-anchor="thread"
-        // (literal). The id never matches, so .is-target never lands on
-        // .feedback-thread-click-target. Any CSS keyed on that combo is
-        // dead — calling it out so a future reader doesn't try to "cover"
-        // it via a different selector.
-        //
-        // Click 1 of 2: Charlie's reply on thread 1 → .feedback-reply.is-target.
-        await page.click('[data-feedback-reply-anchor="fb_reply_charlie"]');
-        await page.waitForSelector('#feedbackView .feedback-reply.is-target', { timeout: 2000 });
-        // Click 2 of 2: thread 2's BODY <p> → .feedback-thread-body.is-target.
-        // The body element is selected by data-feedback-reply-anchor="thread-body";
-        // scope to thread 2 by article id.
-        await page.click('article[data-feedback-id="fb_thread_fixture_02"] [data-feedback-reply-anchor="thread-body"]');
-        await page.waitForSelector(
-            'article[data-feedback-id="fb_thread_fixture_02"] .feedback-thread-body.is-target',
-            { timeout: 2000 },
-        );
-        // Both threads now show .feedback-reply-target chip un-hidden (one per thread).
-        const visibleChips = await page.evaluate(() =>
-            document.querySelectorAll('#feedbackView .feedback-reply-target:not(.hidden)').length
-        );
-        assertOrThrow(visibleChips === 2, `view 14b: expected 2 visible reply-target chips, got ${visibleChips}`);
-        await page.waitForTimeout(200);
-    } },
-    // View 14c — Page B — POPULATED feedback board, THREAD 1 contexts in viewport.
-    //
-    // BACKGROUND. View 14b leaves `#feedbackList` scrolled to the bottom (thread
-    // 2's `.feedback-thread-body.is-target` click auto-scrolls thread 2 into the
-    // inner overflow:auto container). Thread 1's two `.feedback-reply-context`
-    // chips (Bravo .is-left, Charlie .is-right) end up at viewport y≈-1000,
-    // OUTSIDE the screenshot. `page.screenshot({fullPage:false})` clips to the
-    // 1280x800 viewport, AND `fullPage:true` doesn't help because the document
-    // scrollHeight equals the viewport — only the inner #feedbackList scroll
-    // container is overflowing. The §3a.i regression (PR #71, 2026-06-23) on
-    // `.feedback-reply.is-left/.is-right .feedback-reply-context` border/
-    // background/color slipped THROUGH two `--check` runs as 0/1024000 px diff
-    // for exactly this reason — the affected chrome was painted, but painted
-    // OUTSIDE the captured region. Direct Playwright computed-style probes were
-    // the load-bearing verification for §3a.i until this view existed.
-    //
-    // What this view captures. Re-applies `.feedback-reply.is-target` to
-    // Charlie's reply (thread 1, is-right) — view 14b's later click on thread 2
-    // body cleared it — then `scrollIntoView({block:'center'})` on the FIRST
-    // `.feedback-reply-context` (Bravo's is-left chip). At ~25px tall with
-    // ~160px between Bravo's and Charlie's contexts, both land in the 800px
-    // viewport. Result: thread 1's full reply lane chrome — both tone-tinted
-    // (1,4,0) selectors AND the lane-lock (1,3,0) chips AND `.is-target`
-    // ring chrome on Charlie — under pixel-diff coverage.
-    //
-    // INVARIANT. Must run AFTER 14b (depends on the seeded fixture + the
-    // .feedback-thread-body.is-target chrome 14b establishes on thread 2 —
-    // which we DON'T see but which determines that view 14b's `.is-target`
-    // state didn't bleed into here as a different element). Does NOT call
-    // restoreFeedbackBoard — cleanup happens in the captureView IIFE finally
-    // (`signalCleanupRestore` + the bottom-of-try restoreFeedbackBoard) so
-    // a later sibling view inheriting the populated board is the next
-    // contributor's responsibility, not 14c's.
-    // failRatio: §3a.i regression (PR #71, 2026-06-23) on the two .feedback-
-    // reply.is-{left,right} .feedback-reply-context chips (~50×340px ≈ 0.13%
-    // of the frame) produced 1002/1024000 = 0.098% diff. 0.0005 (0.05%)
-    // catches it with a 2× safety margin; baseline noise on this view is 0 px.
-    { name: '14c-feedback-board-thread1-contexts', page: 'B', failRatio: 0.0005, setup: async (page) => {
-        // Re-apply .feedback-reply.is-target on Charlie. View 14b's thread-body
-        // click on thread 2 cleared the earlier .is-target on Charlie because
-        // setFeedbackReplyTarget allows only one .is-target at a time.
-        await page.click('[data-feedback-reply-anchor="fb_reply_charlie"]');
-        await page.waitForSelector('#feedbackView .feedback-reply.is-target', { timeout: 2000 });
-        // ScrollIntoView the first .feedback-reply-context (Bravo's) into the
-        // CENTER of the #feedbackList viewport. block:'center' both lifts thread 1
-        // contexts above the lower-thread overflow AND keeps Charlie's context
-        // (~160px below Bravo's) inside the 800px viewport. behavior:'instant'
-        // avoids the smooth-scroll animation that could mid-screenshot-shift
-        // the rendered position.
-        await page.evaluate(() => {
-            const target = document.querySelector('#feedbackView .feedback-reply-context');
-            if (!target) throw new Error('view 14c: no .feedback-reply-context to scroll into view');
-            target.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
-        });
-        await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
-        // Assert BOTH contexts now sit inside the 1280x800 capture viewport.
-        // Captured BEFORE settleLesson runs so a layout regression that pushes
-        // them out fails fast instead of producing a vacuously-passing screenshot.
-        const probe = await page.evaluate(() => {
-            const els = Array.from(document.querySelectorAll('#feedbackView .feedback-reply-context'));
-            const vh = window.innerHeight, vw = window.innerWidth;
-            return els.map((el) => {
-                const r = el.getBoundingClientRect();
-                return { top: Math.round(r.top), bottom: Math.round(r.bottom),
-                    fullyIn: r.top >= 0 && r.bottom <= vh && r.left >= 0 && r.right <= vw };
-            });
-        });
-        // Split into two assertions so the failure message attributes the
-        // problem correctly: a fixture edit that drops .replyTo would fail the
-        // length check (point reviewer at the fixture); a scrollIntoView /
-        // layout regression that pushes a context off-screen would fail the
-        // fullyIn check (point reviewer at the harness or CSS).
-        assertOrThrow(
-            probe.length === 2,
-            `view 14c: fixture should produce exactly 2 .feedback-reply-context elements (Bravo + Charlie's replyTo bubbles); got ${probe.length} — check tools/fixtures/feedback-board.populated.json`,
-        );
-        assertOrThrow(
-            probe.every(p => p.fullyIn),
-            `view 14c: scrollIntoView did not center both contexts inside the 1280x800 capture viewport; got ${JSON.stringify(probe)}`,
-        );
-        await page.waitForTimeout(200);
-    } },
-    // View 14d — Page B — populated feedback board, .feedback-textarea :focus
-    // on the compose-card body input. Inherits view 14c's right-column state
-    // (populated board, Charlie .is-target, both .feedback-reply-context
-    // chips scrolled into viewport center) and adds the :focus cascade at
-    // L29380-L29389 (border-color → sky-300; background → 0.76 white; box-
-    // shadow → 4px sky ring). Required by deferred §3b.iv to validate
-    // collapses of `:focus` rules on feedback inputs — if a delete drops
-    // the actual cascade winner, the focused border-color shifts visibly.
-    //
-    // mouse.move(0,0) clears any latent hover from view 14c (the .click on
-    // Charlie's reply leaves the mouse at that reply's location; no hover
-    // chrome is cascading on .feedback-reply, but a defensive reset avoids
-    // future-proofing risk if a later refactor adds .feedback-reply:hover).
-    // 350ms wait covers the 150ms box-shadow transition on .feedback-textarea
-    // (the L29401 transition rule on .feedback-primary-btn et al. wrapper
-    // doesn't apply to textareas; textareas inherit default UA transitions
-    // on focus glow). failRatio: 0.0005 keeps the chrome-recolor safety
-    // margin tight — the focus ring on a ~860×140 textarea covers ≈ 8000
-    // px = ~0.78% of frame, so 0.5% default would catch full-ring deletion
-    // but a subtle alpha cascade swap could slip under.
-    { name: '14d-feedback-compose-input-focused', page: 'B', failRatio: 0.0005, setup: async (page) => {
-        await page.mouse.move(0, 0);
-        await page.focus('#feedbackBodyInput');
-        const focused = await page.evaluate(() => {
-            const t = document.getElementById('feedbackBodyInput');
-            return Boolean(t) && document.activeElement === t;
-        });
-        assertOrThrow(focused, 'view 14d: #feedbackBodyInput is not document.activeElement after page.focus()');
-        await page.waitForTimeout(350);
-        // OUTLINE GUARD (deferred §3b.iv.followup gap 3). The grouped
-        // selector at style.css L36989-L37001 sets `outline: none
-        // !important`; the broad rule at L9405 (`button:focus,
-        // input:focus, textarea:focus { outline: none }`) provides a
-        // second-line fallback. A future refactor that drops BOTH
-        // would re-enable the UA `:focus-visible` ring. The explicit
-        // computed-style check below catches the catastrophic two-
-        // rule deletion (pixel diff alone caught the single-rule
-        // L36989 case at 0.089% during v5 regression verification —
-        // well above the 0.05% threshold). Belt-and-suspenders: the
-        // assertion documents the cascade dependency for any reader
-        // touching either rule.
-        const outline = await page.evaluate(() => {
-            const t = document.getElementById('feedbackBodyInput');
-            if (!t) return null;
-            const cs = getComputedStyle(t);
-            return { style: cs.outlineStyle, width: cs.outlineWidth };
-        });
-        assertOrThrow(outline && outline.style === 'none',
-            `view 14d: #feedbackBodyInput :focus outline-style is "${outline?.style}", expected "none" (style.css L37000 :important + L9405 broad fallback). If BOTH were deleted, the UA :focus-visible ring is back — restore one of them.`);
-    } },
-    // View 14f — Page B — populated feedback board, .feedback-input :focus
-    // (the input arm of L36989's grouped selector, NOT the textarea arm
-    // covered by 14d). Closes the v4 harness blind spot flagged in docs/
-    // phase3_deferred.md §3b.iv.followup gap 2: L36989 groups four
-    // selectors — `.feedback-input` (covers #feedbackNameInput +
-    // #feedbackTitleInput), `.feedback-textarea` (#feedbackBodyInput),
-    // `.feedback-reply-name`, `.feedback-reply-input`. View 14d only
-    // exercises the textarea arm; a §3b.iv refactor that splits the
-    // grouped selector (e.g. dropping the .feedback-input arm) would
-    // leave the textarea pixel-stable while regressing the name/title
-    // inputs into the unstyled :focus state.
-    //
-    // Inherits 14b's populated fixture (composer inputs are always
-    // present regardless of board state). 14e's blur-on-entry cleans
-    // up 14f's focus.
-    //
-    // ASSERT: document.activeElement match + outline-style === 'none'
-    // (catches L37000 deletion on this arm specifically — gap 3 again,
-    // but for .feedback-input, not .feedback-textarea).
-    //
-    // failRatio: 0.0005 keeps the chrome-recolor safety margin tight.
-    // The 4px sky-glow box-shadow ring around the ~340×40 px name input
-    // covers ≈ 3000 px ≈ 0.29% — well under 0.5% default.
-    { name: '14f-feedback-input-focused', page: 'B', failRatio: 0.0005, setup: async (page) => {
-        // mouse.move(0,0) — same reasoning as 14d: clear any latent
-        // hover from upstream views (14c left mouse at Charlie's reply).
-        await page.mouse.move(0, 0);
-        await page.focus('#feedbackNameInput');
-        const focused = await page.evaluate(() => {
-            const t = document.getElementById('feedbackNameInput');
-            return Boolean(t) && document.activeElement === t
-                   && t.classList.contains('feedback-input');
-        });
-        assertOrThrow(focused,
-            'view 14f: #feedbackNameInput is not document.activeElement after page.focus() (or it lost its .feedback-input class)');
-        await page.waitForTimeout(350);
-        const outline = await page.evaluate(() => {
-            const t = document.getElementById('feedbackNameInput');
-            if (!t) return null;
-            const cs = getComputedStyle(t);
-            return { style: cs.outlineStyle, width: cs.outlineWidth };
-        });
-        assertOrThrow(outline && outline.style === 'none',
-            `view 14f: #feedbackNameInput :focus outline-style is "${outline?.style}", expected "none" (style.css L37000 + L9405 broad fallback). If BOTH were deleted, the UA :focus-visible ring is back on the name input — restore one of them.`);
-    } },
-    // View 14e — Page B — populated feedback board, .feedback-primary-btn
-    // :hover on the compose submit button. Blurs view 14d's textarea focus
-    // first so the only state-variant in this frame is the hovered submit
-    // button — captures TWO cascade rules:
-    //   (1) PARENT BUTTON cascade winner = style.css L35040
-    //       `#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn:hover
-    //         { transform: translateY(-2px) !important; ... }` (3-ID + 1-class
-    //       specificity beats the L29417 .feedback-primary-btn:hover rule
-    //       — both !important, specificity decides). L29417 IS still the
-    //       winner for sibling .feedback-secondary-btn:hover /
-    //       .feedback-reply-btn:hover (not exercised by this view).
-    //   (2) CHILD ICON cascade winner = style.css L35050
-    //       `... #feedbackSubmitBtn.feedback-primary-btn:hover i
-    //         { transform: translateX(2px) translateY(-1px) rotate(-6deg) !important; }`
-    //       — only fires on hover and only via the same 3-ID prefix. Has
-    //       no shadower; deleting it leaves the icon static at hover.
-    // Required by §3b.iv to validate collapses of `:hover` rules on
-    // feedback buttons.
-    //
-    // ASSERTS. The check is exact-match on the resolved matrix string for
-    // BOTH the button AND the child icon. The base .feedback-primary-btn
-    // rule at L29400 sets `transform: translateY(0) !important` on the
-    // BUTTON (NOT the icon) — so the button's resting matrix is
-    // `matrix(1, 0, 0, 1, 0, 0)`, NOT `'none'`. A weak `!== 'none'`
-    // assert would pass even if page.hover silently no-op'd; only the
-    // resting-vs-hovered comparison catches that. failRatio: 0.0005
-    // backs it up — a 2px button translate on a ~120×50 px target dirties
-    // ~480 px ≈ 0.047%; a child-icon rotate sweeps a ~24×24 region ≈ 575
-    // px ≈ 0.056%; both well above 0.0005's noise floor (~50 px) and
-    // well below the 0.5% default.
-    //
-    // INVARIANT: leaves mouse at #feedbackSubmitBtn. The next Page B view
-    // is 24, whose setup hides #feedbackView AND defensively parks the
-    // mouse at (0, 0) (per the matching guard in view 24's setup). View
-    // 24's baseline is pixel-unchanged because the (0, 0) parking became
-    // its baseline. If a future schedule edit moves a hoverable-on-
-    // visible-chrome view between 14e and 24, view 24's self-park keeps
-    // its baseline stable regardless.
-    // 350ms wait covers the 160ms transform transition on .feedback-primary-btn
-    // (style.css L29401) AND L35037 (icon-hover-transition declared on
-    // .feedback-compose-card #feedbackSubmitBtn).
-    { name: '14e-feedback-compose-btn-hover', page: 'B', failRatio: 0.0005, setup: async (page) => {
-        await page.evaluate(() => document.activeElement?.blur?.());
-        // Snapshot resting transforms BEFORE hover so the assert can
-        // distinguish "hover landed" from "page.hover silently no-op'd"
-        // — the latter would leave both transforms unchanged. Note the
-        // BUTTON resting is matrix(1,0,0,1,0,0) (L29400 base), not 'none'.
-        const before = await page.evaluate(() => {
-            const btn = document.getElementById('feedbackSubmitBtn');
-            const icon = btn?.querySelector('i');
-            return {
-                button: btn ? getComputedStyle(btn).transform : null,
-                icon:   icon ? getComputedStyle(icon).transform : null,
-            };
-        });
-        await page.hover('#feedbackSubmitBtn');
-        // Wait BEFORE reading `after` — see view 12b for the rationale.
-        // 350ms covers both the 160ms parent transition (L29401) and the
-        // 160ms child-icon transition (L35037).
-        await page.waitForTimeout(350);
-        const after = await page.evaluate(() => {
-            const btn = document.getElementById('feedbackSubmitBtn');
-            const icon = btn?.querySelector('i');
-            return {
-                button: btn ? getComputedStyle(btn).transform : null,
-                icon:   icon ? getComputedStyle(icon).transform : null,
-            };
-        });
-        const BUTTON_EXPECTED = 'matrix(1, 0, 0, 1, 0, -2)';
-        // L35050 sets translateX(2px) translateY(-1px) rotate(-6deg).
-        // Serialized matrix: cos(-6°)=0.9945, sin(-6°)=-0.1045 →
-        // matrix(0.994522, -0.104528, 0.104528, 0.994522, 2, -1).
-        // The match is on the matrix() prefix + arg structure; we use
-        // startsWith on the rounded-prefix to absorb cross-Chromium
-        // float-precision wobble in the last digit.
-        const ICON_PREFIX = 'matrix(0.99';
-        assertOrThrow(before.button === 'matrix(1, 0, 0, 1, 0, 0)',
-            `view 14e: #feedbackSubmitBtn resting transform is "${before.button}", expected "matrix(1, 0, 0, 1, 0, 0)" (base translateY(0) !important at style.css L29400). If a new base rule was added, update this assert.`);
-        assertOrThrow(after.button === BUTTON_EXPECTED,
-            `view 14e: #feedbackSubmitBtn :hover transform is "${after.button}", expected "${BUTTON_EXPECTED}" (L35040 cascade winner). If L35040 was deleted, L29417's translateY(-1px) becomes the winner — check the cascade.`);
-        assertOrThrow(before.icon === 'none',
-            `view 14e: child #feedbackSubmitBtn i resting transform should be 'none' (no base transform on the icon) but is "${before.icon}"`);
-        assertOrThrow(after.icon != null && after.icon.startsWith(ICON_PREFIX),
-            `view 14e: child #feedbackSubmitBtn i :hover transform is "${after.icon}", expected to start with "${ICON_PREFIX}" (L35050 rotate(-6deg)+translate cascade). If L35050 was deleted, the icon stays untransformed at hover — check the cascade.`);
     } },
     // ----- Page A (continued — lesson chrome class flips) -----
     // View 15 — Page A — forces learnBody.classList.add('chapter-overview-active')
@@ -1370,22 +993,15 @@ const sharedViews = [
     // (app.js L6080) including the topbar.classList.remove('hidden') flip
     // so the captured frame matches the production Glass surface (topbar
     // sits above the answer panel in real use). Page B never enters the
-    // login flow. The previous
-    // Page B view (14-feedback-board) left #feedbackView visible — close
-    // it first along with the other sibling panels showAnswer also hides.
+    // login flow. Close the sibling panels that showAnswer also hides before
+    // exposing the answer workspace.
     { name: '24-answer-workspace', page: 'B', setup: async (page) => {
         // Defensive mouse park (Phase 3.5 v4 §3b.iv harness expansion finding):
         // make view 24 self-defensive about mouse position so its baseline is
-        // robust against ANY upstream Page B view that leaves the cursor over
-        // a hoverable element. Today the last upstream Page B view is 14e
-        // (cursor at #feedbackSubmitBtn inside #feedbackView which gets hidden
-        // below); the parking is identity-safe for that case. The guarantee
-        // matters for FUTURE inserts: e.g. a 14f hover-on-other-button view
-        // could otherwise silently shift this baseline at the new cursor
-        // coordinate. Park at (0, 0) for consistency with view 14d's pattern.
+        // robust against any upstream Page B view that leaves the cursor over
+        // a hoverable element. Park at (0, 0) before changing panel visibility.
         await page.mouse.move(0, 0);
         await page.evaluate(() => {
-            document.getElementById('feedbackView')?.classList.add('hidden');
             document.getElementById('preferenceView')?.classList.add('hidden');
             document.getElementById('courseTrackerView')?.classList.add('hidden');
             document.getElementById('mistakeNotebookView')?.classList.add('hidden');
@@ -1472,7 +1088,7 @@ const sharedViews = [
         await page.evaluate(() => {
             const overlay = document.getElementById('quizOverlay');
             if (overlay) overlay.style.display = 'none';
-            ['answerScreen','feedbackView','preferenceView','courseTrackerView',
+            ['answerScreen','preferenceView','courseTrackerView',
              'mistakeNotebookView','settingsView','welcomeScreen','loginView']
                 .forEach(id => document.getElementById(id)?.classList.add('hidden'));
             const SEEDED_TS = 1700000000000;
@@ -1915,9 +1531,9 @@ async function runPageCView(page, viewName) {
 let cachePresent = new Set();
 
 // ---------- runner ----------
-// Signal-handler cleanup for the seeded feedback fixture (view 14b) AND
-// the spawned bridge subprocess. The IIFE finally block restores on normal
-// exit and on caught exceptions; SIGINT/SIGTERM short-circuit that path.
+// Signal-handler cleanup for the spawned bridge subprocess. The IIFE finally
+// block stops it on normal exit and caught exceptions; SIGINT/SIGTERM
+// short-circuit that path.
 //
 // PR #69 review finding #9: the original signal handler called process.exit
 // without killing the bridge subprocess, orphaning ws-bridge on port :9125
@@ -1927,10 +1543,9 @@ let cachePresent = new Set();
 // (e.g. impatient double ctrl-C).
 let bridgeProcess = null;
 let signalHandled = false;
-function signalCleanupRestore(signal) {
+function signalCleanup(signal) {
     if (signalHandled) return;
     signalHandled = true;
-    try { restoreFeedbackBoard(); } catch (_) {}
     if (bridgeProcess && !bridgeProcess.killed) {
         try { bridgeProcess.kill('SIGTERM'); } catch (_) {}
     }
@@ -1941,8 +1556,8 @@ function signalCleanupRestore(signal) {
     // exitCode 130 = standard SIGINT (128+2); 143 = SIGTERM (128+15).
     process.exit(signal === 'SIGTERM' ? 143 : 130);
 }
-process.once('SIGINT', () => signalCleanupRestore('SIGINT'));
-process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
+process.once('SIGINT', () => signalCleanup('SIGINT'));
+process.once('SIGTERM', () => signalCleanup('SIGTERM'));
 
 (async () => {
     const repoRoot = path.resolve(__dirname, '..');
@@ -1961,7 +1576,7 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
     console.log(`[visual-diff] mode=${MODE} → ${outDir}`);
     console.log(`[visual-diff] starting bridge on :${PORT}`);
     const server = spawnBridge(repoRoot, PORT);
-    bridgeProcess = server; // expose to signal handler — see signalCleanupRestore
+    bridgeProcess = server; // expose to signal handler — see signalCleanup
 
     let exitCode = 0;
     const results = [];
@@ -2046,15 +1661,8 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
         // app's <link rel=stylesheet>); the mask CSS leans on `!important` +
         // selector specificity to win the cascade regardless of order.
         //
-        // timezoneId + locale pinned (PR #69 review findings #10, #16) so
-        // formatFeedbackTime (feedback-board.js: date.toLocaleString([], {...}))
-        // renders byte-identical strings on every machine. Without pinning,
-        // view 14b's .feedback-thread-meta width drifts between an author's
-        // local TZ and CI's UTC by up to one character per timestamp, which
-        // shifts downstream layout under the MASK_CSS color:transparent
-        // overlay. All other views' visible timestamps are already masked
-        // visibility:hidden (recent-list, settings UID) so pinning is
-        // pixel-neutral on the existing 25 baselines.
+        // Pin timezone and locale so any date or locale-sensitive rendering
+        // stays byte-identical across developer machines and CI.
         const context = await browser.newContext({
             viewport: VIEWPORT,
             timezoneId: 'UTC',
@@ -2111,11 +1719,6 @@ process.once('SIGTERM', () => signalCleanupRestore('SIGTERM'));
         console.error('[visual-diff] FATAL', err);
         exitCode = 1;
     } finally {
-        // Restore app/users/feedback-board.json to its pre-run state — deletes
-        // the seeded fixture if no backup existed, restores the developer's
-        // file otherwise. Runs BEFORE bridge SIGTERM so a slow bridge shutdown
-        // doesn't widen the contamination window.
-        try { restoreFeedbackBoard(); } catch (_) {}
         // Attach the exit listener BEFORE sending SIGTERM so a fast-exiting
         // bridge can't race the listener; race against a 2s timeout and warn
         // if it hits so "real exit" and "never exited" don't look identical.

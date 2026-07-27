@@ -13358,284 +13358,94 @@ h6,
   flex: 0 0 auto !important;
 }
 
-/* Feedback Board: shared suggestion wall for users. */
-.feedback-view.hidden {
-  display: none !important;
-}
-
-.feedback-view {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.feedback-shell {
-  margin: 0 auto;
-}
-
-.feedback-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 22px;
-  align-items: flex-start;
-}
-
-.feedback-eyebrow,
-.feedback-card-kicker {
-  font-family: "DM Mono", monospace;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.feedback-title {
-  margin: 6px 0 8px;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  line-height: 0.98;
-  letter-spacing: 0;
-}
-
-.feedback-subtitle {
-  margin: 0;
-}
-
-.feedback-grid {
-  display: grid;
-  align-items: start;
-}
-
-.feedback-compose-card,
-.feedback-board-card,
-.feedback-thread {
-  position: relative;
-  border-radius: 26px;
-}
-
-.feedback-compose-card {
-  position: sticky;
-}
-
-.feedback-tape {
-  position: absolute;
-  top: -30px;
-  left: 52px;
-  width: 34px;
-  height: 74px;
-  border: 5px solid #94a3b8;
-  border-bottom: 0;
-  border-radius: 18px 18px 0 0;
-  background: transparent;
-  box-shadow:
-    3px 5px 0 rgba(15, 23, 42, 0.08),
-    inset 0 0 0 3px rgba(226, 232, 240, 0.8);
-  transform: rotate(14deg);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.feedback-tape::before {
-  content: "";
-  position: absolute;
-  left: 7px;
-  top: 11px;
-  width: 15px;
-  height: 50px;
-  border: 4px solid #cbd5e1;
-  border-bottom: 0;
-  border-radius: 11px 11px 0 0;
-  background: transparent;
-}
-
-.feedback-tape::after {
-  content: "";
-  position: absolute;
-  left: 4px;
-  bottom: -16px;
-  width: 29px;
-  height: 21px;
-  border: 5px solid #94a3b8;
-  border-top: 0;
-  border-radius: 0 0 15px 15px;
-  background: transparent;
-}
-
-.feedback-compose-card h2,
-.feedback-board-head h2 {
-  margin: 7px 0 8px;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  line-height: 1.1;
-}
-
-.feedback-compose-card p {
-  margin: 0 0 18px;
-  line-height: 1.55;
-}
-
-.feedback-input,
-.feedback-textarea,
-.feedback-reply-name,
-.feedback-reply-input {
-  width: 100%;
-  box-sizing: border-box;
-  font: 700 14px/1.5 "Nunito", sans-serif;
-  outline: none;
-}
-
-.feedback-input {
-  min-height: 44px;
-  padding: 10px 13px;
-  margin-bottom: 10px;
-}
-
-.feedback-textarea {
-  min-height: 150px;
-  resize: vertical;
-  padding: 12px 13px;
-  margin-bottom: 14px;
-}
-
-.feedback-primary-btn,
-.feedback-secondary-btn,
-.feedback-reply-btn {
-  background: #38bdf8;
-  color: #fff;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.feedback-primary-btn {
-  width: 100%;
-  padding: 12px 16px;
-}
-
-.feedback-secondary-btn,
-.feedback-reply-btn {
-  padding: 9px 13px;
-  border-color: #93c5fd;
-  box-shadow: 0 4px 0 #bfdbfe;
-}
-
-.feedback-primary-btn:disabled,
-.feedback-reply-btn:disabled {
-  opacity: 0.6;
-  cursor: wait;
-}
-
-.feedback-status {
-  min-height: 20px;
-  margin-top: 12px;
-  font: 800 12px/1.4 "DM Mono", monospace;
-  color: #64748b;
-}
-
-.feedback-status[data-kind="ok"] { color: #059669; }
-.feedback-status[data-kind="error"] { color: #e11d48; }
-.feedback-status[data-kind="busy"] { color: #0284c7; }
-
-.feedback-board-card {
-  padding: 22px;
-}
-
-.feedback-board-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 18px;
-}
-
-.feedback-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.feedback-empty {
-  padding: 32px 22px;
-  font-weight: 800;
-  text-align: center;
-}
 
 
-.feedback-thread-pin {
-  position: absolute;
-  top: -11px;
-  right: 32px;
-  width: 24px;
-  height: 24px;
-  border: 3px solid #172033;
-  border-radius: 50%;
-  background: #fde047;
-  box-shadow: 0 3px 0 rgba(15, 23, 42, 0.18);
-}
-
-.feedback-thread-head {
-  display: flex;
-  justify-content: space-between;
-}
-
-.feedback-thread h3 {
-  margin: 0 0 5px;
-  font-family: "Quicksand", "Nunito", sans-serif;
-}
-
-.feedback-thread-meta,
-.feedback-reply-meta {
-  font: 800 11px/1.4 "DM Mono", monospace;
-}
-
-.feedback-reply-count {
-  flex: 0 0 auto;
-  border-radius: 999px;
-  font: 900 11px/1 "DM Mono", monospace;
-}
 
 
-.feedback-replies {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 14px;
-}
 
 
-.feedback-reply-body {
-  margin-top: 4px;
-}
 
 
-.feedback-reply-input {
-  resize: vertical;
-}
-
-@media (max-width: 920px) {
 
 
-  .feedback-reply-compose {
-    grid-template-columns: 1fr;
-  }
-}
-
-:root[data-theme="dark"] .feedback-view {
-  background-size: auto, 28px 28px, 28px 28px, auto;
-}
 
 
-:root[data-theme="dark"] .feedback-title,
-:root[data-theme="dark"] .feedback-compose-card h2,
-:root[data-theme="dark"] .feedback-board-head h2,
-:root[data-theme="dark"] .feedback-thread h3 {
-  color: #e6edf7;
-}
 
 
-:root[data-theme="dark"] .feedback-input,
-:root[data-theme="dark"] .feedback-textarea,
-:root[data-theme="dark"] .feedback-reply-name,
-:root[data-theme="dark"] .feedback-reply-input {
-  background: rgba(12, 17, 27, 0.82);
-  color: #e6edf7;
-  border-color: #2b3a50;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Compact skill-call state for the lesson Q&A panel. */
 .learn-chat-scroll {
@@ -18646,10 +18456,9 @@ body,
 .course-tracker-view,
 .mistake-notebook-view,
 .preference-view,
-.feedback-view,
 .answer,
 .col-explain,
-.col-book{
+.col-book {
   background-image: none !important;
 }
 
@@ -20526,562 +20335,157 @@ body {
     line-height: 1 !important;
 }
 
-/* FEEDBACK BOARD GLASS REFRESH: turn the community wall into a soft glass workspace. */
-.feedback-view {
-  padding: 44px clamp(24px, 4.2vw, 64px) 64px !important;
-  background-size: auto !important;
-}
-
-.feedback-shell {
-  max-width: 1210px !important;
-}
-
-.feedback-header {
-  margin-bottom: 30px !important;
-}
-
-.feedback-eyebrow,
-.feedback-card-kicker {
-  color: #0284c7 !important;
-  letter-spacing: 0.16em !important;
-}
-
-.feedback-title {
-  margin-top: 8px !important;
-  color: #162033 !important;
-  font-size: clamp(42px, 5.2vw, 72px) !important;
-  font-weight: 800 !important;
-}
-
-.feedback-subtitle {
-  max-width: 720px !important;
-  color: #40516c !important;
-  font-size: 17px !important;
-  line-height: 1.7 !important;
-  font-weight: 760 !important;
-}
-
-#feedbackCloseBtn {
-  border: 1px solid rgba(203, 213, 225, 0.72) !important;
-  background: rgba(255, 255, 255, 0.54) !important;
-  backdrop-filter: blur(18px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(1.5) !important;
-  box-shadow: 0 18px 46px rgba(15, 23, 42, 0.10) !important;
-}
-
-.feedback-grid {
-  grid-template-columns: minmax(300px, 390px) minmax(0, 1fr) !important;
-  gap: 28px !important;
-}
-
-.feedback-compose-card,
-.feedback-board-card,
-.feedback-thread {
-  border: 1px solid rgba(203, 213, 225, 0.58) !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.42)),
-    rgba(255, 255, 255, 0.38) !important;
-  background-size: auto !important;
-  backdrop-filter: blur(26px) saturate(1.65) !important;
-  -webkit-backdrop-filter: blur(26px) saturate(1.65) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.86),
-    0 24px 72px rgba(15, 23, 42, 0.10) !important;
-}
-
-.feedback-compose-card {
-  padding: 30px 24px 24px !important;
-  top: 28px !important;
-}
-
-.feedback-compose-card::before,
-.feedback-board-card::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: inherit !important;
-  pointer-events: none !important;
-}
-
-.feedback-tape,
-.feedback-tape::before,
-.feedback-tape::after,
-.feedback-thread-pin {
-  display: none !important;
-}
-
-.feedback-compose-card h2,
-.feedback-board-head h2 {
-  position: relative !important;
-  color: #172033 !important;
-  font-size: 24px !important;
-  font-weight: 820 !important;
-}
-
-.feedback-compose-card p {
-  position: relative !important;
-  color: #475569 !important;
-  font-weight: 720 !important;
-}
-
-.feedback-input,
-.feedback-textarea,
-.feedback-reply-name,
-.feedback-reply-input {
-  position: relative !important;
-  border: 1px solid rgba(203, 213, 225, 0.70) !important;
-  border-radius: 17px !important;
-  background: rgba(255, 255, 255, 0.58) !important;
-  color: #182033 !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.76),
-    0 10px 28px rgba(15, 23, 42, 0.045) !important;
-  backdrop-filter: blur(12px) saturate(1.28) !important;
-  -webkit-backdrop-filter: blur(12px) saturate(1.28) !important;
-}
-
-.feedback-input::placeholder,
-.feedback-textarea::placeholder,
-.feedback-reply-name::placeholder,
-.feedback-reply-input::placeholder {
-  color: #91a0b5 !important;
-}
-
-.feedback-primary-btn,
-.feedback-secondary-btn,
-.feedback-reply-btn {
-  position: relative !important;
-  border: 1px solid rgba(14, 165, 233, 0.45) !important;
-  border-radius: 17px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.60),
-    0 14px 32px rgba(14, 165, 233, 0.22) !important;
-  transform: translateY(0) !important;
-  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease !important;
-}
-
-.feedback-primary-btn {
-  background: linear-gradient(135deg, #38bdf8, #0ea5e9) !important;
-  color: #ffffff !important;
-}
-
-.feedback-secondary-btn,
-.feedback-reply-btn {
-  background: rgba(255, 255, 255, 0.62) !important;
-  color: #2563eb !important;
-  backdrop-filter: blur(14px) saturate(1.35) !important;
-  -webkit-backdrop-filter: blur(14px) saturate(1.35) !important;
-}
-
-.feedback-board-head {
-  position: relative !important;
-  align-items: center !important;
-}
-
-.feedback-empty {
-  border: 1px dashed rgba(148, 163, 184, 0.58) !important;
-  border-radius: 22px !important;
-  background: rgba(255, 255, 255, 0.36) !important;
-  color: #64748b !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52) !important;
-}
-
-
-.feedback-thread h3 {
-  font-weight: 820 !important;
-}
-
-
-.feedback-reply-count {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
-}
-
-.feedback-reply {
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.56) !important;
-}
-
-@media (max-width: 920px) {
-  .feedback-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .feedback-compose-card {
-    position: relative !important;
-    top: auto !important;
-  }
-}
-
-
-:root[data-theme="dark"] .feedback-compose-card,
-:root[data-theme="dark"] .feedback-board-card,
-:root[data-theme="dark"] .feedback-thread {
-  border-color: rgba(71, 85, 105, 0.62) !important;
-  background:
-    linear-gradient(145deg, rgba(30, 41, 59, 0.76), rgba(15, 23, 42, 0.56)),
-    rgba(15, 23, 42, 0.42) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    0 24px 72px rgba(0, 0, 0, 0.34) !important;
-}
-
-:root[data-theme="dark"] .feedback-subtitle,
-:root[data-theme="dark"] .feedback-compose-card p,
-:root[data-theme="dark"] .feedback-thread-body,
-:root[data-theme="dark"] .feedback-reply-body {
-  color: #bac6d8 !important;
-}
-
-:root[data-theme="dark"] .feedback-input,
-:root[data-theme="dark"] .feedback-textarea,
-:root[data-theme="dark"] .feedback-reply-name,
-:root[data-theme="dark"] .feedback-reply-input,
-:root[data-theme="dark"] .feedback-empty,
-:root[data-theme="dark"] .feedback-reply {
-  border-color: rgba(71, 85, 105, 0.68) !important;
-  background: rgba(15, 23, 42, 0.52) !important;
-  color: #e6edf7 !important;
-}
-
-/* FEEDBACK BOARD GLASS INTENSITY: make the two main panels read as actual frosted glass. */
-.feedback-view {
-  background:
-    linear-gradient(118deg, rgba(224, 247, 255, 0.88) 0%, rgba(255, 255, 255, 0.40) 34%, rgba(232, 255, 246, 0.82) 100%),
-    linear-gradient(32deg, rgba(14, 165, 233, 0.15) 0 16%, transparent 16% 48%, rgba(45, 212, 191, 0.13) 48% 68%, transparent 68%),
-    repeating-linear-gradient(135deg, rgba(14, 165, 233, 0.055) 0 1px, transparent 1px 18px),
-    #f8fbff !important;
-}
-
-.feedback-compose-card::before,
-.feedback-board-card::before {
-  background:
-    linear-gradient(126deg, rgba(255, 255, 255, 0.74) 0%, rgba(255, 255, 255, 0.18) 23%, transparent 42%),
-    linear-gradient(306deg, rgba(14, 165, 233, 0.16), transparent 42%) !important;
-  opacity: 0.95 !important;
-}
-
-.feedback-compose-card::after,
-.feedback-board-card::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 1px !important;
-  border-radius: inherit !important;
-  pointer-events: none !important;
-  background:
-    linear-gradient(112deg, transparent 0 16%, rgba(255, 255, 255, 0.34) 17%, transparent 31%),
-    repeating-linear-gradient(112deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 11px) !important;
-  mix-blend-mode: screen !important;
-  opacity: 0.78 !important;
-}
-
-.feedback-input,
-.feedback-textarea,
-.feedback-reply-name,
-.feedback-reply-input,
-.feedback-empty {
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.18)),
-    rgba(255, 255, 255, 0.22) !important;
-  border-color: rgba(255, 255, 255, 0.62) !important;
-  backdrop-filter: blur(20px) saturate(1.55) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.55) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.86),
-    inset 0 -1px 0 rgba(148, 163, 184, 0.12),
-    0 12px 34px rgba(15, 23, 42, 0.06) !important;
-}
-
-.feedback-primary-btn {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.62),
-    0 14px 34px rgba(14, 165, 233, 0.30),
-    0 0 0 1px rgba(255, 255, 255, 0.46) inset !important;
-}
-
-:root[data-theme="dark"] .feedback-view {
-  background:
-    linear-gradient(118deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.70) 42%, rgba(8, 47, 73, 0.82) 100%),
-    linear-gradient(32deg, rgba(14, 165, 233, 0.18) 0 18%, transparent 18% 52%, rgba(45, 212, 191, 0.12) 52% 72%, transparent 72%),
-    repeating-linear-gradient(135deg, rgba(125, 211, 252, 0.055) 0 1px, transparent 1px 18px),
-    #07111f !important;
-}
-
-:root[data-theme="dark"] .feedback-compose-card,
-:root[data-theme="dark"] .feedback-board-card {
-  border-color: rgba(148, 163, 184, 0.28) !important;
-  background:
-    linear-gradient(137deg, rgba(30, 41, 59, 0.54) 0%, rgba(15, 23, 42, 0.24) 52%, rgba(8, 47, 73, 0.28) 100%),
-    rgba(15, 23, 42, 0.22) !important;
-}
-
-.feedback-board-card::after {
-  opacity: 0.34 !important;
-}
-
-.feedback-list {
-  gap: 20px !important;
-}
-
-.feedback-thread {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 16px !important;
-  padding: 24px !important;
-  border: 1px solid rgba(203, 213, 225, 0.72) !important;
-  border-radius: 24px !important;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(248, 252, 255, 0.68)),
-    rgba(255, 255, 255, 0.72) !important;
-  backdrop-filter: blur(22px) saturate(1.45) !important;
-  -webkit-backdrop-filter: blur(22px) saturate(1.45) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    0 16px 42px rgba(15, 23, 42, 0.08) !important;
-}
-
-.feedback-thread-head {
-  align-items: flex-start !important;
-  gap: 18px !important;
-}
-
-.feedback-thread h3 {
-  margin-bottom: 8px !important;
-  color: #111827 !important;
-  font-size: 24px !important;
-  line-height: 1.18 !important;
-  letter-spacing: 0 !important;
-}
-
-.feedback-thread-meta,
-.feedback-reply-meta {
-  color: #5f6f86 !important;
-  font-family: "Nunito", sans-serif !important;
-  font-size: 14px !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.01em !important;
-}
-
-.feedback-reply-count {
-  min-width: 88px !important;
-  padding: 7px 12px !important;
-  text-align: center !important;
-  background: rgba(224, 242, 254, 0.92) !important;
-  color: #075985 !important;
-  font-size: 12px !important;
-}
-
-.feedback-thread-body {
-  margin: 0 !important;
-  padding: 14px 16px !important;
-  border-radius: 16px !important;
-  background: rgba(255, 255, 255, 0.58) !important;
-  color: #334155 !important;
-  font-size: 15px !important;
-  line-height: 1.75 !important;
-  font-weight: 760 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
-}
-
-.feedback-replies {
-  gap: 10px !important;
-  margin: 0 !important;
-}
-
-.feedback-reply {
-  padding: 13px 15px !important;
-  border-left: 3px solid rgba(14, 165, 233, 0.80) !important;
-  border-radius: 15px !important;
-  background: rgba(239, 248, 255, 0.72) !important;
-}
-
-.feedback-reply-body {
-  color: #28364a !important;
-  font-size: 15px !important;
-  line-height: 1.58 !important;
-  font-weight: 720 !important;
-}
-
-.feedback-reply-compose {
-  display: grid !important;
-  grid-template-columns: minmax(132px, 180px) minmax(220px, 1fr) 100px !important;
-  gap: 10px !important;
-  align-items: center !important;
-  padding-top: 2px !important;
-}
-
-.feedback-reply-name,
-.feedback-reply-input {
-  min-height: 48px !important;
-  border-radius: 15px !important;
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.45)),
-    rgba(255, 255, 255, 0.58) !important;
-  color: #1f2937 !important;
-  font-size: 13px !important;
-}
-
-.feedback-reply-name {
-  height: 48px !important;
-  padding: 12px 14px !important;
-}
-
-.feedback-reply-input {
-  height: 48px !important;
-  min-height: 48px !important;
-  max-height: 120px !important;
-  padding: 12px 14px !important;
-}
-
-.feedback-reply-btn {
-  height: 48px !important;
-  min-height: 48px !important;
-  padding: 0 14px !important;
-  border-radius: 15px !important;
-  background: rgba(255, 255, 255, 0.76) !important;
-  color: #1d4ed8 !important;
-  font-size: 14px !important;
-}
-
-@media (max-width: 760px) {
-  .feedback-thread {
-    padding: 18px !important;
-  }
-
-  .feedback-thread-head {
-    flex-direction: column !important;
-  }
-
-  .feedback-reply-compose {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-:root[data-theme="dark"] .feedback-board-card {
-  background:
-    linear-gradient(137deg, rgba(30, 41, 59, 0.66) 0%, rgba(15, 23, 42, 0.36) 52%, rgba(8, 47, 73, 0.34) 100%),
-    rgba(15, 23, 42, 0.30) !important;
-}
-
-:root[data-theme="dark"] .feedback-thread {
-  border-color: rgba(100, 116, 139, 0.46) !important;
-  background:
-    linear-gradient(145deg, rgba(30, 41, 59, 0.80), rgba(15, 23, 42, 0.66)),
-    rgba(15, 23, 42, 0.58) !important;
-}
-
-:root[data-theme="dark"] .feedback-thread-body,
-:root[data-theme="dark"] .feedback-reply {
-  background: rgba(15, 23, 42, 0.54) !important;
-}
-
-/* FEEDBACK BOARD COMPACT PASS: smaller page scale, shorter cards, lighter controls. */
-
-
-#feedbackView .feedback-compose-card {
-  padding: 34px 28px 30px !important;
-}
-
-#feedbackView .feedback-board-card {
-  padding: 20px !important;
-}
-
-
-#feedbackView .feedback-compose-card p {
-  margin-bottom: 14px !important;
-}
-
-#feedbackView .feedback-input {
-  margin-bottom: 9px !important;
-  font-size: 12px !important;
-}
-
-#feedbackView .feedback-textarea {
-  margin-bottom: 18px !important;
-  font-size: 12px !important;
-}
-
-#feedbackView .feedback-primary-btn {
-  padding: 12px 14px !important;
-  font-size: 13px !important;
-}
-
-
-#feedbackView .feedback-thread h3 {
-  margin-bottom: 5px !important;
-}
-
-#feedbackView .feedback-thread-meta,
-#feedbackView .feedback-reply-meta {
-  line-height: 1.35 !important;
-}
-
-
-#feedbackView .feedback-reply::before {
-  position: absolute !important;
-  left: -9px !important;
-  top: 13px !important;
-  width: 9px !important;
-  height: 1px !important;
-}
-
-#feedbackView .feedback-reply .feedback-reply-meta {
-  color: #64748b !important;
-  font-family: "Nunito", "Inter", sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 750 !important;
-  line-height: 1.25 !important;
-  letter-spacing: 0 !important;
-}
-
-
-#feedbackView .feedback-refresh-icon-btn {
-  position: relative !important;
-  overflow: hidden !important;
-  border: 1px solid rgba(125, 211, 252, 0.68) !important;
-  background:
-    radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.42) 36%, transparent 37%),
-    linear-gradient(145deg, rgba(255, 255, 255, 0.70), rgba(224, 242, 254, 0.46)),
-    rgba(255, 255, 255, 0.40) !important;
-  font-size: 17px !important;
-  line-height: 1 !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    inset 0 -1px 0 rgba(14, 165, 233, 0.12),
-    0 10px 24px rgba(14, 165, 233, 0.13) !important;
-  backdrop-filter: blur(18px) saturate(1.65) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(1.65);
-  transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease !important;
-}
-
-#feedbackView .feedback-refresh-icon-btn::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 4px !important;
-  border-radius: inherit !important;
-  border: 1px solid rgba(255, 255, 255, 0.62) !important;
-  pointer-events: none;
-}
-
-#feedbackView .feedback-refresh-icon-btn:hover {
-  transform: translateY(-1px) !important;
-  border-color: rgba(14, 165, 233, 0.62) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.96),
-    inset 0 -1px 0 rgba(14, 165, 233, 0.16),
-    0 14px 30px rgba(14, 165, 233, 0.20) !important;
-}
-
-#feedbackView .feedback-refresh-icon-btn:hover i {
-  transform: rotate(28deg) !important;
-}
-
-#feedbackView .feedback-refresh-icon-btn i {
-  display: block !important;
-  position: relative !important;
-  z-index: 1;
-  font-size: 17px !important;
-  line-height: 1 !important;
-  transition: transform 180ms ease !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* HOME ASK FINAL POSITION: keep the homepage question module slightly lower. */
 .home-ask-stage > .home-ask-empty,
@@ -22997,7 +22401,6 @@ body,
 .settings-view,
 .syllabus-view,
 .recent-view,
-.feedback-view,
 .mistake-notebook-view,
 .preference-view {
   background-color: transparent !important;
@@ -23040,7 +22443,6 @@ body {
 .learn-chat-scroll,
 .settings-page-shell,
 .recent-shell,
-.feedback-shell,
 .mistake-notebook-shell,
 .preference-page-shell {
   background: transparent !important;
@@ -24598,7 +24000,6 @@ body {
 #learnView#learnView #learnClose.learn-close,
 #topbarCloseBtn#topbarCloseBtn.feature-close-btn,
 #settingsView#settingsView #settingsPageBackBtn.feature-close-btn,
-#feedbackView#feedbackView #feedbackCloseBtn.feature-close-btn,
 #preferenceView#preferenceView #preferencePageBackBtn.feature-close-btn,
 #courseTrackerView#courseTrackerView #courseTrackerCloseBtn.feature-close-btn,
 #mistakeNotebookView#mistakeNotebookView #mistakeNotebookCloseBtn.feature-close-btn {
@@ -24879,111 +24280,37 @@ body {
   white-space: normal !important;
 }
 
-/* EOF FEEDBACK AUTHOR COLORS: identity tint beats lane tint.
-   The next rule's .feedback-reply.is-left[class*="tone-"] /
-   .is-right[class*="tone-"] arms (1,4,0) are uniquely defined here —
-   no later duplicate. Deleting them lets the FEEDBACK CONVERSATION
-   COLOR LANES rules starting at L37461 (specificity 1,3,0) win,
-   replacing the author tone tint with hardcoded green/pink lane colors.
-   DO NOT DELETE without first relocating these selectors AFTER the
-   lane-color block, or the chip border/background/color for any reply
-   that has BOTH a lane class AND a tone class will flip.
-   The neighbouring .feedback-reply::before triple-group at L34705 is
-   the live source of the dot-marker chrome; treat it as the same kind
-   of load-bearing rule. */
-#feedbackView .feedback-reply[class*="tone-"] .feedback-reply-context,
-#feedbackView .feedback-reply.is-left[class*="tone-"] .feedback-reply-context,
-#feedbackView .feedback-reply.is-right[class*="tone-"] .feedback-reply-context {
-  border-color: rgba(var(--author-rgb),0.22) !important;
-  background: rgba(var(--author-rgb),0.08) !important;
-  color: var(--author-ink) !important;
-}
 
-#feedbackView .feedback-thread[class*="tone-"] {
-  background:
-    radial-gradient(520px 160px at 0% 0%, rgba(var(--author-rgb),0.10), transparent 72%),
-    linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.16)) !important;
-}
 
-#feedbackView .feedback-thread[class*="tone-"]::after {
-  display: block !important;
-  content: "" !important;
-  left: 0 !important;
-  top: 22px !important;
-  bottom: 22px !important;
-  width: 4px !important;
-  border-radius: 0 999px 999px 0 !important;
-  background: linear-gradient(180deg, rgba(var(--author-rgb),0.46), rgba(var(--author-rgb),0.18)) !important;
-}
 
-#feedbackView .feedback-thread[class*="tone-"] .feedback-thread-meta {
-  color: var(--author-ink) !important;
-}
+
+
+
+
+
 
 
 /* Dot-marker chrome for left/right replies. Provides position:absolute +
    content for the .is-left::before / .is-right::before offset rules below
    (left:-5px / right:-5px). Deleting this group leaves those offsets with
    no positioned pseudo-element to push. */
-#feedbackView .feedback-reply::before,
-#feedbackView .feedback-reply.is-left::before,
-#feedbackView .feedback-reply.is-right::before {
-  content: "" !important;
-  display: block !important;
-  position: absolute !important;
-  top: 14px !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 999px !important;
-  background: rgba(var(--author-rgb),0.72) !important;
-  box-shadow:
-    0 0 0 5px rgba(var(--author-rgb),0.12),
-    0 6px 14px rgba(var(--author-rgb),0.18) !important;
-}
 
-/* FEEDBACK AUTHOR TONE LOCK: colors belong to people, not left/right lanes.
-   See the L34660 banner for the (1,4,0) > (1,3,0) cascade rationale that
-   makes tone-rules beat the later lane-color overrides at L37461+.
-   --author-mid is consumed by #feedbackView .feedback-reply-count (L34698)
-   even though the .feedback-reply-context consumer was removed in PR #81 —
-   do not drop this variable. */
-#feedbackView .feedback-thread,
-#feedbackView .feedback-reply {
-  --author-rgb: 56, 189, 248;
-  --author-ink: #0369a1;
-  --author-soft: rgba(var(--author-rgb), 0.11);
-  --author-mid: rgba(var(--author-rgb), 0.24);
-  --author-line: rgba(var(--author-rgb), 0.40);
-}
 
-#feedbackView .tone-0 { --author-rgb: 56, 189, 248; --author-ink: #0369a1; }
-#feedbackView .tone-1 { --author-rgb: 129, 140, 248; --author-ink: #4f46e5; }
-#feedbackView .tone-2 { --author-rgb: 45, 212, 191; --author-ink: #0f766e; }
-#feedbackView .tone-3 { --author-rgb: 251, 146, 60; --author-ink: #c2410c; }
-#feedbackView .tone-4 { --author-rgb: 168, 85, 247; --author-ink: #7e22ce; }
-#feedbackView .tone-5 { --author-rgb: 100, 116, 139; --author-ink: #475569; }
 
-#feedbackView .feedback-reply,
-#feedbackView .feedback-reply.is-left,
-#feedbackView .feedback-reply.is-right {
-  border-color: rgba(255,255,255,0.48) !important;
-  background:
-    radial-gradient(300px 100px at 12% 0%, var(--author-soft), transparent 74%),
-    linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0.12)) !important;
-  box-shadow:
-    0 10px 24px rgba(15,23,42,0.045),
-    inset 0 1px 0 rgba(255,255,255,0.68),
-    inset 0 -1px 0 rgba(255,255,255,0.14) !important;
-}
 
-#feedbackView .feedback-reply.is-left::before {
-  left: -5px !important;
-}
 
-#feedbackView .feedback-reply.is-right::before {
-  right: -5px !important;
-  left: auto !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* Sidebar Home entry: a quiet glass shortcut above Syllabus. */
@@ -25063,104 +24390,24 @@ body {
 
 
 
-/* FEEDBACK POST BUTTON LOCK: compact primary action, not a full-width pill. */
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn {
-  align-self: flex-end !important;
-  display: inline-flex !important;
-  width: auto !important;
-  min-width: 224px !important;
-  max-width: 100% !important;
-  min-height: 52px !important;
-  margin-top: 10px !important;
-  padding: 0 18px 0 22px !important;
-  gap: 12px !important;
-  border: 1px solid rgba(255,255,255,0.68) !important;
-  border-radius: 16px !important;
-  background:
-    radial-gradient(circle at 18% 0%, rgba(255,255,255,0.58), transparent 34%),
-    linear-gradient(135deg, rgba(34,211,238,0.84), rgba(37,99,235,0.70) 58%, rgba(99,102,241,0.62)) !important;
-  color: #ffffff !important;
-  font-size: 15px !important;
-  font-weight: 800;
-  letter-spacing: 0 !important;
-  line-height: 1 !important;
-  justify-content: center !important;
-  align-items: center !important;
-  box-shadow:
-    0 16px 32px rgba(37,99,235,0.22),
-    0 6px 14px rgba(14,165,233,0.18),
-    inset 0 1px 0 rgba(255,255,255,0.64),
-    inset 0 -1px 0 rgba(15,23,42,0.12) !important;
-  text-shadow: 0 1px 10px rgba(15,23,42,0.18);
-  backdrop-filter: blur(20px) saturate(180%) brightness(1.04) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) brightness(1.04);
-  position: relative !important;
-  overflow: hidden !important;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 1px !important;
-  border-radius: 15px !important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.34), rgba(255,255,255,0.04) 42%, transparent 72%) !important;
-  pointer-events: none;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn span,
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn i {
-  position: relative !important;
-  z-index: 1;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn i {
-  display: grid !important;
-  place-items: center !important;
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 11px !important;
-  background: rgba(255,255,255,0.20) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.45),
-    0 8px 18px rgba(15,23,42,0.10) !important;
-  font-size: 17px !important;
-  transition: transform .16s ease, background .16s ease !important;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn:hover {
-  transform: translateY(-2px) !important;
-  border-color: rgba(255,255,255,0.82) !important;
-  box-shadow:
-    0 20px 40px rgba(37,99,235,0.26),
-    0 10px 22px rgba(14,165,233,0.20),
-    inset 0 1px 0 rgba(255,255,255,0.72),
-    inset 0 -1px 0 rgba(15,23,42,0.10) !important;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn:hover i {
-  transform: translateX(2px) translateY(-1px) rotate(-6deg) !important;
-  background: rgba(255,255,255,0.28) !important;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn:active {
-  transform: translateY(0) scale(0.99) !important;
-}
 
-#feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn:disabled {
-  cursor: wait !important;
-  opacity: 0.74 !important;
-  filter: saturate(0.82) !important;
-  transform: none !important;
-}
 
-@media (max-width: 760px) {
-  #feedbackView .feedback-compose-card #feedbackSubmitBtn.feedback-primary-btn {
-    width: 100% !important;
-    min-width: 0 !important;
-    align-self: stretch !important;
-  }
-}
+
+
+
+
+
+
+
+
+
+
 
 /* True EOF Mistake Notebook layout lock: horizontal case rail + full-width review desk. */
 #mistakeNotebookView#mistakeNotebookView .mistake-notebook-grid {
@@ -26847,821 +26094,193 @@ body {
   }
 }
 
-/* FEEDBACK BOARD LIQUID GLASS FINAL: match the current Morning/Dusk glass system. */
-#feedbackView.feedback-view {
-  height: 100% !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  background: transparent !important;
-  background-image: none !important;
-}
-
-#feedbackView .feedback-shell {
-  width: min(100%, 1540px) !important;
-  max-width: none !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  margin: 0 auto !important;
-  padding: clamp(28px, 4vw, 58px) clamp(28px, 4.6vw, 72px) 62px !important;
-  overflow-y: auto !important;
-}
-
-#feedbackView .feedback-header {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 24px !important;
-  margin-bottom: clamp(22px, 3vw, 34px) !important;
-}
-
-#feedbackView .feedback-eyebrow,
-#feedbackView .feedback-card-kicker {
-  margin-bottom: 10px !important;
-  color: rgba(51, 65, 85, 0.62) !important;
-  font-family: "DM Mono", "SFMono-Regular", monospace;
-  font-size: 12px !important;
-  font-weight: 700;
-  letter-spacing: 0.22em !important;
-  text-transform: uppercase;
-}
-
-#feedbackView .feedback-title {
-  margin: 0 0 12px !important;
-  color: rgba(15, 23, 42, 0.90) !important;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  font-size: clamp(48px, 5.6vw, 84px) !important;
-  line-height: 0.92 !important;
-  letter-spacing: 0 !important;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.58);
-}
-
-#feedbackView .feedback-subtitle {
-  max-width: 790px !important;
-  margin: 0 !important;
-  color: rgba(51, 65, 85, 0.72) !important;
-  font-size: 17px !important;
-  line-height: 1.62 !important;
-  font-weight: 760;
-}
-
-#feedbackView #feedbackCloseBtn.feature-close-btn {
-  border: 1px solid rgba(255,255,255,0.62) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.48), rgba(255,255,255,0.20)) !important;
-  color: rgba(15, 23, 42, 0.72) !important;
-  box-shadow:
-    0 14px 28px rgba(15, 23, 42, 0.09),
-    inset 0 1px 0 rgba(255,255,255,0.82),
-    inset 0 -1px 0 rgba(255,255,255,0.18) !important;
-  backdrop-filter: blur(24px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-}
-
-#feedbackView .feedback-grid {
-  display: grid !important;
-  grid-template-columns: minmax(360px, 0.40fr) minmax(0, 0.60fr) !important;
-  gap: clamp(22px, 2.8vw, 34px) !important;
-  align-items: start !important;
-}
-
-#feedbackView .feedback-compose-card,
-#feedbackView .feedback-board-card,
-#feedbackView .feedback-thread {
-  position: relative !important;
-  border: 1px solid rgba(255,255,255,0.58) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.42), rgba(255,255,255,0.16)) !important;
-  box-shadow:
-    var(--theme-composer-shadow),
-    inset 0 1px 0 rgba(255,255,255,0.82),
-    inset 0 -1px 0 rgba(255,255,255,0.18) !important;
-  backdrop-filter: blur(34px) saturate(190%) brightness(1.05) !important;
-  -webkit-backdrop-filter: blur(34px) saturate(190%) brightness(1.05);
-  overflow: hidden !important;
-}
-
-#feedbackView .feedback-compose-card,
-#feedbackView .feedback-board-card {
-  border-radius: 34px;
-  padding: clamp(26px, 3vw, 38px) !important;
-}
-
-#feedbackView .feedback-compose-card {
-  position: sticky !important;
-  top: 20px !important;
-  min-height: min(720px, calc(100vh - 190px)) !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-#feedbackView .feedback-board-card {
-  min-width: 0 !important;
-}
-
-#feedbackView .feedback-compose-card::before,
-#feedbackView .feedback-board-card::before,
-#feedbackView .feedback-thread::before {
-  content: "" !important;
-  position: absolute !important;
-  inset: 1px !important;
-  border-radius: inherit !important;
-  pointer-events: none;
-  background:
-    radial-gradient(540px 180px at 14% 0%, rgba(255,255,255,0.56), transparent 72%),
-    radial-gradient(460px 160px at 98% 100%, rgba(255,255,255,0.20), transparent 74%) !important;
-  opacity: .76 !important;
-  mix-blend-mode: screen;
-}
-
-#feedbackView .feedback-compose-card::after,
-#feedbackView .feedback-board-card::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 1px !important;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    linear-gradient(112deg, transparent 0 18%, rgba(255,255,255,0.26) 19%, transparent 33%),
-    repeating-linear-gradient(112deg, rgba(255,255,255,0.045) 0 1px, transparent 1px 12px) !important;
-  opacity: .52 !important;
-  mix-blend-mode: screen;
-}
-
-#feedbackView .feedback-compose-card > *,
-#feedbackView .feedback-board-card > *,
-#feedbackView .feedback-thread > * {
-  position: relative !important;
-  z-index: 1;
-}
-
-#feedbackView .feedback-tape,
-#feedbackView .feedback-tape::before,
-#feedbackView .feedback-tape::after,
-#feedbackView .feedback-thread-pin {
-  display: none !important;
-  visibility: hidden !important;
-  content: none !important;
-}
-
-#feedbackView .feedback-compose-card h2,
-#feedbackView .feedback-board-head h2 {
-  margin: 4px 0 8px !important;
-  color: rgba(15, 23, 42, 0.88) !important;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  font-size: clamp(26px, 2.4vw, 34px) !important;
-  line-height: 1.06 !important;
-  letter-spacing: 0 !important;
-}
-
-#feedbackView .feedback-compose-card p {
-  margin: 0 0 24px !important;
-  color: rgba(51,65,85,0.72) !important;
-  font-size: 16px !important;
-  line-height: 1.58 !important;
-  font-weight: 720;
-}
-
-#feedbackView .feedback-input,
-#feedbackView .feedback-textarea,
-#feedbackView .feedback-reply-name,
-#feedbackView .feedback-reply-input,
-#feedbackView .feedback-empty {
-  border: 1px solid rgba(255,255,255,0.58) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.38), rgba(255,255,255,0.14)) !important;
-  color: rgba(15,23,42,0.82) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.78),
-    inset 0 -1px 0 rgba(255,255,255,0.15),
-    0 12px 26px rgba(15,23,42,0.055) !important;
-  backdrop-filter: blur(20px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
-}
-
-#feedbackView .feedback-input,
-#feedbackView .feedback-textarea {
-  width: 100% !important;
-  margin-bottom: 12px !important;
-  border-radius: 22px !important;
-  font-size: 15px !important;
-}
-
-#feedbackView .feedback-input {
-  min-height: 56px !important;
-  padding: 15px 18px !important;
-}
-
-#feedbackView .feedback-textarea {
-  flex: 1 1 260px !important;
-  min-height: 260px !important;
-  padding: 18px !important;
-  resize: vertical;
-}
-
-#feedbackView .feedback-input::placeholder,
-#feedbackView .feedback-textarea::placeholder,
-#feedbackView .feedback-reply-name::placeholder,
-#feedbackView .feedback-reply-input::placeholder {
-  color: rgba(100,116,139,0.64) !important;
-}
-
-#feedbackView .feedback-input:focus,
-#feedbackView .feedback-textarea:focus,
-#feedbackView .feedback-reply-name:focus,
-#feedbackView .feedback-reply-input:focus {
-  border-color: rgba(125,211,252,0.74) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.54), rgba(255,255,255,0.22)) !important;
-  box-shadow:
-    0 0 0 4px rgba(125,211,252,0.18),
-    0 16px 32px rgba(14,165,233,0.10),
-    inset 0 1px 0 rgba(255,255,255,0.84) !important;
-  outline: none !important;
-}
-
-#feedbackView .feedback-primary-btn,
-#feedbackView .feedback-secondary-btn,
-#feedbackView .feedback-reply-btn {
-  border: 1px solid rgba(255,255,255,0.60) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.44), rgba(255,255,255,0.18)) !important;
-  color: rgba(15, 23, 42, 0.76) !important;
-  box-shadow:
-    0 12px 26px rgba(15,23,42,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.76) !important;
-  backdrop-filter: blur(18px) saturate(170%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(170%);
-  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease !important;
-}
-
-#feedbackView .feedback-primary-btn {
-  min-height: 62px !important;
-  margin-top: 8px !important;
-  border-color: rgba(255,255,255,0.52) !important;
-  border-radius: 20px !important;
-  background:
-    linear-gradient(135deg, rgba(14,165,233,0.82), rgba(37,99,235,0.58)) !important;
-  color: #ffffff !important;
-  box-shadow:
-    0 18px 38px rgba(14,165,233,0.22),
-    inset 0 1px 0 rgba(255,255,255,0.44) !important;
-}
-
-#feedbackView .feedback-primary-btn:hover,
-#feedbackView .feedback-secondary-btn:hover,
-#feedbackView .feedback-reply-btn:hover {
-  transform: translateY(-1px) !important;
-  box-shadow:
-    0 16px 34px rgba(14,165,233,0.16),
-    inset 0 1px 0 rgba(255,255,255,0.82) !important;
-}
-
-#feedbackView .feedback-status {
-  min-height: 22px !important;
-  margin-top: 12px !important;
-  color: rgba(51,65,85,0.68) !important;
-  font-size: 13px !important;
-}
-
-#feedbackView .feedback-status[data-kind="ok"] { color: #059669 !important; }
-#feedbackView .feedback-status[data-kind="error"] { color: #e11d48 !important; }
-#feedbackView .feedback-status[data-kind="busy"] { color: #0284c7 !important; }
-
-#feedbackView .feedback-board-head {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 18px !important;
-  margin-bottom: 24px !important;
-}
-
-#feedbackView .feedback-refresh-icon-btn {
-  width: 52px !important;
-  min-width: 52px !important;
-  height: 52px !important;
-  min-height: 52px !important;
-  padding: 0 !important;
-  border-radius: 999px !important;
-  color: #0b72d9 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-#feedbackView .feedback-list {
-  display: grid !important;
-  max-height: min(66vh, 760px) !important;
-  overflow: auto !important;
-  padding: 2px 4px 2px 2px !important;
-  scrollbar-gutter: stable;
-}
-
-#feedbackView .feedback-empty {
-  padding: 28px !important;
-  border-radius: 24px;
-  color: rgba(71,85,105,0.70) !important;
-}
-
-#feedbackView .feedback-thread {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 14px !important;
-  padding: clamp(18px, 2vw, 24px) !important;
-  border-radius: 28px !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.70),
-    0 12px 28px rgba(15,23,42,0.055) !important;
-  transition: transform .16s ease, box-shadow .16s ease, background .16s ease !important;
-}
-
-#feedbackView .feedback-thread:hover {
-  transform: translateY(-2px) !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.46), rgba(255,255,255,0.18)) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.78),
-    0 18px 36px rgba(15,23,42,0.08) !important;
-}
-
-#feedbackView .feedback-thread-head {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 18px !important;
-}
-
-#feedbackView .feedback-thread h3 {
-  margin: 0 0 7px !important;
-  font-family: "Quicksand", "Nunito", sans-serif;
-  font-size: clamp(20px, 1.8vw, 28px) !important;
-  line-height: 1.14 !important;
-  letter-spacing: 0 !important;
-}
-
-#feedbackView .feedback-thread-meta,
-#feedbackView .feedback-reply-meta {
-  color: rgba(71,85,105,0.66) !important;
-  font-family: "DM Mono", monospace !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0 !important;
-}
-
-#feedbackView .feedback-reply-count {
-  flex-shrink: 0 !important;
-  min-width: 90px !important;
-  padding: 7px 12px !important;
-  border: 1px solid rgba(255,255,255,0.62) !important;
-  border-radius: 999px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.74) !important;
-  font-family: "DM Mono", monospace;
-  font-size: 12px !important;
-  font-weight: 700;
-  text-align: center;
-}
-
-#feedbackView .feedback-thread-body {
-  margin: 0 !important;
-  padding: 16px 18px !important;
-  border: 1px solid rgba(255,255,255,0.46) !important;
-  border-radius: 20px !important;
-  color: rgba(30,41,59,0.78) !important;
-  font-size: 15px !important;
-  line-height: 1.68 !important;
-  font-weight: 700 !important;
-}
-
-#feedbackView .feedback-replies {
-  display: grid !important;
-  margin: 0 !important;
-}
-
-#feedbackView .feedback-reply {
-  position: relative !important;
-}
-
-#feedbackView .feedback-reply-body {
-  margin-top: 5px !important;
-  font-size: 14px !important;
-  line-height: 1.52 !important;
-  font-weight: 680 !important;
-}
-
-#feedbackView .feedback-reply-compose {
-  display: grid !important;
-  grid-template-columns: minmax(116px, 148px) minmax(180px, 1fr) 92px !important;
-  gap: 10px !important;
-  align-items: center !important;
-  margin-top: 2px !important;
-}
-
-#feedbackView .feedback-reply-name,
-#feedbackView .feedback-reply-input {
-  height: 44px !important;
-  min-height: 44px !important;
-  padding: 11px 13px !important;
-  border-radius: 15px;
-  font-size: 13px !important;
-}
-
-#feedbackView .feedback-reply-input {
-  max-height: 130px !important;
-  resize: vertical;
-}
-
-#feedbackView .feedback-reply-btn {
-  width: 92px !important;
-  height: 44px !important;
-  min-height: 44px !important;
-  padding: 0 12px !important;
-  border-radius: 15px;
-  color: #1d4ed8 !important;
-  font-size: 14px !important;
-}
-
-:root[data-theme="dusk"] #feedbackView .feedback-compose-card,
-:root[data-theme="dusk"] #feedbackView .feedback-board-card,
-:root[data-theme="dusk"] #feedbackView .feedback-thread,
-:root[data-theme="dark"] #feedbackView .feedback-compose-card,
-:root[data-theme="dark"] #feedbackView .feedback-board-card,
-:root[data-theme="dark"] #feedbackView .feedback-thread {
-  box-shadow:
-    0 28px 70px rgba(148, 47, 62, 0.15),
-    0 12px 30px rgba(15,23,42,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.78),
-    inset 0 -1px 0 rgba(255,255,255,0.18) !important;
-}
-
-@media (max-width: 1180px) {
-  #feedbackView .feedback-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  #feedbackView .feedback-compose-card {
-    position: relative !important;
-    top: auto !important;
-    min-height: auto !important;
-  }
-
-  #feedbackView .feedback-textarea {
-    min-height: 180px !important;
-    flex-basis: 180px !important;
-  }
-}
-
-@media (max-width: 980px) {
-  #feedbackView .feedback-reply-compose {
-    grid-template-columns: 1fr !important;
-  }
-
-  #feedbackView .feedback-reply-btn {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 760px) {
-  #feedbackView .feedback-shell {
-    padding: 24px 16px 46px !important;
-  }
-
-  #feedbackView .feedback-header {
-    gap: 16px !important;
-  }
-
-  #feedbackView .feedback-compose-card,
-  #feedbackView .feedback-board-card {
-    border-radius: 26px;
-    padding: 22px !important;
-  }
-
-  #feedbackView .feedback-thread-head {
-    flex-direction: column !important;
-  }
-
-  #feedbackView .feedback-reply-compose {
-    grid-template-columns: 1fr !important;
-  }
-
-  #feedbackView .feedback-reply-btn {
-    width: 100% !important;
-  }
-}
-
-/* FEEDBACK REPLY GLASS BUBBLE LOCK: remove the harsh blue reply spine. */
-#feedbackView .feedback-reply {
-  margin: 0 !important;
-  padding: 14px 16px 15px !important;
-  border: 1px solid rgba(255,255,255,0.44) !important;
-  border-left: 1px solid rgba(255,255,255,0.44) !important;
-  border-radius: 22px !important;
-  background:
-    linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.11)) !important;
-  box-shadow:
-    0 10px 24px rgba(15,23,42,0.045),
-    inset 0 1px 0 rgba(255,255,255,0.66),
-    inset 0 -1px 0 rgba(255,255,255,0.14) !important;
-  backdrop-filter: blur(18px) saturate(165%) brightness(1.04);
-  -webkit-backdrop-filter: blur(18px) saturate(165%) brightness(1.04);
-}
-
-#feedbackView .feedback-reply::before {
-  content: none !important;
-  display: none !important;
-  background: transparent !important;
-}
-
-#feedbackView .feedback-reply::after {
-  content: "" !important;
-  position: absolute !important;
-  inset: 1px !important;
-  border-radius: inherit !important;
-  pointer-events: none;
-  background:
-    radial-gradient(260px 90px at 14% 0%, rgba(255,255,255,0.42), transparent 72%) !important;
-  opacity: .68 !important;
-}
-
-#feedbackView .feedback-reply-meta,
-#feedbackView .feedback-reply-body {
-  position: relative !important;
-  z-index: 1;
-}
-
-#feedbackView .feedback-reply-body {
-  color: rgba(30,41,59,0.74) !important;
-}
-
-/* FEEDBACK THREADED REPLY LOCK: clicking a note chooses who the reply targets. */
-#feedbackView .feedback-click-reply {
-  cursor: pointer;
-  transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease, background .16s ease !important;
-}
-
-#feedbackView .feedback-click-reply:hover,
-#feedbackView .feedback-click-reply:focus-visible {
-  border-color: rgba(125,211,252,0.58) !important;
-  box-shadow:
-    0 14px 30px rgba(14,165,233,0.10),
-    inset 0 1px 0 rgba(255,255,255,0.74) !important;
-  outline: none !important;
-}
-
-#feedbackView .feedback-thread-click-target {
-  border: 1px solid transparent !important;
-  border-radius: 18px;
-  padding: 2px 8px 4px !important;
-  margin: -2px -8px -4px !important;
-}
-
-#feedbackView .feedback-thread-body.feedback-click-reply {
-  cursor: pointer;
-}
-
-#feedbackView .feedback-replies {
-  gap: 14px !important;
-}
-
-#feedbackView .feedback-reply {
-  width: min(84%, 680px) !important;
-  max-width: 100% !important;
-}
-
-#feedbackView .feedback-reply.is-left {
-  justify-self: start !important;
-}
-
-#feedbackView .feedback-reply.is-right {
-  justify-self: end !important;
-}
-
-#feedbackView .feedback-reply-context {
-  position: relative !important;
-  z-index: 1;
-  width: max-content !important;
-  max-width: 100% !important;
-  margin: 7px 0 2px !important;
-  padding: 5px 9px !important;
-  border: 1px solid rgba(255,255,255,0.42) !important;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.22) !important;
-  color: rgba(71,85,105,0.62) !important;
-  font-size: 11px !important;
-  font-weight: 750;
-  line-height: 1.2 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#feedbackView .feedback-reply-target {
-  grid-column: 1 / -1 !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto !important;
-  gap: 4px 10px !important;
-  align-items: center !important;
-  margin-bottom: 2px !important;
-  padding: 10px 12px !important;
-  border: 1px solid rgba(125,211,252,0.50) !important;
-  border-radius: 16px;
-  color: rgba(30,41,59,0.76) !important;
-  backdrop-filter: blur(18px) saturate(165%);
-  -webkit-backdrop-filter: blur(18px) saturate(165%);
-}
-
-#feedbackView .feedback-reply-target.hidden {
-  display: none !important;
-}
-
-#feedbackView .feedback-reply-target-name {
-  grid-column: 1 !important;
-  font-family: "DM Mono", monospace;
-  font-size: 12px !important;
-  font-weight: 750;
-}
-
-#feedbackView .feedback-reply-target-text {
-  grid-column: 1 !important;
-  color: rgba(71,85,105,0.66) !important;
-  font-size: 12px !important;
-  font-weight: 700;
-  overflow: hidden !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#feedbackView .feedback-reply-target-clear {
-  grid-column: 2 !important;
-  grid-row: 1 / span 2 !important;
-  width: 28px !important;
-  height: 28px !important;
-  border: 1px solid rgba(255,255,255,0.54) !important;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.34) !important;
-  color: rgba(71,85,105,0.72) !important;
-  font-size: 18px !important;
-  line-height: 1 !important;
-  cursor: pointer;
-}
-
-@media (max-width: 760px) {
-  #feedbackView .feedback-reply {
-    width: 100% !important;
-  }
-}
-
-/* FEEDBACK CONVERSATION COLOR LANES: make thread, left replies, and right replies scannable. */
-#feedbackView .feedback-list {
-  gap: 18px !important;
-}
-
-#feedbackView .feedback-thread {
-  --thread-accent: #0ea5e9;
-  --thread-accent-soft: rgba(14,165,233,0.16);
-  --thread-accent-mid: rgba(14,165,233,0.30);
-  border-color: rgba(125,211,252,0.58) !important;
-  background:
-    radial-gradient(680px 220px at 0% 0%, rgba(186,230,253,0.34), transparent 70%),
-    linear-gradient(135deg, rgba(255,255,255,0.42), rgba(240,249,255,0.18)) !important;
-}
-
-#feedbackView .feedback-thread::after {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 22px !important;
-  bottom: 22px !important;
-  width: 5px !important;
-  border-radius: 0 999px 999px 0 !important;
-  background: linear-gradient(180deg, #38bdf8, #2563eb) !important;
-  opacity: 0.82 !important;
-  pointer-events: none;
-}
-
-#feedbackView .feedback-thread-head {
-  padding-left: 8px !important;
-}
-
-#feedbackView .feedback-thread h3 {
-  color: rgba(18,31,55,0.92) !important;
-}
-
-#feedbackView .feedback-thread-body {
-  border-color: rgba(125,211,252,0.58) !important;
-  background:
-    linear-gradient(135deg, rgba(240,249,255,0.52), rgba(255,255,255,0.18)) !important;
-  box-shadow:
-    0 12px 30px rgba(14,165,233,0.075),
-    inset 0 1px 0 rgba(255,255,255,0.76) !important;
-}
-
-#feedbackView .feedback-reply-count {
-  border-color: rgba(125,211,252,0.58) !important;
-  background:
-    linear-gradient(135deg, rgba(224,242,254,0.86), rgba(255,255,255,0.26)) !important;
-  color: #075985 !important;
-}
-
-#feedbackView .feedback-replies {
-  position: relative !important;
-  padding: 4px 0 !important;
-}
-
-#feedbackView .feedback-replies::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 50% !important;
-  top: 6px !important;
-  bottom: 6px !important;
-  width: 1px !important;
-  background:
-    linear-gradient(180deg, transparent, rgba(148,163,184,0.34), transparent) !important;
-  transform: translateX(-50%) !important;
-  pointer-events: none;
-}
-
-#feedbackView .feedback-reply {
-  min-height: 84px !important;
-}
-
-#feedbackView .feedback-reply.is-left {
-  border-color: rgba(52,211,153,0.46) !important;
-  background:
-    radial-gradient(320px 120px at 12% 0%, rgba(167,243,208,0.32), transparent 76%),
-    linear-gradient(135deg, rgba(236,253,245,0.58), rgba(255,255,255,0.16)) !important;
-  box-shadow:
-    0 12px 28px rgba(16,185,129,0.10),
-    inset 4px 0 0 rgba(16,185,129,0.54),
-    inset 0 1px 0 rgba(255,255,255,0.70) !important;
-}
-
-#feedbackView .feedback-reply.is-right {
-  border-color: rgba(244,114,182,0.42) !important;
-  background:
-    radial-gradient(320px 120px at 88% 0%, rgba(251,207,232,0.30), transparent 76%),
-    linear-gradient(135deg, rgba(253,242,248,0.58), rgba(255,255,255,0.16)) !important;
-  box-shadow:
-    0 12px 28px rgba(219,39,119,0.09),
-    inset -4px 0 0 rgba(236,72,153,0.44),
-    inset 0 1px 0 rgba(255,255,255,0.70) !important;
-}
-
-#feedbackView .feedback-reply.is-left .feedback-reply-meta {
-  color: #047857 !important;
-}
-
-#feedbackView .feedback-reply.is-right .feedback-reply-meta {
-  color: #be185d !important;
-}
-
-#feedbackView .feedback-reply.is-left .feedback-reply-context {
-  border-color: rgba(52,211,153,0.34) !important;
-  background: rgba(236,253,245,0.42) !important;
-  color: rgba(6,95,70,0.70) !important;
-}
-
-#feedbackView .feedback-reply.is-right .feedback-reply-context {
-  border-color: rgba(244,114,182,0.32) !important;
-  background: rgba(253,242,248,0.46) !important;
-  color: rgba(157,23,77,0.70) !important;
-}
-
-#feedbackView .feedback-click-reply.is-target {
-  border-color: rgba(250,204,21,0.74) !important;
-  background:
-    radial-gradient(280px 96px at 12% 0%, rgba(254,240,138,0.30), transparent 72%),
-    linear-gradient(135deg, rgba(255,251,235,0.54), rgba(255,255,255,0.18)) !important;
-  box-shadow:
-    0 0 0 3px rgba(250,204,21,0.16),
-    0 16px 34px rgba(234,179,8,0.12),
-    inset 0 1px 0 rgba(255,255,255,0.78) !important;
-}
-
-#feedbackView .feedback-reply-target {
-  border-color: rgba(250,204,21,0.56) !important;
-  background:
-    radial-gradient(260px 90px at 8% 0%, rgba(254,240,138,0.34), transparent 70%),
-    linear-gradient(135deg, rgba(255,251,235,0.52), rgba(255,255,255,0.18)) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.72),
-    0 12px 24px rgba(234,179,8,0.10) !important;
-}
-
-#feedbackView .feedback-reply-target-name {
-  color: #a16207 !important;
-}
-
-@media (max-width: 760px) {
-  #feedbackView .feedback-thread::after,
-  #feedbackView .feedback-replies::before {
-    display: none !important;
-    content: none !important;
-  }
-
-  #feedbackView .feedback-thread-head {
-    padding-left: 0 !important;
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Learn final layout/theme lock: strict 55:45, full lecture page, themed Q&A, glass page number. */
 #learnView#learnView #learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active):not(.chat-collapsed) .learn-body-inner:not([data-custom-split="true"]) {
@@ -27764,24 +26383,9 @@ body {
 
 
 
-#feedbackView .feedback-reply[class*="tone-"],
-#feedbackView .feedback-reply.is-left[class*="tone-"],
-#feedbackView .feedback-reply.is-right[class*="tone-"] {
-  border-color: rgba(255,255,255,0.48) !important;
-  background:
-    radial-gradient(300px 100px at 12% 0%, rgba(var(--author-rgb),0.10), transparent 74%),
-    linear-gradient(135deg, rgba(255,255,255,0.34), rgba(255,255,255,0.12)) !important;
-  box-shadow:
-    0 10px 24px rgba(15,23,42,0.045),
-    inset 0 1px 0 rgba(255,255,255,0.68),
-    inset 0 -1px 0 rgba(255,255,255,0.14) !important;
-}
 
-#feedbackView .feedback-reply[class*="tone-"] .feedback-reply-meta,
-#feedbackView .feedback-reply.is-left[class*="tone-"] .feedback-reply-meta,
-#feedbackView .feedback-reply.is-right[class*="tone-"] .feedback-reply-meta {
-  color: var(--author-ink) !important;
-}
+
+
 
 /* MISTAKE NOTE OWNERSHIP LOCK: user notes stay primary, AI drafts stay separate. */
 #mistakeNotebookView .mistake-notes-panel {

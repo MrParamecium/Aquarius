@@ -42,10 +42,6 @@ const MASK_CSS = `
     /* relative timestamps in Recent Conversations drift between runs */
     .sidebar-recent-list .recent-timestamp,
     .sidebar-recent-list time { visibility: hidden !important; }
-    /* feedback meta line = author + " · " + timestamp; timestamp drifts.
-       Real selectors verified against renderFeedbackBoard. */
-    .feedback-thread-meta,
-    .feedback-reply-meta { color: transparent !important; text-shadow: none !important; }
     /* input caret blink in focused-composer view. Scoped to input surfaces. */
     input, textarea, [contenteditable="true"] { caret-color: transparent !important; }
     /* home-mode menu transitions during forced .show flip */
@@ -627,106 +623,6 @@ async function runFlow(page, steps, opts = {}) {
     return { passed: true, failedAt: null, error: null, stepLog };
 }
 
-// Path to the on-disk feedback-board fixture used by /api/feedback GET.
-// Matches the runtime path computed in ws-bridge.js L1237 (usersDir =
-// path.join(__dirname, 'users')) + user-memory.js L46 (FEEDBACK_BOARD_PATH =
-// path.join(USERS_DIR, 'feedback-board.json')). Hardcoded rather than
-// recomputed via require('../app/...') to keep test-utils Node-only and
-// avoid pulling in ws-bridge's module graph just to read one constant.
-const FEEDBACK_BOARD_PATH = path.join(__dirname, '..', 'app', 'users', 'feedback-board.json');
-
-// Canonical path to the Phase 3.5 v3 §9a populated fixture. Hoisted to
-// test-utils.js (was inline in visual-diff.js view 14b setup per PR #69
-// review finding #15) so a future sibling view (14c two-thread, 14d single-
-// reply, …) and the §9c.x mistake-notebook fixtures share one resolution
-// site.
-const FEEDBACK_FIXTURE_POPULATED_PATH = path.join(__dirname, 'fixtures', 'feedback-board.populated.json');
-
-// Backup directory for harness-mutated user files. Lives under tools/ rather
-// than next to the production file (app/users/) per PR #69 review finding
-// #20: snapshotting into app/users/feedback-board.harness-backup.json mixed
-// harness state with real per-user state. tools/.harness-state/ is git-
-// ignored and isolated from the runtime read path.
-const HARNESS_STATE_DIR = path.join(__dirname, '.harness-state');
-const FEEDBACK_BOARD_BACKUP_PATH = path.join(HARNESS_STATE_DIR, 'feedback-board.backup.json');
-
-// Read a small JSON file and return its parsed content (or null on any error).
-// Used by seedFeedbackFixture / restoreFeedbackBoard to compare board content
-// against the fixture so we never destroy a developer's real feedback data.
-// Synchronous + best-effort — failures fall back to null, callers handle.
-function readJsonOrNull(p) {
-    try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch (_) { return null; }
-}
-
-// Two boards are "the same" iff their normalized JSON bytes match. Catches
-// the case where seedFeedbackFixture has already written the fixture (so the
-// board content equals the fixture content) without falsely matching a board
-// that happens to have similar items.
-function jsonEquals(a, b) {
-    return JSON.stringify(a) === JSON.stringify(b);
-}
-
-// Phase 3.5 v3 §9a — seed app/users/feedback-board.json from a fixture so
-// view 14b can render populated thread/reply chrome (G.3.2's deleted
-// `#feedbackView` rules + all tone-N/lane/target chrome). The bridge reads
-// the file on every /api/feedback GET (no in-process cache), so seeding at
-// view-setup time is sufficient — no bridge restart needed.
-//
-// Safety contract (PR #69 review findings #1, #11, #12, #20):
-//   - Snapshots any pre-existing board into tools/.harness-state/ BEFORE
-//     overwriting, so restoreFeedbackBoard can put it back byte-for-byte.
-//   - Snapshot is skipped only when the existing board already matches the
-//     fixture (idempotent re-seed within one run, or a crashed prior run
-//     that left fixture in place — in which case the backup would be the
-//     fixture too, defeating the purpose).
-//   - If an old backup exists from a crashed prior run, it is PRESERVED
-//     (never overwritten with fixture-as-original) so the dev's true
-//     original data survives chains of failed runs.
-function seedFeedbackFixture(fixturePath) {
-    fs.mkdirSync(HARNESS_STATE_DIR, { recursive: true });
-    const fixture = readJsonOrNull(fixturePath);
-    if (!fixture) throw new Error(`seedFeedbackFixture: cannot read fixture at ${fixturePath}`);
-    const existing = readJsonOrNull(FEEDBACK_BOARD_PATH);
-    if (existing && !jsonEquals(existing, fixture) && !fs.existsSync(FEEDBACK_BOARD_BACKUP_PATH)) {
-        // Real user data — snapshot it. (Existing equals fixture → we already
-        // seeded this run; skip. Existing differs AND backup exists → some
-        // prior run already preserved the original; preserve THAT, not the
-        // current existing-which-might-be-fixture-from-a-clobbered-prior-run.)
-        fs.copyFileSync(FEEDBACK_BOARD_PATH, FEEDBACK_BOARD_BACKUP_PATH);
-    }
-    fs.copyFileSync(fixturePath, FEEDBACK_BOARD_PATH);
-}
-
-// Restore app/users/feedback-board.json to its pre-harness state. Two paths:
-//   1. Backup exists → copy backup back, delete backup. The dev's original
-//      board is restored exactly.
-//   2. No backup → ONLY delete the board if its content matches the fixture
-//      we know about (the §9a populated fixture). Anything else — including
-//      a board the dev created after the harness exited mid-run — is left
-//      alone. Prevents the data-loss path from PR #69 review finding #1
-//      where a dev runs --check on a tree that has real feedback data and
-//      restoreFeedbackBoard silently deletes it.
-function restoreFeedbackBoard() {
-    if (fs.existsSync(FEEDBACK_BOARD_BACKUP_PATH)) {
-        fs.copyFileSync(FEEDBACK_BOARD_BACKUP_PATH, FEEDBACK_BOARD_PATH);
-        fs.unlinkSync(FEEDBACK_BOARD_BACKUP_PATH);
-        return;
-    }
-    if (!fs.existsSync(FEEDBACK_BOARD_PATH)) return;
-    // Compare current board content to every known fixture; only delete on
-    // match. Keeps the safety check honest if more fixtures land later —
-    // add their paths here.
-    const known = [FEEDBACK_FIXTURE_POPULATED_PATH];
-    const current = readJsonOrNull(FEEDBACK_BOARD_PATH);
-    for (const p of known) {
-        if (jsonEquals(current, readJsonOrNull(p))) {
-            fs.unlinkSync(FEEDBACK_BOARD_PATH);
-            return;
-        }
-    }
-    // Unknown content — leave it alone. Don't touch the dev's real data.
-}
-
 // Resolve a lesson-cache file path using the same workspace-preferred fallback
 // chain that ws-bridge.js uses. Returns the resolved absolute path or null.
 function resolveLessonCachePath(repoRoot, sectionId) {
@@ -762,11 +658,6 @@ module.exports = {
     resolveLessonCachePath,
     closeFeaturePopovers,
     maskLessonSidebar,
-    FEEDBACK_BOARD_PATH,
-    FEEDBACK_FIXTURE_POPULATED_PATH,
-    HARNESS_STATE_DIR,
-    seedFeedbackFixture,
-    restoreFeedbackBoard,
     waitForBoot,
     clickUntilLog,
     runFlow,
