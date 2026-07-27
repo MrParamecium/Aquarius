@@ -27,7 +27,7 @@
 //     resetQuiz, isB8TextbookOnlySection, shouldOpenSectionAsChapterOverview
 //                                       (app.js)
 //   - appShell, welcomeScreen, answerScreen, learnView, settingsView,
-//     feedbackView, courseTrackerView, mistakeNotebookView,
+//     courseTrackerView, mistakeNotebookView,
 //     loginView, topbar, loginCustomStage, loginClerkStage
 //                                       (mostly app.js DOM consts)
 //
@@ -777,7 +777,6 @@ function startGuestMode() {
   if (answerScreen) answerScreen.classList.add('hidden');
   if (learnView) learnView.classList.add('hidden');
   if (settingsView) settingsView.classList.add('hidden');
-  if (feedbackView) feedbackView.classList.add('hidden');
   if (courseTrackerView) courseTrackerView.classList.add('hidden');
   if (mistakeNotebookView) mistakeNotebookView.classList.add('hidden');
   if (topbar) topbar.classList.add('hidden');

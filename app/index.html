@@ -341,12 +341,6 @@
             </span>
             <span>Preferences</span>
           </button>
-          <button class="sidebar-link sidebar-link-feedback" id="navFeedbackBtn" type="button" title="Feedback Board">
-            <span class="sidebar-link-icon">
-              <i class="ph-bold ph-chat-circle-dots" aria-hidden="true"></i>
-            </span>
-            <span>Feedback Board</span>
-          </button>
         </div>
       </div>
 
@@ -957,51 +951,6 @@
         </div>
       </div>
 
-      <div class="feedback-view hidden" id="feedbackView">
-        <div class="feedback-shell">
-          <div class="feedback-header">
-            <div>
-              <div class="feedback-eyebrow">Community Notes</div>
-              <h1 class="feedback-title">Feedback Board</h1>
-              <p class="feedback-subtitle">Leave suggestions for Fourier, see what others requested, and discuss product ideas together.</p>
-            </div>
-            <button class="feature-close-btn" id="feedbackCloseBtn" type="button" aria-label="Close feedback board">✕</button>
-          </div>
-
-          <div class="feedback-grid">
-            <section class="feedback-compose-card">
-              <div class="feedback-tape" aria-hidden="true"></div>
-              <div class="feedback-card-kicker">New Suggestion</div>
-              <h2>What should be better?</h2>
-              <p>Tell Harrison what feels confusing, broken, missing, or worth improving. Everyone can see and discuss it.</p>
-              <input id="feedbackNameInput" class="feedback-input" type="text" maxlength="60" placeholder="Your name (optional)">
-              <input id="feedbackTitleInput" class="feedback-input" type="text" maxlength="120" placeholder="Short title">
-              <textarea id="feedbackBodyInput" class="feedback-textarea" maxlength="1200" placeholder="Describe the suggestion, bug, or idea..."></textarea>
-              <button id="feedbackSubmitBtn" class="feedback-primary-btn" type="button">
-                <span>Post Suggestion</span>
-                <i class="ph-bold ph-paper-plane-tilt" aria-hidden="true"></i>
-              </button>
-              <div id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></div>
-            </section>
-
-            <section class="feedback-board-card">
-              <div class="feedback-board-head">
-                <div>
-                  <div class="feedback-card-kicker">Public Discussion</div>
-                  <h2>Suggestions from users</h2>
-                </div>
-                <button id="feedbackRefreshBtn" class="feedback-secondary-btn feedback-refresh-icon-btn" type="button" aria-label="Refresh suggestions" title="Refresh suggestions">
-                  <i class="ph-bold ph-arrow-clockwise" aria-hidden="true"></i>
-                </button>
-              </div>
-              <div id="feedbackList" class="feedback-list">
-                <div class="feedback-empty">No suggestions yet. Be the first to pin one here.</div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-
       <div class="preference-view hidden" id="preferenceView">
         <div class="preference-page-shell">
           <div class="preference-page-header">
@@ -1604,7 +1553,6 @@
   <script src="preference-profile.js?v=1700"></script>
   <script src="attachments.js?v=1338"></script>
   <script src="recent-conversations.js?v=1700"></script>
-  <script src="feedback-board.js?v=1605"></script>
   <script src="textbook-focus.js?v=1606"></script>
   <script src="syllabus-view.js?v=1608"></script>
   <script src="interactive-demos/helpers.js?v=1602"></script>
