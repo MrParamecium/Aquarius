@@ -1,0 +1,5 @@
+{"file":".trellis/spec/app/index.md","reason":"按应用层 Quality Check 检查语法、范围和材料路径。"}
+{"file":".trellis/spec/app/conventions.md","reason":"复核依赖、模块、缓存命名和 Windows 文件名约束。"}
+{"file":".trellis/spec/css/index.md","reason":"识别 GeoGebra 样式修改触发的 CSS 全量检查要求。"}
+{"file":".trellis/spec/css/verification.md","reason":"复核 CSS probe、visual diff 与响应式视觉证据。"}
+{"file":".trellis/tasks/07-26-loop-03-geogebra-2-4-2/research/geogebra-and-local-contracts.md","reason":"独立核对固定版本、API 生命周期和数学验收值。"}

@@ -1,0 +1,72 @@
+{
+  "captured_at": "2026-07-27T11:30:56+08:00",
+  "branch": "codex/loop-03-geogebra-2-4-2",
+  "baseline": "9f8360d73de9c40e950cb172d230662238313d0b",
+  "geogebra": {
+    "loader_url": "https://www.geogebra.org/apps/deployggb.js",
+    "html5_codebase": "https://www.geogebra.org/apps/5.4.920.0/web3d",
+    "applet_count": 1,
+    "graphics_view_count": 2,
+    "math_readings": [
+      { "t": -4, "area": 0, "output": 0 },
+      { "t": -3, "area": 0, "output": 0 },
+      { "t": -2, "area": 0.6321205588, "output": 0.6321205588 },
+      { "t": 0, "area": 0.9502129316, "output": 0.9502129316 }
+    ]
+  },
+  "mobile_390x844": {
+    "lecture": {
+      "width": 359,
+      "qa_width": 0,
+      "switch_height": 45.8248,
+      "horizontal_overflow": 0,
+      "pager": "4 / 7",
+      "active_step": 3,
+      "stage_state": "ready",
+      "canvas_sizes": [
+        { "width": 318, "height": 216 },
+        { "width": 318, "height": 314 }
+      ]
+    },
+    "qa": {
+      "lecture_width": 0,
+      "width": 359,
+      "switch_height": 45.9899,
+      "horizontal_overflow": 0,
+      "applet_canvas_count_while_hidden": 2,
+      "stage_state_while_hidden": "ready"
+    },
+    "returned_lecture": {
+      "width": 359,
+      "qa_width": 0,
+      "horizontal_overflow": 0,
+      "pager": "4 / 7",
+      "active_step": 3,
+      "stage_state": "ready",
+      "canvas_count": 2
+    },
+    "visible_canvas_pixel_samples": [
+      {
+        "sampled": 69006,
+        "non_near_white": 8742,
+        "saturated": 2305,
+        "dark": 1740
+      },
+      {
+        "sampled": 40386,
+        "non_near_white": 21392,
+        "saturated": 24,
+        "dark": 473
+      }
+    ]
+  },
+  "mobile_regression": {
+    "result": "7/7 passed",
+    "preserved_t": -2,
+    "preserved_step": 3,
+    "same_canvas_nodes": true,
+    "constructor_count": 1,
+    "inject_count": 1,
+    "remove_count": 0
+  }
+}

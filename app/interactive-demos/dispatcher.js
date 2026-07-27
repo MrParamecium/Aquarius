@@ -156,6 +156,9 @@ function inferInteractiveDemoFamily(demo = {}) {
   const hasPoleRocIntent = /\b(roc|region of convergence|pole[-\s]?zero|poles?\s+and\s+zeros?|zeros?\s+and\s+poles?|root location|stability tester|stable pole|pole location|causal\s*\/\s*(?:right|outside)|anti[-\s]?causal\s*\/\s*(?:left|inside)|inside\s+the\s+unit\s+circle|outside\s+the\s+unit\s+circle)\b/i.test(combinedText);
   const hasTransformRuleIntent = /\b(z[-\s]?transform|z[-\s]?domain|laplace|s[-\s]?domain|transfer function|h\[z\]|x\[z\]|y\[z\]|block diagram|realization|direct form|op[-\s]?amp|transform[-\s]?scale|time integration|running area|time scaling|delay factor|frequency shifting)\b/i.test(combinedText);
 
+  if (frame === 'geogebra') {
+    return 'geogebra';
+  }
   if (/\b(convol|sliding overlap|reverse.*shift.*multiply|overlap.*sum)\b/i.test(combinedText)) {
     return 'convolution_lab';
   }
@@ -271,6 +274,7 @@ const INTERACTIVE_DEMO_FAMILY_RENDERERS = {
   matrix_locator: renderMatrixLocatorFallback,
   parameter_response: renderParameterResponseFallback,
   pointwise_multiplication: renderPointwiseMultiplicationFallback,
+  geogebra: renderGeoGebraDemo,
   convolution_lab: renderConvolutionLabDemo,
   pole_zero_roc_lab: renderPoleZeroRocLabDemo,
   frequency_response_lab: renderFrequencyResponseLabDemo,

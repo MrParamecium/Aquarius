@@ -7531,6 +7531,389 @@ body.learn-resizing .learn-resizer::before {
   }
 }
 
+.geogebra-demo-shell {
+  background: #fffefa;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #172033;
+  container-type: inline-size;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.geogebra-demo-shell [hidden] {
+  display: none;
+}
+
+.geogebra-demo-head {
+  align-items: start;
+  border-bottom: 1px solid #dbe3ec;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 18px 20px 16px;
+}
+
+.geogebra-demo-kicker {
+  color: #0f766e;
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+}
+
+.geogebra-demo-title {
+  color: #172033;
+  font-family: "Quicksand", "Nunito", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.3;
+}
+
+.geogebra-demo-subtitle {
+  color: #526176;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+.geogebra-demo-steps {
+  background: #f3f6f8;
+  border-bottom: 1px solid #dbe3ec;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.geogebra-demo-step {
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  color: #526176;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  min-height: 46px;
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.geogebra-demo-step + .geogebra-demo-step {
+  border-left: 1px solid #dbe3ec;
+}
+
+.geogebra-demo-step:hover {
+  background: #ffffff;
+  color: #172033;
+}
+
+.geogebra-demo-step.is-active {
+  background: #ffffff;
+  border-bottom-color: #0f766e;
+  color: #0f5f59;
+}
+
+.geogebra-demo-toolbar {
+  align-items: center;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  padding: 14px 20px 8px;
+}
+
+.geogebra-demo-instruction {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  text-align: center;
+}
+
+.geogebra-demo-instruction strong {
+  color: #172033;
+  font-size: 0.94rem;
+  line-height: 1.35;
+}
+
+.geogebra-demo-instruction span {
+  color: #526176;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.geogebra-demo-button {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #94a3b8;
+  border-radius: 6px;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 850;
+  justify-content: center;
+  letter-spacing: 0;
+  min-height: 44px;
+  padding: 8px 14px;
+}
+
+.geogebra-demo-button:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #64748b;
+}
+
+.geogebra-demo-button--primary {
+  background: #0f766e;
+  border-color: #0f766e;
+  color: #ffffff;
+}
+
+.geogebra-demo-button--primary:hover:not(:disabled) {
+  background: #115e59;
+  border-color: #115e59;
+}
+
+.geogebra-demo-button:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+
+.geogebra-demo-button:focus-visible,
+.geogebra-demo-step:focus-visible,
+.geogebra-demo-time-control input:focus-visible {
+  outline: 3px solid rgba(14, 116, 144, 0.34);
+  outline-offset: 2px;
+}
+
+.geogebra-demo-time-control {
+  align-items: center;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 92px minmax(0, 1fr) 52px;
+  padding: 8px 20px 14px;
+}
+
+.geogebra-demo-time-control span {
+  color: #334155;
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.geogebra-demo-time-control input {
+  accent-color: #7c3aed;
+  margin: 0;
+  min-height: 32px;
+  width: 100%;
+}
+
+.geogebra-demo-time-control output {
+  color: #6d28d9;
+  font-size: 0.88rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  text-align: right;
+}
+
+.geogebra-demo-legend {
+  align-items: center;
+  border-top: 1px solid #e5eaf0;
+  color: #526176;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.76rem;
+  gap: 8px 16px;
+  min-height: 42px;
+  padding: 8px 20px;
+}
+
+.geogebra-demo-legend span {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.geogebra-demo-swatch {
+  background: #64748b;
+  border-radius: 2px;
+  display: inline-block;
+  height: 3px;
+  width: 20px;
+}
+
+.geogebra-demo-swatch--input { background: #2563eb; }
+.geogebra-demo-swatch--source { background: #0d9488; }
+.geogebra-demo-swatch--moving { background: #7c3aed; }
+.geogebra-demo-swatch--product { background: #d97706; }
+.geogebra-demo-swatch--output { background: #b45309; }
+
+.geogebra-demo-stage {
+  background: #ffffff;
+  border-block: 1px solid #dbe3ec;
+  box-sizing: border-box;
+  height: 620px;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.geogebra-demo-mount {
+  height: 620px;
+  min-width: 320px;
+  width: 100%;
+}
+
+.geogebra-demo-loading {
+  align-items: center;
+  background: #f8fafc;
+  color: #526176;
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 24px;
+  position: absolute;
+  text-align: center;
+  z-index: 2;
+}
+
+.geogebra-demo-fallback {
+  align-items: center;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1.25fr) minmax(240px, 0.75fr);
+  height: 100%;
+  overflow: auto;
+  padding: 20px;
+}
+
+.geogebra-demo-fallback img {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  display: block;
+  height: auto;
+  margin: 0 auto;
+  max-height: 560px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.geogebra-demo-fallback-copy {
+  color: #526176;
+  display: grid;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.geogebra-demo-fallback-copy strong {
+  color: #9f1239;
+  font-size: 1rem;
+}
+
+.geogebra-demo-fallback-copy code {
+  background: #f8fafc;
+  border-left: 3px solid #d97706;
+  color: #172033;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  padding: 10px 12px;
+  white-space: normal;
+}
+
+.geogebra-demo-fallback-copy .geogebra-demo-button {
+  justify-self: start;
+}
+
+.geogebra-demo-feedback {
+  background: #fff8e6;
+  border-left: 4px solid #d97706;
+  color: #713f12;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  min-height: 48px;
+  padding: 13px 18px;
+}
+
+#learnExplainCol:has(.geogebra-demo-shell) #learnExplainPager {
+  bottom: auto;
+  flex: 0 0 auto;
+  left: auto;
+  margin: 8px auto 12px;
+  position: relative;
+  transform: none;
+}
+
+@container (max-width: 620px) {
+  .geogebra-demo-fallback {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .geogebra-demo-fallback img {
+    max-height: 280px;
+  }
+}
+
+@media (max-width: 620px) {
+  .geogebra-demo-head {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .geogebra-demo-reset {
+    justify-self: start;
+  }
+
+  .geogebra-demo-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .geogebra-demo-step:nth-child(3) {
+    border-left: 0;
+  }
+
+  .geogebra-demo-toolbar {
+    grid-template-columns: 1fr 1fr;
+    padding: 14px 16px 8px;
+  }
+
+  .geogebra-demo-instruction {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    min-height: 66px;
+  }
+
+  .geogebra-demo-time-control {
+    grid-template-columns: 78px minmax(0, 1fr) 46px;
+    padding: 8px 16px 14px;
+  }
+
+  .geogebra-demo-legend {
+    gap: 7px 12px;
+    padding-inline: 16px;
+  }
+
+  .geogebra-demo-stage,
+  .geogebra-demo-mount {
+    height: 540px;
+  }
+
+  .geogebra-demo-fallback {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+  }
+
+  .geogebra-demo-fallback img {
+    max-height: 280px;
+  }
+}
+
 .chapter-demo-shell {
   border: 1px solid rgba(148, 163, 184, 0.45);
   border-radius: 14px;
@@ -31927,6 +32310,128 @@ body {
     min-height: auto !important;
     height: auto !important;
     grid-template-rows: auto 12px auto !important;
+  }
+}
+
+/* 移动端课程使用讲义/问答互斥单面板，章节概览继续沿用原布局。 */
+@media (max-width: 900px) {
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) .learn-body-inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainCol#learnExplainCol,
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnChatCol#learnChatCol {
+    flex: 1 1 100% !important;
+    flex-basis: 100% !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnResizer#learnResizer {
+    display: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    pointer-events: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.chat-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainCol#learnExplainCol {
+    display: flex !important;
+    border-right: 0 !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.chat-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnChatCol#learnChatCol {
+    display: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.explain-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainCol#learnExplainCol {
+    display: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.explain-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnChatCol#learnChatCol {
+    display: flex !important;
+    pointer-events: auto !important;
+    visibility: visible !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.chat-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnChatRestoreBtn#learnChatRestoreBtn,
+  #learnView#learnView #learnBody#learnBody.explain-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainRestoreBtn#learnExplainRestoreBtn {
+    display: inline-flex !important;
+    min-height: 44px !important;
+    height: 44px !important;
+    letter-spacing: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody.chat-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnExplainRestoreBtn#learnExplainRestoreBtn,
+  #learnView#learnView #learnBody#learnBody.explain-collapsed:not(.chapter-overview-active):not(.chapter-overview-split-active) #learnChatRestoreBtn#learnChatRestoreBtn {
+    display: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn) {
+    border: 1px solid rgba(255, 255, 255, 0.68) !important;
+    border-radius: 18px !important;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.50), rgba(255, 255, 255, 0.18)) !important;
+    color: #31415f !important;
+    box-shadow:
+      0 14px 34px rgba(15, 23, 42, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.18) !important;
+    backdrop-filter: blur(18px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(160%) !important;
+    transform: none !important;
+    letter-spacing: 0 !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn)::before,
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn)::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn) .learn-edge-toggle-icon {
+    border-color: rgba(125, 184, 255, 0.72) !important;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(219, 234, 254, 0.24)) !important;
+    color: #2563eb !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.88),
+      0 3px 10px rgba(37, 99, 235, 0.10) !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn):hover {
+    border-color: rgba(255, 255, 255, 0.84) !important;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.62), rgba(255, 255, 255, 0.24)) !important;
+    box-shadow:
+      0 16px 36px rgba(15, 23, 42, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.94),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.22) !important;
+    transform: translateY(-1px) !important;
+  }
+
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) :is(#learnChatRestoreBtn#learnChatRestoreBtn, #learnExplainRestoreBtn#learnExplainRestoreBtn):active {
+    box-shadow:
+      0 8px 18px rgba(15, 23, 42, 0.11),
+      inset 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+    transform: none !important;
+  }
+
+  #learnView #learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) .learn-side-restore:focus-visible {
+    outline: 3px solid #0ea5e9 !important;
+    outline-offset: 3px !important;
   }
 }
 

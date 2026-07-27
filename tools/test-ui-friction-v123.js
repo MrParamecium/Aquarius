@@ -277,10 +277,26 @@ async function main() {
         await page.waitForTimeout(250);
         const narrowPanelContract = await page.evaluate(() => {
             const pager = document.getElementById('learnExplainPager');
-            const host = document.getElementById('learnExplainCol');
+            const lecture = document.getElementById('learnExplainCol');
+            const qa = document.getElementById('learnChatCol');
+            const showQa = document.getElementById('learnChatRestoreBtn');
+            const showLecture = document.getElementById('learnExplainRestoreBtn');
+            const isVisible = element => {
+                if (!element) return false;
+                const style = getComputedStyle(element);
+                const rect = element.getBoundingClientRect();
+                return style.display !== 'none'
+                    && style.visibility !== 'hidden'
+                    && rect.width > 0
+                    && rect.height > 0;
+            };
             return {
-                hostWidth: host?.getBoundingClientRect().width || 0,
-                display: pager ? getComputedStyle(pager).display : null,
+                lectureWidth: lecture?.getBoundingClientRect().width || 0,
+                qaWidth: qa?.getBoundingClientRect().width || 0,
+                pagerDisplay: pager ? getComputedStyle(pager).display : null,
+                showQaVisible: isVisible(showQa),
+                showQaHeight: showQa?.getBoundingClientRect().height || 0,
+                showLectureVisible: isVisible(showLecture),
                 pageCornerCount: document.querySelectorAll(
                     '#lecturePrevOverlayBtn, #lectureNextOverlayBtn, .lecture-page-corner, .page-turner'
                 ).length
@@ -340,11 +356,17 @@ async function main() {
         if (pagerNavigationContract.returnedIndex !== pagerNavigationContract.startIndex) {
             failures.push(`bottom pager did not return to index ${pagerNavigationContract.startIndex}`);
         }
-        if (narrowPanelContract.hostWidth >= 280) {
-            failures.push(`narrow viewport lesson panel width = ${narrowPanelContract.hostWidth}px`);
+        if (narrowPanelContract.lectureWidth < 350 || narrowPanelContract.qaWidth !== 0) {
+            failures.push(`narrow viewport panels = lecture ${narrowPanelContract.lectureWidth}px, Q&A ${narrowPanelContract.qaWidth}px`);
         }
-        if (narrowPanelContract.display !== 'none') {
-            failures.push(`narrow hidden lesson panel pager display = ${narrowPanelContract.display}`);
+        if (narrowPanelContract.pagerDisplay === 'none') {
+            failures.push(`narrow lecture pager display = ${narrowPanelContract.pagerDisplay}`);
+        }
+        if (!narrowPanelContract.showQaVisible || narrowPanelContract.showQaHeight < 44) {
+            failures.push(`narrow Q&A switch = visible ${narrowPanelContract.showQaVisible}, height ${narrowPanelContract.showQaHeight}px`);
+        }
+        if (narrowPanelContract.showLectureVisible) {
+            failures.push('narrow lecture switch is visible while lecture is already open');
         }
         if (narrowPanelContract.pageCornerCount !== 0) {
             failures.push(`narrow viewport legacy page-corner controls = ${narrowPanelContract.pageCornerCount}`);

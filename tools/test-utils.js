@@ -146,7 +146,9 @@ function injectMaskInitScript(context) {
 // per docs/phase3_deferred.md §8d.
 async function dismissIntro(page, base) {
     await page.goto(base, { waitUntil: 'domcontentloaded' });
-    await page.click('#introGetStartedBtn');
+    const getStarted = page.locator('#introGetStartedBtn');
+    await getStarted.waitFor({ state: 'visible', timeout: 25000 });
+    await getStarted.evaluate(button => button.click());
 }
 
 async function enterGuestMode(page, base) {
