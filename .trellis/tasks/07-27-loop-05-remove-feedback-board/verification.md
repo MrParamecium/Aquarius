@@ -105,9 +105,11 @@ reply context width           294.438px -> 293.891px
 
 `_view-cascade-probe.js` 已移除夹具和旧导航依赖，并通过语法检查；本独立工作区没有删除前的 `_view-cascade-baseline.json`（该文件为忽略的约 360 MB 生成物），因此没有伪造一次“删除后自我基线”的对比结果。
 
-## 尚未执行
+## PR 状态
 
-- 尚未推送、创建 PR 或合并。
+- 分支 `codex/loop-05-remove-feedback-board` 已推送。
+- 中英文双语 PR [#141](https://github.com/MrParamecium/Fourier/pull/141) 已创建，目标分支为 `main`。
+- PR 保持未合并，等待远端检查、用户实际体验和手动合并。
 - 尚未连接线上 Neon，`feedback_items` 表没有删除。只能在合并、部署并验证线上健康后由用户再次确认执行不可逆删表。
 
 ## 集成最新 main
@@ -137,4 +139,4 @@ Loop 04 使集成后的 `style.css` 再减少 11 行。没有沿用旧行号：�
 - 三个旧 Feedback Board API 再次实测均为 `404`，且不会创建反馈文件。
 - 旧 `{view:"feedback"}` 状态刷新后再次实测安全回到 Home。
 
-集成完成后仍未推送、创建新 PR、合并本 Loop 或连接 Neon。
+集成完成并通过回归后已推送分支、创建中英文双语 PR #141；本 Loop 尚未合并，也没有连接 Neon。
