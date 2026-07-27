@@ -83,7 +83,7 @@ computed styles.
    The arbiter cannot render every state, so never reset a keep line it physically cannot flip (a
    reset-and-regrow would strip it *untested*). A keep line is **carve-out** (preserve, do not reset) iff:
    - **(a) cross-view override** — the selector names a *non-target* view id (e.g. the 7-way grouped
-     close-button `border:0 !important` at L24702, shared with learn/topbar/settings/preference/
+     close-button `border:0 !important` shared with learn/topbar/settings/preference/
      courseTracker/mistakeNotebook). Carve out **regardless of reachability**: a per-view strip's blast
      radius exceeds the per-view arbiter's coverage, so stripping it silently regresses the *other* views.
      This is the generalized L24702 hazard.
@@ -93,7 +93,7 @@ computed styles.
    - **Evaluate per declaration, NEVER per substring.** A grouped decl is carve-out only if **NONE** of its
      comma-separated compounds is arbiter-driven; a grouped rule that *also* lists a driven control is
      REACHABLE. The naive "any compound matches a gated pattern" filter over-carves grouped driven+non-driven
-     rules — for `#feedbackView` it yields **21** vs the correct **15**. Assert the exact split before proceeding.
+     rules. Assert the exact split for the selected surface before proceeding.
 
 3. **Commit the MINIMAL keep-set, not the over-grown loop output.** `_grow-keep-from-report.js` over-keeps by
    design; the committed keep-set must be `backup minus measured-residual` (the original with only the
@@ -101,9 +101,7 @@ computed styles.
 
 4. **Honest outcome.** A converged `kept == original` is a *successful* "reproducible-within-coverage" proof
    (the floor is genuinely load-bearing) — **not** a failure, and never papered over with a manufactured
-   strip. But the measurement can also expose real headroom the proxy hid: the `#feedbackView` pass found
-   **7 over-kept `border-radius !important`** decls a prior increment's defensive over-keep had retained
-   (feedback 472 → 465). A residual strip then goes through the five gates in verification.md.
+   strip. A residual strip must still go through the five gates in verification.md.
 
 ## State-gating reality
 

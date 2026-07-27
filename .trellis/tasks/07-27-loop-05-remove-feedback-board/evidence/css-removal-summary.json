@@ -1,0 +1,14 @@
+{
+  "removedRules": 243,
+  "removedSelectorArms": 354,
+  "mixedRulesRewritten": 4,
+  "oldCssLines": 32469,
+  "newCssLines": 31073,
+  "sourceCommit": "489b548",
+  "oldKeepLines": 1073,
+  "sourceImportantDeclarations": 1076,
+  "removedFeedbackDeclarations": 464,
+  "transformedMixedDeclarations": 2,
+  "mappedDeclarations": 612,
+  "newKeepLines": 609
+}
