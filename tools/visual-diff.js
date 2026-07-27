@@ -4,7 +4,7 @@
  *
  * Captures PNG screenshots of the key visual surfaces in guest mode, then
  * compares them pixel-for-pixel against a saved baseline. Animated regions
- * (login cosmos Three.js canvas, in-flight panel transitions) are masked so
+ * (login decorations, in-flight panel transitions) are masked so
  * a deterministic diff is possible.
  *
  * Usage:
@@ -1086,12 +1086,10 @@ const sharedViews = [
     // ----- Page D (pre-guest login surface) -----
     // View 19 — Page D — login card visible (intro dismissed, guest not
     // entered). Covers FINAL LOGIN LIQUID GLASS banner at app/style.css
-    // L43321+ + .login-* tokens at L43326+. The login Three.js cosmos
-    // canvas (#loginWebglContainer) is masked via MASK_CSS so the per-run
-    // particle seed cannot drift.
+    // L43321+ + .login-* tokens at L43326+. Decorative motion is frozen via
+    // MASK_CSS so animations cannot drift between runs.
     { name: '19-login-screen', page: 'D', setup: async (page) => {
-        // initLoginExperience() may schedule a rAF/tilt setup; settle a
-        // couple frames + 200ms slack before capture.
+        // Let the login card's CSS animation settle before capture.
         await page.evaluate(() => new Promise(r =>
             requestAnimationFrame(() => requestAnimationFrame(r))));
         await page.waitForTimeout(200);
@@ -1371,8 +1369,8 @@ const sharedViews = [
     // at L41934+ is exercised without making an LLM call. Mirrors showAnswer
     // (app.js L6080) including the topbar.classList.remove('hidden') flip
     // so the captured frame matches the production Glass surface (topbar
-    // sits above the answer panel in real use). destroyLoginScene() is
-    // skipped because Page B never entered the login flow. The previous
+    // sits above the answer panel in real use). Page B never enters the
+    // login flow. The previous
     // Page B view (14-feedback-board) left #feedbackView visible — close
     // it first along with the other sibling panels showAnswer also hides.
     { name: '24-answer-workspace', page: 'B', setup: async (page) => {

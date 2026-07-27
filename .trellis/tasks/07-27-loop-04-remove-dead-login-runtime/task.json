@@ -3,7 +3,7 @@
   "name": "loop-04-remove-dead-login-runtime",
   "title": "删除无效登录动画运行时",
   "description": "",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": null,
   "scope": "app",
   "package": null,
