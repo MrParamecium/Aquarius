@@ -1,0 +1,6 @@
+{"file":".trellis/spec/app/index.md","reason":"确认无构建 vanilla JS 项目边界、材料目录和基础质量门槛。"}
+{"file":".trellis/spec/app/conventions.md","reason":"遵守 classic script 模块、课程缓存路径、命名和依赖约束。"}
+{"file":".trellis/spec/app/architecture.md","reason":"理解前端加载顺序、部署方式和模块拆分边界。"}
+{"file":".trellis/spec/css/index.md","reason":"新增 GeoGebra 外壳样式前读取 CSS 层入口与强制门槛。"}
+{"file":".trellis/spec/css/verification.md","reason":"执行 CSS probe 与 visual diff 验证，防止现有课程界面回归。"}
+{"file":".trellis/tasks/07-26-loop-03-geogebra-2-4-2/research/geogebra-and-local-contracts.md","reason":"提供官方嵌入/API/版本、许可前提、本地缓存与 Figure 2.7 数学依据。"}
