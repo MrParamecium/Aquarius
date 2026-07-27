@@ -107,6 +107,34 @@ reply context width           294.438px -> 293.891px
 
 ## 尚未执行
 
-- Loop 04 尚未合并，本分支还没有集成更新后的 `origin/main`。
 - 尚未推送、创建 PR 或合并。
 - 尚未连接线上 Neon，`feedback_items` 表没有删除。只能在合并、部署并验证线上健康后由用户再次确认执行不可逆删表。
+
+## 集成最新 main
+
+用户确认所有前置 PR 已合并后，执行 `git fetch origin`，远端主分支从 `e819d78` 更新到 `d2dd24d`。`d2dd24d` 是 Loop 04 登录运行时减法的合并提交。
+
+通过普通 `git merge origin/main` 集成，出现 3 个内容冲突：
+
+- `app/app.js`：保留 Loop 04 对 `destroyLoginScene()` 的删除，同时不恢复 `showFeedbackView()`；
+- `package.json`：同时删除 `login-cosmos.js`、`feedback-board.js` 和 `_probe-harness-gap.js` 的检查项；
+- `tools/visual-diff.js`：保留已删除 Feedback Board 视图后的 33 视图结构，同时采用不再依赖登录场景运行时的说明。
+
+`app/index.html`、`app/clerk-auth.js`、`tools/test-utils.js` 和 `app/style.css` 自动合并后逐项审查。精确扫描确认登录动画运行时和 Feedback Board 运行标识均为零。
+
+Loop 04 使集成后的 `style.css` 再减少 11 行。没有沿用旧行号：从合并前 `HEAD` 重新按稳定声明身份映射 612 个存活声明，得到 609 个有效 keep 行号；随后重新生成 `_view-important.json`，`.sidebar` 仍为 609 条，全部行号与声明身份验证通过。证据文件已补充 `integratedMain: d2dd24d`。
+
+### 集成后回归
+
+- `npm run check`：通过；第 4、5 章材料计数不变。
+- `node tools/test-auth-guard.js`：40/40 通过。
+- `npm run test:session-restore`：通过。
+- `npm run test:smoke`：9/9 通过。
+- `npm run test:geogebra`：9/9 通过。
+- `npm run test:mobile-learn-panels`：7/7 通过，无横向溢出。
+- `npm run test:css-probe:check`：16 个状态全部逐字节一致。
+- `npm run test:visual:check`：33/33 个视图成功生成；仍为 1 个通过、32 个删除前已知的全局基线漂移，没有重烘焙无关基线。
+- 三个旧 Feedback Board API 再次实测均为 `404`，且不会创建反馈文件。
+- 旧 `{view:"feedback"}` 状态刷新后再次实测安全回到 Home。
+
+集成完成后仍未推送、创建新 PR、合并本 Loop 或连接 Neon。

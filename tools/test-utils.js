@@ -16,13 +16,8 @@ const { spawn } = require('child_process');
 // page derived from the context inherits the mask before first paint —
 // callers must not need to remember to re-inject.
 const MASK_CSS = `
-    /* login cosmos Three.js canvas — Phase 1 #10 */
-    #introWebglContainer { visibility: hidden !important; }
-    /* Phase 3.5 v2 view 19: login-view WebGL backdrop + decorative doodles
-       drift across runs (random sparkle/tilt seeds in clerk-auth.js + CSS
-       keyframes). Mask the canvas + freeze the decorative motion so the
-       Glass card chrome stays diffable. */
-    #loginWebglContainer { visibility: hidden !important; }
+    /* Phase 3.5 v2 view 19: freeze decorative login motion so the Glass card
+       chrome stays diffable across runs. */
     #loginView .login-card.tilt-element {
         transform: none !important;
         transition: none !important;
@@ -158,10 +153,20 @@ async function enterGuestMode(page, base) {
 // landing so the login Glass surface (FINAL LOGIN LIQUID GLASS L43321+) is
 // visible. Does NOT enter guest mode — clicking `#guestModeBtnLogin` would
 // transition into the workspace. After this returns the page sits on the
-// login card with the Three.js cosmos canvas masked.
+// login card with decorative motion frozen by MASK_CSS.
 async function enterLoginView(page, base) {
     await dismissIntro(page, base);
-    await page.waitForSelector('#loginView:not(.hidden)', { timeout: 10000 });
+    await page.waitForSelector('#loginView:not(.hidden)[data-bound-login-experience="1"]', { timeout: 10000 });
+    const passwordToggleWorks = await page.evaluate(() => {
+        const input = document.getElementById('loginPasswordInput');
+        const toggle = document.getElementById('loginPasswordToggleBtn');
+        if (!input || !toggle || input.type !== 'password') return false;
+        toggle.click();
+        const revealed = input.type === 'text';
+        toggle.click();
+        return revealed && input.type === 'password';
+    });
+    if (!passwordToggleWorks) throw new Error('login password visibility control was not bound');
     // Wait for the bound-guest-mode attribute as proof clerk-auth.js
     // initLoginExperience() ran — the same readiness signal enterGuestMode
     // uses one click later. Without it, the login card buttons may still be

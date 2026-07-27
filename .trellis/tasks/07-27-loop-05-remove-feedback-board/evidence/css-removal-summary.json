@@ -10,5 +10,10 @@
   "removedFeedbackDeclarations": 464,
   "transformedMixedDeclarations": 2,
   "mappedDeclarations": 612,
-  "newKeepLines": 609
+  "newKeepLines": 609,
+  "integratedMain": "d2dd24d",
+  "integratedCssLines": 31061,
+  "integratedSourceDeclarations": 612,
+  "integratedKeepLines": 609,
+  "integratedSidebarDeclarations": 609
 }

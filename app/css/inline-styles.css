@@ -71,7 +71,6 @@ body.intro-active .intro-landing-new:not(.hidden) {
   box-sizing: border-box;
 }
 
-.intro-landing-new #introWebglContainer,
 .intro-landing-new .nebula {
   display: none !important;
 }

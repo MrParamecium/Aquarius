@@ -259,15 +259,15 @@
 
 ## 第 8 步：集成 Loop 04 合并后的最新 `main`
 
-- [ ] 等待 Loop 04 合并到 `main` 后执行 `git fetch origin`，记录新的 `origin/main`。
-- [ ] 在当前分支集成最新 `origin/main`；优先使用可审计的普通 merge/rebase 流程，不覆盖用户工作区。
-- [ ] 重点人工审查三个重叠文件：
+- [x] 等待 Loop 04 合并到 `main` 后执行 `git fetch origin`，记录新的 `origin/main@d2dd24d`。
+- [x] 在当前分支通过普通 merge 集成 `origin/main@d2dd24d`，没有覆盖用户工作区。
+- [x] 重点人工审查三个重叠文件：
   - `app/index.html`
   - `app/clerk-auth.js`
   - `package.json`
-- [ ] 确认 Loop 04 的登录运行时删除和本 Loop 的 Feedback Board 删除同时存在。
-- [ ] 若最新 `main` 改动 `app/style.css` 或行号型 JSON，重新执行第 4 步身份映射，禁止沿用旧行号。
-- [ ] 重新运行第 7 步全部回归，并把集成后的 commit 与结果写入 `verification.md`。
+- [x] 确认 Loop 04 的登录运行时删除和本 Loop 的 Feedback Board 删除同时存在。
+- [x] 最新 `main` 改动了 `app/style.css`，已重新映射 612 个声明为 609 个有效 keep 行号，并重新生成 609 条 `.sidebar` 数据。
+- [x] 重新运行第 7 步全部可用回归，并把集成结果写入 `verification.md`。
 
 停止条件：Loop 04 尚未合并，或重叠文件无法同时满足两个 Loop 的验收标准时，不创建 PR。
 

@@ -76,8 +76,6 @@
 </head>
 <body class="app-booting">
   <div id="introLanding" class="intro-landing-new hidden font-body text-ink overflow-x-hidden">
-    <div id="introWebglContainer" aria-hidden="true"></div>
-
     <!-- 顶部胶带导航 -->
     <nav id="introNavbar" class="fixed w-full z-50 top-0 pointer-events-none">
       <div class="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between pointer-events-auto">
@@ -1189,7 +1187,6 @@
   </div>
 
   <div class="login-view hidden" id="loginView">
-        <div class="login-webgl-container" id="loginWebglContainer" aria-hidden="true"></div>
         <svg class="login-doodle login-doodle-constellation" viewBox="0 0 220 190" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M38 48 L78 78 L118 56 L166 96 L145 148 L92 128 L58 160" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="7 8" stroke-linecap="round" stroke-linejoin="round"/>
           <circle cx="38" cy="48" r="6" fill="#38bdf8" stroke="#0f172a" stroke-width="3"/>
@@ -1537,17 +1534,13 @@
     id="clerkScript">
   </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="config.js?v=1778524701"></script>
   <script src="data/preferences.js?v=1222"></script>
   <script src="data/course-metadata.js?v=1410"></script>
   <script src="data/quiz-questions.js?v=1222"></script>
   <script src="data/syllabus-data.js?v=1222"></script>
   <script src="markdown-engine.js?v=1222"></script>
-  <script src="login-cosmos.js?v=1334"></script>
-  <script src="clerk-auth.js?v=1700"></script>
+  <script src="clerk-auth.js?v=1701"></script>
   <script src="api-client.js?v=1700"></script>
   <script src="mistake-notebook.js?v=1336"></script>
   <script src="preference-profile.js?v=1700"></script>
@@ -1581,7 +1574,7 @@
   <script src="interactive-demos/geogebra-demo.js?v=1701"></script>
   <script src="interactive-demos/dispatcher.js?v=1701"></script>
   <script src="lesson-render.js?v=1610"></script>
-  <script src="app.js?v=1700"></script>
+  <script src="app.js?v=1701"></script>
   <script src="ui-friction-fixes.js?v=1607"></script>
 </body>
 </html>

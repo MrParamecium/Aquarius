@@ -153,10 +153,6 @@ body.intro-active .intro-landing-new:not(.hidden) {
   box-sizing: border-box;
 }
 
-.intro-landing-new #introWebglContainer {
-  display: none !important;
-}
-
 .intro-landing-new .nebula {
   position: absolute;
   border-radius: 50%;
@@ -10709,13 +10705,6 @@ h6,
   height: 520px;
 }
 
-
-.login-webgl-container,
-.login-webgl-container canvas {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
 
 .login-doodle {
   position: fixed;
