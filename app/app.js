@@ -4326,7 +4326,6 @@ document.addEventListener('keydown', e => {
 
 // ── View switcher ───────────────────────────────────────────────────────────
 function showWelcome() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.remove('hidden');
   answerScreen.classList.add('hidden');
@@ -4348,7 +4347,6 @@ function showWelcome() {
 }
 
 function showAnswer(question) {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.remove('hidden');
@@ -4366,7 +4364,6 @@ function showAnswer(question) {
 }
 
 function showLearnView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4384,7 +4381,6 @@ function showLearnView() {
 }
 
 function showSettingsView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4404,7 +4400,6 @@ function showSettingsView() {
 }
 
 function showPreferenceView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4423,7 +4418,6 @@ function showPreferenceView() {
 }
 
 function showFeedbackView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4443,7 +4437,6 @@ function showFeedbackView() {
 }
 
 function showCourseTrackerView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4463,7 +4456,6 @@ function showCourseTrackerView() {
 }
 
 function showMistakeNotebookView() {
-  destroyLoginScene();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');

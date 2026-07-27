@@ -20,7 +20,6 @@
 //   - currentBook                     (app.js)
 //   - syllabusData                    (data/syllabus-data.js)
 //   - DEFAULT_PREFERENCE_PROFILE      (data/preferences.js)
-//   - createLoginCosmos               (login-cosmos.js, Phase 1 #10)
 //   - updatePreferenceSidebarSummary  (preference-profile.js, Phase 2 #14)
 //   - updateLearnModeBadge, showLoginView, showWelcome, showSettingsView,
 //     hideIntroLanding, openLearnMode, openChapterOverviewMode, showQuiz,
@@ -45,7 +44,7 @@
 //     enterWorkspaceWithExistingSession, onUserSignedIn,
 //     syncCurrentUserWithoutNavigation, handleSignOut, startGuestMode
 //   - UI: initLoginExperience, setLoginStatus, setLoginButtonsBusy,
-//     destroyLoginScene, renderUserBadge, renderWorkspaceAccountBar,
+//     renderUserBadge, renderWorkspaceAccountBar,
 //     bindWorkspaceAccountBar, setWorkspaceAccountBarVisible,
 //     hideAuthOverlay, showAuthOverlay
 //   - utility: isQuizProfileComplete
@@ -78,7 +77,6 @@ let currentUser = null;  // { uid, name, email, imageUrl }
 let userMemory  = {};    // loaded from backend after login
 
 let clerkInstance = null;
-let loginScene = null;
 let openClerkSignIn = () => {};
 let loginActionBusy = false;
 let authRedirectInProgress = false;
@@ -210,13 +208,6 @@ function setLoginButtonsBusy(isBusy) {
     const el = document.getElementById(id);
     if (el) el.disabled = isBusy;
   });
-}
-
-function destroyLoginScene() {
-  if (loginScene && typeof loginScene.destroy === 'function') {
-    loginScene.destroy();
-    loginScene = null;
-  }
 }
 
 function getBaseAppUrl() {
@@ -417,11 +408,11 @@ async function handleAuthRedirectIfNeeded() {
 }
 
 function initLoginExperience() {
-  const loginContainer = document.getElementById('loginWebglContainer');
-  if (!loginContainer) return;
+  const loginRoot = document.getElementById('loginView');
+  if (!loginRoot) return;
 
-  if (!loginContainer.dataset.bound) {
-    loginContainer.dataset.bound = '1';
+  if (!loginRoot.dataset.boundLoginExperience) {
+    loginRoot.dataset.boundLoginExperience = '1';
 
     const wrapper = document.querySelector('.login-tilt-wrapper');
     const card = document.getElementById('loginCard');
@@ -478,10 +469,6 @@ function initLoginExperience() {
     directOAuth('clerkGithubBtnLogin', 'github');
     relayToClerk('loginForgotBtn');
     relayToClerk('loginSignupBtn');
-  }
-
-  if (!loginScene && window.THREE) {
-    loginScene = createLoginCosmos();
   }
 }
 
