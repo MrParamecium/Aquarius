@@ -1,15 +1,13 @@
 /*
- * User memory + feedback + sessions IO (extracted from ws-bridge.js in
+ * User memory + sessions IO (extracted from ws-bridge.js in
  * Phase 1 #5; dual storage backend added in the 07-05 user-db task).
  *
- * TWO interchangeable storage backends behind one 8-primitive store
+ * TWO interchangeable storage backends behind one 6-primitive store
  * interface (readUserMemory / writeUserMemory / listSessionsForUid /
- * readSessionFile / writeSessionFile / deleteSessionForUid /
- * readFeedbackBoard / writeFeedbackBoard):
+ * readSessionFile / writeSessionFile / deleteSessionForUid):
  *
  *   file store (default, deps.databaseUrl unset) — on-disk JSON under USERS_DIR:
  *     USERS_DIR/<uid>.json            → user memory (quiz profile, concepts, style signals)
- *     USERS_DIR/feedback-board.json   → shared feedback board (threaded replies)
  *     USERS_DIR/sessions/<uid>/<id>.json → per-uid persisted chat sessions
  *
  *   pg store (deps.databaseUrl set) — Neon Postgres via app/db.js, JSONB
@@ -18,7 +16,7 @@
  * The PUBLIC surface is async in both modes (the pg store forces it; the
  * file store just resolves immediately). Callers must await every exported
  * function except the pure helpers (buildUserProfilePrompt,
- * deriveMemoryFromSessions, publicFeedbackItem, cleanFeedbackText).
+ * deriveMemoryFromSessions).
  *
  * Call init() once at startup: in pg mode it bootstraps the schema and
  * FAILS FAST if the database is unreachable (never silently falls back to
@@ -60,7 +58,6 @@ module.exports = function createUserMemory(deps) {
     if (!usingPg) {
         try { if (!fs.existsSync(USERS_DIR)) fs.mkdirSync(USERS_DIR, { recursive: true }); } catch (_) {}
     }
-    const FEEDBACK_BOARD_PATH = path.join(USERS_DIR, 'feedback-board.json');
     const SESSIONS_DIR = path.join(USERS_DIR, 'sessions');
     if (!usingPg) {
         try { if (!fs.existsSync(SESSIONS_DIR)) fs.mkdirSync(SESSIONS_DIR, { recursive: true }); } catch (_) {}
@@ -195,28 +192,8 @@ module.exports = function createUserMemory(deps) {
         return (await store.writeSessionFile(uid, session)) ? id : null;
     }
 
-    function cleanFeedbackText(value, maxLen = 1200) {
-        return compactWhitespace(String(value || '').replace(/\r/g, '\n')).slice(0, maxLen);
-    }
-
-    function fileReadFeedbackBoard() {
-        try {
-            const parsed = JSON.parse(fs.readFileSync(FEEDBACK_BOARD_PATH, 'utf8'));
-            const items = Array.isArray(parsed.items) ? parsed.items : [];
-            return { items };
-        } catch (_) {
-            return { items: [] };
-        }
-    }
-
-    function fileWriteFeedbackBoard(board) {
-        const items = Array.isArray(board && board.items) ? board.items : [];
-        fs.writeFileSync(FEEDBACK_BOARD_PATH, JSON.stringify({ items }, null, 2), 'utf8');
-        return true; // a write failure throws and surfaces as the route's error response
-    }
-
     // ── Store selection ──────────────────────────────────────────────────────
-    // 8-primitive store interface; both impls return identical shapes and are
+    // 6-primitive store interface; both impls return identical shapes and are
     // spread directly into the module's exports (the file impl is sync
     // internally — callers await everything, which resolves plain values
     // just the same).
@@ -227,8 +204,6 @@ module.exports = function createUserMemory(deps) {
         readSessionFile: fileReadSessionFile,
         writeSessionFile: fileWriteSessionFile,
         deleteSessionForUid: fileDeleteSessionForUid,
-        readFeedbackBoard: fileReadFeedbackBoard,
-        writeFeedbackBoard: fileWriteFeedbackBoard,
     };
     const store = usingPg
         ? require('./db')({ databaseUrl: DATABASE_URL, normalizeQuizProfile, isValidSessionId })
@@ -244,25 +219,6 @@ module.exports = function createUserMemory(deps) {
         } else {
             console.log(`[user-memory] file store active at ${USERS_DIR}`);
         }
-    }
-
-    function publicFeedbackItem(item) {
-        return {
-            id: item.id,
-            title: item.title,
-            body: item.body,
-            author: item.author,
-            createdAt: item.createdAt,
-            replies: Array.isArray(item.replies) ? item.replies.map(reply => ({
-                id: reply.id,
-                body: reply.body,
-                author: reply.author,
-                createdAt: reply.createdAt,
-                replyTo: reply.replyTo || null,
-                replyToAuthor: reply.replyToAuthor || '',
-                replyToBody: reply.replyToBody || ''
-            })) : []
-        };
     }
 
     function deriveMemoryFromSessions(uid, sessions, existing = {}) {
@@ -518,12 +474,10 @@ module.exports = function createUserMemory(deps) {
 
     return {
         init,
-        ...store, // the 8 primitives, whichever backend is active
+        ...store, // the 6 primitives, whichever backend is active
         persistSessionTurn,
         buildUserProfilePrompt,
         updateUserMemoryFromQA,
         deriveMemoryFromSessions,
-        publicFeedbackItem,
-        cleanFeedbackText,
     };
 };

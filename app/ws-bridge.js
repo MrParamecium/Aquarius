@@ -1312,8 +1312,7 @@ const {
     init: initUserStore,
     readUserMemory, writeUserMemory, listSessionsForUid, readSessionFile,
     deleteSessionForUid, persistSessionTurn, buildUserProfilePrompt,
-    updateUserMemoryFromQA, deriveMemoryFromSessions, readFeedbackBoard,
-    writeFeedbackBoard, publicFeedbackItem, cleanFeedbackText,
+    updateUserMemoryFromQA, deriveMemoryFromSessions,
 } = require('./user-memory')({
     compactWhitespace,
     normalizeQuizProfile,
@@ -4380,17 +4379,6 @@ async function callTutorSkillRaw(prompt, options = {}) {
     });
 }
 
-// The feedback board is a whole-document read-modify-write (both backends),
-// so two concurrent posts can silently drop one another's just-written item.
-// This process is the only writer (single Render instance), so a promise
-// chain serializing the mutations closes the race for both backends.
-let feedbackMutationChain = Promise.resolve();
-function serializeFeedbackMutation(mutate) {
-    const run = feedbackMutationChain.then(mutate, mutate);
-    feedbackMutationChain = run.catch(() => {}); // keep the chain alive after a failed mutation
-    return run;
-}
-
 const server = http.createServer(async (req, res) => {
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname || '/';
@@ -5270,100 +5258,6 @@ const server = http.createServer(async (req, res) => {
             apiTutor: true,
             skillScript: SKILL_SCRIPT
         }));
-        return;
-    }
-
-    if (pathname === '/api/feedback' && req.method === 'GET') {
-        const board = await readFeedbackBoard();
-        const items = board.items
-            .slice()
-            .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
-            .map(publicFeedbackItem);
-        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify({ items }));
-        return;
-    }
-
-    if (pathname === '/api/feedback' && req.method === 'POST') {
-        try {
-            const data = await readJsonBody(req);
-            const title = cleanFeedbackText(data.title, 120);
-            const body = cleanFeedbackText(data.body, 1200);
-            const author = cleanFeedbackText(data.author, 60) || 'Anonymous';
-            if (!title || !body) {
-                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: 'title and body are required' }));
-                return;
-            }
-            const item = await serializeFeedbackMutation(async () => {
-                const board = await readFeedbackBoard();
-                const created = {
-                    id: `fb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-                    title,
-                    body,
-                    author,
-                    createdAt: new Date().toISOString(),
-                    replies: []
-                };
-                board.items.unshift(created);
-                board.items = board.items.slice(0, 300);
-                if (!(await writeFeedbackBoard(board))) throw new Error('Storage write failed');
-                return created;
-            });
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ item: publicFeedbackItem(item) }));
-        } catch (err) {
-            res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err.message || 'bad request' }));
-        }
-        return;
-    }
-
-    const feedbackReplyMatch = pathname.match(/^\/api\/feedback\/([^/]+)\/replies$/);
-    if (feedbackReplyMatch && req.method === 'POST') {
-        try {
-            const id = decodeURIComponent(feedbackReplyMatch[1] || '');
-            const data = await readJsonBody(req);
-            const body = cleanFeedbackText(data.body, 800);
-            const author = cleanFeedbackText(data.author, 60) || 'Anonymous';
-            const replyTo = cleanFeedbackText(data.replyTo, 80);
-            const replyToAuthor = cleanFeedbackText(data.replyToAuthor, 60);
-            const replyToBody = cleanFeedbackText(data.replyToBody, 160);
-            if (!id || !body) {
-                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: 'feedback id and body are required' }));
-                return;
-            }
-            const result = await serializeFeedbackMutation(async () => {
-                const board = await readFeedbackBoard();
-                const item = board.items.find(entry => entry.id === id);
-                if (!item) return null;
-                const reply = {
-                    id: `rp_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-                    body,
-                    author,
-                    createdAt: new Date().toISOString(),
-                    replyTo: replyTo || '',
-                    replyToAuthor: replyToAuthor || '',
-                    replyToBody: replyToBody || ''
-                };
-                item.replies = Array.isArray(item.replies) ? item.replies : [];
-                item.replies.push(reply);
-                item.replies = item.replies.slice(-200);
-                if (!(await writeFeedbackBoard(board))) throw new Error('Storage write failed');
-                return { item, reply };
-            });
-            if (!result) {
-                res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: 'feedback item not found' }));
-                return;
-            }
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ item: publicFeedbackItem(result.item), reply: result.reply }));
-        } catch (err) {
-            res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err.message || 'bad request' }));
-        }
         return;
     }
 
