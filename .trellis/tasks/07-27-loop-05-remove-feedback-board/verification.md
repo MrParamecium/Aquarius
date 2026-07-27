@@ -114,7 +114,7 @@ reply context width           294.438px -> 293.891px
 
 用户确认所有前置 PR 已合并后，执行 `git fetch origin`，远端主分支从 `e819d78` 更新到 `d2dd24d`。`d2dd24d` 是 Loop 04 登录运行时减法的合并提交。
 
-通过普通 `git merge origin/main` 集成，出现 3 个内容冲突：
+通过普通 `git merge origin/main` 集成，合并提交为 `1f3de45`，出现 3 个内容冲突：
 
 - `app/app.js`：保留 Loop 04 对 `destroyLoginScene()` 的删除，同时不恢复 `showFeedbackView()`；
 - `package.json`：同时删除 `login-cosmos.js`、`feedback-board.js` 和 `_probe-harness-gap.js` 的检查项；
