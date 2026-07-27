@@ -12,28 +12,28 @@
 
 ## 第 0 步：锁定分支、范围与变更前基线
 
-- [ ] 确认当前工作区为 `work/Fourier-loop-05-feedback-board`，分支为 `codex/loop-05-remove-feedback-board`，工作区干净。
-- [ ] 记录当前 HEAD、`origin/main` 和规划提交；确认尚未修改运行时代码。
-- [ ] 保存精确的 Feedback Board 引用清单，至少覆盖：
+- [x] 确认当前工作区为 `work/Fourier-loop-05-feedback-board`，分支为 `codex/loop-05-remove-feedback-board`，工作区干净。
+- [x] 记录当前 HEAD、`origin/main` 和规划提交；确认尚未修改运行时代码。
+- [x] 保存精确的 Feedback Board 引用清单，至少覆盖：
   - `feedbackView`、`navFeedbackBtn`、`feedback-board.js`；
   - `/api/feedback`、`readFeedbackBoard`、`writeFeedbackBoard`；
   - `feedback_items`、`feedback-board.json`；
   - Feedback Board 专属 CSS 令牌、夹具、视觉视图和探针。
-- [ ] 单独保存同名但必须保留的引用清单，例如 GeoGebra 的交互反馈和教材里的 feedback system，用作删除后的防误伤对照。
-- [ ] 运行并记录变更前基线：
+- [x] 单独保存同名但必须保留的引用清单，例如 GeoGebra 的交互反馈和教材里的 feedback system，用作删除后的防误伤对照。
+- [x] 运行并记录变更前基线：
   - `npm run check`
   - `npm run test:smoke`
   - `npm run test:session-restore`
   - `npm run test:css-probe:check`
   - `npm run test:visual:check`
-- [ ] 若完整测试受环境、旧基线漂移或现有材料文件阻塞，将“命令、失败位置、是否与本 Loop 无关”写入 `verification.md`，不能把旧失败算成新删除造成的失败。
-- [ ] 确认本地 `app/users/feedback-board.json` 是否存在，只记录存在性和路径，不在本阶段删除。
+- [x] 若完整测试受环境、旧基线漂移或现有材料文件阻塞，将“命令、失败位置、是否与本 Loop 无关”写入 `verification.md`，不能把旧失败算成新删除造成的失败。
+- [x] 确认本地 `app/users/feedback-board.json` 是否存在，只记录存在性和路径，不在本阶段删除。
 
 停止条件：分支不对、存在来源不明的重叠改动，或核心启动/语法基线在变更前失败且无法归因为已知问题时，不进入删除步骤。
 
 ## 第 1 步：先建立删除后的行为门槛
 
-- [ ] 在临时验证脚本或现有一次性验证流程中定义删除后的可观察契约：
+- [x] 在临时验证脚本或现有一次性验证流程中定义删除后的可观察契约：
   - 侧栏不存在 Feedback Board 入口；
   - DOM 不存在 `#feedbackView`；
   - 页面不加载 `feedback-board.js`；
@@ -41,8 +41,8 @@
   - `POST /api/feedback` 返回普通 `404`；
   - `POST /api/feedback/<任意 id>/replies` 返回普通 `404`；
   - 写入旧 `{view: "feedback"}` 位置状态后刷新，应用回到 Home，页面不空白且控制台无错误。
-- [ ] 在删除前运行这些断言，确认它们会因为旧功能仍存在而失败，证明检查能区分新旧行为。
-- [ ] 记录失败证据，不把临时检查脚本长期保留为新的产品功能。
+- [x] 在删除前运行这些断言，确认它们会因为旧功能仍存在而失败，证明检查能区分新旧行为。
+- [x] 记录失败证据，不把临时检查脚本长期保留为新的产品功能。
 
 ## 第 2 步：删除前端入口、页面和状态绑定
 
