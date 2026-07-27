@@ -12,7 +12,7 @@
   "assignee": "codex",
   "createdAt": "2026-07-27",
   "completedAt": null,
-  "branch": null,
+  "branch": "codex/loop-05-remove-feedback-board",
   "base_branch": "main",
   "worktree_path": null,
   "commit": null,

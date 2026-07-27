@@ -271,14 +271,7 @@ async function runPass1(jwksUrl) {
         check('section overview UNCACHED tokenless -> 401 before generation', Boolean(found), `no candidate 401'd among ${UNCACHED_OVERVIEW_CANDIDATES.join(', ')}`);
         if (found) console.log(`       (generation-gate candidate: ${found})`);
 
-        // public routes stay public
-        r = await httpJson('GET', `${base}/api/feedback`);
-        check('feedback GET tokenless -> 200', r.status === 200, `got ${r.status}`);
-        r = await httpJson('POST', `${base}/api/feedback`, { body: { title: 'auth-guard test post', body: 'hermetic test item', author: 'test' } });
-        const fbId = r.json && r.json.item && r.json.item.id;
-        check('feedback POST tokenless -> 200', r.status === 200 && Boolean(fbId), `got ${r.status}`);
-        r = await httpJson('POST', `${base}/api/feedback/${encodeURIComponent(fbId || 'missing')}/replies`, { body: { body: 'tokenless reply (m1)' } });
-        check('feedback reply POST tokenless -> 200 (m1)', r.status === 200, `got ${r.status}`);
+        // health stays public
         r = await httpJson('GET', `${base}/health`);
         check('health -> 200', r.status === 200, `got ${r.status}`);
     } finally {

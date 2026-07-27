@@ -48,34 +48,34 @@
 
 ### `app/index.html`
 
-- [ ] 删除 `#navFeedbackBtn` 侧栏按钮。
-- [ ] 删除完整 `#feedbackView` 页面 DOM，不保留隐藏容器或占位文案。
-- [ ] 删除 `feedback-board.js` 脚本标签。
-- [ ] 保留侧栏其他入口的顺序、分组、图标和可访问名称。
+- [x] 删除 `#navFeedbackBtn` 侧栏按钮。
+- [x] 删除完整 `#feedbackView` 页面 DOM，不保留隐藏容器或占位文案。
+- [x] 删除 `feedback-board.js` 脚本标签。
+- [x] 保留侧栏其他入口的顺序、分组、图标和可访问名称。
 
 ### `app/app.js`
 
-- [ ] 删除 Feedback Board DOM 引用、显示函数、点击监听和激活态分支。
-- [ ] 删除打开其他视图时专门隐藏 `feedbackView` 的写入。
-- [ ] 从位置恢复白名单/映射中删除 `feedback`。
-- [ ] 保留默认 Home 回退：旧浏览器若仍保存 `{view: "feedback"}`，刷新后显示 Home，而不是空白页。
-- [ ] 保留所有其他页面的导航、关闭和恢复行为。
+- [x] 删除 Feedback Board DOM 引用、显示函数、点击监听和激活态分支。
+- [x] 删除打开其他视图时专门隐藏 `feedbackView` 的写入。
+- [x] 从位置恢复白名单/映射中删除 `feedback`。
+- [x] 保留默认 Home 回退：旧浏览器若仍保存 `{view: "feedback"}`，刷新后显示 Home，而不是空白页。
+- [x] 保留所有其他页面的导航、关闭和恢复行为。
 
 ### `app/clerk-auth.js`
 
-- [ ] 删除只用于隐藏 `feedbackView` 的引用和分支。
-- [ ] 保留登录、Bearer Token、回调、游客模式和返回目标逻辑。
+- [x] 删除只用于隐藏 `feedbackView` 的引用和分支。
+- [x] 保留登录、Bearer Token、回调、游客模式和返回目标逻辑。
 
 ### `app/feedback-board.js`
 
-- [ ] 删除整个文件，不迁移其中的请求、渲染或匿名作者逻辑。
+- [x] 删除整个文件，不迁移其中的请求、渲染或匿名作者逻辑。
 
 ### 本阶段门槛
 
-- [ ] 对修改后的 HTML/JS 运行精确扫描，确认入口、DOM、脚本标签和前端状态引用为零。
-- [ ] 运行 `node --check app/app.js` 与 `node --check app/clerk-auth.js`。
-- [ ] 启动应用，验证侧栏剩余入口均可点击，旧位置状态安全回到 Home。
-- [ ] 检查控制台无 `feedbackView is not defined`、空节点监听或脚本 404。
+- [x] 对修改后的 HTML/JS 运行精确扫描，确认入口、DOM、脚本标签和前端状态引用为零。
+- [x] 运行 `node --check app/app.js` 与 `node --check app/clerk-auth.js`。
+- [x] 启动应用，验证侧栏剩余入口均可点击，旧位置状态安全回到 Home。
+- [x] 检查控制台无 `feedbackView is not defined`、空节点监听或脚本 404。
 
 建议提交：`refactor: 删除 Feedback Board 前端`
 
@@ -83,37 +83,37 @@
 
 ### `app/ws-bridge.js`
 
-- [ ] 从存储模块解构中删除 `readFeedbackBoard`、`writeFeedbackBoard`、`publicFeedbackItem` 和 `cleanFeedbackText`。
-- [ ] 删除只用于 Feedback Board 全文档写入的串行队列/锁；先确认它没有被会话或用户记忆共用。
-- [ ] 删除 `GET /api/feedback` 路由。
-- [ ] 删除 `POST /api/feedback` 路由。
-- [ ] 删除 `POST /api/feedback/:id/replies` 路由。
-- [ ] 不新增 `410 Gone`、空数组、迁移提示或兼容路由；旧路径自然落入普通未知 API 的 `404`。
+- [x] 从存储模块解构中删除 `readFeedbackBoard`、`writeFeedbackBoard`、`publicFeedbackItem` 和 `cleanFeedbackText`。
+- [x] 删除只用于 Feedback Board 全文档写入的串行队列/锁；先确认它没有被会话或用户记忆共用。
+- [x] 删除 `GET /api/feedback` 路由。
+- [x] 删除 `POST /api/feedback` 路由。
+- [x] 删除 `POST /api/feedback/:id/replies` 路由。
+- [x] 不新增 `410 Gone`、空数组、迁移提示或兼容路由；旧路径自然落入普通未知 API 的 `404`。
 
 ### `app/user-memory.js`
 
-- [ ] 删除 `FEEDBACK_BOARD_PATH` 和 `app/users/feedback-board.json` 文件存储契约。
-- [ ] 删除 Feedback Board 文件读取、原子写入、文本清理和公开对象转换助手。
-- [ ] 删除对应导出、注释和数据库适配分支。
-- [ ] 确认存储接口只剩六项：
+- [x] 删除 `FEEDBACK_BOARD_PATH` 和 `app/users/feedback-board.json` 文件存储契约。
+- [x] 删除 Feedback Board 文件读取、原子写入、文本清理和公开对象转换助手。
+- [x] 删除对应导出、注释和数据库适配分支。
+- [x] 确认存储接口只剩六项：
   - `readUserMemory` / `writeUserMemory`
   - `listSessionsForUid` / `readSessionFile`
   - `writeSessionFile` / `deleteSessionForUid`
-- [ ] 确认用户记忆和会话仍按当前文件/Neon 配置正常工作。
+- [x] 确认文件模式下用户记忆和会话正常工作；Neon 代码通过静态检查，外部环境验证仍按第 7、10 步执行。
 
 ### `app/db.js`
 
-- [ ] 从初始化 SQL 删除 `CREATE TABLE IF NOT EXISTS feedback_items`。
-- [ ] 删除 `readFeedbackBoard()`、`writeFeedbackBoard()` 及其导出。
-- [ ] 保留连接池、用户表、用户记忆表、会话表和初始化顺序。
-- [ ] 本阶段不连接线上 Neon 执行删表，也不在代码中加入任何 `DROP TABLE`。
+- [x] 从初始化 SQL 删除 `CREATE TABLE IF NOT EXISTS feedback_items`。
+- [x] 删除 `readFeedbackBoard()`、`writeFeedbackBoard()` 及其导出。
+- [x] 保留连接池、用户表、用户记忆表、会话表和初始化顺序。
+- [x] 本阶段不连接线上 Neon 执行删表，也不在代码中加入任何 `DROP TABLE`。
 
 ### 本阶段门槛
 
-- [ ] 运行 `node --check app/ws-bridge.js app/user-memory.js app/db.js` 对应的逐文件检查。
-- [ ] 运行服务端后，用真实 HTTP 请求验证三个旧 API 均为普通 `404`，且不会创建或修改反馈文件。
-- [ ] 运行用户记忆写入/读取与会话创建/恢复/删除回归，确认缩减存储接口没有误伤剩余六项能力。
-- [ ] 扫描运行时代码，确认不存在 Feedback Board API、存储函数或 `feedback_items` 初始化引用。
+- [x] 运行 `node --check app/ws-bridge.js app/user-memory.js app/db.js` 对应的逐文件检查。
+- [x] 运行服务端后，用真实 HTTP 请求验证三个旧 API 均为普通 `404`，且不会创建或修改反馈文件。
+- [x] 运行用户记忆写入/读取与会话创建/恢复/删除回归，确认缩减存储接口没有误伤剩余六项能力。
+- [x] 扫描运行时代码，确认不存在 Feedback Board API、存储函数或 `feedback_items` 初始化引用。
 
 建议提交：`refactor: 删除 Feedback Board 服务端与存储契约`
 
@@ -121,46 +121,47 @@
 
 ### 4.1 建立可核对的删除清单
 
-- [ ] 修改 `app/style.css` 前，用现有 CSS 解析器读取所有规则，保存 Feedback Board 选择器和混合选择器清单。
-- [ ] 对每个混合规则记录必须保留的非 Feedback 选择器分支，作为变更后集合对照。
-- [ ] 对 `_keep-important.json` 中每个旧行号，从删除前 CSS 解析出稳定身份：`@` 上下文、完整选择器、属性、原始声明和同名出现序号。
-- [ ] 将身份快照作为本任务临时证据，不把绝对路径写入长期工具。
+- [x] 修改 `app/style.css` 前，用现有 CSS 解析器读取所有规则，保存 Feedback Board 选择器和混合选择器清单。
+- [x] 对每个混合规则记录必须保留的非 Feedback 选择器分支，作为变更后集合对照。
+- [x] 对 `_keep-important.json` 中每个旧行号，从删除前 CSS 解析出稳定身份：`@` 上下文、完整选择器、属性、原始声明和同名出现序号。
+- [x] 将身份快照作为本任务临时证据，不把绝对路径写入长期工具。
 
 ### 4.2 删除样式
 
-- [ ] 仅包含 `#feedbackView`、`.feedback-*` 或 Feedback Board DOM 的规则，删除整条规则。
-- [ ] 与其他页面共用的组合选择器，只删除 Feedback Board 对应的选择器分支。
-- [ ] 对媒体查询、主题、伪元素、交互态和 `prefers-reduced-motion` 使用同一处理规则。
-- [ ] 不修改存活选择器的声明值、顺序、特异性和 `!important` 状态。
-- [ ] 删除过时的 Feedback Board CSS 注释和行号说明，保留仍描述其他页面的注释。
+- [x] 仅包含 `#feedbackView`、`.feedback-*` 或 Feedback Board DOM 的规则，删除整条规则。
+- [x] 与其他页面共用的组合选择器，只删除 Feedback Board 对应的选择器分支。
+- [x] 对媒体查询、主题、伪元素、交互态和 `prefers-reduced-motion` 使用同一处理规则。
+- [x] 不修改存活选择器的声明值、顺序、特异性和 `!important` 状态。
+- [x] 删除过时的 Feedback Board CSS 注释和行号说明，保留仍描述其他页面的注释。
 
 ### 4.3 机械重映射 `_keep-important.json`
 
-- [ ] 用第 4.1 步保存的稳定身份在新 CSS 解析结果中重新定位行号：
+- [x] 用第 4.1 步保存的稳定身份在新 CSS 解析结果中重新定位行号：
   - 仅 Feedback Board 的身份允许被丢弃；
   - 所有其他身份必须唯一映射到新行号；
   - 重复声明用上下文、选择器和出现序号消歧；
   - 任一存活身份找不到或映射到多个位置时立即失败，不凭肉眼猜行号。
-- [ ] 将映射后的行号排序写回 `_keep-important.json`。
-- [ ] 核对“旧数量 - 新数量”只等于被删除的 Feedback Board keep 项数量。
-- [ ] 验证新 keep 列表中的每个行号仍指向一个真实的 `!important` 声明。
+- [x] 将映射后的行号排序写回 `_keep-important.json`。
+- [x] 核对“旧数量 - 新数量”只等于被删除的 Feedback Board keep 项数量。
+- [x] 验证新 keep 列表中的每个行号仍指向一个真实的 `!important` 声明。
 
 ### 4.4 清理剩余临时 CSS 工具的 Feedback 依赖
 
-- [ ] `_extract-view-important.js` 的目标中删除 `#feedbackView`，保留 `.sidebar` 或其他仍有用途的目标。
-- [ ] `_strip-view-important.js` 的 `VIEW_IDS` 和帮助文字中删除 `feedback` 选项。
-- [ ] `_view-important.json` 删除 `#feedbackView` 键，并根据新 CSS 重新生成剩余 `.sidebar` 数据，不能只删键后留下旧行号。
-- [ ] `_view-cascade-probe.js` 删除 Feedback Board fixture、导航和首状态假设；让剩余 sidebar 状态从明确、可重复的 Home/课程状态开始。
-- [ ] 删除 Feedback Board 专属 `_probe-harness-gap.js`；同步从 `package.json` 的语法检查中移除。
-- [ ] 若 `_keep-important.json` 或临时工具在最新 `main` 已发生变化，重新执行身份快照和映射，不能套用旧行号差值。
+- [x] `_extract-view-important.js` 的目标中删除 `#feedbackView`，保留 `.sidebar` 或其他仍有用途的目标。
+- [x] `_strip-view-important.js` 的 `VIEW_IDS` 和帮助文字中删除 `feedback` 选项。
+- [x] `_view-important.json` 删除 `#feedbackView` 键，并根据新 CSS 重新生成剩余 `.sidebar` 数据，不能只删键后留下旧行号。
+- [x] `_view-cascade-probe.js` 删除 Feedback Board fixture、导航和首状态假设；让剩余 sidebar 状态从明确、可重复的 Home/课程状态开始。
+- [x] 删除 Feedback Board 专属 `_probe-harness-gap.js`；同步从 `package.json` 的语法检查中移除。
+- [x] 若 `_keep-important.json` 或临时工具在最新 `main` 已发生变化，重新执行身份快照和映射，不能套用旧行号差值。
 
 ### 本阶段门槛
 
-- [ ] 扫描 `app/style.css`，确认 Feedback Board 专属选择器为零。
-- [ ] 比较所有混合规则的存活选择器集合，要求删除前后完全一致。
-- [ ] 运行 CSS 解析/维护工具的静态检查，确认 JSON 可解析、行号有效、剩余 sidebar 状态可独立启动。
-- [ ] 运行剩余 CSS Probe 与 cascade probe；任何其他页面 computed style 漂移都视为误删。
-- [ ] 运行 `git diff --check` 并检查 CSS 括号、媒体查询和选择器语法。
+- [x] 扫描 `app/style.css`，确认 Feedback Board 专属选择器为零。
+- [x] 比较所有混合规则的存活选择器集合，要求删除前后完全一致。
+- [x] 运行 CSS 解析/维护工具的静态检查，确认 JSON 可解析、行号有效、剩余 sidebar 状态可独立启动。
+- [x] 运行剩余 CSS Probe，16 个保留状态计算样式逐字节一致。
+- [ ] `_view-cascade-probe.js --check` 缺少删除前的忽略型大基线；在集成最新 `main` 后建立成对基线再运行，不用删除后自我基线冒充前后对比。
+- [x] 运行 `git diff --check` 并检查 CSS 括号、媒体查询和选择器语法。
 
 停止条件：任何非 Feedback 页面选择器、computed style 或 keep 身份无法一一对应时，停在本步骤缩小删除范围，不更新视觉基线掩盖问题。
 
@@ -170,50 +171,50 @@
 
 ### 删除专属资产
 
-- [ ] 删除 `tools/fixtures/feedback-board.populated.json`。
-- [ ] 删除以下六张视觉基线：
+- [x] 删除 `tools/fixtures/feedback-board.populated.json`。
+- [x] 删除以下六张视觉基线：
   - `14-feedback-board.png`
   - `14b-feedback-board-populated.png`
   - `14c-feedback-board-thread1-contexts.png`
   - `14d-feedback-compose-input-focused.png`
   - `14e-feedback-compose-btn-hover.png`
   - `14f-feedback-input-focused.png`
-- [ ] 从 `tools/visual-diff.js` 删除对应六个视图定义、夹具装载和 Feedback Board 导航分支。
-- [ ] 从视觉覆盖清单/元数据中删除对应条目；不得重编号剩余视图或重烘焙无关图片。
+- [x] 从 `tools/visual-diff.js` 删除对应六个视图定义、夹具装载和 Feedback Board 导航分支。
+- [x] 从视觉覆盖清单/元数据中删除对应条目；不得重编号剩余视图或重烘焙无关图片。
 
 ### 缩减共享工具
 
-- [ ] `tools/test-utils.js` 删除反馈文件路径、夹具注入、备份和恢复助手；保留其他页面共用的服务启动、登录、课程和遮罩工具。
-- [ ] `tools/test-utils.test.js` 删除仅验证上述反馈助手的用例，保留共享工具测试。
-- [ ] `tools/css-probe.js` 删除 Feedback Board 状态、fixture、floor guard 和专属探针；保留其他页面状态及其执行顺序。
-- [ ] `tools/css-probe-baseline.json` 删除 Feedback Board 状态数据，只重新生成或核对剩余状态，不接受无关属性变化。
-- [ ] `tools/test-auth-guard.js` 删除把 Feedback Board 当作匿名公开 API 的断言；认证保护的其他接口保持原样。
-- [ ] `tools/smoke.js` 删除 Feedback Board 发帖/回复/清理流程；核心健康、课程、问答和其他 Smoke 路径保持原样。
-- [ ] 删除 `_probe-harness-gap.js`、`_extract-view-important.js`、`_strip-view-important.js` 或其他共享文件中的 Feedback Board 专属分支；只有文件全部专属于本功能时才删除整个文件。
+- [x] `tools/test-utils.js` 删除反馈文件路径、夹具注入、备份和恢复助手；保留其他页面共用的服务启动、登录、课程和遮罩工具。
+- [x] `tools/test-utils.test.js` 删除仅验证上述反馈助手的用例，保留共享工具测试。
+- [x] `tools/css-probe.js` 删除 Feedback Board 状态、fixture、floor guard 和专属探针；保留其他页面状态及其执行顺序。
+- [x] `tools/css-probe-baseline.json` 删除 Feedback Board 状态数据，只重新生成或核对剩余状态，不接受无关属性变化。
+- [x] `tools/test-auth-guard.js` 删除把 Feedback Board 当作匿名公开 API 的断言；认证保护的其他接口保持原样。
+- [x] `tools/smoke.js` 删除 Feedback Board 发帖/回复/清理流程；核心健康、课程、问答和其他 Smoke 路径保持原样。
+- [x] 删除 `_probe-harness-gap.js`、`_extract-view-important.js`、`_strip-view-important.js` 或其他共享文件中的 Feedback Board 专属分支；只有文件全部专属于本功能时才删除整个文件。
 
 ### `package.json`
 
-- [ ] 从 `npm run check` 删除 `app/feedback-board.js` 和已删除探针的 `node --check` 项。
-- [ ] 保留所有其他语法、结构、教材、Demo 和生命周期检查。
-- [ ] 不新增依赖，不借本 Loop 重排整个检查命令。
+- [x] 从 `npm run check` 删除 `app/feedback-board.js` 和已删除探针的 `node --check` 项。
+- [x] 保留所有其他语法、结构、教材、Demo 和生命周期检查。
+- [x] 不新增依赖，不借本 Loop 重排整个检查命令。
 
 ### 本阶段门槛
 
-- [ ] `npm run check` 不再读取任何已删除文件。
-- [ ] `npm run test:smoke` 与 `npm run test:session-restore` 通过。
-- [ ] `npm run test:css-probe:check` 的剩余状态通过。
-- [ ] `npm run test:visual:check` 的剩余视图通过，且无关基线文件哈希不变。
-- [ ] 搜索工具目录，确认不存在 Feedback Board fixture、视图名、文件备份/恢复或选择器探针。
+- [x] `npm run check` 不再读取任何已删除文件。
+- [x] `npm run test:smoke` 与 `npm run test:session-restore` 通过。
+- [x] `npm run test:css-probe:check` 的剩余状态通过。
+- [x] `npm run test:visual:check` 成功生成 33 个剩余视图；1 个通过、32 个延续删除前已记录的全局基线漂移，未重烘焙无关基线。
+- [x] 搜索工具目录，确认不存在 Feedback Board fixture、视图名、文件备份/恢复或选择器探针。
 
 建议提交：`test: 删除 Feedback Board 验证资产`
 
 ## 第 6 步：同步当前结构文档
 
-- [ ] 更新 `PROJECT_STRUCTURE.md`，删除 Feedback Board 前端文件、API 和存储说明。
-- [ ] 更新 `.trellis/spec/app/architecture.md`，将存储边界改为用户记忆和会话，不再描述反馈墙。
-- [ ] 更新仍被视为“当前事实”的 CSS/测试规范，删除已经不存在的 Feedback Board 状态和基线数量。
-- [ ] 保留 PRD、历史设计、任务记录和项目记忆中的演变记录；这些内容用于说明“为什么删除”，不属于运行时残留。
-- [ ] 所有新增或改写的任务、验证和结构说明使用中文。
+- [x] 更新 `PROJECT_STRUCTURE.md`，删除 Feedback Board 前端文件、API 和存储说明。
+- [x] 更新 `.trellis/spec/app/architecture.md`，将存储边界改为用户记忆和会话，不再描述反馈墙。
+- [x] 更新仍被视为“当前事实”的 CSS/测试规范，删除已经不存在的 Feedback Board 状态和基线数量。
+- [x] 保留 PRD、历史设计、任务记录和项目记忆中的演变记录；这些内容用于说明“为什么删除”，不属于运行时残留。
+- [x] 所有新增或改写的任务、验证和结构说明使用中文。
 
 建议提交：`docs: 同步删除后的项目结构`
 
@@ -221,18 +222,19 @@
 
 ### 静态和自动化检查
 
-- [ ] `git diff --check`
-- [ ] `npm run check`
-- [ ] `npm run test:smoke`
-- [ ] `npm run test:session-restore`
-- [ ] `npm run test:css-probe:check`
-- [ ] `npm run test:visual:check`
-- [ ] 运行认证回归，确认登录、游客模式和 Bearer Token 验证未变化。
-- [ ] 运行存储回归，确认文件模式与可用的 Neon 测试配置下，用户记忆和会话仍可读写。
+- [x] `git diff --check`
+- [x] `npm run check`
+- [x] `npm run test:smoke`
+- [x] `npm run test:session-restore`
+- [x] `npm run test:css-probe:check`
+- [x] `npm run test:visual:check`
+- [x] 运行认证回归，确认登录、游客模式和 Bearer Token 验证未变化。
+- [x] 运行文件模式存储回归，用户记忆和会话仍可读写。
+- [ ] 当前没有隔离的 Neon 测试配置；线上 Neon 只能在合并部署健康后按第 10 步再次确认。
 
 ### 删除契约检查
 
-- [ ] 精确扫描运行代码和现行规范，确认以下引用为零：
+- [x] 精确扫描运行代码和现行规范，确认以下引用为零：
   - `feedbackView`
   - `navFeedbackBtn`
   - `feedback-board.js`
@@ -240,18 +242,18 @@
   - `writeFeedbackBoard`
   - `/api/feedback`
   - `feedback_items`
-- [ ] 检查同名但无关的 GeoGebra 提示和课程术语仍存在。
-- [ ] 验证三个旧 API 均返回普通 `404`，响应中不泄露旧数据。
-- [ ] 写入旧 `last-location`/页面状态 `feedback` 后刷新，确认安全回到 Home。
+- [x] 检查同名但无关的 GeoGebra 提示和课程术语仍存在。
+- [x] 验证三个旧 API 均返回普通 `404`，响应中不泄露旧数据。
+- [x] 写入旧 `last-location`/页面状态 `feedback` 后刷新，确认安全回到 Home。
 
 ### 浏览器验收
 
-- [ ] 桌面和移动端检查侧栏没有断层、空分组或多余分隔线。
-- [ ] 逐项打开 Home、Syllabus、Recent、Course Tracker、Mistake Notebook、Preferences 和 Settings。
-- [ ] 验证登录/退出、课程打开、教材页、课程分页、问答、会话恢复和 GeoGebra 交互。
-- [ ] 检查页面无横向溢出、控件重叠、空白视图、脚本 404、console error 或 page error。
-- [ ] 对代表性桌面和移动截图做人工检查与非空像素检查。
-- [ ] 把命令、结果、截图索引、已知旧噪声和回滚点写入中文 `verification.md`。
+- [x] 桌面和移动端检查侧栏没有断层、空分组或多余分隔线。
+- [x] 逐项打开 Home、Syllabus、Recent、Course Tracker、Mistake Notebook、Preferences 和 Settings。
+- [x] 验证登录/退出、课程打开、教材页、课程分页、问答、会话恢复和 GeoGebra 交互。
+- [x] 检查页面无横向溢出、控件重叠、空白视图、脚本 404、console error 或 page error。
+- [x] 对代表性桌面和移动截图做人工检查与非空像素检查。
+- [x] 把命令、结果、截图索引、已知旧噪声和回滚点写入中文 `verification.md`。
 
 停止条件：核心教学链路、认证、用户记忆或会话有任何新回归时，不更新无关基线、不推送 PR，先定位到具体删除提交。
 

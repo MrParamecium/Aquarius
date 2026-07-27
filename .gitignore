@@ -53,7 +53,6 @@ tools/unused-css-report.md
 # Harness state directory (seeded-fixture backups for view 14b / 03b / …).
 # Files only exist between seedFeedbackFixture and restoreFeedbackBoard,
 # plus leftover backups from crashed runs (recovered on next clean run).
-tools/.harness-state/
 
 # view-cascade-probe (Phase 3.6 !important-strip arbiter): the scripts are
 # committed, but the baseline (~30MB) and flip reports are regenerated each run.
