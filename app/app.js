@@ -977,6 +977,9 @@ let learnPanelFocus = 'normal';
 let isLearnChatPopoverOpen = false;
 let _learnViewMode = 'lecture';
 let _learnLayoutMode = 'lesson';
+const learnMobilePanelQuery = typeof window.matchMedia === 'function'
+  ? window.matchMedia('(max-width: 900px)')
+  : null;
 const learnWebToggle  = document.getElementById('learnWebToggle') || { classList: { add() {}, remove() {}, toggle() {} } };
 const learnWebBtn     = document.getElementById('learnWebBtn') || { classList: { add() {}, remove() {}, toggle() {} }, addEventListener() {} };
 const learnWebCount   = document.getElementById('learnWebCount') || { textContent: '' };
@@ -1183,9 +1186,107 @@ function setChapterOverviewLayoutActive(active) {
   if (learnChatPopover) learnChatPopover.classList.add('hidden');
 }
 
+function isMobileLearnPanelLayout() {
+  const shell = learnBody || document.getElementById('learnBody');
+  return Boolean(learnMobilePanelQuery?.matches)
+    && _learnLayoutMode !== 'overview'
+    && !shell?.classList.contains('chapter-overview-active')
+    && !shell?.classList.contains('chapter-overview-split-active');
+}
+
+function setMobileLearnPanel(panel = 'lecture') {
+  if (!isMobileLearnPanelLayout()) return false;
+  const normalized = panel === 'qa' ? 'qa' : 'lecture';
+  const showLecture = normalized === 'lecture';
+  const shell = learnBody || document.getElementById('learnBody');
+  if (!shell) return false;
+
+  learnPanelFocus = 'normal';
+  isLearnChatCollapsed = showLecture;
+  isLearnExplainCollapsed = !showLecture;
+  isLearnChatPopoverOpen = false;
+
+  delete shell.dataset.panelFocus;
+  ['normal', 'lecture-wide', 'lecture-full', 'qa-wide', 'qa-full'].forEach((state) => {
+    shell.classList.toggle(`panel-${state}`, state === 'normal');
+  });
+  shell.classList.toggle('chat-collapsed', showLecture);
+  shell.classList.toggle('explain-collapsed', !showLecture);
+
+  const learnBodyInner = shell.querySelector?.('.learn-body-inner');
+  if (learnBodyInner) {
+    learnBodyInner.style.removeProperty('grid-template-columns');
+    learnBodyInner.dataset.customSplit = '';
+  }
+  [learnExplainColEl, learnChatColPanel].forEach((column) => {
+    if (!column) return;
+    ['flex', 'flex-basis', 'width', 'min-width', 'max-width'].forEach((property) => {
+      column.style.removeProperty(property);
+    });
+  });
+
+  if (learnExplainColEl) {
+    learnExplainColEl.classList.toggle('hidden', !showLecture);
+    learnExplainColEl.style.display = showLecture ? '' : 'none';
+    learnExplainColEl.setAttribute('aria-hidden', String(!showLecture));
+  }
+  if (learnChatColPanel) {
+    learnChatColPanel.classList.toggle('hidden', showLecture);
+    learnChatColPanel.style.display = showLecture ? 'none' : '';
+    learnChatColPanel.setAttribute('aria-hidden', String(showLecture));
+  }
+  if (learnResizerPanel) {
+    learnResizerPanel.classList.add('hidden');
+    learnResizerPanel.style.display = 'none';
+  }
+  if (learnBookColEl) learnBookColEl.style.display = 'none';
+
+  if (learnChatRestoreBtn) learnChatRestoreBtn.classList.toggle('hidden', !showLecture);
+  if (learnExplainRestoreBtn) learnExplainRestoreBtn.classList.toggle('hidden', showLecture);
+  if (learnChatFab) learnChatFab.classList.add('hidden');
+  if (learnChatPopover) learnChatPopover.classList.add('hidden');
+
+  requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  return true;
+}
+
+function restoreDesktopLearnPanelLayout() {
+  if (_learnLayoutMode === 'overview') return;
+  const shell = learnBody || document.getElementById('learnBody');
+  if (shell?.classList.contains('chapter-overview-active') || shell?.classList.contains('chapter-overview-split-active')) return;
+  learnPanelFocus = 'normal';
+  isLearnChatCollapsed = false;
+  isLearnExplainCollapsed = false;
+  isLearnChatPopoverOpen = false;
+  learnExplainColEl?.removeAttribute('aria-hidden');
+  learnChatColPanel?.removeAttribute('aria-hidden');
+  applyLearnPanelFocusState();
+}
+
+if (learnMobilePanelQuery) {
+  const handleMobileLearnPanelChange = (event) => {
+    const isLearnVisible = learnView
+      && !learnView.classList.contains('hidden')
+      && learnBody
+      && !learnBody.classList.contains('hidden');
+    if (!isLearnVisible) return;
+    if (event.matches) setMobileLearnPanel('lecture');
+    else restoreDesktopLearnPanelLayout();
+  };
+  if (typeof learnMobilePanelQuery.addEventListener === 'function') {
+    learnMobilePanelQuery.addEventListener('change', handleMobileLearnPanelChange);
+  } else {
+    learnMobilePanelQuery.addListener?.(handleMobileLearnPanelChange);
+  }
+}
+
 function applyLearnPanelFocusState() {
   const shell = learnBody || document.getElementById('learnBody');
   if (!shell) return;
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel(isLearnExplainCollapsed && !isLearnChatCollapsed ? 'qa' : 'lecture');
+    return;
+  }
   const isOverviewLayout = false;
   const states = ['normal', 'lecture-wide', 'lecture-full', 'qa-wide', 'qa-full'];
   const normalized = states.includes(learnPanelFocus) ? learnPanelFocus : 'normal';
@@ -1212,10 +1313,12 @@ function applyLearnPanelFocusState() {
   if (learnExplainColEl) {
     learnExplainColEl.classList.remove('hidden');
     learnExplainColEl.style.display = '';
+    learnExplainColEl.removeAttribute('aria-hidden');
   }
   if (learnChatColPanel) {
     learnChatColPanel.classList.remove('hidden');
     learnChatColPanel.style.display = '';
+    learnChatColPanel.removeAttribute('aria-hidden');
   }
   if (learnResizerPanel) {
     learnResizerPanel.classList.remove('hidden');
@@ -1251,6 +1354,10 @@ function applyLearnPanelFocusState() {
 }
 
 function advanceLearnPanelFocus(side) {
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel(side === 'qa' ? 'qa' : 'lecture');
+    return;
+  }
   if (side === 'lecture') {
     learnPanelFocus = learnPanelFocus === 'lecture-wide'
       ? 'lecture-full'
@@ -1267,6 +1374,10 @@ function advanceLearnPanelFocus(side) {
 
 function applyLearnChatCollapsedState() {
   const shell = learnBody || document.getElementById('learnBody');
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel(isLearnChatCollapsed ? 'lecture' : 'qa');
+    return;
+  }
   const isOverviewLayout = _learnLayoutMode === 'overview';
   if (isOverviewLayout || learnPanelFocus !== 'normal') {
     if (isOverviewLayout) {
@@ -1345,6 +1456,10 @@ function applyLearnChatCollapsedState() {
 
 
 function openLearnQaSidebar() {
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel('qa');
+    return;
+  }
   learnPanelFocus = 'normal';
   isLearnChatCollapsed = false;
   isLearnChatPopoverOpen = false;
@@ -1352,6 +1467,10 @@ function openLearnQaSidebar() {
 }
 
 function minimizeLearnQaToBubble() {
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel('lecture');
+    return;
+  }
   learnPanelFocus = 'normal';
   isLearnChatCollapsed = true;
   isLearnChatPopoverOpen = false;
@@ -1360,6 +1479,10 @@ function minimizeLearnQaToBubble() {
 
 
 function applyLearnExplainCollapsedState() {
+  if (isMobileLearnPanelLayout()) {
+    setMobileLearnPanel(isLearnExplainCollapsed ? 'qa' : 'lecture');
+    return;
+  }
   const isOverviewLayout = false;
   if (isOverviewLayout || learnPanelFocus !== 'normal') {
     applyLearnPanelFocusState();
@@ -2431,7 +2554,8 @@ async function startLesson(options = {}) {
     renderLearnWebSources(data.webSources || []);
     renderLearnWebSection(data.webSources || []);
     learnExplainScroll.scrollTop = 0;
-    openLearnQaSidebar();
+    if (isMobileLearnPanelLayout()) setMobileLearnPanel('lecture');
+    else openLearnQaSidebar();
     setLearnLoading(false);
     // Async: save session summary
     saveSessionSummary(`Studied section "${learnSectionTitle}".`);
@@ -2611,9 +2735,13 @@ function _setLearnMode(mode) {
   if (lectureFocusOverlayBtn) lectureFocusOverlayBtn.classList.add('hidden');
   applyLearnPanelFocusState();
   if (isLessonLikeLayout && learnPanelFocus === 'normal') {
-    isLearnChatCollapsed = false;
-    isLearnChatPopoverOpen = false;
-    applyLearnChatCollapsedState();
+    if (isMobileLearnPanelLayout()) {
+      setMobileLearnPanel(isLearnExplainCollapsed ? 'qa' : 'lecture');
+    } else {
+      isLearnChatCollapsed = false;
+      isLearnChatPopoverOpen = false;
+      applyLearnChatCollapsedState();
+    }
   }
 }
 
