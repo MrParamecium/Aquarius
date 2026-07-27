@@ -1,1 +1,3 @@
-{"_example": "Fill with {\"file\": \"<path>\", \"reason\": \"<why>\"}. Put spec/research files only — no code paths. Run `python3 .trellis/scripts/get_context.py --mode packages` to list available specs. Delete this line once real entries are added."}
+{"file":".trellis/spec/app/architecture.md","reason":"实施前核对前端、服务端、存储和测试工具的现行边界，避免删除 Feedback Board 时误伤用户记忆、会话与认证。"}
+{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"删除 Feedback Board CSS 和重映射行号型维护资产时，遵守仓库现有级联、混合选择器与压缩规则。"}
+{"file":".trellis/spec/css/verification.md","reason":"实施 CSS 与视觉资产删除时，按现有探针、视觉基线和非回归门槛执行。"}

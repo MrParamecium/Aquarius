@@ -3,7 +3,7 @@
   "name": "loop-05-remove-feedback-board",
   "title": "Loop 05：删除 Feedback Board",
   "description": "从 Tutor Agent 中完整移除共享反馈墙前端、API、存储契约、样式与测试覆盖，保持核心教学链路不变。",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": null,
   "scope": "app/index.html, app/app.js, app/clerk-auth.js, app/feedback-board.js, app/ws-bridge.js, app/user-memory.js, app/db.js, app/style.css, package.json, tools feedback-specific harness assets",
   "package": null,
