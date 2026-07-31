@@ -49,6 +49,7 @@ module.exports = function createRagFlowClient(deps) {
     const RAGFLOW_SIMILARITY_THRESHOLD = Number(process.env.RAGFLOW_SIMILARITY_THRESHOLD || 0.2);
     const RAGFLOW_VECTOR_SIMILARITY_WEIGHT = Number(process.env.RAGFLOW_VECTOR_SIMILARITY_WEIGHT || 0.5);
     const RAGFLOW_RETRIEVAL_PATH = process.env.RAGFLOW_RETRIEVAL_PATH || '/api/v1/retrieval';
+    const RAGFLOW_CONFIGURED = RAGFLOW_ENABLED && Boolean(RAGFLOW_BASE_URL) && RAGFLOW_DATASET_IDS.length > 0;
 
     function buildRagFlowRetrievalUrl() {
         if (!RAGFLOW_BASE_URL) return '';
@@ -213,6 +214,7 @@ module.exports = function createRagFlowClient(deps) {
 
     return {
         RAGFLOW_ENABLED,
+        RAGFLOW_CONFIGURED,
         retrieveFromRagFlow,
         ragFlowChunksToBookPages,
         mergeAskBookContexts,

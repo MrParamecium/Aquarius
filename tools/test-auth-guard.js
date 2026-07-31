@@ -72,7 +72,10 @@ function mintToken(claimOverrides = {}, opts = {}) {
         sub: 'user_test_a',
         sid: 'sess_test_1',
         iat: now,
-        exp: now + 60,
+        // The invalid-key LLM probes can each wait tens of seconds. Keep the
+        // default test token alive for the full two-pass suite; expiry behavior
+        // is covered separately with an explicit expired-token override.
+        exp: now + 10 * 60,
         nbf: now - 5,
         azp: TEST_PARTY,
     }, claimOverrides);
@@ -215,36 +218,88 @@ async function runPass1(jwksUrl) {
         check('session DELETE valid token, unknown id -> 404', r.status === 404, `got ${r.status}`);
         r = await httpJson('DELETE', `${base}/api/sessions/${ghost}`);
         check('session DELETE tokenless -> 401', r.status === 401, `got ${r.status}`);
+        r = await httpJson('PATCH', `${base}/api/sessions/${ghost}`, { token: valid, body: { starred: true } });
+        check('session PATCH valid token, unknown id -> 404', r.status === 404, `got ${r.status}`);
+        r = await httpJson('PATCH', `${base}/api/sessions/${ghost}`, { body: { starred: true } });
+        check('session PATCH tokenless -> 401', r.status === 401, `got ${r.status}`);
+
+        const seededId = 'bbbbbbbb-2222-4222-8222-bbbbbbbbbbbb';
+        const seededDir = path.join(bridge.usersDir, 'sessions', 'user_test_a');
+        fs.mkdirSync(seededDir, { recursive: true });
+        fs.writeFileSync(path.join(seededDir, `${seededId}.json`), JSON.stringify({
+            id: seededId,
+            uid: 'user_test_a',
+            origin: 'learn',
+            title: 'Seeded session',
+            customTitle: '',
+            starred: false,
+            sectionId: '4.2-1',
+            sectionTitle: 'Time Shifting',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            messages: [
+                { role: 'user', content: 'How does time shifting work?', ts: new Date().toISOString() },
+                { role: 'assistant', content: 'It moves the signal along the time axis.', ts: new Date().toISOString() }
+            ]
+        }), 'utf8');
+        r = await httpJson('GET', `${base}/api/sessions`, { token: valid });
+        check('sessions list returns token-owned server session', r.status === 200 && r.json.sessions.some(session => session.id === seededId), `got ${r.status}`);
+        r = await httpJson('GET', `${base}/api/sessions/${seededId}`, { token: mintToken({ sub: 'user_other' }) });
+        check('session GET cross-user -> 404', r.status === 404, `got ${r.status}`);
+        r = await httpJson('PATCH', `${base}/api/sessions/${seededId}`, { token: valid, body: { customTitle: 'Renamed', starred: true } });
+        check('session PATCH updates strict metadata', r.status === 200 && r.json.session.title === 'Renamed' && r.json.session.starred === true, `got ${r.status} ${r.raw.slice(0, 160)}`);
+        r = await httpJson('PATCH', `${base}/api/sessions/${seededId}`, { token: valid, body: { title: 'unsupported' } });
+        check('session PATCH rejects unsupported fields', r.status === 400, `got ${r.status}`);
+        r = await httpJson('DELETE', `${base}/api/sessions/${seededId}`, { token: valid });
+        check('session DELETE removes token-owned session', r.status === 200, `got ${r.status}`);
+        r = await httpJson('GET', `${base}/api/sessions/${seededId}`, { token: valid });
+        check('deleted session is no longer readable', r.status === 404, `got ${r.status}`);
 
         // uid-spoof immunity via the hermetic uid-scoped path (C2/AC4)
         r = await httpJson('POST', `${base}/api/memory`, {
             token: valid,
-            body: { uid: 'user_victim', quiz: { track: 'cram', math: 'all_solid', timeline: 'this_week', preference: ['exam_first'], priority: ['solve_faster'] } },
+            body: { uid: 'user_victim', teachingInstructions: '  先讲直觉，再推导公式。  ' },
         });
         check('memory POST spoofed body.uid -> lands under token sub', r.status === 200 && r.json && r.json.memory && r.json.memory.uid === 'user_test_a', `got ${r.status} uid=${r.json && r.json.memory && r.json.memory.uid}`);
         r = await httpJson('GET', `${base}/api/memory`, { token: valid });
-        check('memory GET token sub sees the write', r.status === 200 && r.json && r.json.quiz && r.json.quiz.track === 'cram', `got ${r.status} ${r.raw.slice(0, 160)}`);
+        check('memory GET token sub sees trimmed teaching instructions', r.status === 200 && r.json && r.json.teachingInstructions === '先讲直觉，再推导公式。', `got ${r.status} ${r.raw.slice(0, 160)}`);
         r = await httpJson('GET', `${base}/api/memory`, { token: mintToken({ sub: 'user_victim' }) });
-        check('memory GET victim sub sees NOTHING', r.status === 200 && !(r.json && r.json.quiz && r.json.quiz.track === 'cram'), `got ${r.status} ${r.raw.slice(0, 160)}`);
+        check('memory GET victim sub sees NOTHING', r.status === 200 && r.json && r.json.teachingInstructions === '', `got ${r.status} ${r.raw.slice(0, 160)}`);
 
-        // memory/rebuild is uid-scoped too
+        r = await httpJson('POST', `${base}/api/memory`, { token: valid, body: { teachingInstructions: ['not a string'] } });
+        check('memory POST rejects non-string teachingInstructions', r.status === 400, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/memory`, { token: valid, body: { teachingInstructions: 'x'.repeat(1001) } });
+        check('memory POST rejects teachingInstructions over 1000 chars', r.status === 400, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/memory`, { token: valid, body: { teachingInstructions: 'keep', preferenceProfile: { markdown: 'legacy' } } });
+        check('memory POST rejects deleted legacy fields', r.status === 400, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/memory`, { token: valid, body: { teachingInstructions: '' } });
+        check('memory POST clears teaching instructions', r.status === 200 && r.json && r.json.memory && r.json.memory.teachingInstructions === '', `got ${r.status}`);
+
+        // Deleted routes stay deleted regardless of authentication state.
         r = await httpJson('POST', `${base}/api/memory/rebuild`, { body: { uid: 'spoof_target', sessions: [] } });
-        check('memory/rebuild tokenless -> 401', r.status === 401, `got ${r.status}`);
+        check('memory/rebuild tokenless -> 404', r.status === 404, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/memory/rebuild`, { token: valid, body: { sessions: [] } });
+        check('memory/rebuild valid token -> 404', r.status === 404, `got ${r.status}`);
 
-        // LLM-spending routes: tokenless -> 401 BEFORE any OpenRouter call;
-        // with a valid token the guard must let the request through (NOT 401).
+        // LLM-spending routes: tokenless -> 401 before validation. A valid
+        // token reaches validation (400), proving auth passed without making
+        // this hermetic test depend on an external model request.
         r = await httpJson('POST', `${base}/api/ask`, { body: { prompt: 'What is a phasor?', uid: 'user_victim' } });
         check('ask tokenless -> 401', r.status === 401, `got ${r.status}`);
-        r = await httpJson('POST', `${base}/api/ask`, { token: valid, body: { prompt: 'What is a phasor?' } });
-        check('ask valid token -> not 401', r.status !== 401, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/ask`, { token: valid, body: {} });
+        check('ask valid token reaches validation -> 400', r.status === 400, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/ask-guidance`, { body: { prompt: 'What is a phasor?' } });
+        check('ask-guidance tokenless -> 401', r.status === 401, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/ask-guidance`, { token: valid, body: { prompt: 'What is a phasor?', unsupported: true } });
+        check('ask-guidance valid token passes auth and rejects unknown field', r.status === 400 && r.json && r.json.stage === 'validation', `got ${r.status}`);
         r = await httpJson('POST', `${base}/api/intent`, { body: { prompt: 'hi' } });
         check('intent tokenless -> 401', r.status === 401, `got ${r.status}`);
-        r = await httpJson('POST', `${base}/api/intent`, { token: valid, body: { prompt: 'hi' } });
-        check('intent valid token -> not 401', r.status !== 401, `got ${r.status}`);
+        r = await httpJson('POST', `${base}/api/intent`, { token: valid, body: {} });
+        check('intent valid token reaches validation -> 400', r.status === 400, `got ${r.status}`);
         r = await httpJson('POST', `${base}/api/preference/draft`, { body: { instruction: 'shorter answers' } });
-        check('preference/draft tokenless -> 401', r.status === 401, `got ${r.status}`);
+        check('preference/draft tokenless -> 404', r.status === 404, `got ${r.status}`);
         r = await httpJson('POST', `${base}/api/preference/draft`, { token: valid, body: { instruction: 'shorter answers' } });
-        check('preference/draft valid token -> not 401', r.status !== 401, `got ${r.status}`);
+        check('preference/draft valid token -> 404', r.status === 404, `got ${r.status}`);
         r = await httpJson('POST', `${base}/api/pregen/section`, { body: { sectionId: CACHED_LESSON_SECTION.sectionId } });
         check('pregen tokenless -> 401', r.status === 401, `got ${r.status}`);
         r = await httpJson('POST', `${base}/api/pregen/section`, { token: valid, body: { sectionId: CACHED_LESSON_SECTION.sectionId, inspectContextOnly: true } });
@@ -290,10 +345,10 @@ async function runPass2(jwksUrl) {
     const { base } = bridge;
     try {
         // legacy tokenless uid-param flow still works end to end
-        let r = await httpJson('POST', `${base}/api/memory`, { body: { uid: 'legacy_user_1', quiz: { track: 'standard' } } });
+        let r = await httpJson('POST', `${base}/api/memory`, { body: { uid: 'legacy_user_1', teachingInstructions: 'Use one example.' } });
         check('memory POST tokenless uid-param -> 200 (compat)', r.status === 200 && r.json && r.json.memory && r.json.memory.uid === 'legacy_user_1', `got ${r.status}`);
         r = await httpJson('GET', `${base}/api/memory?uid=legacy_user_1`);
-        check('memory GET tokenless uid-param -> 200 (compat)', r.status === 200 && r.json && r.json.quiz && r.json.quiz.track === 'standard', `got ${r.status} ${r.raw.slice(0, 120)}`);
+        check('memory GET tokenless uid-param -> 200 (compat)', r.status === 200 && r.json && r.json.teachingInstructions === 'Use one example.', `got ${r.status} ${r.raw.slice(0, 120)}`);
         r = await httpJson('GET', `${base}/api/sessions?uid=legacy_user_1`);
         check('sessions GET tokenless uid-param -> 200 (compat)', r.status === 200, `got ${r.status}`);
         r = await httpJson('GET', `${base}/api/memory`);
@@ -301,18 +356,19 @@ async function runPass2(jwksUrl) {
 
         // C3: a presented valid token WINS over the client-supplied uid
         const tokenB = mintToken({ sub: 'user_test_b' });
-        r = await httpJson('POST', `${base}/api/memory`, { token: tokenB, body: { uid: 'legacy_user_1', quiz: { track: 'top_score' } } });
+        r = await httpJson('POST', `${base}/api/memory`, { token: tokenB, body: { uid: 'legacy_user_1', teachingInstructions: 'Show every step.' } });
         check('memory POST token + spoofed uid -> token sub wins (C3)', r.status === 200 && r.json && r.json.memory && r.json.memory.uid === 'user_test_b', `got ${r.status} uid=${r.json && r.json.memory && r.json.memory.uid}`);
         r = await httpJson('GET', `${base}/api/memory?uid=legacy_user_1`);
-        check('legacy uid NOT polluted by token write (C3)', r.status === 200 && r.json && r.json.quiz && r.json.quiz.track === 'standard', `got ${r.status} track=${r.json && r.json.quiz && r.json.quiz.track}`);
+        check('legacy uid NOT polluted by token write (C3)', r.status === 200 && r.json && r.json.teachingInstructions === 'Use one example.', `got ${r.status} ${r.raw.slice(0, 120)}`);
 
         // an INVALID token with enforcement off is not rejected: falls back
         r = await httpJson('GET', `${base}/api/memory?uid=legacy_user_1`, { token: mintToken({}, { signWith: 'stranger' }) });
         check('invalid token, enforcement off -> not rejected (fallback)', r.status === 200, `got ${r.status}`);
 
-        // generation paths are NOT gated with the flag unset
-        r = await httpJson('POST', `${base}/api/section`, { body: { sectionId: CACHED_LESSON_SECTION.sectionId, mode: 'intro' } });
-        check('section intro tokenless, enforcement off -> not 401', r.status !== 401, `got ${r.status}`);
+        // With enforcement off, a generation path reaches ordinary request
+        // validation without requiring a token or calling an external model.
+        r = await httpJson('POST', `${base}/api/section`, { body: { mode: 'intro' } });
+        check('section intro tokenless, enforcement off -> validation 400', r.status === 400, `got ${r.status}`);
     } finally {
         stopBridge(bridge);
     }

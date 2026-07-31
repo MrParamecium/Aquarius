@@ -1,0 +1,71 @@
+%%KC_BLOCK%%<div class="kc-visual-plan" data-visual-plan-b64="eyJwcmltYXJ5X2FuY2hvciI6ImdlbmVyYXRlZF9pbWFnZSIsInJhdGlvbmFsZSI6Ik5vIHRleHRib29rIGZpZ3VyZXMgYXJlIGF2YWlsYWJsZSBvbiB0aGlzIHBhZ2UsIGJ1dCB0aGUgc2VjdGlvbiBpcyBmb3JtdWxhLWRlbnNlIGFuZCBiZW5lZml0cyBmcm9tIGEgY2xlYW4gd29ya2Zsb3cgdmlzdWFsLiBBIGdlbmVyYXRlZCBsZWN0dXJlLW5vdGVzIGRpYWdyYW0gY2FuIHNob3cgdGhlIHN0ZXAtYnktc3RlcCByZWR1Y3Rpb24gZnJvbSBnZW5lcmFsIHF1YWRyYXRpYyBhbmQgY3ViaWMgZm9ybXMgdG8gdGhlaXIgc29sdXRpb24gZm9ybXVsYXMgbW9yZSBjbGVhcmx5IHRoYW4gcmF3IE9DUiB0ZXh0LiIsImNyYW0iOiJVc2UgdmlzdWFscyB0byBzaG93IHRoZSBxdWlja2VzdCBkZWNpc2lvbiBwYXRoOiBxdWFkcmF0aWMgZ29lcyBzdHJhaWdodCB0byB0aGUgZm9ybXVsYSwgY3ViaWMgbXVzdCBmaXJzdCBiZSByZWR1Y2VkIHRvIGRlcHJlc3NlZCBjdWJpYyBmb3JtLiIsInN0YW5kYXJkIjoiVXNlIHZpc3VhbHMgdG8gY2xhcmlmeSB0aGUgd29ya2Zsb3cgYW5kIHN1cHBvcnQgb25lIHJlcHJlc2VudGF0aXZlIGV4YW1wbGUgd2l0aG91dCBvdmVyd2hlbG1pbmcgdGhlIHN0dWRlbnQgd2l0aCBkZXJpdmF0aW9uIGRldGFpbHMuIiwidG9wX3Njb3JlIjoiVXNlIHZpc3VhbHMgdG8gZXhwb3NlIHdoZXJlIHN1YnN0aXR1dGlvbiBlcnJvcnMgYW5kIGNvZWZmaWNpZW50LW1hdGNoaW5nIG1pc3Rha2VzIGhhcHBlbiBpbiB0aGUgY3ViaWMgcmVkdWN0aW9uLiJ9" style="display:none;"></div>%%KC_END%%
+# Solution of Quadratic and Cubic Equations
+
+> **Section Objective:** Master two classic algebra tools — the quadratic formula and the cubic reduction workflow — and learn exactly where setup errors occur before any formula is applied.
+
+This page gives you two essential algebra tools: one for solving quadratic equations and one for solving cubic equations. You will learn how to put each equation into the correct standard form, which formula to reach for, and where mistakes most commonly appear.
+
+For exams, the danger zone is not the formula itself — it is the step before the formula, when students fail to standardize the equation correctly. A sign error in reading a coefficient or a missed rearrangement can invalidate everything that follows.
+
+The good news: the quadratic case is the faster one, so we start there.
+
+## 1. Solving a Quadratic Equation
+
+Before using the quadratic formula, every quadratic equation must be written in standard form: 
+
+$$ax^2 + bx + c = 0$$
+
+Do not skip this step. If terms are scattered on both sides of the equation, move them all to one side first. Only once the equation is in standard form can you safely read off the coefficients.
+
+**Representative example:** Solve 
+
+$$2x^2 + 3x - 2 = 0$$
+
+The equation is already in standard form. Read the coefficients directly:
+- \(a = 2\), \(b = 3\), \(c = -2\)
+
+Substitute into the quadratic formula:
+
+$$x = \frac{-3 \pm \sqrt{9 - 4(2)(-2)}}{2(2)} = \frac{-3 \pm \sqrt{25}}{4} = \frac{-3 \pm 5}{4}$$
+
+The two roots are \(x = \frac{1}{2}\) and \(x = -2\).
+
+#### Exam Note
+Sign errors almost always come from misreading \(b\) or \(c\) — especially when the original equation has terms on both sides.
+
+$$ax^2 + bx + c = 0 \qquad x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+*The first expression is the required standard form that the equation must be in before anything else; the second is the quadratic formula applied only after the coefficients \(a\), \(b\), and \(c\) have been correctly identified from that standard form.*
+
+## 2. Solving a Cubic Equation
+
+Cubic equations require an extra setup step that quadratics do not. The general cubic
+
+$$y^3 + py^2 + qy + r = 0$$
+
+cannot be fed directly into the solution formula. First, it must be converted into the **depressed cubic** form
+
+$$x^3 + ax + b = 0$$
+
+by making the substitution \(y = x - \frac{p}{3}\). The entire purpose of this substitution is to eliminate the squared term — the \(py^2\) part — so the equation matches the form the solution formula is built for.
+
+Once the depressed cubic is obtained, the textbook defines two intermediate quantities \(A\) and \(B\) in terms of the new coefficients \(a\) and \(b\), and uses them to write the three roots.
+
+### NAMING COLLISION WARNING
+
+Be careful: the letter \(a\) in the depressed cubic \(x^3 + ax + b = 0\) is a new coefficient, not the same \(a\) from the quadratic formula. Keep track of which equation you are working with.
+
+#### Exam Note
+For cubic problems, setup accuracy matters more than memorizing every symbol in the final formula. Get the reduction right first.
+
+$$y^3 + py^2 + qy + r = 0 \qquad y = x - \frac{p}{3} \qquad x^3 + ax + b = 0$$
+*The substitution \(y = x - \frac{p}{3}\) shifts the variable so that the squared term cancels out, rewriting the general cubic in the depressed form \(x^3 + ax + b = 0\), which is the exact form the solution formula is designed to handle.*
+
+---
+**📌 Key Takeaways**
+- Quadratic: rewrite as \(ax^2 + bx + c = 0\) first, then apply the quadratic formula with correct \(a\), \(b\), \(c\).
+- Cubic: substitute \(y = x - \frac{p}{3}\) to remove the squared term and reach depressed cubic form.
+- Setup accuracy is the critical step — formula errors almost always begin with a wrong coefficient or sign.
+
+*In the next section we will move on to a new background tool or method.*
+
+%%KC_BLOCK%%<div class="kc-quiz-plan" data-quiz-b64="eyJ0eXBlIjoicXVpel9wbGFuIiwidGFyZ2V0X3F1ZXN0aW9ucyI6NiwicXVlc3Rpb25fcmFuZ2UiOnsibWluIjo1LCJtYXgiOjd9LCJrbm93bGVkZ2VfcG9pbnRzIjpbeyJpZCI6InF1YWRyYXRpY19zdGFuZGFyZF9mb3JtX2FuZF9mb3JtdWxhIiwibGFiZWwiOiJRdWFkcmF0aWMgc3RhbmRhcmQgZm9ybSBhbmQgY29ycmVjdCBmb3JtdWxhIHVzZSIsImltcG9ydGFuY2UiOiJoaWdoIiwiZXhhbV93ZWlnaHQiOiJoaWdoIiwibWFzdGVyeV9ydWxlIjp7ImNvcnJlY3Rfc3RyZWFrX3JlcXVpcmVkIjoyfSwicXVlc3Rpb25zIjpbeyJpZCI6ImtwMV9xMSIsInR5cGUiOiJtdWx0aXBsZV9jaG9pY2UiLCJzdGVtIjoiV2hpY2ggZXF1YXRpb24gaXMgYWxyZWFkeSBpbiB0aGUgc3RhbmRhcmQgcXVhZHJhdGljIGZvcm0gbmVlZGVkIGZvciB0aGUgcXVhZHJhdGljIGZvcm11bGE/Iiwib3B0aW9ucyI6WyJBLiBcXCgzeF4yID0gNSAtIDJ4XFwpIiwiQi4gXFwoM3heMiArIDJ4IC0gNSA9IDBcXCkiLCJDLiBcXCh4KDN4ICsgMikgPSA1XFwpIiwiRC4gXFwoM3heMiArIDJ4ID0gNVxcKSJdLCJjb3JyZWN0X29wdGlvbiI6IkIiLCJleHBsYW5hdGlvbiI6IlRoZSBxdWFkcmF0aWMgZm9ybXVsYSBpcyBhcHBsaWVkIGFmdGVyIHRoZSBlcXVhdGlvbiBpcyB3cml0dGVuIGFzIFxcKGF4XjIgKyBieCArIGMgPSAwXFwpLCBhbmQgb25seSBvcHRpb24gQiBpcyBhbHJlYWR5IGluIHRoYXQgZm9ybS4iLCJ3cm9uZ19vcHRpb25fZXhwbGFuYXRpb25zIjp7IkEiOiJUaGlzIGlzIG5vdCB5ZXQgc2V0IGVxdWFsIHRvIHplcm8uIiwiQyI6IlRoaXMgaXMgbm90IGV4cGFuZGVkIGFuZCBub3Qgc2V0IGVxdWFsIHRvIHplcm8uIiwiRCI6IlRoaXMgc3RpbGwgbmVlZHMgYWxsIHRlcm1zIG1vdmVkIHRvIG9uZSBzaWRlLiJ9LCJoaW50IjoiTG9vayBmb3IgXFwoYXheMiArIGJ4ICsgYyA9IDBcXCkgZXhhY3RseS4iLCJuZWVkc192aXN1YWwiOmZhbHNlLCJzYW1lX3BvaW50X3ZhcmlhbnQiOmZhbHNlfSx7ImlkIjoia3AxX3EyIiwidHlwZSI6Im11bHRpcGxlX2Nob2ljZSIsInN0ZW0iOiJGb3IgdGhlIGVxdWF0aW9uIFxcKDJ4XjIgKyAzeCAtIDIgPSAwXFwpLCB3aGljaCBzZXQgb2YgY29lZmZpY2llbnRzIGlzIGNvcnJlY3Q/Iiwib3B0aW9ucyI6WyJBLiBcXChhID0gMixcXCBiID0gMyxcXCBjID0gLTJcXCkiLCJCLiBcXChhID0gMixcXCBiID0gLTMsXFwgYyA9IDJcXCkiLCJDLiBcXChhID0gMyxcXCBiID0gMixcXCBjID0gLTJcXCkiLCJELiBcXChhID0gLTIsXFwgYiA9IDMsXFwgYyA9IDJcXCkiXSwiY29ycmVjdF9vcHRpb24iOiJBIiwiZXhwbGFuYXRpb24iOiJSZWFkIGNvZWZmaWNpZW50cyBkaXJlY3RseSBmcm9tIFxcKDJ4XjIgKyAzeCAtIDIgPSAwXFwpOiB0aGUgXFwoeF4yXFwpIGNvZWZmaWNpZW50IGlzIFxcKDJcXCksIHRoZSBcXCh4XFwpIGNvZWZmaWNpZW50IGlzIFxcKDNcXCksIGFuZCB0aGUgY29uc3RhbnQgdGVybSBpcyBcXCgtMlxcKS4iLCJ3cm9uZ19vcHRpb25fZXhwbGFuYXRpb25zIjp7IkIiOiJUaGUgc2lnbnMgd2VyZSBmbGlwcGVkIGluY29ycmVjdGx5LiIsIkMiOiJcXChhXFwpIG11c3QgYmUgdGhlIGNvZWZmaWNpZW50IG9mIFxcKHheMlxcKSwgbm90IFxcKHhcXCkuIiwiRCI6IlRoZSBjb25zdGFudCBhbmQgbGVhZGluZyBjb2VmZmljaWVudCB3ZXJlIG1pc3JlYWQuIn0sImhpbnQiOiJNYXRjaCBlYWNoIGNvZWZmaWNpZW50IHRvIGl0cyBwb3dlciBvZiBcXCh4XFwpLiIsIm5lZWRzX3Zpc3VhbCI6ZmFsc2UsInNhbWVfcG9pbnRfdmFyaWFudCI6dHJ1ZX0seyJpZCI6ImtwMV9xMyIsInR5cGUiOiJzaG9ydF9hbnN3ZXIiLCJzdGVtIjoiU29sdmUgXFwoMnheMiArIDN4IC0gMiA9IDBcXCkgdXNpbmcgdGhlIHF1YWRyYXRpYyBmb3JtdWxhLiIsImlkZWFsX2Fuc3dlciI6IlVzaW5nIFxcKGEgPSAyXFwpLCBcXChiID0gM1xcKSwgXFwoYyA9IC0yXFwpLCB0aGUgcm9vdHMgYXJlIFxcKHggPSBcXGZyYWN7MX17Mn1cXCkgYW5kIFxcKHggPSAtMlxcKS4iLCJncmFkaW5nX3J1YnJpYyI6WyJNdXN0IGlkZW50aWZ5IFxcKGEgPSAyXFwpLCBcXChiID0gM1xcKSwgXFwoYyA9IC0yXFwpIGNvcnJlY3RseS4iLCJNdXN0IHN1YnN0aXR1dGUgaW50byB0aGUgcXVhZHJhdGljIGZvcm11bGEgY29ycmVjdGx5LiIsIk11c3QgZ2l2ZSBib3RoIHJvb3RzIGNvcnJlY3RseS4iXSwiZXhwbGFuYXRpb24iOiJUaGlzIGNoZWNrcyB3aGV0aGVyIHRoZSBzdHVkZW50IGNhbiBjYXJyeSBvdXQgdGhlIGZ1bGwgcXVhZHJhdGljIHdvcmtmbG93LCBub3QganVzdCByZWNvZ25pemUgdGhlIGZvcm11bGEuIiwiaGludCI6IkNvbXB1dGUgdGhlIGRpc2NyaW1pbmFudCBcXChiXjIgLSA0YWNcXCkgZmlyc3QuIiwibmVlZHNfdmlzdWFsIjpmYWxzZSwic2FtZV9wb2ludF92YXJpYW50IjpmYWxzZX1dfSx7ImlkIjoiY3ViaWNfcmVkdWN0aW9uX3dvcmtmbG93IiwibGFiZWwiOiJHZW5lcmFsIGN1YmljIHRvIGRlcHJlc3NlZCBjdWJpYyB3b3JrZmxvdyIsImltcG9ydGFuY2UiOiJoaWdoIiwiZXhhbV93ZWlnaHQiOiJtZWRpdW0iLCJtYXN0ZXJ5X3J1bGUiOnsiY29ycmVjdF9zdHJlYWtfcmVxdWlyZWQiOjJ9LCJxdWVzdGlvbnMiOlt7ImlkIjoia3AyX3ExIiwidHlwZSI6Im11bHRpcGxlX2Nob2ljZSIsInN0ZW0iOiJCZWZvcmUgdXNpbmcgdGhlIHRleHRib29rJ3MgY3ViaWMgc29sdXRpb24gZm9ybXVsYXMsIHdoYXQgbXVzdCBiZSBkb25lIHRvIHRoZSBnZW5lcmFsIGN1YmljIFxcKHleMyArIHB5XjIgKyBxeSArIHIgPSAwXFwpPyIsIm9wdGlvbnMiOlsiQS4gRGlmZmVyZW50aWF0ZSBpdCBvbmNlIiwiQi4gRmFjdG9yIG91dCBcXCh5XFwpIiwiQy4gQ29udmVydCBpdCB0byB0aGUgZGVwcmVzc2VkIGN1YmljIGZvcm0gXFwoeF4zICsgYXggKyBiID0gMFxcKSIsIkQuIFJlcGxhY2UgXFwoeVxcKSB3aXRoIFxcKHB5XFwpIl0sImNvcnJlY3Rfb3B0aW9uIjoiQyIsImV4cGxhbmF0aW9uIjoiVGhlIHRleHRib29rIGZpcnN0IHJlZHVjZXMgdGhlIGdlbmVyYWwgY3ViaWMgdG8gdGhlIGRlcHJlc3NlZCBjdWJpYyBmb3JtLCBhbmQgb25seSB0aGVuIGRlZmluZXMgXFwoQVxcKSBhbmQgXFwoQlxcKSBmb3IgdGhlIHNvbHV0aW9uLiIsIndyb25nX29wdGlvbl9leHBsYW5hdGlvbnMiOnsiQSI6IkRpZmZlcmVudGlhdGlvbiBpcyBub3QgcGFydCBvZiB0aGlzIHNvbHZpbmcgbWV0aG9kLiIsIkIiOiJGYWN0b3Jpbmcgb3V0IFxcKHlcXCkgaXMgbm90IGdlbmVyYWxseSBwb3NzaWJsZS4iLCJEIjoiVGhhdCBzdWJzdGl0dXRpb24gZG9lcyBub3QgcHJvZHVjZSB0aGUgcmVxdWlyZWQgZm9ybS4ifSwiaGludCI6IlRoaW5rIGFib3V0IHRoZSB0YXJnZXQgZm9ybSBzaG93biBpbiB0aGUgbm90ZXMuIiwibmVlZHNfdmlzdWFsIjp0cnVlLCJ2aXN1YWxfdHlwZSI6Im9wZW5haS9ncHQtNS40LWltYWdlLTIiLCJzYW1lX3BvaW50X3ZhcmlhbnQiOmZhbHNlfSx7ImlkIjoia3AyX3EyIiwidHlwZSI6Im11bHRpcGxlX2Nob2ljZSIsInN0ZW0iOiJXaGljaCBzdWJzdGl0dXRpb24gaXMgdXNlZCB0byByZW1vdmUgdGhlIHNxdWFyZWQgdGVybSBmcm9tIHRoZSBnZW5lcmFsIGN1YmljPyIsIm9wdGlvbnMiOlsiQS4gXFwoeSA9IHggKyBwXFwpIiwiQi4gXFwoeSA9IHggLSBcXGZyYWN7cH17M31cXCkiLCJDLiBcXCh5ID0geCArIFxcZnJhY3txfXszfVxcKSIsIkQuIFxcKHkgPSB4IC0gXFxmcmFje3J9ezN9XFwpIl0sImNvcnJlY3Rfb3B0aW9uIjoiQiIsImV4cGxhbmF0aW9uIjoiVGhlIHN1YnN0aXR1dGlvbiBcXCh5ID0geCAtIFxcZnJhY3twfXszfVxcKSBpcyB1c2VkIHNvIHRoZSB0cmFuc2Zvcm1lZCBlcXVhdGlvbiBiZWNvbWVzIGEgZGVwcmVzc2VkIGN1YmljIHdpdGhvdXQgdGhlIHNxdWFyZWQgdGVybS4iLCJ3cm9uZ19vcHRpb25fZXhwbGFuYXRpb25zIjp7IkEiOiJUaGlzIGlzIG5vdCB0aGUgdGV4dGJvb2sgc3Vic3RpdHV0aW9uIGFuZCBkb2VzIG5vdCBnZW5lcmFsbHkgcmVtb3ZlIHRoZSBzcXVhcmVkIHRlcm0uIiwiQyI6IlxcKHFcXCkgaXMgbm90IHRoZSBjb2VmZmljaWVudCB1c2VkIGluIHRoZSBzaGlmdC4iLCJEIjoiXFwoclxcKSBpcyB0aGUgY29uc3RhbnQgdGVybSwgbm90IHRoZSBjb2VmZmljaWVudCB1c2VkIGluIHRoZSBzaGlmdC4ifSwiaGludCI6IlRoZSBzaGlmdCBkZXBlbmRzIG9uIHRoZSBjb2VmZmljaWVudCBvZiB0aGUgc3F1YXJlZCB0ZXJtLiIsIm5lZWRzX3Zpc3VhbCI6ZmFsc2UsInNhbWVfcG9pbnRfdmFyaWFudCI6dHJ1ZX0seyJpZCI6ImtwMl9xMyIsInR5cGUiOiJtdWx0aXBsZV9jaG9pY2UiLCJzdGVtIjoiV2hhdCBpcyB0aGUgbWFpbiBwdXJwb3NlIG9mIHJld3JpdGluZyBhIGN1YmljIGFzIFxcKHheMyArIGF4ICsgYiA9IDBcXCk/Iiwib3B0aW9ucyI6WyJBLiBUbyBtYWtlIHRoZSBlcXVhdGlvbiBsaW5lYXIiLCJCLiBUbyByZW1vdmUgdGhlIG1pZGRsZSBzcXVhcmVkIHRlcm0gc28gdGhlIHNvbHV0aW9uIGZvcm11bGEgY2FuIGJlIGFwcGxpZWQiLCJDLiBUbyBndWFyYW50ZWUgaW50ZWdlciByb290cyIsIkQuIFRvIGF2b2lkIHVzaW5nIGNvZWZmaWNpZW50cyJdLCJjb3JyZWN0X29wdGlvbiI6IkIiLCJleHBsYW5hdGlvbiI6IlRoZSBkZXByZXNzZWQgY3ViaWMgZm9ybSByZW1vdmVzIHRoZSBzcXVhcmVkIHRlcm0gYW5kIG1hdGNoZXMgdGhlIGZvcm0gdXNlZCBieSB0aGUgc29sdXRpb24gZXhwcmVzc2lvbnMgaW52b2x2aW5nIFxcKEFcXCkgYW5kIFxcKEJcXCkuIiwid3Jvbmdfb3B0aW9uX2V4cGxhbmF0aW9ucyI6eyJBIjoiVGhlIGVxdWF0aW9uIHJlbWFpbnMgY3ViaWMsIG5vdCBsaW5lYXIuIiwiQyI6IlRoaXMgbWV0aG9kIGRvZXMgbm90IGd1YXJhbnRlZSBpbnRlZ2VyIHJvb3RzLiIsIkQiOiJDb2VmZmljaWVudHMgYXJlIHN0aWxsIGVzc2VudGlhbC4ifSwiaGludCI6IkZvY3VzIG9uIHdoYXQgY2hhbmdlZCBzdHJ1Y3R1cmFsbHkgaW4gdGhlIGVxdWF0aW9uLiIsIm5lZWRzX3Zpc3VhbCI6ZmFsc2UsInNhbWVfcG9pbnRfdmFyaWFudCI6ZmFsc2V9XX1dfQ==" style="display:none;"></div>%%KC_END%%

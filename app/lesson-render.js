@@ -9,8 +9,7 @@
 //     learnWebData / learnAbort / learnRequestSeq / learnParentOverviewContext
 //     (session lets @ app.js)
 //   - _learnLayoutMode / currentBookPageIndex (orchestration lets @ app.js)
-//   - compactWhitespace / parseSectionTitleParts / escapeHtml / detectLang /
-//     getActiveLearnTrack (utils that stay in app.js)
+//   - compactWhitespace / parseSectionTitleParts / escapeHtml / detectLang
 //   - DOM consts: learnKpTitle / learnKpPrevBtn / learnKpNextBtn /
 //     learnExplainScroll / learnExplainContent / learnBody / ...
 //   - markdownToHtml / inlineFormat / decodeHtmlEntities / parseMdTable
@@ -94,37 +93,13 @@ function getVisualBlockNodes(entry) {
 }
 
 
-function getPairedVisualSubtitle(track, bookEntry, genEntry) {
-  const bookRole = getTeachingRoleLabel(bookEntry?.role || '').toLowerCase();
+function getPairedVisualSubtitle(genEntry) {
   const genRole = getTeachingRoleLabel(genEntry?.role || '').toLowerCase();
-
-  switch (track) {
-    case 'cram':
-      return `Start with the textbook figure, then use the generated visual to recognize the exam pattern fast${genRole ? ` through a clearer ${genRole}` : ''}.`;
-    case 'top_score':
-      return `Compare the canonical textbook figure with the generated interpretation to spot subtle distinctions, traps, and higher-precision reasoning${bookRole ? ` around the ${bookRole}` : ''}.`;
-    case 'standard':
-    default:
-      return `Read the textbook figure first, then use the generated visual to make the core idea intuitive${genRole ? ` through a clearer ${genRole}` : ''}.`;
-  }
+  return `Read the textbook figure first, then use the generated visual to make the core idea intuitive${genRole ? ` through a clearer ${genRole}` : ''}.`;
 }
 
-function getPairedVisualPanelTitle(track, side) {
-  if (side === 'book') {
-    switch (track) {
-      case 'cram': return 'Textbook pattern';
-      case 'top_score': return 'Canonical figure';
-      case 'standard':
-      default: return 'From the textbook';
-    }
-  }
-
-  switch (track) {
-    case 'cram': return 'Fast recognition view';
-    case 'top_score': return 'High-precision interpretation';
-    case 'standard':
-    default: return 'Clarified visual';
-  }
+function getPairedVisualPanelTitle(side) {
+  return side === 'book' ? 'From the textbook' : 'Clarified visual';
 }
 
 function decorateLectureContent(root) {
@@ -302,7 +277,6 @@ function decorateLectureContent(root) {
 
 function enhanceVisualMetadataUI(root) {
   if (!root) return;
-  const track = getActiveLearnTrack();
   const planNode = root.querySelector('.kc-visual-plan');
   const plan = planNode
     ? (parseBase64JsonAttr(planNode.dataset.visualPlanB64 || planNode.getAttribute('data-visual-plan-b64')) || {})
@@ -391,7 +365,7 @@ function enhanceVisualMetadataUI(root) {
 
       const subtitle = document.createElement('div');
       subtitle.className = 'learn-visual-pair-subtitle';
-      subtitle.textContent = getPairedVisualSubtitle(track, bookEntry, genEntry);
+      subtitle.textContent = getPairedVisualSubtitle(genEntry);
 
       const grid = document.createElement('div');
       grid.className = 'learn-visual-pair-grid';
@@ -403,10 +377,10 @@ function enhanceVisualMetadataUI(root) {
 
       const bookTitle = document.createElement('div');
       bookTitle.className = 'learn-visual-pair-card-title';
-      bookTitle.textContent = getPairedVisualPanelTitle(track, 'book');
+      bookTitle.textContent = getPairedVisualPanelTitle('book');
       const genTitle = document.createElement('div');
       genTitle.className = 'learn-visual-pair-card-title';
-      genTitle.textContent = getPairedVisualPanelTitle(track, 'generated');
+      genTitle.textContent = getPairedVisualPanelTitle('generated');
 
       bookCard.appendChild(bookTitle);
       genCard.appendChild(genTitle);

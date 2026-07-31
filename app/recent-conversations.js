@@ -1,8 +1,8 @@
 // Recent conversations storage — extracted from app.js in Phase 2 #17.
-// Loaded as a classic <script> BEFORE app.js. The scope is the persistent
-// localStorage('tutorRecentSessions')-backed conversation list shown in the
-// sidebar: state, debug log, context menu, delete-confirm modal, snapshot
-// builder, save/load, render, and the historical-session restoration path.
+// Loaded as a classic <script> BEFORE app.js. Signed-in users use
+// /api/sessions as the source of truth; guests keep the existing tab-local
+// tutorRecentSessions snapshots and never upload them. This module owns the
+// sidebar state, menus, snapshot storage, and historical restoration path.
 //
 // External globals used at call time:
 //   - escapeHtml, markdownToHtml                                (app.js / markdown-engine.js)
@@ -46,6 +46,7 @@ let recentConversationMenuTargetTimestamp = null;
 let pendingDeleteRecentConversationTimestamp = null;
 let recentConversationDeleteOverlay = null;
 const deletedRecentConversationTimestamps = new Set();
+let serverRecentSessions = [];
 window.__recentConversationDebug = window.__recentConversationDebug || [];
 
 const navRecentBtn = document.getElementById('navRecentBtn');
@@ -85,7 +86,7 @@ function showDeleteConversationConfirm(timestamp) {
   closeDeleteConversationConfirm();
   pendingDeleteRecentConversationTimestamp = timestamp;
 
-  const session = loadRecentConversations().find(s => s.timestamp === timestamp);
+  const session = findRecentConversation(timestamp);
   const rawTitle = session?.customTitle || session?.summaryTitle || session?.title || 'this conversation';
   const safeTitle = String(rawTitle).replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -113,7 +114,7 @@ function showDeleteConversationConfirm(timestamp) {
       <div style="width:42px; height:42px; border-radius:14px; background:#FEF2F2; color:#B91C1C; display:flex; align-items:center; justify-content:center; font-size:20px; flex:0 0 auto;">🗑️</div>
       <div style="flex:1; min-width:0;">
         <div style="font-size:18px; font-weight:700; line-height:1.3; color:#0F172A; margin-bottom:8px;">Delete this conversation?</div>
-        <div style="font-size:14px; line-height:1.65; color:#475569; margin-bottom:8px;">This will permanently remove the conversation and clear its impact from the user profile and memory.</div>
+        <div style="font-size:14px; line-height:1.65; color:#475569; margin-bottom:8px;">This will permanently remove the conversation from your history.</div>
         <div style="font-size:13px; line-height:1.5; color:#0F172A; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:12px; padding:10px 12px;">${safeTitle}</div>
       </div>
     </div>
@@ -184,8 +185,7 @@ window.openRecentConversationMenu = function(timestamp, anchorEl) {
   recentConversationMenuTargetTimestamp = timestamp;
   pushRecentConversationDebug('menu:open', { timestamp });
 
-  const sessions = loadRecentConversations();
-  const session = sessions.find(s => s.timestamp === timestamp) || null;
+  const session = findRecentConversation(timestamp);
   const isStarred = !!(session && session.starred);
 
   const menu = document.createElement('div');
@@ -250,6 +250,9 @@ function toggleRecentPanel(forceOpen = null) {
   setAccordionOpen(sidebarRecentPanel, nextOpen);
   if (nextOpen) toggleSyllabusPanel(false);
   updateSidebarNavActive(nextOpen ? 'recent' : null);
+  if (nextOpen && usesServerRecentConversations()) {
+    void refreshServerRecentConversations().catch(error => renderRecentConversationError(error));
+  }
 }
 
 // Persistent Recent Conversations replacing transient one
@@ -258,7 +261,53 @@ function normalizeRecentConversationTimestamp(value) {
   return Number.isFinite(n) ? n : String(value ?? '');
 }
 
+function usesServerRecentConversations() {
+  return Boolean(typeof currentUser !== 'undefined' && currentUser && !currentUser.isGuest);
+}
+
+function recentConversationKey(session) {
+  return session && session.id ? String(session.id) : normalizeRecentConversationTimestamp(session && session.timestamp);
+}
+
+function findRecentConversation(identifier) {
+  const normalized = normalizeRecentConversationTimestamp(identifier);
+  return loadRecentConversations().find(session => (
+    String(session.id || '') === String(identifier)
+    || normalizeRecentConversationTimestamp(session.timestamp) === normalized
+  )) || null;
+}
+
+function sessionApiError(data, status) {
+  const suffix = [data && data.stage ? `stage=${data.stage}` : '', data && data.request_id ? `request=${data.request_id}` : ''].filter(Boolean).join(', ');
+  return `${data && data.error ? data.error : `HTTP ${status}`}${suffix ? ` (${suffix})` : ''}`;
+}
+
+async function refreshServerRecentConversations() {
+  if (!usesServerRecentConversations()) return [];
+  const response = await apiFetch('/api/sessions');
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(sessionApiError(data, response.status));
+  serverRecentSessions = (Array.isArray(data.sessions) ? data.sessions : []).map(session => ({
+    ...session,
+    summaryTitle: session.title || 'Saved conversation',
+    timestamp: Date.parse(session.updatedAt || session.createdAt || '') || 0,
+  }));
+  updateRecentConversationsUI({ skipServerRefresh: true });
+  return serverRecentSessions;
+}
+
+function renderRecentConversationError(error) {
+  const container = document.getElementById('recentConversationsNav');
+  if (!container) return;
+  container.replaceChildren();
+  const message = document.createElement('div');
+  message.className = 'error-box';
+  message.textContent = `Failed to load conversations: ${error && error.message ? error.message : error}`;
+  container.appendChild(message);
+}
+
 function loadRecentConversations() {
+  if (usesServerRecentConversations()) return serverRecentSessions.slice();
   const saved = localStorage.getItem('tutorRecentSessions');
   if (saved) {
     try {
@@ -273,34 +322,15 @@ function loadRecentConversations() {
 }
 
 function saveRecentConversations(sessions) {
+  if (usesServerRecentConversations()) {
+    serverRecentSessions = Array.isArray(sessions) ? sessions.slice() : [];
+    return;
+  }
   localStorage.setItem('tutorRecentSessions', JSON.stringify(Array.isArray(sessions) ? sessions.map(session => ({
     ...session,
     timestamp: normalizeRecentConversationTimestamp(session.timestamp),
     lessonMarkdown: forceB8TextbookOnlyLesson(session.sectionId, session.sectionTitle, session.lessonMarkdown || '')
   })) : []));
-}
-
-async function rebuildUserMemoryFromRemainingSessions(sessions) {
-  // Signed-in only: guest memory never lives server-side (D3), and identity
-  // travels in the Authorization header — no uid field.
-  if (!currentUser || currentUser.isGuest) return;
-  try {
-    const res = await apiFetch('/api/memory/rebuild', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessions })
-    });
-    const data = await res.json();
-    if (res.ok && data && data.memory) {
-      userMemory = data.memory;
-      if (userMemory && userMemory.quiz) {
-        localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
-      }
-      renderUserBadge();
-    }
-  } catch (err) {
-    console.warn('[recentConversations] failed to rebuild user memory:', err);
-  }
 }
 
 function summarizeRecentConversation(history = [], sectionTitle = '') {
@@ -363,6 +393,26 @@ const performDeleteRecentConversationImpl = async (timestamp) => {
   });
   deletedRecentConversationTimestamps.add(normalizedTs);
 
+  if (usesServerRecentConversations()) {
+    const session = findRecentConversation(timestamp);
+    if (!session || !session.id) throw new Error('Session not found');
+    const response = await apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`, { method: 'DELETE' });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(sessionApiError(data, response.status));
+    if (tutorState.chatSessionId === session.id) {
+      tutorState.chatHistory = [];
+      tutorState.chatSessionId = null;
+    }
+    if (tutorState.learnSessionId === session.id) {
+      tutorState.learnHistory = [];
+      tutorState.learnSessionId = null;
+    }
+    serverRecentSessions = serverRecentSessions.filter(item => item.id !== session.id);
+    updateRecentConversationsUI({ skipServerRefresh: true });
+    pushRecentConversationDebug('delete:server-completed', { sessionId: session.id });
+    return;
+  }
+
   const allSessions = loadRecentConversations();
   pushRecentConversationDebug('delete:before-filter', {
     count: allSessions.length,
@@ -393,13 +443,29 @@ const performDeleteRecentConversationImpl = async (timestamp) => {
   });
   updateRecentConversationsUI();
   pushRecentConversationDebug('delete:after-ui-update', {});
-  await rebuildUserMemoryFromRemainingSessions(sessions);
-  pushRecentConversationDebug('delete:after-memory-rebuild', {
+  pushRecentConversationDebug('delete:completed', {
     count: loadRecentConversations().length
   });
 };
 
-window.toggleRecentConversationStar = function(timestamp) {
+window.toggleRecentConversationStar = async function(timestamp) {
+  if (usesServerRecentConversations()) {
+    const session = findRecentConversation(timestamp);
+    if (!session || !session.id) return;
+    try {
+      const response = await apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ starred: !session.starred })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(sessionApiError(data, response.status));
+      await refreshServerRecentConversations();
+    } catch (error) {
+      alert(`Failed to update conversation: ${error.message || error}`);
+    }
+    return;
+  }
   const normalizedTs = normalizeRecentConversationTimestamp(timestamp);
   const sessions = loadRecentConversations();
   const next = sessions.map(session => normalizeRecentConversationTimestamp(session.timestamp) === normalizedTs ? { ...session, starred: !session.starred } : session);
@@ -411,15 +477,34 @@ window.toggleRecentConversationStar = function(timestamp) {
   updateRecentConversationsUI();
 };
 
-window.renameRecentConversation = function(timestamp) {
+window.renameRecentConversation = async function(timestamp) {
   const normalizedTs = normalizeRecentConversationTimestamp(timestamp);
   const sessions = loadRecentConversations();
-  const session = sessions.find(s => normalizeRecentConversationTimestamp(s.timestamp) === normalizedTs);
+  const session = findRecentConversation(timestamp);
   if (!session) return;
   const currentTitle = session.customTitle || session.summaryTitle || session.title || '';
   const renamed = window.prompt('Rename this conversation', currentTitle);
   if (renamed == null) return;
   const cleanTitle = String(renamed).trim();
+  if (cleanTitle.length > 80) {
+    alert('Conversation titles must be 80 characters or fewer.');
+    return;
+  }
+  if (usesServerRecentConversations()) {
+    try {
+      const response = await apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ customTitle: cleanTitle })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(sessionApiError(data, response.status));
+      await refreshServerRecentConversations();
+    } catch (error) {
+      alert(`Failed to rename conversation: ${error.message || error}`);
+    }
+    return;
+  }
   const next = sessions.map(s => normalizeRecentConversationTimestamp(s.timestamp) === normalizedTs
     ? { ...s, customTitle: cleanTitle || '', summaryTitle: cleanTitle || summarizeRecentConversation(s.history || [], s.sectionTitle || ''), title: cleanTitle || summarizeRecentConversation(s.history || [], s.sectionTitle || '') }
     : s
@@ -439,6 +524,7 @@ window.performDeleteRecentConversation = function(timestamp) {
 };
 
 function buildRecentConversationSnapshot(source = 'unknown') {
+  if (usesServerRecentConversations()) return null;
   const sourceKey = String(source || '');
   const answerVisible = answerScreen && !answerScreen.classList.contains('hidden');
   const shouldUseMain = sourceKey.startsWith('answer:') || sourceKey.startsWith('main:') || (answerVisible && (tutorState.chatHistory || []).length >= 2);
@@ -470,6 +556,7 @@ function buildRecentConversationSnapshot(source = 'unknown') {
 }
 
 function saveCurrentLearnSession(source = 'unknown') {
+  if (usesServerRecentConversations()) return;
   const snapshot = buildRecentConversationSnapshot(source);
   if (!snapshot) {
     pushRecentConversationDebug('save:skipped-history-too-short', {
@@ -539,10 +626,9 @@ function saveCurrentLearnSession(source = 'unknown') {
   updateRecentConversationsUI();
 }
 
-window.loadHistoricalSession = function(timestamp) {
+window.loadHistoricalSession = async function(timestamp) {
   const normalizedTs = normalizeRecentConversationTimestamp(timestamp);
-  const sessions = loadRecentConversations();
-  const session = sessions.find(s => normalizeRecentConversationTimestamp(s.timestamp) === normalizedTs);
+  let session = findRecentConversation(timestamp);
   if (!session) return;
 
   try {
@@ -551,14 +637,49 @@ window.loadHistoricalSession = function(timestamp) {
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
     if (learnAbort) learnAbort.abort();
 
+    if (usesServerRecentConversations()) {
+      const response = await apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`);
+      const detail = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(sessionApiError(detail, response.status));
+      session = {
+        ...session,
+        ...detail,
+        timestamp: Date.parse(detail.updatedAt || detail.createdAt || '') || normalizedTs,
+        history: Array.isArray(detail.messages) ? detail.messages.map(({ role, content, ts }) => ({ role, content, ts })) : [],
+        bookPages: [],
+        webSources: [],
+        attachments: [],
+        lessonMarkdown: ''
+      };
+      if ((detail.origin || 'main') === 'learn' && detail.sectionId) {
+        const lessonResponse = await apiFetch('/api/section', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sectionId: detail.sectionId,
+            sectionTitle: detail.sectionTitle || detail.sectionId,
+            mode: 'lesson',
+            language: 'en',
+            bookSource: currentBook
+          })
+        });
+        const lessonData = await lessonResponse.json().catch(() => ({}));
+        if (!lessonResponse.ok) throw new Error(lessonData.error || `HTTP ${lessonResponse.status}`);
+        session.lessonMarkdown = lessonData.lesson || '';
+        session.bookPages = Array.isArray(lessonData.bookPages) ? lessonData.bookPages : [];
+      }
+    }
+
     const sessionOrigin = session.origin || (session.sectionId === 'general-qa' ? 'main' : 'learn');
     if (sessionOrigin === 'main') {
+      window.guidanceMode?.resetScope('main');
       if (currentAbortController) currentAbortController.abort();
       currentAbortController = null;
       stopBtn.classList.add('hidden');
       if (loadingTimer) clearInterval(loadingTimer);
 
       tutorState.chatHistory = JSON.parse(JSON.stringify(session.history || []));
+      tutorState.chatSessionId = session.id || null;
       tutorState.chatSessionStartTime = session.timestamp;
       tutorState.currentBookPages = Array.isArray(session.bookPages) ? session.bookPages : [];
       tutorState.currentWebSources = Array.isArray(session.webSources) ? session.webSources : [];
@@ -585,6 +706,7 @@ window.loadHistoricalSession = function(timestamp) {
       return;
     }
 
+    window.guidanceMode?.resetScope('learn');
     tutorState.learnSectionId = session.sectionId || '';
     tutorState.learnSectionTitle = session.sectionTitle || 'Saved Conversation';
     tutorState.learnLessonMarkdown = forceB8TextbookOnlyLesson(
@@ -595,6 +717,7 @@ window.loadHistoricalSession = function(timestamp) {
     tutorState.learnBookPages = Array.isArray(session.bookPages) ? session.bookPages : [];
     tutorState.learnWebSources = Array.isArray(session.webSources) ? session.webSources : [];
     tutorState.learnHistory = JSON.parse(JSON.stringify(session.history || []));
+    tutorState.learnSessionId = session.id || null;
     tutorState.sessionStartTime = session.timestamp;
     currentBookPageIndex = 0;
 
@@ -657,20 +780,27 @@ window.loadHistoricalSession = function(timestamp) {
   }
 };
 
-function updateRecentConversationsUI() {
+function updateRecentConversationsUI(options = {}) {
   const container = document.getElementById('recentConversationsNav');
   if (!container) return;
 
+  if (usesServerRecentConversations() && !options.skipServerRefresh) {
+    void refreshServerRecentConversations().catch(error => renderRecentConversationError(error));
+    return;
+  }
+
   let sessions = loadRecentConversations();
   let changed = false;
-  sessions = sessions.map(session => {
-    const computedTitle = session.customTitle || summarizeRecentConversation(session.history || [], session.sectionTitle || '');
-    if (session.summaryTitle !== computedTitle || session.title !== computedTitle) {
-      changed = true;
-      return { ...session, title: computedTitle, summaryTitle: computedTitle };
-    }
-    return session;
-  });
+  if (!usesServerRecentConversations()) {
+    sessions = sessions.map(session => {
+      const computedTitle = session.customTitle || summarizeRecentConversation(session.history || [], session.sectionTitle || '');
+      if (session.summaryTitle !== computedTitle || session.title !== computedTitle) {
+        changed = true;
+        return { ...session, title: computedTitle, summaryTitle: computedTitle };
+      }
+      return session;
+    });
+  }
   sessions.sort((a, b) => {
     if (!!b.starred !== !!a.starred) return Number(!!b.starred) - Number(!!a.starred);
     return (b.timestamp || 0) - (a.timestamp || 0);
@@ -704,7 +834,7 @@ function updateRecentConversationsUI() {
     card.setAttribute('aria-label', `Open conversation: ${fullTitle}`);
     card.className = 'sidebar-recent-item';
     card.addEventListener('click', () => {
-      window.loadHistoricalSession(session.timestamp);
+      window.loadHistoricalSession(recentConversationKey(session));
     });
 
     const topRow = document.createElement('div');
@@ -724,7 +854,7 @@ function updateRecentConversationsUI() {
     menuBtn.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
-      window.openRecentConversationMenu(session.timestamp, menuBtn);
+      window.openRecentConversationMenu(recentConversationKey(session), menuBtn);
     });
 
     topRow.appendChild(title);
@@ -753,6 +883,10 @@ function updateRecentConversationsUI() {
 // Hook it into existing updateRecentConversations calls smoothly
 function updateRecentConversations(source = 'unknown') {
   pushRecentConversationDebug('updateRecentConversations:called', { source });
+  if (usesServerRecentConversations()) {
+    void refreshServerRecentConversations().catch(error => renderRecentConversationError(error));
+    return;
+  }
   saveCurrentLearnSession(source);
   updateRecentConversationsUI();
 }

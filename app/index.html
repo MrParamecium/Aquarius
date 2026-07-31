@@ -473,6 +473,9 @@
                 <svg class="qa-caret-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               </button>
               </div>
+              <button id="guidanceToggleBtnMain" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="main" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+              </button>
               <button id="webSearchToggleBtnMain" class="icon-toggle-btn active search-box-web-toggle home-ask-web-toggle" title="Enable Web Search">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"></circle>
@@ -584,6 +587,9 @@
                       <span>Detailed</span>
                     </button>
                   </div>
+                  <button id="guidanceToggleBtnFollowup" class="guidance-toggle followup-web-toggle" type="button" data-guidance-toggle data-guidance-scope="main" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                  </button>
                   <button id="webSearchToggleBtnFollowup" class="followup-web-toggle active" type="button" title="Web Search: ON" aria-label="Toggle web search" aria-pressed="true">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"></circle>
@@ -610,7 +616,6 @@
       <div class="learn-view hidden" id="learnView">
         <div class="learn-topbar">
           <div class="learn-topbar-left">
-            <span class="learn-badge" id="learnModeBadge">LEARNING MODE</span>
             <h2 class="learn-title" id="learnTitle">Section Title</h2>
           </div>
           <div class="learn-topbar-actions">
@@ -794,6 +799,10 @@
                     <svg class="qa-caret-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
 
+                  <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                  </button>
+
                   <button id="webSearchToggleBtnLearn" class="action-chip network-on" title="Web Search: ON">
                     <svg class="qa-inline-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 12h17M12 3.5c2.3 2.4 3.4 5.2 3.4 8.5s-1.1 6.1-3.4 8.5C9.7 18.1 8.6 15.3 8.6 12S9.7 5.9 12 3.5Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
                   </button>
@@ -838,6 +847,9 @@
                     <option value="balanced" selected>Balanced</option>
                     <option value="detailed">Detailed</option>
                   </select>
+                  <button id="guidanceToggleBtnLearnPopover" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                  </button>
                   <button id="webSearchToggleBtnLearnPopover" class="icon-toggle-btn active" title="Enable Web Search">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
@@ -927,12 +939,11 @@
               <section class="settings-page-card">
                 <div class="settings-page-card-head">
                   <div>
-                    <div class="settings-page-card-eyebrow">Learning</div>
-                    <h2 class="settings-page-card-title">Profile & study setup</h2>
+                    <div class="settings-page-card-eyebrow">个性化</div>
+                    <h2 class="settings-page-card-title">教学要求</h2>
                   </div>
                 </div>
-                <p class="settings-page-copy">Reset your learning profile if you want Fourier to rebuild the tutoring track, pacing, and explanation style from scratch.</p>
-                <button id="settingsResetQuizBtn" class="settings-inline-btn" type="button">Reset learning profile</button>
+                <button id="settingsPreferencesBtn" class="settings-inline-btn" type="button">编辑教学要求</button>
               </section>
 
               <section class="settings-page-card">
@@ -953,59 +964,30 @@
         <div class="preference-page-shell">
           <div class="preference-page-header">
             <div>
-              <div class="preference-page-eyebrow">Personalization Memory</div>
-              <h1 class="preference-page-title">Learning Preferences</h1>
-              <p class="preference-page-subtitle">Edit the profile Fourier injects into lesson and Q&A prompts. Save once, and future answers immediately adapt.</p>
+              <div class="preference-page-eyebrow">个性化记忆</div>
+              <h1 class="preference-page-title">教学要求</h1>
             </div>
-            <button class="feature-close-btn" id="preferencePageBackBtn" type="button" aria-label="Close preferences">✕</button>
+            <button class="feature-close-btn" id="preferencePageBackBtn" type="button" aria-label="关闭教学要求">✕</button>
           </div>
 
-          <div class="preference-page-grid">
+          <div class="preference-page-grid preference-page-grid-single">
             <section class="preference-profile-card">
               <div class="preference-card-tape" aria-hidden="true"></div>
               <div class="preference-card-head">
                 <div>
-                  <div class="preference-card-eyebrow">Editable Profile</div>
-                  <h2 class="preference-card-title">What Fourier should remember</h2>
+                  <div class="preference-card-eyebrow">全局设置</div>
+                  <label class="preference-card-title" for="preferenceProfileEditor">希望 Fourier 如何讲解</label>
                 </div>
-                <div class="preference-save-state" id="preferenceSaveState">Loaded locally</div>
+                <div class="preference-save-state" id="preferenceSaveState">尚未保存</div>
               </div>
-              <textarea id="preferenceProfileEditor" class="preference-profile-editor" spellcheck="true"></textarea>
+              <textarea id="preferenceProfileEditor" class="preference-profile-editor" spellcheck="true" placeholder="例如：先用直觉和图像解释，再给完整公式推导；遇到容易混淆的符号时主动提醒我。"></textarea>
+              <div class="preference-field-meta">
+                <span id="preferenceCharacterCount">0 / 1000</span>
+              </div>
               <div class="preference-profile-actions">
-                <button id="preferenceSaveBtn" class="preference-primary-btn" type="button">Save & Apply</button>
-                <button id="preferenceResetBtn" class="preference-secondary-btn" type="button">Reset Draft</button>
+                <button id="preferenceSaveBtn" class="preference-primary-btn" type="button">保存</button>
+                <button id="preferenceClearBtn" class="preference-secondary-btn" type="button">清除</button>
               </div>
-              <p class="preference-profile-note">This first version keeps one live profile. Version history can come later after the workflow feels right.</p>
-            </section>
-
-            <aside class="preference-ai-card">
-              <div class="preference-card-head">
-                <div>
-                  <div class="preference-card-eyebrow">AI Draft Assistant</div>
-                  <h2 class="preference-card-title">Ask AI to rewrite it</h2>
-                </div>
-              </div>
-              <p class="preference-page-copy">Describe how you want the profile changed. Fourier will generate a draft only; it will not apply anything until you click Save.</p>
-              <textarea id="preferenceAiInstruction" class="preference-ai-input" placeholder="Example: Make my tutor more exam-oriented, but keep explanations visual and step-by-step."></textarea>
-              <button id="preferenceAiDraftBtn" class="preference-secondary-btn preference-ai-btn" type="button">Generate AI Draft</button>
-              <div class="preference-draft-panel hidden" id="preferenceDraftPanel">
-                <div class="preference-draft-label">AI Draft</div>
-                <pre id="preferenceDraftText"></pre>
-                <div class="preference-draft-actions">
-                  <button id="preferenceApplyDraftBtn" class="preference-primary-btn" type="button">Use This Draft</button>
-                  <button id="preferenceDiscardDraftBtn" class="preference-secondary-btn" type="button">Discard</button>
-                </div>
-              </div>
-            </aside>
-
-            <section class="preference-preview-card">
-              <div class="preference-card-head">
-                <div>
-                  <div class="preference-card-eyebrow">Active Tutor Signals</div>
-                  <h2 class="preference-card-title">What changes in answers</h2>
-                </div>
-              </div>
-              <div id="preferenceProfilePreview" class="preference-profile-preview"></div>
             </section>
           </div>
         </div>
@@ -1325,20 +1307,6 @@
     <img class="lightbox-img" id="lightboxImg" src="" alt="">
   </div>
 
-  <div id="quizOverlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(15,23,42,0.4);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
-    <div id="quizCard" style="background: #ffffff; border: 3px solid #cbd5e1; border-radius: 28px; padding: 40px 48px; max-width: 560px; width: 90%; box-shadow: 0 16px 0px -4px #f8fafc, 0 16px 0px 1px #94a3b8, 0 30px 40px rgba(0,0,0,0.08); position: relative; font-family: 'Nunito', sans-serif;">
-      <button id="quizCloseBtn" class="quiz-close-btn" type="button" aria-label="Close quick setup without saving">✕</button>
-      <div style="font-family:'Quicksand',sans-serif;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#94a3b8;margin-bottom:8px;">Quick Setup • 30 seconds</div>
-      <h2 style="font-family:'Quicksand',sans-serif;font-size:26px;font-weight:800;color:#1e293b;margin:0 0 12px;">Let's personalize your experience</h2>
-      <p style="font-size:16px;color:#64748b;margin:0 0 32px;font-weight:600;">Your answers help the AI tutor explain things exactly how you learn best.</p>
-      <div id="quizSteps"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:32px;">
-        <div id="quizPageIndicator"><span id="quizStepNum">1</span> / 5</div>
-        <button id="quizNextBtn" style="padding: 10px 24px; background: #38bdf8; color: #fff; border: 2px solid #0284c7; border-radius: 14px; font-family: 'Quicksand', sans-serif; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0px #0284c7; transition: all 0.15s;" onmouseover="if(!this.disabled){this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 0px #0284c7';}" onmouseout="if(!this.disabled){this.style.transform='none';this.style.boxShadow='0 4px 0px #0284c7';}" disabled>Next →</button>
-      </div>
-    </div>
-  </div>
-
   <div id="authOverlay" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(15,23,42,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:24px;">
     <div style="background:rgba(255,255,255,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(226,232,240,0.9);border-radius:24px;padding:44px 48px;max-width:440px;width:min(440px,92vw);box-shadow:0 32px 80px rgba(15,23,42,0.24);text-align:center;">
       <div style="font-size:30px;font-family:'Playfair Display',serif;font-weight:700;font-style:italic;color:#0F172A;margin-bottom:6px;">Fourier</div>
@@ -1446,6 +1414,9 @@
               <option value="balanced" selected>Balanced</option>
               <option value="detailed">Detailed</option>
             </select>
+            <button id="guidanceToggleBtnTextbookFocus" class="guidance-toggle icon-toggle-btn textbook-focus-qa-guidance" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+              <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+            </button>
             <button id="webSearchToggleBtnTextbookFocus" class="icon-toggle-btn active textbook-focus-qa-web" title="Enable Web Search" type="button" aria-label="Toggle web search">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -1535,13 +1506,12 @@
   </script>
 
   <script src="config.js?v=1778524701"></script>
-  <script src="data/preferences.js?v=1222"></script>
   <script src="data/course-metadata.js?v=1410"></script>
-  <script src="data/quiz-questions.js?v=1222"></script>
   <script src="data/syllabus-data.js?v=1222"></script>
   <script src="markdown-engine.js?v=1222"></script>
   <script src="clerk-auth.js?v=1701"></script>
   <script src="api-client.js?v=1700"></script>
+  <script src="guidance-mode.js?v=1700"></script>
   <script src="mistake-notebook.js?v=1336"></script>
   <script src="preference-profile.js?v=1700"></script>
   <script src="attachments.js?v=1338"></script>

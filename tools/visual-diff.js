@@ -362,8 +362,6 @@ const sharedViews = [
         await resetHomeChromeState(page);
         await page.click('#navPreferenceBtn');
         await page.waitForSelector('#preferenceView:not(.hidden)', { timeout: 5000 });
-        // Wait for the markdown preview to render at least one signal block.
-        await page.waitForSelector('#preferenceProfilePreview', { timeout: 5000 });
         await page.waitForTimeout(300);
     } },
     // View 12b — Page B — preference page, .preference-primary-btn :hover.
@@ -458,14 +456,14 @@ const sharedViews = [
         await page.waitForTimeout(500);
     } },
     // View 12d — Page B — preference page, .preference-secondary-btn :hover.
-    // Hovers #preferenceResetBtn (the "Reset Draft" button) to close the
+    // Hovers #preferenceClearBtn to close the
     // grouped-selector blind spot left by 12b. The :hover cascade rules
     // at L13985 + L35558 group `.preference-primary-btn:hover` WITH
     // `.preference-secondary-btn:hover` — a §3b.iv refactor that splits
     // the comma list could break secondary while leaving primary intact,
     // and the harness has no view exercising secondary-btn hover otherwise.
     //
-    // Cascade winner for #preferenceResetBtn:hover: L35558 (translateY
+    // Cascade winner for #preferenceClearBtn:hover: L35558 (translateY
     // -1px !important) via #preferenceView ID, same as #preferenceSaveBtn.
     // Resting transform is 'none' (base .preference-secondary-btn rule at
     // L13979 sets no transform). The exact-match assert below catches a
@@ -477,29 +475,29 @@ const sharedViews = [
         // schedule-symmetry with 12b/12c, not pixel correctness.
         await page.mouse.move(0, 0);
         const before = await page.evaluate(() => {
-            const btn = document.getElementById('preferenceResetBtn');
+            const btn = document.getElementById('preferenceClearBtn');
             return btn ? getComputedStyle(btn).transform : null;
         });
-        await page.hover('#preferenceResetBtn');
+        await page.hover('#preferenceClearBtn');
         // Poll until the transition settles — see view 12b for the
         // rationale (fixed wait was flaky under variable CDP latency).
         const EXPECTED = 'matrix(1, 0, 0, 1, 0, -1)';
         await page.waitForFunction(
             (exp) => {
-                const btn = document.getElementById('preferenceResetBtn');
+                const btn = document.getElementById('preferenceClearBtn');
                 return Boolean(btn) && getComputedStyle(btn).transform === exp;
             },
             EXPECTED,
             { timeout: 5000 },
         ).catch(() => {});
         const after = await page.evaluate(() => {
-            const btn = document.getElementById('preferenceResetBtn');
+            const btn = document.getElementById('preferenceClearBtn');
             return btn ? getComputedStyle(btn).transform : null;
         });
         assertOrThrow(before === 'none',
-            `view 12d: #preferenceResetBtn resting transform should be 'none' but is "${before}"`);
+            `view 12d: #preferenceClearBtn resting transform should be 'none' but is "${before}"`);
         assertOrThrow(after === EXPECTED,
-            `view 12d: #preferenceResetBtn :hover transform is "${after}", expected "${EXPECTED}" (L35558 secondary-btn cascade arm)`);
+            `view 12d: #preferenceClearBtn :hover transform is "${after}", expected "${EXPECTED}" (L35558 secondary-btn cascade arm)`);
     } },
     // View 12e — Page B — preference page, .preference-primary-btn :active.
     // Closes the v4 harness blind spot flagged in docs/phase3_deferred.md
@@ -514,7 +512,7 @@ const sharedViews = [
     // and `:active` matches no rule → transform stays 'none' through
     // mousedown, distinguishable from the EXPECTED matrix.
     //
-    // mouse.move(0,0) clears view 12d's hover on #preferenceResetBtn so
+    // mouse.move(0,0) clears view 12d's hover on #preferenceClearBtn so
     // the only cascade arm exercised here is :active on #preferenceSaveBtn.
     // A 350ms wait covers the 150ms transform-transition reversal on
     // reset-btn (style.css L13969) before snapshotting the resting frame.
@@ -1021,21 +1019,6 @@ const sharedViews = [
             ans?.classList.remove('hidden');
         });
     } },
-    // View 25 — Page B — force `#quizOverlay` to display:flex per
-    // index.html L1388 (inline style="display:none"). Covers TRUE EOF
-    // QUICK SETUP GLASS MODAL at L40258+. The chrome (card, title, backdrop
-    // blur) is captured; the per-step option-chip descendants rendered by
-    // renderQuizStep (app.js L271) are NOT — see docs/phase3_deferred.md
-    // §7d.12 for the deferred follow-up. Previous view 24 left
-    // #answerScreen visible — the overlay's full-viewport backdrop covers
-    // it so cascade noise from beneath is not a concern.
-    { name: '25-quick-setup-modal', page: 'B', setup: async (page) => {
-        await page.evaluate(() => {
-            const overlay = document.getElementById('quizOverlay');
-            if (overlay) overlay.style.display = 'flex';
-        });
-        await page.waitForSelector('#quizOverlay', { timeout: 3000, state: 'visible' });
-    } },
     // View 29 — Page B — RECENT-CONVERSATIONS RESTORE flow gate.
     // Seeds a fake learn-origin session into localStorage's
     // `tutorRecentSessions` (recent-conversations.js L262) and calls the
@@ -1048,7 +1031,7 @@ const sharedViews = [
     // §"Deferred sibling flow views", Page A is sticky on 1.1-1 and a
     // restore-then-reopen flow would conflict with view 26's KP cursor.
     //
-    // Placement: AFTER view 25 (the last Page B view today, quizOverlay).
+    // Placement: after the other Page B workspace views.
     // View 29's setup defensively hides every sibling view before triggering
     // the restore so no upstream Page B chrome bleeds into the screenshot.
     // After view 29, Page B is left in learn-view state; view 03b is Page A
@@ -1086,8 +1069,6 @@ const sharedViews = [
         // restore. Keeps the setup atomic (no microtask interleaving between
         // chrome-hide and the seed visible to the page).
         await page.evaluate(() => {
-            const overlay = document.getElementById('quizOverlay');
-            if (overlay) overlay.style.display = 'none';
             ['answerScreen','preferenceView','courseTrackerView',
              'mistakeNotebookView','settingsView','welcomeScreen','loginView']
                 .forEach(id => document.getElementById(id)?.classList.add('hidden'));

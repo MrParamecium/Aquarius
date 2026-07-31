@@ -14,26 +14,24 @@
  *   - a ~64KB cap on the JSONB payload written to user_memory.data and
  *     chat_sessions.messages, to stop one hostile account from bloating the
  *     free-tier DB
- *   - every method except init() swallows its own errors and returns the
- *     same "not found / no-op" value the file store would return, so a
- *     transient DB hiccup never throws into a request handler
+ *   - user-memory reads keep their historical null/false contract; session
+ *     methods throw storage failures so routes can distinguish an outage
+ *     from a uid-scoped "not found" result
  */
 'use strict';
 
 /**
  * @param {{
  *   databaseUrl: string,
- *   normalizeQuizProfile: (quiz?: object) => object,
  *   isValidSessionId: (id?: string) => boolean,
  * }} deps — isValidSessionId is injected from user-memory.js so both
  * backends validate session ids with the same single definition.
  */
 module.exports = function createPgStore(deps) {
     const databaseUrl = deps && deps.databaseUrl;
-    const normalizeQuizProfile = deps && deps.normalizeQuizProfile;
     const isValidSessionId = deps && deps.isValidSessionId;
-    if (typeof databaseUrl !== 'string' || !databaseUrl || typeof normalizeQuizProfile !== 'function' || typeof isValidSessionId !== 'function') {
-        throw new Error('db: missing required deps {databaseUrl, normalizeQuizProfile, isValidSessionId}');
+    if (typeof databaseUrl !== 'string' || !databaseUrl || typeof isValidSessionId !== 'function') {
+        throw new Error('db: missing required deps {databaseUrl, isValidSessionId}');
     }
 
     // Required lazily so merely loading this module (e.g. via `node --check`,
@@ -133,9 +131,7 @@ module.exports = function createPgStore(deps) {
         try {
             const result = await pool.query('SELECT data FROM user_memory WHERE uid = $1', [uid]);
             if (!result.rows.length) return null;
-            const doc = result.rows[0].data;
-            if (doc && doc.quiz) doc.quiz = normalizeQuizProfile(doc.quiz);
-            return doc;
+            return result.rows[0].data;
         } catch (e) {
             console.warn('[db] readUserMemory failed:', e.message);
             return null;
@@ -193,7 +189,7 @@ module.exports = function createPgStore(deps) {
             });
         } catch (e) {
             console.warn('[db] listSessionsForUid failed:', e.message);
-            return [];
+            throw e;
         }
     }
 
@@ -222,7 +218,7 @@ module.exports = function createPgStore(deps) {
             };
         } catch (e) {
             console.warn('[db] readSessionFile failed:', e.message);
-            return null;
+            throw e;
         }
     }
 
@@ -257,7 +253,7 @@ module.exports = function createPgStore(deps) {
             return result.rowCount > 0;
         } catch (e) {
             console.warn('[db] writeSessionFile failed:', e.message);
-            return false;
+            throw e;
         }
     }
 
@@ -268,7 +264,7 @@ module.exports = function createPgStore(deps) {
             return result.rowCount > 0;
         } catch (e) {
             console.warn('[db] deleteSessionForUid failed:', e.message);
-            return false;
+            throw e;
         }
     }
 

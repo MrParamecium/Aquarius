@@ -26,8 +26,8 @@
 
 ## 第 0 步：锁定分支、范围和变更前基线
 
-- [ ] 确认当前工作区为 `work/Fourier-tier-3`，分支为 `codex/loop-06-tier-3-simplification`，HEAD 包含已批准设计提交 `bb1b0bc`。
-- [ ] 获取并记录最新 `origin/main`；若主分支已有新提交，先普通 merge 集成并重新核对重叠文件，不用 rebase 或覆盖用户改动。
+- [x] 确认当前工作区为 `work/Fourier-tier-3`，分支为 `codex/loop-06-tier-3-simplification`，HEAD 包含已批准设计提交 `bb1b0bc`。
+- [x] 获取并记录最新 `origin/main@d57ecaf`；当前主分支没有新提交，无需额外 merge。
 - [ ] 保存运行时引用清单，至少覆盖：
   - Quick Setup DOM、`QUIZ_QUESTIONS`、`tutorQuiz`、`showQuiz`、`resetQuiz`；
   - `preferenceProfile`、`DEFAULT_PREFERENCE_PROFILE`、`/api/preference/draft`；
@@ -37,8 +37,8 @@
   - `session_id`、`persistSessionTurn`、`tutorRecentSessions`、`/api/sessions`；
   - 首页、首页追问、课程问答、课程问答弹层和教材聚焦问答的工具栏控件。
 - [ ] 单独记录必须保留的同名引用，例如普通英语中的 “standard”、历史设计记录、教材正文和迁移清单，避免用全文替换误删。
-- [ ] 记录 551 / 162 / 389 缓存基线，并保存 14 个迁移目标及其候选源文件报告。
-- [ ] 运行变更前基线并把命令、结果和已有失败写入 `verification.md`：
+- [x] 记录 551 / 162 / 389 缓存基线，并确认 14 个迁移目标来自 13 份 `standard` 与 1 份 `solid_b`。
+- [x] 运行变更前基线并把命令、结果和已有失败写入 `verification.md`：
 
 ```bash
 npm run check
@@ -49,7 +49,7 @@ npm run test:css-probe:check
 npm run test:visual:check
 ```
 
-- [ ] 若测试依赖密钥、Neon、RAGFlow 或现有视觉基线而失败，记录失败阶段和环境条件，不把旧失败算成本 Loop 回归。
+- [x] 记录 Smoke 的 5 个 `ERR_CONNECTION_CLOSED` 与视觉导航超时，不把变更前失败算成本 Loop 回归。
 
 停止条件：分支不正确、最新 `main` 有未解决冲突、缓存基线无法复现，或核心语法/启动测试存在无法解释的基线失败时，不进入运行代码修改。
 
@@ -496,3 +496,22 @@ node tools/migrate-user-memory.js --dry-run
 - 回答长度选择、认证、教材/OCR、GeoGebra、课程正文和核心教学链路通过回归；
 - 新代码部署后生产旧用户记忆字段已按备份、预览、幂等流程直接清理；
 - PR 由用户审阅并手动合并，Codex 不自动合并。
+
+## 当前实施状态（2026-07-31）
+
+### 已完成
+
+- 第一阶段：Quick Setup、旧偏好档案、自动学习标签和三档课程模式已从运行时删除；用户长期记忆收敛为一段可选 `teachingInstructions`。
+- 第二阶段：14 个缺失目标已迁移，389 份旧缓存已从 Git 删除；运行时只读取 162 份普通课程缓存和 14 份父级概览缓存。
+- 第三阶段：登录用户以服务端 `session_id` 续接真实会话，访客继续使用浏览器会话；不存在、跨用户和写入失败均显式报错。
+- 第四阶段：`/api/ask-guidance`、整本教材检索、共享开关、临时讲解路径、五个镜像入口和错误/重试/跳过/取消状态已实现。
+- 课程手机问答栏已固定为输入与工具两行；选中讲解路径不会再把输入框压缩或把联网按钮推进第三行。
+- 项目结构、架构和验证记录已同步；Quick Setup 删除后的 Playwright 辅助函数也已更新。
+
+### 尚未完成
+
+- 用户尚未提交、推送、创建 PR 和手动合并当前分支。
+- 尚未在部署环境验证真实 RAGFlow、OpenRouter、Clerk 登录和 Neon。
+- 生产用户记忆清理必须等 PR 合并并部署健康后，先 `--dry-run`、备份，再由用户明确执行 `--apply`；当前没有连接或修改生产 Neon。
+
+因此 `task.json` 继续保持 `in_progress`。代码实现完成不等于整个 Loop 已部署完成。

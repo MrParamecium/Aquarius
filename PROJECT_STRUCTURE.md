@@ -2,6 +2,58 @@
 
 This file describes the organized project layout after the first cleanup pass on 2026-05-15.
 
+## 当前运行结构（2026-07-31）
+
+下面这段是本分支当前事实；后面的英文段落保留历史清理记录，不再作为运行时设计依据。
+
+```text
+app/
+├── index.html                  页面结构、课程栏、教材聚焦和工具栏入口
+├── app.js                      首页问答、课程问答、会话编号和页面状态编排
+├── style.css                   全局主题、课程布局、引导卡片和响应式样式
+├── ws-bridge.js                单 Node HTTP 服务、鉴权、问答和会话 API
+├── guidance-service.js         整本教材检索并生成本轮讲解路径
+├── guidance-mode.js            引导开关、选项、选择、取消和错误状态
+├── user-memory.js              只保存用户主动填写的教学要求
+├── db.js                       本地文件/Neon 用户记忆与真实会话存储
+├── lesson-cache.js             唯一课程缓存读取、格式校验和明确 cache miss
+├── lesson-render.js             课程正文、分页、图表和交互演示渲染
+├── recent-conversations.js     登录用户服务端会话与访客浏览器会话入口
+├── textbook-focus.js            教材原页聚焦和教材问答镜像
+├── ragflow-client.js            可选 RAGFlow 教材检索
+├── search-helpers.js             本地 OCR/教材索引检索辅助
+├── section-*.json               新教材章节、页码、锚点和图像映射
+├── data/                        课程元数据与教学大纲
+└── interactive-demos/           按知识点分发的交互演示
+
+workspace/materials/
+├── new-book-ocr/                新教材 OCR 原文
+├── new-book-section-ocr/        章节级 OCR 索引
+├── new-book-pages/              原书页图
+├── new-book-figures/            章节图像
+├── formula-catalog/             公式目录与校验信息
+├── lesson-cache/                176 份唯一正式缓存：162 普通课程 + 14 parent_prelude
+└── prompts/                     课程正文生成所需的既有 Prompt
+
+tools/
+├── migrate-user-memory.js       旧用户记忆预览/备份/清理工具
+├── migrate-unified-lesson-cache.js 统一缓存迁移工具
+├── check-unified-lesson-cache.js   课程缓存集合与格式检查
+├── test-ask-guidance.js         服务端引导契约测试
+├── test-guidance-ui.js          引导 UI 与手机课程工具栏测试
+├── test-session-continuity.js   会话创建、追加、隔离和失败测试
+├── test-session-frontend-contract.js 前端会话编号契约测试
+├── test-auth-guard.js           Bearer Token 与路由门禁测试
+├── css-probe.js                 计算样式回归探针
+└── test-utils.js                Playwright 测试公共辅助
+```
+
+### 三条核心数据边界
+
+- **全局教学要求**：用户主动在设置页填写，登录用户写入 `/api/memory`，访客只写当前标签页；不自动从问答推断。
+- **真实会话**：登录用户以服务端 `chat_sessions` 和 `session_id` 为真源，访客只使用浏览器会话；引导选项不进入会话消息或长期要求。
+- **课程与引导**：课程正文只读取统一 `aquarius_visual_latex_v2` 缓存；引导开启后先走 `/api/ask-guidance`，选择/跳过后再走正式 `/api/ask`。
+
 ## Runtime App
 
 ```text
@@ -40,7 +92,7 @@ workspace/materials/
 ├── new-book-ocr/
 ├── new-book-section-ocr/
 ├── new-book-figures/
-├── lesson-cache/                  (171 section directories — live)
+├── lesson-cache/                  (176 unified lesson files — live)
 ├── background-ocr-v3/
 ├── background-pages-split/
 ├── prompts/                       (agent-a-planner.md, agent-b-tutor.md, schemas)
@@ -67,6 +119,13 @@ tools/
 ├── visual-diff-report.md          (last --check pass/fail table; git-ignored)
 ├── visual-diff-coverage.json      (committed Page C family-routing audit record)
 ├── smoke.js , smoke-report.md     (deterministic UI smoke suite, ~12s; report git-ignored)
+├── test-ask-guidance.js           (server-side guidance contract tests)
+├── test-guidance-ui.js            (guidance state and mobile composer tests)
+├── test-session-continuity.js     (server session continuity tests)
+├── test-session-frontend-contract.js (front-end session source-of-truth tests)
+├── migrate-user-memory.js         (explicit legacy memory cleanup; never auto-runs)
+├── migrate-unified-lesson-cache.js (explicit cache migration tool)
+├── check-unified-lesson-cache.js  (unified cache set/format checker)
 ├── css-probe.js                   (computed-style floor probe; run by `npm run check`)
 ├── css-probe-baseline.json        (committed proof artifact for css-probe --check)
 ├── css-probe-report.md            (last css-probe run output; regenerated each run, git-ignored)
