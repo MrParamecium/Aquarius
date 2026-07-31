@@ -15,52 +15,52 @@ async function run() {
         await memory.init();
 
         const created = await memory.persistSessionTurn('user_a', null, {
-            userText: '第一问',
-            aiText: '第一答',
+            userText: 'First question',
+            aiText: 'First answer',
             origin: 'main',
         });
         assert.equal(created.status, 'created');
         assert.match(created.sessionId, /^[a-f0-9-]{36}$/i);
 
         const appended = await memory.persistSessionTurn('user_a', created.sessionId, {
-            userText: '第二问',
-            aiText: '第二答',
+            userText: 'Second question',
+            aiText: 'Second answer',
             origin: 'main',
         });
         assert.deepEqual(appended, { status: 'appended', sessionId: created.sessionId });
         const sessions = await memory.listSessionsForUid('user_a');
-        assert.equal(sessions.length, 1, '第二轮不得创建第二个会话');
+        assert.equal(sessions.length, 1, 'The second turn must not create another session');
         const restored = await memory.readSessionFile('user_a', created.sessionId);
         assert.equal(restored.messages.length, 4);
         assert.equal(restored.origin, 'main');
 
         const unknownId = 'aaaaaaaa-1111-4111-8111-aaaaaaaaaaaa';
         const missing = await memory.persistSessionTurn('user_a', unknownId, {
-            userText: '不能新建',
-            aiText: '不能落盘',
+            userText: 'Must not create',
+            aiText: 'Must not persist',
             origin: 'main',
         });
         assert.deepEqual(missing, { status: 'not_found', sessionId: unknownId });
         assert.equal((await memory.listSessionsForUid('user_a')).length, 1);
 
         const crossUser = await memory.persistSessionTurn('user_b', created.sessionId, {
-            userText: '跨用户',
-            aiText: '不可见',
+            userText: 'Cross-user request',
+            aiText: 'Must not be visible',
             origin: 'main',
         });
         assert.deepEqual(crossUser, { status: 'not_found', sessionId: created.sessionId });
         assert.equal((await memory.listSessionsForUid('user_b')).length, 0);
 
         const invalid = await memory.persistSessionTurn('user_a', 'not-a-uuid', {
-            userText: '非法编号',
-            aiText: '不可写',
+            userText: 'Invalid ID',
+            aiText: 'Must not write',
             origin: 'main',
         });
         assert.deepEqual(invalid, { status: 'not_found', sessionId: 'not-a-uuid' });
 
         const learn = await memory.persistSessionTurn('user_a', null, {
-            userText: '课程问题',
-            aiText: '课程回答',
+            userText: 'Lesson question',
+            aiText: 'Lesson answer',
             origin: 'learn',
             sectionId: '4.2-1',
             sectionTitle: 'Time Shifting',
@@ -70,11 +70,11 @@ async function run() {
         assert.equal(learnSession.origin, 'learn');
         assert.equal(learnSession.sectionId, '4.2-1');
         const metadata = await memory.updateSessionMetadata('user_a', learn.sessionId, {
-            customTitle: '重命名课程会话',
+            customTitle: 'Renamed lesson session',
             starred: true,
         });
         assert.equal(metadata.status, 'updated');
-        assert.equal(metadata.session.title, '重命名课程会话');
+        assert.equal(metadata.session.title, 'Renamed lesson session');
         assert.equal(metadata.session.starred, true);
         assert.deepEqual(
             await memory.updateSessionMetadata('user_b', learn.sessionId, { starred: false }),
@@ -94,8 +94,8 @@ async function run() {
         };
         const failingMemory = createUserMemory({ usersDir: root, store: failedStore });
         const failed = await failingMemory.persistSessionTurn('user_a', null, {
-            userText: '写入失败',
-            aiText: '不能报告成功',
+            userText: 'Write failure',
+            aiText: 'Must not report success',
             origin: 'main',
         });
         assert.equal(failed.status, 'write_failed');

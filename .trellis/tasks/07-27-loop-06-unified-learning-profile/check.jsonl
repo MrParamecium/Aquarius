@@ -1,3 +1,0 @@
-{"file":".trellis/spec/app/architecture.md","reason":"验收被删除的偏好与课程档位没有残留，同时会话、认证和课程主链路边界仍然成立。"}
-{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"逐层核对用户记忆清理、统一缓存、session_id 续接和引导问答的数据流与失败状态。"}
-{"file":".trellis/spec/css/verification.md","reason":"按仓库标准运行 CSS Probe、桌面与手机视觉回归，确认新增问答状态不重叠或溢出。"}

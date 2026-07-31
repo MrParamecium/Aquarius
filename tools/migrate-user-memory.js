@@ -23,13 +23,13 @@ function parseArgs(argv) {
         else if (arg === '--apply') options.apply = true;
         else if (arg === '--backup-dir') options.backupDir = argv[++index] || '';
         else if (arg === '--users-dir') options.usersDir = argv[++index] || '';
-        else throw new Error(`未知参数：${arg}`);
+        else throw new Error(`Unknown argument: ${arg}`);
     }
     if (options.dryRun === options.apply) {
-        throw new Error('必须且只能指定 --dry-run 或 --apply');
+        throw new Error('Specify exactly one of --dry-run or --apply');
     }
     if (options.apply && !options.backupDir) {
-        throw new Error('--apply 必须显式指定 --backup-dir');
+        throw new Error('--apply requires an explicit --backup-dir');
     }
     return options;
 }
@@ -59,10 +59,10 @@ function listLocalMemoryRecords(usersDir) {
             try {
                 data = JSON.parse(raw);
             } catch (error) {
-                throw new Error(`本地用户记忆不是合法 JSON：${file}（${error.message}）`);
+                throw new Error(`Local user memory is not valid JSON: ${file} (${error.message})`);
             }
             if (!data || typeof data !== 'object' || Array.isArray(data)) {
-                throw new Error(`本地用户记忆必须是 JSON 对象：${file}`);
+                throw new Error(`Local user memory must be a JSON object: ${file}`);
             }
             const { cleaned, removed } = stripLegacyFields(data);
             return { file, name: entry.name, raw, data, cleaned, removed };
@@ -73,7 +73,7 @@ function ensureExternalBackupDir(backupDir) {
     const resolved = path.resolve(backupDir);
     const relative = path.relative(REPO_ROOT, resolved);
     if (relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative))) {
-        throw new Error(`备份目录必须位于 Git 仓库之外：${resolved}`);
+        throw new Error(`Backup directory must be outside the Git repository: ${resolved}`);
     }
     fs.mkdirSync(resolved, { recursive: true });
     return resolved;
@@ -97,12 +97,12 @@ function applyLocalMigration(records) {
             fs.writeFileSync(temporary, `${JSON.stringify(record.cleaned, null, 2)}\n`, 'utf8');
             const verified = JSON.parse(fs.readFileSync(temporary, 'utf8'));
             const remaining = LEGACY_FIELDS.filter(field => Object.prototype.hasOwnProperty.call(verified, field));
-            if (remaining.length) throw new Error(`临时文件仍含旧字段：${remaining.join(', ')}`);
+            if (remaining.length) throw new Error(`Temporary file still contains legacy fields: ${remaining.join(', ')}`);
             fs.renameSync(temporary, record.file);
             changed += 1;
         } catch (error) {
             try { fs.unlinkSync(temporary); } catch (_) {}
-            throw new Error(`本地用户记忆迁移失败：${record.file}（${error.message}）`);
+            throw new Error(`Local user memory migration failed: ${record.file} (${error.message})`);
         }
     }
     return changed;
@@ -146,11 +146,11 @@ async function applyNeonMigration(pool, backupDir) {
                 'UPDATE user_memory SET data = $2::jsonb, updated_at = now() WHERE uid = $1 RETURNING data',
                 [row.uid, JSON.stringify(row.cleaned)]
             );
-            if (update.rowCount !== 1) throw new Error(`Neon 更新记录数异常：${row.uid}`);
+            if (update.rowCount !== 1) throw new Error(`Unexpected Neon update count: ${row.uid}`);
             const remaining = LEGACY_FIELDS.filter(field => (
                 Object.prototype.hasOwnProperty.call(update.rows[0].data || {}, field)
             ));
-            if (remaining.length) throw new Error(`Neon 记录仍含旧字段：${row.uid} / ${remaining.join(', ')}`);
+            if (remaining.length) throw new Error(`Neon row still contains legacy fields: ${row.uid} / ${remaining.join(', ')}`);
             changed += 1;
         }
 
@@ -159,7 +159,7 @@ async function applyNeonMigration(pool, backupDir) {
             const remaining = LEGACY_FIELDS.filter(field => (
                 Object.prototype.hasOwnProperty.call(row.data || {}, field)
             ));
-            if (remaining.length) throw new Error(`Neon 提交前复核失败：${row.uid} / ${remaining.join(', ')}`);
+            if (remaining.length) throw new Error(`Neon pre-commit verification failed: ${row.uid} / ${remaining.join(', ')}`);
         }
         await client.query('COMMIT');
         return { total: rows.length, changed };

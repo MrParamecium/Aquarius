@@ -2,57 +2,57 @@
 
 This file describes the organized project layout after the first cleanup pass on 2026-05-15.
 
-## 当前运行结构（2026-07-31）
+## Current Runtime Structure (2026-07-31)
 
-下面这段是本分支当前事实；后面的英文段落保留历史清理记录，不再作为运行时设计依据。
+The section below describes the current branch. The later sections preserve historical cleanup notes.
 
 ```text
 app/
-├── index.html                  页面结构、课程栏、教材聚焦和工具栏入口
-├── app.js                      首页问答、课程问答、会话编号和页面状态编排
-├── style.css                   全局主题、课程布局、引导卡片和响应式样式
-├── ws-bridge.js                单 Node HTTP 服务、鉴权、问答和会话 API
-├── guidance-service.js         整本教材检索并生成本轮讲解路径
-├── guidance-mode.js            引导开关、选项、选择、取消和错误状态
-├── user-memory.js              只保存用户主动填写的教学要求
-├── db.js                       本地文件/Neon 用户记忆与真实会话存储
-├── lesson-cache.js             唯一课程缓存读取、格式校验和明确 cache miss
-├── lesson-render.js             课程正文、分页、图表和交互演示渲染
-├── recent-conversations.js     登录用户服务端会话与访客浏览器会话入口
-├── textbook-focus.js            教材原页聚焦和教材问答镜像
-├── ragflow-client.js            可选 RAGFlow 教材检索
-├── search-helpers.js             本地 OCR/教材索引检索辅助
-├── section-*.json               新教材章节、页码、锚点和图像映射
-├── data/                        课程元数据与教学大纲
-└── interactive-demos/           按知识点分发的交互演示
+├── index.html                  page structure, lesson panels, textbook focus, and toolbar entry points
+├── app.js                      home Q&A, lesson Q&A, session IDs, and page-state orchestration
+├── style.css                   global theme, lesson layout, guidance cards, and responsive styles
+├── ws-bridge.js                single Node HTTP server, auth, Q&A, and session APIs
+├── guidance-service.js         full-textbook retrieval and per-turn teaching path generation
+├── guidance-mode.js            guidance toggle, options, selection, cancellation, and error states
+├── user-memory.js              user-authored teaching instructions only
+├── db.js                       local-file/Neon memory and real-session storage
+├── lesson-cache.js             unified cache lookup, format validation, and explicit cache misses
+├── lesson-render.js            lesson text, pages, figures, and interactive-demo rendering
+├── recent-conversations.js     server sessions for users and browser sessions for guests
+├── textbook-focus.js           original textbook-page focus and mirrored textbook Q&A
+├── ragflow-client.js           optional RAGFlow textbook retrieval
+├── search-helpers.js           local OCR and textbook-index retrieval helpers
+├── section-*.json              textbook section, page, anchor, and figure maps
+├── data/                       course metadata and syllabus data
+└── interactive-demos/          knowledge-point interactive-demo dispatchers
 
 workspace/materials/
-├── new-book-ocr/                新教材 OCR 原文
-├── new-book-section-ocr/        章节级 OCR 索引
-├── new-book-pages/              原书页图
-├── new-book-figures/            章节图像
-├── formula-catalog/             公式目录与校验信息
-├── lesson-cache/                176 份唯一正式缓存：162 普通课程 + 14 parent_prelude
-└── prompts/                     课程正文生成所需的既有 Prompt
+├── new-book-ocr/                source OCR for the new textbook
+├── new-book-section-ocr/        section-level OCR index
+├── new-book-pages/              original textbook page images
+├── new-book-figures/            textbook figures
+├── formula-catalog/             formula catalogs and validation metadata
+├── lesson-cache/                176 unified production caches: 162 lessons + 14 parent_prelude
+└── prompts/                     existing prompts for lesson generation
 
 tools/
-├── migrate-user-memory.js       旧用户记忆预览/备份/清理工具
-├── migrate-unified-lesson-cache.js 统一缓存迁移工具
-├── check-unified-lesson-cache.js   课程缓存集合与格式检查
-├── test-ask-guidance.js         服务端引导契约测试
-├── test-guidance-ui.js          引导 UI 与手机课程工具栏测试
-├── test-session-continuity.js   会话创建、追加、隔离和失败测试
-├── test-session-frontend-contract.js 前端会话编号契约测试
-├── test-auth-guard.js           Bearer Token 与路由门禁测试
-├── css-probe.js                 计算样式回归探针
-└── test-utils.js                Playwright 测试公共辅助
+├── migrate-user-memory.js       legacy-memory preview, backup, and cleanup tool
+├── migrate-unified-lesson-cache.js unified-cache migration tool
+├── check-unified-lesson-cache.js   cache-set and format checker
+├── test-ask-guidance.js         server-side guidance contract tests
+├── test-guidance-ui.js          guidance UI and mobile composer tests
+├── test-session-continuity.js   session creation, append, isolation, and failure tests
+├── test-session-frontend-contract.js front-end session-ID contract tests
+├── test-auth-guard.js           Bearer Token route-gate tests
+├── css-probe.js                 computed-style regression probe
+└── test-utils.js                shared Playwright test helpers
 ```
 
-### 三条核心数据边界
+### Three Core Data Boundaries
 
-- **全局教学要求**：用户主动在设置页填写，登录用户写入 `/api/memory`，访客只写当前标签页；不自动从问答推断。
-- **真实会话**：登录用户以服务端 `chat_sessions` 和 `session_id` 为真源，访客只使用浏览器会话；引导选项不进入会话消息或长期要求。
-- **课程与引导**：课程正文只读取统一 `aquarius_visual_latex_v2` 缓存；引导开启后先走 `/api/ask-guidance`，选择/跳过后再走正式 `/api/ask`。
+- **Global teaching instructions**: users enter them on the preferences page; signed-in users save them through `/api/memory`, guests keep them in the current tab, and Q&A never infers them.
+- **Real sessions**: signed-in users use server-side `chat_sessions` and `session_id`; guests use browser sessions, and guidance paths never enter messages or long-term instructions.
+- **Lessons and guidance**: lesson text reads only the unified `aquarius_visual_latex_v2` cache; enabled guidance calls `/api/ask-guidance` first and then `/api/ask` after selection or skip.
 
 ## Runtime App
 

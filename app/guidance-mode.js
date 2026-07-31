@@ -32,23 +32,8 @@
   try { enabled = storage && storage.getItem(storageKey) === '1'; } catch (_) {}
   state = enabled ? 'waiting' : 'closed';
 
-  function copy(language = 'en') {
-    const zh = language === 'zh';
-    return zh ? {
-      loadingTitle: '正在准备讲解路径',
-      loadingBody: '先检索整本教材，再给出几种真正不同的讲法。',
-      title: '这次想怎么讲？',
-      empty: '整本教材没有找到直接命中，以下路径仅根据你的问题生成。',
-      skip: '跳过，直接回答',
-      cancel: '取消',
-      retry: '重试',
-      errorTitle: '引导模式失败',
-      stage: '阶段',
-      request: '请求编号',
-      clear: '清除本轮讲解路径',
-      selected: '讲解路径',
-      cancelled: '已取消，问题仍保留在输入框。',
-    } : {
+  function copy() {
+    return {
       loadingTitle: 'Preparing teaching paths',
       loadingBody: 'Searching the full textbook before offering distinct ways to explain this.',
       title: 'How should I explain this?',
@@ -85,7 +70,7 @@
       button.classList.toggle('active', enabled);
       button.classList.toggle('has-selection', Boolean(enabled && selected));
       button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
-      button.title = enabled ? '引导模式：开' : '引导模式：关';
+      button.title = enabled ? 'Guidance mode: On' : 'Guidance mode: Off';
     });
 
     doc.querySelectorAll('.guidance-path-chip').forEach(node => node.remove());
@@ -102,7 +87,7 @@
       const clearButton = doc.createElement('button');
       clearButton.type = 'button';
       clearButton.className = 'guidance-path-chip-clear';
-      clearButton.setAttribute('aria-label', copy('zh').clear);
+      clearButton.setAttribute('aria-label', copy().clear);
       clearButton.textContent = '\u00d7';
       clearButton.addEventListener('click', (event) => {
         event.stopPropagation();

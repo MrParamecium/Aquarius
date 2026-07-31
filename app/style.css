@@ -31052,7 +31052,7 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
     min-height: 38px !important;
   }
 
-  /* 课程问答栏在手机端固定为输入、工具两行，避免新增路径把输入框挤窄。 */
+  /* Keep lesson Q&A on two mobile rows so guidance state cannot squeeze the input. */
   #learnView#learnView#learnView #learnBody#learnBody#learnBody #learnChatCol#learnChatCol#learnChatCol #learnFollowupBar#learnFollowupBar#learnFollowupBar {
     width: calc(100% - 24px) !important;
     min-height: 142px !important;

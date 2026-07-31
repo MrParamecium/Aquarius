@@ -74,7 +74,7 @@ function collectInventory() {
 
 function reportList(label, items) {
     if (!items.length) return;
-    console.error(`${label}（${items.length}）：`);
+    console.error(`${label} (${items.length}):`);
     for (const item of items) console.error(`- ${item}`);
 }
 
@@ -100,16 +100,16 @@ function main() {
         const [dir, file] = target.split('/');
         const syllabusEntry = syllabusMap.get(dir);
         if (file === preludeFile && syllabusEntry && syllabusEntry.kind !== 'parent') {
-            invalidTargets.push(`${target}：非父级节点不应使用 parent_prelude`);
+            invalidTargets.push(`${target}: parent_prelude is only valid for parent sections`);
         }
         const sectionId = syllabusEntry ? syllabusEntry.sectionId : dir.replace(/_/g, '.');
         const variant = file === preludeFile ? 'parent_prelude' : 'lesson';
         const content = fs.readFileSync(path.join(cacheRoot, target), 'utf8');
         const normalized = prepareLessonForCache(sectionId, content);
         const issues = collectLessonFormatIssues(normalized);
-        if (issues.length) formatFailures.push(`${target}：${issues.join(', ')}`);
+        if (issues.length) formatFailures.push(`${target}: ${issues.join(', ')}`);
         const runtimeContent = lessonCache.readLessonCache(sectionId, 'new', variant);
-        if (!runtimeContent || !runtimeContent.trim()) formatFailures.push(`${target}：生产读取器返回空内容`);
+        if (!runtimeContent || !runtimeContent.trim()) formatFailures.push(`${target}: runtime reader returned empty content`);
     }
 
     const legacyOnly = inventory.filter(row => !row.lesson && row.legacy.length > 0);
@@ -119,10 +119,10 @@ function main() {
         return !manifestTargets.has(target) && !(row.prelude && syllabusEntry && syllabusEntry.kind === 'parent');
     });
 
-    reportList('缺失的统一课程目标', missingTargets);
-    reportList('variant 与 UI 打开规则冲突', invalidTargets);
-    reportList('生产格式或读取校验失败', formatFailures);
-    reportList('未被清单或父级概览规则解释的旧缓存目录', unexplainedLegacyOnly.map(row => row.dir));
+    reportList('Missing unified lesson targets', missingTargets);
+    reportList('Variant and UI open-rule conflicts', invalidTargets);
+    reportList('Production format or read failures', formatFailures);
+    reportList('Legacy-only cache directories without a manifest or parent-prelude explanation', unexplainedLegacyOnly.map(row => row.dir));
 
     const expectedUnifiedLessons = manifest.expectedBeforeMigration.unifiedLessons + manifest.entries.length;
     const expectedPreludes = manifest.expectedBeforeMigration.parentPreludes;
@@ -130,24 +130,24 @@ function main() {
     const preludeCount = inventory.filter(row => row.prelude).length;
     const legacyCount = inventory.reduce((count, row) => count + row.legacy.length, 0);
     if (lessonCount !== expectedUnifiedLessons) {
-        console.error(`统一普通缓存数量错误：实际 ${lessonCount}，预期 ${expectedUnifiedLessons}`);
+        console.error(`Unified lesson count mismatch: got ${lessonCount}, expected ${expectedUnifiedLessons}`);
     }
     if (preludeCount !== expectedPreludes) {
-        console.error(`父级概览缓存数量错误：实际 ${preludeCount}，预期 ${expectedPreludes}`);
+        console.error(`Parent-prelude count mismatch: got ${preludeCount}, expected ${expectedPreludes}`);
     }
     if (legacyCount !== 0) {
-        console.error(`旧档位/画像缓存仍存在：${legacyCount} 份；预期为 0`);
+        console.error(`Legacy tier/profile caches remain: ${legacyCount}; expected 0`);
     }
 
     const failed = missingTargets.length || invalidTargets.length || formatFailures.length || unexplainedLegacyOnly.length
         || lessonCount !== expectedUnifiedLessons || preludeCount !== expectedPreludes || legacyCount !== 0;
     if (failed) process.exit(1);
-    console.log(`统一课程缓存检查通过：普通课程 ${lessonCount}，父级概览 ${preludeCount}，目标集合无缺失或错误 variant。`);
+    console.log(`Unified lesson cache check passed: ${lessonCount} lessons, ${preludeCount} parent preludes, no missing targets or invalid variants.`);
 }
 
 try {
     main();
 } catch (error) {
-    console.error(`统一课程缓存检查失败：${error.message}`);
+    console.error(`Unified lesson cache check failed: ${error.message}`);
     process.exit(1);
 }

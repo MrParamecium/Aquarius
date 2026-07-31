@@ -56,8 +56,8 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
                     status: 'hit',
                     retrieval_source: 'local_ocr',
                     options: [
-                        { id: 'path_1', title: '先看直觉', description: '用图像建立方向感。', instruction: '先用直觉类比，再连接公式。' },
-                        { id: 'path_2', title: '逐步推导', description: '从定义逐行推导。', instruction: '从定义开始，每一步说明理由。' }
+                        { id: 'path_1', title: 'Start with intuition', description: 'Build orientation with diagrams.', instruction: 'Start with an intuition, then connect it to the formula.' },
+                        { id: 'path_2', title: 'Derive step by step', description: 'Move from the definition line by line.', instruction: 'Start from the definition and explain each reason.' }
                     ]
                 }
             };
@@ -93,7 +93,7 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
             window.guidanceMode.requestChoice({
                 scope: 'main',
                 mount: document.getElementById('mount'),
-                payload: { prompt: '卷积为什么要翻转？', language: 'zh' }
+                payload: { prompt: 'Why does convolution require a flip?', language: 'en' }
             }).then(result => { window.choiceResult = result; });
         });
         await page.waitForSelector('.guidance-option');
@@ -108,7 +108,7 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
         const reused = await page.evaluate(() => window.guidanceMode.requestChoice({
             scope: 'main',
             mount: document.getElementById('mount'),
-            payload: { prompt: '继续解释', language: 'zh' }
+            payload: { prompt: 'Continue explaining', language: 'en' }
         }));
         assert.equal(reused.reused, true);
         assert.equal(await page.evaluate(() => window.guidanceCalls), 1, 'follow-up must reuse the selected path');
@@ -125,8 +125,8 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
                     status: 'hit',
                     retrieval_source: 'local_ocr',
                     options: [
-                        { id: 'path_1', title: '画时间轴理解', description: '建立直觉。', instruction: '先画时间轴。' },
-                        { id: 'path_2', title: '代入定义判断', description: '逐步判断。', instruction: '从定义开始。' }
+                        { id: 'path_1', title: 'Use a timeline', description: 'Build an intuitive picture.', instruction: 'Start by drawing a timeline.' },
+                        { id: 'path_2', title: 'Apply the definition', description: 'Check the relationship step by step.', instruction: 'Start from the definition.' }
                     ]
                 }
             };
@@ -134,7 +134,7 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
             window.guidanceMode.requestChoice({
                 scope: 'learn',
                 mount: document.getElementById('mount'),
-                payload: { prompt: '为什么 x(t-2) 是右移？', language: 'zh' }
+                payload: { prompt: 'Why is x(t-2) a right shift?', language: 'en' }
             }).then(result => { window.learnChoiceResult = result; });
         });
         await page.waitForSelector('.guidance-option');
@@ -197,20 +197,20 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
             window.guidanceResponse = {
                 ok: false,
                 status: 502,
-                body: { error: '教材检索失败', stage: 'retrieval', request_id: 'request-error-7' }
+                body: { error: 'Textbook retrieval failed', stage: 'retrieval', request_id: 'request-error-7' }
             };
             window.choiceResult = null;
             window.guidanceMode.requestChoice({
                 scope: 'main',
                 mount: document.getElementById('mount'),
-                payload: { prompt: '错误测试', language: 'zh' }
+                payload: { prompt: 'Error test', language: 'en' }
             }).then(result => { window.choiceResult = result; });
         });
         await page.waitForSelector('.guidance-error');
         const errorText = await page.locator('.guidance-error').innerText();
         assert.ok(errorText.includes('retrieval'));
         assert.ok(errorText.includes('request-error-7'));
-        await page.getByRole('button', { name: '跳过，直接回答' }).click();
+        await page.getByRole('button', { name: 'Skip and answer now' }).click();
         await page.waitForFunction(() => window.choiceResult !== null);
         assert.equal((await page.evaluate(() => window.choiceResult)).status, 'skipped');
 

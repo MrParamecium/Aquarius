@@ -13,7 +13,7 @@ const apply = process.argv.slice(2).includes('--apply');
 const unexpectedArgs = process.argv.slice(2).filter(arg => arg !== '--apply' && arg !== '--dry-run');
 
 if (unexpectedArgs.length || (process.argv.includes('--apply') && process.argv.includes('--dry-run'))) {
-    console.error('用法：node tools/migrate-unified-lesson-cache.js [--dry-run|--apply]');
+    console.error('Usage: node tools/migrate-unified-lesson-cache.js [--dry-run|--apply]');
     process.exit(2);
 }
 
@@ -58,23 +58,23 @@ function hash(content) {
 
 function validateManifest(entries) {
     if (!Array.isArray(entries) || entries.length !== 14) {
-        throw new Error(`迁移清单必须恰好包含 14 项，当前为 ${Array.isArray(entries) ? entries.length : '无效值'}`);
+        throw new Error(`Migration manifest must contain exactly 14 entries; got ${Array.isArray(entries) ? entries.length : 'invalid value'}`);
     }
     const sources = new Set();
     const targets = new Set();
     for (const entry of entries) {
         if (!entry || entry.cacheVariant !== 'lesson' || !entry.source || !entry.target || !entry.sectionId || !entry.reason) {
-            throw new Error('迁移清单存在缺失字段或非 lesson 项');
+            throw new Error('Migration manifest contains missing fields or a non-lesson entry');
         }
-        if (sources.has(entry.source)) throw new Error(`重复源：${entry.source}`);
-        if (targets.has(entry.target)) throw new Error(`重复目标：${entry.target}`);
+        if (sources.has(entry.source)) throw new Error(`Duplicate source: ${entry.source}`);
+        if (targets.has(entry.target)) throw new Error(`Duplicate target: ${entry.target}`);
         sources.add(entry.source);
         targets.add(entry.target);
         const expectedTarget = `new__${manifest.cacheVersion}.${manifest.cacheVersion}.en.md`;
-        if (path.basename(entry.target) !== expectedTarget) throw new Error(`目标文件名不规范：${entry.target}`);
-        if (path.dirname(entry.source) !== path.dirname(entry.target)) throw new Error(`源和目标不在同一课程目录：${entry.sectionId}`);
+        if (path.basename(entry.target) !== expectedTarget) throw new Error(`Invalid target filename: ${entry.target}`);
+        if (path.dirname(entry.source) !== path.dirname(entry.target)) throw new Error(`Source and target are in different lesson directories: ${entry.sectionId}`);
         if (path.isAbsolute(entry.source) || path.isAbsolute(entry.target) || entry.source.includes('..') || entry.target.includes('..')) {
-            throw new Error(`清单路径必须位于缓存目录内：${entry.sectionId}`);
+            throw new Error(`Manifest paths must stay inside the lesson-cache directory: ${entry.sectionId}`);
         }
     }
 }
@@ -100,12 +100,12 @@ function main() {
         legacyMarkdown: 0
     };
     if (!sameInventory(before, expected) && !sameInventory(before, migrated) && !sameInventory(before, finalized)) {
-        throw new Error(`缓存基线不符：实际 ${JSON.stringify(before)}，预期迁移前、迁移后或已清理状态`);
+        throw new Error(`Cache baseline mismatch: got ${JSON.stringify(before)}; expected pre-migration, migrated, or finalized state`);
     }
     if (sameInventory(before, finalized)) {
         const missing = manifest.entries.filter(entry => !fs.existsSync(path.join(cacheRoot, entry.target)));
-        if (missing.length) throw new Error(`已清理状态缺少 ${missing.length} 个迁移目标`);
-        console.log('统一课程缓存迁移已完成，389 份旧缓存也已清理，无需再次迁移。');
+        if (missing.length) throw new Error(`Finalized state is missing ${missing.length} migration targets`);
+        console.log('Unified lesson cache migration is already complete; 389 legacy caches have been removed.');
         return;
     }
 
@@ -113,26 +113,26 @@ function main() {
     for (const entry of manifest.entries) {
         const sourcePath = path.join(cacheRoot, entry.source);
         const targetPath = path.join(cacheRoot, entry.target);
-        if (!fs.existsSync(sourcePath)) throw new Error(`迁移源不存在：${entry.source}`);
+        if (!fs.existsSync(sourcePath)) throw new Error(`Migration source does not exist: ${entry.source}`);
         const content = stripLegacyGeneratedImageBlocks(fs.readFileSync(sourcePath, 'utf8'));
-        if (!content.trim()) throw new Error(`迁移源清理后为空：${entry.source}`);
+        if (!content.trim()) throw new Error(`Migration source is empty after cleanup: ${entry.source}`);
         const digest = hash(content);
         if (fs.existsSync(targetPath)) {
             const existingHash = hash(fs.readFileSync(targetPath));
-            if (existingHash !== digest) throw new Error(`目标已存在但内容冲突：${entry.target}`);
-            planned.push({ ...entry, digest, status: '已迁移' });
+            if (existingHash !== digest) throw new Error(`Target exists with conflicting content: ${entry.target}`);
+            planned.push({ ...entry, digest, status: 'migrated' });
         } else {
-            planned.push({ ...entry, digest, content, targetPath, status: apply ? '待写入' : '将写入' });
+            planned.push({ ...entry, digest, content, targetPath, status: apply ? 'to write' : 'planned' });
         }
     }
 
-    console.log(`${apply ? '执行' : '预览'}统一课程缓存迁移，共 ${planned.length} 项：`);
+    console.log(`${apply ? 'Applying' : 'Previewing'} unified lesson cache migration (${planned.length} entries):`);
     for (const item of planned) {
         console.log(`- ${item.sectionId}: ${item.status} ${item.source} -> ${item.target} sha256=${item.digest.slice(0, 12)}`);
     }
 
     if (!apply) {
-        console.log(`预览完成：${planned.filter(item => item.status === '将写入').length} 项待写入，未修改文件。`);
+        console.log(`Preview complete: ${planned.filter(item => item.status === 'planned').length} files would be written; no files changed.`);
         return;
     }
 
@@ -142,7 +142,7 @@ function main() {
             if (!item.content) continue;
             fs.writeFileSync(item.targetPath, item.content, { encoding: 'utf8', flag: 'wx' });
             created.push(item.targetPath);
-            if (hash(fs.readFileSync(item.targetPath)) !== item.digest) throw new Error(`写入后哈希不一致：${item.target}`);
+            if (hash(fs.readFileSync(item.targetPath)) !== item.digest) throw new Error(`Hash mismatch after write: ${item.target}`);
         }
     } catch (error) {
         for (const file of created.reverse()) {
@@ -156,14 +156,14 @@ function main() {
         for (const file of created.reverse()) {
             try { fs.unlinkSync(file); } catch (_) {}
         }
-        throw new Error(`迁移后数量校验失败并已回滚：${JSON.stringify(after)}`);
+        throw new Error(`Post-migration inventory check failed and was rolled back: ${JSON.stringify(after)}`);
     }
-    console.log(`迁移完成：新增 ${created.length} 项；统一普通缓存 ${after.unifiedLessons}，父级概览 ${after.parentPreludes}，旧缓存仍保留 ${after.legacyMarkdown}。`);
+    console.log(`Migration complete: created ${created.length}; ${after.unifiedLessons} unified lessons, ${after.parentPreludes} parent preludes, ${after.legacyMarkdown} legacy files remain.`);
 }
 
 try {
     main();
 } catch (error) {
-    console.error(`统一课程缓存迁移失败：${error.message}`);
+    console.error(`Unified lesson cache migration failed: ${error.message}`);
     process.exit(1);
 }

@@ -21,16 +21,16 @@ async function main() {
         assert.strictEqual(memory.buildTeachingInstructionsPrompt({ teachingInstructions: '   ' }), '');
 
         const prompt = memory.buildTeachingInstructionsPrompt({
-            teachingInstructions: '  先讲直觉，再给完整公式推导。  ',
+            teachingInstructions: '  Start with intuition, then provide a complete formula derivation.  ',
             quiz: { track: 'cram', length: 'short' },
-            preferenceProfile: { markdown: '旧 Markdown 档案' },
+            preferenceProfile: { markdown: 'Legacy Markdown profile' },
             inferredStyle: ['visual'],
             knownConcepts: ['convolution'],
             weakConcepts: ['Fourier transform'],
-            sessionSummaries: ['旧摘要'],
+            sessionSummaries: ['Legacy summary'],
         });
-        assert(prompt.includes('先讲直觉，再给完整公式推导。'));
-        for (const forbidden of ['cram', '旧 Markdown 档案', 'visual', 'convolution', 'Fourier transform', '旧摘要']) {
+        assert(prompt.includes('Start with intuition, then provide a complete formula derivation.'));
+        for (const forbidden of ['cram', 'Legacy Markdown profile', 'visual', 'convolution', 'Fourier transform', 'Legacy summary']) {
             assert(!prompt.includes(forbidden), `legacy value leaked into prompt: ${forbidden}`);
         }
 
