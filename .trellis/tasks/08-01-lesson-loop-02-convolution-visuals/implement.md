@@ -8,10 +8,10 @@
 
 ## 第 1 步：先建立会失败的视觉契约
 
-- [ ] 新增 `tools/check-convolution-lesson-visuals.js`，检查目标缓存、概览、两张 V2 图、六段结构、唯一 GeoGebra、静态路由、专属样式和禁用旧图。
-- [ ] 更新 `tools/check-geogebra-pilot.js`，允许且只允许两张批准的 V2 类比图，不放宽 GeoGebra 数学与受信数据断言。
-- [ ] 把新检查接入 `package.json` 的 `npm run check` 和独立脚本。
-- [ ] 在生产文件修改前运行新检查，确认因路由、样式和图片引用尚未接入而失败。
+- [x] 新增 `tools/check-convolution-lesson-visuals.js`，检查目标缓存、概览、两张 V2 图、六段结构、唯一 GeoGebra、静态路由、专属样式和禁用旧图。
+- [x] 更新 `tools/check-geogebra-pilot.js`，允许且只允许两张批准的 V2 类比图，不放宽 GeoGebra 数学与受信数据断言。
+- [x] 把新检查接入 `package.json` 的 `npm run check` 和独立脚本。
+- [x] 在生产文件修改前运行新检查，确认因路由、样式和图片引用尚未接入而失败。
 
 ## 第 2 步：接入受限材料路由
 

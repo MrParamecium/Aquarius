@@ -100,7 +100,7 @@ if (cache) {
     fail('old continuous_graphic_convolution demo blocks must not be copied into the pilot cache');
   }
   if (/!\[[^\]]*\]\([^)]+\)/.test(cache)) {
-    fail('normal lesson flow must not contain markdown images; Figure 2.7 is the GeoGebra demo');
+    fail('lesson visuals must use reviewed KC blocks rather than free-form markdown images');
   }
 
   const requiredHeadings = [
