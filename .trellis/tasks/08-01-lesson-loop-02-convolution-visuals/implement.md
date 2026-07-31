@@ -2,9 +2,9 @@
 
 ## 第 0 步：锁定基线
 
-- [ ] 确认分支为 `codex/lesson-loop-02-convolution-visuals`，基线包含 `origin/main@37360f7`、Loop 06 和迁入后的 Loop 01。
-- [ ] 运行 `npm run check`、`npm run test:geogebra` 与 `npm run test:mobile-learn-panels`。
-- [ ] 在 CSS 修改前运行 `npm run test:css-probe:baseline` 与 `npm run test:visual:baseline`，记录报告和基线变化。
+- [x] 确认分支为 `codex/lesson-loop-02-convolution-visuals`，基线包含 `origin/main@37360f7`、Loop 06 和迁入后的 Loop 01。
+- [x] 运行 `npm run check`、`npm run test:geogebra` 与 `npm run test:mobile-learn-panels`。
+- [x] 在 CSS 修改前运行 `npm run test:css-probe:baseline` 与 `npm run test:visual:baseline`，记录报告和基线变化。
 
 ## 第 1 步：先建立会失败的视觉契约
 
