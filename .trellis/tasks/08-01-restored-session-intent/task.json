@@ -3,7 +3,7 @@
   "name": "restored-session-intent",
   "title": "Fix restored session intent routing",
   "description": "Protect history-dependent course follow-ups from casual-chat misrouting after session restore.",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": null,
   "scope": "intent",
   "package": null,
@@ -25,6 +25,6 @@
     "app/intent-routing.js",
     "tools/test-intent-routing.js"
   ],
-  "notes": "",
+  "notes": "Implementation and local verification complete. Production acceptance is pending; Neon remains untouched.",
   "meta": {}
 }

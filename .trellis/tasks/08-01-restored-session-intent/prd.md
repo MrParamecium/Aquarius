@@ -16,12 +16,12 @@ Prevent history-dependent course follow-ups from being misrouted as casual chat 
 
 ## Acceptance Criteria
 
-- [ ] A restored conversation with a long assistant answer correctly routes a later question that refers to an earlier condition to the grounded pipeline.
-- [ ] Short elliptical follow-ups such as a contextual "why?" route to the grounded pipeline when meaningful history exists.
-- [ ] Explicit requests to repeat, clarify, expand, or explain earlier material route to the grounded pipeline.
-- [ ] Clear greetings, thanks, acknowledgements, and small-talk turns retain the short-reply path.
-- [ ] A new deterministic routing helper has direct regression tests for positive, negative, bilingual, and ambiguous cases.
-- [ ] Existing authentication, session continuity, guidance, and repository checks continue to pass.
+- [x] A restored conversation with a long assistant answer correctly routes a later question that refers to an earlier condition to the grounded pipeline.
+- [x] Short elliptical follow-ups such as a contextual "why?" route to the grounded pipeline when meaningful history exists.
+- [x] Explicit requests to repeat, clarify, expand, or explain earlier material route to the grounded pipeline.
+- [x] Clear greetings, thanks, acknowledgements, and small-talk turns retain the short-reply path.
+- [x] A new deterministic routing helper has direct regression tests for positive, negative, bilingual, and ambiguous cases.
+- [x] Existing authentication, session continuity, guidance, and repository checks continue to pass.
 - [ ] Production acceptance passes before any Neon inspection or migration command is run.
 
 ## Notes
