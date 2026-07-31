@@ -1,0 +1,109 @@
+{
+  "cacheVersion": "aquarius_visual_latex_v2",
+  "expectedBeforeMigration": {
+    "totalMarkdown": 551,
+    "unifiedLessons": 148,
+    "parentPreludes": 14,
+    "legacyMarkdown": 389
+  },
+  "entries": [
+    {
+      "sectionId": "1",
+      "cacheVariant": "lesson",
+      "source": "1/new__solid_b~calculus_ok~few_weeks~s=example_first~o=one_liner+worked_example.v8.en.md",
+      "target": "1/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "现有旧缓存评分在默认标准路径下选择该 solid_b 内容；已人工确认正文完整。"
+    },
+    {
+      "sectionId": "1.2",
+      "cacheVariant": "lesson",
+      "source": "1_2/new__track=standard~math=calculus_ok.v16.en.md",
+      "target": "1_2/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "1.4",
+      "cacheVariant": "lesson",
+      "source": "1_4/new__track=standard~math=calculus_ok.v16.en.md",
+      "target": "1_4/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B",
+      "cacheVariant": "lesson",
+      "source": "b/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.1",
+      "cacheVariant": "lesson",
+      "source": "b_1/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_1/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-1",
+      "cacheVariant": "lesson",
+      "source": "b_8-1/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-1/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-2",
+      "cacheVariant": "lesson",
+      "source": "b_8-2/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-2/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-3",
+      "cacheVariant": "lesson",
+      "source": "b_8-3/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-3/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-4",
+      "cacheVariant": "lesson",
+      "source": "b_8-4/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-4/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-6",
+      "cacheVariant": "lesson",
+      "source": "b_8-6/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-6/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-7",
+      "cacheVariant": "lesson",
+      "source": "b_8-7/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-7/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-8",
+      "cacheVariant": "lesson",
+      "source": "b_8-8/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-8/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-9",
+      "cacheVariant": "lesson",
+      "source": "b_8-9/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-9/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    },
+    {
+      "sectionId": "B.8-10",
+      "cacheVariant": "lesson",
+      "source": "b_8-10/new__track=standard~math=calculus_ok.v21.en.md",
+      "target": "b_8-10/new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md",
+      "reason": "该目录最新且格式有效的 standard 内容。"
+    }
+  ]
+}

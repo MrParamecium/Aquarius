@@ -9,8 +9,8 @@
 Browser (app/index.html + app/app.js, vanilla JS)
   └─ app/config.js picks apiBase: '' locally, Render URL otherwise
 ws-bridge.js (single Node http server, built-in modules only)
-  ├─ routes: /api/ask, /api/section, /api/pregen/section, /api/preference/draft,
-  │          /api/memory, /api/tutor (legacy), /api/crop
+  ├─ routes: /api/ask, /api/ask-guidance, /api/section, /api/pregen/section,
+  │          /api/memory, /api/sessions, /api/sessions/:id, /api/tutor (legacy), /api/crop
   ├─ static: /pages, /new-pages, /old-pages, /figures, /generated, app/ files
   ├─ LLM calls via OpenRouter:
   │     Agent A (Planner)  = gpt-5.5            → Rendering Blueprint JSON
@@ -21,6 +21,13 @@ ws-bridge.js (single Node http server, built-in modules only)
   │     normalizePythonCode() sanitizes/repairs the script before execution
   └─ optional RAGFlow retrieval sidecar (RAGFLOW_* env) — retrieval only
 ```
+
+## 当前状态边界
+
+- `app/user-memory.js` 只把用户主动填写的 `teachingInstructions` 作为长期教学要求；不再从问答自动生成掌握度、薄弱点或风格标签。
+- 登录用户的真实会话由服务端 `chat_sessions` 保存，前端通过 `session_id` 续接；访客会话留在浏览器。
+- `app/lesson-cache.js` 只读取统一 `aquarius_visual_latex_v2` 缓存，不按用户画像或课程档位选择文件，也没有旧缓存回退。
+- `app/guidance-service.js` 负责整本教材检索和本轮选项生成；`app/guidance-mode.js` 只负责浏览器端开关和临时选择。选项不会写入长期记忆。
 
 ## Adding a route
 

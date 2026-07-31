@@ -15,6 +15,7 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const crypto = require('crypto');
 const { spawn } = require('child_process');
 
 function loadLocalEnvFile() {
@@ -362,11 +363,6 @@ function buildComplexPlaneInteractiveDemoBlock(sectionId = '', sectionTitle = ''
         content: 'Move the real and imaginary components. Watch the same point become rectangular form, magnitude, and angle.',
         explanation: 'This demo links coordinates to polar form and quadrant-safe phase.',
         teaching_role: 'interactive_demo',
-        mode_specific_visual_use: {
-            cram: 'Use it to recognize the conversion pattern quickly.',
-            standard: 'Use it to connect \(a\), \(b\), \(r\), and \(\theta\).',
-            top_score: 'Use it to catch quadrant and sign mistakes.'
-        },
         demo_spec: {
             framework: 'react_canvas',
             panels: [
@@ -1186,7 +1182,6 @@ const {
     writeLessonCache,
 } = require('./lesson-cache')({
     tutorMaterialsDir: TUTOR_MATERIALS_DIR,
-    normalizeQuizProfile,
     prepareLessonForCache,
     collectLessonFormatIssues,
     assertLessonFormatClean,
@@ -1244,32 +1239,6 @@ function buildVerifiedFormulaPromptSection(catalog) {
     return lines.join('\n');
 }
 
-function normalizePreferenceList(value) {
-    const arr = Array.isArray(value) ? value : (value ? [value] : []);
-    return [...new Set(arr.map(v => compactWhitespace(String(v || '')).toLowerCase()).filter(Boolean))].sort();
-}
-
-function normalizeQuizProfile(quiz = {}) {
-    const next = { ...(quiz || {}) };
-    const track = compactWhitespace(next.track || '').toLowerCase();
-    const legacyGoal = compactWhitespace(next.goal || '').toLowerCase();
-
-    if (!next.track) {
-        if (track) next.track = track;
-        else if (legacyGoal === 'just_pass') next.track = 'cram';
-        else if (legacyGoal === 'going_for_a' || legacyGoal === 'getting_ahead') next.track = 'top_score';
-        else if (legacyGoal === 'solid_b') next.track = 'standard';
-    }
-
-    if (!next.track) next.track = 'standard';
-    if (!next.math) next.math = 'calculus_ok';
-    if (!next.timeline) next.timeline = 'few_weeks';
-    if (!next.goal) next.goal = next.track;
-    next.style = normalizePreferenceList(next.style);
-    next.outcome = normalizePreferenceList(next.outcome);
-    return next;
-}
-
 const B8_FORMULA_APPENDIX_MARKDOWN = [
     '## B.8 Appendix: Useful Mathematical Formulas',
     '',
@@ -1311,12 +1280,8 @@ const { callOpenRouterChat, callOpenAIChat, tryParseJsonLoose } = require('./llm
 const {
     init: initUserStore,
     readUserMemory, writeUserMemory, listSessionsForUid, readSessionFile,
-    deleteSessionForUid, persistSessionTurn, buildUserProfilePrompt,
-    updateUserMemoryFromQA, deriveMemoryFromSessions,
+    deleteSessionForUid, persistSessionTurn, updateSessionMetadata, buildTeachingInstructionsPrompt,
 } = require('./user-memory')({
-    compactWhitespace,
-    normalizeQuizProfile,
-    callOpenRouterChat,
     usersDir: process.env.TUTOR_USERS_DIR || path.join(__dirname, 'users'),
     databaseUrl: process.env.DATABASE_URL || '',
 });
@@ -2202,10 +2167,102 @@ function buildWebContext(webSources) {
 
 const {
     RAGFLOW_ENABLED,
+    RAGFLOW_CONFIGURED,
     retrieveFromRagFlow,
     ragFlowChunksToBookPages,
     mergeAskBookContexts,
 } = require('./ragflow-client')({ compactWhitespace, normalizeUrl, httpRequestJson });
+
+const guidanceService = require('./guidance-service')({
+    createRequestId: () => crypto.randomUUID(),
+    retrieveTextbook: async ({ query }) => {
+        if (RAGFLOW_ENABLED) {
+            if (!RAGFLOW_CONFIGURED) {
+                throw new Error('RAGFlow is enabled but its URL or dataset ids are missing');
+            }
+            const result = await retrieveFromRagFlow({ query, topK: 6 });
+            const chunks = result && Array.isArray(result.chunks) ? result.chunks : [];
+            return {
+                status: chunks.length ? 'hit' : 'empty',
+                source: 'ragflow',
+                chunks,
+            };
+        }
+
+        const keywords = await extractKeywords(query);
+        const entries = selectRelevantBooks(query, keywords, 0, 6, OCR_DIR_NEW);
+        const chunks = entries.map(entry => ({
+            page: entry.page,
+            sectionTitle: entry.subsection || entry.title || '',
+            text: readOCRText(entry.textPath, 8000),
+        })).filter(chunk => compactWhitespace(chunk.text));
+        return {
+            status: chunks.length ? 'hit' : 'empty',
+            source: 'local_ocr',
+            chunks,
+        };
+    },
+    generateOptions: async ({ messages }) => callOpenRouterChat({
+        model: 'openai/gpt-5.4',
+        timeoutMs: 60000,
+        temperature: 0.35,
+        maxTokens: 1000,
+        messages,
+    }),
+    log: (event, details) => console.warn(`[ask-guidance] ${event}`, details),
+});
+
+function parseGuidanceSelection(rawGuidance) {
+    if (rawGuidance == null) return null;
+    if (!rawGuidance || typeof rawGuidance !== 'object' || Array.isArray(rawGuidance)) {
+        throw new Error('guidance must be an object');
+    }
+    const allowedKeys = new Set(['id', 'title', 'instruction']);
+    const unknownKey = Object.keys(rawGuidance).find(key => !allowedKeys.has(key));
+    if (unknownKey) throw new Error(`Unknown guidance field: ${unknownKey}`);
+    const id = compactWhitespace(rawGuidance.id || '');
+    const title = compactWhitespace(rawGuidance.title || '');
+    const instruction = compactWhitespace(rawGuidance.instruction || '');
+    if (!/^path_[1-3]$/.test(id)) throw new Error('Invalid guidance id');
+    if (!title || title.length > 24) throw new Error('Invalid guidance title');
+    if (!instruction || instruction.length > 240) throw new Error('Invalid guidance instruction');
+    return { id, title, instruction };
+}
+
+function parseGuidanceRequestBody(data) {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        throw new Error('请求体必须是对象');
+    }
+    const allowedKeys = new Set(['prompt', 'history', 'sectionId', 'sectionTitle', 'lessonContext', 'bookSource', 'language']);
+    const unknownKey = Object.keys(data).find(key => !allowedKeys.has(key));
+    if (unknownKey) throw new Error(`未知字段：${unknownKey}`);
+    if (typeof data.prompt !== 'string' || !compactWhitespace(data.prompt)) throw new Error('缺少问题');
+    if (data.prompt.length > 4000) throw new Error('问题不能超过 4000 字符');
+    if (data.sectionId != null && (typeof data.sectionId !== 'string' || data.sectionId.length > 80)) throw new Error('sectionId 无效');
+    if (data.sectionTitle != null && (typeof data.sectionTitle !== 'string' || data.sectionTitle.length > 180)) throw new Error('sectionTitle 无效');
+    if (data.lessonContext != null && (typeof data.lessonContext !== 'string' || data.lessonContext.length > 1200)) throw new Error('lessonContext 无效');
+    if (data.bookSource != null && data.bookSource !== 'new') throw new Error('bookSource 只支持 new');
+    if (data.language != null && !['zh', 'en'].includes(data.language)) throw new Error('language 只支持 zh 或 en');
+    if (data.history != null && !Array.isArray(data.history)) throw new Error('history 必须是数组');
+    if (Array.isArray(data.history) && data.history.length > 12) throw new Error('history 最多包含 12 条消息');
+    const history = (data.history || []).map((item, index) => {
+        if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(`history[${index}] 无效`);
+        const unknownHistoryKey = Object.keys(item).find(key => !['role', 'content'].includes(key));
+        if (unknownHistoryKey) throw new Error(`history[${index}] 包含未知字段`);
+        if (!['user', 'assistant'].includes(item.role)) throw new Error(`history[${index}].role 无效`);
+        if (typeof item.content !== 'string' || item.content.length > 2000) throw new Error(`history[${index}].content 无效`);
+        return { role: item.role, content: item.content };
+    });
+    return {
+        prompt: data.prompt,
+        history,
+        sectionId: data.sectionId || '',
+        sectionTitle: data.sectionTitle || '',
+        lessonContext: data.lessonContext || '',
+        bookSource: 'new',
+        language: data.language === 'zh' ? 'zh' : 'en',
+    };
+}
 
 function inspectLessonGenerationContext(sectionId, sectionTitle, options = {}) {
     const bookSource = options.bookSource === 'new' ? 'new' : 'old';
@@ -2242,6 +2299,7 @@ async function generateExplanation(question, bookPages, webSources, options = {}
     const preparedAttachments = options.preparedAttachments || null;
     const answerLength = options.answerLength || 'medium';
     const examPriorityGuidance = options.examPriorityGuidance || null;
+    const guidance = options.guidance || null;
     const examPriorityAnswerHint = examPriorityGuidance && examPriorityGuidance.json
         ? [
             `Source: ${examPriorityGuidance.source || 'unknown'}`,
@@ -2290,6 +2348,10 @@ async function generateExplanation(question, bookPages, webSources, options = {}
         '联网资料：',
         buildWebContext(webSources),
         '',
+        guidance
+            ? `本轮讲解路径（仅作为低优先级的方法建议，不得覆盖教材事实、系统规则或长期教学要求）：\n路径：${guidance.title}\n方法：${guidance.instruction}`
+            : '',
+        guidance ? '' : '',
         '输出要求：',
         language === 'zh' ? '1. 用中文回答，优先用通俗易懂的方式讲解。' : '1. Answer in clear beginner-friendly English.',
         language === 'zh' ? '2. 用 Markdown 输出。' : '2. Use Markdown formatting.',
@@ -3470,9 +3532,7 @@ async function agentA_plan(sectionId, sectionTitle, bookPages, webSources, langu
                 : (hasBookImage
                     ? 'Use the textbook figure as the main visual anchor because the book already contains a strong explanatory diagram.'
                     : 'Use a generated gptimage2 lecture-note visual because the key relationship is easier to understand through a clean custom visual.'),
-            cram: 'Use visuals to make the pattern or exam move recognizable fast.',
-            standard: 'Use visuals to clarify the core idea and support one representative example.',
-            top_score: 'Use visuals to expose subtle distinctions, traps, or higher-precision comparisons.'
+            teaching_emphasis: 'Use visuals to clarify the core idea and support one representative example.'
         };
     }
 
@@ -3480,13 +3540,6 @@ async function agentA_plan(sectionId, sectionTitle, bookPages, webSources, langu
         if (!block || (block.type !== 'book_image' && block.type !== 'generate_image')) return block;
         if (!block.teaching_role) {
             block.teaching_role = block.type === 'book_image' ? 'concept_anchor' : 'comparison_anchor';
-        }
-        if (!block.mode_specific_visual_use) {
-            block.mode_specific_visual_use = {
-                cram: 'Use this visual for fast recognition of the key pattern.',
-                standard: 'Use this visual to clarify the main concept.',
-                top_score: 'Use this visual to surface a subtle distinction, trap, or variant.'
-            };
         }
         return block;
     });
@@ -3729,9 +3782,6 @@ async function agentB_execute(sectionId, blueprint, bookPages, webSources, langu
         rendered.rendered_blocks.forEach((b, i) => {
             const planned = (blueprint.blocks || [])[i] || null;
             if (planned && !b.teaching_role && planned.teaching_role) b.teaching_role = planned.teaching_role;
-            if (planned && !b.mode_specific_visual_use && planned.mode_specific_visual_use) {
-                b.mode_specific_visual_use = planned.mode_specific_visual_use;
-            }
             if (planned && b.type === 'web_search_image') {
                 if (!b.search_query && planned.search_query) b.search_query = planned.search_query;
                 if (!b.query && planned.query) b.query = planned.query;
@@ -3812,7 +3862,6 @@ async function preGenerateSectionLesson(sectionId, sectionTitle, options = {}) {
     const language = options.language === 'zh' ? 'zh' : 'en';
     const bookSource = options.bookSource === 'new' ? 'new' : 'old';
     const cacheVariant = options.cacheVariant || 'lesson';
-    const baseLessonMemory = null;
     const { ocrDir: secOcrDir } = getBookDirs(bookSource);
 
     const mappedPages = getPagesForSection(sectionId, secOcrDir);
@@ -3838,7 +3887,7 @@ async function preGenerateSectionLesson(sectionId, sectionTitle, options = {}) {
         ? preludePages
         : attachSectionOcrToPages(sectionId, mappedPages, bookSource);
 
-    const cachedLesson = readLessonCache(sectionId, baseLessonMemory, bookSource, cacheVariant);
+    const cachedLesson = readLessonCache(sectionId, bookSource, cacheVariant);
     if (cachedLesson && !options.force) {
         return {
             sectionId,
@@ -3886,7 +3935,7 @@ async function preGenerateSectionLesson(sectionId, sectionTitle, options = {}) {
     }
 
     try {
-        writeLessonCache(sectionId, baseLessonMemory, normalizedLesson, bookSource, cacheVariant);
+        writeLessonCache(sectionId, normalizedLesson, bookSource, cacheVariant);
     } catch (err) {
         console.error(`[Pregen:${sectionId}] writeLessonCache failed:`, err && err.stack ? err.stack : err);
         throw err;
@@ -4137,8 +4186,8 @@ async function blueprintToMarkdown(blocks, pageImages, visualPlan = null, bookPa
 
                 if (cropUrl && !block.warning) {
                     const altText = block.fig_id || figId || block.caption || 'Textbook page';
-                    const metaHtml = (block.teaching_role || block.mode_specific_visual_use)
-                        ? `<div class="kc-visual-meta" data-visual-kind="book_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role || '')}" data-visual-use-b64="${Buffer.from(JSON.stringify(block.mode_specific_visual_use || {})).toString('base64')}" style="display:none;"></div>`
+                    const metaHtml = block.teaching_role
+                        ? `<div class="kc-visual-meta" data-visual-kind="book_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role)}" style="display:none;"></div>`
                         : '';
                     if (metaHtml) parts.push(`%%KC_BLOCK%%${metaHtml}%%KC_END%%`);
                     parts.push(`![${altText}](${cropUrl})`);
@@ -4173,7 +4222,7 @@ async function blueprintToMarkdown(blocks, pageImages, visualPlan = null, bookPa
                         block.selected_title = resolved.title;
                         block.selected_mime = resolved.mime;
                         block.fallback_triggered = false;
-                        const metaHtml = `<div class="kc-visual-meta" data-visual-kind="web_reference_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role || 'reference_anchor')}" data-visual-use-b64="${Buffer.from(JSON.stringify(block.mode_specific_visual_use || {})).toString('base64')}" style="display:none;"></div>`;
+                        const metaHtml = `<div class="kc-visual-meta" data-visual-kind="web_reference_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role || 'reference_anchor')}" style="display:none;"></div>`;
                         parts.push(`%%KC_BLOCK%%${metaHtml}%%KC_END%%`);
                         const altText = String(resolved.title || 'Reference illustration').replace(/[\]\[]/g, '');
                         parts.push(`![${altText}](${resolved.url})`);
@@ -4212,8 +4261,8 @@ async function blueprintToMarkdown(blocks, pageImages, visualPlan = null, bookPa
                         break;
                     }
                 }
-                const metaHtml = (block.teaching_role || block.mode_specific_visual_use)
-                    ? `<div class="kc-visual-meta" data-visual-kind="generate_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role || '')}" data-visual-use-b64="${Buffer.from(JSON.stringify(block.mode_specific_visual_use || {})).toString('base64')}" style="display:none;"></div>`
+                const metaHtml = block.teaching_role
+                    ? `<div class="kc-visual-meta" data-visual-kind="generate_image" data-teaching-role="${escapeHtmlAttr(block.teaching_role)}" style="display:none;"></div>`
                     : '';
                 const stylePrefix = 'Use this only as a last-resort fallback after textbook figure, wiki/wikimedia, LaTeX-native visual, and interactive-demo options are judged insufficient. Exactly one knowledge point only. Never combine multiple concepts into one image. No collage, no dashboard, no multi-topic poster, no multi-panel concept bundle. Pure white clean background, minimalist lecture-notes educational diagram, centered academic layout, single clear reading path, low-saturation academic palette, navy / muted teal / soft gray with muted red only for warnings, clean linework, restrained colored teaching boxes, no poster styling, no cartoon elements, no dense text blocks, no full derivation, no extra examples, exam-oriented concept clarity. ';
                 const prompt = `${stylePrefix}${rawPrompt}`.trim();
@@ -4240,7 +4289,7 @@ async function blueprintToMarkdown(blocks, pageImages, visualPlan = null, bookPa
 
             case 'interactive_demo': {
                 const demoB64 = Buffer.from(JSON.stringify(block || {})).toString('base64');
-                const metaHtml = `<div class="kc-visual-meta" data-visual-kind="interactive_demo" data-teaching-role="${escapeHtmlAttr(block.teaching_role || 'interactive_demo')}" data-visual-use-b64="${Buffer.from(JSON.stringify(block.mode_specific_visual_use || {})).toString('base64')}" style="display:none;"></div>`;
+                const metaHtml = `<div class="kc-visual-meta" data-visual-kind="interactive_demo" data-teaching-role="${escapeHtmlAttr(block.teaching_role || 'interactive_demo')}" style="display:none;"></div>`;
                 const shell = `<div class="kc-interactive-demo" data-demo-b64="${demoB64}"></div>`;
                 parts.push(`%%KC_BLOCK%%${metaHtml}${shell}%%KC_END%%`);
                 break;
@@ -4432,26 +4481,67 @@ const server = http.createServer(async (req, res) => {
         if (REQUIRE_AUTH && !auth) { send401(res); return; }
         const uid = auth ? auth.uid : parsedUrl.query.uid;
         if (!uid) { res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify({ sessions: await listSessionsForUid(uid) }));
+        const requestId = crypto.randomUUID();
+        try {
+            const sessions = await listSessionsForUid(uid);
+            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ sessions }));
+        } catch (error) {
+            console.error(`[sessions:${requestId}] list failed:`, error.message);
+            res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: 'Session storage failed', stage: 'persistence', request_id: requestId }));
+        }
         return;
     }
-    if (pathname.startsWith('/api/sessions/') && (req.method === 'GET' || req.method === 'DELETE')) {
+    if (pathname.startsWith('/api/sessions/') && ['GET', 'DELETE', 'PATCH'].includes(req.method)) {
         const auth = await resolveAuth(req);
         if (REQUIRE_AUTH && !auth) { send401(res); return; }
         const uid = auth ? auth.uid : parsedUrl.query.uid;
         const sessionId = decodeURIComponent(pathname.slice('/api/sessions/'.length));
+        const requestId = crypto.randomUUID();
         if (!uid) { res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-        if (req.method === 'GET') {
-            const session = await readSessionFile(uid, sessionId);
-            if (!session) { res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Session not found' })); return; }
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify(session));
+        try {
+            if (req.method === 'GET') {
+                const session = await readSessionFile(uid, sessionId);
+                if (!session) { res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify({ error: 'Session not found' })); return; }
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify(session));
+                return;
+            }
+            if (req.method === 'PATCH') {
+                const data = await readJsonBody(req);
+                const allowedFields = new Set(['customTitle', 'starred']);
+                const unsupported = Object.keys(data).filter(key => !allowedFields.has(key));
+                if (unsupported.length || !Object.keys(data).length
+                    || (Object.prototype.hasOwnProperty.call(data, 'customTitle') && (typeof data.customTitle !== 'string' || data.customTitle.trim().length > 80))
+                    || (Object.prototype.hasOwnProperty.call(data, 'starred') && typeof data.starred !== 'boolean')) {
+                    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'Invalid session metadata patch' }));
+                    return;
+                }
+                const patch = {};
+                if (Object.prototype.hasOwnProperty.call(data, 'customTitle')) patch.customTitle = data.customTitle.trim();
+                if (Object.prototype.hasOwnProperty.call(data, 'starred')) patch.starred = data.starred;
+                const result = await updateSessionMetadata(uid, sessionId, patch);
+                if (result.status === 'not_found') {
+                    res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'Session not found' }));
+                    return;
+                }
+                if (result.status !== 'updated') throw new Error(result.error || 'session metadata write failed');
+                res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ ok: true, session: result.session }));
+                return;
+            }
+            const ok = await deleteSessionForUid(uid, sessionId);
+            res.writeHead(ok ? 200 : 404, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify(ok ? { ok: true } : { error: 'Session not found' }));
             return;
+        } catch (error) {
+            console.error(`[sessions:${requestId}] ${req.method} failed:`, error.message);
+            res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: 'Session storage failed', stage: 'persistence', request_id: requestId }));
         }
-        const ok = await deleteSessionForUid(uid, sessionId);
-        res.writeHead(ok ? 200 : 404, { 'Content-Type': 'application/json; charset=utf-8' });
-        res.end(JSON.stringify(ok ? { ok: true } : { error: 'Session not found' }));
         return;
     }
 
@@ -4463,7 +4553,12 @@ const server = http.createServer(async (req, res) => {
             if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
             const mem = await readUserMemory(uid);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify(mem || {}));
+            res.end(JSON.stringify({
+                teachingInstructions: mem && typeof mem.teachingInstructions === 'string'
+                    ? mem.teachingInstructions
+                    : '',
+                updatedAt: mem && (mem.updatedAt || mem.lastUpdated) || null,
+            }));
             return;
         }
         if (req.method === 'POST') {
@@ -4473,73 +4568,47 @@ const server = http.createServer(async (req, res) => {
                 const data = await readJsonBody(req);
                 const uid = auth ? auth.uid : data.uid;
                 if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
+                const allowedFields = new Set(['teachingInstructions', 'uid']);
+                const unsupportedFields = Object.keys(data).filter(key => !allowedFields.has(key));
+                if (unsupportedFields.length) {
+                    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: `Unsupported memory fields: ${unsupportedFields.join(', ')}` }));
+                    return;
+                }
+                if (typeof data.teachingInstructions !== 'string') {
+                    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'teachingInstructions must be a string' }));
+                    return;
+                }
+                const teachingInstructions = data.teachingInstructions.trim();
+                if (teachingInstructions.length > 1000) {
+                    res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'teachingInstructions must be 1000 characters or fewer' }));
+                    return;
+                }
                 const existing = (await readUserMemory(uid)) || { uid, createdAt: new Date().toISOString() };
-                // Merge patch: quiz, knownConcepts, weakConcepts, sessionSummaries
-                if (data.resetQuiz === true) {
-                    existing.quiz = {};
-                    existing.quizResetAt = new Date().toISOString();
-                } else if (data.quiz) {
-                    existing.quiz = normalizeQuizProfile(Object.assign({}, existing.quiz || {}, data.quiz));
-                }
-                if (Array.isArray(data.knownConcepts)) {
-                    const set = new Set([...(existing.knownConcepts || []), ...data.knownConcepts]);
-                    existing.knownConcepts = [...set];
-                }
-                if (Array.isArray(data.weakConcepts)) {
-                    const set = new Set([...(existing.weakConcepts || []), ...data.weakConcepts]);
-                    existing.weakConcepts = [...set];
-                }
-                if (typeof data.sessionSummary === 'string' && data.sessionSummary.trim()) {
-                    existing.sessionSummaries = existing.sessionSummaries || [];
-                    existing.sessionSummaries.push(
-                        `${new Date().toISOString().slice(0,10)}: ${data.sessionSummary.trim()}`
-                    );
-                    // Keep last 30 summaries
-                    if (existing.sessionSummaries.length > 30) existing.sessionSummaries = existing.sessionSummaries.slice(-30);
-                }
-                if (data.preferenceProfile && typeof data.preferenceProfile === 'object') {
-                    existing.preferenceProfile = {
-                        ...(existing.preferenceProfile || {}),
-                        ...data.preferenceProfile
-                    };
-                }
-                existing.lastUpdated = new Date().toISOString();
-                // Honest status: the pg store refuses guest_* uids, oversized
-                // documents, and transient DB failures — never claim a write
-                // that did not persist succeeded.
-                if (!(await writeUserMemory(uid, existing))) {
+                const updatedAt = new Date().toISOString();
+                const nextMemory = {
+                    uid,
+                    createdAt: existing.createdAt || updatedAt,
+                    teachingInstructions,
+                    updatedAt,
+                };
+                if (!(await writeUserMemory(uid, nextMemory))) {
                     res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
                     res.end(JSON.stringify({ error: 'Storage write failed' }));
                     return;
                 }
                 res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ ok: true, memory: existing }));
+                res.end(JSON.stringify({ ok: true, memory: nextMemory }));
             } catch (err) {
-                res.writeHead(500); res.end(JSON.stringify({ error: err.message }));
+                res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: err.message }));
             }
             return;
         }
-    }
-
-    if (pathname === '/api/memory/rebuild' && req.method === 'POST') {
-        try {
-            const auth = await resolveAuth(req);
-            if (REQUIRE_AUTH && !auth) { send401(res); return; }
-            const data = await readJsonBody(req);
-            const uid = auth ? auth.uid : data.uid;
-            if (!uid) { res.writeHead(400); res.end(JSON.stringify({ error: 'Missing uid' })); return; }
-            const existing = (await readUserMemory(uid)) || { uid, createdAt: new Date().toISOString() };
-            const rebuilt = deriveMemoryFromSessions(uid, data.sessions, existing);
-            if (!(await writeUserMemory(uid, rebuilt))) {
-                res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: 'Storage write failed' }));
-                return;
-            }
-            res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ ok: true, memory: rebuilt }));
-        } catch (err) {
-            res.writeHead(500); res.end(JSON.stringify({ error: err.message }));
-        }
+        res.writeHead(405, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ error: 'Method not allowed' }));
         return;
     }
 
@@ -4555,7 +4624,6 @@ const server = http.createServer(async (req, res) => {
             const sectionTitle = compactWhitespace(data.sectionTitle || sectionId);
             const mode = data.mode || 'intro'; // 'intro' | 'lesson'
             const language = (data.language === 'zh') ? 'zh' : 'en'; // default EN
-            const baseLessonMemory = null;
             const b8FormulaAppendix = getB8FormulaAppendix(sectionId, sectionTitle);
             const { ocrDir: secOcrDir } = getBookDirs(data.bookSource);
 
@@ -4610,9 +4678,9 @@ const server = http.createServer(async (req, res) => {
                     }))
                 }));
             } else if (mode === 'overview') {
-                const hasExistingPrelude = hasLessonCacheFile(sectionId, baseLessonMemory, data.bookSource, 'parent_prelude');
+                const hasExistingPrelude = hasLessonCacheFile(sectionId, data.bookSource, 'parent_prelude');
                 const hasPrelude = hasExistingPrelude || shouldGenerateParentPreludeLesson(sectionId, sectionTitle, rawPages);
-                let cachedLesson = hasPrelude ? readLessonCache(sectionId, baseLessonMemory, data.bookSource, 'parent_prelude') : null;
+                let cachedLesson = hasPrelude ? readLessonCache(sectionId, data.bookSource, 'parent_prelude') : null;
                 const normalizedCachedLesson = cachedLesson
                     ? normalizeMathMarkdown(convertLegacyQuickCheckToKcBlocks(cachedLesson))
                     : '';
@@ -4630,7 +4698,7 @@ const server = http.createServer(async (req, res) => {
                         cacheVariant: 'parent_prelude',
                         force: Boolean(responseFormatIssues.length)
                     });
-                    cachedLesson = generatedResult.lesson || readLessonCache(sectionId, baseLessonMemory, data.bookSource, 'parent_prelude');
+                    cachedLesson = generatedResult.lesson || readLessonCache(sectionId, data.bookSource, 'parent_prelude');
                 }
 
                 const finalLesson = cachedLesson
@@ -4659,7 +4727,7 @@ const server = http.createServer(async (req, res) => {
                 }));
             } else if (mode === 'lesson') {
                 // ── Check lesson cache first ──────────────────────────────
-                const cachedLesson = readLessonCache(sectionId, baseLessonMemory, data.bookSource);
+                const cachedLesson = readLessonCache(sectionId, data.bookSource);
                 if (cachedLesson) {
                     console.log(`[SECTION] Cache hit for ${sectionId}, skipping pipeline.`);
                     const normalizedCachedLesson = normalizeMathMarkdown(convertLegacyQuickCheckToKcBlocks(cachedLesson));
@@ -4668,9 +4736,9 @@ const server = http.createServer(async (req, res) => {
                         console.warn(`[SECTION] Cache response rejected for ${sectionId}: ${responseFormatIssues.join(', ')}`);
                     } else {
                         if (normalizedCachedLesson !== cachedLesson) {
-                            writeLessonCache(sectionId, baseLessonMemory, normalizedCachedLesson, data.bookSource);
+                            writeLessonCache(sectionId, normalizedCachedLesson, data.bookSource);
                         }
-                        const activeCacheExists = hasLessonCacheFile(sectionId, baseLessonMemory, data.bookSource);
+                        const activeCacheExists = hasLessonCacheFile(sectionId, data.bookSource);
 
                         if (hasVisualMetadataMarkup(normalizedCachedLesson)
                             && !hasDisallowedNewBookPageFallback(normalizedCachedLesson, sectionId, rawPages, data.bookSource)
@@ -4791,56 +4859,24 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
-    if (pathname === '/api/preference/draft' && req.method === 'POST') {
+    if (pathname === '/api/ask-guidance' && req.method === 'POST') {
+        const routeRequestId = crypto.randomUUID();
         try {
-            // LLM-spending route (design §2, review M5): calls OpenRouter
-            // unconditionally and reads no per-uid server data.
             const auth = await resolveAuth(req);
             if (REQUIRE_AUTH && !auth) { send401(res); return; }
-            const data = await readJsonBody(req);
-            const currentProfile = compactWhitespace(data.currentProfile || '').slice(0, 6000);
-            const instruction = compactWhitespace(data.instruction || '').slice(0, 1200);
-            if (!instruction) {
-                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
-                res.end(JSON.stringify({ error: 'Missing instruction' }));
-                return;
-            }
-            const messages = [
-                {
-                    role: 'system',
-                    content: [
-                        'You rewrite a student learning preference profile for an AI tutor.',
-                        'Return ONLY the rewritten Markdown profile.',
-                        'Do not add commentary, explanations, code fences, YAML, JSON, or version history.',
-                        'Keep it practical for prompt injection: goals, preferred teaching style, friction points, and tutor behavior.',
-                        'Preserve useful existing details unless the user asks to change them.',
-                        'Use concise Markdown headings and bullets.'
-                    ].join(' ')
-                },
-                {
-                    role: 'user',
-                    content: [
-                        '[Current Profile]',
-                        currentProfile || '(empty)',
-                        '',
-                        '[Student Edit Request]',
-                        instruction
-                    ].join('\n')
-                }
-            ];
-            const draft = await callOpenRouterChat({
-                model: 'anthropic/claude-haiku-4.5',
-                messages,
-                timeoutMs: 45000,
-                temperature: 0.25,
-                maxTokens: 1100
-            });
+            const data = parseGuidanceRequestBody(await readJsonBody(req));
+            const result = await guidanceService.createGuidance(data);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ ok: true, draft: draft.trim() }));
+            res.end(JSON.stringify(result));
         } catch (err) {
-            console.error('[API /api/preference/draft] Error:', err);
-            res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err.message || 'Preference draft failed' }));
+            const isGuidanceError = err && err.name === 'GuidanceServiceError';
+            const requestId = isGuidanceError && err.requestId ? err.requestId : routeRequestId;
+            const stage = isGuidanceError ? err.stage : 'validation';
+            const statusCode = isGuidanceError ? err.statusCode : 400;
+            const message = isGuidanceError ? err.message : (err.message || '引导请求无效');
+            console.error(`[API /api/ask-guidance:${requestId}] ${stage}:`, err.cause || err);
+            res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
+            res.end(JSON.stringify({ error: message, stage, request_id: requestId }));
         }
         return;
     }
@@ -4922,6 +4958,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (pathname === '/api/ask' && req.method === 'POST') {
+        const requestId = crypto.randomUUID();
         try {
             // LLM-spending route that ALSO reads/writes per-uid data (review
             // C2): uid must come from the verified token whenever one is
@@ -4938,10 +4975,36 @@ const server = http.createServer(async (req, res) => {
             const lessonContext = compactWhitespace(data.lessonContext || '');
             const language = data.language === 'zh' ? 'zh' : 'en';
             const uid = auth ? auth.uid : (data.uid || null);
+            const sessionId = data.session_id == null ? null : String(data.session_id);
+            const origin = data.origin || (sectionId || sectionTitle ? 'learn' : 'main');
+            let guidance = null;
+            if (Object.prototype.hasOwnProperty.call(data, 'sessionId')) {
+                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: 'Use session_id instead of sessionId', stage: 'validation', request_id: requestId }));
+                return;
+            }
+            if (sessionId && !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(sessionId)) {
+                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: 'Invalid session_id', stage: 'validation', request_id: requestId }));
+                return;
+            }
+            if (!['main', 'learn'].includes(origin)) {
+                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: 'origin must be main or learn', stage: 'validation', request_id: requestId }));
+                return;
+            }
+            try {
+                guidance = parseGuidanceSelection(data.guidance);
+            } catch (validationError) {
+                res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+                res.end(JSON.stringify({ error: validationError.message, stage: 'validation', request_id: requestId }));
+                return;
+            }
             const userMemory = uid ? await readUserMemory(uid) : null;
-            const userProfilePrompt = buildUserProfilePrompt(userMemory);
-            const userPrefs = userMemory && userMemory.quiz ? userMemory.quiz : {};
-            const answerLength = userPrefs.length || data.answerLength || 'medium';
+            const userProfilePrompt = buildTeachingInstructionsPrompt(userMemory);
+            const answerLength = ['fast', 'short'].includes(data.answerLength)
+                ? 'short'
+                : (['detailed', 'long'].includes(data.answerLength) ? 'long' : 'medium');
             const attachments = Array.isArray(data.attachments) ? data.attachments : [];
             const hasReadableAttachments = attachments.some(att => att && (
                 (att.type === 'image' && att.dataUrl) ||
@@ -5149,7 +5212,8 @@ const server = http.createServer(async (req, res) => {
                 attachments,
                 preparedAttachments,
                 answerLength,
-                examPriorityGuidance
+                examPriorityGuidance,
+                guidance
             });
 
             if (answerLength === 'short' && !explanation.includes('```')) {
@@ -5163,19 +5227,30 @@ const server = http.createServer(async (req, res) => {
             // Post-process pure python outputs into images
             explanation = await processEmbeddedPython(explanation, GENERATED_DIR);
 
-            // Persist this turn to the user's chat session (create on the first turn,
-            // append after). Best-effort: never let storage break the response.
-            let savedSessionId = data.session_id || data.sessionId || null;
+            // A signed-in answer is complete only after its real session turn
+            // has persisted. Unknown ids never fork a replacement session.
+            let savedSessionId = null;
             if (uid) {
-                try {
-                    savedSessionId = await persistSessionTurn(uid, savedSessionId, {
-                        userText: question,
-                        aiText: explanation,
-                        origin: 'main',
-                        sectionId,
-                        sectionTitle: sectionTitle || 'General Q&A'
-                    }) || savedSessionId;
-                } catch (e) { console.warn('[sessions] persist failed:', e.message); }
+                const persistence = await persistSessionTurn(uid, sessionId, {
+                    userText: question,
+                    aiText: explanation,
+                    origin,
+                    sectionId,
+                    sectionTitle: sectionTitle || 'General Q&A'
+                });
+                if (persistence.status === 'not_found') {
+                    console.warn(`[ASK:${requestId}] session not found: ${sessionId}`);
+                    res.writeHead(404, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'Session not found', stage: 'persistence', request_id: requestId }));
+                    return;
+                }
+                if (!['created', 'appended'].includes(persistence.status)) {
+                    console.error(`[ASK:${requestId}] session persistence failed:`, persistence.error || persistence.status);
+                    res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+                    res.end(JSON.stringify({ error: 'Answer generated but session persistence failed', stage: 'persistence', request_id: requestId }));
+                    return;
+                }
+                savedSessionId = persistence.sessionId;
             }
 
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
@@ -5188,6 +5263,7 @@ const server = http.createServer(async (req, res) => {
                 : `✅ 找到 ${relatedBooks.length} 个相关书页`;
             res.end(JSON.stringify({
                 explanation,
+                request_id: requestId,
                 session_id: savedSessionId,
                 bookPages: relatedBooks.map(item => ({
                     page: item.page,
@@ -5229,18 +5305,11 @@ const server = http.createServer(async (req, res) => {
 	                }
 	            }));
 
-            // ── Async: update user memory based on this Q&A turn ─────────────
-            // Fire-and-forget: does NOT block the response
-            if (uid) {
-                updateUserMemoryFromQA(uid, question, explanation, sectionId).catch(e =>
-                    console.warn('[MemoryUpdate] failed:', e.message)
-                );
-            }
             return;
         } catch (err) {
-            console.error('[API /api/ask] Error:', err);
+            console.error(`[API /api/ask:${requestId}] Error:`, err);
             res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: err.message || 'Unknown error' }));
+            res.end(JSON.stringify({ error: err.message || 'Unknown error', request_id: requestId }));
         }
         return;
     }
@@ -5345,6 +5414,14 @@ const server = http.createServer(async (req, res) => {
     if (handleStaticRoute(req, res, pathname)) return;
 });
 
+// Read-only tooling exports. Requiring this module must not start a listener;
+// cache verification uses the exact production normalization and format gates.
+module.exports = {
+    collectLessonFormatIssues,
+    prepareLessonForCache,
+    assertLessonFormatClean,
+};
+
 const IS_PREGEN_CLI = require.main === module && process.argv[2] === '--pregen-section';
 
 if (IS_PREGEN_CLI) {
@@ -5373,7 +5450,7 @@ if (IS_PREGEN_CLI) {
             console.error(err.message || String(err));
             process.exit(1);
         });
-} else {
+} else if (require.main === module) {
     // Eager JWKS fetch when auth is enforced: a typo'd CLERK_JWKS_URL shows
     // up in boot logs instead of as unexplained runtime 401s. Non-blocking,
     // never fatal (unlike the DB, verification is per-request fail-closed).

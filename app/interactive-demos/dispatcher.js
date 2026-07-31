@@ -82,7 +82,6 @@ function slugifyInteractiveDemoKey(value = '') {
 
 function getInteractiveDemoText(demo = {}) {
   const spec = getInteractiveDemoSpec(demo);
-  const mode = demo.mode_specific_visual_use || {};
   return [
     demo.title,
     demo.demo_title,
@@ -107,8 +106,7 @@ function getInteractiveDemoText(demo = {}) {
     spec.student_task_prompt,
     spec.what_to_notice,
     spec.observation_prompt,
-    JSON.stringify(spec || {}),
-    JSON.stringify(mode || {})
+    JSON.stringify(spec || {})
   ].filter(Boolean).join(' ');
 }
 
@@ -119,7 +117,6 @@ function getInteractiveDemoTitle(demo = {}, fallback = 'Interactive demo') {
 
 function getInteractiveDemoSubtitle(demo = {}) {
   const spec = getInteractiveDemoSpec(demo);
-  const mode = demo.mode_specific_visual_use || {};
   return compactWhitespace(
     demo.explanation
     || demo.content
@@ -129,8 +126,6 @@ function getInteractiveDemoSubtitle(demo = {}) {
     || spec.description
     || spec.student_prompt
     || spec.student_task_prompt
-    || mode.standard
-    || mode.cram
     || ''
   );
 }

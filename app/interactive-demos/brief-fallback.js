@@ -11,14 +11,14 @@
 function renderBriefDemoFallback(node, demo, family = 'brief') {
   const title = getInteractiveDemoTitle(demo, 'Interactive demo');
   const subtitle = getInteractiveDemoSubtitle(demo);
-  const mode = demo.mode_specific_visual_use || {};
   const spec = getInteractiveDemoSpec(demo);
-  const tabs = [
-    ['cram', mode.cram || spec.student_prompt || subtitle || ''],
-    ['standard', mode.standard || spec.description || subtitle || ''],
-    ['top_score', mode.top_score || spec.note_below_demo || spec.what_to_notice || '']
-  ].filter(([, value]) => compactWhitespace(value));
-  const initialTab = tabs[0] ? tabs[0][0] : 'standard';
+  const teachingEmphasis = compactWhitespace(
+    spec.student_prompt
+    || spec.description
+    || spec.what_to_notice
+    || subtitle
+    || ''
+  );
 
   node.innerHTML = `
     <section class="interactive-demo-shell interactive-demo-shell--brief interactive-demo-shell--${escapeHtml(family)}">
@@ -26,14 +26,9 @@ function renderBriefDemoFallback(node, demo, family = 'brief') {
         <div class="interactive-demo-title">${escapeHtml(title)}</div>
         <div class="interactive-demo-subtitle">${escapeHtml(subtitle || 'This section is ready to teach, with a compact brief instead of a blank panel.')}</div>
       </div>
-      ${tabs.length ? `
-        <div class="interactive-demo-tabs" role="tablist">
-          ${tabs.map(([key, label], index) => `<button type="button" class="interactive-demo-tab${key === initialTab ? ' is-active' : ''}" data-interactive-tab="${escapeHtml(key)}" aria-pressed="${key === initialTab ? 'true' : 'false'}">${escapeHtml(key.replace(/_/g, ' '))}</button>`).join('')}
-        </div>
-      ` : ''}
       <div class="interactive-demo-brief-card">
         <div class="interactive-demo-brief-label">Teaching emphasis</div>
-        <div class="interactive-demo-brief-copy" data-interactive-brief-copy>${escapeHtml(tabs.find(([key]) => key === initialTab)?.[1] || subtitle || '')}</div>
+        <div class="interactive-demo-brief-copy">${escapeHtml(teachingEmphasis)}</div>
       </div>
       <div class="interactive-demo-readouts">
         ${spec.note_below_demo ? `<div class="interactive-demo-readout"><strong>Note:</strong> ${decodeInlineMarkdownFragment(escapeHtml(spec.note_below_demo))}</div>` : ''}
@@ -44,20 +39,5 @@ function renderBriefDemoFallback(node, demo, family = 'brief') {
   `;
 
   const shellEl = node.querySelector('.interactive-demo-shell');
-  const copyEl = node.querySelector('[data-interactive-brief-copy]');
-  const tabsEl = node.querySelectorAll('[data-interactive-tab]');
-  const tabMap = new Map(tabs);
-  tabsEl.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      const key = tab.getAttribute('data-interactive-tab');
-      tabsEl.forEach((item) => {
-        const active = item === tab;
-        item.classList.toggle('is-active', active);
-        item.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-      if (copyEl) copyEl.textContent = tabMap.get(key) || '';
-    });
-  });
   if (shellEl) shellEl.classList.toggle('is-narrow', shellEl.clientWidth < 760);
 }
-

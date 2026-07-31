@@ -145,7 +145,6 @@ async function dismissIntro(page, base) {
 async function enterGuestMode(page, base) {
     await dismissIntro(page, base);
     await page.click('#guestModeBtnLogin[data-bound-guest-mode="1"]', { timeout: 25000 });
-    await page.click('#quizCloseBtn');
     await page.waitForSelector('#navSyllabusBtn', { timeout: 10000 });
 }
 

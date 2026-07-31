@@ -21,6 +21,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const { chromium } = require('playwright');
+const { enterGuestMode, ensureSyllabusOpen } = require('./test-utils.js');
 
 const PORT = Number(process.env.TUTOR_TEST_PORT || 9123);
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -77,18 +78,12 @@ function waitForHealth(timeoutMs = 15000) {
                 console.log(`  [page] ${t}`);
             }
         });
-        await page.goto(BASE, { waitUntil: 'domcontentloaded' });
-
-        // Landing -> guest mode -> dismiss onboarding quiz.
-        // The guest button's handler is bound only after the Clerk script
-        // settles (data-bound-guest-mode="1"), so wait for that attribute.
-        await page.click('#introGetStartedBtn');
-        await page.click('#guestModeBtnLogin[data-bound-guest-mode="1"]', { timeout: 25000 });
-        await page.click('#quizCloseBtn');
+        // Use the shared startup flow so this regression stays aligned with
+        // the rest of the Playwright harness after Quick Setup was deleted.
+        await enterGuestMode(page, BASE);
 
         // Full user click path: Syllabus -> B Background -> B.8 -> subtopic
-        await page.click('#navSyllabusBtn');
-        await page.waitForSelector('#sidebarSyllabusPanel.is-open:not(.is-animating)');
+        await ensureSyllabusOpen(page);
         await page.click('#courseSyllabus .syllabus-chapter:has-text("B Background")');
         await page.click('#courseSyllabus .syllabus-section[data-section="B.8 Appendix: Useful Mathematical Formulas"]');
         const card = page.locator(`.chapter-overview-subcard[data-sublesson-title="${SUBTOPIC}"]`);

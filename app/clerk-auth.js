@@ -19,11 +19,10 @@
 //   - API_BASE                        (app.js)
 //   - currentBook                     (app.js)
 //   - syllabusData                    (data/syllabus-data.js)
-//   - DEFAULT_PREFERENCE_PROFILE      (data/preferences.js)
 //   - updatePreferenceSidebarSummary  (preference-profile.js, Phase 2 #14)
-//   - updateLearnModeBadge, showLoginView, showWelcome, showSettingsView,
-//     hideIntroLanding, openLearnMode, openChapterOverviewMode, showQuiz,
-//     resetQuiz, isB8TextbookOnlySection, shouldOpenSectionAsChapterOverview
+//   - showLoginView, showWelcome, showSettingsView, showPreferenceView,
+//     hideIntroLanding, openLearnMode, openChapterOverviewMode,
+//     isB8TextbookOnlySection, shouldOpenSectionAsChapterOverview
 //                                       (app.js)
 //   - appShell, welcomeScreen, answerScreen, learnView, settingsView,
 //     courseTrackerView, mistakeNotebookView,
@@ -47,7 +46,6 @@
 //     renderUserBadge, renderWorkspaceAccountBar,
 //     bindWorkspaceAccountBar, setWorkspaceAccountBarVisible,
 //     hideAuthOverlay, showAuthOverlay
-//   - utility: isQuizProfileComplete
 //   - DOM consts: sidebarSettingsBtn, settingsUserCard, workspaceAccountBar,
 //     workspaceGoogleBtn, workspaceAccountAvatar
 
@@ -72,6 +70,17 @@ const HAD_SESSION_HINT_KEY = 'aquarius-had-session';
 // Guest memory lives ONLY in sessionStorage (design D3: guest data dies
 // with the tab, never touches the backend or the database).
 const GUEST_MEMORY_KEY = 'aquarius-guest-memory';
+const BROWSER_MEMORY_VERSION_KEY = 'aquarius-memory-storage-version';
+const BROWSER_MEMORY_VERSION = '2';
+const LEGACY_MEMORY_FIELDS = [
+  'quiz',
+  'quizResetAt',
+  'preferenceProfile',
+  'inferredStyle',
+  'knownConcepts',
+  'weakConcepts',
+  'sessionSummaries'
+];
 
 let currentUser = null;  // { uid, name, email, imageUrl }
 let userMemory  = {};    // loaded from backend after login
@@ -88,13 +97,6 @@ const settingsUserCard = document.getElementById('settingsUserCard');
 const workspaceAccountBar = document.getElementById('workspaceAccountBar');
 const workspaceGoogleBtn = document.getElementById('workspaceGoogleBtn');
 const workspaceAccountAvatar = document.getElementById('workspaceAccountAvatar');
-
-function isQuizProfileComplete(memory = userMemory) {
-  return Boolean(memory && memory.quiz && ['track', 'math', 'timeline', 'preference', 'priority'].every(k => {
-    const v = memory.quiz[k];
-    return Array.isArray(v) ? v.length > 0 : !!v;
-  }));
-}
 
 function hasPendingAuthReturnIntent() {
   try { return Boolean(sessionStorage.getItem(AUTH_RETURN_INTENT_KEY)); } catch (_) { return false; }
@@ -137,13 +139,32 @@ function clearGuestSessionKeys() {
   try { sessionStorage.removeItem(GUEST_MEMORY_KEY); } catch (_) {}
 }
 
-function defaultPreferenceProfileDoc() {
-  return {
-    markdown: DEFAULT_PREFERENCE_PROFILE,
-    updatedAt: new Date().toISOString(),
-    source: 'default',
-    manualEdited: false
-  };
+function stripLegacyMemoryFields(memory) {
+  const cleaned = memory && typeof memory === 'object' ? { ...memory } : {};
+  LEGACY_MEMORY_FIELDS.forEach(field => delete cleaned[field]);
+  cleaned.teachingInstructions = typeof cleaned.teachingInstructions === 'string'
+    ? cleaned.teachingInstructions.trim()
+    : '';
+  return cleaned;
+}
+
+function migrateLegacyBrowserMemory() {
+  try {
+    if (localStorage.getItem(BROWSER_MEMORY_VERSION_KEY) !== BROWSER_MEMORY_VERSION) {
+      localStorage.removeItem('tutorQuiz');
+      localStorage.setItem(BROWSER_MEMORY_VERSION_KEY, BROWSER_MEMORY_VERSION);
+    }
+  } catch (_) {}
+  try { sessionStorage.removeItem('tutorQuiz'); } catch (_) {}
+
+  try {
+    const raw = sessionStorage.getItem(GUEST_MEMORY_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    sessionStorage.setItem(GUEST_MEMORY_KEY, JSON.stringify(stripLegacyMemoryFields(parsed)));
+  } catch (_) {
+    try { sessionStorage.removeItem(GUEST_MEMORY_KEY); } catch (_) {}
+  }
 }
 
 function loadGuestMemory() {
@@ -152,23 +173,22 @@ function loadGuestMemory() {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (parsed && typeof parsed === 'object') {
-        if (!parsed.preferenceProfile || !parsed.preferenceProfile.markdown) {
-          parsed.preferenceProfile = defaultPreferenceProfileDoc();
-        }
-        return parsed;
+        return stripLegacyMemoryFields(parsed);
       }
     }
   } catch (_) {}
-  return { preferenceProfile: defaultPreferenceProfileDoc() };
+  return { teachingInstructions: '' };
 }
 
 function saveGuestMemory(memory) {
   if (!currentUser || !currentUser.isGuest) return;
-  try { sessionStorage.setItem(GUEST_MEMORY_KEY, JSON.stringify(memory || {})); } catch (_) {}
+  try { sessionStorage.setItem(GUEST_MEMORY_KEY, JSON.stringify(stripLegacyMemoryFields(memory))); } catch (_) {}
 }
 
+migrateLegacyBrowserMemory();
+
 // Quiet in-tab guest restore on reload: rebuilds currentUser/userMemory from
-// sessionStorage WITHOUT navigating and WITHOUT the quiz popup — the boot
+// sessionStorage WITHOUT navigating — the boot
 // restore step (app.js maybeBootRestoreLastLocation) handles where to land.
 function rehydrateGuestSession() {
   if (currentUser) return false;
@@ -179,7 +199,6 @@ function rehydrateGuestSession() {
   userMemory = loadGuestMemory();
   renderUserBadge();
   updatePreferenceSidebarSummary();
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   return true;
 }
 
@@ -700,22 +719,16 @@ async function onUserSignedIn(user) {
     const res = await apiFetch('/api/memory');
     userMemory = res.ok ? await res.json() : {};
   } catch (_) { userMemory = {}; }
-  if (!userMemory.preferenceProfile || !userMemory.preferenceProfile.markdown) {
-    userMemory.preferenceProfile = defaultPreferenceProfileDoc();
-  }
   updatePreferenceSidebarSummary();
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   renderUserBadge();
 
-  const quizDone = isQuizProfileComplete(userMemory);
   const shouldEnterWorkspace = navigationAllowed && (authReturnIntent === 'workspace' || authReturnIntent === 'learn');
 
   if (!shouldEnterWorkspace) return;
 
   hideIntroLanding(true);
-  if (authReturnIntent === 'learn' && quizDone && continueToPendingLearnTarget()) return;
+  if (authReturnIntent === 'learn' && continueToPendingLearnTarget()) return;
   showWelcome();
-  if (authReturnIntent === 'learn' && !quizDone) showQuiz();
 }
 
 async function syncCurrentUserWithoutNavigation(user) {
@@ -732,11 +745,7 @@ async function syncCurrentUserWithoutNavigation(user) {
     const res = await apiFetch('/api/memory');
     userMemory = res.ok ? await res.json() : {};
   } catch (_) { userMemory = {}; }
-  if (!userMemory.preferenceProfile || !userMemory.preferenceProfile.markdown) {
-    userMemory.preferenceProfile = defaultPreferenceProfileDoc();
-  }
   updatePreferenceSidebarSummary();
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   renderUserBadge();
   // Plain-reload path (design D2): a restored session parks here with no
   // navigation — the boot-restore step decides whether to reopen the last
@@ -769,9 +778,6 @@ function startGuestMode() {
   if (topbar) topbar.classList.add('hidden');
   renderUserBadge();
   updatePreferenceSidebarSummary();
-  // Same rule as fresh sign-in: only quiz a guest whose profile is
-  // incomplete (a returning in-tab guest keeps their answers).
-  if (!isQuizProfileComplete(userMemory)) showQuiz();
 }
 
 // Helper for handling sign-out
@@ -821,7 +827,7 @@ function renderUserBadge() {
           <div class="settings-user-meta" style="font-family:'DM Mono', monospace; font-size:11px; color:#94a3b8; font-weight:600; letter-spacing:1px; margin-top:4px;">ID: #${shortUid.toUpperCase()}</div>
         </div>
         <div class="settings-user-actions" style="display:flex; flex-direction:column; gap:8px;">
-          <button class="settings-user-link" onclick="resetQuiz()" type="button" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:6px 12px; font-weight:700; color:#475569; font-size:12px; box-shadow:0 2px 0 #cbd5e1; cursor:pointer;">Preferences</button>
+          <button class="settings-user-link" onclick="showPreferenceView()" type="button" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:6px 12px; font-weight:700; color:#475569; font-size:12px; box-shadow:0 2px 0 #cbd5e1; cursor:pointer;">教学要求</button>
           <button class="settings-user-link settings-user-danger" onclick="handleSignOut()" type="button" style="background:#fff1f2; border:2px solid #fca5a5; border-radius:10px; padding:6px 12px; font-weight:800; color:#e11d48; font-size:12px; box-shadow:0 2px 0 #fca5a5; cursor:pointer;">Sign out</button>
         </div>
       </div>

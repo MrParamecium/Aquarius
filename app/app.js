@@ -329,143 +329,15 @@ function renderCourseTracker() {
 
 
 
-async function resetQuiz() {
-  if (!currentUser) return;
-  if (currentUser.isGuest) {
-    // Guest memory is sessionStorage-only (D3): no backend traffic.
-    if (userMemory) userMemory.quiz = {};
-    saveGuestMemory(userMemory);
-  } else {
-    try {
-      const res = await apiFetch('/api/memory', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resetQuiz: true })
-      });
-      if (!res.ok) console.warn('[quiz] reset failed:', res.status);
-    } catch (_) {}
-    if (userMemory) userMemory.quiz = {};
-  }
-  localStorage.removeItem('tutorQuiz');
-  quizAnswers = {};
-  showQuiz({ returnView: 'settings' });
-}
-
-const settingsResetQuizBtn = document.getElementById('settingsResetQuizBtn');
-if (settingsResetQuizBtn) {
-  settingsResetQuizBtn.addEventListener('click', async () => {
-    await resetQuiz();
-    showSettingsView();
-  });
-}
-
-// ──────────────────────────────
-// QUIZ
-// ──────────────────────────────
-// QUIZ_QUESTIONS moved to data/quiz-questions.js (Phase 1 #2).
-
-let quizStep = 0;
-let quizAnswers = {};
-let quizReturnView = null;
-
-function getTrackMeta(track) {
-  switch (track) {
-    case 'cram':
-      return { label: '速通保分', en: 'CRAM MODE' };
-    case 'standard':
-      return { label: '标准提分', en: 'STANDARD MODE' };
-    case 'top_score':
-      return { label: '冲刺高分', en: 'TOP SCORE MODE' };
-    default:
-      return { label: '学习模式', en: 'LEARNING MODE' };
-  }
-}
-
-function updateLearnModeBadge(track) {
-  if (typeof learnModeBadge === 'undefined' || !learnModeBadge) return;
-  const meta = getTrackMeta(track);
-  learnModeBadge.textContent = meta.en;
-  learnModeBadge.title = meta.label;
-}
-
-function showQuiz(options = {}) {
-  quizStep = 0;
-  quizAnswers = {};
-  quizReturnView = options.returnView || null;
-  const overlay = document.getElementById('quizOverlay');
-  if (overlay) { overlay.style.display = 'flex'; }
-  renderQuizStep();
-}
-
-function closeQuizWithoutSaving() {
-  const overlay = document.getElementById('quizOverlay');
-  if (overlay) overlay.style.display = 'none';
-  quizStep = 0;
-  quizAnswers = {};
-  quizReturnView = null;
-  renderQuizStep();
-  renderUserBadge();
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
-}
-
 function hasStartupViewClaimedScreen() {
   const intro = document.getElementById('introLanding');
-  const quizOverlay = document.getElementById('quizOverlay');
   const params = new URLSearchParams(window.location.search);
   return Boolean(
     (intro && !intro.classList.contains('hidden')) ||
     (loginView && !loginView.classList.contains('hidden')) ||
-    (quizOverlay && quizOverlay.style.display && quizOverlay.style.display !== 'none') ||
     params.get(AUTH_VIEW_FLAG) === 'login' ||
     params.has(AUTH_CALLBACK_FLAG)
   );
-}
-
-function renderQuizStep() {
-  const q = QUIZ_QUESTIONS[quizStep];
-  const container = document.getElementById('quizSteps');
-  const stepNum = document.getElementById('quizStepNum');
-  const nextBtn = document.getElementById('quizNextBtn');
-  if (!container || !q) return;
-  if (stepNum) stepNum.textContent = quizStep + 1;
-  if (nextBtn) {
-    nextBtn.disabled = true;
-    nextBtn.textContent = quizStep < QUIZ_QUESTIONS.length - 1 ? 'Next →' : 'Start Learning →';
-  }
-  container.innerHTML = `
-    <div style="font-size:18px;font-weight:800;color:#1E293B;margin-bottom:12px;line-height:1.4;font-family:'Quicksand', sans-serif;">${q.en}</div>
-    ${q.multi && q.maxSelect ? `<div style="font-size:13px;color:#64748B;margin-bottom:16px;font-weight:700;font-family:'Nunito', sans-serif;">Choose up to ${q.maxSelect}</div>` : '<div style="margin-bottom:20px;"></div>'}
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      ${q.options.map(opt => `
-        <button class="quiz-option" data-value="${opt.value}"
-          style="text-align:left;padding:14px 20px;border:2px solid #cbd5e1;border-radius:16px;background:#fff;font-size:15px;color:#475569;cursor:pointer;transition:all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);font-family:'Nunito', sans-serif;font-weight:700;outline:none;"
-          onmouseover="if(this.dataset.selected!=='true') { this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 0 #e2e8f0'; }"
-          onmouseout="if(this.dataset.selected!=='true') { this.style.transform='none'; this.style.boxShadow='none'; }">${opt.en}</button>
-      `).join('')}
-    </div>
-  `;
-  if (q.multi && !Array.isArray(quizAnswers[q.key])) quizAnswers[q.key] = [];
-  container.querySelectorAll('.quiz-option').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (q.multi) {
-        const val = btn.dataset.value; const arr = quizAnswers[q.key]; const idx = arr.indexOf(val); const limit = q.maxSelect || Infinity;
-        if (idx === -1) {
-          if (arr.length >= limit) return; arr.push(val);
-          btn.dataset.selected = 'true'; btn.style.borderColor = '#38BDF8'; btn.style.background = '#F0F9FF'; btn.style.color = '#0284C7'; btn.style.boxShadow = '0 4px 0px #BAE6FD'; btn.style.transform = 'translateY(-2px)';
-        } else {
-          arr.splice(idx, 1); btn.dataset.selected = 'false'; btn.style.borderColor = '#cbd5e1'; btn.style.background = '#fff'; btn.style.color = '#475569'; btn.style.boxShadow = 'none'; btn.style.transform = 'none';
-        }
-        if (nextBtn) nextBtn.disabled = arr.length === 0;
-      } else {
-        container.querySelectorAll('.quiz-option').forEach(b => {
-          b.dataset.selected = 'false'; b.style.borderColor = '#cbd5e1'; b.style.background = '#fff'; b.style.color = '#475569'; b.style.boxShadow = 'none'; b.style.transform = 'none';
-        });
-        btn.dataset.selected = 'true'; btn.style.borderColor = '#38BDF8'; btn.style.background = '#F0F9FF'; btn.style.color = '#0284C7'; btn.style.boxShadow = '0 4px 0px #BAE6FD'; btn.style.transform = 'translateY(-2px)';
-        quizAnswers[q.key] = btn.dataset.value;
-        if (nextBtn) nextBtn.disabled = false;
-      }
-    });
-  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -486,77 +358,8 @@ document.addEventListener('DOMContentLoaded', () => {
   } finally {
     finishStartupBoot();
   }
-  const nextBtn = document.getElementById('quizNextBtn');
-  const quizCloseBtn = document.getElementById('quizCloseBtn');
-  if (quizCloseBtn && !quizCloseBtn.dataset.boundClose) {
-    quizCloseBtn.dataset.boundClose = '1';
-    quizCloseBtn.addEventListener('click', () => {
-      closeQuizWithoutSaving();
-      showWelcome();
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', async () => {
-      quizStep++;
-      if (quizStep < QUIZ_QUESTIONS.length) {
-        renderQuizStep();
-      } else {
-        // Done: save quiz — backend for signed-in users, sessionStorage for
-        // guests (D3: guest data never touches the server).
-        const overlay = document.getElementById('quizOverlay');
-        if (overlay) overlay.style.display = 'none';
-        if (currentUser) {
-          try {
-            const quizProfile = buildPreferenceProfileAfterQuiz(quizAnswers, userMemory?.preferenceProfile || {});
-            if (currentUser.isGuest) {
-              userMemory = { ...(userMemory || {}), quiz: { ...quizAnswers }, preferenceProfile: quizProfile };
-              saveGuestMemory(userMemory);
-            } else {
-              const res = await apiFetch('/api/memory', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  quiz: quizAnswers,
-                  preferenceProfile: quizProfile
-                })
-              });
-              if (!res.ok) console.warn('[quiz] save failed:', res.status); // diagnosable; state merge below already guards
-              const data = await res.json();
-              userMemory = data.memory || userMemory;
-              // Also persist quiz locally so profileOverride always works
-              if (userMemory && userMemory.quiz) {
-                localStorage.setItem('tutorQuiz', JSON.stringify(userMemory.quiz));
-              }
-            }
-            syncPreferenceEditorFromMemory();
-          } catch (_) {}
-        }
-        if (userMemory && userMemory.quiz && !userMemory.quiz.timeline) {
-          userMemory.quiz.timeline = 'two_weeks';
-        }
-        if (userMemory && userMemory.quiz && !userMemory.quiz.goal && userMemory.quiz.track) {
-          userMemory.quiz.goal = userMemory.quiz.track;
-        }
-        updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
-        renderUserBadge();
-        const returnView = quizReturnView;
-        quizReturnView = null;
-        if (returnView === 'settings') {
-          showSettingsView();
-          return;
-        }
-        if (returnView === 'preference') {
-          showPreferenceView();
-          return;
-        }
-        if (continueToPendingLearnTarget()) return;
-        showWelcome();
-      }
-    });
-  }
-
   // Always try Clerk if key is set. After the auth layer settles: quietly
-  // rehydrate an in-tab guest session (no navigation, no quiz popup), then
+  // rehydrate an in-tab guest session, then
   // attempt the one-shot last-location restore (no-op unless its boot
   // conditions hold — see maybeBootRestoreLastLocation).
   Promise.resolve(initClerk()).finally(() => {
@@ -568,20 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // getUid() deleted in Stage B of the 07-05 task: identity now travels in the
 // Authorization header via apiFetch; client-supplied uids are dead plumbing.
-
-// Save a session summary after lesson load (signed-in only — guest memory
-// is client-side and profile prompts never run server-side for guests)
-async function saveSessionSummary(summary) {
-  if (!currentUser || currentUser.isGuest || !summary) return;
-  try {
-    await apiFetch('/api/memory', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionSummary: summary })
-    });
-  } catch (_) {}
-}
-
 
 // 2nd Edition was retired 2026-06-19. The bookSource value is hardcoded to 'new'
 // (3rd Edition) and shipped to the server unchanged for backward compatibility
@@ -604,6 +393,7 @@ const navSettingsBtn = document.getElementById('sidebarSettingsBtn');
 const sidebarSyllabusPanel = document.getElementById('sidebarSyllabusPanel');
 const welcomeCoverBtn = document.getElementById('welcomeCoverBtn');
 const settingsPageBackBtn = document.getElementById('settingsPageBackBtn');
+const settingsPreferencesBtn = document.getElementById('settingsPreferencesBtn');
 const courseTrackerCloseBtn = document.getElementById('courseTrackerCloseBtn');
 const courseTrackerResetBtn = document.getElementById('courseTrackerResetBtn');
 const courseTrackerTableBody = document.getElementById('courseTrackerTableBody');
@@ -714,6 +504,9 @@ if (settingsPageBackBtn) {
     showWelcome();
   });
 }
+if (settingsPreferencesBtn) {
+  settingsPreferencesBtn.addEventListener('click', showPreferenceView);
+}
 if (preferencePageBackBtn) {
   preferencePageBackBtn.addEventListener('click', () => {
     showWelcome();
@@ -782,6 +575,7 @@ let currentAbortController = null;
 
 const tutorState = {
   chatHistory: [],
+  chatSessionId: null,
   chatSessionStartTime: Date.now(),
   currentBookPages: [],
   currentWebSources: [],
@@ -789,6 +583,7 @@ const tutorState = {
   learnSectionTitle: '',
   learnLessonMarkdown: '',
   learnHistory: [],
+  learnSessionId: null,
   learnBookPages: [],
   learnWebSources: []
 };
@@ -886,7 +681,6 @@ function setSendState() {
 // ============================================================
 const learnOverlay    = null; // replaced by learnView inline mode
 const learnTitle      = document.getElementById('learnTitle');
-const learnModeBadge  = document.getElementById('learnModeBadge');
 const learnClose      = document.getElementById('learnClose');
 const learnIntroCard  = document.getElementById('learnIntroCard');
 const learnIntroMeta  = document.getElementById('learnIntroMeta');
@@ -1055,15 +849,6 @@ function decodeInlineMarkdownFragment(markdown) {
   const withoutHeading = text.replace(/^##\s+.*?(?:\n|$)/, '').trim();
   return withoutHeading ? markdownToHtml(withoutHeading) : '';
 }
-
-function getActiveLearnTrack() {
-  return (userMemory && userMemory.quiz && userMemory.quiz.track) || 'standard';
-}
-
-
-
-
-
 
 // SYNC: keep identical to ws-bridge.js compactWhitespace.
 // Node/browser split keeps two copies; drift risk is real but tolerated.
@@ -2289,6 +2074,7 @@ if (learnChatContent && learnChatEmptyState) {
 function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
   console.log('[openChapterOverviewMode]', { sectionId, sectionTitle, subsectionCount: subsections.length, currentBook });
   if (learnAbort) learnAbort.abort();
+  window.guidanceMode?.resetScope('learn');
   learnRequestSeq += 1;
   closeTextbookFocusMode();
   learnSectionId = sectionId;
@@ -2304,7 +2090,6 @@ function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
   _setLearnMode('lecture');
 
   learnTitle.textContent = sectionTitle;
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   clearLearnRenderedContent('');
   showLearnView();
   if (learnIntroCard) learnIntroCard.classList.add('hidden');
@@ -2327,10 +2112,12 @@ function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
 async function openLearnMode(sectionId, sectionTitle, subsections = [], options = {}) {
   console.log('[openLearnMode]', { sectionId, sectionTitle, currentBook });
   if (learnAbort) learnAbort.abort();
+  window.guidanceMode?.resetScope('learn');
   learnRequestSeq += 1;
   closeTextbookFocusMode();
   learnSectionId = sectionId;
   learnSectionTitle = sectionTitle;
+  tutorState.learnSessionId = options.sessionId || null;
   recordLastLocation('learn', { sectionId });
   learnParentOverviewContext = options.parentOverviewContext || (
     subsections === null ? findParentOverviewContextForSubsection(sectionId, sectionTitle) : null
@@ -2344,7 +2131,6 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
   _setLearnMode('lecture');
 
   learnTitle.textContent = sectionTitle;
-  updateLearnModeBadge(userMemory && userMemory.quiz ? userMemory.quiz.track : null);
   if(learnIntroCard) learnIntroCard.classList.add('hidden');
   clearLearnRenderedContent('Preparing lesson...');
   showLearnView();
@@ -2536,8 +2322,6 @@ async function startLesson(options = {}) {
     if (isMobileLearnPanelLayout()) setMobileLearnPanel('lecture');
     else openLearnQaSidebar();
     setLearnLoading(false);
-    // Async: save session summary
-    saveSessionSummary(`Studied section "${learnSectionTitle}".`);
   } catch (err) {
     hideSplash();
     if (err.name === 'AbortError') return;
@@ -3004,11 +2788,84 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
   syncTextbookFocusQaFromLearnChat();
 
   if (learnAbort) learnAbort.abort();
-  learnAbort = new AbortController();
-  const localLearnSignal = learnAbort.signal; // capture before any reassignment
+  const localLearnController = new AbortController();
+  learnAbort = localLearnController;
+  const localLearnSignal = localLearnController.signal;
+  const answerEl = document.getElementById(answerId);
+  const answerDiv = answerEl?.querySelector('.fub-a') || answerEl;
+
+  let groundedTurn = true;
+  let casualReply = '';
+  if (getModelReadableAttachments(attachments).length === 0) {
+    const intent = await callIntent(prompt, localLearnSignal, {
+      history: tutorState.learnHistory.slice(-6).map(({ role, content }) => ({ role, content })),
+      sectionId: tutorState.learnSectionId,
+      sectionTitle: tutorState.learnSectionTitle,
+      language: promptLang
+    });
+    groundedTurn = intent.grounded !== false;
+    casualReply = groundedTurn ? '' : (intent.reply || '');
+  }
+  if (learnAbort !== localLearnController) return;
+  if (!groundedTurn) {
+    if (answerDiv) {
+      answerDiv.className = 'fub-a learn-explain-content';
+      answerDiv.textContent = casualReply;
+    }
+    tutorState.learnHistory.push(
+      { role: 'user', content: prompt },
+      { role: 'assistant', content: casualReply }
+    );
+    syncTextbookFocusQaFromLearnChat();
+    if (learnChatPopoverScroll) learnChatPopoverScroll.innerHTML = learnChatContent.innerHTML || '';
+    return;
+  }
+
+  let selectedGuidance = window.guidanceMode?.getSelection('learn') || null;
+  if (window.guidanceMode?.isEnabled() && !selectedGuidance && answerDiv) {
+    const guidanceResult = await window.guidanceMode.requestChoice({
+      scope: 'learn',
+      signal: localLearnSignal,
+      mount: answerDiv,
+      payload: {
+        prompt,
+        history: tutorState.learnHistory.slice(-8).map(({ role, content }) => ({
+          role,
+          content: String(content || '').slice(0, 2000)
+        })),
+        sectionId: String(tutorState.learnSectionId || '').slice(0, 80),
+        sectionTitle: String(tutorState.learnSectionTitle || '').slice(0, 180),
+        lessonContext: compactWhitespace(tutorState.learnLessonMarkdown || '').slice(0, 1200),
+        bookSource: 'new',
+        language: promptLang
+      }
+    });
+    if (guidanceResult.status === 'cancelled') {
+      if (learnAbort !== localLearnController) return;
+      learnFollowupInput.value = prompt;
+      autoResize(learnFollowupInput);
+      learnFollowupBtn.disabled = false;
+      if (learnFollowupInputPopover) {
+        learnFollowupInputPopover.value = prompt;
+        autoResize(learnFollowupInputPopover);
+      }
+      if (learnFollowupBtnPopover) learnFollowupBtnPopover.disabled = false;
+      if (typeof textbookFocusQaInput !== 'undefined' && textbookFocusQaInput) textbookFocusQaInput.value = prompt;
+      attachments.forEach(item => attachmentsLearn.push(item));
+      renderAttachPreview(attachmentsLearn, 'attachPreviewLearn');
+      return;
+    }
+    selectedGuidance = guidanceResult.guidance || null;
+  }
+
+  if (answerDiv) {
+    answerDiv.className = 'fub-a ghost';
+    answerDiv.innerHTML = buildSearchProgressMarkup('followup', promptLang);
+  }
+  if (learnChatPopoverScroll) learnChatPopoverScroll.innerHTML = learnChatContent.innerHTML || '';
+  syncTextbookFocusQaFromLearnChat();
 
   let learnStep = 1;
-  const answerEl = document.getElementById(answerId);
   if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
   window.loadingTimerLearn = setInterval(() => {
     if (!answerEl) return clearInterval(window.loadingTimerLearn);
@@ -3051,8 +2908,12 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
       answerLength: selectedAnswerLength,
       answerStyleInstruction: getAnswerStyleInstruction(selectedAnswerLength, detectLang(prompt)),
       language: detectLang(prompt),
-      attachments: getModelReadableAttachments(attachments)
+      attachments: getModelReadableAttachments(attachments),
+      guidance: selectedGuidance || undefined,
+      session_id: tutorState.learnSessionId || undefined,
+      origin: 'learn'
     });
+    if (learnAbort !== localLearnController) return;
 
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
 
@@ -3093,6 +2954,8 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
       { role: 'user', content: prompt },
       { role: 'assistant', content: data.explanation || '' }
     );
+    if (typeof data.session_id === 'string' && data.session_id) tutorState.learnSessionId = data.session_id;
+    window.guidanceMode?.markDone();
 
     if (Array.isArray(data.bookPages) && data.bookPages.length) {
       tutorState.learnBookPages = data.bookPages;
@@ -3108,6 +2971,7 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
     updateRecentConversations('learn:stream-finished');
     learnChatScroll.scrollTop = learnChatScroll.scrollHeight;
   } catch (err) {
+    if (learnAbort !== localLearnController) return;
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
     if (err.name === 'AbortError') return;
     const target = document.getElementById(answerId);
@@ -4900,7 +4764,14 @@ async function callAsk(prompt, signal, extra = {}) {
     throw new Error(text || `HTTP ${res.status}`);
   }
 
-  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  if (!res.ok) {
+    const suffix = [data.stage ? `stage=${data.stage}` : '', data.request_id ? `request=${data.request_id}` : ''].filter(Boolean).join(', ');
+    const error = new Error(`${data.error || `HTTP ${res.status}`}${suffix ? ` (${suffix})` : ''}`);
+    error.stage = data.stage || '';
+    error.requestId = data.request_id || '';
+    error.status = res.status;
+    throw error;
+  }
   return data;
 }
 
@@ -5043,7 +4914,9 @@ async function sendQuestion(rawPrompt, source = 'auto') {
   if (!prompt && attachmentsMain.length === 0 && attachmentsFollowup.length === 0) return;
 
   const isFollowup = source === 'followup' || (source === 'auto' && (document.activeElement === followupInput || !!followupInput.value.trim()));
+  if (!isFollowup) window.guidanceMode?.resetScope('main');
   if (!isFollowup && (!tutorState.chatHistory || tutorState.chatHistory.length === 0)) {
+    tutorState.chatSessionId = null;
     tutorState.chatSessionStartTime = Date.now();
   }
   const attachments = isFollowup
@@ -5105,20 +4978,22 @@ async function sendQuestion(rawPrompt, source = 'auto') {
 
   // Abort any in-flight request
   if (currentAbortController) currentAbortController.abort();
-  currentAbortController = new AbortController();
+  const questionAbortController = new AbortController();
+  currentAbortController = questionAbortController;
   stopBtn.classList.remove('hidden');
 
   // ── Triage: casual/non-question turns skip the grounded pipeline entirely ──
   let groundedTurn = true;
   let casualReply = '';
   if (!hasReadableAttachments) {
-    const intent = await callIntent(prompt, currentAbortController.signal, {
+    const intent = await callIntent(prompt, questionAbortController.signal, {
       history: tutorState.chatHistory.slice(-6).map(({ role, content }) => ({ role, content })),
       language: detectLang(prompt)
     });
     groundedTurn = intent.grounded !== false;
     casualReply = groundedTurn ? '' : (intent.reply || '');
   }
+  if (currentAbortController !== questionAbortController) return;
   if (!groundedTurn) {
     currentAbortController = null;
     stopBtn.classList.add('hidden');
@@ -5133,6 +5008,47 @@ async function sendQuestion(rawPrompt, source = 'auto') {
     answerScroll.scrollTop = isFollowup ? answerScroll.scrollHeight : 0;
     setStatus('Done', 'done');
     return;
+  }
+
+  let selectedGuidance = window.guidanceMode?.getSelection('main') || null;
+  if (window.guidanceMode?.isEnabled() && !selectedGuidance) {
+    const guidanceMountId = `main-guidance-${Date.now()}`;
+    renderMainConversationThread({
+      pendingPrompt: prompt,
+      pendingImages: turnImages,
+      pendingAssistantHtml: `<div class="guidance-mount" id="${guidanceMountId}"></div>`,
+      pendingAssistantClass: 'main-chat-turn-pending'
+    });
+    const guidanceMount = document.getElementById(guidanceMountId);
+    const guidanceResult = await window.guidanceMode.requestChoice({
+      scope: 'main',
+      signal: questionAbortController.signal,
+      mount: guidanceMount,
+      payload: {
+        prompt,
+        history: tutorState.chatHistory.slice(-8).map(({ role, content }) => ({
+          role,
+          content: String(content || '').slice(0, 2000)
+        })),
+        bookSource: 'new',
+        language: detectLang(prompt)
+      }
+    });
+    if (guidanceResult.status === 'cancelled') {
+      if (currentAbortController !== questionAbortController) return;
+      currentAbortController = null;
+      stopBtn.classList.add('hidden');
+      setStatus('', 'idle');
+      const targetInput = isFollowup ? followupInput : userInput;
+      targetInput.value = prompt;
+      autoResize(targetInput);
+      const targetAttachments = isFollowup ? attachmentsFollowup : attachmentsMain;
+      visibleAttachments.forEach(item => targetAttachments.push(item));
+      renderAttachPreview(targetAttachments, isFollowup ? 'attachPreviewFollowup' : 'attachPreviewMain');
+      setSendState();
+      return;
+    }
+    selectedGuidance = guidanceResult.guidance || null;
   }
   // Grounded turn: swap the neutral "Thinking…" card for the grounded one.
   renderMainConversationThread({
@@ -5154,7 +5070,7 @@ async function sendQuestion(rawPrompt, source = 'auto') {
   }, 1500);
 
   try {
-    const data = await callAsk(prompt, currentAbortController.signal, {
+    const data = await callAsk(prompt, questionAbortController.signal, {
       mode: isFollowup ? 'followup' : 'ask',
       history: tutorState.chatHistory.slice(-8).map(({ role, content }) => ({ role, content })),
       bookPages: hasReadableAttachments ? [] : tutorState.currentBookPages,
@@ -5164,8 +5080,12 @@ async function sendQuestion(rawPrompt, source = 'auto') {
       answerLength: answerLength,
       answerStyleInstruction: getAnswerStyleInstruction(answerLength, detectLang(prompt)),
       language: detectLang(prompt),
-      attachments: getModelReadableAttachments(attachments)
+      attachments: getModelReadableAttachments(attachments),
+      guidance: selectedGuidance || undefined,
+      session_id: tutorState.chatSessionId || undefined,
+      origin: 'main'
     });
+    if (currentAbortController !== questionAbortController) return;
     stopStepAnimation();
     replayLiveSearchEvents(answerContent, data.liveSearchEvents || [], data.webSources || [], detectLang(prompt));
     const finalStep = answerContent.querySelectorAll('.search-step')[2];
@@ -5181,6 +5101,8 @@ async function sendQuestion(rawPrompt, source = 'auto') {
       { role: 'user', content: prompt, images: turnImages },
       { role: 'assistant', content: data.explanation || '' }
     );
+    if (typeof data.session_id === 'string' && data.session_id) tutorState.chatSessionId = data.session_id;
+    window.guidanceMode?.markDone();
     tutorState.currentBookPages = data.bookPages || [];
     tutorState.currentWebSources = data.webSources || [];
     updateRecentConversations('answer:stream-finished');
@@ -5197,6 +5119,7 @@ async function sendQuestion(rawPrompt, source = 'auto') {
 
     setStatus('Done', 'done');
   } catch (err) {
+    if (currentAbortController !== questionAbortController) return;
     stopStepAnimation();
     currentAbortController = null;
     stopBtn.classList.add('hidden');
@@ -5333,10 +5256,12 @@ followupBtn.addEventListener('click', () => sendQuestion(followupInput.value, 'f
 
 if (backBtn) {
   backBtn.addEventListener('click', () => {
+    window.guidanceMode?.resetScope('main');
     saveCurrentLearnSession('main:back-before-clear');
     showWelcome();
     setStatus('', 'idle');
     tutorState.chatHistory = [];
+    tutorState.chatSessionId = null;
     tutorState.chatSessionStartTime = Date.now();
     tutorState.currentBookPages = [];
     tutorState.currentWebSources = [];
@@ -5344,10 +5269,12 @@ if (backBtn) {
 }
 if (topbarCloseBtn) {
   topbarCloseBtn.addEventListener('click', () => {
+    window.guidanceMode?.resetScope('main');
     saveCurrentLearnSession('main:topbar-close-before-clear');
     showWelcome();
     setStatus('', 'idle');
     tutorState.chatHistory = [];
+    tutorState.chatSessionId = null;
     tutorState.chatSessionStartTime = Date.now();
     tutorState.currentBookPages = [];
     tutorState.currentWebSources = [];
@@ -5378,6 +5305,7 @@ autoResize(userInput);
 autoResize(followupInput);
 setSendState();
 initTheme();
+window.guidanceMode?.init();
 // NOTE: this boot-path showWelcome() also records 'welcome' as the last
 // location — harmless, because the restore step reads BOOT_SAVED_LOCATION,
 // a snapshot taken at the very top of this script before any boot-path
