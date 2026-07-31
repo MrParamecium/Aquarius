@@ -808,6 +808,12 @@ function closeLightbox() {
 
 function bindExpandableLessonImages(root) {
   if (!root) return;
+  root.querySelectorAll('img[data-api-asset="1"]').forEach(img => {
+    const rawSrc = img.getAttribute('src') || '';
+    if (rawSrc.startsWith('/') && API_BASE && !rawSrc.startsWith(API_BASE)) {
+      img.src = `${API_BASE}${rawSrc}`;
+    }
+  });
   root.querySelectorAll('img.lesson-img').forEach(img => {
     if (img.dataset.zoomBound === '1') return;
     img.dataset.zoomBound = '1';

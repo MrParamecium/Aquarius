@@ -25291,7 +25291,7 @@ body {
 }
 
 #learnView#learnView #learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) .lesson-page-content {
-  font-size: clamp(1.08rem, 1.55vw, 1.65rem) !important;
+  font-size: var(--lesson-page-content-font-size, clamp(1.08rem, 1.55vw, 1.65rem)) !important;
   line-height: 1.62 !important;
 }
 
@@ -26384,6 +26384,88 @@ body {
   .welcome.home-ask-workspace #homeModeMenu.home-mode-menu {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* 2.4-2 analogy visuals: compact memory aids; GeoGebra remains the main visual. */
+.lesson-page-frame[data-lesson-section="2.4-2"] {
+  --lesson-page-content-font-size: clamp(1.16rem, 1.65vw, 1.72rem);
+}
+
+.convolution-analogy-block {
+  --convolution-analogy-accent: #2563eb;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(170px, 30%);
+  align-items: center;
+  gap: clamp(20px, 3vw, 38px);
+  width: 100%;
+  margin: clamp(18px, 2.4vw, 28px) 0;
+  padding: clamp(16px, 2vw, 24px) 0 clamp(16px, 2vw, 24px) clamp(16px, 2vw, 24px);
+  border-left: 4px solid var(--convolution-analogy-accent);
+}
+
+.convolution-analogy-block-sprinkler {
+  --convolution-analogy-accent: #16876a;
+}
+
+.convolution-analogy-copy {
+  min-width: 0;
+}
+
+.convolution-analogy-copy > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.convolution-analogy-kicker {
+  margin: 0 0 10px !important;
+  color: var(--convolution-analogy-accent) !important;
+  font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 0.76em !important;
+  font-weight: 700;
+  line-height: 1.35 !important;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.convolution-analogy-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  margin: 0;
+}
+
+#learnView .convolution-analogy-image {
+  display: block;
+  width: auto !important;
+  max-width: 100% !important;
+  height: clamp(310px, 42vh, 430px) !important;
+  max-height: 430px !important;
+  aspect-ratio: 1153 / 2048;
+  object-fit: contain;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  border: 1px solid rgba(93, 83, 66, 0.16);
+  border-radius: 6px;
+  background: #faf8f2 !important;
+  box-shadow: 0 10px 24px rgba(54, 47, 37, 0.09);
+}
+
+@media (max-width: 760px) {
+  .convolution-analogy-block {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px 0 18px 16px;
+  }
+
+  .convolution-analogy-figure {
+    justify-self: center;
+    width: min(100%, 220px);
+  }
+
+  #learnView .convolution-analogy-image {
+    height: min(40vh, 340px) !important;
+    max-height: 340px !important;
   }
 }
 

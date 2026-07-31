@@ -1122,6 +1122,8 @@ function stripDuplicatePageHeading(innerHtml, displayTitle) {
 
 function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   const rawType = compactWhitespace(block?.type || 'lesson').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  const lessonSectionId = compactWhitespace(learnSectionId || '').match(/^(?:[a-z](?:[._-]\d+)*|\d+(?:[._-]\d+)*)/i)?.[0] || '';
+  const lessonSectionAttr = lessonSectionId ? ` data-lesson-section="${lessonSectionId}"` : '';
   const extraHtml = String(block?.extraHtml || '').trim();
   const displayTitle = getLessonPageDisplayTitle(block, index);
   const pageBodyHtml = displayTitle ? stripDuplicatePageHeading(innerHtml, displayTitle) : String(innerHtml || '');
@@ -1129,7 +1131,7 @@ function buildLessonPageFrameHtml(innerHtml, block, index, total) {
     ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2></header>`
     : '';
   return `
-    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}">
+    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}>
       ${titleHtml}
       <div class="lesson-page-content">
         ${pageBodyHtml || '<p class="ghost">No explanation available.</p>'}

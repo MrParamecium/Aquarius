@@ -1,23 +1,20 @@
 # 2.4-2 Graphical Understanding of Convolution
 
-> **Section objective:** Understand why convolution adds contributions from the past, turn the integral into a five-step graphical procedure, and use Figure 2.7 to connect overlap area with the output of an LTIC system.
+> **Section objective:** See convolution as a picture: flip, slide, multiply, and add the overlap.
 
 Concepts in this section:
 
-- System memory and accumulated past contributions
-- The roles of t and τ
-- The four graphical actions from flipping through integration
-- The five-step graphical procedure
-- Figure 2.7 and first contact
-- Convolution in LTIC systems
+- Why convolution adds contributions from the past
+- How the graphical steps build the output
+- How Figure 2.7 connects overlap to an LTIC system response
 
 ## 1. Why Convolution Adds the Past
 
 A system with memory does not forget an input as soon as that input ends. A tiny part of the input applied at a past time τ leaves behind a scaled and delayed system response. The output we see now is the sum of all those responses that are still present.
 
-Imagine a transparent pool. Instead of pouring in one bucket of ink, you add drops at many different times. Each drop is darkest when it enters. As time passes, it spreads through the water and becomes fainter. The color of the pool now is not caused by the last drop alone. It is the combined color still left by every earlier drop.
+%%KC_BLOCK%%<section class="convolution-analogy-block convolution-analogy-block-ink" data-convolution-analogy="ink"><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it: ink in water</p><p>Imagine a transparent pool. Instead of pouring in one bucket of ink, you add drops at many different times. Each drop is darkest when it enters. As time passes, it spreads through the water and becomes fainter. The color of the pool now is not caused by the last drop alone. It is the combined color still left by every earlier drop.</p></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-ink-memory-v2.png" data-api-asset="1" alt="Ink drops spreading and accumulating in a transparent pool" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
 
-Convolution keeps that same kind of total:
+**Bridge note:** Convolution keeps that same kind of total:
 
 - \(x(\tau)\) tells us how much ink was added at the past time τ.
 - \(g(t-\tau)\) tells us how much influence that drop still has after an age of \(t-\tau\).
@@ -36,23 +33,15 @@ $$
 
 To calculate one value \(c(t)\), hold \(t\) fixed. It means "now." The variable τ is the one that scans through the past.
 
-Think of pinning today's date on a calendar while your finger moves backward across earlier dates. For each date τ, you ask two questions: how much input occurred then, and how much of its effect survives until today? Their product is one historical contribution. The integral is the total of all such contributions.
+**Quick reading rule:** Think of pinning today's date on a calendar while your finger moves backward across earlier dates. For each date τ, you ask two questions: how much input occurred then, and how much of its effect survives until today? Their product is one historical contribution. The integral is the total of all such contributions.
 
 That is why both \(x(\tau)\) and \(g(t-\tau)\) must be drawn against the same horizontal τ-axis. The picture changes when we choose another value of \(t\), but each individual area calculation is performed along τ.
 
 ## 3. How the Graphical Procedure Works
 
-Now imagine that \(x(\tau)\) is a farm spread along the τ-axis. Crop density changes from one location to another. Imagine \(g\) as the spray pattern of a sprinkler truck. We want to know how much useful water the whole farm receives when the truck is positioned at \(t\).
+%%KC_BLOCK%%<section class="convolution-analogy-block convolution-analogy-block-sprinkler" data-convolution-analogy="sprinkler"><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it: a sprinkler truck</p><p>Imagine that \(x(\tau)\) is a farm spread along the τ-axis. Crop density changes from one location to another. Imagine \(g\) as the spray pattern of a sprinkler truck. We want to know how much useful water the whole farm receives when the truck is positioned at \(t\).</p><p>First the sprinkler truck turns around. This is the reflection from \(g(\tau)\) to \(g(-\tau)\). Then it drives along the farm to position \(t\). This is the shift from \(g(-\tau)\) to \(g(t-\tau)\).</p><p>At each location, the useful contribution is \(\text{crop density}\times\text{local spray amount}\).</p></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-sprinkler-procedure-v2.png" data-api-asset="1" alt="A sprinkler truck moving across crops with different densities" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
 
-First the sprinkler truck turns around. This is the reflection from \(g(\tau)\) to \(g(-\tau)\). Then it drives along the farm to position \(t\). This is the shift from \(g(-\tau)\) to \(g(t-\tau)\).
-
-At each location, the useful contribution is
-
-$$
-\text{crop density}\times\text{local spray amount}.
-$$
-
-Sparse crops under heavy spray still make only a limited contribution. Dense crops under a tiny spray also make only a small contribution. This is why overlap width alone is not enough: we must multiply the two heights point by point. Adding those local contributions over the whole farm gives \(c(t)\).
+**Quick reading rule:** Sparse crops under heavy spray still make only a limited contribution. Dense crops under a tiny spray also make only a small contribution. This is why overlap width alone is not enough: we must multiply the two heights point by point. Adding those local contributions over the whole farm gives \(c(t)\).
 
 The graphical actions therefore come directly from the formula:
 
@@ -131,7 +120,7 @@ c(-2)=2(1-e^{-1})\approx1.2642,\qquad
 c(0)=2(1-e^{-3})\approx1.9004.
 $$
 
-Do not confuse the product height with the output. The output is the entire shaded area. Also remember to flip before sliding; shifting \(g(\tau)\) first creates the wrong moving signal.
+**Common trap:** Do not confuse the product height with the output. The output is the entire shaded area. Also remember to flip before sliding; shifting \(g(\tau)\) first creates the wrong moving signal.
 
 ## 6. Why This Section Matters in the Book
 
