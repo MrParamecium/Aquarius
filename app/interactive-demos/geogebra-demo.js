@@ -112,7 +112,7 @@ function renderGeoGebraDemo(node, demo) {
           <div class="geogebra-demo-fallback-copy">
             <strong>The interactive construction is unavailable.</strong>
             <span>The lesson still follows the textbook figure. For these signals,</span>
-            <code>c(t) = 0 for t &lt; -3; c(t) = 1 - exp(-(t + 3)) for t >= -3.</code>
+            <code>c(t) = 0 for t &lt;= -3; c(t) = 2 * (1 - exp(-(t + 3))) for t &gt; -3.</code>
             <button class="geogebra-demo-button geogebra-demo-button--primary" type="button" data-geogebra-retry>Retry</button>
           </div>
         </div>

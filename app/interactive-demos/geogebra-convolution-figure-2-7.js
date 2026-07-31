@@ -55,7 +55,7 @@ function createGeoGebraConvolutionFigure27Scene() {
 
   function getState() {
     const t = readValue('t', settings.initialT);
-    const output = readValue('outputValue', t < -3 ? 0 : 1 - Math.exp(-(t + 3)));
+    const output = readValue('outputValue', t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3))));
     const area = readValue('overlapArea', output);
     return {
       step,
@@ -113,13 +113,13 @@ function createGeoGebraConvolutionFigure27Scene() {
     try { api.setSliderIncrement('t', settings.stepT); } catch (_) {}
     setVisible('t', false);
     run('xSignal(tau)=If(tau>=-1,1,0)');
-    run('gSignal(tau)=If(tau>=-2,exp(-(tau+2)),0)');
-    run('gFlipped(tau)=If(tau<=2,exp(tau-2),0)');
-    run('gMoving(tau)=If(tau<=t+2,exp(tau-t-2),0)');
+    run('gSignal(tau)=If(tau>=-2,2*exp(-(tau+2)),0)');
+    run('gFlipped(tau)=If(tau<=2,2*exp(tau-2),0)');
+    run('gMoving(tau)=If(tau<=t+2,2*exp(tau-t-2),0)');
     run('productSignal(tau)=xSignal(tau)*gMoving(tau)');
     run('overlapFill=Integral(productSignal,-1,Max(-1,t+2))');
     run('supportBoundary: x=t+2');
-    run('overlapArea=If(t<-3,0,1-exp(-(t+3)))');
+    run('overlapArea=If(t<=-3,0,2*(1-exp(-(t+3))))');
     setVisible('overlapArea', false);
     styleObject('xSignal', [37, 99, 235], 5);
     styleObject('gSignal', [13, 148, 136], 5);
@@ -131,8 +131,8 @@ function createGeoGebraConvolutionFigure27Scene() {
     try { api.setColor('overlapFill', 245, 158, 11); } catch (_) {}
     try { api.setFilling('overlapFill', 0.35); } catch (_) {}
 
-    configureView(2, { xMin: -4.5, xMax: 3.5, yMin: -0.2, yMax: 1.2 });
-    run('convolutionOutput(s)=If(s<-3,0,1-exp(-(s+3)))');
+    configureView(2, { xMin: -4.5, xMax: 3.5, yMin: -0.2, yMax: 2.3 });
+    run('convolutionOutput(s)=If(s<=-3,0,2*(1-exp(-(s+3))))');
     run('outputValue=convolutionOutput(t)');
     run('currentOutputPoint=(t,outputValue)');
     setVisible('outputValue', false);
