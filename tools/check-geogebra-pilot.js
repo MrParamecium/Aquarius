@@ -14,6 +14,8 @@ const CACHE_FILE = path.join(
 );
 const FIGURE_MAP_FILE = path.join(ROOT, 'app', 'section-figure-map-new.json');
 const DISPATCHER_FILE = path.join(ROOT, 'app', 'interactive-demos', 'dispatcher.js');
+const SCENE_FILE = path.join(ROOT, 'app', 'interactive-demos', 'geogebra-convolution-figure-2-7.js');
+const DEMO_SHELL_FILE = path.join(ROOT, 'app', 'interactive-demos', 'geogebra-demo.js');
 const REQUIRED_RUNTIME_FILES = [
   'app/interactive-demos/geogebra-runtime.js',
   'app/interactive-demos/geogebra-demo.js',
@@ -63,6 +65,8 @@ function collectForbiddenCommandKeys(value, at = 'demo') {
 const cache = readRequired(CACHE_FILE);
 const figureMapSource = readRequired(FIGURE_MAP_FILE);
 const dispatcher = readRequired(DISPATCHER_FILE);
+const sceneSource = readRequired(SCENE_FILE);
+const demoShellSource = readRequired(DEMO_SHELL_FILE);
 REQUIRED_RUNTIME_FILES.forEach(readRequired);
 
 if (cache) {
@@ -95,9 +99,67 @@ if (cache) {
   if (/continuous_graphic_convolution/.test(cache)) {
     fail('old continuous_graphic_convolution demo blocks must not be copied into the pilot cache');
   }
-  if (!cache.includes('/figures/page-179-figure_2_7.png')) {
-    fail('pilot cache must cite the local Figure 2.7 asset');
+  if (/!\[[^\]]*\]\([^)]+\)/.test(cache)) {
+    fail('normal lesson flow must not contain markdown images; Figure 2.7 is the GeoGebra demo');
   }
+
+  const requiredHeadings = [
+    '## 1. Why Convolution Adds the Past',
+    '## 2. What the Integral Is Saying',
+    '## 3. How the Graphical Procedure Works',
+    '## 4. Five-Step Checklist',
+    '## 5. Figure 2.7 in GeoGebra',
+    '## 6. Why This Section Matters in the Book',
+  ];
+  let previousHeading = -1;
+  for (const heading of requiredHeadings) {
+    const index = cache.indexOf(heading);
+    if (index < 0) fail(`lesson is missing required heading: ${heading}`);
+    if (index >= 0 && index <= previousHeading) fail(`lesson heading is out of order: ${heading}`);
+    if (index >= 0) previousHeading = index;
+  }
+
+  const requiredTeachingTerms = [
+    ['transparent pool', /transparent pool/i],
+    ['sprinkler truck', /sprinkler truck/i],
+    ['zero-state response', /zero-state response/i],
+    ['RLC', /\bRLC\b/],
+    ['sampling', /\bsampling\b/i],
+    ['filtering', /\bfiltering\b/i],
+    ['cascade', /\bcascade\b/i],
+  ];
+  for (const [label, pattern] of requiredTeachingTerms) {
+    if (!pattern.test(cache)) fail(`lesson must include the approved ${label} connection`);
+  }
+  if (!cache.includes('g(\\tau)=2e^{-(\\tau+2)}u(\\tau+2)')) {
+    fail('lesson must use the textbook amplitude g(tau)=2e^{-(tau+2)}u(tau+2)');
+  }
+  if (!cache.includes('2\\left(1-e^{-(t+3)}\\right)')) {
+    fail('lesson must use the textbook convolution output amplitude 2(1-e^{-(t+3)})');
+  }
+  if (!/t\s*=\s*-3/.test(cache)) {
+    fail('lesson must identify first contact at t = -3');
+  }
+}
+
+if (sceneSource) {
+  const requiredSceneCommands = [
+    'gSignal(tau)=If(tau>=-2,2*exp(-(tau+2)),0)',
+    'gFlipped(tau)=If(tau<=2,2*exp(tau-2),0)',
+    'gMoving(tau)=If(tau<=t+2,2*exp(tau-t-2),0)',
+    'overlapArea=If(t<=-3,0,2*(1-exp(-(t+3))))',
+    'convolutionOutput(s)=If(s<=-3,0,2*(1-exp(-(s+3))))',
+  ];
+  for (const command of requiredSceneCommands) {
+    if (!sceneSource.includes(command)) fail(`Figure 2.7 scene is missing textbook command: ${command}`);
+  }
+  if (!/configureView\(2,\s*\{[^}]*yMax:\s*2\.[2-9]/s.test(sceneSource)) {
+    fail('Figure 2.7 output view must leave headroom above amplitude 2');
+  }
+}
+
+if (demoShellSource && !demoShellSource.includes('2 * (1 - exp(-(t + 3)))')) {
+  fail('GeoGebra fallback formula must use the textbook amplitude 2');
 }
 
 if (figureMapSource) {

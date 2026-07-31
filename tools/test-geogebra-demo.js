@@ -95,7 +95,7 @@ async function installFakeGeoGebra(page) {
           const t = values.t;
           if (name === 't') return t;
           if (name === 'overlapArea' || name === 'outputValue') {
-            return t < -3 ? 0 : 1 - Math.exp(-(t + 3));
+            return t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3)));
           }
           return values[name] || 0;
         },
@@ -192,6 +192,18 @@ async function main() {
         && initial.codebase === 'https://www.geogebra.org/apps/5.4.920.0/web3d',
       JSON.stringify(initial));
 
+    const textbookCommands = await page.evaluate(() => window.__fakeGeoGebra.commands.slice());
+    const requiredCommands = [
+      'gSignal(tau)=If(tau>=-2,2*exp(-(tau+2)),0)',
+      'gFlipped(tau)=If(tau<=2,2*exp(tau-2),0)',
+      'gMoving(tau)=If(tau<=t+2,2*exp(tau-t-2),0)',
+      'overlapArea=If(t<=-3,0,2*(1-exp(-(t+3))))',
+      'convolutionOutput(s)=If(s<=-3,0,2*(1-exp(-(s+3))))',
+    ];
+    record('scene commands use the textbook amplitude 2',
+      requiredCommands.every((command) => textbookCommands.includes(command)),
+      `${requiredCommands.filter((command) => !textbookCommands.includes(command)).length} command(s) missing`);
+
     const softGuidance = await page.evaluate(() => {
       const node = window.__geogebraTestNode;
       node.querySelector('[data-geogebra-step="3"]').click();
@@ -211,6 +223,24 @@ async function main() {
         && softGuidance.reachedStep4
         && /overlap area = 0/.test(softGuidance.output),
       JSON.stringify(softGuidance));
+
+    const textbookValues = await page.evaluate(() => {
+      const diagnostics = window.__geogebraTestNode.__geoGebraDiagnostics;
+      const readAt = (t) => {
+        diagnostics.setTime(t);
+        return diagnostics.getState();
+      };
+      return { atMinus2: readAt(-2), atZero: readAt(0) };
+    });
+    const expectedMinus2 = 2 * (1 - Math.exp(-1));
+    const expectedZero = 2 * (1 - Math.exp(-3));
+    const close = (actual, expected) => Math.abs(actual - expected) <= 1e-9;
+    record('t = -2 and t = 0 match the textbook convolution values',
+      close(textbookValues.atMinus2.output, expectedMinus2)
+        && close(textbookValues.atMinus2.area, expectedMinus2)
+        && close(textbookValues.atZero.output, expectedZero)
+        && close(textbookValues.atZero.area, expectedZero),
+      JSON.stringify(textbookValues));
 
     const reset = await page.evaluate(() => {
       const node = window.__geogebraTestNode;

@@ -68,7 +68,7 @@ async function installFakeGeoGebra(context) {
           const t = values.t;
           if (name === 't') return t;
           if (name === 'overlapArea' || name === 'outputValue') {
-            return t < -3 ? 0 : 1 - Math.exp(-(t + 3));
+            return t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3)));
           }
           return values[name] || 0;
         },
@@ -239,7 +239,8 @@ async function main() {
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
-    const totalPages = await goToLessonPage(page, 4);
+    const geoGebraPage = 6;
+    const totalPages = await goToLessonPage(page, geoGebraPage);
     await page.waitForFunction(() => {
       const stage = document.querySelector('.geogebra-demo-stage');
       return stage?.dataset.state === 'ready';
@@ -262,8 +263,8 @@ async function main() {
         constructorCount: window.__fakeGeoGebra?.constructorCount,
       };
     });
-    record('real 2.4-2 page 4 mounts one continuous two-view Applet',
-      prepared.pager === `4 / ${totalPages}`
+    record('real 2.4-2 GeoGebra page mounts one continuous two-view Applet',
+      prepared.pager === `${geoGebraPage} / ${totalPages}`
         && prepared.step === '3'
         && prepared.t === -2
         && prepared.canvasCount === 2
