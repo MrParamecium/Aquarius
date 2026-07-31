@@ -21,7 +21,7 @@ function writeJson(file, value) {
 
     const legacy = {
         uid: 'user_a',
-        teachingInstructions: '先讲直觉',
+        teachingInstructions: 'Start with intuition',
         preferenceProfile: { markdown: 'legacy' },
         quiz: { track: 'standard' },
         weakConcepts: ['sign'],
@@ -32,8 +32,8 @@ function writeJson(file, value) {
     writeJson(path.join(usersDir, 'sessions', 'session.json'), { quiz: { mustStay: true } });
 
     try {
-        assert.throws(() => migration.parseArgs([]), /必须且只能/);
-        assert.throws(() => migration.parseArgs(['--dry-run', '--apply']), /必须且只能/);
+        assert.throws(() => migration.parseArgs([]), /exactly one/);
+        assert.throws(() => migration.parseArgs(['--dry-run', '--apply']), /exactly one/);
         assert.throws(() => migration.parseArgs(['--apply']), /backup-dir/);
 
         const records = migration.listLocalMemoryRecords(usersDir);
@@ -52,7 +52,7 @@ function writeJson(file, value) {
         assert.strictEqual(migration.applyLocalMigration(records), 1);
 
         const migrated = JSON.parse(fs.readFileSync(path.join(usersDir, 'user_a.json'), 'utf8'));
-        assert.strictEqual(migrated.teachingInstructions, '先讲直觉');
+        assert.strictEqual(migrated.teachingInstructions, 'Start with intuition');
         assert.deepStrictEqual(migrated.customField, { keep: true });
         for (const field of migration.LEGACY_FIELDS) assert(!Object.prototype.hasOwnProperty.call(migrated, field));
         assert.deepStrictEqual(JSON.parse(fs.readFileSync(path.join(usersDir, 'sessions', 'session.json'), 'utf8')), { quiz: { mustStay: true } });
@@ -63,7 +63,7 @@ function writeJson(file, value) {
 
         const neonRows = [{
             uid: 'user_neon',
-            data: { teachingInstructions: '画图讲', quiz: { track: 'cram' }, inferredStyle: ['visual'] },
+            data: { teachingInstructions: 'Use diagrams', quiz: { track: 'cram' }, inferredStyle: ['visual'] },
             updated_at: new Date('2026-07-31T00:00:00.000Z'),
         }];
         const neonQueries = [];
@@ -89,7 +89,7 @@ function writeJson(file, value) {
         fs.mkdirSync(neonBackupDir);
         const neonResult = await migration.applyNeonMigration({ connect: async () => client }, neonBackupDir);
         assert.deepStrictEqual(neonResult, { total: 1, changed: 1 });
-        assert.strictEqual(neonRows[0].data.teachingInstructions, '画图讲');
+        assert.strictEqual(neonRows[0].data.teachingInstructions, 'Use diagrams');
         assert(!Object.prototype.hasOwnProperty.call(neonRows[0].data, 'quiz'));
         assert(!Object.prototype.hasOwnProperty.call(neonRows[0].data, 'inferredStyle'));
         assert(neonQueries.includes('COMMIT'));
@@ -113,7 +113,7 @@ function writeJson(file, value) {
         fs.mkdirSync(failureBackupDir);
         await assert.rejects(
             migration.applyNeonMigration({ connect: async () => failureClient }, failureBackupDir),
-            /更新记录数异常/
+            /Unexpected Neon update count/
         );
         assert(failureQueries.includes('ROLLBACK'));
         console.log('[user-memory-migration] PASS');

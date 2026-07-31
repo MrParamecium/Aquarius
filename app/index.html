@@ -473,7 +473,7 @@
                 <svg class="qa-caret-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
               </button>
               </div>
-              <button id="guidanceToggleBtnMain" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="main" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+              <button id="guidanceToggleBtnMain" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="main" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
                 <i class="ph-bold ph-signpost" aria-hidden="true"></i>
               </button>
               <button id="webSearchToggleBtnMain" class="icon-toggle-btn active search-box-web-toggle home-ask-web-toggle" title="Enable Web Search">
@@ -587,7 +587,7 @@
                       <span>Detailed</span>
                     </button>
                   </div>
-                  <button id="guidanceToggleBtnFollowup" class="guidance-toggle followup-web-toggle" type="button" data-guidance-toggle data-guidance-scope="main" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                  <button id="guidanceToggleBtnFollowup" class="guidance-toggle followup-web-toggle" type="button" data-guidance-toggle data-guidance-scope="main" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
                     <i class="ph-bold ph-signpost" aria-hidden="true"></i>
                   </button>
                   <button id="webSearchToggleBtnFollowup" class="followup-web-toggle active" type="button" title="Web Search: ON" aria-label="Toggle web search" aria-pressed="true">
@@ -799,7 +799,7 @@
                     <svg class="qa-caret-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
                   </button>
 
-                  <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                  <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
                     <i class="ph-bold ph-signpost" aria-hidden="true"></i>
                   </button>
 
@@ -847,7 +847,7 @@
                     <option value="balanced" selected>Balanced</option>
                     <option value="detailed">Detailed</option>
                   </select>
-                  <button id="guidanceToggleBtnLearnPopover" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+                  <button id="guidanceToggleBtnLearnPopover" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
                     <i class="ph-bold ph-signpost" aria-hidden="true"></i>
                   </button>
                   <button id="webSearchToggleBtnLearnPopover" class="icon-toggle-btn active" title="Enable Web Search">
@@ -939,11 +939,11 @@
               <section class="settings-page-card">
                 <div class="settings-page-card-head">
                   <div>
-                    <div class="settings-page-card-eyebrow">个性化</div>
-                    <h2 class="settings-page-card-title">教学要求</h2>
+                    <div class="settings-page-card-eyebrow">Personalization</div>
+                    <h2 class="settings-page-card-title">Teaching instructions</h2>
                   </div>
                 </div>
-                <button id="settingsPreferencesBtn" class="settings-inline-btn" type="button">编辑教学要求</button>
+                <button id="settingsPreferencesBtn" class="settings-inline-btn" type="button">Edit teaching instructions</button>
               </section>
 
               <section class="settings-page-card">
@@ -964,10 +964,10 @@
         <div class="preference-page-shell">
           <div class="preference-page-header">
             <div>
-              <div class="preference-page-eyebrow">个性化记忆</div>
-              <h1 class="preference-page-title">教学要求</h1>
+              <div class="preference-page-eyebrow">Personalization memory</div>
+              <h1 class="preference-page-title">Teaching instructions</h1>
             </div>
-            <button class="feature-close-btn" id="preferencePageBackBtn" type="button" aria-label="关闭教学要求">✕</button>
+            <button class="feature-close-btn" id="preferencePageBackBtn" type="button" aria-label="Close teaching instructions">✕</button>
           </div>
 
           <div class="preference-page-grid preference-page-grid-single">
@@ -975,18 +975,18 @@
               <div class="preference-card-tape" aria-hidden="true"></div>
               <div class="preference-card-head">
                 <div>
-                  <div class="preference-card-eyebrow">全局设置</div>
-                  <label class="preference-card-title" for="preferenceProfileEditor">希望 Fourier 如何讲解</label>
+                  <div class="preference-card-eyebrow">Global settings</div>
+                  <label class="preference-card-title" for="preferenceProfileEditor">How should Fourier explain things?</label>
                 </div>
-                <div class="preference-save-state" id="preferenceSaveState">尚未保存</div>
+                <div class="preference-save-state" id="preferenceSaveState">Not saved</div>
               </div>
-              <textarea id="preferenceProfileEditor" class="preference-profile-editor" spellcheck="true" placeholder="例如：先用直觉和图像解释，再给完整公式推导；遇到容易混淆的符号时主动提醒我。"></textarea>
+              <textarea id="preferenceProfileEditor" class="preference-profile-editor" spellcheck="true" placeholder="Example: Start with intuition and diagrams, then provide a complete formula derivation; remind me when symbols are easy to confuse."></textarea>
               <div class="preference-field-meta">
                 <span id="preferenceCharacterCount">0 / 1000</span>
               </div>
               <div class="preference-profile-actions">
-                <button id="preferenceSaveBtn" class="preference-primary-btn" type="button">保存</button>
-                <button id="preferenceClearBtn" class="preference-secondary-btn" type="button">清除</button>
+                <button id="preferenceSaveBtn" class="preference-primary-btn" type="button">Save</button>
+                <button id="preferenceClearBtn" class="preference-secondary-btn" type="button">Clear</button>
               </div>
             </section>
           </div>
@@ -1414,7 +1414,7 @@
               <option value="balanced" selected>Balanced</option>
               <option value="detailed">Detailed</option>
             </select>
-            <button id="guidanceToggleBtnTextbookFocus" class="guidance-toggle icon-toggle-btn textbook-focus-qa-guidance" type="button" data-guidance-toggle data-guidance-scope="learn" title="引导模式：关" aria-label="切换问答引导模式" aria-pressed="false">
+            <button id="guidanceToggleBtnTextbookFocus" class="guidance-toggle icon-toggle-btn textbook-focus-qa-guidance" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
               <i class="ph-bold ph-signpost" aria-hidden="true"></i>
             </button>
             <button id="webSearchToggleBtnTextbookFocus" class="icon-toggle-btn active textbook-focus-qa-web" title="Enable Web Search" type="button" aria-label="Toggle web search">

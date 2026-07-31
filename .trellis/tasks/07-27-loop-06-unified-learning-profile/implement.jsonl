@@ -1,4 +1,0 @@
-{"file":".trellis/spec/app/architecture.md","reason":"实施偏好、缓存、会话和问答引导的跨层修改前，核对当前前端、服务端、认证与双存储边界。"}
-{"file":".trellis/spec/app/conventions.md","reason":"新增引导接口、状态与迁移工具时遵守现有模块、命名、错误处理和测试约定。"}
-{"file":".trellis/spec/guides/cross-layer-thinking-guide.md","reason":"按用户操作、前端状态、API、持久化和回归测试的完整链路实施四个阶段。"}
-{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"删除旧偏好与模式样式、增加输入工具栏开关和引导卡时避免破坏共享选择器与级联。"}

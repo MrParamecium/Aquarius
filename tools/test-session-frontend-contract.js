@@ -10,27 +10,27 @@ const app = fs.readFileSync(path.join(repoRoot, 'app', 'app.js'), 'utf8');
 const recent = fs.readFileSync(path.join(repoRoot, 'app', 'recent-conversations.js'), 'utf8');
 
 function includes(source, fragment, message) {
-    assert.ok(source.includes(fragment), message || `缺少前端契约：${fragment}`);
+    assert.ok(source.includes(fragment), message || `Missing front-end contract: ${fragment}`);
 }
 
-includes(app, 'chatSessionId: null', '首页必须保存活动服务端会话编号');
-includes(app, 'learnSessionId: null', '课程问答必须保存独立活动服务端会话编号');
-includes(app, "session_id: tutorState.chatSessionId || undefined", '首页追问必须回传 session_id');
-includes(app, "origin: 'main'", '首页问答必须标记 main 来源');
-includes(app, "session_id: tutorState.learnSessionId || undefined", '课程追问必须回传 session_id');
-includes(app, "origin: 'learn'", '课程问答必须标记 learn 来源');
-includes(app, 'tutorState.chatSessionId = data.session_id', '首页成功后必须绑定服务端编号');
-includes(app, 'tutorState.learnSessionId = data.session_id', '课程成功后必须绑定服务端编号');
-includes(app, 'data.request_id ? `request=${data.request_id}`', '持久化错误必须显示请求编号');
+includes(app, 'chatSessionId: null', 'Home must store the active server session ID');
+includes(app, 'learnSessionId: null', 'Lesson Q&A must store its own active server session ID');
+includes(app, "session_id: tutorState.chatSessionId || undefined", 'Home follow-ups must send session_id');
+includes(app, "origin: 'main'", 'Home Q&A must mark the main origin');
+includes(app, "session_id: tutorState.learnSessionId || undefined", 'Lesson follow-ups must send session_id');
+includes(app, "origin: 'learn'", 'Lesson Q&A must mark the learn origin');
+includes(app, 'tutorState.chatSessionId = data.session_id', 'Home success must bind the server session ID');
+includes(app, 'tutorState.learnSessionId = data.session_id', 'Lesson success must bind the server session ID');
+includes(app, 'data.request_id ? `request=${data.request_id}`', 'Persistence errors must show the request ID');
 
-includes(recent, 'currentUser && !currentUser.isGuest', '只有登录用户使用服务端 Recent');
-includes(recent, "apiFetch('/api/sessions')", '登录用户列表必须来自服务端');
-includes(recent, "apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`)", '详情和元数据必须使用服务端会话编号');
-includes(recent, "method: 'PATCH'", '重命名和星标必须等待服务端 PATCH');
-includes(recent, "method: 'DELETE'", '删除必须等待服务端 DELETE');
-includes(recent, "if (usesServerRecentConversations()) return serverRecentSessions.slice()", '登录用户不得读取本地完整快照');
-includes(recent, "localStorage.getItem('tutorRecentSessions')", '访客仍需保留浏览器会话');
-includes(recent, 'tutorState.chatSessionId = session.id || null', '恢复首页会话后必须继续原编号');
-includes(recent, 'tutorState.learnSessionId = session.id || null', '恢复课程会话后必须继续原编号');
+includes(recent, 'currentUser && !currentUser.isGuest', 'Only signed-in users use server-side Recent');
+includes(recent, "apiFetch('/api/sessions')", 'Signed-in session lists must come from the server');
+includes(recent, "apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`)", 'Details and metadata must use the server session ID');
+includes(recent, "method: 'PATCH'", 'Rename and star must wait for server PATCH');
+includes(recent, "method: 'DELETE'", 'Delete must wait for server DELETE');
+includes(recent, "if (usesServerRecentConversations()) return serverRecentSessions.slice()", 'Signed-in users must not read a local full snapshot');
+includes(recent, "localStorage.getItem('tutorRecentSessions')", 'Guests must retain browser sessions');
+includes(recent, 'tutorState.chatSessionId = session.id || null', 'Restored home sessions must reuse the original ID');
+includes(recent, 'tutorState.learnSessionId = session.id || null', 'Restored lesson sessions must reuse the original ID');
 
 console.log('[session-frontend-contract] PASS');

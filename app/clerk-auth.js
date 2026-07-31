@@ -827,7 +827,7 @@ function renderUserBadge() {
           <div class="settings-user-meta" style="font-family:'DM Mono', monospace; font-size:11px; color:#94a3b8; font-weight:600; letter-spacing:1px; margin-top:4px;">ID: #${shortUid.toUpperCase()}</div>
         </div>
         <div class="settings-user-actions" style="display:flex; flex-direction:column; gap:8px;">
-          <button class="settings-user-link" onclick="showPreferenceView()" type="button" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:6px 12px; font-weight:700; color:#475569; font-size:12px; box-shadow:0 2px 0 #cbd5e1; cursor:pointer;">教学要求</button>
+          <button class="settings-user-link" onclick="showPreferenceView()" type="button" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:10px; padding:6px 12px; font-weight:700; color:#475569; font-size:12px; box-shadow:0 2px 0 #cbd5e1; cursor:pointer;">Teaching instructions</button>
           <button class="settings-user-link settings-user-danger" onclick="handleSignOut()" type="button" style="background:#fff1f2; border:2px solid #fca5a5; border-radius:10px; padding:6px 12px; font-weight:800; color:#e11d48; font-size:12px; box-shadow:0 2px 0 #fca5a5; cursor:pointer;">Sign out</button>
         </div>
       </div>

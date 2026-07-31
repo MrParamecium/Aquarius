@@ -258,11 +258,11 @@ async function runPass1(jwksUrl) {
         // uid-spoof immunity via the hermetic uid-scoped path (C2/AC4)
         r = await httpJson('POST', `${base}/api/memory`, {
             token: valid,
-            body: { uid: 'user_victim', teachingInstructions: '  先讲直觉，再推导公式。  ' },
+            body: { uid: 'user_victim', teachingInstructions: '  Start with intuition, then derive the formula.  ' },
         });
         check('memory POST spoofed body.uid -> lands under token sub', r.status === 200 && r.json && r.json.memory && r.json.memory.uid === 'user_test_a', `got ${r.status} uid=${r.json && r.json.memory && r.json.memory.uid}`);
         r = await httpJson('GET', `${base}/api/memory`, { token: valid });
-        check('memory GET token sub sees trimmed teaching instructions', r.status === 200 && r.json && r.json.teachingInstructions === '先讲直觉，再推导公式。', `got ${r.status} ${r.raw.slice(0, 160)}`);
+        check('memory GET token sub sees trimmed teaching instructions', r.status === 200 && r.json && r.json.teachingInstructions === 'Start with intuition, then derive the formula.', `got ${r.status} ${r.raw.slice(0, 160)}`);
         r = await httpJson('GET', `${base}/api/memory`, { token: mintToken({ sub: 'user_victim' }) });
         check('memory GET victim sub sees NOTHING', r.status === 200 && r.json && r.json.teachingInstructions === '', `got ${r.status} ${r.raw.slice(0, 160)}`);
 

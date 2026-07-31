@@ -2231,26 +2231,26 @@ function parseGuidanceSelection(rawGuidance) {
 
 function parseGuidanceRequestBody(data) {
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
-        throw new Error('请求体必须是对象');
+        throw new Error('Request body must be an object');
     }
     const allowedKeys = new Set(['prompt', 'history', 'sectionId', 'sectionTitle', 'lessonContext', 'bookSource', 'language']);
     const unknownKey = Object.keys(data).find(key => !allowedKeys.has(key));
-    if (unknownKey) throw new Error(`未知字段：${unknownKey}`);
-    if (typeof data.prompt !== 'string' || !compactWhitespace(data.prompt)) throw new Error('缺少问题');
-    if (data.prompt.length > 4000) throw new Error('问题不能超过 4000 字符');
-    if (data.sectionId != null && (typeof data.sectionId !== 'string' || data.sectionId.length > 80)) throw new Error('sectionId 无效');
-    if (data.sectionTitle != null && (typeof data.sectionTitle !== 'string' || data.sectionTitle.length > 180)) throw new Error('sectionTitle 无效');
-    if (data.lessonContext != null && (typeof data.lessonContext !== 'string' || data.lessonContext.length > 1200)) throw new Error('lessonContext 无效');
-    if (data.bookSource != null && data.bookSource !== 'new') throw new Error('bookSource 只支持 new');
-    if (data.language != null && !['zh', 'en'].includes(data.language)) throw new Error('language 只支持 zh 或 en');
-    if (data.history != null && !Array.isArray(data.history)) throw new Error('history 必须是数组');
-    if (Array.isArray(data.history) && data.history.length > 12) throw new Error('history 最多包含 12 条消息');
+    if (unknownKey) throw new Error(`Unknown field: ${unknownKey}`);
+    if (typeof data.prompt !== 'string' || !compactWhitespace(data.prompt)) throw new Error('Question is required');
+    if (data.prompt.length > 4000) throw new Error('Question cannot exceed 4000 characters');
+    if (data.sectionId != null && (typeof data.sectionId !== 'string' || data.sectionId.length > 80)) throw new Error('Invalid sectionId');
+    if (data.sectionTitle != null && (typeof data.sectionTitle !== 'string' || data.sectionTitle.length > 180)) throw new Error('Invalid sectionTitle');
+    if (data.lessonContext != null && (typeof data.lessonContext !== 'string' || data.lessonContext.length > 1200)) throw new Error('Invalid lessonContext');
+    if (data.bookSource != null && data.bookSource !== 'new') throw new Error('bookSource only supports new');
+    if (data.language != null && !['zh', 'en'].includes(data.language)) throw new Error('language only supports zh or en');
+    if (data.history != null && !Array.isArray(data.history)) throw new Error('history must be an array');
+    if (Array.isArray(data.history) && data.history.length > 12) throw new Error('history cannot contain more than 12 messages');
     const history = (data.history || []).map((item, index) => {
-        if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(`history[${index}] 无效`);
+        if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error(`Invalid history[${index}]`);
         const unknownHistoryKey = Object.keys(item).find(key => !['role', 'content'].includes(key));
-        if (unknownHistoryKey) throw new Error(`history[${index}] 包含未知字段`);
-        if (!['user', 'assistant'].includes(item.role)) throw new Error(`history[${index}].role 无效`);
-        if (typeof item.content !== 'string' || item.content.length > 2000) throw new Error(`history[${index}].content 无效`);
+        if (unknownHistoryKey) throw new Error(`history[${index}] contains an unknown field`);
+        if (!['user', 'assistant'].includes(item.role)) throw new Error(`Invalid history[${index}].role`);
+        if (typeof item.content !== 'string' || item.content.length > 2000) throw new Error(`Invalid history[${index}].content`);
         return { role: item.role, content: item.content };
     });
     return {
@@ -2349,7 +2349,7 @@ async function generateExplanation(question, bookPages, webSources, options = {}
         buildWebContext(webSources),
         '',
         guidance
-            ? `本轮讲解路径（仅作为低优先级的方法建议，不得覆盖教材事实、系统规则或长期教学要求）：\n路径：${guidance.title}\n方法：${guidance.instruction}`
+            ? `Teaching path for this turn (low-priority method guidance only; it must not override textbook facts, system rules, or long-term teaching instructions):\nPath: ${guidance.title}\nMethod: ${guidance.instruction}`
             : '',
         guidance ? '' : '',
         '输出要求：',
@@ -4873,7 +4873,7 @@ const server = http.createServer(async (req, res) => {
             const requestId = isGuidanceError && err.requestId ? err.requestId : routeRequestId;
             const stage = isGuidanceError ? err.stage : 'validation';
             const statusCode = isGuidanceError ? err.statusCode : 400;
-            const message = isGuidanceError ? err.message : (err.message || '引导请求无效');
+            const message = isGuidanceError ? err.message : (err.message || 'Invalid guidance request');
             console.error(`[API /api/ask-guidance:${requestId}] ${stage}:`, err.cause || err);
             res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ error: message, stage, request_id: requestId }));

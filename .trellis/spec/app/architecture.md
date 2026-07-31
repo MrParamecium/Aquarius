@@ -22,12 +22,12 @@ ws-bridge.js (single Node http server, built-in modules only)
   └─ optional RAGFlow retrieval sidecar (RAGFLOW_* env) — retrieval only
 ```
 
-## 当前状态边界
+## Current State Boundaries
 
-- `app/user-memory.js` 只把用户主动填写的 `teachingInstructions` 作为长期教学要求；不再从问答自动生成掌握度、薄弱点或风格标签。
-- 登录用户的真实会话由服务端 `chat_sessions` 保存，前端通过 `session_id` 续接；访客会话留在浏览器。
-- `app/lesson-cache.js` 只读取统一 `aquarius_visual_latex_v2` 缓存，不按用户画像或课程档位选择文件，也没有旧缓存回退。
-- `app/guidance-service.js` 负责整本教材检索和本轮选项生成；`app/guidance-mode.js` 只负责浏览器端开关和临时选择。选项不会写入长期记忆。
+- `app/user-memory.js` stores only user-authored `teachingInstructions`; mastery, weakness, and style labels are no longer inferred from Q&A.
+- Signed-in users persist real sessions in server-side `chat_sessions` and resume them with `session_id`; guest sessions remain in the browser.
+- `app/lesson-cache.js` reads only the unified `aquarius_visual_latex_v2` cache. It does not select files by profile or course tier and has no legacy fallback.
+- `app/guidance-service.js` searches the full textbook and generates per-turn paths; `app/guidance-mode.js` owns the browser toggle and temporary selection. Paths never enter long-term memory.
 
 ## Adding a route
 

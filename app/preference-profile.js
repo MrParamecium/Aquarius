@@ -1,4 +1,4 @@
-// 用户主动填写的教学要求。登录用户保存到服务端，访客仅保存在当前标签页。
+// User-authored teaching instructions. Signed-in users persist them server-side; guests keep them in the current tab.
 
 const MAX_TEACHING_INSTRUCTIONS_LENGTH = 1000;
 
@@ -20,7 +20,7 @@ function getTeachingInstructions() {
 
 function summarizeTeachingInstructions(instructions) {
   const text = String(instructions || '').replace(/\s+/g, ' ').trim();
-  if (!text) return '尚未设置教学要求';
+  if (!text) return 'No teaching instructions set';
   return text.length > 88 ? `${text.slice(0, 86)}...` : text;
 }
 
@@ -28,7 +28,7 @@ function updatePreferenceSidebarSummary() {
   if (!preferenceSidebarSummary) return;
   const kicker = document.createElement('div');
   kicker.className = 'preference-sidebar-kicker';
-  kicker.textContent = '教学要求';
+  kicker.textContent = 'Teaching instructions';
   const summary = document.createElement('div');
   summary.className = 'preference-sidebar-text';
   summary.textContent = summarizeTeachingInstructions(getTeachingInstructions());
@@ -53,7 +53,7 @@ function syncPreferenceEditorFromMemory() {
   updatePreferenceCharacterCount();
   updatePreferenceSidebarSummary();
   const updatedAt = userMemory && typeof userMemory.updatedAt === 'string' ? userMemory.updatedAt : '';
-  setPreferenceSaveState(updatedAt ? `已保存 ${updatedAt.slice(0, 10)}` : '尚未保存', 'idle');
+  setPreferenceSaveState(updatedAt ? `Saved ${updatedAt.slice(0, 10)}` : 'Not saved', 'idle');
 }
 
 function setPreferenceControlsBusy(isBusy) {
@@ -62,14 +62,14 @@ function setPreferenceControlsBusy(isBusy) {
 }
 
 async function saveTeachingInstructions(value) {
-  if (!currentUser) throw new Error('请先登录或进入访客模式');
+  if (!currentUser) throw new Error('Sign in or continue as a guest first');
   const teachingInstructions = String(value || '').trim();
   if (teachingInstructions.length > MAX_TEACHING_INSTRUCTIONS_LENGTH) {
-    throw new Error(`教学要求不能超过 ${MAX_TEACHING_INSTRUCTIONS_LENGTH} 字`);
+    throw new Error(`Teaching instructions cannot exceed ${MAX_TEACHING_INSTRUCTIONS_LENGTH} characters`);
   }
 
   setPreferenceControlsBusy(true);
-  setPreferenceSaveState('正在保存...', 'working');
+  setPreferenceSaveState('Saving...', 'working');
   try {
     if (currentUser.isGuest) {
       userMemory = {
@@ -78,22 +78,22 @@ async function saveTeachingInstructions(value) {
         updatedAt: new Date().toISOString()
       };
       saveGuestMemory(userMemory);
-      setPreferenceSaveState(teachingInstructions ? '已保存到当前标签页' : '已清除', 'saved');
+      setPreferenceSaveState(teachingInstructions ? 'Saved in this tab' : 'Cleared', 'saved');
     } else {
       const res = await apiFetch('/api/memory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ teachingInstructions })
       });
-      if (res.status === 401) throw new Error('登录状态已过期，请重新登录');
+      if (res.status === 401) throw new Error('Your session expired. Please sign in again');
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || `保存失败（HTTP ${res.status}）`);
+      if (!res.ok) throw new Error(data.error || `Save failed (HTTP ${res.status})`);
       userMemory = data.memory || {
         ...(userMemory || {}),
         teachingInstructions,
         updatedAt: new Date().toISOString()
       };
-      setPreferenceSaveState(teachingInstructions ? '已保存并生效' : '已清除', 'saved');
+      setPreferenceSaveState(teachingInstructions ? 'Saved and active' : 'Cleared', 'saved');
     }
 
     if (preferenceProfileEditor) preferenceProfileEditor.value = getTeachingInstructions();
@@ -109,7 +109,7 @@ function bindPreferenceControls() {
     preferenceProfileEditor.addEventListener('input', () => {
       updatePreferenceCharacterCount();
       const overLimit = preferenceProfileEditor.value.length > MAX_TEACHING_INSTRUCTIONS_LENGTH;
-      setPreferenceSaveState(overLimit ? '内容超过 1000 字，请删减后保存' : '有未保存的修改', overLimit ? 'error' : 'working');
+      setPreferenceSaveState(overLimit ? 'Content exceeds 1000 characters. Shorten it before saving' : 'Unsaved changes', overLimit ? 'error' : 'working');
     });
   }
 
@@ -118,7 +118,7 @@ function bindPreferenceControls() {
       try {
         await saveTeachingInstructions(preferenceProfileEditor ? preferenceProfileEditor.value : '');
       } catch (err) {
-        setPreferenceSaveState(err.message || '保存失败', 'error');
+        setPreferenceSaveState(err.message || 'Save failed', 'error');
       }
     });
   }
@@ -128,7 +128,7 @@ function bindPreferenceControls() {
       try {
         await saveTeachingInstructions('');
       } catch (err) {
-        setPreferenceSaveState(err.message || '清除失败', 'error');
+        setPreferenceSaveState(err.message || 'Clear failed', 'error');
       }
     });
   }

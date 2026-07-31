@@ -5,9 +5,9 @@ const assert = require('assert');
 const createGuidanceService = require('../app/guidance-service');
 
 const validOptions = JSON.stringify({ options: [
-    { title: '先看直觉', description: '用图像和生活类比建立方向感。', instruction: '先用一个直觉类比解释核心关系，再连接到教材公式。' },
-    { title: '逐步推导', description: '从定义开始逐行推到结论。', instruction: '从定义出发逐步推导，每一步说明为什么成立。' },
-    { title: '例题拆解', description: '通过一个代表性题目理解方法。', instruction: '选一个最小代表例题，按识别、列式、计算和检查四步讲解。' }
+    { title: 'Start with intuition', description: 'Build orientation with diagrams and analogies.', instruction: 'Explain the core relationship with one intuition first, then connect it to the textbook formula.' },
+    { title: 'Derive step by step', description: 'Move from the definition to the conclusion line by line.', instruction: 'Start from the definition and explain why each step is valid.' },
+    { title: 'Break down an example', description: 'Learn the method through a representative problem.', instruction: 'Use a minimal example and explain identification, setup, calculation, and checking.' }
 ] });
 
 function service(overrides = {}) {
@@ -16,7 +16,7 @@ function service(overrides = {}) {
         retrieveTextbook: async ({ query }) => ({
             status: 'hit',
             source: 'local_ocr',
-            chunks: [{ page: 'page-200', sectionTitle: '其他章节', text: `跨章节证据：${query}` }]
+            chunks: [{ page: 'page-200', sectionTitle: 'Other section', text: `Cross-section evidence: ${query}` }]
         }),
         generateOptions: async () => validOptions,
         ...overrides,
@@ -33,42 +33,42 @@ async function expectStage(promise, stage) {
     const hit = await service({
         retrieveTextbook: async ({ query }) => {
             retrievedQuery = query;
-            return { status: 'hit', source: 'local_ocr', chunks: [{ page: 'page-200', sectionTitle: '跨章节', text: '傅里叶变换证据' }] };
+            return { status: 'hit', source: 'local_ocr', chunks: [{ page: 'page-200', sectionTitle: 'Cross-section', text: 'Fourier-transform evidence' }] };
         },
         generateOptions: async ({ messages }) => {
             generatedMessages = messages;
             return validOptions;
         }
     }).createGuidance({
-        question: '卷积和傅里叶变换有什么关系？',
-        sectionTitle: '当前是时移小节',
-        teachingInstructions: '这个长期偏好绝不能进入引导 Prompt',
+        question: 'How are convolution and the Fourier transform related?',
+        sectionTitle: 'Current time-shifting section',
+        teachingInstructions: 'This long-term preference must never enter the guidance prompt',
     });
-    assert.equal(retrievedQuery, '卷积和傅里叶变换有什么关系？');
+    assert.equal(retrievedQuery, 'How are convolution and the Fourier transform related?');
     assert.equal(hit.status, 'hit');
     assert.equal(hit.options.length, 3);
     assert.equal(hit.options[0].id, 'path_1');
-    assert.ok(JSON.stringify(generatedMessages).includes('傅里叶变换证据'));
-    assert.ok(!JSON.stringify(generatedMessages).includes('长期偏好绝不能进入'));
+    assert.ok(JSON.stringify(generatedMessages).includes('Fourier-transform evidence'));
+    assert.ok(!JSON.stringify(generatedMessages).includes('long-term preference must never enter'));
 
     const empty = await service({
         retrieveTextbook: async () => ({ status: 'empty', source: 'local_ocr', chunks: [] })
-    }).createGuidance({ question: '一个教材里没有的问题' });
+    }).createGuidance({ question: 'A question not covered by the textbook' });
     assert.equal(empty.status, 'empty');
     assert.equal(empty.options.length, 3);
 
-    await expectStage(service({ retrieveTextbook: async () => { throw new Error('RAGFlow down'); } }).createGuidance({ question: '测试' }), 'retrieval');
-    await expectStage(service({ generateOptions: async () => { throw new Error('timeout'); } }).createGuidance({ question: '测试' }), 'generation');
-    await expectStage(service({ generateOptions: async () => '```json\n{}\n```' }).createGuidance({ question: '测试' }), 'validation');
-    await expectStage(service({ generateOptions: async () => JSON.stringify({ options: [{ title: '只有一个', description: '不足', instruction: '不足' }] }) }).createGuidance({ question: '测试' }), 'validation');
+    await expectStage(service({ retrieveTextbook: async () => { throw new Error('RAGFlow down'); } }).createGuidance({ question: 'test' }), 'retrieval');
+    await expectStage(service({ generateOptions: async () => { throw new Error('timeout'); } }).createGuidance({ question: 'test' }), 'generation');
+    await expectStage(service({ generateOptions: async () => '```json\n{}\n```' }).createGuidance({ question: 'test' }), 'validation');
+    await expectStage(service({ generateOptions: async () => JSON.stringify({ options: [{ title: 'Only one', description: 'Too few', instruction: 'Too few' }] }) }).createGuidance({ question: 'test' }), 'validation');
     await expectStage(service({ generateOptions: async () => JSON.stringify({ options: [
-        { title: '重复', description: '第一项', instruction: '同一个方法' },
-        { title: '重复', description: '第二项', instruction: '同一个方法' }
-    ] }) }).createGuidance({ question: '测试' }), 'validation');
+        { title: 'Duplicate', description: 'First option', instruction: 'Use the same method' },
+        { title: 'Duplicate', description: 'Second option', instruction: 'Use the same method' }
+    ] }) }).createGuidance({ question: 'test' }), 'validation');
     await expectStage(service({ generateOptions: async () => JSON.stringify({ options: [
-        { title: 'x'.repeat(25), description: '第一项', instruction: '方法一' },
-        { title: '正常', description: '第二项', instruction: '方法二' }
-    ] }) }).createGuidance({ question: '测试' }), 'validation');
+        { title: 'x'.repeat(25), description: 'First option', instruction: 'Method one' },
+        { title: 'Normal', description: 'Second option', instruction: 'Method two' }
+    ] }) }).createGuidance({ question: 'test' }), 'validation');
 
     console.log('[ask-guidance] PASS');
 })().catch(error => {
