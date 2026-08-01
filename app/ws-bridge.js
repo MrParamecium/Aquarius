@@ -17,6 +17,7 @@ const path = require('path');
 const os = require('os');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+const { shouldForceGroundedFollowUp } = require('./intent-routing');
 
 function loadLocalEnvFile() {
     try {
@@ -4903,49 +4904,56 @@ const server = http.createServer(async (req, res) => {
             }
             let grounded = true;
             let reply = '';
-            try {
-                const historyText = history.slice(-3)
-                    .map(h => `${h && h.role === 'assistant' ? 'Tutor' : 'Student'}: ${compactWhitespace((h && h.content) || '')}`)
-                    .filter(line => line.length > 8)
-                    .join('\n')
-                    .slice(0, 1200);
-                const classifyRaw = await callOpenRouterChat({
-                    model: 'anthropic/claude-haiku-4.5',
-                    timeoutMs: 15000,
-                    temperature: 0,
-                    maxTokens: 200,
-                    messages: [
-                        {
-                            role: 'system',
-                            content: 'You triage messages for a Signals & Systems tutoring app. Decide whether the student\'s latest message needs the full grounded teaching pipeline (textbook retrieval + web search + a structured explanation), or is a casual/simple turn (greeting, thanks, acknowledgement, small-talk) that only needs a short friendly reply. A short message can still be grounded if, in context, it is a real course question (e.g. "why?", "再详细点"). When unsure, choose grounded. Respond with STRICT JSON only, no prose: {"grounded": true|false, "reply": "<if not grounded: one short warm reply in the student\'s language inviting a course question; else empty string>"}'
-                        },
-                        {
-                            role: 'user',
-                            content: [
-                                sectionTitle ? `Current section: ${sectionTitle}` : '',
-                                historyText ? `Recent conversation:\n${historyText}` : '',
-                                `Student's latest message: ${question}`,
-                                `Reply language: ${language === 'zh' ? 'Chinese' : 'English'}`
-                            ].filter(Boolean).join('\n\n')
-                        }
-                    ]
-                });
-                const parsed = tryParseJsonLoose(classifyRaw);
-                if (parsed && typeof parsed.grounded === 'boolean') {
-                    grounded = parsed.grounded;
-                    reply = grounded ? '' : compactWhitespace(parsed.reply || '');
+            let routingSource = 'history-follow-up-guard';
+            const forceGroundedFollowUp = shouldForceGroundedFollowUp(question, history);
+            if (!forceGroundedFollowUp) {
+                try {
+                    routingSource = 'classifier-fallback';
+                    const historyText = history.slice(-3)
+                        .map(h => `${h && h.role === 'assistant' ? 'Tutor' : 'Student'}: ${compactWhitespace((h && h.content) || '')}`)
+                        .filter(line => line.length > 8)
+                        .join('\n')
+                        .slice(0, 1200);
+                    const classifyRaw = await callOpenRouterChat({
+                        model: 'anthropic/claude-haiku-4.5',
+                        timeoutMs: 15000,
+                        temperature: 0,
+                        maxTokens: 200,
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You triage messages for a Signals & Systems tutoring app. Decide whether the student\'s latest message needs the full grounded teaching pipeline (textbook retrieval + web search + a structured explanation), or is a casual/simple turn (greeting, thanks, acknowledgement, small-talk) that only needs a short friendly reply. A short message can still be grounded if, in context, it is a real course question (e.g. "why?", "\u518d\u8be6\u7ec6\u70b9"). When unsure, choose grounded. Respond with STRICT JSON only, no prose: {"grounded": true|false, "reply": "<if not grounded: one short warm reply in the student\'s language inviting a course question; else empty string>"}'
+                            },
+                            {
+                                role: 'user',
+                                content: [
+                                    sectionTitle ? `Current section: ${sectionTitle}` : '',
+                                    historyText ? `Recent conversation:\n${historyText}` : '',
+                                    `Student's latest message: ${question}`,
+                                    `Reply language: ${language === 'zh' ? 'Chinese' : 'English'}`
+                                ].filter(Boolean).join('\n\n')
+                            }
+                        ]
+                    });
+                    const parsed = tryParseJsonLoose(classifyRaw);
+                    if (parsed && typeof parsed.grounded === 'boolean') {
+                        grounded = parsed.grounded;
+                        reply = grounded ? '' : compactWhitespace(parsed.reply || '');
+                        routingSource = 'classifier';
+                    }
+                } catch (err) {
+                    console.warn('[intent] classification failed; defaulting to grounded:', err.message);
+                    grounded = true;
+                    reply = '';
+                    routingSource = 'classifier-error-fallback';
                 }
-            } catch (err) {
-                console.warn('[intent] classification failed; defaulting to grounded:', err.message);
-                grounded = true;
-                reply = '';
             }
             if (!grounded && !reply) {
                 reply = language === 'zh'
                     ? '你好！👋 想学哪个知识点、或者有题目，直接问我就行。'
                     : 'Hi! 👋 What would you like to learn or work on? Ask me a concept or a problem.';
             }
-            console.log(`[intent] "${question.slice(0, 60)}" -> grounded=${grounded}`);
+            console.log(`[intent] "${question.slice(0, 60)}" -> grounded=${grounded} source=${routingSource}`);
             res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
             res.end(JSON.stringify({ grounded, reply }));
         } catch (err) {

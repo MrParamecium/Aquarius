@@ -1,0 +1,30 @@
+{
+  "id": "restored-session-intent",
+  "name": "restored-session-intent",
+  "title": "Fix restored session intent routing",
+  "description": "Protect history-dependent course follow-ups from casual-chat misrouting after session restore.",
+  "status": "in_progress",
+  "dev_type": null,
+  "scope": "intent",
+  "package": null,
+  "priority": "P2",
+  "creator": "codex",
+  "assignee": "codex",
+  "createdAt": "2026-08-01",
+  "completedAt": null,
+  "branch": "codex/loop-07-session-intent",
+  "base_branch": "main",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    "app/ws-bridge.js",
+    "app/intent-routing.js",
+    "tools/test-intent-routing.js"
+  ],
+  "notes": "Implementation and local verification complete. Production acceptance is pending; Neon remains untouched.",
+  "meta": {}
+}
