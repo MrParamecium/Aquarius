@@ -34,6 +34,15 @@ const REQUIRED_HEADINGS = [
   '## 5. Figure 2.7 in GeoGebra',
   '## 6. Why This Section Matters in the Book',
 ];
+const EXPECTED_ISLAND_COUNTS = [3, 3, 3, 1, 4, 4];
+const REQUIRED_VISUALS = ['tau-scan', 'five-steps', 'book-map'];
+const SEMANTIC_TOKENS = {
+  '--convolution-input': '#2563eb',
+  '--convolution-response': '#7c3aed',
+  '--convolution-action': '#16876a',
+  '--convolution-output': '#b45309',
+  '--convolution-warning': '#dc2626',
+};
 
 const failures = [];
 const fail = (message) => failures.push(message);
@@ -60,6 +69,20 @@ function readPngSize(filePath) {
   return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
 }
 
+function getSectionSource(markdown, pageNumber) {
+  const start = markdown.indexOf(REQUIRED_HEADINGS[pageNumber - 1]);
+  if (start < 0) return '';
+  const nextHeading = REQUIRED_HEADINGS[pageNumber];
+  const end = nextHeading ? markdown.indexOf(nextHeading, start + 1) : markdown.length;
+  return markdown.slice(start, end < 0 ? markdown.length : end);
+}
+
+function getIslandBlocks(source) {
+  return Array.from(source.matchAll(
+    /<section\b([^>]*\bdata-convolution-island="([^"]+)"[^>]*)>([\s\S]*?)<\/section>/g
+  ), match => ({ attrs: match[1], id: match[2], body: match[3] }));
+}
+
 const cache = readRequired(CACHE_PATH);
 const staticRoutes = readRequired(STATIC_ROUTES_PATH);
 const styles = readRequired(STYLE_PATH);
@@ -81,6 +104,26 @@ if (cache) {
     if (index >= 0) previousIndex = index;
   }
 
+  EXPECTED_ISLAND_COUNTS.forEach((expectedCount, index) => {
+    const pageNumber = index + 1;
+    const source = getSectionSource(cache, pageNumber);
+    const islands = getIslandBlocks(source);
+    if (islands.length !== expectedCount) {
+      fail(`page ${pageNumber} must contain ${expectedCount} content island(s), found ${islands.length}`);
+      return;
+    }
+    islands.forEach((island, islandIndex) => {
+      const expectedNumber = String(islandIndex + 1).padStart(2, '0');
+      const page = island.attrs.match(/data-convolution-page="([^"]+)"/)?.[1];
+      const number = island.attrs.match(/data-convolution-number="([^"]+)"/)?.[1];
+      if (page !== String(pageNumber)) fail(`${island.id} must belong to page ${pageNumber}, found ${page || 'none'}`);
+      if (number !== expectedNumber) fail(`${island.id} must use page-local number ${expectedNumber}, found ${number || 'none'}`);
+      if (/<section\b/i.test(island.body)) fail(`${island.id} must not contain a nested section/card`);
+      const highlights = (island.body.match(/class="[^"]*\bconvolution-key\b/g) || []).length;
+      if (highlights > 4) fail(`${island.id} may highlight at most 4 items, found ${highlights}`);
+    });
+  });
+
   const demoCount = (cache.match(/data-demo-b64="/g) || []).length;
   if (demoCount !== 1) fail(`lesson must keep exactly 1 GeoGebra demo, found ${demoCount}`);
 
@@ -92,11 +135,32 @@ if (cache) {
   if (/convolution-(?:ink-memory|sprinkler-procedure)\.png/.test(cache)) {
     fail('lesson must not reference the superseded non-V2 illustrations');
   }
-  if ((cache.match(/class="convolution-analogy-block/g) || []).length !== 2) {
+  if ((cache.match(/class="[^"]*\bconvolution-analogy-block\b/g) || []).length !== 2) {
     fail('lesson must contain exactly 2 convolution analogy blocks');
   }
   if (!/alt="[^"]*ink[^"]*"/i.test(cache)) fail('ink illustration must have meaningful alt text');
   if (!/alt="[^"]*sprinkler[^"]*"/i.test(cache)) fail('sprinkler illustration must have meaningful alt text');
+
+  const visuals = Array.from(cache.matchAll(/data-convolution-visual="([^"]+)"/g), match => match[1]);
+  if (JSON.stringify(visuals) !== JSON.stringify(REQUIRED_VISUALS)) {
+    fail(`lesson visuals must be exactly ${JSON.stringify(REQUIRED_VISUALS)}, found ${JSON.stringify(visuals)}`);
+  }
+  if ((cache.match(/<svg\b[^>]*class="[^"]*\bconvolution-diagram\b[^>]*role="img"/g) || []).length !== 3) {
+    fail('each code-native diagram must use one accessible role=img SVG');
+  }
+  if ((cache.match(/<title\s+id="convolution-[^"]+-title">/g) || []).length !== 3) {
+    fail('each code-native diagram must contain a stable accessible title');
+  }
+  if ((cache.match(/data-convolution-step="\d{2}"/g) || []).length !== 5) {
+    fail('five-step timeline must contain exactly five numbered steps');
+  }
+  if ((cache.match(/data-convolution-flow="[^"]+"/g) || []).length !== 3) {
+    fail('book map must contain exactly three independent textbook flows');
+  }
+  if (/<(?:canvas|script)\b/i.test(cache)) fail('code-native lesson diagrams must not add canvas or script elements');
+  if (/convolution-book-map-horizontal|convolution-three-column-map/.test(cache)) {
+    fail('the rejected horizontal three-column book map must not return');
+  }
 }
 
 for (const image of APPROVED_IMAGES) {
@@ -117,21 +181,38 @@ if (staticRoutes) {
 
 if (styles) {
   for (const selector of [
+    '.convolution-island',
+    '.convolution-island-number',
+    '.convolution-key-input',
+    '.convolution-key-response',
+    '.convolution-key-action',
+    '.convolution-key-output',
+    '.convolution-key-warning',
     '.convolution-analogy-block',
     '.convolution-analogy-copy',
     '.convolution-analogy-figure',
     '.convolution-analogy-image',
+    '.convolution-tau-scan',
+    '.convolution-step-timeline',
+    '.convolution-book-map',
   ]) {
     if (!styles.includes(selector)) fail(`missing lesson-specific selector: ${selector}`);
   }
+  for (const [token, value] of Object.entries(SEMANTIC_TOKENS)) {
+    const pattern = new RegExp(`${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*${value}`, 'i');
+    if (!pattern.test(styles)) fail(`missing semantic token ${token}: ${value}`);
+  }
   if (!/\.convolution-analogy-block\s*\{[^}]*grid-template-columns:/s.test(styles)) {
-    fail('desktop analogy block must define a two-column grid');
+    fail('desktop analogy block must define a multi-column grid');
   }
   if (!/\.convolution-analogy-image\s*\{[^}]*object-fit:\s*contain/s.test(styles)) {
     fail('analogy images must use object-fit: contain');
   }
-  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-analogy-block\s*\{[^}]*grid-template-columns:\s*1fr/s.test(styles)) {
-    fail('mobile analogy block must collapse to one column at 760px');
+  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-island[^}]*grid-template-columns:\s*1fr/s.test(styles)) {
+    fail('mobile content islands must collapse to one column at 760px');
+  }
+  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-book-flow[^}]*grid-template-columns:\s*1fr/s.test(styles)) {
+    fail('mobile book flows must remain vertical at 760px');
   }
 }
 
@@ -141,4 +222,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[convolution-lesson-visuals] OK - overview, approved images, route and responsive layout contracts verified');
+console.log('[convolution-lesson-visuals] OK - v3 islands, semantics, diagrams and retained Loop 02 contracts verified');
