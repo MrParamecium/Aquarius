@@ -10,130 +10,66 @@ Concepts in this section:
 
 ## 1. Why Convolution Adds the Past
 
-A system with memory does not forget an input as soon as that input ends. A tiny part of the input applied at a past time τ leaves behind a scaled and delayed system response. The output we see now is the sum of all those responses that are still present.
+A system with memory does not forget an input the moment that input ends.
 
-%%KC_BLOCK%%<section class="convolution-analogy-block convolution-analogy-block-ink" data-convolution-analogy="ink"><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it: ink in water</p><p>Imagine a transparent pool. Instead of pouring in one bucket of ink, you add drops at many different times. Each drop is darkest when it enters. As time passes, it spreads through the water and becomes fainter. The color of the pool now is not caused by the last drop alone. It is the combined color still left by every earlier drop.</p></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-ink-memory-v2.png" data-api-asset="1" alt="Ink drops spreading and accumulating in a transparent pool" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
+%%KC_BLOCK%%<section class="convolution-island convolution-island-input" data-convolution-island="p1-memory" data-convolution-page="1" data-convolution-number="01"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-island-body"><h3>System memory</h3><ul><li>A small piece of the <span class="convolution-key convolution-key-input">past input</span> leaves a delayed response behind.</li><li>The <span class="convolution-key convolution-key-output">output now</span> is the sum of every response that is still present.</li></ul></div></section>%%KC_END%%
 
-**Bridge note:** Convolution keeps that same kind of total:
+%%KC_BLOCK%%<section class="convolution-island convolution-analogy-block convolution-analogy-block-ink" data-convolution-island="p1-ink" data-convolution-page="1" data-convolution-number="02" data-convolution-analogy="ink"><div class="convolution-island-number" aria-hidden="true">02</div><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it</p><h3>Ink in a transparent pool</h3><ul><li>You add ink one drop at a time, not as one bucket.</li><li>Each drop spreads and fades, but it does not vanish at once.</li><li>The color now comes from every earlier drop still left in the water.</li></ul></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-ink-memory-v2.png" data-api-asset="1" alt="Ink drops spreading and accumulating in a transparent pool" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
 
-- \(x(\tau)\) tells us how much ink was added at the past time τ.
-- \(g(t-\tau)\) tells us how much influence that drop still has after an age of \(t-\tau\).
-- \(x(\tau)g(t-\tau)\) is that one drop's contribution to the output now.
-- The integral adds the contributions from every possible past time.
-
-This is the central reason convolution appears in systems: each small input contribution creates a response, and linearity lets us add all of those responses.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-response" data-convolution-island="p1-symbol-map" data-convolution-page="1" data-convolution-number="03"><div class="convolution-island-number" aria-hidden="true">03</div><div class="convolution-island-body"><h3>Map the pool back to the symbols</h3><ul><li><span class="convolution-key convolution-key-input">\(x(\tau)\)</span>: how much ink entered at the past time \(\tau\).</li><li><span class="convolution-key convolution-key-response">\(g(t-\tau)\)</span>: how much influence that drop still has now.</li><li><span class="convolution-key convolution-key-output">\(x(\tau)g(t-\tau)\)</span>: that one drop's contribution now.</li><li><span class="convolution-key convolution-key-action">The integral</span>: add every past contribution continuously.</li></ul></div></section>%%KC_END%%
 
 ## 2. What the Integral Is Saying
 
-The convolution of \(x(t)\) and \(g(t)\) is
+To calculate one output value, first choose what "now" means.
 
-$$
-c(t)=\int_{-\infty}^{\infty}x(\tau)g(t-\tau)\,d\tau.
-$$
+%%KC_BLOCK%%<section class="convolution-island convolution-island-response" data-convolution-island="p2-equation" data-convolution-page="2" data-convolution-number="01"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-island-body"><h3>The whole operation in one line</h3><div class="convolution-equation"><span class="convolution-key convolution-key-output">\(c(t)\)</span> \(=\displaystyle\int_{-\infty}^{\infty}\) <span class="convolution-key convolution-key-input">\(x(\tau)\)</span><span class="convolution-key convolution-key-response">\(g(t-\tau)\)</span> \(d\tau\)</div><ul><li>Every point on the \(\tau\)-axis contributes one small amount to this integral.</li></ul></div></section>%%KC_END%%
 
-To calculate one value \(c(t)\), hold \(t\) fixed. It means "now." The variable τ is the one that scans through the past.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-action convolution-island-visual-split" data-convolution-island="p2-scan" data-convolution-page="2" data-convolution-number="02"><div class="convolution-island-number" aria-hidden="true">02</div><div class="convolution-island-body"><h3>Hold \(t\) still; scan with \(\tau\)</h3><ul><li><span class="convolution-key convolution-key-output">\(t\) is fixed</span>: it names the output time we are calculating.</li><li><span class="convolution-key convolution-key-action">\(\tau\) scans</span>: it visits every possible input time.</li></ul></div><figure class="convolution-visual convolution-tau-scan" data-convolution-visual="tau-scan"><svg class="convolution-diagram" role="img" aria-labelledby="convolution-tau-scan-title" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg"><title id="convolution-tau-scan-title">The output time t stays fixed while tau scans the integration axis and combines x of tau with g of t minus tau into one contribution.</title><rect class="convolution-svg-fixed" x="190" y="16" width="180" height="42" rx="6"/><text class="convolution-svg-fixed-text" x="280" y="43" text-anchor="middle">t = now is fixed</text><rect class="convolution-svg-input" x="28" y="88" width="176" height="64" rx="6"/><text class="convolution-svg-label" x="116" y="116" text-anchor="middle">x(&tau;)</text><text class="convolution-svg-note" x="116" y="139" text-anchor="middle">input at that time</text><rect class="convolution-svg-response" x="356" y="88" width="176" height="64" rx="6"/><text class="convolution-svg-label" x="444" y="116" text-anchor="middle">g(t-&tau;)</text><text class="convolution-svg-note" x="444" y="139" text-anchor="middle">effect left now</text><path class="convolution-svg-connector" d="M204 120 C242 120 238 178 280 178"/><path class="convolution-svg-connector" d="M356 120 C318 120 322 178 280 178"/><rect class="convolution-svg-output" x="190" y="162" width="180" height="48" rx="6"/><text class="convolution-svg-label" x="280" y="192" text-anchor="middle">one contribution</text><line class="convolution-svg-axis" x1="42" y1="252" x2="518" y2="252"/><path class="convolution-svg-axis" d="M42 252 l14 -7 v14 z M518 252 l-14 -7 v14 z"/><line class="convolution-svg-cursor" x1="280" y1="214" x2="280" y2="270"/><circle class="convolution-svg-cursor-dot" cx="280" cy="252" r="7"/><text class="convolution-svg-action-text" x="280" y="291" text-anchor="middle">&tau; scans the integration axis</text></svg></figure></section>%%KC_END%%
 
-**Quick reading rule:** Think of pinning today's date on a calendar while your finger moves backward across earlier dates. For each date τ, you ask two questions: how much input occurred then, and how much of its effect survives until today? Their product is one historical contribution. The integral is the total of all such contributions.
-
-That is why both \(x(\tau)\) and \(g(t-\tau)\) must be drawn against the same horizontal τ-axis. The picture changes when we choose another value of \(t\), but each individual area calculation is performed along τ.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-output" data-convolution-island="p2-reading-rule" data-convolution-page="2" data-convolution-number="03"><div class="convolution-island-number" aria-hidden="true">03</div><div class="convolution-island-body"><h3>A fast way to read the integral</h3><ul><li>At each \(\tau\), ask: how much <span class="convolution-key convolution-key-input">input happened then</span>?</li><li>Then ask: how much of its <span class="convolution-key convolution-key-response">effect survives now</span>?</li><li>Multiply the two answers, then <span class="convolution-key convolution-key-output">add every contribution</span>.</li></ul></div></section>%%KC_END%%
 
 ## 3. How the Graphical Procedure Works
 
-%%KC_BLOCK%%<section class="convolution-analogy-block convolution-analogy-block-sprinkler" data-convolution-analogy="sprinkler"><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it: a sprinkler truck</p><p>Imagine that \(x(\tau)\) is a farm spread along the τ-axis. Crop density changes from one location to another. Imagine \(g\) as the spray pattern of a sprinkler truck. We want to know how much useful water the whole farm receives when the truck is positioned at \(t\).</p><p>First the sprinkler truck turns around. This is the reflection from \(g(\tau)\) to \(g(-\tau)\). Then it drives along the farm to position \(t\). This is the shift from \(g(-\tau)\) to \(g(t-\tau)\).</p><p>At each location, the useful contribution is \(\text{crop density}\times\text{local spray amount}\).</p></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-sprinkler-procedure-v2.png" data-api-asset="1" alt="A sprinkler truck moving across crops with different densities" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
+Turn the symbols into a sprinkler truck moving across a field.
 
-**Quick reading rule:** Sparse crops under heavy spray still make only a limited contribution. Dense crops under a tiny spray also make only a small contribution. This is why overlap width alone is not enough: we must multiply the two heights point by point. Adding those local contributions over the whole farm gives \(c(t)\).
+%%KC_BLOCK%%<section class="convolution-island convolution-analogy-block convolution-analogy-block-sprinkler" data-convolution-island="p3-sprinkler" data-convolution-page="3" data-convolution-number="01" data-convolution-analogy="sprinkler"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-analogy-copy"><p class="convolution-analogy-kicker">Picture it</p><h3>A farm and a sprinkler truck</h3><ul><li>The farm along \(\tau\) is <span class="convolution-key convolution-key-input">\(x(\tau)\)</span>; crop density changes from place to place.</li><li>The truck carries the spray pattern <span class="convolution-key convolution-key-response">\(g\)</span>.</li><li>We want the useful water received when the truck is parked at \(t\).</li></ul></div><figure class="convolution-analogy-figure"><img class="lesson-img convolution-analogy-image" src="/lesson-illustrations/2_4-2/convolution-sprinkler-procedure-v2.png" data-api-asset="1" alt="A sprinkler truck moving across crops with different densities" width="1153" height="2048" loading="lazy" decoding="async"></figure></section>%%KC_END%%
 
-The graphical actions therefore come directly from the formula:
+%%KC_BLOCK%%<section class="convolution-island convolution-island-action" data-convolution-island="p3-flip-slide" data-convolution-page="3" data-convolution-number="02"><div class="convolution-island-number" aria-hidden="true">02</div><div class="convolution-island-body"><h3>Flip, then slide</h3><ul><li><span class="convolution-key convolution-key-action">Turn the truck around</span>: \(g(\tau)\rightarrow g(-\tau)\).</li><li><span class="convolution-key convolution-key-action">Drive it to \(t\)</span>: \(g(-\tau)\rightarrow\) <span class="convolution-key convolution-key-response">\(g(t-\tau)\)</span>.</li></ul></div></section>%%KC_END%%
 
-- **Flip and slide:** these actions construct \(g(t-\tau)\).
-- **Multiply:** this finds the contribution at each τ.
-- **Integrate:** this adds all local contributions into one output value.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-output" data-convolution-island="p3-multiply-integrate" data-convolution-page="3" data-convolution-number="03"><div class="convolution-island-number" aria-hidden="true">03</div><div class="convolution-island-body"><h3>Multiply, then integrate</h3><ul><li>Sparse crops under heavy spray still make a <span class="convolution-key convolution-key-output">limited contribution</span>.</li><li>Dense crops under tiny spray also make a <span class="convolution-key convolution-key-output">small contribution</span>.</li><li><span class="convolution-key convolution-key-action">Multiply point by point</span>; overlap width alone is not enough.</li><li><span class="convolution-key convolution-key-action">Add the whole field</span> to obtain \(c(t)\).</li></ul></div></section>%%KC_END%%
 
 ## 4. Five-Step Checklist
 
-Use the same checklist whenever you perform graphical convolution:
+Use the same route every time you perform graphical convolution.
 
-1. **Fix:** Draw both signals on the τ-axis and keep \(x(\tau)\) fixed.
-2. **Flip:** Reflect the simpler signal about \(\tau=0\).
-3. **Slide:** Shift the flipped signal by \(t_0\) to form \(g(t_0-\tau)\).
-4. **Multiply and find area:** Identify the overlap, multiply the heights, and integrate. The area is \(c(t_0)\).
-5. **Record and scan:** Plot that value at \(t=t_0\), change \(t_0\), and repeat to build the complete \(c(t)\).
+%%KC_BLOCK%%<section class="convolution-island convolution-island-action convolution-island-timeline" data-convolution-island="p4-checklist" data-convolution-page="4" data-convolution-number="01"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-island-body"><h3>Five moves, always in this order</h3><figure class="convolution-visual convolution-step-timeline" data-convolution-visual="five-steps"><svg class="convolution-diagram convolution-step-signals" role="img" aria-labelledby="convolution-five-steps-title" viewBox="0 0 180 520" xmlns="http://www.w3.org/2000/svg"><title id="convolution-five-steps-title">Five miniature signal drawings show a fixed input, a flipped response, a shifted response, their overlap, and the recorded output point.</title><line class="convolution-timeline-rail" x1="24" y1="48" x2="24" y2="472"/><circle class="convolution-timeline-dot" cx="24" cy="52" r="8"/><circle class="convolution-timeline-dot" cx="24" cy="156" r="8"/><circle class="convolution-timeline-dot" cx="24" cy="260" r="8"/><circle class="convolution-timeline-dot" cx="24" cy="364" r="8"/><circle class="convolution-timeline-dot" cx="24" cy="468" r="8"/><g transform="translate(46 18)"><line class="convolution-mini-axis" x1="0" y1="66" x2="120" y2="66"/><path class="convolution-mini-input" d="M8 58 L32 58 L32 26 L70 26 L70 58 L112 58"/><path class="convolution-mini-response" d="M8 50 C38 10 78 20 112 54"/></g><g transform="translate(46 122)"><line class="convolution-mini-axis" x1="0" y1="66" x2="120" y2="66"/><path class="convolution-mini-response" d="M8 54 C42 20 82 10 112 50"/><path class="convolution-mini-action" d="M48 14 h24 M48 14 l8 -6 M48 14 l8 6 M72 14 l-8 -6 M72 14 l-8 6"/></g><g transform="translate(46 226)"><line class="convolution-mini-axis" x1="0" y1="66" x2="120" y2="66"/><path class="convolution-mini-response" d="M26 54 C56 20 88 16 116 50"/><path class="convolution-mini-action" d="M20 14 h48 M68 14 l-9 -7 M68 14 l-9 7"/></g><g transform="translate(46 330)"><line class="convolution-mini-axis" x1="0" y1="66" x2="120" y2="66"/><path class="convolution-mini-input" d="M8 58 L32 58 L32 26 L74 26 L74 58 L112 58"/><path class="convolution-mini-response" d="M24 54 C50 18 84 20 108 54"/><path class="convolution-mini-overlap" d="M32 54 C48 27 62 24 74 31 L74 58 L32 58 Z"/></g><g transform="translate(46 434)"><line class="convolution-mini-axis" x1="0" y1="66" x2="120" y2="66"/><path class="convolution-mini-output" d="M10 58 C34 56 48 38 62 24 C76 12 92 10 112 10"/><circle class="convolution-mini-output-dot" cx="72" cy="18" r="6"/></g></svg><ol class="convolution-step-list"><li data-convolution-step="01"><strong><span>01</span> Fix</strong><p>Put both signals on the \(\tau\)-axis. Keep \(x(\tau)\) still.</p></li><li data-convolution-step="02"><strong><span>02</span> Flip</strong><p>Reflect the simpler signal about \(\tau=0\).</p></li><li data-convolution-step="03"><strong><span>03</span> Slide</strong><p>Move the flipped signal to form \(g(t-\tau)\).</p></li><li data-convolution-step="04"><strong><span>04</span> Multiply</strong><p>Multiply the heights and find the full overlap area.</p></li><li data-convolution-step="05"><strong><span>05</span> Record</strong><p>Plot the area as \(c(t)\), change \(t\), and repeat.</p></li></ol></figure></div></section>%%KC_END%%
 
-Convolution is commutative, so you may choose which signal to flip. A useful rule is to flip the signal whose shape is simpler.
+Convolution is commutative. Save work by flipping the signal with the simpler shape.
 
 ## 5. Figure 2.7 in GeoGebra
 
-The textbook signals are
+Now apply the same fixed route to textbook Figure 2.7.
 
-$$
-x(\tau)=u(\tau+1),\qquad g(\tau)=2e^{-(\tau+2)}u(\tau+2).
-$$
-
-The step \(x(\tau)\) begins at \(\tau=-1\). After \(g(\tau)\) is flipped and shifted,
-
-$$
-g(t-\tau)=2e^{\tau-t-2}u(t+2-\tau),
-$$
-
-so its moving right boundary is \(\tau=t+2\).
+%%KC_BLOCK%%<section class="convolution-island convolution-island-input" data-convolution-island="p5-signals" data-convolution-page="5" data-convolution-number="01"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-island-body"><h3>Read the two textbook signals</h3><div class="convolution-equation"><span class="convolution-key convolution-key-input">\(x(\tau)=u(\tau+1)\)</span>, &nbsp; <span class="convolution-key convolution-key-response">\(g(\tau)=2e^{-(\tau+2)}u(\tau+2)\)</span></div><ul><li>The step begins at <span class="convolution-key convolution-key-input">\(\tau=-1\)</span>.</li><li>After flip and slide, the moving boundary is <span class="convolution-key convolution-key-response">\(\tau=t+2\)</span>.</li></ul></div></section>%%KC_END%%
 
 %%KC_BLOCK%%<div class="kc-visual-meta" data-visual-kind="interactive_demo" data-teaching-role="concept_anchor" data-visual-use-b64="eyJjcmFtIjoiVXNlIHRoZSBmb3VyLXN0ZXAgdmlldyB0byBtZW1vcml6ZSBmbGlwLCBzbGlkZSwgbXVsdGlwbHksIGludGVncmF0ZS4iLCJzdGFuZGFyZCI6IlRyYWNrIHRoZSBtb3Zpbmcgc3VwcG9ydCBib3VuZGFyeSBhbmQgY29ubmVjdCBvdmVybGFwIGFyZWEgdG8gYyh0KS4iLCJ0b3Bfc2NvcmUiOiJWZXJpZnkgZmlyc3QgY29udGFjdCBhbmQgdGhlIHBpZWNld2lzZSBvdXRwdXQgYXQgc2V2ZXJhbCB0IHZhbHVlcy4ifQ==" style="display:none;"></div><div class="kc-interactive-demo" data-demo-b64="eyJ0eXBlIjoiaW50ZXJhY3RpdmVfZGVtbyIsImRlbW9fdHlwZSI6Imdlb2dlYnJhX2NvbnZvbHV0aW9uIiwidGl0bGUiOiJHcmFwaGljYWwgY29udm9sdXRpb246IGZsaXAsIHNsaWRlLCBhbmQgaW50ZWdyYXRlIiwiZXhwbGFuYXRpb24iOiJGb2xsb3cgRmlndXJlIDIuNyBpbiBvbmUgY29udGludW91cyBjb25zdHJ1Y3Rpb24uIE1vdmUgdCB3aGlsZSBHZW9HZWJyYSBrZWVwcyB0aGUgZmxpcHBlZCBzaWduYWwsIG92ZXJsYXAgYXJlYSwgYW5kIG91dHB1dCBwb2ludCBzeW5jaHJvbml6ZWQuIiwidGVhY2hpbmdfcm9sZSI6ImNvbmNlcHRfYW5jaG9yIiwic3BlYyI6eyJmcmFtZXdvcmsiOiJnZW9nZWJyYSIsInNjZW5lIjoiY29udm9sdXRpb25fZmlndXJlXzJfNyIsImd1aWRhbmNlIjoic29mdCIsImluaXRpYWxfc3RlcCI6MSwiaW5pdGlhbF90IjotNCwidF9taW4iOi00LCJ0X21heCI6MywidF9zdGVwIjowLjA1LCJ0YXJnZXRfdCI6LTMsInRhcmdldF90b2xlcmFuY2UiOjAuMDgsImZhbGxiYWNrX2ZpZ3VyZSI6Ii9maWd1cmVzL3BhZ2UtMTc5LWZpZ3VyZV8yXzcucG5nIn19"></div>%%KC_END%%
 
-The two factors overlap only when
+%%KC_BLOCK%%<section class="convolution-island convolution-island-action" data-convolution-island="p5-first-contact" data-convolution-page="5" data-convolution-number="02"><div class="convolution-island-number" aria-hidden="true">02</div><div class="convolution-island-body"><h3>First contact</h3><ul><li>The boundaries meet when \(t+2=-1\), so <span class="convolution-key convolution-key-action">\(t=-3\)</span>.</li><li>They touch at only one point. <span class="convolution-key convolution-key-output">Zero width means zero area</span>, so \(c(-3)=0\).</li></ul></div></section>%%KC_END%%
 
-$$
-\tau\ge -1\qquad\text{and}\qquad \tau\le t+2.
-$$
+%%KC_BLOCK%%<section class="convolution-island convolution-island-output" data-convolution-island="p5-output" data-convolution-page="5" data-convolution-number="03"><div class="convolution-island-number" aria-hidden="true">03</div><div class="convolution-island-body"><h3>Record the complete output</h3><div class="convolution-equation"><span class="convolution-key convolution-key-output">\(c(t)\)</span> \(=\begin{cases}0,&t\le -3,\\2\left(1-e^{-(t+3)}\right),&t>-3.\end{cases}\)</div><ul><li>At \(t=-2\): <span class="convolution-key convolution-key-output">\(c(-2)=2(1-e^{-1})\approx1.2642\)</span>.</li><li>At \(t=0\): <span class="convolution-key convolution-key-output">\(c(0)=2(1-e^{-3})\approx1.9004\)</span>.</li></ul></div></section>%%KC_END%%
 
-First contact occurs when the two boundaries meet:
-
-$$
-t+2=-1\quad\Longrightarrow\quad t=-3.
-$$
-
-At \(t=-3\), the signals touch at one point. A point has zero width, so the overlap area and \(c(-3)\) are still zero.
-
-For \(t>-3\), the overlap interval is \([-1,t+2]\), and
-
-$$
-\begin{aligned}
-c(t)
-&=\int_{-1}^{t+2}2e^{\tau-t-2}\,d\tau\\
-&=2\left(1-e^{-(t+3)}\right).
-\end{aligned}
-$$
-
-Thus
-
-$$
-c(t)=
-\begin{cases}
-0, & t\le -3,\\
-2\left(1-e^{-(t+3)}\right), & t>-3.
-\end{cases}
-$$
-
-Use these checkpoints while dragging the slider:
-
-$$
-c(-2)=2(1-e^{-1})\approx1.2642,\qquad
-c(0)=2(1-e^{-3})\approx1.9004.
-$$
-
-**Common trap:** Do not confuse the product height with the output. The output is the entire shaded area. Also remember to flip before sliding; shifting \(g(\tau)\) first creates the wrong moving signal.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-warning" data-convolution-island="p5-trap" data-convolution-page="5" data-convolution-number="04"><div class="convolution-island-number" aria-hidden="true">04</div><div class="convolution-island-body"><p class="convolution-island-kicker">Common trap</p><h3>Do not lose the area</h3><ul><li>The <span class="convolution-key convolution-key-warning">output is the entire shaded area</span>, not the product height at one point.</li><li><span class="convolution-key convolution-key-warning">Flip before sliding</span>; shifting \(g(\tau)\) first creates the wrong moving signal.</li></ul></div></section>%%KC_END%%
 
 ## 6. Why This Section Matters in the Book
 
-This subsection belongs to Section 2.4, **System Response to External Input: The Zero-State Response**. For an LTIC system with input \(x(t)\) and impulse response \(h(t)\),
+The same convolution machine appears again and again in this book.
 
-$$
-y(t)=x(t)*h(t).
-$$
+%%KC_BLOCK%%<figure class="convolution-visual convolution-book-map" data-convolution-visual="book-map"><svg class="convolution-diagram" role="img" aria-labelledby="convolution-book-map-title" viewBox="0 0 360 410" xmlns="http://www.w3.org/2000/svg"><title id="convolution-book-map-title">A vertical system path combines input x of t and impulse response h of t through convolution to produce output y of t.</title><rect class="convolution-svg-input" x="74" y="18" width="212" height="66" rx="6"/><text class="convolution-svg-label" x="180" y="47" text-anchor="middle">x(t)</text><text class="convolution-svg-note" x="180" y="70" text-anchor="middle">INPUT</text><path class="convolution-book-arrow" d="M180 84 V112"/><circle class="convolution-book-plus" cx="180" cy="126" r="14"/><text class="convolution-book-plus-text" x="180" y="133" text-anchor="middle">+</text><path class="convolution-book-arrow" d="M180 140 V164"/><rect class="convolution-svg-response" x="74" y="164" width="212" height="66" rx="6"/><text class="convolution-svg-label" x="180" y="193" text-anchor="middle">h(t)</text><text class="convolution-svg-note" x="180" y="216" text-anchor="middle">SYSTEM MEMORY</text><path class="convolution-book-arrow" d="M180 230 V258"/><rect class="convolution-svg-action" x="74" y="258" width="212" height="58" rx="6"/><text class="convolution-svg-label" x="180" y="293" text-anchor="middle">CONVOLUTION</text><path class="convolution-book-arrow" d="M180 316 V344"/><rect class="convolution-svg-output" x="74" y="344" width="212" height="48" rx="6"/><text class="convolution-svg-label" x="180" y="375" text-anchor="middle">y(t) OUTPUT</text></svg></figure>%%KC_END%%
 
-Convolution is therefore a general machine for answering: if we know the input and the system, what output will the system produce?
+%%KC_BLOCK%%<section class="convolution-island convolution-island-input" data-convolution-island="p6-rlc" data-convolution-page="6" data-convolution-number="01"><div class="convolution-island-number" aria-hidden="true">01</div><div class="convolution-island-body"><p class="convolution-island-kicker">Example 2.9</p><h3>The RLC circuit response</h3><ul><li>Convolution finds the zero-state response without solving the differential equation again for every new input.</li></ul><div class="convolution-book-flow" data-convolution-flow="rlc"><div class="convolution-flow-node convolution-flow-input" data-flow-node>Input voltage</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-system" data-flow-node>RLC circuit</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-output" data-flow-node>Loop current</div></div></div></section>%%KC_END%%
 
-- **Earlier in Section 2.4:** Example 2.9 uses convolution to find the loop current of an RLC circuit. Once the impulse response is known, a new input does not require solving the differential equation again from the beginning.
-- **Sampling and filtering:** The textbook explicitly notes that graphical convolution helps us predict results in sampling, filtering, and cases where signals are known mainly by their graphs.
-- **Next in Section 2.4-3:** Two LTIC subsystems in cascade have the combined impulse response \(h_1(t)*h_2(t)\). The graphical skill learned here makes that result meaningful rather than merely symbolic.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-action" data-convolution-island="p6-filter" data-convolution-page="6" data-convolution-number="02"><div class="convolution-island-number" aria-hidden="true">02</div><div class="convolution-island-body"><h3>Sampling and filtering</h3><ul><li>Graphical convolution predicts what a filter will keep, spread, or suppress.</li></ul><div class="convolution-book-flow" data-convolution-flow="filter"><div class="convolution-flow-node convolution-flow-input" data-flow-node>Raw signal</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-system" data-flow-node>Filter</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-output" data-flow-node>Processed signal</div></div></div></section>%%KC_END%%
 
-**Key takeaway:** Convolution is not a ritual of moving two curves. It asks how much influence every past piece of the input still has now, and then adds all of those influences to produce the current output.
+%%KC_BLOCK%%<section class="convolution-island convolution-island-response" data-convolution-island="p6-cascade" data-convolution-page="6" data-convolution-number="03"><div class="convolution-island-number" aria-hidden="true">03</div><div class="convolution-island-body"><h3>Section 2.4-3: cascade</h3><ul><li>Two LTIC subsystems behave like one equivalent system.</li></ul><div class="convolution-book-flow" data-convolution-flow="cascade"><div class="convolution-flow-node convolution-flow-input" data-flow-node>System 1: \(h_1(t)\)</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-system" data-flow-node>System 2: \(h_2(t)\)</div><div class="convolution-flow-arrow" aria-hidden="true">↓</div><div class="convolution-flow-node convolution-flow-output" data-flow-node>Equivalent: \(h_1*h_2\)</div></div></div></section>%%KC_END%%
+
+%%KC_BLOCK%%<section class="convolution-island convolution-island-output convolution-island-takeaway" data-convolution-island="p6-takeaway" data-convolution-page="6" data-convolution-number="04"><div class="convolution-island-number" aria-hidden="true">04</div><div class="convolution-island-body"><h3>Key takeaway</h3><ul><li>Convolution asks how much influence <span class="convolution-key convolution-key-input">every past input</span> still has now.</li><li>Then it <span class="convolution-key convolution-key-output">adds those influences</span> to produce the current output.</li></ul></div></section>%%KC_END%%

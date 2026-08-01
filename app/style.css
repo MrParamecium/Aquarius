@@ -26387,85 +26387,524 @@ body {
   }
 }
 
-/* 2.4-2 analogy visuals: compact memory aids; GeoGebra remains the main visual. */
+/* 2.4-2 reading structure: numbered content islands and precise teaching diagrams. */
 .lesson-page-frame[data-lesson-section="2.4-2"] {
-  --lesson-page-content-font-size: clamp(1.16rem, 1.65vw, 1.72rem);
+  --lesson-page-content-font-size: 1.32rem;
+  --convolution-input: #2563eb;
+  --convolution-response: #7c3aed;
+  --convolution-action: #16876a;
+  --convolution-output: #b45309;
+  --convolution-warning: #dc2626;
+  --convolution-ink: var(--convolution-input);
+  --convolution-line: #d8dee8;
+  --convolution-copy: #273449;
+  --convolution-muted: #64748b;
 }
 
-.convolution-analogy-block {
-  --convolution-analogy-accent: #2563eb;
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
+  color: var(--convolution-copy);
+}
+
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content > p {
+  max-width: 72ch !important;
+  margin: 0 0 16px !important;
+  color: var(--convolution-muted);
+  font-weight: 560;
+}
+
+.convolution-island {
+  --convolution-island-accent: var(--convolution-input);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(170px, 30%);
-  align-items: center;
-  gap: clamp(20px, 3vw, 38px);
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
   width: 100%;
-  margin: clamp(18px, 2.4vw, 28px) 0;
-  padding: clamp(16px, 2vw, 24px) 0 clamp(16px, 2vw, 24px) clamp(16px, 2vw, 24px);
-  border-left: 4px solid var(--convolution-analogy-accent);
+  margin: 16px 0;
+  padding: 18px 20px;
+  overflow: hidden;
+  border: 1px solid var(--convolution-line);
+  border-left: 4px solid var(--convolution-island-accent);
+  border-radius: 7px;
+  background: #fbfdff;
+  box-shadow: none;
 }
 
-.convolution-analogy-block-sprinkler {
-  --convolution-analogy-accent: #16876a;
+.convolution-island-input {
+  --convolution-island-accent: var(--convolution-input);
+  background: #f7faff;
 }
 
+.convolution-island-response {
+  --convolution-island-accent: var(--convolution-response);
+  background: #fbf9ff;
+}
+
+.convolution-island-action {
+  --convolution-island-accent: var(--convolution-action);
+  background: #f7fcfa;
+}
+
+.convolution-island-output {
+  --convolution-island-accent: var(--convolution-output);
+  background: #fffaf3;
+}
+
+.convolution-island-warning {
+  --convolution-island-accent: var(--convolution-warning);
+  border-color: #fecaca;
+  background: #fff7f7;
+}
+
+.convolution-island-number {
+  color: var(--convolution-island-accent);
+  font-size: 2rem;
+  font-weight: 820;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.convolution-island-body,
 .convolution-analogy-copy {
   min-width: 0;
 }
 
+#learnView .convolution-island h3 {
+  margin: 0 0 10px;
+  color: #172033;
+  font-size: 1.02em;
+  font-weight: 780;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+#learnView .convolution-island ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+#learnView .convolution-island li {
+  margin: 0 0 7px !important;
+  line-height: 1.48 !important;
+}
+
+#learnView .convolution-island li:last-child,
+.convolution-island-body > :last-child,
 .convolution-analogy-copy > :last-child {
   margin-bottom: 0 !important;
 }
 
+.convolution-island-kicker,
 .convolution-analogy-kicker {
-  margin: 0 0 10px !important;
-  color: var(--convolution-analogy-accent) !important;
-  font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace !important;
-  font-size: 0.76em !important;
-  font-weight: 700;
-  line-height: 1.35 !important;
+  margin: 0 0 6px !important;
+  color: var(--convolution-island-accent) !important;
+  font-size: 0.72em !important;
+  font-weight: 780;
+  line-height: 1.2 !important;
   letter-spacing: 0;
   text-transform: uppercase;
 }
 
+.convolution-key {
+  font-weight: 780;
+}
+
+.convolution-key-input { color: var(--convolution-input); }
+.convolution-key-response { color: var(--convolution-response); }
+.convolution-key-action { color: var(--convolution-action); }
+.convolution-key-output { color: var(--convolution-output); }
+.convolution-key-warning { color: var(--convolution-warning); }
+
+.convolution-equation {
+  width: 100%;
+  margin: 8px 0 12px;
+  padding: 10px 0;
+  overflow-x: auto;
+  color: #172033;
+  font-size: 1.08em;
+  line-height: 1.6;
+  scrollbar-width: thin;
+}
+
+.convolution-analogy-block {
+  --convolution-island-accent: var(--convolution-ink);
+  grid-template-columns: 58px minmax(0, 1fr);
+  align-items: center;
+}
+
+.convolution-analogy-block-sprinkler {
+  --convolution-island-accent: var(--convolution-action);
+}
+
 .convolution-analogy-figure {
+  grid-column: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
-  margin: 0;
+  width: min(100%, 210px);
+  margin: 0 auto;
 }
 
 #learnView .convolution-analogy-image {
   display: block;
   width: auto !important;
   max-width: 100% !important;
-  height: clamp(310px, 42vh, 430px) !important;
-  max-height: 430px !important;
+  height: 360px !important;
+  max-height: 360px !important;
   aspect-ratio: 1153 / 2048;
   object-fit: contain;
   margin: 0 auto !important;
   padding: 0 !important;
-  border: 1px solid rgba(93, 83, 66, 0.16);
+  border: 1px solid #e5e0d6;
   border-radius: 6px;
   background: #faf8f2 !important;
-  box-shadow: 0 10px 24px rgba(54, 47, 37, 0.09);
+  box-shadow: none;
+}
+
+#learnView #learnBody.chat-collapsed .convolution-analogy-block {
+  grid-template-columns: 58px minmax(0, 1fr) minmax(180px, 26%);
+  gap: 18px;
+}
+
+#learnView #learnBody.chat-collapsed .convolution-analogy-figure {
+  grid-column: 3;
+}
+
+.convolution-island-visual-split {
+  grid-template-columns: 58px minmax(0, 1fr);
+}
+
+.convolution-island-visual-split .convolution-visual {
+  grid-column: 2;
+}
+
+#learnView #learnBody.chat-collapsed .convolution-island-visual-split {
+  grid-template-columns: 58px minmax(220px, 0.72fr) minmax(360px, 1.28fr);
+  align-items: center;
+}
+
+#learnView #learnBody.chat-collapsed .convolution-island-visual-split .convolution-visual {
+  grid-column: 3;
+}
+
+.convolution-visual {
+  min-width: 0;
+  margin: 0;
+}
+
+.convolution-diagram {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.convolution-tau-scan {
+  padding-left: 16px;
+  border-left: 1px solid var(--convolution-line);
+}
+
+.convolution-svg-input,
+.convolution-svg-response,
+.convolution-svg-action,
+.convolution-svg-output,
+.convolution-svg-fixed {
+  stroke-width: 2;
+}
+
+.convolution-svg-input { fill: #eaf2ff; stroke: var(--convolution-input); }
+.convolution-svg-response { fill: #f2edff; stroke: var(--convolution-response); }
+.convolution-svg-action { fill: #eaf8f3; stroke: var(--convolution-action); }
+.convolution-svg-output { fill: #fff2dd; stroke: var(--convolution-output); }
+.convolution-svg-fixed { fill: #fff8e9; stroke: var(--convolution-output); }
+
+.convolution-svg-label,
+.convolution-svg-fixed-text,
+.convolution-book-plus-text {
+  fill: #172033;
+  font-size: 18px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.convolution-svg-note {
+  fill: #526077;
+  font-size: 13px;
+  font-weight: 620;
+  letter-spacing: 0;
+}
+
+.convolution-svg-fixed-text {
+  fill: var(--convolution-output);
+  font-size: 16px;
+}
+
+.convolution-svg-connector,
+.convolution-svg-axis,
+.convolution-book-arrow {
+  fill: none;
+  stroke: #8793a6;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.convolution-svg-axis {
+  fill: #8793a6;
+}
+
+.convolution-svg-cursor {
+  stroke: var(--convolution-action);
+  stroke-width: 3;
+}
+
+.convolution-svg-cursor-dot {
+  fill: var(--convolution-action);
+}
+
+.convolution-svg-action-text {
+  fill: var(--convolution-action);
+  font-size: 15px;
+  font-weight: 760;
+  letter-spacing: 0;
+}
+
+.convolution-island-timeline {
+  align-items: stretch;
+}
+
+.convolution-step-timeline {
+  display: grid;
+  grid-template-columns: minmax(150px, 26%) minmax(0, 1fr);
+  align-items: stretch;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.convolution-step-signals {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+}
+
+.convolution-timeline-rail,
+.convolution-mini-axis {
+  stroke: #c2cad6;
+  stroke-width: 2;
+}
+
+.convolution-timeline-dot {
+  fill: #ffffff;
+  stroke: var(--convolution-action);
+  stroke-width: 3;
+}
+
+.convolution-mini-input,
+.convolution-mini-response,
+.convolution-mini-action,
+.convolution-mini-output {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.convolution-mini-input { stroke: var(--convolution-input); }
+.convolution-mini-response { stroke: var(--convolution-response); }
+.convolution-mini-action { stroke: var(--convolution-action); }
+.convolution-mini-output { stroke: var(--convolution-output); }
+.convolution-mini-overlap { fill: #f6d79b; stroke: var(--convolution-output); stroke-width: 2; }
+.convolution-mini-output-dot { fill: var(--convolution-output); stroke: #ffffff; stroke-width: 2; }
+
+#learnView .convolution-step-list {
+  display: grid;
+  grid-template-rows: repeat(5, minmax(92px, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#learnView .convolution-step-list li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 10px 0;
+  border-bottom: 1px solid #dce7e2;
+}
+
+#learnView .convolution-step-list li:last-child {
+  border-bottom: 0;
+}
+
+.convolution-step-list strong {
+  color: #172033;
+  font-size: 0.92em;
+  line-height: 1.25;
+}
+
+.convolution-step-list strong span {
+  display: inline-block;
+  min-width: 2.3em;
+  color: var(--convolution-action);
+}
+
+#learnView .convolution-step-list p {
+  margin: 4px 0 0 !important;
+  color: #526077;
+  font-size: 0.82em;
+  line-height: 1.4 !important;
+}
+
+.convolution-book-map {
+  width: min(100%, 430px) !important;
+  margin: 8px auto 18px;
+}
+
+.convolution-book-arrow {
+  stroke: var(--convolution-action);
+  stroke-width: 3;
+}
+
+.convolution-book-plus {
+  fill: #ffffff;
+  stroke: var(--convolution-action);
+  stroke-width: 2;
+}
+
+.convolution-book-plus-text {
+  fill: var(--convolution-action);
+  font-size: 21px;
+}
+
+.convolution-book-flow {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: stretch;
+  gap: 6px;
+  width: min(100%, 520px);
+  margin: 14px auto 2px;
+}
+
+.convolution-flow-node {
+  padding: 10px 14px;
+  border: 1px solid var(--convolution-line);
+  border-left-width: 4px;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #273449;
+  font-size: 0.84em;
+  font-weight: 720;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.convolution-flow-input { border-left-color: var(--convolution-input); }
+.convolution-flow-system { border-left-color: var(--convolution-response); }
+.convolution-flow-output { border-left-color: var(--convolution-output); }
+
+.convolution-flow-arrow {
+  color: var(--convolution-action);
+  font-size: 1.25em;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+}
+
+.convolution-island-takeaway {
+  border-color: #f4d6a7;
+  background: #fff8e9;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] {
+  --convolution-line: #405066;
+  --convolution-copy: #e5edf7;
+  --convolution-muted: #b4c0d0;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-island {
+  background: #172233;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-island h3,
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-step-list strong {
+  color: #f1f5f9;
 }
 
 @media (max-width: 760px) {
-  .convolution-analogy-block {
+  .lesson-page-frame[data-lesson-section="2.4-2"] {
+    --lesson-page-content-font-size: 1.16rem;
+  }
+
+  .convolution-island {
     grid-template-columns: 1fr;
-    gap: 16px;
-    padding: 16px 0 18px 16px;
+    gap: 10px;
+    margin: 13px 0;
+    padding: 14px;
+  }
+
+  #learnView #learnBody.chat-collapsed .convolution-analogy-block,
+  #learnView #learnBody.chat-collapsed .convolution-island-visual-split,
+  .convolution-analogy-block,
+  .convolution-island-visual-split {
+    grid-template-columns: 1fr;
+  }
+
+  .convolution-island-number {
+    font-size: 1.85rem;
+  }
+
+  .convolution-analogy-figure,
+  #learnView #learnBody.chat-collapsed .convolution-analogy-figure,
+  .convolution-island-visual-split .convolution-visual,
+  #learnView #learnBody.chat-collapsed .convolution-island-visual-split .convolution-visual {
+    grid-column: 1;
   }
 
   .convolution-analogy-figure {
-    justify-self: center;
-    width: min(100%, 220px);
+    width: min(100%, 200px);
   }
 
   #learnView .convolution-analogy-image {
-    height: min(40vh, 340px) !important;
-    max-height: 340px !important;
+    height: 320px !important;
+    max-height: 320px !important;
+  }
+
+  .convolution-tau-scan {
+    padding: 10px 0 0;
+    border-top: 1px solid var(--convolution-line);
+    border-left: 0;
+  }
+
+  .convolution-step-timeline {
+    grid-template-columns: minmax(118px, 42%) minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .convolution-step-signals {
+    min-height: 450px;
+  }
+
+  #learnView .convolution-step-list {
+    grid-template-rows: repeat(5, minmax(84px, 1fr));
+  }
+
+  #learnView .convolution-step-list li {
+    padding: 7px 0;
+  }
+
+  #learnView .convolution-step-list p {
+    font-size: 0.78em;
+  }
+
+  .convolution-book-map {
+    width: min(100%, 340px) !important;
+  }
+
+  .convolution-book-flow {
+    grid-template-columns: 1fr;
   }
 }
 
