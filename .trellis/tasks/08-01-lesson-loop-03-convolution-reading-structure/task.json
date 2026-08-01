@@ -3,7 +3,7 @@
   "name": "lesson-loop-03-convolution-reading-structure",
   "title": "讲解 Loop 03：卷积扫读结构与定向图解",
   "description": "在已验收第二版上，将 2.4-2 六个知识页重排为可扫读内容岛，增加页内大序号、短 Bullet、语义高亮，并定向新增三张精确教学图解。",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": null,
   "scope": null,
   "package": null,
