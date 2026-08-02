@@ -1,0 +1,28 @@
+{
+  "id": "lesson-loop-04-convolution-guided-flow",
+  "name": "lesson-loop-04-convolution-guided-flow",
+  "title": "讲解 Loop 04：卷积分阶段学习流程",
+  "description": "把 2.4-2 现有八页分为章节简介、正式讲解和练习巩固三个阶段，重排 What-Why-How 教学顺序，采用页边编号、步骤时间轴和快速页面切换。",
+  "status": "planning",
+  "dev_type": null,
+  "scope": null,
+  "package": null,
+  "priority": "P1",
+  "creator": "codex",
+  "assignee": "codex",
+  "createdAt": "2026-08-02",
+  "completedAt": null,
+  "branch": null,
+  "base_branch": "codex/lesson-loop-03-convolution-reading-structure",
+  "worktree_path": null,
+  "commit": null,
+  "pr_url": null,
+  "subtasks": [],
+  "children": [],
+  "parent": null,
+  "relatedFiles": [
+    "docs/superpowers/specs/2026-08-02-convolution-fourth-loop-design.md"
+  ],
+  "notes": "",
+  "meta": {}
+}

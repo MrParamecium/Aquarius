@@ -1,0 +1,6 @@
+{"file":".trellis/spec/app/index.md","reason":"检查实现是否保持项目架构、课程渲染与回归边界"}
+{"file":".trellis/spec/app/conventions.md","reason":"检查课程缓存、材料、依赖和命名是否合规"}
+{"file":".trellis/spec/css/index.md","reason":"检查课程专属样式是否满足 CSS 质量门"}
+{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"检查选择器范围与复杂级联是否未扰动其他页面"}
+{"file":".trellis/spec/css/verification.md","reason":"复核 CSS probe、视觉回归和真实页面证据"}
+{"file":"docs/superpowers/specs/2026-08-02-convolution-fourth-loop-design.md","reason":"逐项核对用户确认的第四版验收标准"}

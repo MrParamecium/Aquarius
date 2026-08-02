@@ -1,0 +1,6 @@
+{"file":".trellis/spec/app/index.md","reason":"确认无框架、现有课程渲染器和全量检查边界"}
+{"file":".trellis/spec/app/conventions.md","reason":"遵守课程缓存、材料目录、依赖和命名约束"}
+{"file":".trellis/spec/css/index.md","reason":"遵守课程专属 CSS 修改的前置清单和质量门"}
+{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"用受限选择器修改复杂级联，不影响其他课程"}
+{"file":".trellis/spec/css/verification.md","reason":"执行 CSS probe、视觉回归和真实页面验证"}
+{"file":"docs/superpowers/specs/2026-08-02-convolution-fourth-loop-design.md","reason":"落实用户逐项确认的第四版设计决策"}
