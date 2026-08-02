@@ -16,6 +16,7 @@ const ILLUSTRATION_DIR = path.join(ROOT, 'workspace', 'materials', 'lesson-illus
 const STATIC_ROUTES_PATH = path.join(ROOT, 'app', 'static-routes.js');
 const STYLE_PATH = path.join(ROOT, 'app', 'style.css');
 const RENDER_PATH = path.join(ROOT, 'app', 'lesson-render.js');
+const PAGER_PATH = path.join(ROOT, 'app', 'ui-friction-fixes.js');
 
 const APPROVED_IMAGES = [
   {
@@ -95,8 +96,12 @@ const cache = readRequired(CACHE_PATH);
 const staticRoutes = readRequired(STATIC_ROUTES_PATH);
 const styles = readRequired(STYLE_PATH);
 const renderer = readRequired(RENDER_PATH);
+const pagerSource = readRequired(PAGER_PATH);
 
 if (cache) {
+  if (/\p{Script=Han}/u.test(cache)) {
+    fail('the English 2.4-2 lesson cache must not contain Chinese product copy');
+  }
   if (!/data-convolution-stage-intro="true"/.test(cache)) {
     fail('lesson must contain the dedicated fourth-version stage intro');
   }
@@ -206,6 +211,25 @@ if (renderer) {
     'convolution-guided-flow-active',
   ]) {
     if (!renderer.includes(token)) fail(`lesson renderer is missing fourth-version stage token: ${token}`);
+  }
+  const stageCopyStart = renderer.indexOf('const CONVOLUTION_STAGE_LABELS');
+  const stageCopyEnd = renderer.indexOf('// Lesson rendering rules', stageCopyStart);
+  const practiceCopyStart = renderer.indexOf('function buildLessonTestBannerHtml');
+  const guidedCopy = `${renderer.slice(stageCopyStart, stageCopyEnd)}\n${renderer.slice(practiceCopyStart)}`;
+  if (/\p{Script=Han}/u.test(guidedCopy)) {
+    fail('the 2.4-2 stage navigation and practice UI must use English product copy');
+  }
+  for (const phrase of ['Section Overview', 'Lesson', 'Practice', 'Learning stages']) {
+    if (!guidedCopy.includes(phrase)) fail(`guided lesson UI is missing English copy: ${phrase}`);
+  }
+}
+
+if (pagerSource) {
+  if (/\p{Script=Han}/u.test(pagerSource)) {
+    fail('the lesson pager source must not contain Chinese product copy');
+  }
+  for (const phrase of ['Section Overview', 'Lesson ${stageState.position} / ${stageState.total}', 'Practice']) {
+    if (!pagerSource.includes(phrase)) fail(`lesson pager is missing English copy: ${phrase}`);
   }
 }
 

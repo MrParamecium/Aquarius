@@ -239,7 +239,7 @@ async function main() {
     await page.waitForFunction(() => Array.isArray(learnKnowledgePoints) && learnKnowledgePoints.length >= 4, null, {
       timeout: 5000,
     });
-    await page.waitForFunction(() => document.getElementById('learnPagerPosition')?.textContent.trim() === '章节简介', null, {
+    await page.waitForFunction(() => document.getElementById('learnPagerPosition')?.textContent.trim() === 'Section Overview', null, {
       timeout: 5000,
     });
     await page.waitForFunction(() => document.getElementById('learnBody')?.classList.contains('chat-collapsed'), null, {
@@ -298,7 +298,7 @@ async function main() {
     });
     record('real 2.4-2 GeoGebra page mounts one continuous two-view Applet',
       totalPages === 8
-        && prepared.pager === '讲解 5 / 6'
+        && prepared.pager === 'Lesson 5 / 6'
         && prepared.stage?.stage === 'lesson'
         && prepared.stage.position === 5
         && prepared.step === '3'

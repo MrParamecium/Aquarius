@@ -194,12 +194,12 @@ async function main() {
         && intro.state?.stage === 'intro'
         && intro.state?.position === 1
         && intro.state?.total === 1
-        && intro.pager === '章节简介'
+        && intro.pager === 'Section Overview'
         && intro.introMarker,
       JSON.stringify(intro));
     record('three stage tabs are explicit and keyboard operable',
       intro.labels.length === 3
-        && intro.labels.every((label, index) => label.includes(['章节简介', '正式讲解', '练习巩固'][index]))
+        && intro.labels.every((label, index) => label.includes(['Section Overview', 'Lesson', 'Practice'][index]))
         && intro.activeCount === 1
         && intro.keyboardReady,
       JSON.stringify(intro.labels));
@@ -218,7 +218,7 @@ async function main() {
       rememberedBefore.state?.stage === 'lesson'
         && rememberedBefore.state.position === 4
         && rememberedBefore.state.total === 6
-        && rememberedBefore.pager === '讲解 4 / 6',
+        && rememberedBefore.pager === 'Lesson 4 / 6',
       JSON.stringify(rememberedBefore));
 
     await clickStage(page, 'practice', 1);
@@ -230,7 +230,7 @@ async function main() {
     }));
     record('practice is a distinct stage with the existing Quick Check entry',
       practice.state?.stage === 'practice'
-        && practice.pager === '练习巩固'
+        && practice.pager === 'Practice'
         && practice.quickCheck
         && practice.tasks === 3,
       JSON.stringify(practice));

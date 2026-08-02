@@ -426,9 +426,9 @@ function resetLearnKnowledgePointState() {
 
 const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
 const CONVOLUTION_STAGE_LABELS = Object.freeze({
-  intro: '章节简介',
-  lesson: '正式讲解',
-  practice: '练习巩固'
+  intro: 'Section Overview',
+  lesson: 'Lesson',
+  practice: 'Practice'
 });
 let convolutionLastLessonIndex = 1;
 
@@ -481,7 +481,7 @@ function buildConvolutionStageNavHtml(stageState) {
     { stage: 'practice', number: '3' }
   ];
   return `
-    <nav class="convolution-stage-nav" aria-label="学习阶段">
+    <nav class="convolution-stage-nav" aria-label="Learning stages">
       ${tabs.map(({ stage, number }) => {
         const active = stageState.stage === stage;
         return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span class="convolution-stage-tab-number" aria-hidden="true">${number}</span><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
@@ -1636,13 +1636,13 @@ function buildLessonTestBannerHtml() {
       <section class="convolution-practice-stage lesson-test-banner" id="testBannerCard" data-convolution-practice-stage="true">
         <header class="convolution-practice-heading">
           <p class="convolution-practice-kicker">PRACTICE</p>
-          <h2>练习巩固</h2>
-          <p>先判断图形关系，再进入 Quick Check 检验理解。</p>
+          <h2>Practice</h2>
+          <p>Identify the signal relationships first, then use Quick Check to verify your understanding.</p>
         </header>
         <ol class="convolution-practice-list">
-          <li data-convolution-practice-task="fixed-moving"><span>01</span><strong>判断哪条信号固定、哪条信号移动</strong></li>
-          <li data-convolution-practice-task="first-contact"><span>02</span><strong>判断两个信号开始重叠的时刻</strong></li>
-          <li data-convolution-practice-task="full-pass"><span>03</span><strong>用 GeoGebra 完成一次完整卷积</strong></li>
+          <li data-convolution-practice-task="fixed-moving"><span>01</span><strong>Identify which signal stays fixed and which one moves</strong></li>
+          <li data-convolution-practice-task="first-contact"><span>02</span><strong>Find when the two signals first begin to overlap</strong></li>
+          <li data-convolution-practice-task="full-pass"><span>03</span><strong>Complete one full convolution pass in GeoGebra</strong></li>
         </ol>
         <div class="convolution-quick-check">
           <h3>Ready for the Quick Check?</h3>

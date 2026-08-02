@@ -332,11 +332,11 @@
       ? window.getConvolutionLessonStageState(cur)
       : null;
     const pagerText = stageState?.stage === 'intro'
-      ? '章节简介'
+      ? 'Section Overview'
       : stageState?.stage === 'lesson'
-        ? `讲解 ${stageState.position} / ${stageState.total}`
+        ? `Lesson ${stageState.position} / ${stageState.total}`
         : stageState?.stage === 'practice'
-          ? '练习巩固'
+          ? 'Practice'
           : `${cur + 1} / ${total}`;
     setClassIfChanged(pager, 'hidden', false);
     setTextIfChanged(pagerPos, pagerText);
