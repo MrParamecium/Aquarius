@@ -2,27 +2,27 @@
 
 ## 第 0 步：锁定分支与任务边界
 
-- [ ] 用户确认本实施计划后，从计划提交创建 `codex/lesson-loop-04-convolution-guided-flow`。
-- [ ] 将 `task.json.branch` 更新为 Loop 04 分支，`base_branch` 保持 `codex/lesson-loop-03-convolution-reading-structure`。
-- [ ] 执行 `python3 ./.trellis/scripts/task.py start 08-02-lesson-loop-04-convolution-guided-flow` 后才修改生产课程、CSS 或测试。
-- [ ] 实施期间不拉取、合并或变基远端 `main`。
+- [x] 用户确认本实施计划后，从计划提交创建 `codex/lesson-loop-04-convolution-guided-flow`。
+- [x] 将 `task.json.branch` 更新为 Loop 04 分支，`base_branch` 保持 `codex/lesson-loop-03-convolution-reading-structure`。
+- [x] 执行 `python3 ./.trellis/scripts/task.py start 08-02-lesson-loop-04-convolution-guided-flow` 后才修改生产课程、CSS 或测试。
+- [x] 实施期间不拉取、合并或变基远端 `main`。
 
 回滚点：删除未推送的 Loop 04 分支即可返回当前计划提交，不影响第三版提交历史。
 
 ## 第 1 步：记录第四版改动前基线
 
-- [ ] 确认工作区除规划文件外无未提交修改，记录 HEAD 和真实命中的 2.4-2 缓存路径。
-- [ ] 运行：
+- [x] 确认工作区除规划文件外无未提交修改，记录 HEAD 和真实命中的 2.4-2 缓存路径。
+- [x] 运行：
   - `npm run check:convolution-visuals`
   - `npm run test:convolution-layout`
   - `node tools/check-geogebra-pilot.js`
   - `npm run test:geogebra`
   - `npm run test:mobile-learn-panels`
   - `npm run check`
-- [ ] 在任何 CSS 修改前运行并提交基线：
+- [x] 在任何 CSS 修改前运行并提交基线：
   - `npm run test:css-probe:baseline`
   - `npm run test:visual:baseline`
-- [ ] 记录当前 `8/8` 页面结构、720ms 锁定时间和第三版截图，作为第四版前态。
+- [x] 记录当前 `8/8` 页面结构、720ms 锁定时间和第三版截图，作为第四版前态。
 
 回滚点：基线提交只包含测试证据，不含生产代码，可以独立回滚。
 
