@@ -48,6 +48,11 @@ render-neutral change. Text-heavy lesson views carry ~0.061% text-antialiasing n
 0.004%), well under the strict threshold. To prove render-neutrality of a change, **diff the report with-vs-without
 your change** (stash trick), not by demanding literal 0.000%.
 
+**Overflow is not an overlap proof:** a page can have `scrollWidth === clientWidth` while an absolutely positioned
+control still covers an adjacent tab, heading, or action. For responsive changes that introduce or move floating
+controls, add a bounding-rectangle intersection assertion against nearby navigation/toolbars and retain a viewport
+screenshot. Treat either a positive intersection or incoherent visual occlusion as a failed mobile layout check.
+
 ## The set-difference invariant (for dead-CSS deletion)
 
 For any dead-CSS deletion, the definitive viewport-independent safety check is:
