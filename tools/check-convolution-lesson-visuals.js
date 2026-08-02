@@ -15,6 +15,7 @@ const CACHE_PATH = path.join(
 const ILLUSTRATION_DIR = path.join(ROOT, 'workspace', 'materials', 'lesson-illustrations', '2_4-2');
 const STATIC_ROUTES_PATH = path.join(ROOT, 'app', 'static-routes.js');
 const STYLE_PATH = path.join(ROOT, 'app', 'style.css');
+const RENDER_PATH = path.join(ROOT, 'app', 'lesson-render.js');
 
 const APPROVED_IMAGES = [
   {
@@ -27,14 +28,21 @@ const APPROVED_IMAGES = [
   },
 ];
 const REQUIRED_HEADINGS = [
-  '## 1. Why Convolution Adds the Past',
-  '## 2. What the Integral Is Saying',
-  '## 3. How the Graphical Procedure Works',
-  '## 4. Five-Step Checklist',
+  '## 1. What Is Convolution?',
+  '## 2. Why Use Graphical Convolution?',
+  '## 3. How to Flip and Slide',
+  '## 4. How to Multiply and Measure Area',
   '## 5. Figure 2.7 in GeoGebra',
-  '## 6. Why This Section Matters in the Book',
+  '## 6. Where Convolution Fits in the Book',
 ];
-const EXPECTED_ISLAND_COUNTS = [3, 3, 3, 1, 4, 4];
+const EXPECTED_BLOCK_LAYOUTS = [
+  ['editorial', 'editorial', 'editorial'],
+  ['editorial', 'editorial'],
+  ['editorial', 'timeline'],
+  ['timeline'],
+  ['editorial', 'editorial', 'editorial'],
+  ['editorial', 'editorial', 'editorial', 'editorial'],
+];
 const REQUIRED_VISUALS = ['tau-scan', 'five-steps', 'book-map'];
 const SEMANTIC_TOKENS = {
   '--convolution-input': '#2563eb',
@@ -77,24 +85,27 @@ function getSectionSource(markdown, pageNumber) {
   return markdown.slice(start, end < 0 ? markdown.length : end);
 }
 
-function getIslandBlocks(source) {
+function getTeachingBlocks(source) {
   return Array.from(source.matchAll(
-    /<section\b([^>]*\bdata-convolution-island="([^"]+)"[^>]*)>([\s\S]*?)<\/section>/g
+    /<section\b([^>]*\bdata-convolution-block="([^"]+)"[^>]*)>([\s\S]*?)<\/section>/g
   ), match => ({ attrs: match[1], id: match[2], body: match[3] }));
 }
 
 const cache = readRequired(CACHE_PATH);
 const staticRoutes = readRequired(STATIC_ROUTES_PATH);
 const styles = readRequired(STYLE_PATH);
+const renderer = readRequired(RENDER_PATH);
 
 if (cache) {
-  const objective = cache.match(/^> \*\*Section objective:\*\*\s*(.+)$/m)?.[1]?.trim() || '';
-  if (!objective) fail('lesson must contain one Section objective line');
-  if (objective.length > 110) fail(`Section objective must be concise (<=110 chars), found ${objective.length}`);
-
-  const conceptsBlock = cache.match(/Concepts in this section:\s*\n([\s\S]*?)(?=\n##\s)/)?.[1] || '';
-  const concepts = conceptsBlock.match(/^[-*+]\s+.+$/gm) || [];
-  if (concepts.length !== 3) fail(`overview must list exactly 3 primary concepts, found ${concepts.length}`);
+  if (!/data-convolution-stage-intro="true"/.test(cache)) {
+    fail('lesson must contain the dedicated fourth-version stage intro');
+  }
+  if (/Section objective:|Concepts in this section:/i.test(cache)) {
+    fail('lesson intro must not retain the old Objective/Concepts card source');
+  }
+  for (const phrase of ['You already know', 'This section answers', 'Learning route']) {
+    if (!cache.includes(phrase)) fail(`stage intro is missing: ${phrase}`);
+  }
 
   let previousIndex = -1;
   for (const heading of REQUIRED_HEADINGS) {
@@ -104,25 +115,36 @@ if (cache) {
     if (index >= 0) previousIndex = index;
   }
 
-  EXPECTED_ISLAND_COUNTS.forEach((expectedCount, index) => {
+  EXPECTED_BLOCK_LAYOUTS.forEach((expectedLayouts, index) => {
     const pageNumber = index + 1;
     const source = getSectionSource(cache, pageNumber);
-    const islands = getIslandBlocks(source);
-    if (islands.length !== expectedCount) {
-      fail(`page ${pageNumber} must contain ${expectedCount} content island(s), found ${islands.length}`);
+    const blocks = getTeachingBlocks(source);
+    const layouts = blocks.map(block => block.attrs.match(/data-convolution-layout="([^"]+)"/)?.[1] || '');
+    if (JSON.stringify(layouts) !== JSON.stringify(expectedLayouts)) {
+      fail(`page ${pageNumber} block layouts must be ${JSON.stringify(expectedLayouts)}, found ${JSON.stringify(layouts)}`);
       return;
     }
-    islands.forEach((island, islandIndex) => {
-      const expectedNumber = String(islandIndex + 1).padStart(2, '0');
-      const page = island.attrs.match(/data-convolution-page="([^"]+)"/)?.[1];
-      const number = island.attrs.match(/data-convolution-number="([^"]+)"/)?.[1];
-      if (page !== String(pageNumber)) fail(`${island.id} must belong to page ${pageNumber}, found ${page || 'none'}`);
-      if (number !== expectedNumber) fail(`${island.id} must use page-local number ${expectedNumber}, found ${number || 'none'}`);
-      if (/<section\b/i.test(island.body)) fail(`${island.id} must not contain a nested section/card`);
-      const highlights = (island.body.match(/class="[^"]*\bconvolution-key\b/g) || []).length;
-      if (highlights > 4) fail(`${island.id} may highlight at most 4 items, found ${highlights}`);
+    blocks.forEach((block, blockIndex) => {
+      const expectedNumber = String(blockIndex + 1).padStart(2, '0');
+      const page = block.attrs.match(/data-convolution-page="([^"]+)"/)?.[1];
+      const number = block.attrs.match(/data-convolution-number="([^"]+)"/)?.[1];
+      if (page !== String(pageNumber)) fail(`${block.id} must belong to page ${pageNumber}, found ${page || 'none'}`);
+      if (number !== expectedNumber) fail(`${block.id} must use page-local number ${expectedNumber}, found ${number || 'none'}`);
+      if (/<section\b/i.test(block.body)) fail(`${block.id} must not contain a nested section/card`);
+      const highlights = (block.body.match(/class="[^"]*\bconvolution-key\b/g) || []).length;
+      if (highlights > 5) fail(`${block.id} may highlight at most 5 items, found ${highlights}`);
     });
   });
+
+  if (/convolution-island-number/.test(cache)) {
+    fail('the old large island number markup must not remain in the lesson cache');
+  }
+  if ((cache.match(/data-convolution-layout="timeline"/g) || []).length !== 2) {
+    fail('only the two true procedure pages may use timeline blocks');
+  }
+  if ((cache.match(/data-convolution-step="\d{2}"/g) || []).length !== 5) {
+    fail('five-step timeline must contain exactly five numbered steps');
+  }
 
   const demoCount = (cache.match(/data-demo-b64="/g) || []).length;
   if (demoCount !== 1) fail(`lesson must keep exactly 1 GeoGebra demo, found ${demoCount}`);
@@ -151,16 +173,13 @@ if (cache) {
   if ((cache.match(/<title\s+id="convolution-[^"]+-title">/g) || []).length !== 3) {
     fail('each code-native diagram must contain a stable accessible title');
   }
-  if ((cache.match(/data-convolution-step="\d{2}"/g) || []).length !== 5) {
-    fail('five-step timeline must contain exactly five numbered steps');
-  }
   if ((cache.match(/data-convolution-flow="[^"]+"/g) || []).length !== 3) {
     fail('book map must contain exactly three independent textbook flows');
   }
-  if (/<(?:canvas|script)\b/i.test(cache)) fail('code-native lesson diagrams must not add canvas or script elements');
-  if (/convolution-book-map-horizontal|convolution-three-column-map/.test(cache)) {
-    fail('the rejected horizontal three-column book map must not return');
+  if (!/t=-3|t\s*=\s*-3/.test(cache) || !/1\.2642/.test(cache) || !/1\.9004/.test(cache)) {
+    fail('Figure 2.7 first contact and two approved numeric checks must remain');
   }
+  if (/<(?:canvas|script)\b/i.test(cache)) fail('code-native lesson diagrams must not add canvas or script elements');
 }
 
 for (const image of APPROVED_IMAGES) {
@@ -179,18 +198,30 @@ if (staticRoutes) {
   }
 }
 
+if (renderer) {
+  for (const token of [
+    'getConvolutionLessonStageState',
+    'jumpToConvolutionLessonStage',
+    'data-convolution-stage-target',
+    'convolution-guided-flow-active',
+  ]) {
+    if (!renderer.includes(token)) fail(`lesson renderer is missing fourth-version stage token: ${token}`);
+  }
+}
+
 if (styles) {
   for (const selector of [
-    '.convolution-island',
-    '.convolution-island-number',
+    '.convolution-stage-nav',
+    '.convolution-stage-tab',
+    '.convolution-stage-intro',
+    '.convolution-editorial-block',
+    '.convolution-process-timeline',
+    '.convolution-page-marker',
     '.convolution-key-input',
     '.convolution-key-response',
     '.convolution-key-action',
     '.convolution-key-output',
     '.convolution-key-warning',
-    '.convolution-analogy-block',
-    '.convolution-analogy-copy',
-    '.convolution-analogy-figure',
     '.convolution-analogy-image',
     '.convolution-tau-scan',
     '.convolution-step-timeline',
@@ -202,17 +233,11 @@ if (styles) {
     const pattern = new RegExp(`${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*${value}`, 'i');
     if (!pattern.test(styles)) fail(`missing semantic token ${token}: ${value}`);
   }
-  if (!/\.convolution-analogy-block\s*\{[^}]*grid-template-columns:/s.test(styles)) {
-    fail('desktop analogy block must define a multi-column grid');
+  if (!/convolution-guided-flow-active[\s\S]*learn-page-turn-active::before[^{]*\{[^}]*display:\s*none/s.test(styles)) {
+    fail('guided flow must disable the paper-turn pseudo element');
   }
-  if (!/\.convolution-analogy-image\s*\{[^}]*object-fit:\s*contain/s.test(styles)) {
-    fail('analogy images must use object-fit: contain');
-  }
-  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-island[^}]*grid-template-columns:\s*1fr/s.test(styles)) {
-    fail('mobile content islands must collapse to one column at 760px');
-  }
-  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-book-flow[^}]*grid-template-columns:\s*1fr/s.test(styles)) {
-    fail('mobile book flows must remain vertical at 760px');
+  if (!/@media\s*\(max-width:\s*760px\)[\s\S]*\.convolution-stage-nav/s.test(styles)) {
+    fail('stage navigation must have a 760px mobile rule');
   }
 }
 
@@ -222,4 +247,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[convolution-lesson-visuals] OK - v3 islands, semantics, diagrams and retained Loop 02 contracts verified');
+console.log('[convolution-lesson-visuals] OK - v4 stages, editorial/timeline layouts and retained visual contracts verified');
