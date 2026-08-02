@@ -417,9 +417,118 @@ function resetLearnKnowledgePointState() {
   currentKnowledgePointIndex = 0;
   currentFullLessonHtml = '';
   currentLessonTrailingHtml = '';
+  convolutionLastLessonIndex = 1;
+  learnBody?.classList.remove('convolution-guided-flow-active');
   if (learnKpTitle) learnKpTitle.textContent = 'Preparing lesson...';
   if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
   if (learnKpNextBtn) learnKpNextBtn.disabled = true;
+}
+
+const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
+const CONVOLUTION_STAGE_LABELS = Object.freeze({
+  intro: '章节简介',
+  lesson: '正式讲解',
+  practice: '练习巩固'
+});
+let convolutionLastLessonIndex = 1;
+
+function getCurrentLessonSectionCode() {
+  return compactWhitespace(learnSectionId || '')
+    .match(/^(?:[a-z](?:[._-]\d+)*|\d+(?:[._-]\d+)*)/i)?.[0] || '';
+}
+
+function getConvolutionLessonStageMap() {
+  if (getCurrentLessonSectionCode() !== CONVOLUTION_GUIDED_SECTION_ID) return null;
+  const points = Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints : [];
+  const introIndex = points.findIndex(point => point?.type === 'overview');
+  const lessonIndices = points
+    .map((point, index) => point?.type === 'knowledge' ? index : -1)
+    .filter(index => index >= 0);
+  const practiceIndex = points.findIndex(point => point?.type === 'quiz');
+  if (introIndex < 0 || lessonIndices.length !== 6 || practiceIndex < 0) return null;
+  return { introIndex, lessonIndices, practiceIndex };
+}
+
+function getConvolutionLessonStageState(index = currentKnowledgePointIndex) {
+  const map = getConvolutionLessonStageMap();
+  if (!map) return null;
+  if (index === map.introIndex) {
+    return { stage: 'intro', position: 1, total: 1, index, map };
+  }
+  const lessonPosition = map.lessonIndices.indexOf(index);
+  if (lessonPosition >= 0) {
+    return { stage: 'lesson', position: lessonPosition + 1, total: map.lessonIndices.length, index, map };
+  }
+  if (index === map.practiceIndex) {
+    return { stage: 'practice', position: 1, total: 1, index, map };
+  }
+  return null;
+}
+window.getConvolutionLessonStageState = getConvolutionLessonStageState;
+
+function getConvolutionLessonTurnTiming() {
+  return getConvolutionLessonStageMap()
+    ? { commitMs: 70, totalMs: 180 }
+    : { commitMs: 255, totalMs: 720 };
+}
+window.getConvolutionLessonTurnTiming = getConvolutionLessonTurnTiming;
+
+function buildConvolutionStageNavHtml(stageState) {
+  if (!stageState) return '';
+  const tabs = [
+    { stage: 'intro', number: '1' },
+    { stage: 'lesson', number: '2' },
+    { stage: 'practice', number: '3' }
+  ];
+  return `
+    <nav class="convolution-stage-nav" aria-label="学习阶段">
+      ${tabs.map(({ stage, number }) => {
+        const active = stageState.stage === stage;
+        return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span class="convolution-stage-tab-number" aria-hidden="true">${number}</span><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
+      }).join('')}
+    </nav>
+  `;
+}
+
+function jumpToConvolutionLessonStage(stage) {
+  const map = getConvolutionLessonStageMap();
+  if (!map || isLearnPageTurning) return false;
+  const normalizedStage = String(stage || '').trim();
+  let targetIndex = currentKnowledgePointIndex;
+  if (normalizedStage === 'intro') targetIndex = map.introIndex;
+  else if (normalizedStage === 'practice') targetIndex = map.practiceIndex;
+  else if (normalizedStage === 'lesson') {
+    targetIndex = map.lessonIndices.includes(convolutionLastLessonIndex)
+      ? convolutionLastLessonIndex
+      : map.lessonIndices[0];
+  } else {
+    return false;
+  }
+  if (targetIndex === currentKnowledgePointIndex) return true;
+  const direction = targetIndex < currentKnowledgePointIndex ? -1 : 1;
+  return runLearnPageTurn(direction, () => {
+    currentKnowledgePointIndex = targetIndex;
+    renderCurrentKnowledgePoint();
+  });
+}
+window.jumpToConvolutionLessonStage = jumpToConvolutionLessonStage;
+
+function bindConvolutionStageNavigation(root) {
+  if (!root) return;
+  root.querySelectorAll('[data-convolution-stage-target]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => {
+      jumpToConvolutionLessonStage(button.dataset.convolutionStageTarget || '');
+    });
+  });
+  root.querySelectorAll('[data-convolution-intro-start]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => {
+      jumpToConvolutionLessonStage('lesson');
+    });
+  });
 }
 
 // Lesson rendering rules enforced on the client so the first overview stays concise
@@ -602,6 +711,11 @@ function applyLessonRenderRulesToKnowledgePoint(block) {
 function buildLessonOverviewHtml(nodes) {
   const sourceNodes = Array.isArray(nodes) ? nodes : [];
   if (!sourceNodes.length) return '';
+
+  const convolutionIntro = sourceNodes.find((node) => node?.nodeType === Node.ELEMENT_NODE
+    && (node.matches?.('[data-convolution-stage-intro="true"]')
+      || node.querySelector?.('[data-convolution-stage-intro="true"]')));
+  if (convolutionIntro) return convolutionIntro.outerHTML || '';
 
   const topLevel = sourceNodes
     .map((node) => {
@@ -924,6 +1038,12 @@ function parseLessonKnowledgePoints(html) {
       if (isSectionTitleHeading(node)) return;
       const text = compactWhitespace(node.textContent || '');
       const html = node.outerHTML || node.textContent || '';
+      const isConvolutionIntro = node.matches?.('[data-convolution-stage-intro="true"]')
+        || node.querySelector?.('[data-convolution-stage-intro="true"]');
+      if (isConvolutionIntro) {
+        objectiveNodes.push(node);
+        return;
+      }
       const isObjectiveNode = !foundObjective && /^>?\s*Section Objective[:：]?\s*(.+)$/i.test(text);
 
       if (isObjectiveNode) {
@@ -1125,13 +1245,19 @@ function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   const lessonSectionId = compactWhitespace(learnSectionId || '').match(/^(?:[a-z](?:[._-]\d+)*|\d+(?:[._-]\d+)*)/i)?.[0] || '';
   const lessonSectionAttr = lessonSectionId ? ` data-lesson-section="${lessonSectionId}"` : '';
   const extraHtml = String(block?.extraHtml || '').trim();
+  const stageState = getConvolutionLessonStageState(index);
+  const stageAttrs = stageState
+    ? ` data-lesson-stage="${stageState.stage}" data-stage-position="${stageState.position}" data-stage-total="${stageState.total}"`
+    : '';
+  const stageNavHtml = buildConvolutionStageNavHtml(stageState);
   const displayTitle = getLessonPageDisplayTitle(block, index);
   const pageBodyHtml = displayTitle ? stripDuplicatePageHeading(innerHtml, displayTitle) : String(innerHtml || '');
   const titleHtml = displayTitle
     ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2></header>`
     : '';
   return `
-    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}>
+    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}${stageAttrs}>
+      ${stageNavHtml}
       ${titleHtml}
       <div class="lesson-page-content">
         ${pageBodyHtml || '<p class="ghost">No explanation available.</p>'}
@@ -1219,6 +1345,9 @@ function renderCurrentKnowledgePoint() {
   }
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
+  const stageState = getConvolutionLessonStageState(currentKnowledgePointIndex);
+  if (stageState?.stage === 'lesson') convolutionLastLessonIndex = currentKnowledgePointIndex;
+  learnBody?.classList.toggle('convolution-guided-flow-active', Boolean(stageState));
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
   replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
   delete learnExplainContent.dataset.lectureDecorated;
@@ -1227,6 +1356,7 @@ function renderCurrentKnowledgePoint() {
   enhanceVisualMetadataUI(learnExplainContent);
   hydrateInteractiveDemos(learnExplainContent);
   bindOverviewSubsectionCards();
+  bindConvolutionStageNavigation(learnExplainContent);
   
   const learnKpTitle = document.getElementById('learnKpTitle');
   if (learnKpTitle) learnKpTitle.textContent = block.title || '';
@@ -1336,6 +1466,7 @@ function setLearnLessonContent(fullHtml, options = {}) {
     learnKnowledgePoints = parsed.points;
     currentLessonTrailingHtml = parsed.trailingHtml;
     currentKnowledgePointIndex = Math.max(0, Math.min(options.index || 0, Math.max(learnKnowledgePoints.length - 1, 0)));
+    convolutionLastLessonIndex = 1;
     renderCurrentKnowledgePoint();
   } catch (err) {
     console.error('[LessonRender] setLearnLessonContent failed:', err);
@@ -1374,6 +1505,7 @@ function runLearnPageTurn(direction = 1, commit = () => {}) {
     return true;
   }
   if (isLearnPageTurning) return false;
+  const timing = getConvolutionLessonTurnTiming();
 
   if (learnPageTurnTimer) window.clearTimeout(learnPageTurnTimer);
   if (learnPageTurnMidTimer) window.clearTimeout(learnPageTurnMidTimer);
@@ -1393,13 +1525,13 @@ function runLearnPageTurn(direction = 1, commit = () => {}) {
         if (learnExplainContent) learnExplainContent.classList.add('learn-page-turn-reveal');
       });
     }
-  }, 255);
+  }, timing.commitMs);
 
   learnPageTurnTimer = window.setTimeout(() => {
     clearLearnPageTurnClasses();
     learnPageTurnTimer = null;
     learnPageTurnMidTimer = null;
-  }, 720);
+  }, timing.totalMs);
 
   return true;
 }
@@ -1499,6 +1631,27 @@ function moveLearnKnowledgePoint(delta) {
 }
 
 function buildLessonTestBannerHtml() {
+  if (getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID) {
+    return `
+      <section class="convolution-practice-stage lesson-test-banner" id="testBannerCard" data-convolution-practice-stage="true">
+        <header class="convolution-practice-heading">
+          <p class="convolution-practice-kicker">PRACTICE</p>
+          <h2>练习巩固</h2>
+          <p>先判断图形关系，再进入 Quick Check 检验理解。</p>
+        </header>
+        <ol class="convolution-practice-list">
+          <li data-convolution-practice-task="fixed-moving"><span>01</span><strong>判断哪条信号固定、哪条信号移动</strong></li>
+          <li data-convolution-practice-task="first-contact"><span>02</span><strong>判断两个信号开始重叠的时刻</strong></li>
+          <li data-convolution-practice-task="full-pass"><span>03</span><strong>用 GeoGebra 完成一次完整卷积</strong></li>
+        </ol>
+        <div class="convolution-quick-check">
+          <h3>Ready for the Quick Check?</h3>
+          <p>Use a short adaptive check to expose any remaining blind spots.</p>
+          <button id="startTestBtn" type="button">Start Quick Check</button>
+        </div>
+      </section>
+    `;
+  }
   return `
     <div class="lesson-test-banner" id="testBannerCard" style="margin-top: 40px; padding: 24px; background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border-radius: 12px; border: 1px solid #E2E8F0; text-align: center; margin-bottom: 40px;">
       <h3 style="margin: 0 0 8px 0; color: #0F172A; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 8px;">

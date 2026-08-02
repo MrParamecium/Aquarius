@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const {
@@ -14,6 +15,9 @@ const {
 const PORT = Number(process.env.TUTOR_MOBILE_LEARN_PANELS_PORT || 9152);
 const BASE = `http://127.0.0.1:${PORT}`;
 const repoRoot = path.resolve(__dirname, '..');
+const evidenceDir = process.env.TUTOR_LOOP04_EVIDENCE_DIR
+  ? path.resolve(process.env.TUTOR_LOOP04_EVIDENCE_DIR)
+  : '';
 const SUBTOPIC = {
   chapter: 'Chapter 2',
   section: '2.4 System Response to External Input: The Zero-State Response',
@@ -24,6 +28,12 @@ const results = [];
 function record(name, ok, detail = '') {
   results.push({ name, ok, detail });
   console.log(`  ${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ` - ${detail}` : ''}`);
+}
+
+async function captureEvidence(page, filename) {
+  if (!evidenceDir) return;
+  fs.mkdirSync(evidenceDir, { recursive: true });
+  await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
 }
 
 async function installFakeGeoGebra(context) {
@@ -115,12 +125,14 @@ async function waitForLayout(page) {
 }
 
 async function goToLessonPage(page, targetPage) {
-  const initialPosition = await page.locator('#learnPagerPosition').textContent();
-  const totalPages = Number(String(initialPosition || '').match(/\/\s*(\d+)/)?.[1]);
+  const totalPages = await page.evaluate(() => Array.isArray(learnKnowledgePoints)
+    ? learnKnowledgePoints.length
+    : 0);
   if (!Number.isFinite(totalPages) || totalPages < targetPage) {
-    throw new Error(`lesson pager reported an invalid total: ${initialPosition}`);
+    throw new Error(`lesson state reported an invalid total: ${totalPages}`);
   }
-  for (let current = 1; current < targetPage; current += 1) {
+  let current = await page.evaluate(() => Number(currentKnowledgePointIndex) + 1);
+  while (current < targetPage) {
     await page.waitForFunction(() => typeof isLearnPageTurning === 'undefined' || !isLearnPageTurning, null, {
       timeout: 5000,
     });
@@ -128,13 +140,12 @@ async function goToLessonPage(page, targetPage) {
     if (!moved) throw new Error(`lesson state refused to advance from page ${current}`);
     try {
       await page.waitForFunction(
-        ({ nextPage, total }) => {
+        ({ nextPage }) => {
           const body = document.getElementById('learnBody');
-          const position = document.getElementById('learnPagerPosition');
-          return position?.textContent.trim() === `${nextPage} / ${total}`
+          return Number(currentKnowledgePointIndex) + 1 === nextPage
             && !body?.classList.contains('learn-page-turn-active');
         },
-        { nextPage: current + 1, total: totalPages },
+        { nextPage: current + 1 },
         { timeout: 8000 }
       );
     } catch (error) {
@@ -146,8 +157,9 @@ async function goToLessonPage(page, targetPage) {
         isTurning: typeof isLearnPageTurning === 'boolean' ? isLearnPageTurning : null,
         nextDisabled: document.getElementById('learnPagerNextBtn')?.disabled,
       }));
-      throw new Error(`pager did not settle on ${current + 1} / ${totalPages}: ${JSON.stringify(state)} (${error.message})`);
+      throw new Error(`lesson did not settle on page ${current + 1} / ${totalPages}: ${JSON.stringify(state)} (${error.message})`);
     }
+    current += 1;
   }
   return totalPages;
 }
@@ -177,6 +189,11 @@ async function openPreparedSubtopic(page, card) {
 async function panelSnapshot(page) {
   return page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
+    const overlaps = (first, second) => Boolean(first && second
+      && first.left < second.right
+      && first.right > second.left
+      && first.top < second.bottom
+      && first.bottom > second.top);
     const visible = (selector) => {
       const element = document.querySelector(selector);
       if (!element) return false;
@@ -189,6 +206,7 @@ async function panelSnapshot(page) {
     const chat = rect('#learnChatCol');
     const showQa = rect('#learnChatRestoreBtn');
     const showLecture = rect('#learnExplainRestoreBtn');
+    const stageNav = rect('.convolution-stage-nav');
     return {
       classes: body?.className || '',
       explainWidth: explain?.width || 0,
@@ -197,6 +215,7 @@ async function panelSnapshot(page) {
       showQaHeight: showQa?.height || 0,
       showLectureVisible: visible('#learnExplainRestoreBtn'),
       showLectureHeight: showLecture?.height || 0,
+      showQaOverlapsStageNav: overlaps(showQa, stageNav),
       horizontalOverflow: document.documentElement.scrollWidth - window.innerWidth,
     };
   });
@@ -220,9 +239,9 @@ async function main() {
     await page.waitForFunction(() => Array.isArray(learnKnowledgePoints) && learnKnowledgePoints.length >= 4, null, {
       timeout: 5000,
     });
-    await page.waitForFunction(() => /\/\s*[4-9]\d*$/.test(
-      document.getElementById('learnPagerPosition')?.textContent.trim() || ''
-    ), null, { timeout: 5000 });
+    await page.waitForFunction(() => document.getElementById('learnPagerPosition')?.textContent.trim() === '章节简介', null, {
+      timeout: 5000,
+    });
     await page.waitForFunction(() => document.getElementById('learnBody')?.classList.contains('chat-collapsed'), null, {
       timeout: 5000,
     });
@@ -233,9 +252,20 @@ async function main() {
         && directMobile.chatWidth === 0
         && directMobile.showQaVisible
         && directMobile.showQaHeight >= 44
+        && !directMobile.showQaOverlapsStageNav
         && !directMobile.showLectureVisible
         && directMobile.horizontalOverflow <= 1,
       JSON.stringify(directMobile));
+    await captureEvidence(page, 'mobile-intro-390.png');
+
+    await goToLessonPage(page, 2);
+    await waitForLayout(page);
+    await captureEvidence(page, 'mobile-editorial-number-390.png');
+
+    await goToLessonPage(page, 4);
+    await page.locator('.convolution-process-timeline').first().scrollIntoViewIfNeeded();
+    await waitForLayout(page);
+    await captureEvidence(page, 'mobile-timeline-390.png');
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
@@ -257,6 +287,9 @@ async function main() {
       window.__mobilePanelCanvasRefs = node ? Array.from(node.querySelectorAll('canvas')) : [];
       return {
         pager: document.getElementById('learnPagerPosition')?.textContent.trim(),
+        stage: typeof getConvolutionLessonStageState === 'function'
+          ? getConvolutionLessonStageState()
+          : null,
         step: node?.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
         t: node?.__geoGebraDiagnostics?.getState()?.t,
         canvasCount: window.__mobilePanelCanvasRefs.length,
@@ -264,7 +297,10 @@ async function main() {
       };
     });
     record('real 2.4-2 GeoGebra page mounts one continuous two-view Applet',
-      prepared.pager === `${geoGebraPage} / ${totalPages}`
+      totalPages === 8
+        && prepared.pager === '讲解 5 / 6'
+        && prepared.stage?.stage === 'lesson'
+        && prepared.stage.position === 5
         && prepared.step === '3'
         && prepared.t === -2
         && prepared.canvasCount === 2
@@ -272,13 +308,16 @@ async function main() {
       JSON.stringify(prepared));
 
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('.geogebra-demo-shell').scrollIntoViewIfNeeded();
     await waitForLayout(page);
+    await captureEvidence(page, 'mobile-geogebra-390.png');
     const mobileLecture = await panelSnapshot(page);
     record('mobile defaults to a full-width lecture with a usable Q&A switch',
       mobileLecture.explainWidth >= 350
         && mobileLecture.chatWidth === 0
         && mobileLecture.showQaVisible
         && mobileLecture.showQaHeight >= 44
+        && !mobileLecture.showQaOverlapsStageNav
         && mobileLecture.horizontalOverflow <= 1,
       JSON.stringify(mobileLecture));
 

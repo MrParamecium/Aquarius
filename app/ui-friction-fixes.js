@@ -328,8 +328,18 @@
     }
     const total = points.length;
     const cur = Math.min(Math.max(idx, 0), total - 1);
+    const stageState = typeof window.getConvolutionLessonStageState === 'function'
+      ? window.getConvolutionLessonStageState(cur)
+      : null;
+    const pagerText = stageState?.stage === 'intro'
+      ? '章节简介'
+      : stageState?.stage === 'lesson'
+        ? `讲解 ${stageState.position} / ${stageState.total}`
+        : stageState?.stage === 'practice'
+          ? '练习巩固'
+          : `${cur + 1} / ${total}`;
     setClassIfChanged(pager, 'hidden', false);
-    setTextIfChanged(pagerPos, (cur + 1) + ' / ' + total);
+    setTextIfChanged(pagerPos, pagerText);
     setDisabledIfChanged(pagerPrevBtn, cur <= 0);
     const atEnd = cur >= total - 1;
     const { id, title } = currentSectionRefs();

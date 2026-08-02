@@ -104,12 +104,12 @@ if (cache) {
   }
 
   const requiredHeadings = [
-    '## 1. Why Convolution Adds the Past',
-    '## 2. What the Integral Is Saying',
-    '## 3. How the Graphical Procedure Works',
-    '## 4. Five-Step Checklist',
+    '## 1. What Is Convolution?',
+    '## 2. Why Use Graphical Convolution?',
+    '## 3. How to Flip and Slide',
+    '## 4. How to Multiply and Measure Area',
     '## 5. Figure 2.7 in GeoGebra',
-    '## 6. Why This Section Matters in the Book',
+    '## 6. Where Convolution Fits in the Book',
   ];
   let previousHeading = -1;
   for (const heading of requiredHeadings) {

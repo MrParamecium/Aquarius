@@ -246,8 +246,11 @@ async function main() {
       : null);
     const turnStarted = Date.now();
     const moved = await page.evaluate(() => moveLearnKnowledgePoint(1));
-    await waitForTurn(page);
+    await page.waitForFunction(() => typeof isLearnPageTurning === 'undefined' || !isLearnPageTurning, null, {
+      timeout: 5000,
+    });
     const elapsed = Date.now() - turnStarted;
+    await waitForLayout(page);
     const turnVisual = await page.evaluate(() => {
       const content = document.getElementById('learnExplainContent');
       const pseudo = content ? getComputedStyle(content, '::before') : null;
