@@ -8,8 +8,9 @@
 
 ### 阶段与教学顺序
 
-- 顶部阶段导航固定为 `章节简介 | 正式讲解 | 练习巩固`。
-- 简介、讲解、练习分别显示 `章节简介`、`讲解 n / 6`、`练习巩固`，不再显示误导性的全局 `n / 8`。
+- 顶部阶段导航固定为 `Section Overview | Lesson | Practice`。
+- 简介、讲解、练习分别显示 `Section Overview`、`Lesson n / 6`、`Practice`，不再显示误导性的全局 `n / 8`。
+- 产品界面、课程内容、按钮和 ARIA 文案均为英文；中文只用于沟通和本验收记录。
 - 从练习或简介返回正式讲解，会恢复本次会话最近阅读的讲解页。
 - 六个讲解页按 What → Why → How → How → GeoGebra → 本章用途排列。
 - 普通知识块使用页边编号；翻转、平移、相乘和积分步骤使用连续时间轴。
@@ -59,6 +60,6 @@
 
 ## English Summary
 
-Loop 04 passes its acceptance criteria. The existing eight-page parser remains intact and is mapped to one introduction, six lesson pages, and one practice page. The guided flow adds stage navigation, stage-local progress, recent lesson-page restoration, What → Why → How ordering, editorial markers, process timelines, and a fast 70/180ms transition without changing other lessons or the GeoGebra math contract.
+Loop 04 passes its acceptance criteria. The existing eight-page parser remains intact and is mapped to one introduction, six lesson pages, and one practice page. The guided flow adds stage navigation, stage-local progress, recent lesson-page restoration, What → Why → How ordering, editorial markers, process timelines, and a fast 70/180ms transition without changing other lessons or the GeoGebra math contract. All learner-facing UI, lesson content, controls, pagination, and accessibility copy are English; Chinese remains limited to collaboration and the Chinese acceptance record above.
 
 Desktop, 390px, and 430px checks passed without horizontal overflow. A screenshot exposed an overlap between the mobile Q&A switch and the stage navigation; the layout now reserves dedicated space and the mobile harness asserts that their bounding rectangles do not intersect. All targeted tests, 16 CSS-probe states, and 32 visual-regression views passed. No new browser errors were observed.

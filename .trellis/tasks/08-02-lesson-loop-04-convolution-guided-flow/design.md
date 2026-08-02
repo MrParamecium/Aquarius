@@ -30,6 +30,8 @@ overview + 6 knowledge + quiz
 
 阶段按钮仍通过当前 `renderCurrentKnowledgePoint()` 提交页面，所有内容替换继续经过 `replaceLearnContent()`，因此不会绕过 GeoGebra teardown。
 
+产品语言边界固定为英文：阶段标签、分页器、按钮、课程正文和 ARIA 文案不得使用中文。中文只用于沟通和内部 Loop 记录。
+
 ## 3. 章节简介与练习页
 
 课程缓存用稳定标记提供 2.4-2 专属简介内容。`buildLessonOverviewHtml()` 只在发现该标记时直接保留它；其他课程继续使用原有 Objective/Concepts 解析。
@@ -69,9 +71,9 @@ overview + 6 knowledge + quiz
 
 底部上一页、下一页仍按现有 8 个索引顺序移动，因此简介末尾自然进入讲解，讲解末尾自然进入练习。显示文字改为阶段语义：
 
-- 简介：`章节简介`
-- 讲解：`讲解 n / 6`
-- 练习：`练习巩固`
+- 简介：`Section Overview`
+- 讲解：`Lesson n / 6`
+- 练习：`Practice`
 
 到达练习页才沿用现有完成标记和下一小节逻辑。
 
