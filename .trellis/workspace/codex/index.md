@@ -8,8 +8,8 @@
 
 <!-- @@@auto:current-status -->
 - **Active File**: `journal-1.md`
-- **Total Sessions**: 1
-- **Last Active**: 2026-07-24
+- **Total Sessions**: 2
+- **Last Active**: 2026-08-03
 <!-- @@@/auto:current-status -->
 
 ---
@@ -19,7 +19,7 @@
 <!-- @@@auto:active-documents -->
 | File | Lines | Status |
 |------|-------|--------|
-| `journal-1.md` | ~42 | Active |
+| `journal-1.md` | ~86 | Active |
 <!-- @@@/auto:active-documents -->
 
 ---
@@ -29,6 +29,7 @@
 <!-- @@@auto:session-history -->
 | # | Date | Title | Commits | Branch |
 |---|------|-------|---------|--------|
+| 2 | 2026-08-03 | 卷积讲解 Loop 05：完整教学与渐进练习 | `c821e58`, `9dd71ef`, `4ec51cd`, `063ec01` | `codex/lesson-loop-05-convolution-complete-teaching` |
 | 1 | 2026-07-24 | 循环 1：第 4–5 章材料整合 | `8dd8284`, `0809ddf`, `7a0c317` | `codex/loop-01-ch4-ch5-materials` |
 <!-- @@@/auto:session-history -->
 

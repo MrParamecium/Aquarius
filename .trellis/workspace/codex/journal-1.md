@@ -48,3 +48,47 @@
 ### 下一步
 
 - 审阅 PR #137，检查通过后再合并到 `main`。
+
+
+## Session 2: 卷积讲解 Loop 05：完整教学与渐进练习
+
+**Date**: 2026-08-03
+**Task**: 卷积讲解 Loop 05：完整教学与渐进练习
+**Branch**: `codex/lesson-loop-05-convolution-complete-teaching`
+
+### Summary
+
+将 2.4-2 扩充为 1/12/1 教学结构，加入四个教材 GeoGebra 预设、Drills 2.10-2.13 语义练习、手机置顶导航和双语验收；全部定向、样式与视觉回归通过。
+
+### Main Changes
+
+- 将 2.4-2 扩充为 `1 个 Section Overview + 12 个 Lesson + 1 个 Practice`，沿用现有课程缓存、渲染器和阶段导航。
+- 新增 Figure 2.7、Examples 2.10-2.12 四个教材预设；GeoGebra 改为单一 `G` 视图中的 Signals、Product、Output 三层。
+- 新增 Drills 2.10-2.13 语义练习、延迟提示、掌握状态恢复和未完成时禁用的 `Complete practice`。
+- 修复 390px 长标题截断、阶段导航滚动失效和 Q&A 按钮重叠，新增真实滚动矩形断言。
+- 写入中英文验收记录和桌面、移动端、真实 GeoGebra、失败降级证据。
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `c821e58` | feat: expand graphical convolution lesson flow |
+| `9dd71ef` | feat: add textbook convolution demos and practice |
+| `4ec51cd` | fix: keep convolution stages visible on mobile |
+| `063ec01` | docs: record convolution loop five verification |
+
+### Testing
+
+- [OK] `npm run test:convolution-layout` (`13/13`)
+- [OK] `npm run test:convolution-practice` (`7/7`)
+- [OK] `npm run test:geogebra` (`10/10`)
+- [OK] `npm run test:mobile-learn-panels` (`8/8`)
+- [OK] `npm run check`、16 个 CSS probe 状态、32 个视觉视图
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- 用户先在本地服务审阅第五版，再决定是否推送并创建 PR。
