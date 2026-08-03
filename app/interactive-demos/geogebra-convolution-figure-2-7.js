@@ -1,19 +1,32 @@
-// Trusted GeoGebra construction for textbook Figure 2.7.
+// One trusted GeoGebra scene for Figure 2.7 and Examples 2.10-2.12.
 
-const GEOGEBRA_FIGURE_2_7_OBJECTS = {
-  xSignal: 'xSignal',
-  gSignal: 'gSignal',
-  gFlipped: 'gFlipped',
-  gMoving: 'gMoving',
-  product: 'productSignal',
-  overlap: 'overlapFill',
-  supportBoundary: 'supportBoundary',
+const GEOGEBRA_CONVOLUTION_OBJECTS = Object.freeze({
+  source: 'sourceBand',
+  input: 'inputBand',
+  flipped: 'flippedBand',
+  moving: 'movingBand',
+  product: 'productBand',
   output: 'convolutionOutput',
   currentPoint: 'currentOutputPoint',
-};
+  signalDivider: 'signalDivider',
+  productDivider: 'productDivider',
+  signalAxis: 'signalAxis',
+  productAxis: 'productAxis',
+});
+
+const GEOGEBRA_CONVOLUTION_TASK_STEPS = Object.freeze({
+  'change-variable': 1,
+  flip: 2,
+  slide: 3,
+  multiply: 4,
+  integrate: 5,
+  'worked-example': 5,
+});
 
 function createGeoGebraConvolutionFigure27Scene() {
   let api = null;
+  let preset = null;
+  let task = 'slide';
   let step = 1;
   let destroyed = false;
   let stateListener = null;
@@ -32,35 +45,30 @@ function createGeoGebraConvolutionFigure27Scene() {
   }
 
   function setVisible(name, visible) {
-    try { api.setVisible(name, Boolean(visible)); } catch (_) {}
+    try { api?.setVisible(name, Boolean(visible)); } catch (_) {}
   }
 
   function styleObject(name, color, thickness = 4) {
-    try { api.setColor(name, color[0], color[1], color[2]); } catch (_) {}
-    try { api.setLineThickness(name, thickness); } catch (_) {}
-    try { api.setLabelVisible(name, false); } catch (_) {}
+    try { api?.setColor(name, color[0], color[1], color[2]); } catch (_) {}
+    try { api?.setLineThickness(name, thickness); } catch (_) {}
+    try { api?.setLabelVisible(name, false); } catch (_) {}
   }
 
-  function configureView(view, bounds) {
-    api.evalCommand(`SetActiveView(${view})`);
-    api.evalCommand(`ZoomIn(${bounds.xMin},${bounds.yMin},${bounds.xMax},${bounds.yMax})`);
-    try { api.setAxesVisible(view, true, true); } catch (_) {}
-    try { api.setGridVisible(view, false); } catch (_) {}
-  }
-
-  function readValue(name, fallback = 0) {
-    const value = Number(api?.getValue?.(name));
-    return Number.isFinite(value) ? value : fallback;
+  function readTime() {
+    const value = Number(api?.getValue?.('t'));
+    return Number.isFinite(value) ? value : settings.initialT;
   }
 
   function getState() {
-    const t = readValue('t', settings.initialT);
-    const output = readValue('outputValue', t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3))));
-    const area = readValue('overlapArea', output);
+    const t = readTime();
+    const output = Number(preset?.evaluate?.(t)) || 0;
     return {
+      preset: preset?.id || '',
+      task,
       step,
       t,
-      area,
+      overlap: Math.abs(output) > 1e-10,
+      area: output,
       output,
       atTarget: Math.abs(t - settings.targetT) <= settings.targetTolerance,
     };
@@ -71,17 +79,19 @@ function createGeoGebraConvolutionFigure27Scene() {
   }
 
   function setStep(nextStep) {
-    step = Math.max(1, Math.min(4, Math.round(Number(nextStep) || 1)));
-    const o = GEOGEBRA_FIGURE_2_7_OBJECTS;
-    setVisible(o.xSignal, true);
-    setVisible(o.gSignal, step <= 2);
-    setVisible(o.gFlipped, step === 2);
-    setVisible(o.gMoving, step >= 3);
-    setVisible(o.supportBoundary, step >= 3);
-    setVisible(o.product, step === 4);
-    setVisible(o.overlap, step === 4);
-    setVisible(o.output, step === 4);
-    setVisible(o.currentPoint, step === 4);
+    step = Math.max(1, Math.min(5, Math.round(Number(nextStep) || 1)));
+    const o = GEOGEBRA_CONVOLUTION_OBJECTS;
+    setVisible(o.input, true);
+    setVisible(o.source, step === 1);
+    setVisible(o.flipped, step === 2);
+    setVisible(o.moving, step >= 3);
+    setVisible(o.product, true);
+    setVisible(o.output, true);
+    setVisible(o.currentPoint, true);
+    setVisible(o.signalDivider, true);
+    setVisible(o.productDivider, true);
+    setVisible(o.signalAxis, true);
+    setVisible(o.productAxis, true);
     emitState();
   }
 
@@ -94,61 +104,79 @@ function createGeoGebraConvolutionFigure27Scene() {
   }
 
   function create(loadedApi, options = {}) {
+    const presetId = String(options.presetId || options.preset || 'figure-2-7');
+    preset = window.__ftutorConvolutionPresets?.getConvolutionPreset(presetId) || null;
+    if (!preset) throw new Error(`Unknown convolution preset: ${presetId}`);
+
     api = loadedApi;
     destroyed = false;
+    task = String(options.task || 'slide');
+    const range = preset.range || {};
     settings = {
-      initialT: Number.isFinite(Number(options.initialT)) ? Number(options.initialT) : -4,
-      minT: Number.isFinite(Number(options.minT)) ? Number(options.minT) : -4,
-      maxT: Number.isFinite(Number(options.maxT)) ? Number(options.maxT) : 3,
-      stepT: Number.isFinite(Number(options.stepT)) ? Number(options.stepT) : 0.05,
-      targetT: Number.isFinite(Number(options.targetT)) ? Number(options.targetT) : -3,
+      initialT: Number.isFinite(Number(options.initialT)) ? Number(options.initialT) : range.initial,
+      minT: Number.isFinite(Number(options.minT)) ? Number(options.minT) : range.min,
+      maxT: Number.isFinite(Number(options.maxT)) ? Number(options.maxT) : range.max,
+      stepT: Number.isFinite(Number(options.stepT)) ? Number(options.stepT) : range.step,
+      targetT: Number.isFinite(Number(options.targetT)) ? Number(options.targetT) : range.target,
       targetTolerance: Number.isFinite(Number(options.targetTolerance)) ? Number(options.targetTolerance) : 0.08,
     };
     stateListener = typeof options.onStateChange === 'function' ? options.onStateChange : null;
 
-    configureView(1, { xMin: -4.5, xMax: 5.5, yMin: -0.35, yMax: 2.35 });
+    try { api.setCoordSystem(settings.minT - 0.5, settings.maxT + 0.5, -0.5, 8.5); } catch (_) {}
+    try { api.setAxesVisible(1, true, false); } catch (_) {}
+    try { api.setGridVisible(1, false); } catch (_) {}
+
     run(`t=${settings.initialT}`);
     try { api.setSliderMin('t', settings.minT); } catch (_) {}
     try { api.setSliderMax('t', settings.maxT); } catch (_) {}
     try { api.setSliderIncrement('t', settings.stepT); } catch (_) {}
     setVisible('t', false);
-    run('xSignal(tau)=If(tau>=-1,1,0)');
-    run('gSignal(tau)=If(tau>=-2,2*exp(-(tau+2)),0)');
-    run('gFlipped(tau)=If(tau<=2,2*exp(tau-2),0)');
-    run('gMoving(tau)=If(tau<=t+2,2*exp(tau-t-2),0)');
-    run('productSignal(tau)=xSignal(tau)*gMoving(tau)');
-    run('overlapFill=Integral(productSignal,-1,Max(-1,t+2))');
-    run('supportBoundary: x=t+2');
-    run('overlapArea=If(t<=-3,0,2*(1-exp(-(t+3))))');
-    setVisible('overlapArea', false);
-    styleObject('xSignal', [37, 99, 235], 5);
-    styleObject('gSignal', [13, 148, 136], 5);
-    styleObject('gFlipped', [124, 58, 237], 5);
-    styleObject('gMoving', [124, 58, 237], 5);
-    styleObject('productSignal', [217, 119, 6], 4);
-    styleObject('supportBoundary', [100, 116, 139], 2);
-    try { api.setLineStyle('supportBoundary', 2); } catch (_) {}
-    try { api.setColor('overlapFill', 245, 158, 11); } catch (_) {}
-    try { api.setFilling('overlapFill', 0.35); } catch (_) {}
 
-    configureView(2, { xMin: -4.5, xMax: 3.5, yMin: -0.2, yMax: 2.3 });
-    run('convolutionOutput(s)=If(s<=-3,0,2*(1-exp(-(s+3))))');
-    run('outputValue=convolutionOutput(t)');
-    run('currentOutputPoint=(t,outputValue)');
-    setVisible('outputValue', false);
+    run(preset.commands.input);
+    run(preset.commands.response);
+    run(preset.commands.flipped);
+    run(preset.commands.moving);
+    run('productSignal(tau)=xSignal(tau)*gMoving(tau)');
+    run('inputBand(tau)=xSignal(tau)+6');
+    run('sourceBand(tau)=gSignal(tau)+6');
+    run('flippedBand(tau)=gFlipped(tau)+6');
+    run('movingBand(tau)=gMoving(tau)+6');
+    run('productBand(tau)=productSignal(tau)+3');
+    run(preset.commands.output);
+    run('currentOutputPoint=(t,convolutionOutput(t))');
+    run(`signalDivider: y=5`);
+    run(`productDivider: y=2.5`);
+    run(`signalAxis: y=6`);
+    run(`productAxis: y=3`);
+
+    ['xSignal', 'gSignal', 'gFlipped', 'gMoving', 'productSignal'].forEach(name => setVisible(name, false));
+    styleObject('inputBand', [37, 99, 235], 5);
+    styleObject('sourceBand', [13, 148, 136], 5);
+    styleObject('flippedBand', [124, 58, 237], 5);
+    styleObject('movingBand', [124, 58, 237], 5);
+    styleObject('productBand', [22, 135, 106], 5);
     styleObject('convolutionOutput', [180, 83, 9], 5);
+    styleObject('signalDivider', [203, 213, 225], 2);
+    styleObject('productDivider', [203, 213, 225], 2);
+    styleObject('signalAxis', [148, 163, 184], 2);
+    styleObject('productAxis', [148, 163, 184], 2);
+    try { api.setLineStyle('signalDivider', 2); } catch (_) {}
+    try { api.setLineStyle('productDivider', 2); } catch (_) {}
+    try { api.setLineStyle('signalAxis', 1); } catch (_) {}
+    try { api.setLineStyle('productAxis', 1); } catch (_) {}
     try { api.setColor('currentOutputPoint', 220, 38, 38); } catch (_) {}
     try { api.setPointSize('currentOutputPoint', 6); } catch (_) {}
 
     window[listenerName] = emitState;
     api.registerUpdateListener(listenerName);
-    setStep(options.initialStep);
+    const initialStep = options.initialStep || GEOGEBRA_CONVOLUTION_TASK_STEPS[task] || 1;
+    setStep(initialStep);
     return getState();
   }
 
   function reset() {
     setTime(settings.initialT);
-    setStep(1);
+    setStep(GEOGEBRA_CONVOLUTION_TASK_STEPS[task] || 1);
   }
 
   function destroy() {

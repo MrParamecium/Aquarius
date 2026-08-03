@@ -50,6 +50,7 @@ async function installFakeGeoGebra(page) {
       observerDisconnectCount: 0,
       unregisterCount: 0,
       codebases: [],
+      perspectives: [],
       visibilities: {},
       commands: [],
     };
@@ -104,6 +105,7 @@ async function installFakeGeoGebra(page) {
 
     window.GGBApplet = function FakeGGBApplet(params) {
       metrics.constructorCount += 1;
+      metrics.perspectives.push(params.perspective);
       this.setHTML5Codebase = (url) => metrics.codebases.push(url);
       this.inject = (mountId) => {
         metrics.injectCount += 1;
@@ -234,6 +236,9 @@ async function main() {
         rangeDisabled: node.querySelector('[data-geogebra-time]')?.disabled,
         canvasCount: node.querySelectorAll('canvas').length,
         codebase: window.__fakeGeoGebra.codebases[0],
+        perspective: window.__fakeGeoGebra.perspectives[0],
+        productVisible: window.__fakeGeoGebra.visibilities.productBand,
+        outputVisible: window.__fakeGeoGebra.visibilities.convolutionOutput,
       };
     });
     record('controlled lesson demo mounts one applet with the three stacked layers and no duplicate pager',
@@ -244,6 +249,9 @@ async function main() {
         && initial.internalStepTabs === 0
         && initial.rangeDisabled === false
         && initial.canvasCount === 1
+        && initial.perspective === 'G'
+        && initial.productVisible === true
+        && initial.outputVisible === true
         && initial.codebase === 'https://www.geogebra.org/apps/5.4.920.0/web3d',
       JSON.stringify(initial));
 

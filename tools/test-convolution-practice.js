@@ -76,6 +76,8 @@ async function main() {
         hintDisabled: Boolean(hint?.disabled),
         feedbackLive: feedback?.getAttribute('aria-live') || '',
         genericQuickCheck: Boolean(document.querySelector('#startTestBtn')),
+        nextDisabled: Boolean(document.getElementById('learnPagerNextBtn')?.disabled),
+        nextLabel: document.getElementById('learnPagerNextLabel')?.textContent.trim() || '',
       };
     });
     record('practice opens with four textbook drills and no generic Quick Check',
@@ -84,7 +86,9 @@ async function main() {
         && initial.statuses.every(status => status === 'Not Started')
         && initial.hintDisabled
         && initial.feedbackLive === 'polite'
-        && !initial.genericQuickCheck,
+        && !initial.genericQuickCheck
+        && initial.nextDisabled
+        && initial.nextLabel === 'Complete practice',
       JSON.stringify(initial));
 
     const semantics = await page.evaluate((answers) => {
@@ -92,13 +96,15 @@ async function main() {
       return Object.fromEntries(Object.entries(answers).map(([drillId, answer]) => {
         const correct = api.evaluate(drillId, answer);
         const wrong = api.evaluate(drillId, { ...answer, supportStart: '99' });
-        return [drillId, { correct, wrong }];
+        const reversed = drillId === '2.10' ? null : api.evaluate(drillId, { ...answer, flip: 'x' });
+        return [drillId, { correct, wrong, reversed }];
       }));
     }, CORRECT_ANSWERS);
     record('semantic evaluator accepts all four textbook answers and identifies the wrong field',
       Object.values(semantics).every(result => result.correct?.ok === true
         && result.wrong?.ok === false
-        && result.wrong?.field === 'support'),
+        && result.wrong?.field === 'support')
+        && Object.entries(semantics).filter(([drillId]) => drillId !== '2.10').every(([, result]) => result.reversed?.ok === true),
       JSON.stringify(semantics));
 
     const firstAttempt = await page.evaluate(() => {
@@ -135,7 +141,7 @@ async function main() {
       JSON.stringify(mastered));
 
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await enterGuestMode(page, BASE);
+    await page.waitForSelector('#navSyllabusBtn', { timeout: 10000 });
     await openSubtopic(page, SUBTOPIC);
     await page.waitForSelector('.lesson-page-frame[data-lesson-section="2.4-2"]', { timeout: 5000 });
     await waitForLayout(page);

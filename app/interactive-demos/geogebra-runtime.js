@@ -130,7 +130,7 @@ async function createGeoGebraApplet(container, options = {}) {
       appName: 'classic',
       width: Math.max(320, Math.round(Number(options.width) || 760)),
       height: Math.max(420, Math.round(Number(options.height) || 620)),
-      perspective: 'G/D',
+      perspective: 'G',
       showToolBar: false,
       showMenuBar: false,
       showAlgebraInput: false,
