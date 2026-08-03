@@ -27533,6 +27533,568 @@ body {
   }
 }
 
+/* 2.4-2 guided flow v5: twelve focused pages, synchronized demos, and semantic practice. */
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 18px rgba(23, 32, 51, 0.06);
+}
+
+#learnView #learnBody.convolution-guided-flow-active .lesson-page-frame[data-lesson-section="2.4-2"] {
+  overflow: visible !important;
+}
+
+@media (max-width: 760px) {
+  #learnView #learnBody.convolution-guided-flow-active.chat-collapsed .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
+    top: 64px;
+  }
+}
+
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
+  width: 100%;
+  max-width: 72ch;
+  margin-inline: auto;
+  font-size: 18px !important;
+  line-height: 1.68 !important;
+}
+
+.convolution-lesson-progress {
+  width: min(100%, 72ch);
+  margin: 0 auto 8px !important;
+  color: var(--convolution-muted) !important;
+  font-size: 0.78rem !important;
+  font-weight: 800;
+  text-align: right;
+}
+
+.convolution-overview-objective {
+  max-width: 48ch;
+  margin: 0 0 20px !important;
+  color: #334155 !important;
+  font-size: 1.08rem !important;
+  font-weight: 650;
+  line-height: 1.55 !important;
+}
+
+.convolution-overview-formula,
+.convolution-equation {
+  min-width: 0;
+  margin: 14px 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+  border-left: 4px solid var(--convolution-output);
+  background: #f8fafc;
+  color: #172033;
+  font-size: 1.02em;
+  line-height: 1.55;
+}
+
+.convolution-core-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 24px;
+}
+
+.convolution-core-actions > div {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 15px;
+  border: 1px solid #d8e0eb;
+  border-top: 4px solid var(--convolution-action);
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+.convolution-core-actions strong {
+  color: #172033;
+  font-size: 0.95rem;
+}
+
+.convolution-core-actions span {
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block {
+  width: 100%;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #d8e0eb;
+  border-top: 4px solid var(--convolution-block-accent, var(--convolution-input));
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-page-question {
+  margin: 0 0 16px !important;
+  color: #172033 !important;
+  font-size: 1.08em !important;
+  font-weight: 800;
+  line-height: 1.45 !important;
+}
+
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block ul,
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block ol {
+  margin: 12px 0;
+  padding-left: 1.3em;
+}
+
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block li {
+  margin: 0 0 8px !important;
+  line-height: 1.65 !important;
+}
+
+.convolution-analogy-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 210px);
+  gap: 22px;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--convolution-line);
+}
+
+#learnView .convolution-analogy-layout h3 {
+  margin: 0 0 8px;
+  color: #172033;
+  font-size: 1em;
+}
+
+.convolution-analogy-layout .convolution-analogy-figure {
+  width: 100%;
+  margin: 0;
+}
+
+#learnView .convolution-analogy-layout .convolution-analogy-image {
+  width: 100% !important;
+  height: 300px !important;
+  max-height: 300px !important;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 6px;
+}
+
+.convolution-past-weighting {
+  width: 100%;
+  margin: 20px 0 0;
+  padding: 14px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 6px;
+  background: #f8fafc;
+}
+
+.convolution-past-weighting figcaption {
+  margin-bottom: 8px;
+  color: var(--convolution-muted);
+  font-size: 0.8em;
+  font-weight: 700;
+}
+
+.convolution-past-weighting svg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 720 / 250;
+}
+
+.convolution-weight-bars line {
+  stroke: var(--convolution-input);
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.convolution-svg-response-line {
+  fill: none;
+  stroke: var(--convolution-response);
+  stroke-width: 4;
+}
+
+.convolution-role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.convolution-role-grid > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 12px;
+  padding: 16px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 6px;
+  background: #f8fafc;
+}
+
+.convolution-role-symbol {
+  grid-row: 1 / 3;
+  color: var(--convolution-action);
+  font-size: 1.45em;
+  font-weight: 800;
+}
+
+.convolution-role-grid strong { color: #172033; }
+#learnView .convolution-role-grid p { margin: 0 !important; color: var(--convolution-muted); font-size: 0.86em; }
+
+.convolution-five-steps {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.convolution-five-steps > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.28fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 14px;
+  border-left: 4px solid var(--convolution-action);
+  background: #f2f8f6;
+}
+
+.convolution-five-steps strong { color: #105f4e; }
+.convolution-five-steps span { color: #3f4f63; }
+
+.convolution-takeaway {
+  margin: 18px 0 0 !important;
+  padding: 12px 14px;
+  border-left: 4px solid var(--convolution-output);
+  background: #fff8e8;
+  color: #5d4316 !important;
+}
+
+.convolution-interval-line {
+  display: grid;
+  grid-template-columns: auto minmax(50px, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  margin: 18px 0;
+  color: var(--convolution-muted);
+  font-size: 0.84em;
+}
+
+.convolution-interval-line i {
+  height: 4px;
+  background: var(--convolution-action);
+}
+
+.convolution-piecewise {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1px;
+  margin: 16px 0;
+  overflow: hidden;
+  border: 1px solid var(--convolution-line);
+  border-radius: 6px;
+  background: var(--convolution-line);
+}
+
+.convolution-piecewise > * {
+  min-width: 0;
+  padding: 11px 13px;
+  background: #ffffff;
+}
+
+.convolution-piecewise span { color: var(--convolution-muted); }
+.convolution-piecewise strong { color: var(--convolution-output); overflow-wrap: anywhere; }
+.convolution-piecewise-wide { grid-template-columns: minmax(100px, auto) minmax(0, 1fr); }
+.convolution-answer { border-left-color: var(--convolution-action); font-weight: 750; }
+
+.convolution-demo-stack {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  border-block: 1px solid #dbe3ec;
+  background: #dbe3ec;
+}
+
+.convolution-demo-panel {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  padding: 10px 14px;
+  background: #f8fafc;
+}
+
+.convolution-demo-panel strong { color: #172033; font-size: 0.82rem; }
+.convolution-demo-panel span { color: #64748b; font-size: 0.72rem; overflow-wrap: anywhere; }
+.convolution-demo-panel[data-convolution-demo-layer="signals"] { border-top: 3px solid var(--convolution-input); }
+.convolution-demo-panel[data-convolution-demo-layer="product"] { border-top: 3px solid var(--convolution-action); }
+.convolution-demo-panel[data-convolution-demo-layer="output"] { border-top: 3px solid var(--convolution-output); }
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .kc-interactive-demo {
+  margin-top: 18px;
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .geogebra-demo-instruction {
+  padding: 13px 20px;
+  text-align: left;
+}
+
+.convolution-practice-builder {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.32fr) minmax(0, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.convolution-practice-drills {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+}
+
+.convolution-practice-drills button {
+  display: grid;
+  gap: 2px;
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.convolution-practice-drills button.is-active {
+  border-color: var(--convolution-action);
+  background: #eef8f5;
+}
+
+.convolution-practice-drills strong {
+  color: var(--convolution-muted);
+  font-size: 0.7em;
+}
+
+.convolution-practice-workspace {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.convolution-practice-prompt {
+  margin-bottom: 16px;
+  color: #172033;
+  font-weight: 800;
+}
+
+.convolution-practice-fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 0;
+  border: 0;
+  border-top: 1px solid var(--convolution-line);
+}
+
+.convolution-practice-fieldset legend {
+  width: 100%;
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 760;
+}
+
+.convolution-practice-fieldset label {
+  min-width: 0;
+  color: #526176;
+}
+
+.convolution-practice-fieldset input[type="text"],
+.convolution-practice-fieldset select {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #94a3b8;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #172033;
+  font: inherit;
+}
+
+.convolution-practice-support label {
+  display: grid;
+  gap: 5px;
+  flex: 1 1 170px;
+}
+
+.convolution-breakpoint,
+.convolution-practice-actions button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid #94a3b8;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.convolution-breakpoint[aria-pressed="true"],
+.convolution-practice-actions .convolution-practice-submit {
+  border-color: var(--convolution-action);
+  background: var(--convolution-action);
+  color: #ffffff;
+}
+
+.convolution-curve-segment {
+  flex: 1 1 170px;
+  min-width: 0;
+}
+
+.convolution-curve-segment label {
+  display: grid;
+  gap: 5px;
+}
+
+.convolution-practice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.convolution-practice-actions button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.convolution-practice-feedback {
+  min-height: 50px;
+  margin: 14px 0 0 !important;
+  padding: 12px 14px;
+  border-left: 4px solid var(--convolution-output);
+  background: #fff8e8;
+  color: #5d4316 !important;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
+  .convolution-teaching-block,
+  .convolution-core-actions > div,
+  .convolution-role-grid > div,
+  .convolution-piecewise > *,
+  .convolution-practice-drills button,
+  .convolution-practice-workspace,
+  .convolution-demo-panel
+) {
+  border-color: #405066;
+  background: #172233;
+  color: #dbe5f2;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
+  .convolution-overview-objective,
+  .convolution-page-question,
+  .convolution-core-actions strong,
+  .convolution-role-grid strong,
+  .convolution-demo-panel strong,
+  .convolution-practice-prompt
+) {
+  color: #f1f5f9 !important;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
+  .convolution-overview-formula,
+  .convolution-equation,
+  .convolution-past-weighting,
+  .convolution-five-steps > div
+) {
+  background: #111b2a;
+  color: #e5edf7;
+}
+
+@media (max-width: 760px) {
+  #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
+    font-size: 16px !important;
+    line-height: 1.68 !important;
+  }
+
+  .convolution-core-actions,
+  .convolution-role-grid,
+  .convolution-practice-builder {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block {
+    padding: 16px 14px;
+  }
+
+  .convolution-analogy-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .convolution-analogy-layout .convolution-analogy-figure {
+    width: min(100%, 210px);
+    margin-inline: auto;
+  }
+
+  .convolution-five-steps > div {
+    grid-template-columns: 92px minmax(0, 1fr);
+    gap: 10px;
+    padding-inline: 10px;
+  }
+
+  .convolution-demo-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .convolution-demo-panel {
+    grid-template-columns: 74px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .convolution-piecewise,
+  .convolution-piecewise-wide {
+    grid-template-columns: minmax(90px, 0.42fr) minmax(0, 1fr);
+  }
+
+  .convolution-practice-drills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .convolution-practice-workspace {
+    padding: 14px;
+  }
+
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-tab {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  .convolution-core-actions { gap: 7px; }
+  .convolution-practice-drills { grid-template-columns: 1fr; }
+  .convolution-interval-line { grid-template-columns: 1fr; }
+  .convolution-interval-line i { width: 100%; }
+}
+
+@media (max-width: 820px) {
+  #learnView#learnView .learn-topbar-left {
+    overflow: visible !important;
+  }
+
+  #learnView#learnView .learn-title {
+    overflow: visible !important;
+    font-size: 16px !important;
+    line-height: 1.24 !important;
+    overflow-wrap: anywhere !important;
+    text-overflow: clip !important;
+    white-space: normal !important;
+  }
+}
+
 /* MISTAKE NOTE GLASS STACK LOCK: stacked frosted notes, user-owned first. */
 
 #mistakeNotebookView .mistake-user-note-card,

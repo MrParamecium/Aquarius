@@ -104,13 +104,11 @@ async function installFakeGeoGebra(context) {
       this.inject = (mountId) => {
         metrics.injectCount += 1;
         const mount = document.getElementById(mountId);
-        ['upper', 'lower'].forEach((view) => {
-          const canvas = document.createElement('canvas');
-          canvas.width = 760;
-          canvas.height = 310;
-          canvas.dataset.fakeGeoGebraView = view;
-          mount?.appendChild(canvas);
-        });
+        const canvas = document.createElement('canvas');
+        canvas.width = 760;
+        canvas.height = 620;
+        canvas.dataset.fakeGeoGebraView = 'stacked';
+        mount?.appendChild(canvas);
         queueMicrotask(() => params.appletOnLoad(makeApi(mount)));
       };
     };
@@ -221,6 +219,34 @@ async function panelSnapshot(page) {
   });
 }
 
+async function stickyStageSnapshot(page) {
+  return page.evaluate(() => {
+    const nav = document.querySelector('.convolution-stage-nav');
+    const frame = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+    const scroll = document.getElementById('learnExplainScroll');
+    const showQa = document.getElementById('learnChatRestoreBtn');
+    const navRect = nav?.getBoundingClientRect();
+    const scrollRect = scroll?.getBoundingClientRect();
+    const showQaRect = showQa?.getBoundingClientRect();
+    const navStyle = nav ? getComputedStyle(nav) : null;
+    const frameStyle = frame ? getComputedStyle(frame) : null;
+    const overlaps = Boolean(navRect && showQaRect
+      && navRect.left < showQaRect.right
+      && navRect.right > showQaRect.left
+      && navRect.top < showQaRect.bottom
+      && navRect.bottom > showQaRect.top);
+    return {
+      scrollTop: scroll?.scrollTop || 0,
+      scrollTopEdge: scrollRect?.top || 0,
+      navTop: navRect?.top || 0,
+      stickyOffset: parseFloat(navStyle?.top || '0'),
+      position: navStyle?.position || '',
+      frameOverflow: frameStyle?.overflow || '',
+      overlapsShowQa: overlaps,
+    };
+  });
+}
+
 async function main() {
   const server = spawnBridge(repoRoot, PORT);
   let browser;
@@ -239,7 +265,7 @@ async function main() {
     await page.waitForFunction(() => Array.isArray(learnKnowledgePoints) && learnKnowledgePoints.length >= 4, null, {
       timeout: 5000,
     });
-    await page.waitForFunction(() => document.getElementById('learnPagerPosition')?.textContent.trim() === 'Section Overview', null, {
+    await page.waitForFunction(() => window.getConvolutionLessonStageState?.()?.stage === 'intro', null, {
       timeout: 5000,
     });
     await page.waitForFunction(() => document.getElementById('learnBody')?.classList.contains('chat-collapsed'), null, {
@@ -259,13 +285,22 @@ async function main() {
     await captureEvidence(page, 'mobile-intro-390.png');
 
     await goToLessonPage(page, 2);
+    await page.locator('.convolution-analogy-layout').first().scrollIntoViewIfNeeded();
     await waitForLayout(page);
-    await captureEvidence(page, 'mobile-editorial-number-390.png');
+    const stickyStage = await stickyStageSnapshot(page);
+    record('mobile stage navigation stays pinned below the Q&A switch while lesson content scrolls',
+      stickyStage.scrollTop > 0
+        && stickyStage.position === 'sticky'
+        && stickyStage.frameOverflow === 'visible'
+        && Math.abs(stickyStage.navTop - (stickyStage.scrollTopEdge + stickyStage.stickyOffset)) <= 1
+        && !stickyStage.overlapsShowQa,
+      JSON.stringify(stickyStage));
+    await captureEvidence(page, 'mobile-lesson-analogy-390.png');
 
-    await goToLessonPage(page, 4);
-    await page.locator('.convolution-process-timeline').first().scrollIntoViewIfNeeded();
+    await goToLessonPage(page, 5);
+    await page.locator('.convolution-five-steps').first().scrollIntoViewIfNeeded();
     await waitForLayout(page);
-    await captureEvidence(page, 'mobile-timeline-390.png');
+    await captureEvidence(page, 'mobile-five-steps-390.png');
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
@@ -278,32 +313,32 @@ async function main() {
 
     const prepared = await page.evaluate(() => {
       const node = document.querySelector('.kc-interactive-demo .geogebra-demo-shell')?.closest('.kc-interactive-demo');
-      node?.querySelector('[data-geogebra-step="3"]')?.click();
-      const range = node?.querySelector('[data-geogebra-time]');
-      if (range) {
-        range.value = '-2';
-        range.dispatchEvent(new Event('input', { bubbles: true }));
-      }
       window.__mobilePanelCanvasRefs = node ? Array.from(node.querySelectorAll('canvas')) : [];
       return {
         pager: document.getElementById('learnPagerPosition')?.textContent.trim(),
         stage: typeof getConvolutionLessonStageState === 'function'
           ? getConvolutionLessonStageState()
           : null,
-        step: node?.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
+        task: node?.dataset.convolutionTask,
+        layers: node?.querySelectorAll('[data-convolution-demo-layer]').length,
+        internalSteps: node?.querySelectorAll('[data-geogebra-step], [data-geogebra-nav]').length,
+        rangeDisabled: node?.querySelector('[data-geogebra-time]')?.disabled,
         t: node?.__geoGebraDiagnostics?.getState()?.t,
         canvasCount: window.__mobilePanelCanvasRefs.length,
         constructorCount: window.__fakeGeoGebra?.constructorCount,
       };
     });
-    record('real 2.4-2 GeoGebra page mounts one continuous two-view Applet',
-      totalPages === 8
-        && prepared.pager === 'Lesson 5 / 6'
+    record('real 2.4-2 GeoGebra page mounts one controlled three-layer Applet',
+      totalPages === 14
+        && prepared.pager === 'Lesson 5 / 12'
         && prepared.stage?.stage === 'lesson'
         && prepared.stage.position === 5
-        && prepared.step === '3'
-        && prepared.t === -2
-        && prepared.canvasCount === 2
+        && prepared.task === 'change-variable'
+        && prepared.layers === 3
+        && prepared.internalSteps === 0
+        && prepared.rangeDisabled
+        && prepared.t === -4
+        && prepared.canvasCount === 1
         && prepared.constructorCount === 1,
       JSON.stringify(prepared));
 
@@ -365,21 +400,21 @@ async function main() {
         canvasCount: canvases.length,
         sameCanvasNodes: canvases.length === references.length
           && canvases.every((canvas, index) => canvas === references[index]),
-        step: node?.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
+        task: node?.dataset.convolutionTask,
         t: node?.__geoGebraDiagnostics?.getState()?.t,
       };
     });
-    record('returning to lecture preserves the GeoGebra instance, step, and t',
+    record('returning to lecture preserves the controlled GeoGebra instance and state',
       resizedMobileQa.showLectureVisible
         && returned.panel.explainWidth >= 390
         && returned.panel.chatWidth === 0
         && returned.constructorCount === 1
         && returned.injectCount === 1
         && returned.removeCount === 0
-        && returned.canvasCount === 2
+        && returned.canvasCount === 1
         && returned.sameCanvasNodes
-        && returned.step === '3'
-        && returned.t === -2,
+        && returned.task === 'change-variable'
+        && returned.t === -4,
       JSON.stringify(returned));
 
     await page.setViewportSize({ width: 1280, height: 800 });
