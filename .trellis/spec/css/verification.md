@@ -53,6 +53,11 @@ control still covers an adjacent tab, heading, or action. For responsive changes
 controls, add a bounding-rectangle intersection assertion against nearby navigation/toolbars and retain a viewport
 screenshot. Treat either a positive intersection or incoherent visual occlusion as a failed mobile layout check.
 
+**`position: sticky` 不能只检查计算样式：** 测试必须在真实滚动容器中向下滚动，再断言固定元素的
+`top` 等于滚动容器顶部加上计算后的 sticky 偏移，同时检查它不与邻近浮动控件相交。还要检查从
+sticky 元素到滚动容器之间的祖先；非滚动祖先的 `overflow: hidden/auto` 会接管 sticky 边界，使
+`position: sticky` 的计算值正确但元素仍被卷走。
+
 ## The set-difference invariant (for dead-CSS deletion)
 
 For any dead-CSS deletion, the definitive viewport-independent safety check is:
