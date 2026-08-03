@@ -22,13 +22,14 @@ function record(name, ok, detail = '') {
 
 const DEMO = {
   type: 'interactive_demo',
-  title: 'Synthetic Figure 2.7',
-  explanation: 'Fake API lifecycle test',
+  title: 'Textbook Figure 2.7',
+  explanation: 'Controlled lesson task',
   spec: {
     framework: 'geogebra',
     scene: 'convolution_figure_2_7',
-    guidance: 'soft',
-    initial_step: 1,
+    preset: 'figure-2-7',
+    task: 'slide',
+    scaffolding: 'guided',
     initial_t: -4,
     t_min: -4,
     t_max: 3,
@@ -91,14 +92,7 @@ async function installFakeGeoGebra(page) {
           values[name] = Number(value);
           listeners.forEach((listenerName) => window[listenerName]?.());
         },
-        getValue(name) {
-          const t = values.t;
-          if (name === 't') return t;
-          if (name === 'overlapArea' || name === 'outputValue') {
-            return t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3)));
-          }
-          return values[name] || 0;
-        },
+        getValue(name) { return values[name] || 0; },
         registerUpdateListener(listenerName) { listeners.add(listenerName); },
         unregisterUpdateListener(listenerName) {
           if (listeners.delete(listenerName)) metrics.unregisterCount += 1;
@@ -126,6 +120,11 @@ async function installFakeGeoGebra(page) {
 
 async function hydrateDemo(page, demo = DEMO) {
   await page.evaluate((payload) => {
+    const old = document.getElementById('geogebra-test-container');
+    if (old) {
+      window.__ftutorTeardownInteractiveDemos?.(old);
+      old.remove();
+    }
     const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
     const container = document.createElement('div');
     container.id = 'geogebra-test-container';
@@ -166,6 +165,56 @@ async function main() {
     record('explicit GeoGebra route wins before convolution keywords', route === 'geogebra', `got ${route}`);
     record('ordinary convolution route is unchanged', plainConvolutionRoute === 'convolution_lab', `got ${plainConvolutionRoute}`);
 
+    const presetChecks = await page.evaluate(() => {
+      const api = window.__ftutorConvolutionPresets;
+      if (!api) return { ready: false };
+      const ids = api.list().map(preset => preset.id);
+      const read = (id, t) => api.getConvolutionPreset(id)?.evaluate(t);
+      const describe = (id) => {
+        const preset = api.getConvolutionPreset(id);
+        return { support: preset?.support, breakpoints: preset?.breakpoints };
+      };
+      return {
+        ready: true,
+        ids,
+        figure: { minus2: read('figure-2-7', -2), zero: read('figure-2-7', 0), shape: describe('figure-2-7') },
+        example210: { minus1: read('example-2-10', -1), one: read('example-2-10', 1), shape: describe('example-2-10') },
+        example211: { minus1: read('example-2-11', -1), one: read('example-2-11', 1), shape: describe('example-2-11') },
+        example212: {
+          minus1: read('example-2-12', -1),
+          zero: read('example-2-12', 0),
+          one: read('example-2-12', 1),
+          two: read('example-2-12', 2),
+          three: read('example-2-12', 3),
+          four: read('example-2-12', 4),
+          shape: describe('example-2-12'),
+        },
+      };
+    });
+    const close = (actual, expected) => Math.abs(Number(actual) - expected) <= 1e-9;
+    record('preset registry exposes the four approved textbook cases',
+      presetChecks.ready
+        && JSON.stringify(presetChecks.ids) === JSON.stringify(['figure-2-7', 'example-2-10', 'example-2-11', 'example-2-12'])
+        && JSON.stringify(presetChecks.figure.shape) === JSON.stringify({ support: [-3, 'inf'], breakpoints: [-3] })
+        && JSON.stringify(presetChecks.example210.shape) === JSON.stringify({ support: [0, 'inf'], breakpoints: [0] })
+        && JSON.stringify(presetChecks.example211.shape) === JSON.stringify({ support: ['-inf', 'inf'], breakpoints: [0] })
+        && JSON.stringify(presetChecks.example212.shape) === JSON.stringify({ support: [-1, 4], breakpoints: [-1, 1, 2, 4] }),
+      JSON.stringify(presetChecks));
+    record('all four textbook output evaluators match representative values',
+      close(presetChecks.figure?.minus2, 2 * (1 - Math.exp(-1)))
+        && close(presetChecks.figure?.zero, 2 * (1 - Math.exp(-3)))
+        && close(presetChecks.example210?.minus1, 0)
+        && close(presetChecks.example210?.one, Math.exp(-1) - Math.exp(-2))
+        && close(presetChecks.example211?.minus1, -Math.exp(-2))
+        && close(presetChecks.example211?.one, 1 - 2 * Math.exp(-1))
+        && close(presetChecks.example212?.minus1, 0)
+        && close(presetChecks.example212?.zero, 1 / 6)
+        && close(presetChecks.example212?.one, 2 / 3)
+        && close(presetChecks.example212?.two, 4 / 3)
+        && close(presetChecks.example212?.three, 5 / 6)
+        && close(presetChecks.example212?.four, 0),
+      JSON.stringify(presetChecks));
+
     const sharedLoader = await page.evaluate(async () => {
       const runtime = window.__ftutorGeoGebraRuntime;
       const [a, b] = await Promise.all([runtime.load(), runtime.load()]);
@@ -177,81 +226,47 @@ async function main() {
     const initial = await page.evaluate(() => {
       const node = window.__geogebraTestNode;
       return {
-        state: node.querySelector('[data-geogebra-stage]').dataset.state,
-        active: node.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
-        rangeDisabled: node.querySelector('[data-geogebra-time]').disabled,
-        codebase: window.__fakeGeoGebra.codebases[0],
+        state: node.querySelector('[data-geogebra-stage]')?.dataset.state,
+        preset: node.dataset.convolutionPreset,
+        task: node.dataset.convolutionTask,
+        layers: Array.from(node.querySelectorAll('[data-convolution-demo-layer]')).map(layer => layer.dataset.convolutionDemoLayer),
+        internalStepTabs: node.querySelectorAll('[data-geogebra-step], [data-geogebra-nav]').length,
+        rangeDisabled: node.querySelector('[data-geogebra-time]')?.disabled,
         canvasCount: node.querySelectorAll('canvas').length,
+        codebase: window.__fakeGeoGebra.codebases[0],
       };
     });
-    record('scene mounts at step 1 with the pinned codebase',
+    record('controlled lesson demo mounts one applet with the three stacked layers and no duplicate pager',
       initial.state === 'ready'
-        && initial.active === '1'
-        && initial.rangeDisabled
+        && initial.preset === 'figure-2-7'
+        && initial.task === 'slide'
+        && JSON.stringify(initial.layers) === JSON.stringify(['signals', 'product', 'output'])
+        && initial.internalStepTabs === 0
+        && initial.rangeDisabled === false
         && initial.canvasCount === 1
         && initial.codebase === 'https://www.geogebra.org/apps/5.4.920.0/web3d',
       JSON.stringify(initial));
 
-    const textbookCommands = await page.evaluate(() => window.__fakeGeoGebra.commands.slice());
-    const requiredCommands = [
-      'gSignal(tau)=If(tau>=-2,2*exp(-(tau+2)),0)',
-      'gFlipped(tau)=If(tau<=2,2*exp(tau-2),0)',
-      'gMoving(tau)=If(tau<=t+2,2*exp(tau-t-2),0)',
-      'overlapArea=If(t<=-3,0,2*(1-exp(-(t+3))))',
-      'convolutionOutput(s)=If(s<=-3,0,2*(1-exp(-(s+3))))',
-    ];
-    record('scene commands use the textbook amplitude 2',
-      requiredCommands.every((command) => textbookCommands.includes(command)),
-      `${requiredCommands.filter((command) => !textbookCommands.includes(command)).length} command(s) missing`);
-
-    const softGuidance = await page.evaluate(() => {
+    const firstContact = await page.evaluate(() => {
       const node = window.__geogebraTestNode;
-      node.querySelector('[data-geogebra-step="3"]').click();
       const range = node.querySelector('[data-geogebra-time]');
-      const canSlide = !range.disabled;
       range.value = '-3';
       range.dispatchEvent(new Event('input', { bubbles: true }));
-      const contact = node.querySelector('[data-geogebra-feedback]').textContent;
-      node.querySelector('[data-geogebra-nav="next"]').click();
-      const reachedStep4 = node.querySelector('[data-geogebra-step="4"]').classList.contains('is-active');
-      const output = node.querySelector('[data-geogebra-feedback]').textContent;
-      return { canSlide, contact, reachedStep4, output };
-    });
-    record('soft guidance allows progress and reports first contact',
-      softGuidance.canSlide
-        && /First contact/.test(softGuidance.contact)
-        && softGuidance.reachedStep4
-        && /overlap area = 0/.test(softGuidance.output),
-      JSON.stringify(softGuidance));
-
-    const textbookValues = await page.evaluate(() => {
-      const diagnostics = window.__geogebraTestNode.__geoGebraDiagnostics;
-      const readAt = (t) => {
-        diagnostics.setTime(t);
-        return diagnostics.getState();
-      };
-      return { atMinus2: readAt(-2), atZero: readAt(0) };
-    });
-    const expectedMinus2 = 2 * (1 - Math.exp(-1));
-    const expectedZero = 2 * (1 - Math.exp(-3));
-    const close = (actual, expected) => Math.abs(actual - expected) <= 1e-9;
-    record('t = -2 and t = 0 match the textbook convolution values',
-      close(textbookValues.atMinus2.output, expectedMinus2)
-        && close(textbookValues.atMinus2.area, expectedMinus2)
-        && close(textbookValues.atZero.output, expectedZero)
-        && close(textbookValues.atZero.area, expectedZero),
-      JSON.stringify(textbookValues));
-
-    const reset = await page.evaluate(() => {
-      const node = window.__geogebraTestNode;
-      node.querySelector('.geogebra-demo-reset').click();
       return {
-        step: node.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
-        t: node.querySelector('[data-geogebra-time]').value,
-        disabled: node.querySelector('[data-geogebra-time]').disabled,
+        ready: node.dataset.convolutionTaskReady,
+        feedback: node.querySelector('[data-geogebra-feedback]')?.textContent.trim() || '',
+        state: node.__geoGebraDiagnostics?.getState?.(),
       };
     });
-    record('reset restores step 1 and t = -4', reset.step === '1' && reset.t === '-4' && reset.disabled, JSON.stringify(reset));
+    record('slide task completes at first contact and reports the shared atomic state',
+      firstContact.ready === 'true'
+        && /first contact/i.test(firstContact.feedback)
+        && firstContact.state?.preset === 'figure-2-7'
+        && firstContact.state?.task === 'slide'
+        && close(firstContact.state?.t, -3)
+        && close(firstContact.state?.area, 0)
+        && close(firstContact.state?.output, 0),
+      JSON.stringify(firstContact));
 
     const teardown = await page.evaluate(() => {
       const before = { ...window.__fakeGeoGebra };
@@ -277,21 +292,27 @@ async function main() {
       JSON.stringify(teardown));
 
     const unknownDemo = JSON.parse(JSON.stringify(DEMO));
-    unknownDemo.spec.scene = 'not_registered';
+    unknownDemo.spec.preset = 'not-registered';
     await hydrateDemo(page, unknownDemo);
     const unknown = await page.evaluate(() => ({
-      state: window.__geogebraTestNode.querySelector('[data-geogebra-stage]').dataset.state,
-      fallbackVisible: !window.__geogebraTestNode.querySelector('[data-geogebra-fallback]').hidden,
-      feedback: window.__geogebraTestNode.querySelector('[data-geogebra-feedback]').textContent,
+      state: window.__geogebraTestNode.querySelector('[data-geogebra-stage]')?.dataset.state,
+      fallbackVisible: !window.__geogebraTestNode.querySelector('[data-geogebra-fallback]')?.hidden,
+      ready: window.__geogebraTestNode.dataset.convolutionTaskReady,
+      feedback: window.__geogebraTestNode.querySelector('[data-geogebra-feedback]')?.textContent || '',
+      layers: window.__geogebraTestNode.querySelectorAll('[data-convolution-demo-layer]').length,
     }));
-    record('unknown scenes fail closed to the local fallback',
-      unknown.state === 'failed' && unknown.fallbackVisible && /Unknown GeoGebra scene/.test(unknown.feedback),
+    record('unknown presets fail to a usable three-layer fallback without locking Continue',
+      unknown.state === 'failed'
+        && unknown.fallbackVisible
+        && unknown.ready === 'true'
+        && unknown.layers === 3
+        && /Unknown convolution preset/.test(unknown.feedback),
       JSON.stringify(unknown));
+
     await page.evaluate(() => {
       window.__ftutorTeardownInteractiveDemos(window.__geogebraTestContainer);
       window.__geogebraTestContainer.remove();
     });
-
     await context.close();
 
     const loaderContext = await browser.newContext();
@@ -332,7 +353,7 @@ async function main() {
     await stopBridge(server, { label: 'geogebra-test' });
   }
 
-  const failed = results.filter((result) => !result.ok);
+  const failed = results.filter(result => !result.ok);
   console.log(`\n[geogebra-demo] ${results.length - failed.length}/${results.length} passed`);
   process.exit(failed.length ? 1 : 0);
 }
