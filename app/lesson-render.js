@@ -425,12 +425,49 @@ function resetLearnKnowledgePointState() {
 }
 
 const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
+const CONVOLUTION_LESSON_PAGE_COUNT = 12;
+const CONVOLUTION_STATE_STORAGE_KEY = 'ftutor:convolution-lesson:v5';
 const CONVOLUTION_STAGE_LABELS = Object.freeze({
   intro: 'Section Overview',
   lesson: 'Lesson',
   practice: 'Practice'
 });
 let convolutionLastLessonIndex = 1;
+
+function readConvolutionLessonState() {
+  const fallback = { version: 5, lastLessonPosition: 1, tasks: {} };
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONVOLUTION_STATE_STORAGE_KEY) || 'null');
+    if (!saved || saved.version !== 5) return fallback;
+    return {
+      version: 5,
+      lastLessonPosition: Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(saved.lastLessonPosition) || 1)),
+      tasks: saved.tasks && typeof saved.tasks === 'object' ? saved.tasks : {},
+    };
+  } catch (_) {
+    return fallback;
+  }
+}
+
+function writeConvolutionLessonState(nextState) {
+  try { localStorage.setItem(CONVOLUTION_STATE_STORAGE_KEY, JSON.stringify(nextState)); } catch (_) {}
+}
+
+function getConvolutionLessonTaskState(task) {
+  const key = String(task || '').trim();
+  return Boolean(key && readConvolutionLessonState().tasks[key]);
+}
+
+function setConvolutionLessonTaskComplete(task, complete = true) {
+  const key = String(task || '').trim();
+  if (!key) return false;
+  const saved = readConvolutionLessonState();
+  saved.tasks[key] = Boolean(complete);
+  writeConvolutionLessonState(saved);
+  return saved.tasks[key];
+}
+window.getConvolutionLessonTaskState = getConvolutionLessonTaskState;
+window.setConvolutionLessonTaskComplete = setConvolutionLessonTaskComplete;
 
 function getCurrentLessonSectionCode() {
   return compactWhitespace(learnSectionId || '')
@@ -445,7 +482,7 @@ function getConvolutionLessonStageMap() {
     .map((point, index) => point?.type === 'knowledge' ? index : -1)
     .filter(index => index >= 0);
   const practiceIndex = points.findIndex(point => point?.type === 'quiz');
-  if (introIndex < 0 || lessonIndices.length !== 6 || practiceIndex < 0) return null;
+  if (introIndex < 0 || lessonIndices.length !== CONVOLUTION_LESSON_PAGE_COUNT || practiceIndex < 0) return null;
   return { introIndex, lessonIndices, practiceIndex };
 }
 
@@ -476,17 +513,18 @@ window.getConvolutionLessonTurnTiming = getConvolutionLessonTurnTiming;
 function buildConvolutionStageNavHtml(stageState) {
   if (!stageState) return '';
   const tabs = [
-    { stage: 'intro', number: '1' },
-    { stage: 'lesson', number: '2' },
-    { stage: 'practice', number: '3' }
+    { stage: 'intro' },
+    { stage: 'lesson' },
+    { stage: 'practice' }
   ];
   return `
     <nav class="convolution-stage-nav" aria-label="Learning stages">
-      ${tabs.map(({ stage, number }) => {
+      ${tabs.map(({ stage }) => {
         const active = stageState.stage === stage;
-        return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span class="convolution-stage-tab-number" aria-hidden="true">${number}</span><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
+        return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
       }).join('')}
     </nav>
+    ${stageState.stage === 'lesson' ? `<p class="convolution-lesson-progress">Lesson ${stageState.position} of ${stageState.total}</p>` : ''}
   `;
 }
 
@@ -508,6 +546,11 @@ function jumpToConvolutionLessonStage(stage) {
   const direction = targetIndex < currentKnowledgePointIndex ? -1 : 1;
   return runLearnPageTurn(direction, () => {
     currentKnowledgePointIndex = targetIndex;
+    if (normalizedStage === 'lesson') {
+      const saved = readConvolutionLessonState();
+      saved.lastLessonPosition = map.lessonIndices.indexOf(targetIndex) + 1;
+      writeConvolutionLessonState(saved);
+    }
     renderCurrentKnowledgePoint();
   });
 }
@@ -1214,7 +1257,10 @@ function isBadLessonPageTitle(title) {
 
 function getLessonPageDisplayTitle(block, index) {
   if (!block || block.type !== 'knowledge') return '';
-  const title = compactWhitespace(block.title || '');
+  const rawTitle = compactWhitespace(block.title || '');
+  const title = getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID
+    ? rawTitle.replace(/^\d+[.)]\s+/, '')
+    : rawTitle;
   if (!title || /^Knowledge Point$/i.test(title) || /^Core Lesson$/i.test(title) || isBadLessonPageTitle(title)) {
     const inferred = inferLessonChunkTitle(block.html || '', '', index);
     if (inferred && !/^Core Lesson\s+\d+$/i.test(inferred)) return inferred;
@@ -1234,7 +1280,9 @@ function stripDuplicatePageHeading(innerHtml, displayTitle) {
     if (child.classList && (child.classList.contains('kc-visual-plan') || child.classList.contains('kc-visual-meta'))) return false;
     return /^H[1-3]$/.test(child.tagName || '');
   });
-  if (firstHeading && compactWhitespace(firstHeading.textContent || '') === normalizedTitle) {
+  const normalizedHeading = compactWhitespace(firstHeading?.textContent || '');
+  if (firstHeading && (normalizedHeading === normalizedTitle
+    || normalizedHeading.replace(/^\d+[.)]\s+/, '') === normalizedTitle)) {
     firstHeading.remove();
   }
   return temp.innerHTML;
@@ -1346,7 +1394,12 @@ function renderCurrentKnowledgePoint() {
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
   const stageState = getConvolutionLessonStageState(currentKnowledgePointIndex);
-  if (stageState?.stage === 'lesson') convolutionLastLessonIndex = currentKnowledgePointIndex;
+  if (stageState?.stage === 'lesson') {
+    convolutionLastLessonIndex = currentKnowledgePointIndex;
+    const saved = readConvolutionLessonState();
+    saved.lastLessonPosition = stageState.position;
+    writeConvolutionLessonState(saved);
+  }
   learnBody?.classList.toggle('convolution-guided-flow-active', Boolean(stageState));
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
   replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
@@ -1355,6 +1408,8 @@ function renderCurrentKnowledgePoint() {
   decorateLectureContent(learnExplainContent);
   enhanceVisualMetadataUI(learnExplainContent);
   hydrateInteractiveDemos(learnExplainContent);
+  const convolutionPractice = learnExplainContent.querySelector('[data-convolution-practice]');
+  if (convolutionPractice) window.__ftutorConvolutionPractice?.mount(convolutionPractice);
   bindOverviewSubsectionCards();
   bindConvolutionStageNavigation(learnExplainContent);
   
@@ -1397,7 +1452,7 @@ function renderCurrentKnowledgePoint() {
     requestAnimationFrame(() => {
       if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
     });
-  }, 60);
+  }, getConvolutionLessonStageMap() ? 0 : 60);
 }
 
 function bindStartTestBtnIfPresent() {
@@ -1463,10 +1518,22 @@ function setLearnLessonContent(fullHtml, options = {}) {
   currentFullLessonHtml = String(fullHtml || '');
   try {
     const parsed = parseLessonKnowledgePoints(currentFullLessonHtml);
+    if (getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID
+      && parsed.points.filter(point => point?.type === 'knowledge').length === CONVOLUTION_LESSON_PAGE_COUNT
+      && !parsed.points.some(point => point?.type === 'quiz')) {
+      parsed.points.push({
+        type: 'quiz',
+        label: 'Practice',
+        title: 'Practice',
+        html: buildLessonTestBannerHtml(),
+      });
+    }
     learnKnowledgePoints = parsed.points;
     currentLessonTrailingHtml = parsed.trailingHtml;
     currentKnowledgePointIndex = Math.max(0, Math.min(options.index || 0, Math.max(learnKnowledgePoints.length - 1, 0)));
-    convolutionLastLessonIndex = 1;
+    const map = getConvolutionLessonStageMap();
+    const savedLessonPosition = readConvolutionLessonState().lastLessonPosition;
+    convolutionLastLessonIndex = map?.lessonIndices?.[savedLessonPosition - 1] ?? 1;
     renderCurrentKnowledgePoint();
   } catch (err) {
     console.error('[LessonRender] setLearnLessonContent failed:', err);
@@ -1632,25 +1699,7 @@ function moveLearnKnowledgePoint(delta) {
 
 function buildLessonTestBannerHtml() {
   if (getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID) {
-    return `
-      <section class="convolution-practice-stage lesson-test-banner" id="testBannerCard" data-convolution-practice-stage="true">
-        <header class="convolution-practice-heading">
-          <p class="convolution-practice-kicker">PRACTICE</p>
-          <h2>Practice</h2>
-          <p>Identify the signal relationships first, then use Quick Check to verify your understanding.</p>
-        </header>
-        <ol class="convolution-practice-list">
-          <li data-convolution-practice-task="fixed-moving"><span>01</span><strong>Identify which signal stays fixed and which one moves</strong></li>
-          <li data-convolution-practice-task="first-contact"><span>02</span><strong>Find when the two signals first begin to overlap</strong></li>
-          <li data-convolution-practice-task="full-pass"><span>03</span><strong>Complete one full convolution pass in GeoGebra</strong></li>
-        </ol>
-        <div class="convolution-quick-check">
-          <h3>Ready for the Quick Check?</h3>
-          <p>Use a short adaptive check to expose any remaining blind spots.</p>
-          <button id="startTestBtn" type="button">Start Quick Check</button>
-        </div>
-      </section>
-    `;
+    return window.__ftutorConvolutionPractice?.buildHtml?.() || '<section data-convolution-practice><p>Practice is loading...</p></section>';
   }
   return `
     <div class="lesson-test-banner" id="testBannerCard" style="margin-top: 40px; padding: 24px; background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border-radius: 12px; border: 1px solid #E2E8F0; text-align: center; margin-bottom: 40px;">

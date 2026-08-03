@@ -338,12 +338,28 @@
         : stageState?.stage === 'practice'
           ? 'Practice'
           : `${cur + 1} / ${total}`;
+    if (stageState?.stage === 'intro') {
+      setClassIfChanged(pager, 'hidden', true);
+      _lastAtEnd = false;
+      return;
+    }
     setClassIfChanged(pager, 'hidden', false);
     setTextIfChanged(pagerPos, pagerText);
     setDisabledIfChanged(pagerPrevBtn, cur <= 0);
     const atEnd = cur >= total - 1;
+    const practiceState = stageState?.stage === 'practice'
+      ? window.__ftutorConvolutionPractice?.getState?.()
+      : null;
+    const practiceComplete = !practiceState
+      || Object.values(practiceState.drills || {}).every(drill => drill?.status === 'Mastered');
+    const canFinishSection = stageState?.stage !== 'practice' || practiceComplete;
     const { id, title } = currentSectionRefs();
-    if (atEnd) {
+    if (atEnd && !canFinishSection) {
+      setDisabledIfChanged(pagerNextBtn, true);
+      setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
+      setTextIfChanged(pagerNextLabel, 'Complete practice');
+      setAttrIfChanged(pagerNextBtn, 'title', 'Master all four drills to continue');
+    } else if (atEnd) {
       const next = peekNextSubsection(id, title);
       if (next) {
         setDisabledIfChanged(pagerNextBtn, false);
@@ -357,15 +373,17 @@
         setAttrIfChanged(pagerNextBtn, 'title', 'You finished the syllabus.');
       }
     } else {
-      setDisabledIfChanged(pagerNextBtn, false);
+      const controlledTask = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"] [data-convolution-task-ready]');
+      const taskReady = !controlledTask || controlledTask.getAttribute('data-convolution-task-ready') === 'true';
+      setDisabledIfChanged(pagerNextBtn, !taskReady);
       setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
-      setTextIfChanged(pagerNextLabel, 'Next');
-      setAttrIfChanged(pagerNextBtn, 'title', 'Next page');
+      setTextIfChanged(pagerNextLabel, stageState?.stage === 'lesson' ? 'Continue' : 'Next');
+      setAttrIfChanged(pagerNextBtn, 'title', taskReady ? 'Next page' : 'Complete this step to continue');
     }
     // Mark completion only on the false→true transition into the final page,
     // not on every rAF tick that lands while the user is sitting at the end.
-    if (atEnd && !_lastAtEnd && (id || title)) markCompleted(id, title);
-    _lastAtEnd = atEnd;
+    if (atEnd && canFinishSection && !_lastAtEnd && (id || title)) markCompleted(id, title);
+    _lastAtEnd = atEnd && canFinishSection;
   }
   window.__ftutorRefreshPager = refreshPager;
 

@@ -216,8 +216,9 @@ async function main() {
     const before = await page.evaluate(() => currentKnowledgePointIndex);
     const turnStarted = Date.now();
     const moved = await page.evaluate(() => moveLearnKnowledgePoint(1));
-    await waitForTurn(page);
+    await page.waitForFunction(() => typeof isLearnPageTurning === 'undefined' || !isLearnPageTurning, null, { timeout: 5000 });
     const elapsed = Date.now() - turnStarted;
+    await waitForLayout(page);
     const after = await page.evaluate(() => currentKnowledgePointIndex);
     record('lesson uses the approved 180ms fade without paper curl',
       moved
