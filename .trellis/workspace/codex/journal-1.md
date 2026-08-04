@@ -92,3 +92,44 @@
 ### Next Steps
 
 - 用户先在本地服务审阅第五版，再决定是否推送并创建 PR。
+
+
+## Session 3: 2.4-2 learning-first glass surface
+
+**Date**: 2026-08-04
+**Task**: 2.4-2 learning-first glass surface
+**Branch**: `codex/lesson-loop-05-convolution-complete-teaching`
+
+### Summary
+
+Implemented the approved learning-first visual surface for 2.4-2 only: opaque reading planes, glass stage navigation with fallback, vertical 01/02/03 overview actions, semantic AA colors, responsive/dark validation, bilingual verification, and two local commits. No push or merge.
+
+### Main Changes
+
+- Replaced the 2.4-2 paper texture with a quiet opaque learning surface.
+- Limited frosted glass to the sticky stage navigation and added an opaque fallback.
+- Reworked the overview actions into vertical 01/02/03 rows with stable semantic colors.
+- Added layout, contrast, dark-theme, mobile, and no-backdrop-filter contracts.
+- Added bilingual verification and desktop/mobile evidence screenshots.
+
+### Git Commits
+
+| Hash | Message |
+|------|---------|
+| `84c1392` | (see git log) |
+
+### Testing
+
+- [OK] `npm run test:convolution-layout` - 19/19
+- [OK] `npm run test:geogebra` - 10/10
+- [OK] `npm run test:convolution-practice` - 7/7
+- [OK] `npm run test:mobile-learn-panels` - 8/8
+- [OK] `npm run check`, CSS probe, and all 32 visual-regression views
+
+### Status
+
+[OK] **Completed**
+
+### Next Steps
+
+- User reviews the local page and commit history before any push, PR, or merge.
