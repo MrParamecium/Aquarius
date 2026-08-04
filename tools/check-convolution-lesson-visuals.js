@@ -60,11 +60,21 @@ const EXPECTED_DEMOS = [
   { page: 12, preset: 'example-2-12', task: 'worked-example', scaffolding: 'light' },
 ];
 const SEMANTIC_TOKENS = {
-  '--convolution-input': '#2563eb',
-  '--convolution-response': '#7c3aed',
-  '--convolution-action': '#16876a',
-  '--convolution-output': '#b45309',
-  '--convolution-warning': '#dc2626',
+  '--convolution-input': '#1f64d7',
+  '--convolution-response': '#7042b8',
+  '--convolution-action': '#167b64',
+  '--convolution-overlap': '#167b64',
+  '--convolution-output': '#167b64',
+  '--convolution-integral': '#b6531d',
+  '--convolution-warning': '#b6531d',
+};
+const SURFACE_TOKENS = {
+  '--convolution-environment': '#eaf1f2',
+  '--convolution-surface': '#fbfcfc',
+  '--convolution-tool-surface': '#f5f7f8',
+  '--convolution-copy': '#172033',
+  '--convolution-muted': '#58687e',
+  '--convolution-line': '#d9e1e5',
 };
 
 const failures = [];
@@ -138,6 +148,13 @@ if (cache) {
   }
   if ((cache.match(/data-convolution-core-action=/g) || []).length !== 3) {
     fail('stage intro must contain exactly three core actions');
+  }
+  const coreActionIndices = Array.from(
+    cache.matchAll(/class="convolution-core-action-index"[^>]*>(0[1-3])<\/span>/g),
+    match => match[1]
+  );
+  if (JSON.stringify(coreActionIndices) !== JSON.stringify(['01', '02', '03'])) {
+    fail(`stage intro actions must expose the ordered 01/02/03 labels, found ${JSON.stringify(coreActionIndices)}`);
   }
   if (!/data-convolution-overview-formula/.test(cache) || !/x\(\\tau\)[\s\S]*g\(t-\\tau\)/.test(cache)) {
     fail('stage intro must show the approved continuous-time convolution formula');
@@ -274,6 +291,7 @@ if (styles) {
     '.convolution-stage-nav',
     '.convolution-overview-objective',
     '.convolution-core-actions',
+    '.convolution-core-action-index',
     '.convolution-lesson-progress',
     '.convolution-demo-stack',
     '.convolution-demo-panel',
@@ -286,10 +304,20 @@ if (styles) {
     const pattern = new RegExp(`${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*${value}`, 'i');
     if (!pattern.test(styles)) fail(`missing semantic token ${token}: ${value}`);
   }
+  for (const [token, value] of Object.entries(SURFACE_TOKENS)) {
+    const pattern = new RegExp(`${token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*:\\s*${value}`, 'i');
+    if (!pattern.test(styles)) fail(`missing learning surface token ${token}: ${value}`);
+  }
   if (!/convolution-guided-flow-active[\s\S]*learn-page-turn-active::before[^{]*\{[^}]*display:\s*none/s.test(styles)) {
     fail('guided flow must disable the paper-turn pseudo element');
   }
   if (!/convolution-stage-nav\s*\{[^}]*position:\s*sticky/s.test(styles)) fail('stage navigation must be sticky');
+  if (!/convolution-stage-nav\s*\{[^}]*background:\s*var\(--convolution-nav-fallback\)/s.test(styles)) {
+    fail('stage navigation must define an opaque fallback before the glass enhancement');
+  }
+  if (!/@supports[^{]*backdrop-filter[\s\S]*convolution-stage-nav\s*\{[^}]*backdrop-filter:\s*blur\((?:18|19|20|21|22)px\)/s.test(styles)) {
+    fail('stage navigation glass must be feature-gated with an 18px-22px blur');
+  }
 }
 
 if (failures.length) {

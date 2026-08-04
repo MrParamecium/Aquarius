@@ -26390,15 +26390,22 @@ body {
 /* 2.4-2 reading structure: numbered content islands and precise teaching diagrams. */
 .lesson-page-frame[data-lesson-section="2.4-2"] {
   --lesson-page-content-font-size: 1.32rem;
-  --convolution-input: #2563eb;
-  --convolution-response: #7c3aed;
-  --convolution-action: #16876a;
-  --convolution-output: #b45309;
-  --convolution-warning: #dc2626;
+  --convolution-environment: #eaf1f2;
+  --convolution-surface: #fbfcfc;
+  --convolution-tool-surface: #f5f7f8;
+  --convolution-nav-fallback: #f5f9fa;
+  --convolution-nav-glass: rgba(245, 249, 250, 0.84);
+  --convolution-input: #1f64d7;
+  --convolution-response: #7042b8;
+  --convolution-action: #167b64;
+  --convolution-overlap: #167b64;
+  --convolution-output: #167b64;
+  --convolution-integral: #b6531d;
+  --convolution-warning: #b6531d;
   --convolution-ink: var(--convolution-input);
-  --convolution-line: #d8dee8;
-  --convolution-copy: #273449;
-  --convolution-muted: #64748b;
+  --convolution-line: #d9e1e5;
+  --convolution-copy: #172033;
+  --convolution-muted: #58687e;
 }
 
 #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
@@ -26910,8 +26917,8 @@ body {
 
 /* 2.4-2 guided flow v4: stage navigation, editorial markers and true process timelines. */
 .lesson-page-frame[data-lesson-section="2.4-2"] {
-  --convolution-stage-surface: #f2f5f8;
-  --convolution-stage-active: #ffffff;
+  --convolution-stage-surface: var(--convolution-nav-fallback);
+  --convolution-stage-active: var(--convolution-surface);
   --convolution-block-accent: var(--convolution-input);
 }
 
@@ -26939,7 +26946,7 @@ body {
   border: 1px solid transparent;
   border-radius: 5px;
   background: transparent;
-  color: #657287;
+  color: var(--convolution-muted);
   font: inherit;
   font-size: 0.78rem;
   font-weight: 760;
@@ -26950,20 +26957,20 @@ body {
 }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-tab:hover {
-  color: #26364d;
-  background: rgba(255, 255, 255, 0.58);
+  color: var(--convolution-copy);
+  background: rgba(251, 252, 252, 0.68);
 }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-tab.is-active {
-  border-color: #cfd8e5;
+  border-color: var(--convolution-line);
   background: var(--convolution-stage-active);
-  color: #172033;
+  color: var(--convolution-copy);
   box-shadow: 0 2px 8px rgba(27, 39, 58, 0.08);
 }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-tab:focus-visible,
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-intro-start:focus-visible {
-  outline: 3px solid rgba(37, 99, 235, 0.3);
+  outline: 3px solid rgba(31, 100, 215, 0.3);
   outline-offset: 2px;
 }
 
@@ -26999,8 +27006,8 @@ body {
 
 #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-intro > h2 {
   margin: 0 0 28px;
-  color: #172033;
-  font-size: clamp(1.8rem, 4vw, 2.65rem);
+  color: var(--convolution-copy);
+  font-size: 2.45rem;
   font-weight: 820;
   letter-spacing: 0;
   line-height: 1.08;
@@ -27079,9 +27086,9 @@ body {
   gap: 10px;
   min-height: 46px;
   padding: 0 18px;
-  border: 1px solid #1958cf;
+  border: 1px solid #174fae;
   border-radius: 6px;
-  background: #2563eb;
+  background: var(--convolution-input);
   color: #ffffff;
   font: inherit;
   font-size: 0.82rem;
@@ -27092,7 +27099,7 @@ body {
 }
 
 .convolution-intro-start:hover {
-  background: #1d4ed8;
+  background: #174fae;
   transform: translateY(-1px);
 }
 
@@ -27378,8 +27385,23 @@ body {
 }
 
 :root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] {
-  --convolution-stage-surface: #172233;
-  --convolution-stage-active: #243247;
+  --convolution-environment: #0d1622;
+  --convolution-surface: #131e2c;
+  --convolution-tool-surface: #192638;
+  --convolution-nav-fallback: #172434;
+  --convolution-nav-glass: rgba(23, 36, 52, 0.88);
+  --convolution-stage-surface: var(--convolution-nav-fallback);
+  --convolution-stage-active: #24354b;
+  --convolution-copy: #edf3f8;
+  --convolution-muted: #b7c4d2;
+  --convolution-line: #35485d;
+  --convolution-input: #78a7ff;
+  --convolution-response: #c09cff;
+  --convolution-action: #62c8ab;
+  --convolution-overlap: #62c8ab;
+  --convolution-output: #62c8ab;
+  --convolution-integral: #f0a173;
+  --convolution-warning: #f0a173;
 }
 
 :root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
@@ -27533,17 +27555,32 @@ body {
   }
 }
 
-/* 2.4-2 guided flow v5: twelve focused pages, synchronized demos, and semantic practice. */
+/* 2.4-2 learning-first surface: quiet reading planes with glass reserved for navigation. */
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
   position: sticky;
   top: 0;
   z-index: 20;
   margin-bottom: 16px;
-  box-shadow: 0 8px 18px rgba(23, 32, 51, 0.06);
+  border-color: rgba(115, 132, 151, 0.24);
+  background: var(--convolution-nav-fallback);
+  box-shadow:
+    0 10px 24px rgba(23, 32, 51, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
+    background: var(--convolution-nav-glass);
+    -webkit-backdrop-filter: blur(20px) saturate(112%);
+    backdrop-filter: blur(20px) saturate(112%);
+  }
 }
 
 #learnView #learnBody.convolution-guided-flow-active .lesson-page-frame[data-lesson-section="2.4-2"] {
   overflow: visible !important;
+  background: var(--convolution-environment) !important;
+  background-image: none !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 760px) {
@@ -27553,9 +27590,17 @@ body {
 }
 
 #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
+  box-sizing: border-box;
   width: 100%;
   max-width: 72ch;
   margin-inline: auto;
+  padding: 30px 32px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 8px;
+  background: var(--convolution-surface) !important;
+  background-image: none !important;
+  color: var(--convolution-copy);
+  box-shadow: 0 14px 36px rgba(23, 32, 51, 0.07);
   font-size: 18px !important;
   line-height: 1.68 !important;
 }
@@ -27569,65 +27614,86 @@ body {
   text-align: right;
 }
 
-.convolution-overview-objective {
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-overview-objective {
   max-width: 48ch;
   margin: 0 0 20px !important;
-  color: #334155 !important;
+  color: var(--convolution-muted) !important;
   font-size: 1.08rem !important;
   font-weight: 650;
   line-height: 1.55 !important;
 }
 
-.convolution-overview-formula,
-.convolution-equation {
+.lesson-page-frame[data-lesson-section="2.4-2"] :is(.convolution-overview-formula, .convolution-equation) {
   min-width: 0;
   margin: 14px 0;
   padding: 14px 16px;
   overflow-x: auto;
-  border-left: 4px solid var(--convolution-output);
-  background: #f8fafc;
-  color: #172033;
+  border-left: 4px solid var(--convolution-integral);
+  background: var(--convolution-tool-surface);
+  color: var(--convolution-copy);
   font-size: 1.02em;
   line-height: 1.55;
 }
 
-.convolution-core-actions {
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   margin: 0 0 24px;
+  border-block: 1px solid var(--convolution-line);
 }
 
-.convolution-core-actions > div {
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions > div {
   display: grid;
-  gap: 6px;
+  grid-template-columns: 48px minmax(130px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
   min-width: 0;
-  padding: 15px;
-  border: 1px solid #d8e0eb;
-  border-top: 4px solid var(--convolution-action);
-  border-radius: 6px;
-  background: #ffffff;
+  min-height: 64px;
+  padding: 13px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--convolution-line);
+  border-radius: 0;
+  background: transparent;
 }
 
-.convolution-core-actions strong {
-  color: #172033;
-  font-size: 0.95rem;
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions > div:last-child {
+  border-bottom: 0;
 }
 
-.convolution-core-actions span {
-  color: #64748b;
-  font-size: 0.8rem;
-  line-height: 1.45;
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-action-index {
+  color: var(--convolution-response);
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] [data-convolution-core-action="multiply"] .convolution-core-action-index {
+  color: var(--convolution-overlap);
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] [data-convolution-core-action="integrate"] .convolution-core-action-index {
+  color: var(--convolution-integral);
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions strong {
+  color: var(--convolution-copy);
+  font-size: 1rem;
+}
+
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions span:not(.convolution-core-action-index) {
+  color: var(--convolution-muted);
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block {
   width: 100%;
   min-width: 0;
-  padding: 22px;
-  border: 1px solid #d8e0eb;
-  border-top: 4px solid var(--convolution-block-accent, var(--convolution-input));
-  border-radius: 7px;
-  background: #ffffff;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-page-question {
@@ -27685,7 +27751,7 @@ body {
   padding: 14px;
   border: 1px solid var(--convolution-line);
   border-radius: 6px;
-  background: #f8fafc;
+  background: var(--convolution-tool-surface);
 }
 
 .convolution-past-weighting figcaption {
@@ -27727,7 +27793,7 @@ body {
   padding: 16px;
   border: 1px solid var(--convolution-line);
   border-radius: 6px;
-  background: #f8fafc;
+  background: var(--convolution-tool-surface);
 }
 
 .convolution-role-symbol {
@@ -27737,7 +27803,7 @@ body {
   font-weight: 800;
 }
 
-.convolution-role-grid strong { color: #172033; }
+.convolution-role-grid strong { color: var(--convolution-copy); }
 #learnView .convolution-role-grid p { margin: 0 !important; color: var(--convolution-muted); font-size: 0.86em; }
 
 .convolution-five-steps {
@@ -27754,18 +27820,18 @@ body {
   min-height: 54px;
   padding: 10px 14px;
   border-left: 4px solid var(--convolution-action);
-  background: #f2f8f6;
+  background: var(--convolution-tool-surface);
 }
 
-.convolution-five-steps strong { color: #105f4e; }
-.convolution-five-steps span { color: #3f4f63; }
+.convolution-five-steps strong { color: var(--convolution-overlap); }
+.convolution-five-steps span { color: var(--convolution-muted); }
 
 .convolution-takeaway {
   margin: 18px 0 0 !important;
   padding: 12px 14px;
-  border-left: 4px solid var(--convolution-output);
-  background: #fff8e8;
-  color: #5d4316 !important;
+  border-left: 4px solid var(--convolution-integral);
+  background: #fbf1ea;
+  color: #6b3018 !important;
 }
 
 .convolution-interval-line {
@@ -27797,13 +27863,13 @@ body {
 .convolution-piecewise > * {
   min-width: 0;
   padding: 11px 13px;
-  background: #ffffff;
+  background: var(--convolution-surface);
 }
 
 .convolution-piecewise span { color: var(--convolution-muted); }
 .convolution-piecewise strong { color: var(--convolution-output); overflow-wrap: anywhere; }
 .convolution-piecewise-wide { grid-template-columns: minmax(100px, auto) minmax(0, 1fr); }
-.convolution-answer { border-left-color: var(--convolution-action); font-weight: 750; }
+.convolution-answer { border-left-color: var(--convolution-output); font-weight: 750; }
 
 .convolution-demo-stack {
   display: grid;
@@ -27818,13 +27884,13 @@ body {
   gap: 2px;
   min-width: 0;
   padding: 10px 14px;
-  background: #f8fafc;
+  background: var(--convolution-tool-surface);
 }
 
-.convolution-demo-panel strong { color: #172033; font-size: 0.82rem; }
-.convolution-demo-panel span { color: #64748b; font-size: 0.72rem; overflow-wrap: anywhere; }
+.convolution-demo-panel strong { color: var(--convolution-copy); font-size: 0.82rem; }
+.convolution-demo-panel span { color: var(--convolution-muted); font-size: 0.72rem; overflow-wrap: anywhere; }
 .convolution-demo-panel[data-convolution-demo-layer="signals"] { border-top: 3px solid var(--convolution-input); }
-.convolution-demo-panel[data-convolution-demo-layer="product"] { border-top: 3px solid var(--convolution-action); }
+.convolution-demo-panel[data-convolution-demo-layer="product"] { border-top: 3px solid var(--convolution-overlap); }
 .convolution-demo-panel[data-convolution-demo-layer="output"] { border-top: 3px solid var(--convolution-output); }
 
 .lesson-page-frame[data-lesson-section="2.4-2"] .kc-interactive-demo {
@@ -27856,8 +27922,8 @@ body {
   padding: 10px 12px;
   border: 1px solid var(--convolution-line);
   border-radius: 6px;
-  background: #ffffff;
-  color: #334155;
+  background: var(--convolution-surface);
+  color: var(--convolution-copy);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -27865,7 +27931,7 @@ body {
 
 .convolution-practice-drills button.is-active {
   border-color: var(--convolution-action);
-  background: #eef8f5;
+  background: #edf7f3;
 }
 
 .convolution-practice-drills strong {
@@ -27878,12 +27944,12 @@ body {
   padding: 18px;
   border: 1px solid var(--convolution-line);
   border-radius: 7px;
-  background: #ffffff;
+  background: var(--convolution-surface);
 }
 
 .convolution-practice-prompt {
   margin-bottom: 16px;
-  color: #172033;
+  color: var(--convolution-copy);
   font-weight: 800;
 }
 
@@ -27901,13 +27967,13 @@ body {
 .convolution-practice-fieldset legend {
   width: 100%;
   margin-bottom: 8px;
-  color: #334155;
+  color: var(--convolution-copy);
   font-weight: 760;
 }
 
 .convolution-practice-fieldset label {
   min-width: 0;
-  color: #526176;
+  color: var(--convolution-muted);
 }
 
 .convolution-practice-fieldset input[type="text"],
@@ -27918,8 +27984,8 @@ body {
   padding: 8px 10px;
   border: 1px solid #94a3b8;
   border-radius: 5px;
-  background: #ffffff;
-  color: #172033;
+  background: var(--convolution-surface);
+  color: var(--convolution-copy);
   font: inherit;
 }
 
@@ -27935,8 +28001,8 @@ body {
   padding: 8px 14px;
   border: 1px solid #94a3b8;
   border-radius: 6px;
-  background: #ffffff;
-  color: #334155;
+  background: var(--convolution-surface);
+  color: var(--convolution-copy);
   font: inherit;
   font-weight: 760;
   cursor: pointer;
@@ -27975,23 +28041,21 @@ body {
   min-height: 50px;
   margin: 14px 0 0 !important;
   padding: 12px 14px;
-  border-left: 4px solid var(--convolution-output);
-  background: #fff8e8;
-  color: #5d4316 !important;
+  border-left: 4px solid var(--convolution-integral);
+  background: #fbf1ea;
+  color: #6b3018 !important;
 }
 
 :root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
-  .convolution-teaching-block,
-  .convolution-core-actions > div,
   .convolution-role-grid > div,
   .convolution-piecewise > *,
   .convolution-practice-drills button,
   .convolution-practice-workspace,
   .convolution-demo-panel
 ) {
-  border-color: #405066;
-  background: #172233;
-  color: #dbe5f2;
+  border-color: var(--convolution-line);
+  background: var(--convolution-tool-surface);
+  color: var(--convolution-copy);
 }
 
 :root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
@@ -28011,12 +28075,13 @@ body {
   .convolution-past-weighting,
   .convolution-five-steps > div
 ) {
-  background: #111b2a;
-  color: #e5edf7;
+  background: var(--convolution-tool-surface);
+  color: var(--convolution-copy);
 }
 
 @media (max-width: 760px) {
   #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-content {
+    padding: 22px 16px;
     font-size: 16px !important;
     line-height: 1.68 !important;
   }
@@ -28028,7 +28093,27 @@ body {
   }
 
   .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-teaching-block {
-    padding: 16px 14px;
+    padding: 0;
+  }
+
+  #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-intro > h2 {
+    font-size: 1.8rem;
+  }
+
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions > div {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 5px 10px;
+    align-items: start;
+    padding-block: 14px;
+  }
+
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-action-index {
+    grid-row: 1 / 3;
+    padding-top: 4px;
+  }
+
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-core-actions span:not(.convolution-core-action-index) {
+    grid-column: 2;
   }
 
   .convolution-analogy-layout {
@@ -28074,7 +28159,7 @@ body {
 }
 
 @media (max-width: 430px) {
-  .convolution-core-actions { gap: 7px; }
+  .convolution-core-actions { gap: 0; }
   .convolution-practice-drills { grid-template-columns: 1fr; }
   .convolution-interval-line { grid-template-columns: 1fr; }
   .convolution-interval-line i { width: 100%; }

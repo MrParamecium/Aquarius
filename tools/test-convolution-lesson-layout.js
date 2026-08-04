@@ -36,6 +36,28 @@ const LESSON_TITLES = [
 ];
 const results = [];
 
+function parseRgb(color) {
+  const channels = String(color).match(/[\d.]+/g)?.map(Number) || [];
+  if (channels.length < 3) return null;
+  return { r: channels[0], g: channels[1], b: channels[2], a: channels[3] ?? 1 };
+}
+
+function relativeLuminance(color) {
+  const rgb = parseRgb(color);
+  if (!rgb) return 0;
+  const linear = [rgb.r, rgb.g, rgb.b].map(channel => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return (0.2126 * linear[0]) + (0.7152 * linear[1]) + (0.0722 * linear[2]);
+}
+
+function contrastRatio(foreground, background) {
+  const lighter = Math.max(relativeLuminance(foreground), relativeLuminance(background));
+  const darker = Math.min(relativeLuminance(foreground), relativeLuminance(background));
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
 function record(name, ok, detail = '') {
   results.push({ name, ok, detail });
   console.log(`  ${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ` - ${detail}` : ''}`);
@@ -83,8 +105,10 @@ async function inspectLessonPage(page, position) {
     const frame = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
     const content = frame?.querySelector('.lesson-page-content');
     const nav = frame?.querySelector('.convolution-stage-nav');
+    const teachingBlock = content?.querySelector('.convolution-teaching-block');
     const title = frame?.querySelector('.lesson-page-heading h2')?.textContent.trim() || '';
     const computed = content ? getComputedStyle(content) : null;
+    const teachingStyle = teachingBlock ? getComputedStyle(teachingBlock) : null;
     const images = Array.from(content?.querySelectorAll('.convolution-analogy-image') || []).map(image => ({
       src: new URL(image.src).pathname,
       complete: image.complete,
@@ -103,11 +127,54 @@ async function inspectLessonPage(page, position) {
       contentOverflow: content ? Math.max(0, content.scrollWidth - content.clientWidth) : 999,
       pageOverflow: Math.max(0, document.documentElement.scrollWidth - window.innerWidth),
       navOverflow: nav ? Math.max(0, nav.scrollWidth - nav.clientWidth) : 999,
+      contentBackground: computed?.backgroundColor || '',
+      contentBackgroundImage: computed?.backgroundImage || '',
+      teachingBackground: teachingStyle?.backgroundColor || '',
+      teachingBorderTopWidth: teachingStyle?.borderTopWidth || '',
       demoCount: content?.querySelectorAll('.kc-interactive-demo').length || 0,
       visualKinds: Array.from(content?.querySelectorAll('[data-convolution-visual]') || []).map(node => node.dataset.convolutionVisual),
       images,
     };
   }, LESSON_TITLES[position - 1]);
+}
+
+async function inspectOverviewSurface(page) {
+  return page.evaluate(() => {
+    const frame = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+    const content = frame?.querySelector('.lesson-page-content');
+    const nav = frame?.querySelector('.convolution-stage-nav');
+    const formula = frame?.querySelector('.convolution-overview-formula');
+    const actions = Array.from(frame?.querySelectorAll('[data-convolution-core-action]') || []);
+    const frameStyle = frame ? getComputedStyle(frame) : null;
+    const contentStyle = content ? getComputedStyle(content) : null;
+    const navStyle = nav ? getComputedStyle(nav) : null;
+    const formulaStyle = formula ? getComputedStyle(formula) : null;
+    return {
+      frameBackground: frameStyle?.backgroundColor || '',
+      frameBackgroundImage: frameStyle?.backgroundImage || '',
+      contentBackground: contentStyle?.backgroundColor || '',
+      contentBackgroundImage: contentStyle?.backgroundImage || '',
+      contentColor: contentStyle?.color || '',
+      formulaBackground: formulaStyle?.backgroundColor || '',
+      formulaColor: formulaStyle?.color || '',
+      navBackground: navStyle?.backgroundColor || '',
+      navBackdrop: navStyle?.backdropFilter || navStyle?.webkitBackdropFilter || '',
+      pageOverflow: Math.max(0, document.documentElement.scrollWidth - window.innerWidth),
+      actions: actions.map(action => {
+        const rect = action.getBoundingClientRect();
+        const style = getComputedStyle(action);
+        return {
+          index: action.querySelector('.convolution-core-action-index')?.textContent.trim() || '',
+          top: rect.top,
+          bottom: rect.bottom,
+          width: rect.width,
+          background: style.backgroundColor,
+          borderTopWidth: style.borderTopWidth,
+          indexColor: getComputedStyle(action.querySelector('.convolution-core-action-index')).color,
+        };
+      }),
+    };
+  });
 }
 
 async function collectViewport(page, width, height) {
@@ -181,6 +248,99 @@ async function main() {
         && intro.boxedNumbers === 0,
       JSON.stringify(intro));
 
+    const overviewDesktop = await inspectOverviewSurface(page);
+    const desktopRowsAreVertical = overviewDesktop.actions.every((action, index, actions) => (
+      index === 0 || action.top >= actions[index - 1].bottom - 1
+    ));
+    record('overview uses a clean reading surface and ordered vertical 01/02/03 actions',
+      overviewDesktop.frameBackground === 'rgb(234, 241, 242)'
+        && overviewDesktop.frameBackgroundImage === 'none'
+        && overviewDesktop.contentBackground === 'rgb(251, 252, 252)'
+        && overviewDesktop.contentBackgroundImage === 'none'
+        && overviewDesktop.formulaBackground === 'rgb(245, 247, 248)'
+        && overviewDesktop.actions.map(action => action.index).join(',') === '01,02,03'
+        && overviewDesktop.actions.every(action => action.borderTopWidth !== '4px')
+        && desktopRowsAreVertical
+        && overviewDesktop.pageOverflow <= 1,
+      JSON.stringify(overviewDesktop));
+    record('overview text, formula, and glass navigation remain readable',
+      contrastRatio(overviewDesktop.contentColor, overviewDesktop.contentBackground) >= 4.5
+        && contrastRatio(overviewDesktop.formulaColor, overviewDesktop.formulaBackground) >= 4.5
+        && parseRgb(overviewDesktop.navBackground)?.a >= 0.72
+        && /blur\((?:18|19|20|21|22)px\)/.test(overviewDesktop.navBackdrop),
+      JSON.stringify({
+        contentContrast: contrastRatio(overviewDesktop.contentColor, overviewDesktop.contentBackground),
+        formulaContrast: contrastRatio(overviewDesktop.formulaColor, overviewDesktop.formulaBackground),
+        navBackground: overviewDesktop.navBackground,
+        navBackdrop: overviewDesktop.navBackdrop,
+      }));
+    record('overview action colors preserve meaning and WCAG AA contrast',
+      overviewDesktop.actions.map(action => action.indexColor).join(',')
+          === 'rgb(112, 66, 184),rgb(22, 123, 100),rgb(182, 83, 29)'
+        && overviewDesktop.actions.every(action => (
+          contrastRatio(action.indexColor, overviewDesktop.contentBackground) >= 4.5
+        )),
+      JSON.stringify(overviewDesktop.actions.map(action => ({
+        index: action.index,
+        color: action.indexColor,
+        contrast: contrastRatio(action.indexColor, overviewDesktop.contentBackground),
+      }))));
+
+    const noBackdropOverride = await page.addStyleTag({ content: `
+      .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
+        background: var(--convolution-nav-fallback) !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+      }
+    ` });
+    await waitForLayout(page);
+    const overviewNoBackdrop = await inspectOverviewSurface(page);
+    record('navigation keeps an opaque readable fallback without backdrop-filter',
+      overviewNoBackdrop.navBackground === 'rgb(245, 249, 250)'
+        && overviewNoBackdrop.navBackdrop === 'none'
+        && overviewNoBackdrop.contentBackground === 'rgb(251, 252, 252)'
+        && contrastRatio(overviewNoBackdrop.contentColor, overviewNoBackdrop.contentBackground) >= 4.5,
+      JSON.stringify(overviewNoBackdrop));
+    await noBackdropOverride.evaluate(node => node.remove());
+    await waitForLayout(page);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForLayout(page);
+    const overviewMobile = await inspectOverviewSurface(page);
+    const mobileRowsAreVertical = overviewMobile.actions.every((action, index, actions) => (
+      index === 0 || action.top >= actions[index - 1].bottom - 1
+    ));
+    record('390px overview keeps the numbered action rows ordered without overflow',
+      overviewMobile.actions.map(action => action.index).join(',') === '01,02,03'
+        && mobileRowsAreVertical
+        && overviewMobile.actions.every(action => action.width <= 390)
+        && overviewMobile.pageOverflow <= 1,
+      JSON.stringify(overviewMobile));
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const documentTheme = await page.evaluate(() => document.documentElement.dataset.theme || '');
+    await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
+    await waitForLayout(page);
+    const overviewDark = await inspectOverviewSurface(page);
+    record('dark theme keeps the overview on stable high-contrast reading surfaces',
+      overviewDark.frameBackgroundImage === 'none'
+        && overviewDark.contentBackgroundImage === 'none'
+        && parseRgb(overviewDark.contentBackground)?.a === 1
+        && parseRgb(overviewDark.formulaBackground)?.a === 1
+        && contrastRatio(overviewDark.contentColor, overviewDark.contentBackground) >= 4.5
+        && contrastRatio(overviewDark.formulaColor, overviewDark.formulaBackground) >= 4.5,
+      JSON.stringify({
+        contentBackground: overviewDark.contentBackground,
+        contentContrast: contrastRatio(overviewDark.contentColor, overviewDark.contentBackground),
+        formulaBackground: overviewDark.formulaBackground,
+        formulaContrast: contrastRatio(overviewDark.formulaColor, overviewDark.formulaBackground),
+      }));
+    await page.evaluate((theme) => {
+      if (theme) document.documentElement.dataset.theme = theme;
+      else document.documentElement.removeAttribute('data-theme');
+    }, documentTheme);
+    await waitForLayout(page);
+
     await clickStage(page, 'lesson', 1);
     const lessonStart = await page.evaluate(() => ({
       state: window.getConvolutionLessonStageState?.(),
@@ -247,6 +407,10 @@ async function main() {
         && item.contentOverflow <= 1
         && item.pageOverflow <= 1
         && item.navOverflow <= 1
+        && item.contentBackground === 'rgb(251, 252, 252)'
+        && item.contentBackgroundImage === 'none'
+        && item.teachingBackground === 'rgba(0, 0, 0, 0)'
+        && item.teachingBorderTopWidth === '0px'
         && item.fontSize >= 18
         && item.lineHeight >= item.fontSize * 1.6),
       JSON.stringify(desktop.map((item, index) => ({ page: index + 1, title: item.title, font: item.fontSize, overflow: item.pageOverflow }))));
