@@ -1680,9 +1680,12 @@ function renderLearnWebSection(webSources) {
 }
 
 // Open Learn Mode without touching the right TOC (used when clicking sub-items in TOC)
-async function openLearnModeKeepToc(sectionId, sectionTitle, parentOverviewContext = null) {
+async function openLearnModeKeepToc(sectionId, sectionTitle, parentOverviewContext = null, options = {}) {
   const parentContext = parentOverviewContext || learnParentOverviewContext || findParentOverviewContextForSubsection(sectionId, sectionTitle);
-  return openLearnMode(sectionId, sectionTitle, null /* null = keep existing TOC */, { parentOverviewContext: parentContext });
+  return openLearnMode(sectionId, sectionTitle, null /* null = keep existing TOC */, {
+    ...options,
+    parentOverviewContext: parentContext
+  });
 }
 
 function getSectionPreview(sectionId, sectionTitle) {
@@ -2134,8 +2137,11 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
   if(learnIntroCard) learnIntroCard.classList.add('hidden');
   clearLearnRenderedContent('Preparing lesson...');
   showLearnView();
-  // Bypass intro card: auto-start lesson immediately
-  if (typeof startLesson === 'function') startLesson({ silent: true });
+  // Bypass intro card: auto-start lesson immediately. Carry the cache-miss redirect
+  // marker through so that redirect can fire at most once (see startLesson).
+  if (typeof startLesson === 'function') {
+    startLesson({ silent: true, fromCacheMissRedirect: Boolean(options.fromCacheMissRedirect) });
+  }
 
   // ── Use pre-generated preview if available (instant, no API call) ──
   const preview = getSectionPreview(sectionId, sectionTitle);
@@ -2222,6 +2228,9 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
 
 async function startLesson(options = {}) {
   const silent = Boolean(options && options.silent);
+  // Set when this lesson was itself opened by the cacheMiss redirect below; used to
+  // cap that redirect at one hop.
+  const fromCacheMissRedirect = Boolean(options && options.fromCacheMissRedirect);
   const requestSeq = ++learnRequestSeq;
   const requestSectionId = learnSectionId;
   const requestSectionTitle = learnSectionTitle;
@@ -2292,11 +2301,16 @@ async function startLesson(options = {}) {
 
     // Add the "Start Test" bottom section
     const isFormulaAppendixLesson = Boolean(data && data.formulaAppendix);
-    if (isCacheMissLesson) {
+    // Depth guard (#8): this redirect re-enters startLesson via openLearnMode, so it
+    // must be bounded. Today it terminates only because a syllabus subsection title
+    // is never itself a section title with subsections; a syllabus entry whose first
+    // child resolved back to a cache-missing parent would loop forever, re-requesting
+    // /api/section each hop. Cap it at one hop and never redirect onto ourselves.
+    if (isCacheMissLesson && !fromCacheMissRedirect) {
       const fallbackSubsections = findSyllabusSubsections(requestSectionTitle);
-      if (fallbackSubsections.length) {
+      if (fallbackSubsections.length && fallbackSubsections[0] !== requestSectionTitle) {
         const parentContext = createOverviewContext(requestSectionId, requestSectionTitle, fallbackSubsections);
-        openLearnModeKeepToc(fallbackSubsections[0], fallbackSubsections[0], parentContext);
+        openLearnModeKeepToc(fallbackSubsections[0], fallbackSubsections[0], parentContext, { fromCacheMissRedirect: true });
         return;
       }
     }
