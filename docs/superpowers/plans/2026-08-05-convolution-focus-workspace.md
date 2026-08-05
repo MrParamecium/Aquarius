@@ -5,13 +5,13 @@
 - 日期：2026-08-05
 - 分支：`codex/lesson-loop-06-convolution-focus-workspace`
 - 基线：`231118f`
-- 状态：用户已确认，准备开始实施
+- 状态：修订方案 A 已确认，正在实施
 - 设计来源：`docs/superpowers/specs/2026-08-05-convolution-focus-workspace-design.md`
 - Trellis 任务：`.trellis/tasks/08-05-lesson-loop-06-convolution-focus-workspace/`
 
 ## 目标与边界
 
-本计划只调整 2.4-2 的课程工作区：Lesson 与 Practice 自动隐藏完整左侧导航，边缘 Hover 显示纯图标栏；Tutor Agent 默认收成小球并以固定 `320px` 右栏展开；包含 GeoGebra 的页面使用 `40% / 60%` 横向布局。
+本计划只调整 2.4-2 的课程工作区：Lesson 与 Practice 将完整左侧导航缩为常驻 `76px` 图标轨；Tutor Agent 默认收成小球，展开后讲解与问答按 `2:1` 分配；包含 GeoGebra 的页面使用约 `46% / 54%` 横向布局、控制 Demo 宽度并显示清楚的横纵坐标轴。
 
 保持不变：
 
@@ -30,9 +30,10 @@
 
 - `app/lesson-render.js`：同步 2.4-2 专注状态与 Demo 页面修饰状态。
 - `app/app.js`：复用现有 Q&A 收展逻辑，设置 2.4-2 默认小球和阶段重置。
-- `app/index.html`：为现有聊天栏补充专注模式缩小按钮，不复制聊天 DOM。
-- `app/style.css`：2.4-2 专属左侧图标轨、Agent 停靠栏和横向 Demo。
+- `app/index.html`：调整现有 Tutor 小球标志并保留专注模式缩小按钮，不复制聊天 DOM。
+- `app/style.css`：2.4-2 专属常驻图标轨、Agent `2:1` 分栏和横向 Demo。
 - `app/interactive-demos/geogebra-demo.js`：读取真实容器宽高并压缩专注 Demo 外壳。
+- `app/interactive-demos/geogebra-convolution-figure-2-7.js`：启用横纵坐标轴并强化三层基准轴，不改变教材函数或输出值。
 - `tools/test-convolution-lesson-layout.js`：状态、侧栏、Agent、布局、交叠与一屏断言。
 - `tools/test-geogebra-demo.js`：尺寸更新与单实例生命周期断言。
 - `tools/test-mobile-learn-panels.js`：窄屏纵向降级和触屏入口断言。
@@ -49,7 +50,6 @@
 
 - `workspace/materials/lesson-cache/2_4-2/*`
 - `app/interactive-demos/geogebra-convolution-presets.js`
-- `app/interactive-demos/geogebra-convolution-figure-2-7.js`
 - `app/convolution-practice.js`
 - `app/ws-bridge.js`
 
@@ -82,9 +82,9 @@ npm run test:visual:baseline
 ## 第 2 步：先写失败契约
 
 - [ ] Overview 无专注状态；Lesson/Practice 有专注状态；离开课程清理。
-- [ ] 左边缘感应、Hover、`focus-within`、延迟收回和触屏入口可用。
-- [ ] 图标轨覆盖显示，不改变讲解区 bounding rect。
-- [ ] Lesson 初始显示 Agent 小球，展开宽 `320px`，缩小恢复小球。
+- [ ] 桌面图标轨常驻 `76px` 并占据稳定网格列；移动端触屏入口可用。
+- [ ] 鼠标经过图标轨不展开整栏、不覆盖课程，键盘焦点与 Tooltip 可用。
+- [ ] Lesson 初始显示教育 AI Tutor 小球，展开后讲解与问答约 `2:1`，缩小恢复小球。
 - [ ] Agent 状态跨 Lesson 翻页与 Practice 保持，返回 Overview 后按设计重置。
 - [ ] 含 GeoGebra 页面有横向修饰类，无 Demo 页面无该类。
 - [ ] Agent 开合只 resize 现有 applet，不增加 constructor、inject 或 canvas 数量。
@@ -94,23 +94,24 @@ npm run test:visual:baseline
 
 回滚点：回滚测试提交不会改变产品行为。
 
-## 第 3 步：专注状态与左侧图标轨
+## 第 3 步：专注状态与常驻图标轨
 
 - [ ] 在 `renderCurrentKnowledgePoint()` 的现有 `stageState` 位置同步专注状态。
 - [ ] 在 `resetLearnKnowledgePointState()` 等统一清理入口移除状态。
 - [ ] 复用 `#leftSidebar`，隐藏文字、子面板和版本行，保留原图标与事件。
-- [ ] 默认只留下约 `10px` 感应边缘，激活后覆盖式显示 `88–96px` 图标轨。
-- [ ] 实现 Hover、键盘焦点、约 `250ms` 离开延迟与触屏菜单。
+- [ ] 桌面将图标轨固定为 `76px` 应用网格列，进入专注模式后始终可见。
+- [ ] 鼠标经过不展开整栏；保留键盘焦点、英文 Tooltip 和现有路由事件。
+- [ ] 移动端不占用 `76px`，继续使用触屏菜单入口。
 - [ ] 进入/退出状态后使用现有 resize 通知重算课程宽度。
 
 回滚点：本提交独立恢复 Loop 05 完整侧栏。
 
-## 第 4 步：Agent 小球与 `320px` 停靠栏
+## 第 4 步：教育 AI Tutor 小球与 `2:1` 停靠栏
 
 - [ ] 2.4-2 Lesson 初始化调用 `minimizeLearnQaToBubble()`；其他课程保持默认展开 Q&A。
-- [ ] 解除 `#learnChatFab` 在目标状态中的强制隐藏，并改为英文图标与 Tooltip。
+- [ ] 解除 `#learnChatFab` 在目标状态中的强制隐藏，使用毕业帽主图标、`AI` 角标和英文 Tooltip `Tutor Agent`。
 - [ ] 在现有聊天栏内增加专注模式缩小按钮，复用 `minimizeLearnQaToBubble()`。
-- [ ] 目标状态下隐藏 Resizer、忽略历史 split 比例并固定 Agent 宽 `320px`。
+- [ ] 目标状态下隐藏 Resizer、忽略历史 split 比例，并使用讲解 `2fr` / Tutor `1fr` 分栏；Tutor 最小宽度 `320px`。
 - [ ] Agent 开合后保持焦点合理，并触发 GeoGebra resize。
 - [ ] 移动端继续使用现有 Lecture/Q&A 单面板，不显示桌面小球和停靠栏。
 
@@ -119,22 +120,23 @@ npm run test:visual:baseline
 ## 第 5 步：横向 Demo 与紧凑 GeoGebra
 
 - [ ] 根据当前 DOM 是否含 `.geogebra-demo-shell` 设置 Demo 修饰类。
-- [ ] 足够宽时使用讲解 `40%`、GeoGebra `60%`；普通页面保持单栏。
+- [ ] 足够宽时使用讲解约 `46%`、GeoGebra 约 `54%`；Demo 目标宽度为 `500–620px`，普通页面保持单栏。
 - [ ] 左列保留核心公式、要点、任务和分页；避免左右重复教学文案。
 - [ ] 右列压缩外壳间距并把总高度控制在约 `500–540px`，不删除必要控件。
 - [ ] `getAppletSize()` 读取真实 mount 宽高，不再仅按宽度硬编码 `560/640px`。
 - [ ] ResizeObserver 只 resize 同一个 applet；Fallback 和 Retry 保持稳定尺寸。
+- [ ] GeoGebra 同时显示横轴与纵轴，`tau = 0` 纵轴贯穿画布，三层水平基准轴使用清楚的实线与独立颜色层级。
 - [ ] 空间不足时恢复纵向与正常滚动，不裁切坐标或按钮。
 
 回滚点：回滚本提交恢复 Loop 05 GeoGebra 页面，数学引擎没有变化。
 
 ## 第 6 步：响应式与主题
 
-- [ ] `1280×720`、`1440×900` 检查 Agent 收起/展开与一屏 Demo。
+- [ ] `1280×720`、`1440×900` 检查 `76px` 图标轨、Agent 收起/`2:1` 展开与一屏 Demo。
 - [ ] `390×844`、`430×932` 检查单面板、纵向 Demo、触屏入口和长标题。
 - [ ] 浅色、深色、减少动画与 GeoGebra Fallback 均可读。
 - [ ] 新增悬浮元素与阶段导航、分页、公式、Agent、GeoGebra 控件均不相交。
-- [ ] CSS probe 覆盖专注收起、图标轨 Hover、Agent 展开和移动降级。
+- [ ] CSS probe 覆盖桌面常驻图标轨、Agent `2:1` 展开和移动降级。
 
 ## 第 7 步：完整回归
 
@@ -160,7 +162,7 @@ npm run test:visual:check
 
 - [ ] 启动当前分支服务并验证 `/health`。
 - [ ] 真实完成 Overview → Lesson → Demo → Practice → Overview。
-- [ ] 实测 Hover、键盘、Agent、GeoGebra、Fallback 和 Retry。
+- [ ] 实测常驻图标轨、键盘、Agent、GeoGebra、Fallback 和 Retry。
 - [ ] 保存各视口、主题和开合状态证据。
 - [ ] 在任务 `verification.md` 写中文详细结果和英文摘要。
 - [ ] 更新 `workspace/memory/2026-08-05.md`。
