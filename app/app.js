@@ -2150,52 +2150,16 @@ async function openLearnMode(sectionId, sectionTitle, subsections = [], options 
     ].join('');
     learnIntroText.textContent = introText;
     setLearnLoading(false);
-  } else {
-    // Fallback: fetch from API for sections without pre-generated previews
-    if (imgWrap) imgWrap.textContent = '📖';
-    if (learnIntroMeta) learnIntroMeta.innerHTML = '';
-    learnIntroText.textContent = 'Loading section preview...';
-
-    // startLesson() above already owns learnAbort for its in-flight lesson
-    // request; aborting or replacing it here kills that request and strands
-    // the pane on "Preparing lesson...". Chain the intro fetch to the same
-    // lifecycle with its own controller instead.
-    const introAbort = new AbortController();
-    if (learnAbort) learnAbort.signal.addEventListener('abort', () => introAbort.abort(), { once: true });
-    try {
-      const res = await apiFetch('/api/section', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sectionId, sectionTitle, mode: 'intro', language: 'en', bookSource: currentBook }),
-        signal: introAbort.signal
-      });
-      if (res.status === 401) {
-        // Guest against the intro-generation gate (C1): skip the intro
-        // gracefully — the cached lesson below is fully available. No
-        // early return: the TOC build after this block must still run.
-        hideSplash();
-        learnIntroText.textContent = 'Ready to start learning.';
-        setLearnLoading(false);
-      } else {
-        const data = await readApiJson(res, 'section preview request');
-        learnPages = data.bookPages || [];
-        hideSplash();
-        if (learnIntroMeta && data.bookPages && data.bookPages.length) {
-          learnIntroMeta.innerHTML = [
-            `<span class="learn-intro-badge">${data.bookPages.length} reference${data.bookPages.length !== 1 ? 's' : ''}</span>`,
-            `<span class="learn-intro-badge">${sectionTitle}</span>`
-          ].join('');
-        }
-        learnIntroText.textContent = data.intro || 'Ready to start learning.';
-        setLearnLoading(false);
-      }
-    } catch (err) {
-      hideSplash();
-      if (err.name === 'AbortError') return;
-      learnIntroText.textContent = 'Failed to load: ' + err.message;
-      setLearnLoading(false);
-    }
   }
+  // No `else` branch: sections without a pre-generated preview used to fetch
+  // `/api/section mode=intro` here, which cost one LLM call per open and wrote its
+  // result into #learnIntroCard — a card this function hides on entry and nothing
+  // ever un-hides, so none of it was ever visible. Its other effects were dead too:
+  // `learnPages` is assigned in several places but never read (the live state is
+  // `tutorState.learnBookPages`), and both `hideSplash()` and `setLearnLoading(false)`
+  // are owned by the `startLesson()` call above. Removing it also unblocks the TOC
+  // build below, which previously waited on that request and was skipped entirely
+  // when the request aborted.
 
   // Build right TOC: section title + subsections (skip if null = preserve existing TOC)
   if (subsections !== null) {
