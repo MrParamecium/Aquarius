@@ -1,0 +1,4 @@
+{"_example": "Fill with {\"file\": \"<path>\", \"reason\": \"<why>\"}. Put spec/research files only — no code paths. Run `python3 .trellis/scripts/get_context.py --mode packages` to list available specs. Delete this line once real entries are added."}
+{"file": "docs/superpowers/specs/2026-08-05-convolution-focus-workspace-design.md", "reason": "Acceptance criteria source"}
+{"file": ".trellis/spec/css/verification.md", "reason": "Mandatory computed-style and visual gates"}
+{"file": ".trellis/tasks/08-03-lesson-loop-05-convolution-complete-teaching/verification.md", "reason": "Loop 05 regression baseline and prior evidence"}
