@@ -47,6 +47,8 @@ async function installFakeGeoGebra(page) {
       injectCount: 0,
       removeCount: 0,
       resizeCount: 0,
+      constructorSizes: [],
+      resizeSizes: [],
       observerDisconnectCount: 0,
       unregisterCount: 0,
       codebases: [],
@@ -56,8 +58,12 @@ async function installFakeGeoGebra(page) {
     };
     const metrics = window.__fakeGeoGebra;
     const NativeResizeObserver = window.ResizeObserver;
+    window.__fakeResizeObservers = [];
     window.ResizeObserver = class FakeResizeObserver {
-      constructor(callback) { this.callback = callback; }
+      constructor(callback) {
+        this.callback = callback;
+        window.__fakeResizeObservers.push(this);
+      }
       observe() { this.callback([]); }
       disconnect() { metrics.observerDisconnectCount += 1; }
       unobserve() {}
@@ -98,13 +104,17 @@ async function installFakeGeoGebra(page) {
         unregisterUpdateListener(listenerName) {
           if (listeners.delete(listenerName)) metrics.unregisterCount += 1;
         },
-        setSize() { metrics.resizeCount += 1; },
+        setSize(width, height) {
+          metrics.resizeCount += 1;
+          metrics.resizeSizes.push({ width, height });
+        },
         remove() { metrics.removeCount += 1; },
       };
     }
 
     window.GGBApplet = function FakeGGBApplet(params) {
       metrics.constructorCount += 1;
+      metrics.constructorSizes.push({ width: params.width, height: params.height });
       metrics.perspectives.push(params.perspective);
       this.setHTML5Codebase = (url) => metrics.codebases.push(url);
       this.inject = (mountId) => {
@@ -254,6 +264,34 @@ async function main() {
         && initial.outputVisible === true
         && initial.codebase === 'https://www.geogebra.org/apps/5.4.920.0/web3d',
       JSON.stringify(initial));
+
+    const responsiveSize = await page.evaluate(() => {
+      const node = window.__geogebraTestNode;
+      const stage = node.querySelector('[data-geogebra-stage]');
+      const mount = node.querySelector('[data-geogebra-mount]');
+      stage.style.height = '420px';
+      mount.style.height = '420px';
+      window.__fakeResizeObservers.at(-1)?.callback([]);
+      const metrics = window.__fakeGeoGebra;
+      return {
+        initial: metrics.constructorSizes[0],
+        resized: metrics.resizeSizes.at(-1),
+        constructorCount: metrics.constructorCount,
+        injectCount: metrics.injectCount,
+        canvasCount: node.querySelectorAll('canvas').length,
+      };
+    });
+    record('applet sizing follows the real stage width and height without rebuilding the instance',
+      responsiveSize.initial?.width >= 896
+        && responsiveSize.initial.width <= 900
+        && responsiveSize.initial?.height === 620
+        && responsiveSize.resized?.width >= 896
+        && responsiveSize.resized.width <= 900
+        && responsiveSize.resized?.height === 420
+        && responsiveSize.constructorCount === 1
+        && responsiveSize.injectCount === 1
+        && responsiveSize.canvasCount === 1,
+      JSON.stringify(responsiveSize));
 
     const firstContact = await page.evaluate(() => {
       const node = window.__geogebraTestNode;

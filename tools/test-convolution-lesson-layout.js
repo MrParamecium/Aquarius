@@ -177,6 +177,63 @@ async function inspectOverviewSurface(page) {
   });
 }
 
+async function inspectFocusWorkspace(page) {
+  return page.evaluate(() => {
+    const visible = (element) => {
+      if (!element) return false;
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== 'none'
+        && style.visibility !== 'hidden'
+        && Number(style.opacity || 1) > 0
+        && rect.width > 0
+        && rect.height > 0;
+    };
+    const rect = (selector) => {
+      const box = document.querySelector(selector)?.getBoundingClientRect();
+      return box ? {
+        left: box.left,
+        right: box.right,
+        top: box.top,
+        bottom: box.bottom,
+        width: box.width,
+        height: box.height,
+      } : null;
+    };
+    const sidebar = document.getElementById('leftSidebar');
+    const sidebarStyle = sidebar ? getComputedStyle(sidebar) : null;
+    const chat = document.getElementById('learnChatCol');
+    const chatStyle = chat ? getComputedStyle(chat) : null;
+    const resizer = document.getElementById('learnResizer');
+    const demoPage = document.querySelector('.lesson-page-frame.convolution-demo-page');
+    const demoContent = demoPage?.querySelector('.lesson-page-content');
+    const demoStyle = demoContent ? getComputedStyle(demoContent) : null;
+    const teaching = demoContent?.querySelector('.convolution-teaching-block')?.getBoundingClientRect();
+    const demo = demoContent?.querySelector('.kc-interactive-demo')?.getBoundingClientRect();
+    return {
+      appFocus: document.querySelector('.app')?.classList.contains('convolution-focus-workspace-active') || false,
+      bodyFocus: document.getElementById('learnBody')?.classList.contains('convolution-focus-workspace-active') || false,
+      chatCollapsed: document.getElementById('learnBody')?.classList.contains('chat-collapsed') || false,
+      sidebar: rect('#leftSidebar'),
+      sidebarPosition: sidebarStyle?.position || '',
+      explain: rect('#learnExplainCol'),
+      chat: rect('#learnChatCol'),
+      chatDisplay: chatStyle?.display || '',
+      resizerDisplay: resizer ? getComputedStyle(resizer).display : '',
+      fabVisible: visible(document.getElementById('learnChatFab')),
+      fabTitle: document.getElementById('learnChatFab')?.title || '',
+      minimizeVisible: visible(document.getElementById('learnTutorMinimizeBtn')),
+      minimizeTitle: document.getElementById('learnTutorMinimizeBtn')?.title || '',
+      demoPage: Boolean(demoPage),
+      demoColumns: demoStyle?.gridTemplateColumns || '',
+      demoTeachingWidth: teaching?.width || 0,
+      demoWidth: demo?.width || 0,
+      fullscreenControls: document.querySelectorAll('[data-convolution-fullscreen], #convolutionFullscreenBtn, #convolutionExitFullscreenBtn').length,
+      horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - window.innerWidth),
+    };
+  });
+}
+
 async function collectViewport(page, width, height) {
   await page.setViewportSize({ width, height });
   await waitForLayout(page);
@@ -239,6 +296,12 @@ async function main() {
         && intro.keyboardReady
         && intro.sticky,
       JSON.stringify({ labels: intro.labels, sticky: intro.sticky }));
+    const overviewWorkspace = await inspectFocusWorkspace(page);
+    record('section overview stays in the ordinary workspace without fullscreen controls',
+      !overviewWorkspace.appFocus
+        && !overviewWorkspace.bodyFocus
+        && overviewWorkspace.fullscreenControls === 0,
+      JSON.stringify(overviewWorkspace));
     record('overview shows the approved objective, formula, actions, and one start button without bottom pager',
       intro.objective === 'Interpret and compute continuous-time convolution graphically.'
         && /x\(τ\).*g\(t−?τ\)/.test(intro.formula)
@@ -352,6 +415,126 @@ async function main() {
         && lessonStart.state.total === 12
         && lessonStart.pager === 'Lesson 1 / 12',
       JSON.stringify(lessonStart));
+
+    const lessonFocus = await inspectFocusWorkspace(page);
+    record('lesson enters the focus workspace with a hidden icon rail and Tutor orb',
+      lessonFocus.appFocus
+        && lessonFocus.bodyFocus
+        && lessonFocus.chatCollapsed
+        && lessonFocus.sidebarPosition === 'fixed'
+        && lessonFocus.sidebar?.width >= 88
+        && lessonFocus.sidebar.width <= 96
+        && lessonFocus.sidebar.right >= 8
+        && lessonFocus.sidebar.right <= 12
+        && lessonFocus.fabVisible
+        && lessonFocus.fabTitle === 'Ask Tutor'
+        && lessonFocus.chatDisplay === 'none'
+        && lessonFocus.resizerDisplay === 'none'
+        && lessonFocus.fullscreenControls === 0,
+      JSON.stringify(lessonFocus));
+
+    const explainBeforeRail = lessonFocus.explain;
+    await page.mouse.move(4, 420);
+    await page.waitForTimeout(260);
+    const railOpen = await inspectFocusWorkspace(page);
+    await page.mouse.move(640, 420);
+    await page.waitForTimeout(120);
+    const railDelay = await inspectFocusWorkspace(page);
+    await page.waitForTimeout(420);
+    const railClosed = await inspectFocusWorkspace(page);
+    record('left edge reveals an overlay icon rail and closes after a stable delay',
+      railOpen.sidebar?.left >= -1
+        && railOpen.sidebar.left <= 1
+        && Math.abs((railOpen.explain?.left || 0) - (explainBeforeRail?.left || 0)) <= 1
+        && railDelay.sidebar?.left >= -1
+        && railDelay.sidebar.left <= 1
+        && railClosed.sidebar?.right >= 8
+        && railClosed.sidebar.right <= 12,
+      JSON.stringify({ explainBeforeRail, railOpen, railDelay, railClosed }));
+
+    await page.focus('#navHomeBtn');
+    await page.waitForTimeout(260);
+    const railFocused = await inspectFocusWorkspace(page);
+    await page.focus('[data-convolution-stage-target="lesson"]');
+    await page.waitForTimeout(420);
+    const railBlurred = await inspectFocusWorkspace(page);
+    record('keyboard focus opens the icon rail and releases it after focus leaves',
+      railFocused.sidebar?.left >= -1
+        && railFocused.sidebar.left <= 1
+        && railBlurred.sidebar?.right >= 8
+        && railBlurred.sidebar.right <= 12,
+      JSON.stringify({ railFocused, railBlurred }));
+
+    await page.evaluate(() => document.getElementById('learnChatFab')?.click());
+    await page.waitForTimeout(160);
+    const tutorOpen = await inspectFocusWorkspace(page);
+    record('Tutor orb opens the existing fixed 320px panel with a minimize control',
+      !tutorOpen.chatCollapsed
+        && tutorOpen.chat?.width >= 318
+        && tutorOpen.chat.width <= 322
+        && tutorOpen.chatDisplay !== 'none'
+        && tutorOpen.minimizeVisible
+        && tutorOpen.minimizeTitle === 'Minimize Tutor'
+        && !tutorOpen.fabVisible
+        && tutorOpen.resizerDisplay === 'none'
+        && tutorOpen.horizontalOverflow <= 1,
+      JSON.stringify(tutorOpen));
+
+    await goToLessonPage(page, 2);
+    const tutorAfterPage = await inspectFocusWorkspace(page);
+    await clickStage(page, 'practice', 1);
+    const tutorPractice = await inspectFocusWorkspace(page);
+    record('Tutor panel state survives lesson pages and the transition to practice',
+      !tutorAfterPage.chatCollapsed
+        && tutorAfterPage.chat?.width >= 318
+        && !tutorPractice.chatCollapsed
+        && tutorPractice.chat?.width >= 318,
+      JSON.stringify({ tutorAfterPage, tutorPractice }));
+
+    await clickStage(page, 'intro', 1);
+    const overviewReset = await inspectFocusWorkspace(page);
+    await clickStage(page, 'lesson', 2);
+    const lessonReset = await inspectFocusWorkspace(page);
+    record('returning to overview restores ordinary Q&A and re-entering lesson resets to the orb',
+      !overviewReset.appFocus
+        && !overviewReset.bodyFocus
+        && !overviewReset.chatCollapsed
+        && overviewReset.chatDisplay !== 'none'
+        && lessonReset.appFocus
+        && lessonReset.bodyFocus
+        && lessonReset.chatCollapsed
+        && lessonReset.fabVisible,
+      JSON.stringify({ overviewReset, lessonReset }));
+
+    await goToLessonPage(page, 5);
+    const demoWorkspace = await inspectFocusWorkspace(page);
+    record('GeoGebra lesson uses a 40/60 horizontal workspace on desktop',
+      demoWorkspace.demoPage
+        && demoWorkspace.demoTeachingWidth > 0
+        && demoWorkspace.demoWidth > demoWorkspace.demoTeachingWidth
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth >= 1.35
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth <= 1.65
+        && demoWorkspace.horizontalOverflow <= 1,
+      JSON.stringify(demoWorkspace));
+
+    await page.evaluate(() => document.getElementById('learnChatFab')?.click());
+    await page.waitForTimeout(160);
+    const demoWithTutor = await inspectFocusWorkspace(page);
+    record('opening Tutor reflows the Demo without overlapping or rebuilding its layout shell',
+      demoWithTutor.demoPage
+        && demoWithTutor.chat?.width >= 318
+        && demoWithTutor.explain?.right <= demoWithTutor.chat?.left + 1
+        && demoWithTutor.horizontalOverflow <= 1,
+      JSON.stringify(demoWithTutor));
+
+    await page.evaluate(() => document.getElementById('learnTutorMinimizeBtn')?.click());
+    await page.waitForTimeout(160);
+    const tutorMinimized = await inspectFocusWorkspace(page);
+    record('Tutor minimize control returns focus workspace to the orb',
+      tutorMinimized.chatCollapsed
+        && tutorMinimized.fabVisible
+        && !tutorMinimized.minimizeVisible,
+      JSON.stringify(tutorMinimized));
 
     await goToLessonPage(page, 7);
     await clickStage(page, 'practice', 1);
