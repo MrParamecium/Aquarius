@@ -1394,9 +1394,20 @@ let learnSectionId = '';
 let learnSectionTitle = '';
 let learnWebData = [];
 let learnAbort = null;
+// Follow-up Q&A runs inside an already-open lesson, so it needs its own lifetime:
+// navigating away must cancel it, but it must never cancel the lesson (#9).
+let learnFollowupAbort = null;
 let learnRequestSeq = 0;
 let splashShowDelayTimer = null;
 let learnParentOverviewContext = null;
+
+// Cancel everything scoped to the lesson we're leaving: the lesson request itself and
+// any follow-up Q&A hanging off it. Every navigation/teardown path calls this.
+// sendLearnFollowup must NOT — a question is not navigation (#9).
+function abortLearnScope() {
+  if (learnAbort) learnAbort.abort();
+  if (learnFollowupAbort) learnFollowupAbort.abort();
+}
 
 function clearLearnRenderedContent(message = 'Preparing lesson...') {
   currentFullLessonHtml = '';
@@ -1938,7 +1949,7 @@ async function loadChapterOverviewPrelude(sectionId, sectionTitle, subsections =
 }
 
 async function openChapterParentLessonFromOverview(sectionId, sectionTitle, subsections = []) {
-  if (learnAbort) learnAbort.abort();
+  abortLearnScope();
   const requestSeq = ++learnRequestSeq;
   const controller = new AbortController();
   learnAbort = controller;
@@ -2073,7 +2084,7 @@ if (learnChatContent && learnChatEmptyState) {
 
 function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
   console.log('[openChapterOverviewMode]', { sectionId, sectionTitle, subsectionCount: subsections.length, currentBook });
-  if (learnAbort) learnAbort.abort();
+  abortLearnScope();
   window.guidanceMode?.resetScope('learn');
   learnRequestSeq += 1;
   closeTextbookFocusMode();
@@ -2111,7 +2122,7 @@ function openChapterOverviewMode(sectionId, sectionTitle, subsections = []) {
 
 async function openLearnMode(sectionId, sectionTitle, subsections = [], options = {}) {
   console.log('[openLearnMode]', { sectionId, sectionTitle, currentBook });
-  if (learnAbort) learnAbort.abort();
+  abortLearnScope();
   window.guidanceMode?.resetScope('learn');
   learnRequestSeq += 1;
   closeTextbookFocusMode();
@@ -2334,7 +2345,7 @@ async function startLesson(options = {}) {
 }
 
 function closeLearnMode() {
-  if (learnAbort) learnAbort.abort();
+  abortLearnScope();
   hideSplash();
   closeTextbookFocusMode();
   resetLearnKnowledgePointState();
@@ -2348,7 +2359,7 @@ function closeLearnMode() {
 }
 
 function handleLearnBack() {
-  if (learnAbort) learnAbort.abort();
+  abortLearnScope();
   hideSplash();
   closeTextbookFocusMode();
   resetLearnKnowledgePointState();
@@ -2787,9 +2798,14 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
   }
   syncTextbookFocusQaFromLearnChat();
 
-  if (learnAbort) learnAbort.abort();
+  // A follow-up is Q&A inside the current lesson, not navigation. It used to take over
+  // `learnAbort` — the navigation/lesson controller — so asking a question while
+  // startLesson's fetch was still in flight aborted that fetch, and the swallowed
+  // AbortError left the pane stuck on "Preparing lesson..." (#9). Supersede only the
+  // previous follow-up; navigation cancels this one via abortLearnScope().
+  if (learnFollowupAbort) learnFollowupAbort.abort();
   const localLearnController = new AbortController();
-  learnAbort = localLearnController;
+  learnFollowupAbort = localLearnController;
   const localLearnSignal = localLearnController.signal;
   const answerEl = document.getElementById(answerId);
   const answerDiv = answerEl?.querySelector('.fub-a') || answerEl;
@@ -2806,7 +2822,7 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
     groundedTurn = intent.grounded !== false;
     casualReply = groundedTurn ? '' : (intent.reply || '');
   }
-  if (learnAbort !== localLearnController) return;
+  if (localLearnSignal.aborted) return;
   if (!groundedTurn) {
     if (answerDiv) {
       answerDiv.className = 'fub-a learn-explain-content';
@@ -2841,7 +2857,7 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
       }
     });
     if (guidanceResult.status === 'cancelled') {
-      if (learnAbort !== localLearnController) return;
+      if (localLearnSignal.aborted) return;
       learnFollowupInput.value = prompt;
       autoResize(learnFollowupInput);
       learnFollowupBtn.disabled = false;
@@ -2913,7 +2929,7 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
       session_id: tutorState.learnSessionId || undefined,
       origin: 'learn'
     });
-    if (learnAbort !== localLearnController) return;
+    if (localLearnSignal.aborted) return;
 
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
 
@@ -2971,7 +2987,7 @@ async function sendLearnFollowup(rawPrompt, options = {}) {
     updateRecentConversations('learn:stream-finished');
     learnChatScroll.scrollTop = learnChatScroll.scrollHeight;
   } catch (err) {
-    if (learnAbort !== localLearnController) return;
+    if (localLearnSignal.aborted) return;
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
     if (err.name === 'AbortError') return;
     const target = document.getElementById(answerId);

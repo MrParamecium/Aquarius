@@ -635,7 +635,9 @@ window.loadHistoricalSession = async function(timestamp) {
     // Stop ongoing flows and save current before switching
     saveCurrentLearnSession('loadHistoricalSession:before-switch');
     if (window.loadingTimerLearn) clearInterval(window.loadingTimerLearn);
-    if (learnAbort) learnAbort.abort();
+    // Switching sessions is navigation: cancel the in-flight lesson AND any follow-up
+    // hanging off it, or a stale answer streams into the session we just switched to.
+    abortLearnScope();
 
     if (usesServerRecentConversations()) {
       const response = await apiFetch(`/api/sessions/${encodeURIComponent(session.id)}`);
