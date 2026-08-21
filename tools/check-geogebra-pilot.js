@@ -5,11 +5,22 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const CACHE_FILE = path.join(ROOT, 'workspace', 'materials', 'lesson-cache', '2_4-2', 'new__aquarius_visual_latex_v2.aquarius_visual_latex_v2.en.md');
+const FIGURE_DIR = path.join(ROOT, 'workspace', 'materials', 'new-book-figures');
 const FIGURE_MAP_FILE = path.join(ROOT, 'app', 'section-figure-map-new.json');
 const DISPATCHER_FILE = path.join(ROOT, 'app', 'interactive-demos', 'dispatcher.js');
 const PRESET_FILE = path.join(ROOT, 'app', 'interactive-demos', 'geogebra-convolution-presets.js');
 const SCENE_FILE = path.join(ROOT, 'app', 'interactive-demos', 'geogebra-convolution-figure-2-7.js');
 const DEMO_FILE = path.join(ROOT, 'app', 'interactive-demos', 'geogebra-demo.js');
+const ALLOWED_FALLBACKS = new Set([
+  '/figures/page-179-figure_2_7.png',
+  '/figures/page-182-figure_2_8.png',
+  '/figures/page-184-figure_2_9.png',
+  '/figures/page-186-figure_2_10.png',
+  '/figures/page-188-figure_2_11.png',
+  '/figures/page-188-figure_2_12.png',
+  '/figures/page-188-figure_2_13.png',
+]);
+const NON_ENGLISH_PRODUCT_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 const failures = [];
 
 function fail(message) { failures.push(message); }
@@ -23,18 +34,50 @@ function readRequired(file) {
 
 function decodeDemoBlocks(markdown) {
   const blocks = [];
-  for (const match of markdown.matchAll(/data-demo-b64="([A-Za-z0-9+/=]+)"/g)) {
-    try { blocks.push(JSON.parse(Buffer.from(match[1], 'base64').toString('utf8'))); }
-    catch (error) { fail(`invalid data-demo-b64 JSON: ${error.message}`); }
+  let index = 0;
+  for (const match of markdown.matchAll(/data-demo-b64="([^"]*)"/g)) {
+    index += 1;
+    try {
+      const encoded = match[1];
+      if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(encoded)) {
+        throw new Error('payload is not canonical padded base64');
+      }
+      const bytes = Buffer.from(encoded, 'base64');
+      if (bytes.toString('base64') !== encoded) throw new Error('payload base64 does not round-trip canonically');
+      const decoded = bytes.toString('utf8');
+      if (!Buffer.from(decoded, 'utf8').equals(bytes)) throw new Error('payload is not valid UTF-8');
+      const payload = JSON.parse(decoded);
+      if (Buffer.from(JSON.stringify(payload), 'utf8').toString('base64') !== encoded) {
+        throw new Error('payload must encode canonical compact JSON');
+      }
+      blocks.push(payload);
+    }
+    catch (error) { fail(`demo ${index} has invalid data-demo-b64: ${error.message}`); }
   }
   return blocks;
+}
+
+function validateFallbackFigure(fallbackFigure, context) {
+  if (typeof fallbackFigure !== 'string') {
+    fail(`${context} fallback_figure must be a string`);
+    return;
+  }
+  const segments = fallbackFigure.split('/');
+  const filename = segments.at(-1) || '';
+  if (segments.some(segment => segment === '.' || segment === '..')
+    || !/^\/figures\/[A-Za-z0-9_-]+\.(?:png|jpe?g|webp)$/i.test(fallbackFigure)) {
+    fail(`${context} fallback_figure must be a normalized PNG, JPG, JPEG, or WebP path under /figures/`);
+    return;
+  }
+  if (!ALLOWED_FALLBACKS.has(fallbackFigure)) fail(`${context} fallback_figure is not in the Section 2.4-2 allowlist`);
+  if (!fs.existsSync(path.join(FIGURE_DIR, filename))) fail(`${context} fallback_figure does not exist in trusted figure storage`);
 }
 
 function collectForbiddenCommandKeys(value, at = 'demo') {
   if (!value || typeof value !== 'object') return [];
   const found = [];
   for (const [key, child] of Object.entries(value)) {
-    if (/^(?:commands?|eval_command|ggb_base64|ggbbase64|xml|filename|material_id)$/i.test(key)) found.push(`${at}.${key}`);
+    if (/^(?:commands?|eval_command|base64|ggb_base64|ggbbase64|xml|filename|material_id)$/i.test(key)) found.push(`${at}.${key}`);
     found.push(...collectForbiddenCommandKeys(child, `${at}.${key}`));
   }
   return found;
@@ -49,16 +92,21 @@ const demoShell = readRequired(DEMO_FILE);
 readRequired(path.join(ROOT, 'app', 'interactive-demos', 'geogebra-runtime.js'));
 
 if (cache) {
+  if (NON_ENGLISH_PRODUCT_SCRIPT.test(cache)) {
+    fail('lesson cache must not contain Han, Hiragana, Katakana, or Hangul product copy');
+  }
   const demos = decodeDemoBlocks(cache);
   const expected = [
-    ['figure-2-7', 'change-variable', 'guided'],
-    ['figure-2-7', 'flip', 'guided'],
-    ['figure-2-7', 'slide', 'guided'],
-    ['figure-2-7', 'multiply', 'guided'],
-    ['figure-2-7', 'integrate', 'guided'],
+    ['figure-2-7', 'guided-sequence', 'guided'],
     ['example-2-10', 'worked-example', 'full'],
-    ['example-2-11', 'worked-example', 'partial'],
-    ['example-2-12', 'worked-example', 'light'],
+    ['example-2-11', 'segments', 'partial'],
+    ['example-2-11', 'cases', 'partial'],
+    ['example-2-12', 'contact-points', 'light'],
+    ['example-2-12', 'integration-limits', 'light'],
+    ['example-2-12', 'piecewise-output', 'light'],
+    ['figure-2-11', 'commutativity', 'transfer'],
+    ['figure-2-12', 'support-transfer', 'transfer'],
+    ['figure-2-13', 'shift-transfer', 'transfer'],
   ];
   if (demos.length !== expected.length) fail(`expected ${expected.length} demo blocks, found ${demos.length}`);
   expected.forEach(([preset, task, scaffolding], index) => {
@@ -68,32 +116,44 @@ if (cache) {
     if (spec.preset !== preset || spec.task !== task || spec.scaffolding !== scaffolding) {
       fail(`demo ${index + 1} has the wrong preset, task, or scaffolding`);
     }
+    const allowedSpecKeys = ['fallback_figure', 'framework', 'preset', 'scaffolding', 'scene', 'task'];
+    const unexpectedSpecKeys = Object.keys(spec).filter(key => !allowedSpecKeys.includes(key));
+    if (unexpectedSpecKeys.length) fail(`demo ${index + 1} has uncontrolled spec fields: ${unexpectedSpecKeys.join(', ')}`);
+    validateFallbackFigure(spec.fallback_figure, `demo ${index + 1}`);
   });
   const forbidden = collectForbiddenCommandKeys(demos);
   if (forbidden.length) fail(`cache may not inject GeoGebra commands: ${forbidden.join(', ')}`);
 
   const requiredHeadings = [
-    '## 1. What Is Convolution?',
-    '## 2. Why Do We Need It?',
-    '## 3. Understanding t and τ',
-    '## 4. The Five-Step Method',
-    '## 5. Change the Variable',
-    '## 6. Flip',
-    '## 7. Slide',
-    '## 8. Multiply and Find the Overlap',
-    '## 9. Integrate and Trace the Output',
-    '## 10. Worked Example 1',
-    '## 11. Worked Example 2',
-    '## 12. Worked Example 3',
+    '## 1. What Does Graphical Convolution Show?',
+    '## 2. What Do t and τ Mean?',
+    '## 3. Why Use a Graphical View?',
+    '## 4. Why Does the Overlap Create the Output?',
+    '## 5. The Five-Step Map',
+    '## 6. Figure 2.7 Guided Graphical Convolution Lab',
+    '## 7. Same Convolution, New View',
+    '## 8. One Signal, Two Segments',
+    '## 9. Build the Two Output Cases',
+    '## 10. Find the Contact Points',
+    '## 11. Build the Integration Limits',
+    '## 12. Assemble the Piecewise Output',
+    '## 13. Same Result, Easier Route',
+    '## 14. When Causal Meets Anticausal',
+    '## 15. When Opposite Shifts Cancel',
+    '## 16. The Graphical Convolution Checklist',
+    '## 17. Exit Check',
+    '## 18. You Can Now',
   ];
-  let previous = -1;
-  requiredHeadings.forEach(heading => {
-    const current = cache.indexOf(heading);
-    if (current < 0) fail(`lesson is missing required heading: ${heading}`);
-    if (current >= 0 && current <= previous) fail(`lesson heading is out of order: ${heading}`);
-    if (current >= 0) previous = current;
+  const actualHeadings = Array.from(cache.matchAll(/^## [1-9]\d*\. [^\r\n]+\r?$/gm), match => match[0].replace(/\r$/, ''));
+  if (actualHeadings.length !== requiredHeadings.length) {
+    fail(`lesson must contain exactly ${requiredHeadings.length} anchored H2 pages, found ${actualHeadings.length}`);
+  }
+  requiredHeadings.forEach((heading, index) => {
+    if (actualHeadings[index] !== heading) {
+      fail(`lesson H2 ${index + 1} must be "${heading}", found "${actualHeadings[index] || '(missing)'}"`);
+    }
   });
-  for (const pattern of [/transparent pool/i, /sprinkler truck/i, /first contact/i, /sampling/i, /filtering/i]) {
+  for (const pattern of [/moving picture/i, /first contact/i, /full overlap/i, /last contact/i, /past input/i]) {
     if (!pattern.test(cache)) fail(`lesson is missing approved teaching language: ${pattern}`);
   }
   if (/continuous_graphic_convolution/.test(cache)) fail('legacy generated convolution blocks must not return');
@@ -144,4 +204,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('[geogebra-pilot] OK - v5 textbook presets, controlled demos, and trusted-data boundaries verified');
+console.log('[geogebra-pilot] OK - 18-page lesson demos and trusted-data boundaries verified');
