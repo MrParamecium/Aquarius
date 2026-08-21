@@ -15,24 +15,31 @@ const {
 const PORT = Number(process.env.TUTOR_CONVOLUTION_LAYOUT_PORT || 9154);
 const BASE = `http://127.0.0.1:${PORT}`;
 const repoRoot = path.resolve(__dirname, '..');
+const evidenceDir = process.env.TUTOR_CONVOLUTION_LAYOUT_EVIDENCE_DIR || '';
 const SUBTOPIC = {
   chapter: 'Chapter 2',
   section: '2.4 System Response to External Input: The Zero-State Response',
   title: '2.4-2 Graphical Understanding of Convolution Operation',
 };
 const LESSON_TITLES = [
-  'What Is Convolution?',
-  'Why Do We Need It?',
-  'Understanding t and τ',
-  'The Five-Step Method',
-  'Change the Variable',
-  'Flip',
-  'Slide',
-  'Multiply and Find the Overlap',
-  'Integrate and Trace the Output',
-  'Worked Example 1',
-  'Worked Example 2',
-  'Worked Example 3',
+  'What Does Graphical Convolution Show?',
+  'What Do t and τ Mean?',
+  'Why Use a Graphical View?',
+  'Why Does the Overlap Create the Output?',
+  'The Five-Step Map',
+  'Figure 2.7 Guided Graphical Convolution Lab',
+  'Same Convolution, New View',
+  'One Signal, Two Segments',
+  'Build the Two Output Cases',
+  'Find the Contact Points',
+  'Build the Integration Limits',
+  'Assemble the Piecewise Output',
+  'Same Result, Easier Route',
+  'When Causal Meets Anticausal',
+  'When Opposite Shifts Cancel',
+  'The Graphical Convolution Checklist',
+  'Exit Check',
+  'You Can Now',
 ];
 const results = [];
 
@@ -73,6 +80,11 @@ async function waitForTurn(page) {
   await waitForLayout(page);
 }
 
+async function captureEvidence(page, filename) {
+  if (!evidenceDir) return;
+  await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
+}
+
 async function clickStage(page, stage, position) {
   await page.locator(`[data-convolution-stage-target="${stage}"]`).click();
   await page.waitForFunction(
@@ -86,6 +98,7 @@ async function clickStage(page, stage, position) {
     { timeout: 5000 }
   );
   await waitForLayout(page);
+  await page.waitForTimeout(520);
 }
 
 async function goToLessonPage(page, lessonPosition) {
@@ -109,7 +122,7 @@ async function inspectLessonPage(page, position) {
     const title = frame?.querySelector('.lesson-page-heading h2')?.textContent.trim() || '';
     const computed = content ? getComputedStyle(content) : null;
     const teachingStyle = teachingBlock ? getComputedStyle(teachingBlock) : null;
-    const images = Array.from(content?.querySelectorAll('.convolution-analogy-image') || []).map(image => ({
+    const images = Array.from(content?.querySelectorAll('.convolution-analogy-image, .convolution-past-effects-image') || []).map(image => ({
       src: new URL(image.src).pathname,
       complete: image.complete,
       width: image.naturalWidth,
@@ -202,32 +215,103 @@ async function inspectFocusWorkspace(page) {
     };
     const sidebar = document.getElementById('leftSidebar');
     const sidebarStyle = sidebar ? getComputedStyle(sidebar) : null;
+    const app = document.querySelector('.app');
+    const appStyle = app ? getComputedStyle(app) : null;
     const chat = document.getElementById('learnChatCol');
     const chatStyle = chat ? getComputedStyle(chat) : null;
+    const bodyInner = document.querySelector('#learnBody .learn-body-inner');
+    const bodyInnerStyle = bodyInner ? getComputedStyle(bodyInner) : null;
+    const explain = document.getElementById('learnExplainCol');
+    const explainStyle = explain ? getComputedStyle(explain) : null;
     const resizer = document.getElementById('learnResizer');
     const demoPage = document.querySelector('.lesson-page-frame.convolution-demo-page');
     const demoContent = demoPage?.querySelector('.lesson-page-content');
     const demoStyle = demoContent ? getComputedStyle(demoContent) : null;
     const teaching = demoContent?.querySelector('.convolution-teaching-block')?.getBoundingClientRect();
     const demo = demoContent?.querySelector('.kc-interactive-demo')?.getBoundingClientRect();
+    const demoFeedback = demoContent?.querySelector('.geogebra-demo-feedback')?.getBoundingClientRect();
+    const stageNav = demoPage?.querySelector('.convolution-stage-nav')?.getBoundingClientRect();
+    const lessonProgress = demoPage?.querySelector('.convolution-lesson-progress')?.getBoundingClientRect();
+    const lessonHeading = demoPage?.querySelector('.lesson-page-heading')?.getBoundingClientRect();
+    const lessonHeadingTitle = demoPage?.querySelector('.lesson-page-heading h2');
+    const lessonHeadingTitleRect = lessonHeadingTitle?.getBoundingClientRect();
+    const lessonHeadingStyle = lessonHeadingTitle ? getComputedStyle(lessonHeadingTitle) : null;
+    const fallbackRetry = demoContent?.querySelector('[data-geogebra-retry]')?.getBoundingClientRect();
+    const demoStage = demoContent?.querySelector('.geogebra-demo-stage')?.getBoundingClientRect();
+    const redMotionArrowCount = demoContent?.querySelectorAll('[data-geogebra-motion-arrow], .geogebra-motion-arrow').length || 0;
+    const pager = document.getElementById('learnExplainPager')?.getBoundingClientRect();
+    const explainScroll = document.getElementById('learnExplainScroll');
+    const sidebarControls = Array.from(document.querySelectorAll(
+      '#sidebarLogoExpandBtn, #sidebarPrimaryNav > .sidebar-link, #sidebarSettingsBtn'
+    )).map(element => ({
+      id: element.id,
+      visible: visible(element),
+      ...rect(`#${element.id}`),
+    }));
     return {
       appFocus: document.querySelector('.app')?.classList.contains('convolution-focus-workspace-active') || false,
+      appSidebarCollapsed: app?.classList.contains('sidebar-collapsed') || false,
       bodyFocus: document.getElementById('learnBody')?.classList.contains('convolution-focus-workspace-active') || false,
       chatCollapsed: document.getElementById('learnBody')?.classList.contains('chat-collapsed') || false,
+      appColumns: appStyle?.gridTemplateColumns || '',
       sidebar: rect('#leftSidebar'),
+      sidebarCollapsed: sidebar?.classList.contains('collapsed') || false,
+      sidebarControls,
       sidebarPosition: sidebarStyle?.position || '',
+      navTouchOpen: document.querySelector('.app')?.classList.contains('convolution-focus-nav-touch-open') || false,
+      main: rect('#mainContent'),
       explain: rect('#learnExplainCol'),
+      explainContainerName: explainStyle?.containerName || '',
+      explainContainerType: explainStyle?.containerType || '',
       chat: rect('#learnChatCol'),
       chatDisplay: chatStyle?.display || '',
+      chatWidth: chatStyle?.width || '',
+      chatMaxWidth: chatStyle?.maxWidth || '',
+      chatFlexBasis: chatStyle?.flexBasis || '',
+      chatGridColumn: chatStyle?.gridColumn || '',
+      innerColumns: bodyInnerStyle?.gridTemplateColumns || '',
+      innerCustomSplit: bodyInner?.dataset.customSplit || '',
       resizerDisplay: resizer ? getComputedStyle(resizer).display : '',
       fabVisible: visible(document.getElementById('learnChatFab')),
       fabTitle: document.getElementById('learnChatFab')?.title || '',
+      tutorMarkVisible: visible(document.querySelector('#learnChatFab .tutor-agent-mark')),
+      tutorBadge: document.querySelector('#learnChatFab .tutor-agent-ai-badge')?.textContent.trim() || '',
+      tutorTooltip: document.querySelector('#learnChatFab .tutor-agent-tooltip')?.textContent.trim() || '',
+      topbarTitle: rect('#learnTitle'),
+      touchMenu: rect('#floatToggleBtn'),
+      touchMenuVisible: visible(document.getElementById('floatToggleBtn')),
+      menuToggleVisible: visible(document.getElementById('menuToggleBtn')),
       minimizeVisible: visible(document.getElementById('learnTutorMinimizeBtn')),
       minimizeTitle: document.getElementById('learnTutorMinimizeBtn')?.title || '',
       demoPage: Boolean(demoPage),
       demoColumns: demoStyle?.gridTemplateColumns || '',
+      demoTeachingTop: teaching?.top || 0,
+      demoTeachingBottom: teaching?.bottom || 0,
       demoTeachingWidth: teaching?.width || 0,
+      demoTop: demo?.top || 0,
+      demoBottom: demo?.bottom || 0,
       demoWidth: demo?.width || 0,
+      demoFeedbackBottom: demoFeedback?.bottom || 0,
+      stageNavBottom: stageNav?.bottom || 0,
+      lessonProgressBottom: lessonProgress?.bottom || 0,
+      lessonHeadingTop: lessonHeading?.top || 0,
+      lessonHeadingBottom: lessonHeading?.bottom || 0,
+      lessonHeadingTitleTop: lessonHeadingTitleRect?.top || 0,
+      lessonHeadingTitleBottom: lessonHeadingTitleRect?.bottom || 0,
+      lessonHeadingFontSize: lessonHeadingStyle?.fontSize || '',
+      lessonHeadingLineHeight: lessonHeadingStyle?.lineHeight || '',
+      lessonHeadingPaddingTop: lessonHeadingStyle?.paddingTop || '',
+      lessonHeadingPaddingBottom: lessonHeadingStyle?.paddingBottom || '',
+      fallbackRetryTop: fallbackRetry?.top || 0,
+      fallbackRetryBottom: fallbackRetry?.bottom || 0,
+      demoStageTop: demoStage?.top || 0,
+      demoStageBottom: demoStage?.bottom || 0,
+      demoStageWidth: demoStage?.width || 0,
+      demoStageHeight: demoStage?.height || 0,
+      redMotionArrowCount,
+      pagerTop: pager?.top || window.innerHeight,
+      viewportHeight: window.innerHeight,
+      explainScrollOverflow: explainScroll ? Math.max(0, explainScroll.scrollHeight - explainScroll.clientHeight) : 999,
       fullscreenControls: document.querySelectorAll('[data-convolution-fullscreen], #convolutionFullscreenBtn, #convolutionExitFullscreenBtn').length,
       horizontalOverflow: Math.max(0, document.documentElement.scrollWidth - window.innerWidth),
     };
@@ -283,11 +367,11 @@ async function main() {
         boxedNumbers: frame?.querySelectorAll('.convolution-intro-number, .convolution-page-marker, [data-convolution-number]').length || 0,
       };
     });
-    record('application maps to one overview, twelve lessons, and one practice page',
-      intro.pointCount === 14
+    record('application maps to one overview, eighteen lessons, and one practice page',
+      intro.pointCount === 20
         && intro.state?.stage === 'intro'
         && intro.state?.total === 1
-        && intro.state?.map?.lessonIndices?.length === 12,
+        && intro.state?.map?.lessonIndices?.length === 18,
       JSON.stringify({ pointCount: intro.pointCount, state: intro.state }));
     record('overview keeps the three English stage tabs sticky and keyboard operable',
       intro.labels.length === 3
@@ -409,69 +493,134 @@ async function main() {
       state: window.getConvolutionLessonStageState?.(),
       pager: document.getElementById('learnPagerPosition')?.textContent.trim() || '',
     }));
-    record('Start Lesson enters Lesson 1 of 12',
+    record('Start Lesson enters Lesson 1 of 18',
       lessonStart.state?.stage === 'lesson'
         && lessonStart.state.position === 1
-        && lessonStart.state.total === 12
-        && lessonStart.pager === 'Lesson 1 / 12',
+        && lessonStart.state.total === 18
+        && lessonStart.pager === 'Lesson 1 / 18',
       JSON.stringify(lessonStart));
 
+    const lessonPhaseStart = await page.evaluate(() => ({
+      chips: Array.from(document.querySelectorAll('[data-convolution-phase-chip]')).map(chip => ({
+        id: chip.dataset.convolutionPhaseChip,
+        active: chip.getAttribute('aria-current') === 'step',
+      })),
+      phase: window.getConvolutionLessonPhase?.(1)?.id || '',
+    }));
+    record('lesson exposes one active WHAT/WHY/HOW phase chip',
+      lessonPhaseStart.chips.map(chip => chip.id).join(',') === 'what,why,how'
+        && lessonPhaseStart.chips.filter(chip => chip.active).map(chip => chip.id).join(',') === 'what'
+        && lessonPhaseStart.phase === 'what',
+      JSON.stringify(lessonPhaseStart));
+
+    await page.evaluate(() => window.jumpToConvolutionLessonPosition?.(3));
+    await waitForLayout(page);
+    const whyPhase = await page.evaluate(() => ({
+      state: window.getConvolutionLessonStageState?.(),
+      active: document.querySelector('[data-convolution-phase-chip][aria-current="step"]')?.dataset.convolutionPhaseChip || '',
+    }));
+    record('jumping to Lesson 3 switches the active phase to WHY',
+      whyPhase.state?.stage === 'lesson'
+        && whyPhase.state.position === 3
+        && whyPhase.active === 'why',
+      JSON.stringify(whyPhase));
+
+    await page.evaluate(() => window.jumpToConvolutionLessonPosition?.(5));
+    await waitForLayout(page);
+    const howPhase = await page.evaluate(() => ({
+      state: window.getConvolutionLessonStageState?.(),
+      active: document.querySelector('[data-convolution-phase-chip][aria-current="step"]')?.dataset.convolutionPhaseChip || '',
+    }));
+    record('jumping to Lesson 5 switches the active phase to HOW',
+      howPhase.state?.stage === 'lesson'
+        && howPhase.state.position === 5
+        && howPhase.active === 'how',
+      JSON.stringify(howPhase));
+
+    await page.evaluate(() => window.jumpToConvolutionLessonPosition?.(1));
+    await waitForLayout(page);
+    const stateIsolation = await page.evaluate(() => {
+      const key = 'ftutor:convolution-lesson:v6';
+      const before = localStorage.getItem(key);
+      localStorage.setItem('ftutor:convolution-lesson:v5', JSON.stringify({ version: 5, lastLessonPosition: 18 }));
+      localStorage.setItem(key, JSON.stringify({ version: 5, lastLessonPosition: 18 }));
+      const fresh = window.getConvolutionFigure27State?.();
+      localStorage.setItem(key, before || '');
+      return { fresh, current: window.getConvolutionLessonStageState?.() };
+    });
+    record('v5 or malformed state falls back to a fresh v6 lesson state',
+      stateIsolation.fresh?.step === 1
+        && stateIsolation.fresh?.t === -4
+        && stateIsolation.current?.position === 1,
+      JSON.stringify(stateIsolation));
+
     const lessonFocus = await inspectFocusWorkspace(page);
-    record('lesson enters the focus workspace with a hidden icon rail and Tutor orb',
+    record('lesson enters the focus workspace with a persistent 76px icon rail and Tutor orb',
       lessonFocus.appFocus
         && lessonFocus.bodyFocus
         && lessonFocus.chatCollapsed
-        && lessonFocus.sidebarPosition === 'fixed'
-        && lessonFocus.sidebar?.width >= 88
-        && lessonFocus.sidebar.width <= 96
-        && lessonFocus.sidebar.right >= 8
-        && lessonFocus.sidebar.right <= 12
+        && lessonFocus.sidebarPosition !== 'fixed'
+        && lessonFocus.sidebar?.left >= -1
+        && lessonFocus.sidebar.left <= 1
+        && lessonFocus.sidebar.width >= 74
+        && lessonFocus.sidebar.width <= 78
+        && lessonFocus.sidebarControls.length >= 8
+        && lessonFocus.sidebarControls.every(control => control.visible
+          && control.left >= -1
+          && control.right <= lessonFocus.sidebar.right + 1)
+        && lessonFocus.main?.left >= 74
+        && lessonFocus.main.left <= 78
         && lessonFocus.fabVisible
-        && lessonFocus.fabTitle === 'Ask Tutor'
+        && lessonFocus.fabTitle === 'Tutor Agent'
+        && lessonFocus.tutorMarkVisible
+        && lessonFocus.tutorBadge === 'AI'
+        && lessonFocus.tutorTooltip === 'Tutor Agent'
         && lessonFocus.chatDisplay === 'none'
         && lessonFocus.resizerDisplay === 'none'
         && lessonFocus.fullscreenControls === 0,
       JSON.stringify(lessonFocus));
 
-    const explainBeforeRail = lessonFocus.explain;
-    await page.mouse.move(4, 420);
-    await page.waitForTimeout(260);
-    const railOpen = await inspectFocusWorkspace(page);
+    const workspaceBeforeRailInteraction = lessonFocus;
+    await page.mouse.move(38, 420);
+    await page.waitForTimeout(300);
+    const railHovered = await inspectFocusWorkspace(page);
     await page.mouse.move(640, 420);
-    await page.waitForTimeout(120);
-    const railDelay = await inspectFocusWorkspace(page);
-    await page.waitForTimeout(420);
-    const railClosed = await inspectFocusWorkspace(page);
-    record('left edge reveals an overlay icon rail and closes after a stable delay',
-      railOpen.sidebar?.left >= -1
-        && railOpen.sidebar.left <= 1
-        && Math.abs((railOpen.explain?.left || 0) - (explainBeforeRail?.left || 0)) <= 1
-        && railDelay.sidebar?.left >= -1
-        && railDelay.sidebar.left <= 1
-        && railClosed.sidebar?.right >= 8
-        && railClosed.sidebar.right <= 12,
-      JSON.stringify({ explainBeforeRail, railOpen, railDelay, railClosed }));
+    await page.waitForTimeout(300);
+    const railAfterHover = await inspectFocusWorkspace(page);
+    record('desktop icon rail stays compact and does not cover or shift the lesson on hover',
+      railHovered.sidebar?.width >= 74
+        && railHovered.sidebar.width <= 78
+        && railAfterHover.sidebar?.width >= 74
+        && railAfterHover.sidebar.width <= 78
+        && Math.abs((railHovered.main?.left || 0) - (workspaceBeforeRailInteraction.main?.left || 0)) <= 1
+        && Math.abs((railAfterHover.main?.left || 0) - (workspaceBeforeRailInteraction.main?.left || 0)) <= 1,
+      JSON.stringify({ workspaceBeforeRailInteraction, railHovered, railAfterHover }));
 
     await page.focus('#navHomeBtn');
     await page.waitForTimeout(260);
     const railFocused = await inspectFocusWorkspace(page);
     await page.focus('[data-convolution-stage-target="lesson"]');
-    await page.waitForTimeout(420);
+    await page.waitForTimeout(260);
     const railBlurred = await inspectFocusWorkspace(page);
-    record('keyboard focus opens the icon rail and releases it after focus leaves',
+    record('keyboard focus remains visible without expanding the compact icon rail',
       railFocused.sidebar?.left >= -1
         && railFocused.sidebar.left <= 1
-        && railBlurred.sidebar?.right >= 8
-        && railBlurred.sidebar.right <= 12,
+        && railFocused.sidebar?.width >= 74
+        && railFocused.sidebar.width <= 78
+        && railBlurred.sidebar?.left >= -1
+        && railBlurred.sidebar.left <= 1
+        && railBlurred.sidebar?.width >= 74
+        && railBlurred.sidebar.width <= 78,
       JSON.stringify({ railFocused, railBlurred }));
 
     await page.evaluate(() => document.getElementById('learnChatFab')?.click());
-    await page.waitForTimeout(160);
+    await page.waitForTimeout(520);
     const tutorOpen = await inspectFocusWorkspace(page);
-    record('Tutor orb opens the existing fixed 320px panel with a minimize control',
+    record('Tutor orb opens the existing panel at an approximately 2:1 lesson-to-Tutor ratio',
       !tutorOpen.chatCollapsed
-        && tutorOpen.chat?.width >= 318
-        && tutorOpen.chat.width <= 322
+        && tutorOpen.chat?.width >= 320
+        && tutorOpen.explain?.width / tutorOpen.chat.width >= 1.95
+        && tutorOpen.explain.width / tutorOpen.chat.width <= 2.05
         && tutorOpen.chatDisplay !== 'none'
         && tutorOpen.minimizeVisible
         && tutorOpen.minimizeTitle === 'Minimize Tutor'
@@ -486,9 +635,11 @@ async function main() {
     const tutorPractice = await inspectFocusWorkspace(page);
     record('Tutor panel state survives lesson pages and the transition to practice',
       !tutorAfterPage.chatCollapsed
-        && tutorAfterPage.chat?.width >= 318
+        && tutorAfterPage.explain?.width / tutorAfterPage.chat?.width >= 1.95
+        && tutorAfterPage.explain.width / tutorAfterPage.chat.width <= 2.05
         && !tutorPractice.chatCollapsed
-        && tutorPractice.chat?.width >= 318,
+        && tutorPractice.explain?.width / tutorPractice.chat?.width >= 1.95
+        && tutorPractice.explain.width / tutorPractice.chat.width <= 2.05,
       JSON.stringify({ tutorAfterPage, tutorPractice }));
 
     await clickStage(page, 'intro', 1);
@@ -497,8 +648,12 @@ async function main() {
     const lessonReset = await inspectFocusWorkspace(page);
     record('returning to overview restores ordinary Q&A and re-entering lesson resets to the orb',
       !overviewReset.appFocus
+        && !overviewReset.appSidebarCollapsed
         && !overviewReset.bodyFocus
         && !overviewReset.chatCollapsed
+        && !overviewReset.sidebarCollapsed
+        && overviewReset.sidebar?.width >= 220
+        && overviewReset.menuToggleVisible
         && overviewReset.chatDisplay !== 'none'
         && lessonReset.appFocus
         && lessonReset.bodyFocus
@@ -506,29 +661,65 @@ async function main() {
         && lessonReset.fabVisible,
       JSON.stringify({ overviewReset, lessonReset }));
 
+    await page.setViewportSize({ width: 1280, height: 720 });
     await goToLessonPage(page, 5);
     const demoWorkspace = await inspectFocusWorkspace(page);
-    record('GeoGebra lesson uses a 40/60 horizontal workspace on desktop',
+    record('GeoGebra lesson uses a compact 46/54 horizontal workspace on desktop',
       demoWorkspace.demoPage
         && demoWorkspace.demoTeachingWidth > 0
         && demoWorkspace.demoWidth > demoWorkspace.demoTeachingWidth
-        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth >= 1.35
-        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth <= 1.65
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth >= 1.12
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth <= 1.24
+        && demoWorkspace.demoWidth <= 622
         && demoWorkspace.horizontalOverflow <= 1,
       JSON.stringify(demoWorkspace));
+    record('1280x720 keeps an equal-scale-ready Demo safely scrollable instead of flattening it',
+      demoWorkspace.demoFeedbackBottom > 0
+        && demoWorkspace.demoStageWidth >= 360
+        && demoWorkspace.demoStageWidth <= 622
+        && demoWorkspace.demoStageHeight >= 360
+        && demoWorkspace.demoStageHeight <= 560
+        && demoWorkspace.explainScrollOverflow > 0
+        && demoWorkspace.horizontalOverflow <= 1
+        && demoWorkspace.redMotionArrowCount === 0
+        && demoWorkspace.lessonHeadingTitleTop >= demoWorkspace.lessonHeadingTop - 1
+        && demoWorkspace.lessonHeadingTitleBottom <= demoWorkspace.lessonHeadingBottom + 1
+        && (!demoWorkspace.fallbackRetryBottom
+          || (demoWorkspace.fallbackRetryTop >= demoWorkspace.demoStageTop
+            && demoWorkspace.fallbackRetryBottom <= demoWorkspace.demoStageBottom)),
+      JSON.stringify(demoWorkspace));
+    await captureEvidence(page, 'focus-1280x720.png');
 
+    await page.setViewportSize({ width: 1440, height: 900 });
     await page.evaluate(() => document.getElementById('learnChatFab')?.click());
-    await page.waitForTimeout(160);
+    await page.waitForTimeout(520);
     const demoWithTutor = await inspectFocusWorkspace(page);
     record('opening Tutor reflows the Demo without overlapping or rebuilding its layout shell',
       demoWithTutor.demoPage
-        && demoWithTutor.chat?.width >= 318
+        && demoWithTutor.chat?.width >= 320
+        && demoWithTutor.explain?.width / demoWithTutor.chat.width >= 1.95
+        && demoWithTutor.explain.width / demoWithTutor.chat.width <= 2.05
         && demoWithTutor.explain?.right <= demoWithTutor.chat?.left + 1
         && demoWithTutor.horizontalOverflow <= 1,
       JSON.stringify(demoWithTutor));
+    record('1440x900 keeps the compact Demo near-square with Tutor open',
+      demoWithTutor.demoFeedbackBottom > 0
+        && demoWithTutor.demoStageHeight >= 360
+        && demoWithTutor.demoStageHeight <= 560
+        && Math.abs(demoWithTutor.demoStageWidth - demoWithTutor.demoStageHeight) <= 3
+        && demoWithTutor.horizontalOverflow <= 1
+        && demoWithTutor.redMotionArrowCount === 0
+        && demoWithTutor.demoTeachingBottom <= demoWithTutor.pagerTop - 8
+        && demoWithTutor.lessonHeadingTitleTop >= demoWithTutor.lessonHeadingTop - 1
+        && demoWithTutor.lessonHeadingTitleBottom <= demoWithTutor.lessonHeadingBottom + 1
+        && (!demoWithTutor.fallbackRetryBottom
+          || (demoWithTutor.fallbackRetryTop >= demoWithTutor.demoStageTop
+            && demoWithTutor.fallbackRetryBottom <= demoWithTutor.demoStageBottom)),
+      JSON.stringify(demoWithTutor));
+    await captureEvidence(page, 'focus-1440x900-tutor.png');
 
     await page.evaluate(() => document.getElementById('learnTutorMinimizeBtn')?.click());
-    await page.waitForTimeout(160);
+    await page.waitForTimeout(520);
     const tutorMinimized = await inspectFocusWorkspace(page);
     record('Tutor minimize control returns focus workspace to the orb',
       tutorMinimized.chatCollapsed
@@ -553,7 +744,7 @@ async function main() {
 
     await clickStage(page, 'lesson', 7);
     const remembered = await page.evaluate(() => window.getConvolutionLessonStageState?.());
-    record('returning from practice restores Lesson 7 of 12', remembered?.stage === 'lesson' && remembered.position === 7, JSON.stringify(remembered));
+    record('returning from practice restores Lesson 7 of 18', remembered?.stage === 'lesson' && remembered.position === 7, JSON.stringify(remembered));
 
     const timing = await page.evaluate(() => window.getConvolutionLessonTurnTiming?.());
     const before = await page.evaluate(() => currentKnowledgePointIndex);
@@ -581,11 +772,11 @@ async function main() {
     await waitForLayout(page);
 
     const desktop = await collectViewport(page, 1280, 900);
-    record('all twelve desktop lesson pages use approved titles without boxed numbers or overflow',
+    record('all eighteen desktop lesson pages use approved titles without boxed numbers or overflow',
       desktop.every((item, index) => item.titleCorrect
         && item.stage === 'lesson'
         && item.position === index + 1
-        && item.total === 12
+        && item.total === 18
         && item.boxedNumbers === 0
         && item.contentOverflow <= 1
         && item.pageOverflow <= 1
@@ -600,21 +791,92 @@ async function main() {
     record('approved visuals and controlled demos appear on the intended pages',
       desktop[0].images.some(image => image.src.endsWith('/convolution-ink-memory-v2.png') && image.complete && image.width === 1153)
         && desktop[1].visualKinds.includes('past-weighting')
+        && desktop[1].images.some(image => image.src.endsWith('/convolution-past-effects-v1.png') && image.complete && image.width === 1153)
         && desktop[3].visualKinds.includes('five-steps')
         && desktop[6].images.some(image => image.src.endsWith('/convolution-sprinkler-procedure-v2.png') && image.complete && image.width === 1153)
         && desktop.slice(4).every(item => item.demoCount === 1),
       JSON.stringify(desktop.map((item, index) => ({ page: index + 1, demos: item.demoCount, visuals: item.visualKinds, images: item.images.map(image => image.src) }))));
 
-    for (const viewport of [[390, 844], [430, 844]]) {
+    for (const viewport of [[390, 844], [430, 932]]) {
       const snapshot = await collectViewport(page, viewport[0], viewport[1]);
-      record(`${viewport[0]}px keeps all twelve pages readable and inside the viewport`,
+      record(`${viewport[0]}px keeps all eighteen pages readable and inside the viewport`,
         snapshot.every(item => item.fontSize >= 16
           && item.contentOverflow <= 1
           && item.pageOverflow <= 1
           && item.navOverflow <= 1
           && item.boxedNumbers === 0),
         JSON.stringify(snapshot.map((item, index) => ({ page: index + 1, font: item.fontSize, overflow: item.pageOverflow }))));
+
+      const mobileFocus = await inspectFocusWorkspace(page);
+      record(`${viewport[0]}px uses the touch menu, hides the Tutor orb, and stacks the Demo`,
+        mobileFocus.appFocus
+          && mobileFocus.bodyFocus
+          && mobileFocus.touchMenuVisible
+          && mobileFocus.touchMenu?.right <= mobileFocus.topbarTitle?.left - 8
+          && !mobileFocus.fabVisible
+          && !mobileFocus.minimizeVisible
+          && mobileFocus.demoPage
+          && mobileFocus.demoTop >= mobileFocus.demoTeachingBottom - 1
+          && mobileFocus.horizontalOverflow <= 1,
+        JSON.stringify(mobileFocus));
+      await captureEvidence(page, `focus-${viewport[0]}x${viewport[1]}.png`);
+
+      await page.evaluate(() => document.getElementById('floatToggleBtn')?.click());
+      await page.waitForTimeout(260);
+      const mobileRailOpen = await inspectFocusWorkspace(page);
+      await page.evaluate(() => document.getElementById('menuToggleBtn')?.click());
+      await page.waitForTimeout(260);
+      const mobileRailClosed = await inspectFocusWorkspace(page);
+      record(`${viewport[0]}px touch menu opens and closes the icon rail without moving the lesson`,
+        mobileRailOpen.navTouchOpen
+          && mobileRailOpen.sidebar?.left >= -1
+          && mobileRailOpen.sidebar.left <= 1
+          && !mobileRailOpen.touchMenuVisible
+          && !mobileRailClosed.navTouchOpen
+          && mobileRailClosed.sidebar?.right <= 1
+          && mobileRailClosed.touchMenuVisible
+          && Math.abs((mobileRailOpen.explain?.left || 0) - (mobileRailClosed.explain?.left || 0)) <= 1,
+        JSON.stringify({ mobileRailOpen, mobileRailClosed }));
     }
+
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await waitForLayout(page);
+    await page.locator('#navHomeBtn').click();
+    await page.waitForFunction(() => document.getElementById('learnView')?.classList.contains('hidden'), null, { timeout: 5000 });
+    await waitForLayout(page);
+    const afterBack = await inspectFocusWorkspace(page);
+    record('Home exits focus and restores the ordinary sidebar workspace',
+      !afterBack.appFocus
+        && !afterBack.bodyFocus
+        && !afterBack.appSidebarCollapsed
+        && !afterBack.sidebarCollapsed
+        && afterBack.sidebar?.width >= 220
+        && afterBack.menuToggleVisible
+        && afterBack.sidebarControls.every(control => control.visible
+          && control.left >= -1
+          && control.right <= afterBack.sidebar.right + 1),
+      JSON.stringify(afterBack));
+
+    await openSubtopic(page, SUBTOPIC);
+    await page.waitForFunction(() => {
+      const state = window.getConvolutionLessonStageState?.();
+      return state?.stage === 'intro' && state.map?.lessonIndices?.length === 18;
+    }, null, { timeout: 25000 });
+    await goToLessonPage(page, 1);
+    await page.waitForFunction(() => window.getConvolutionLessonStageState?.()?.stage === 'lesson', null, { timeout: 5000 });
+    await waitForLayout(page);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.getElementById('learnView')?.classList.contains('hidden'), null, { timeout: 5000 });
+    await waitForLayout(page);
+    const afterEscape = await inspectFocusWorkspace(page);
+    record('Escape exits focus and restores the ordinary sidebar workspace',
+      !afterEscape.appFocus
+        && !afterEscape.bodyFocus
+        && !afterEscape.appSidebarCollapsed
+        && !afterEscape.sidebarCollapsed
+        && afterEscape.sidebar?.width >= 220
+        && afterEscape.menuToggleVisible,
+      JSON.stringify(afterEscape));
 
     record('lesson layout test produced no JavaScript page errors', pageErrors.length === 0, JSON.stringify(pageErrors));
     await context.close();

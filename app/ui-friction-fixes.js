@@ -343,6 +343,11 @@
       _lastAtEnd = false;
       return;
     }
+    if (stageState?.stage === 'lesson' && stageState.position === stageState.total) {
+      setClassIfChanged(pager, 'hidden', true);
+      _lastAtEnd = false;
+      return;
+    }
     setClassIfChanged(pager, 'hidden', false);
     setTextIfChanged(pagerPos, pagerText);
     setDisabledIfChanged(pagerPrevBtn, cur <= 0);
@@ -351,6 +356,7 @@
       ? window.__ftutorConvolutionPractice?.getState?.()
       : null;
     const practiceComplete = !practiceState
+      || practiceState.completed === true
       || Object.values(practiceState.drills || {}).every(drill => drill?.status === 'Mastered');
     const canFinishSection = stageState?.stage !== 'practice' || practiceComplete;
     const { id, title } = currentSectionRefs();
@@ -358,7 +364,7 @@
       setDisabledIfChanged(pagerNextBtn, true);
       setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
       setTextIfChanged(pagerNextLabel, 'Complete practice');
-      setAttrIfChanged(pagerNextBtn, 'title', 'Master all four drills to continue');
+      setAttrIfChanged(pagerNextBtn, 'title', 'Complete all five practice steps to continue');
     } else if (atEnd) {
       const next = peekNextSubsection(id, title);
       if (next) {

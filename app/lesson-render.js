@@ -419,14 +419,20 @@ function resetLearnKnowledgePointState() {
   currentLessonTrailingHtml = '';
   convolutionLastLessonIndex = 1;
   learnBody?.classList.remove('convolution-guided-flow-active');
+  window.resetConvolutionFocusWorkspace?.();
   if (learnKpTitle) learnKpTitle.textContent = 'Preparing lesson...';
   if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
   if (learnKpNextBtn) learnKpNextBtn.disabled = true;
 }
 
 const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
-const CONVOLUTION_LESSON_PAGE_COUNT = 12;
-const CONVOLUTION_STATE_STORAGE_KEY = 'ftutor:convolution-lesson:v5';
+const CONVOLUTION_LESSON_PAGE_COUNT = 18;
+const CONVOLUTION_STATE_STORAGE_KEY = 'ftutor:convolution-lesson:v6';
+const CONVOLUTION_PHASES = Object.freeze([
+  { id: 'what', label: 'WHAT', start: 1, end: 2 },
+  { id: 'why', label: 'WHY', start: 3, end: 4 },
+  { id: 'how', label: 'HOW', start: 5, end: 18 },
+]);
 const CONVOLUTION_STAGE_LABELS = Object.freeze({
   intro: 'Section Overview',
   lesson: 'Lesson',
@@ -435,19 +441,66 @@ const CONVOLUTION_STAGE_LABELS = Object.freeze({
 let convolutionLastLessonIndex = 1;
 
 function readConvolutionLessonState() {
-  const fallback = { version: 5, lastLessonPosition: 1, tasks: {} };
+  const fallback = {
+    version: 6,
+    lastLessonPosition: 1,
+    tasks: {},
+    figure27: { step: 1, t: -4, revealedTimes: [], completed: false },
+    exitCheck: { currentQuestion: 1, attempts: {}, answers: {}, completed: false },
+  };
   try {
     const saved = JSON.parse(localStorage.getItem(CONVOLUTION_STATE_STORAGE_KEY) || 'null');
-    if (!saved || saved.version !== 5) return fallback;
+    if (!saved || saved.version !== 6) return fallback;
+    const figure27 = saved.figure27 && typeof saved.figure27 === 'object' ? saved.figure27 : {};
+    const exitCheck = saved.exitCheck && typeof saved.exitCheck === 'object' ? saved.exitCheck : {};
     return {
-      version: 5,
+      version: 6,
       lastLessonPosition: Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(saved.lastLessonPosition) || 1)),
       tasks: saved.tasks && typeof saved.tasks === 'object' ? saved.tasks : {},
+      figure27: {
+        step: Math.max(1, Math.min(5, Number(figure27.step) || 1)),
+        t: Number.isFinite(Number(figure27.t)) ? Number(figure27.t) : -4,
+        revealedTimes: Array.isArray(figure27.revealedTimes)
+          ? figure27.revealedTimes.map(Number).filter(Number.isFinite).slice(0, 32)
+          : [],
+        completed: Boolean(figure27.completed),
+      },
+      exitCheck: {
+        currentQuestion: Math.max(1, Math.min(3, Number(exitCheck.currentQuestion) || 1)),
+        attempts: exitCheck.attempts && typeof exitCheck.attempts === 'object' ? exitCheck.attempts : {},
+        answers: exitCheck.answers && typeof exitCheck.answers === 'object' ? exitCheck.answers : {},
+        completed: Boolean(exitCheck.completed),
+      },
     };
   } catch (_) {
     return fallback;
   }
 }
+
+function cloneConvolutionState(value) {
+  return typeof structuredClone === 'function'
+    ? structuredClone(value)
+    : JSON.parse(JSON.stringify(value));
+}
+
+function updateConvolutionLessonSlice(key, next) {
+  if (!['figure27', 'exitCheck'].includes(key) || !next || typeof next !== 'object') return false;
+  const saved = readConvolutionLessonState();
+  saved[key] = cloneConvolutionState(next);
+  writeConvolutionLessonState(saved);
+  return true;
+}
+
+function getConvolutionLessonPhase(position) {
+  const value = Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(position) || 1));
+  return CONVOLUTION_PHASES.find(phase => value >= phase.start && value <= phase.end) || CONVOLUTION_PHASES[2];
+}
+
+window.getConvolutionLessonPhase = getConvolutionLessonPhase;
+window.getConvolutionFigure27State = () => cloneConvolutionState(readConvolutionLessonState().figure27);
+window.setConvolutionFigure27State = next => updateConvolutionLessonSlice('figure27', next);
+window.getConvolutionExitCheckState = () => cloneConvolutionState(readConvolutionLessonState().exitCheck);
+window.setConvolutionExitCheckState = next => updateConvolutionLessonSlice('exitCheck', next);
 
 function writeConvolutionLessonState(nextState) {
   try { localStorage.setItem(CONVOLUTION_STATE_STORAGE_KEY, JSON.stringify(nextState)); } catch (_) {}
@@ -512,6 +565,9 @@ window.getConvolutionLessonTurnTiming = getConvolutionLessonTurnTiming;
 
 function buildConvolutionStageNavHtml(stageState) {
   if (!stageState) return '';
+  const activePhase = stageState.stage === 'lesson'
+    ? getConvolutionLessonPhase(stageState.position).id
+    : '';
   const tabs = [
     { stage: 'intro' },
     { stage: 'lesson' },
@@ -524,9 +580,30 @@ function buildConvolutionStageNavHtml(stageState) {
         return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
       }).join('')}
     </nav>
+    ${stageState.stage === 'lesson' ? `<div class="convolution-phase-progress" aria-label="Lesson phases">
+      ${CONVOLUTION_PHASES.map(phase => `<span class="convolution-phase-chip${phase.id === activePhase ? ' is-active' : ''}" data-convolution-phase-chip="${phase.id}"${phase.id === activePhase ? ' aria-current="step"' : ''}>${phase.label}</span>`).join('')}
+    </div>` : ''}
     ${stageState.stage === 'lesson' ? `<p class="convolution-lesson-progress">Lesson ${stageState.position} of ${stageState.total}</p>` : ''}
   `;
 }
+
+function jumpToConvolutionLessonPosition(position) {
+  const map = getConvolutionLessonStageMap();
+  const targetPosition = Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(position) || 1));
+  if (!map || isLearnPageTurning) return false;
+  const targetIndex = map.lessonIndices[targetPosition - 1];
+  if (!Number.isInteger(targetIndex)) return false;
+  if (targetIndex === currentKnowledgePointIndex) return true;
+  const direction = targetIndex < currentKnowledgePointIndex ? -1 : 1;
+  return runLearnPageTurn(direction, () => {
+    currentKnowledgePointIndex = targetIndex;
+    const saved = readConvolutionLessonState();
+    saved.lastLessonPosition = targetPosition;
+    writeConvolutionLessonState(saved);
+    renderCurrentKnowledgePoint();
+  });
+}
+window.jumpToConvolutionLessonPosition = jumpToConvolutionLessonPosition;
 
 function jumpToConvolutionLessonStage(stage) {
   const map = getConvolutionLessonStageMap();
@@ -571,6 +648,16 @@ function bindConvolutionStageNavigation(root) {
     button.addEventListener('click', () => {
       jumpToConvolutionLessonStage('lesson');
     });
+  });
+  root.querySelectorAll('[data-convolution-start-practice]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => jumpToConvolutionLessonStage('practice'));
+  });
+  root.querySelectorAll('[data-convolution-review-lesson]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => jumpToConvolutionLessonPosition(1));
   });
 }
 
@@ -1401,6 +1488,7 @@ function renderCurrentKnowledgePoint() {
     writeConvolutionLessonState(saved);
   }
   learnBody?.classList.toggle('convolution-guided-flow-active', Boolean(stageState));
+  window.syncConvolutionFocusWorkspace?.(stageState);
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
   replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
   delete learnExplainContent.dataset.lectureDecorated;
@@ -1408,8 +1496,15 @@ function renderCurrentKnowledgePoint() {
   decorateLectureContent(learnExplainContent);
   enhanceVisualMetadataUI(learnExplainContent);
   hydrateInteractiveDemos(learnExplainContent);
+  const currentPageFrame = learnExplainContent.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+  currentPageFrame?.classList.toggle(
+    'convolution-demo-page',
+    Boolean(stageState && stageState.stage !== 'intro' && currentPageFrame.querySelector('.geogebra-demo-shell'))
+  );
   const convolutionPractice = learnExplainContent.querySelector('[data-convolution-practice]');
   if (convolutionPractice) window.__ftutorConvolutionPractice?.mount(convolutionPractice);
+  const convolutionExitCheck = learnExplainContent.querySelector('[data-convolution-exit-check-host]');
+  if (convolutionExitCheck) window.__ftutorConvolutionExitCheck?.mount(convolutionExitCheck);
   bindOverviewSubsectionCards();
   bindConvolutionStageNavigation(learnExplainContent);
   
