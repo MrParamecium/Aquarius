@@ -3,7 +3,7 @@
   "name": "lesson-loop-07-restore-layout-shell",
   "title": "2.4-2 restore approved lesson layout shell",
   "description": "",
-  "status": "planning",
+  "status": "in_progress",
   "dev_type": null,
   "scope": "Restore the approved pre-Loop-06 page shell across 2.4-2 while preserving the current 18 lessons, ten demos, Practice, Tutor, and mobile behavior",
   "package": null,

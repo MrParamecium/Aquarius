@@ -7,18 +7,18 @@
 - [x] 用户确认 `prd.md` 与 `design.md`。
 - [x] 完成五任务实施计划。
 - [x] 运行 `python3 ./.trellis/scripts/task.py validate 08-22-lesson-loop-07-restore-layout-shell`。
-- [ ] 用户明确选择执行方式后才运行 `python3 ./.trellis/scripts/task.py start 08-22-lesson-loop-07-restore-layout-shell`。
-- [ ] `task.py start` 前不修改 `app/`、测试或视觉基线。
+- [x] 用户明确选择执行方式后才运行 `python3 ./.trellis/scripts/task.py start 08-22-lesson-loop-07-restore-layout-shell`。
+- [x] `task.py start` 前不修改 `app/`、测试或视觉基线。
 
 保护边界：不提交四张既有视觉 baseline、`.superpowers/`、任务 artifacts、`workspace/memory/*`、`workspace/materials/lesson-cache/2_4/` 或用户未采用图片。
 
 ## 第 1 步：建立失败的旧壳层契约
 
-- [ ] 修改 `tools/test-convolution-lesson-layout.js`，读取 `data-convolution-template`、`.convolution-reading-surface`、Phase 父层、Stage/Tab 宽度和嵌套卡计算样式。
-- [ ] 锁定映射：Overview=`overview`，Lesson 1–5=`reading`，6–15=`demo`，16–18=`finish`，Practice=`practice`。
-- [ ] 锁定每页一个主阅读面、标题内 Phase、全宽三等分 Stage、透明内层教学壳和 Demo 约 `43/57`。
-- [ ] 运行 `npm run test:convolution-layout`，确认只因上述能力尚未实现而失败。
-- [ ] 提交：`test: define restored convolution shell contract`。
+- [x] 修改 `tools/test-convolution-lesson-layout.js`，读取 `data-convolution-template`、`.convolution-reading-surface`、Phase 父层、Stage/Tab 宽度和嵌套卡计算样式。
+- [x] 锁定映射：Overview=`overview`，Lesson 1–5=`reading`，6–15=`demo`，16–18=`finish`，Practice=`practice`。
+- [x] 锁定每页一个主阅读面、标题内 Phase、全宽三等分 Stage、透明内层教学壳和 Demo 约 `43/57`。
+- [x] 运行 `npm run test:convolution-layout`，确认只因上述能力尚未实现而失败（`38/42` 通过，4 项预期失败）。
+- [x] 提交：`test: define restored convolution shell contract`。
 
 回滚点：本提交只修改测试。
 

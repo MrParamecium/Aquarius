@@ -136,6 +136,16 @@ async function inspectLessonPage(page, position) {
     const title = frame?.querySelector('.lesson-page-heading h2')?.textContent.trim() || '';
     const computed = content ? getComputedStyle(content) : null;
     const teachingStyle = teachingBlock ? getComputedStyle(teachingBlock) : null;
+    const phase = frame?.querySelector('.convolution-phase-progress');
+    const heading = frame?.querySelector('.lesson-page-heading');
+    const frameRect = frame?.getBoundingClientRect();
+    const frameStyle = frame ? getComputedStyle(frame) : null;
+    const navRect = nav?.getBoundingClientRect();
+    const frameContentWidth = frameRect && frameStyle
+      ? frameRect.width - parseFloat(frameStyle.paddingLeft || '0') - parseFloat(frameStyle.paddingRight || '0')
+      : 0;
+    const tabRects = Array.from(nav?.querySelectorAll('.convolution-stage-tab') || [])
+      .map(tab => tab.getBoundingClientRect());
     const images = Array.from(content?.querySelectorAll('.convolution-analogy-image, .convolution-past-effects-image') || []).map(image => ({
       src: new URL(image.src).pathname,
       complete: image.complete,
@@ -158,6 +168,13 @@ async function inspectLessonPage(page, position) {
       contentBackgroundImage: computed?.backgroundImage || '',
       teachingBackground: teachingStyle?.backgroundColor || '',
       teachingBorderTopWidth: teachingStyle?.borderTopWidth || '',
+      template: frame?.dataset.convolutionTemplate || '',
+      readingSurfaceCount: frame?.querySelectorAll('.convolution-reading-surface').length || 0,
+      phaseInsideHeading: Boolean(phase && heading?.contains(phase)),
+      navWidthCoverage: frameContentWidth > 0 && navRect ? navRect.width / frameContentWidth : 0,
+      stageTabWidthDelta: tabRects.length === 3
+        ? Math.max(...tabRects.map(rect => rect.width)) - Math.min(...tabRects.map(rect => rect.width))
+        : 999,
       demoCount: content?.querySelectorAll('.kc-interactive-demo').length || 0,
       demos: Array.from(content?.querySelectorAll('.kc-interactive-demo') || []).map(demo => ({
         task: demo.dataset.convolutionTask || '',
@@ -373,6 +390,14 @@ async function main() {
       const pager = document.getElementById('learnExplainPager');
       const nav = frame?.querySelector('.convolution-stage-nav');
       const navStyle = nav ? getComputedStyle(nav) : null;
+      const frameRect = frame?.getBoundingClientRect();
+      const frameStyle = frame ? getComputedStyle(frame) : null;
+      const navRect = nav?.getBoundingClientRect();
+      const frameContentWidth = frameRect && frameStyle
+        ? frameRect.width - parseFloat(frameStyle.paddingLeft || '0') - parseFloat(frameStyle.paddingRight || '0')
+        : 0;
+      const tabRects = Array.from(nav?.querySelectorAll('.convolution-stage-tab') || [])
+        .map(tab => tab.getBoundingClientRect());
       return {
         pointCount: Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints.length : 0,
         state: window.getConvolutionLessonStageState?.() || null,
@@ -388,6 +413,13 @@ async function main() {
         starts: frame?.querySelectorAll('[data-convolution-intro-start]').length || 0,
         pagerHidden: !pager || pager.hidden || getComputedStyle(pager).display === 'none',
         boxedNumbers: frame?.querySelectorAll('.convolution-intro-number, .convolution-page-marker, [data-convolution-number]').length || 0,
+        template: frame?.dataset.convolutionTemplate || '',
+        readingSurfaceCount: frame?.querySelectorAll('.convolution-reading-surface').length || 0,
+        phaseCount: frame?.querySelectorAll('.convolution-phase-progress').length || 0,
+        navWidthCoverage: frameContentWidth > 0 && navRect ? navRect.width / frameContentWidth : 0,
+        stageTabWidthDelta: tabRects.length === 3
+          ? Math.max(...tabRects.map(rect => rect.width)) - Math.min(...tabRects.map(rect => rect.width))
+          : 999,
       };
     });
     record('application maps to one overview, eighteen lessons, and one practice page',
@@ -419,6 +451,19 @@ async function main() {
         && intro.pagerHidden
         && intro.boxedNumbers === 0,
       JSON.stringify(intro));
+    record('overview uses the restored full-width shell without a phase row',
+      intro.template === 'overview'
+        && intro.readingSurfaceCount === 1
+        && intro.phaseCount === 0
+        && intro.navWidthCoverage >= 0.95
+        && intro.stageTabWidthDelta <= 2,
+      JSON.stringify({
+        template: intro.template,
+        readingSurfaceCount: intro.readingSurfaceCount,
+        phaseCount: intro.phaseCount,
+        navWidthCoverage: intro.navWidthCoverage,
+        stageTabWidthDelta: intro.stageTabWidthDelta,
+      }));
 
     const overviewDesktop = await inspectOverviewSurface(page);
     record('overview uses a clean readable surface without horizontal overflow',
@@ -509,11 +554,13 @@ async function main() {
         active: chip.getAttribute('aria-current') === 'step',
       })),
       phase: window.getConvolutionLessonPhase?.(1)?.id || '',
+      phaseInsideHeading: Boolean(document.querySelector('.lesson-page-heading .convolution-phase-progress')),
     }));
     record('lesson exposes one active WHAT/WHY/HOW phase chip',
       lessonPhaseStart.chips.map(chip => chip.id).join(',') === 'what,why,how'
         && lessonPhaseStart.chips.filter(chip => chip.active).map(chip => chip.id).join(',') === 'what'
-        && lessonPhaseStart.phase === 'what',
+        && lessonPhaseStart.phase === 'what'
+        && lessonPhaseStart.phaseInsideHeading,
       JSON.stringify(lessonPhaseStart));
 
     await page.evaluate(() => window.jumpToConvolutionLessonPosition?.(3));
@@ -734,6 +781,9 @@ async function main() {
     await clickStage(page, 'practice', 1);
     const practice = await page.evaluate(() => ({
       state: window.getConvolutionLessonStageState?.(),
+      template: document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]')?.dataset.convolutionTemplate || '',
+      readingSurfaceCount: document.querySelectorAll('.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-reading-surface').length,
+      phaseCount: document.querySelectorAll('.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress').length,
       pager: document.getElementById('learnPagerPosition')?.textContent.trim() || '',
       steps: Array.from(document.querySelectorAll('[data-practice-step-chip]'))
         .map(chip => chip.textContent.replace(/^\d+\.\s*/, '').trim())
@@ -744,6 +794,9 @@ async function main() {
     }));
     record('practice contains the approved five-step builder instead of the generic Quick Check',
       practice.state?.stage === 'practice'
+        && practice.template === 'practice'
+        && practice.readingSurfaceCount === 1
+        && practice.phaseCount === 0
         && practice.pager === 'Practice'
         && practice.steps === 'Predict,Plan,Build,Calculate,Sketch'
         && practice.panels === 1
@@ -781,6 +834,26 @@ async function main() {
     await waitForLayout(page);
 
     const desktop = await collectViewport(page, 1280, 900);
+    const expectedTemplates = [
+      ...Array(5).fill('reading'),
+      ...Array(10).fill('demo'),
+      ...Array(3).fill('finish'),
+    ];
+    record('all lesson pages expose the approved shell template and one reading surface',
+      desktop.every((item, index) => item.template === expectedTemplates[index]
+        && item.readingSurfaceCount === 1
+        && item.phaseInsideHeading
+        && item.navWidthCoverage >= 0.95
+        && item.stageTabWidthDelta <= 2),
+      JSON.stringify(desktop.map((item, index) => ({
+        page: index + 1,
+        expected: expectedTemplates[index],
+        template: item.template,
+        readingSurfaceCount: item.readingSurfaceCount,
+        phaseInsideHeading: item.phaseInsideHeading,
+        navWidthCoverage: item.navWidthCoverage,
+        stageTabWidthDelta: item.stageTabWidthDelta,
+      }))));
     record('all eighteen desktop lesson pages use approved titles without boxed numbers or overflow',
       desktop.every((item, index) => item.titleCorrect
         && item.stage === 'lesson'
