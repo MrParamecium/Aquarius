@@ -1,0 +1,72 @@
+# 实施计划
+
+完整逐步代码计划：`docs/superpowers/plans/2026-08-22-convolution-restore-old-shell.md`
+
+## 第 0 步：实施门槛
+
+- [x] 用户确认 `prd.md` 与 `design.md`。
+- [x] 完成五任务实施计划。
+- [x] 运行 `python3 ./.trellis/scripts/task.py validate 08-22-lesson-loop-07-restore-layout-shell`。
+- [ ] 用户明确选择执行方式后才运行 `python3 ./.trellis/scripts/task.py start 08-22-lesson-loop-07-restore-layout-shell`。
+- [ ] `task.py start` 前不修改 `app/`、测试或视觉基线。
+
+保护边界：不提交四张既有视觉 baseline、`.superpowers/`、任务 artifacts、`workspace/memory/*`、`workspace/materials/lesson-cache/2_4/` 或用户未采用图片。
+
+## 第 1 步：建立失败的旧壳层契约
+
+- [ ] 修改 `tools/test-convolution-lesson-layout.js`，读取 `data-convolution-template`、`.convolution-reading-surface`、Phase 父层、Stage/Tab 宽度和嵌套卡计算样式。
+- [ ] 锁定映射：Overview=`overview`，Lesson 1–5=`reading`，6–15=`demo`，16–18=`finish`，Practice=`practice`。
+- [ ] 锁定每页一个主阅读面、标题内 Phase、全宽三等分 Stage、透明内层教学壳和 Demo 约 `43/57`。
+- [ ] 运行 `npm run test:convolution-layout`，确认只因上述能力尚未实现而失败。
+- [ ] 提交：`test: define restored convolution shell contract`。
+
+回滚点：本提交只修改测试。
+
+## 第 2 步：实现模板、Stage 和标题层
+
+- [ ] 在 `app/lesson-render.js` 增加纯函数 `getConvolutionPageTemplate(stageState)`。
+- [ ] `buildConvolutionStageNavHtml()` 只输出三段 Stage；新增 `buildConvolutionPhaseProgressHtml()`。
+- [ ] `buildLessonPageFrameHtml()` 输出 `data-convolution-template` 和唯一 `.convolution-reading-surface`，Phase 放进 `.lesson-page-heading`。
+- [ ] `.convolution-demo-page` 只在模板为 `demo` 且 hydrate 后存在 `.geogebra-demo-shell` 时添加。
+- [ ] 整理 `app/style.css` 的 Stage/Phase 规则：Stage 全宽三等分，Phase 是标题右侧轻量提示。
+- [ ] 运行 `node --check app/lesson-render.js`、layout 和 micro test。
+- [ ] 提交：`feat: restore convolution stage and title hierarchy`。
+
+回滚点：回滚该提交恢复 Loop 06 导航与 Phase 外观，不触碰课程数据。
+
+## 第 3 步：恢复 Reading、Demo 和 Finish 壳层
+
+- [ ] 先给 layout test 增加不透明主阅读面、透明 teaching card、Reading/Finish 宽度和 `43/57` 比例断言并确认失败。
+- [ ] 合并 `app/style.css` 中 `26918+`、`27558+`、`33330+`、`33685+` 的 2.4-2 竞争规则，不在末尾继续叠加覆盖。
+- [ ] 主阅读面使用稳定白色/深色不透明表面；Reading/Finish 约 `72ch`，Demo 不限窄宽。
+- [ ] 保留互动 DOM，只移除 teaching card、Exit Check root、GeoGebra shell 的边框、阴影和毛玻璃。
+- [ ] Demo 在足够宽的真实课程容器内使用约 `43% / 57%`，保留既有等比例 canvas、Fallback 和生命周期。
+- [ ] 公式使用浅灰底 + 橙色左边线；Learning goal/You can now 使用浅绿底 + 绿色左边线。
+- [ ] 运行 layout、GeoGebra、lifecycle 和 Exit Check tests。
+- [ ] 提交：`style: restore convolution lesson reading shell`。
+
+回滚点：回滚该提交恢复 Loop 06 卡片外观，模板和导航仍可独立存在。
+
+## 第 4 步：统一 Practice、主题和响应式
+
+- [ ] layout test 锁定 Practice 一个主阅读面、五步导航在当前 panel 上方、一个活动 panel 和透明 Practice root。
+- [ ] 不修改 `app/convolution-practice.js` 的答案、状态或 DOM；当前结构足够由 CSS 完成统一壳层。
+- [ ] Practice 五步行置于阅读面顶部；桌面保留 builder/Demo 双栏，移动端纵向。
+- [ ] `390x844` 和 `430x932` 下 Stage 不横滚、Phase 换行、Demo 上下排列、分页器和移动菜单可达。
+- [ ] 深色正文使用 alpha=1 的高对比表面；无 `backdrop-filter` 时 Stage 使用不透明 fallback。
+- [ ] 运行 layout、Practice、Exit Check、mobile、GeoGebra 和 lifecycle tests。
+- [ ] 提交：`style: unify convolution practice and responsive shell`。
+
+回滚点：回滚该提交只恢复 Practice/主题/移动壳层，不改变答案模型。
+
+## 第 5 步：全量回归与双语验收
+
+- [ ] 运行 `git diff --check`、syntax check、convolution visuals、layout、micro、Practice、Exit Check、GeoGebra、lifecycle 和 mobile tests。
+- [ ] 运行 CSS probe、visual check 和 `npm run check`；不通过重做 baseline 掩盖差异。
+- [ ] 使用 `TUTOR_CONVOLUTION_LAYOUT_EVIDENCE_DIR` 生成 `1280x720`、`1440x900 + Tutor`、`390x844` 证据并人工检查。
+- [ ] 手动走完 Overview → Reading → Demo → Exit Check → Practice，并验证 Tutor、Home/Escape、Fallback/Retry。
+- [ ] 在 `verification.md` 写中文详细验收和 `English Summary`，原样记录 parent-prelude `15` vs `14` 的既有缓存例外（若仍存在）。
+- [ ] 用 `git status --short` 和 `git diff --name-only 9473b6c...HEAD` 确认受保护文件未提交。
+- [ ] 提交：`docs: verify restored convolution lesson shell`。
+
+最终交付：停留在本地 `codex/lesson-loop-07-restore-layout-shell`，不 push、不创建 PR、不合并，等待用户验收。
