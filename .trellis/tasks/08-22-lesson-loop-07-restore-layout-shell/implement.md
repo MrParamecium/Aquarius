@@ -61,12 +61,13 @@
 
 ## 第 5 步：全量回归与双语验收
 
-- [ ] 运行 `git diff --check`、syntax check、convolution visuals、layout、micro、Practice、Exit Check、GeoGebra、lifecycle 和 mobile tests。
-- [ ] 运行 CSS probe、visual check 和 `npm run check`；不通过重做 baseline 掩盖差异。
-- [ ] 使用 `TUTOR_CONVOLUTION_LAYOUT_EVIDENCE_DIR` 生成 `1280x720`、`1440x900 + Tutor`、`390x844` 证据并人工检查。
-- [ ] 手动走完 Overview → Reading → Demo → Exit Check → Practice，并验证 Tutor、Home/Escape、Fallback/Retry。
-- [ ] 在 `verification.md` 写中文详细验收和 `English Summary`，原样记录 parent-prelude `15` vs `14` 的既有缓存例外（若仍存在）。
-- [ ] 用 `git status --short` 和 `git diff --name-only 9473b6c...HEAD` 确认受保护文件未提交。
-- [ ] 提交：`docs: verify restored convolution lesson shell`。
+- [x] 运行 `git diff --check`、syntax check、convolution visuals、layout、micro、Practice、Exit Check、GeoGebra、lifecycle 和 mobile tests。
+- [x] 运行 CSS probe、visual check 和 `npm run check`；Visual 为 `33/35`，两个既有 Textbook Overview 场景均为 `3505 / 1024000 = 0.342%` 文字抗锯齿波动，没有重做 baseline 掩盖差异。
+- [x] 使用 `TUTOR_CONVOLUTION_LAYOUT_EVIDENCE_DIR` 生成 `1280x720`、`1440x900 + Tutor`、`390x844` 和 `430x932` 证据并人工检查。
+- [x] 手动走完 Overview → Reading → Demo → Exit Check → Practice，并验证 Tutor、Home/Escape、Fallback/Retry。
+- [x] 在 `verification.md` 写中文详细验收和 `English Summary`；`npm run check` 原样记录既有缓存例外：`Parent-prelude count mismatch: got 15, expected 14`。
+- [x] 用 `git status --short` 和 `git diff --name-only 9473b6c...HEAD` 确认受保护文件未提交。
+- [x] 本轮仅遵循现有 scoped CSS 规范，无需更新全局 spec。
+- [x] 提交：`docs: verify restored convolution lesson shell`。
 
 最终交付：停留在本地 `codex/lesson-loop-07-restore-layout-shell`，不 push、不创建 PR、不合并，等待用户验收。
