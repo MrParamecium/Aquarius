@@ -24,13 +24,13 @@
 
 ## 第 2 步：实现模板、Stage 和标题层
 
-- [ ] 在 `app/lesson-render.js` 增加纯函数 `getConvolutionPageTemplate(stageState)`。
-- [ ] `buildConvolutionStageNavHtml()` 只输出三段 Stage；新增 `buildConvolutionPhaseProgressHtml()`。
-- [ ] `buildLessonPageFrameHtml()` 输出 `data-convolution-template` 和唯一 `.convolution-reading-surface`，Phase 放进 `.lesson-page-heading`。
-- [ ] `.convolution-demo-page` 只在模板为 `demo` 且 hydrate 后存在 `.geogebra-demo-shell` 时添加。
-- [ ] 整理 `app/style.css` 的 Stage/Phase 规则：Stage 全宽三等分，Phase 是标题右侧轻量提示。
-- [ ] 运行 `node --check app/lesson-render.js`、layout 和 micro test。
-- [ ] 提交：`feat: restore convolution stage and title hierarchy`。
+- [x] 在 `app/lesson-render.js` 增加纯函数 `getConvolutionPageTemplate(stageState)`。
+- [x] `buildConvolutionStageNavHtml()` 只输出三段 Stage；新增 `buildConvolutionPhaseProgressHtml()`。
+- [x] `buildLessonPageFrameHtml()` 输出 `data-convolution-template` 和唯一 `.convolution-reading-surface`，Phase 放进 `.lesson-page-heading`。
+- [x] `.convolution-demo-page` 只在模板为 `demo` 且 hydrate 后存在 `.geogebra-demo-shell` 时添加。
+- [x] 整理 `app/style.css` 的 Stage/Phase 规则：Stage 全宽三等分，Phase 是标题右侧轻量提示。
+- [x] 运行 `node --check app/lesson-render.js`、layout（`42/42`）和 micro test（`7/7`）。
+- [x] 提交：`feat: restore convolution stage and title hierarchy`。
 
 回滚点：回滚该提交恢复 Loop 06 导航与 Phase 外观，不触碰课程数据。
 

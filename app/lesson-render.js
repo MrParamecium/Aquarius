@@ -556,6 +556,16 @@ function getConvolutionLessonStageState(index = currentKnowledgePointIndex) {
 }
 window.getConvolutionLessonStageState = getConvolutionLessonStageState;
 
+function getConvolutionPageTemplate(stageState) {
+  if (!stageState) return '';
+  if (stageState.stage === 'intro') return 'overview';
+  if (stageState.stage === 'practice') return 'practice';
+  if (stageState.stage !== 'lesson') return '';
+  if (stageState.position <= 5) return 'reading';
+  if (stageState.position <= 15) return 'demo';
+  return 'finish';
+}
+
 function getConvolutionLessonTurnTiming() {
   return getConvolutionLessonStageMap()
     ? { commitMs: 70, totalMs: 180 }
@@ -565,9 +575,6 @@ window.getConvolutionLessonTurnTiming = getConvolutionLessonTurnTiming;
 
 function buildConvolutionStageNavHtml(stageState) {
   if (!stageState) return '';
-  const activePhase = stageState.stage === 'lesson'
-    ? getConvolutionLessonPhase(stageState.position).id
-    : '';
   const tabs = [
     { stage: 'intro' },
     { stage: 'lesson' },
@@ -580,11 +587,15 @@ function buildConvolutionStageNavHtml(stageState) {
         return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
       }).join('')}
     </nav>
-    ${stageState.stage === 'lesson' ? `<div class="convolution-phase-progress" aria-label="Lesson phases">
-      ${CONVOLUTION_PHASES.map(phase => `<span class="convolution-phase-chip${phase.id === activePhase ? ' is-active' : ''}" data-convolution-phase-chip="${phase.id}"${phase.id === activePhase ? ' aria-current="step"' : ''}>${phase.label}</span>`).join('')}
-    </div>` : ''}
-    ${stageState.stage === 'lesson' ? `<p class="convolution-lesson-progress">Lesson ${stageState.position} of ${stageState.total}</p>` : ''}
   `;
+}
+
+function buildConvolutionPhaseProgressHtml(stageState) {
+  if (stageState?.stage !== 'lesson') return '';
+  const activePhase = getConvolutionLessonPhase(stageState.position).id;
+  return `<div class="convolution-phase-progress" aria-label="Lesson phases">
+    ${CONVOLUTION_PHASES.map(phase => `<span class="convolution-phase-chip${phase.id === activePhase ? ' is-active' : ''}" data-convolution-phase-chip="${phase.id}"${phase.id === activePhase ? ' aria-current="step"' : ''}>${phase.label}</span>`).join('')}
+  </div>`;
 }
 
 function jumpToConvolutionLessonPosition(position) {
@@ -1385,17 +1396,21 @@ function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   const stageAttrs = stageState
     ? ` data-lesson-stage="${stageState.stage}" data-stage-position="${stageState.position}" data-stage-total="${stageState.total}"`
     : '';
+  const pageTemplate = getConvolutionPageTemplate(stageState);
+  const templateAttr = pageTemplate ? ` data-convolution-template="${pageTemplate}"` : '';
   const stageNavHtml = buildConvolutionStageNavHtml(stageState);
+  const phaseHtml = buildConvolutionPhaseProgressHtml(stageState);
   const displayTitle = getLessonPageDisplayTitle(block, index);
   const pageBodyHtml = displayTitle ? stripDuplicatePageHeading(innerHtml, displayTitle) : String(innerHtml || '');
   const titleHtml = displayTitle
-    ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2></header>`
+    ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2>${phaseHtml}</header>`
     : '';
   return `
-    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}${stageAttrs}>
+    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}${stageAttrs}${templateAttr}>
       ${stageNavHtml}
       ${titleHtml}
-      <div class="lesson-page-content">
+      ${stageState?.stage === 'lesson' ? `<p class="convolution-lesson-progress">Lesson ${stageState.position} of ${stageState.total}</p>` : ''}
+      <div class="lesson-page-content convolution-reading-surface">
         ${pageBodyHtml || '<p class="ghost">No explanation available.</p>'}
       </div>
       ${extraHtml ? `<div class="lesson-page-extra">${extraHtml}</div>` : ''}
@@ -1500,9 +1515,10 @@ function renderCurrentKnowledgePoint() {
   hydrateInteractiveDemos(learnExplainContent);
   window.__ftutorConvolutionLessonInteractions?.mount(learnExplainContent);
   const currentPageFrame = learnExplainContent.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+  const isConvolutionDemoTemplate = currentPageFrame?.dataset.convolutionTemplate === 'demo';
   currentPageFrame?.classList.toggle(
     'convolution-demo-page',
-    Boolean(stageState && stageState.stage !== 'intro' && currentPageFrame.querySelector('.geogebra-demo-shell'))
+    Boolean(isConvolutionDemoTemplate && currentPageFrame.querySelector('.geogebra-demo-shell'))
   );
   const convolutionPractice = learnExplainContent.querySelector('[data-convolution-practice]');
   if (convolutionPractice) window.__ftutorConvolutionPractice?.mount(convolutionPractice);

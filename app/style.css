@@ -33688,26 +33688,44 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   --convolution-glass-strong: rgba(245, 249, 250, 0.9);
   color: var(--convolution-copy, #172033);
 }
-.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav,
-.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress {
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
   position: sticky;
+  top: 8px;
   z-index: 20;
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 4px;
   align-items: center;
-  width: fit-content;
-  max-width: 100%;
-  margin: 0 auto 10px;
-  padding: 6px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  margin: 0 0 20px;
+  padding: 4px;
   border: 1px solid rgba(109, 128, 145, 0.24);
-  border-radius: 10px;
+  border-radius: 7px;
   background: var(--convolution-nav-glass, rgba(245, 249, 250, 0.84));
   box-shadow: 0 8px 20px rgba(23, 32, 51, 0.07);
-  backdrop-filter: blur(18px) saturate(112%);
-  -webkit-backdrop-filter: blur(18px) saturate(112%);
+  backdrop-filter: blur(20px) saturate(112%);
+  -webkit-backdrop-filter: blur(20px) saturate(112%);
 }
-.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav { top: 8px; }
-.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress { top: 58px; }
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress {
+  position: static;
+  z-index: auto;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 12px;
+  align-items: center;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
 .convolution-stage-tab,
 .convolution-phase-chip {
   min-height: 34px;
@@ -33722,11 +33740,33 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   letter-spacing: 0;
 }
 .convolution-stage-tab { cursor: pointer; }
-.convolution-stage-tab.is-active,
-.convolution-phase-chip.is-active {
+.convolution-stage-tab.is-active {
   border-color: rgba(22, 123, 100, 0.36);
   background: rgba(22, 123, 100, 0.12);
   color: #0f6a58;
+}
+.convolution-phase-chip {
+  min-height: 0;
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  font-size: 0.74rem;
+}
+.convolution-phase-chip.is-active {
+  border-bottom-color: var(--convolution-action, #167b64);
+  background: transparent;
+  color: #0f6a58;
+}
+#learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-heading {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 18px !important;
+  align-items: end !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
 }
 .convolution-teaching-card,
 .convolution-overlap-preview,
