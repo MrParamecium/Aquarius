@@ -146,6 +146,18 @@ async function inspectLessonPage(page, position) {
       : 0;
     const tabRects = Array.from(nav?.querySelectorAll('.convolution-stage-tab') || [])
       .map(tab => tab.getBoundingClientRect());
+    const nestedSurfaces = Array.from(content?.querySelectorAll(
+      '.convolution-teaching-card, .convolution-exit-check, .geogebra-demo-shell'
+    ) || []).map(node => {
+      const style = getComputedStyle(node);
+      return {
+        className: node.className,
+        background: style.backgroundColor,
+        borderTopWidth: style.borderTopWidth,
+        boxShadow: style.boxShadow,
+        backdrop: style.backdropFilter || style.webkitBackdropFilter || '',
+      };
+    });
     const images = Array.from(content?.querySelectorAll('.convolution-analogy-image, .convolution-past-effects-image') || []).map(image => ({
       src: new URL(image.src).pathname,
       complete: image.complete,
@@ -166,8 +178,12 @@ async function inspectLessonPage(page, position) {
       navOverflow: nav ? Math.max(0, nav.scrollWidth - nav.clientWidth) : 999,
       contentBackground: computed?.backgroundColor || '',
       contentBackgroundImage: computed?.backgroundImage || '',
+      contentWidth: content?.getBoundingClientRect().width || 0,
       teachingBackground: teachingStyle?.backgroundColor || '',
       teachingBorderTopWidth: teachingStyle?.borderTopWidth || '',
+      teachingBoxShadow: teachingStyle?.boxShadow || '',
+      teachingBackdrop: teachingStyle?.backdropFilter || teachingStyle?.webkitBackdropFilter || '',
+      nestedSurfaces,
       template: frame?.dataset.convolutionTemplate || '',
       readingSurfaceCount: frame?.querySelectorAll('.convolution-reading-surface').length || 0,
       phaseInsideHeading: Boolean(phase && heading?.contains(phase)),
@@ -714,19 +730,19 @@ async function main() {
     await page.setViewportSize({ width: 1280, height: 720 });
     await goToLessonPage(page, 6);
     const demoWorkspace = await inspectFocusWorkspace(page);
-    record('GeoGebra lesson uses a compact 46/54 horizontal workspace on desktop',
+    record('GeoGebra lesson uses the approved 43/57 horizontal workspace on desktop',
       demoWorkspace.demoPage
         && demoWorkspace.demoTeachingWidth > 0
         && demoWorkspace.demoWidth > demoWorkspace.demoTeachingWidth
-        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth >= 1.12
-        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth <= 1.24
-        && demoWorkspace.demoWidth <= 622
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth >= 1.25
+        && demoWorkspace.demoWidth / demoWorkspace.demoTeachingWidth <= 1.40
+        && demoWorkspace.demoWidth <= 640
         && demoWorkspace.horizontalOverflow <= 1,
       JSON.stringify(demoWorkspace));
     record('1280x720 keeps an equal-scale-ready Demo safely scrollable instead of flattening it',
       demoWorkspace.demoFeedbackBottom > 0
         && demoWorkspace.demoStageWidth >= 360
-        && demoWorkspace.demoStageWidth <= 622
+        && demoWorkspace.demoStageWidth <= 640
         && demoWorkspace.demoStageHeight >= 360
         && demoWorkspace.demoStageHeight <= 560
         && demoWorkspace.explainScrollOverflow > 0
@@ -854,6 +870,22 @@ async function main() {
         navWidthCoverage: item.navWidthCoverage,
         stageTabWidthDelta: item.stageTabWidthDelta,
       }))));
+    record('all lesson pages use one opaque reading surface without nested glass cards',
+      desktop.every((item, index) => parseRgb(item.contentBackground)?.a === 1
+        && item.contentBackgroundImage === 'none'
+        && (expectedTemplates[index] === 'demo' || item.contentWidth <= 900)
+        && item.nestedSurfaces.length >= 1
+        && item.nestedSurfaces.every(surface => surface.background === 'rgba(0, 0, 0, 0)'
+          && surface.borderTopWidth === '0px'
+          && surface.boxShadow === 'none'
+          && surface.backdrop === 'none')),
+      JSON.stringify(desktop.map((item, index) => ({
+        page: index + 1,
+        template: expectedTemplates[index],
+        contentBackground: item.contentBackground,
+        contentWidth: item.contentWidth,
+        nestedSurfaces: item.nestedSurfaces,
+      }))));
     record('all eighteen desktop lesson pages use approved titles without boxed numbers or overflow',
       desktop.every((item, index) => item.titleCorrect
         && item.stage === 'lesson'
@@ -865,8 +897,6 @@ async function main() {
         && item.navOverflow <= 1
         && item.contentBackground === 'rgb(251, 252, 252)'
         && item.contentBackgroundImage === 'none'
-        && parseRgb(item.teachingBackground)?.a >= 0.7
-        && parseFloat(item.teachingBorderTopWidth) >= 1
         && item.fontSize >= 18
         && item.lineHeight >= item.fontSize * 1.6),
       JSON.stringify(desktop.map((item, index) => ({ page: index + 1, title: item.title, font: item.fontSize, overflow: item.pageOverflow }))));

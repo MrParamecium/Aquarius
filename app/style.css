@@ -27625,7 +27625,7 @@ body {
 
 .lesson-page-frame[data-lesson-section="2.4-2"] :is(.convolution-overview-formula, .convolution-equation) {
   min-width: 0;
-  margin: 14px 0;
+  margin: 16px 0;
   padding: 14px 16px;
   overflow-x: auto;
   border-left: 4px solid var(--convolution-integral);
@@ -33368,17 +33368,17 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 
   .lesson-page-frame[data-lesson-section="2.4-2"].convolution-demo-page .lesson-page-content {
     display: grid !important;
-    grid-template-columns: minmax(340px, 46fr) minmax(400px, 54fr) !important;
-    gap: 16px !important;
+    grid-template-columns: minmax(0, 43fr) minmax(0, 57fr) !important;
+    gap: 24px !important;
     align-items: start !important;
-    padding: 12px !important;
+    padding: 24px !important;
   }
 
   .lesson-page-frame[data-lesson-section="2.4-2"].convolution-demo-page .convolution-teaching-card {
     grid-column: 1 !important;
     align-self: start !important;
     min-width: 0 !important;
-    padding: 14px !important;
+    padding: 0 !important;
     font-size: 17px;
     line-height: 1.45;
   }
@@ -33421,6 +33421,8 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
     align-self: start !important;
     min-width: 0 !important;
     margin: 0 !important;
+    padding-left: 24px !important;
+    border-left: 1px solid var(--convolution-line) !important;
   }
 
   .lesson-page-frame[data-lesson-section="2.4-2"].convolution-demo-page .geogebra-demo-head {
@@ -33682,11 +33684,37 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   }
 }
 
-/* Loop 06 lesson interaction surfaces: quiet glass, short reading blocks. */
+/* Loop 07 restored shell: one stable reading plane, glass reserved for tools. */
 .lesson-page-frame[data-lesson-section="2.4-2"] {
   --convolution-glass: rgba(251, 252, 252, 0.78);
   --convolution-glass-strong: rgba(245, 249, 250, 0.9);
   color: var(--convolution-copy, #172033);
+}
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-reading-surface {
+  box-sizing: border-box;
+  width: 100% !important;
+  margin-inline: auto;
+  padding: 30px 32px;
+  border: 1px solid var(--convolution-line);
+  border-radius: 8px;
+  background: var(--convolution-surface) !important;
+  background-image: none !important;
+  color: var(--convolution-copy);
+  box-shadow: 0 14px 36px rgba(23, 32, 51, 0.07);
+  font-size: 18px !important;
+  line-height: 1.62 !important;
+}
+#learnView#learnView #learnBody#learnBody .lesson-page-frame[data-lesson-section="2.4-2"]:is(
+  [data-convolution-template="overview"],
+  [data-convolution-template="reading"],
+  [data-convolution-template="finish"]
+) .convolution-reading-surface {
+  max-width: 72ch !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"][data-convolution-template="demo"] .convolution-reading-surface {
+  max-width: 1160px !important;
 }
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
   position: sticky;
@@ -33768,12 +33796,7 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   min-height: 0 !important;
   max-height: none !important;
 }
-.convolution-teaching-card,
-.convolution-overlap-preview,
-.convolution-contact-explorer,
-.convolution-exit-check,
-.convolution-practice-stage,
-.geogebra-demo-shell {
+.convolution-practice-stage {
   box-sizing: border-box;
   border: 1px solid rgba(109, 128, 145, 0.22);
   border-radius: 10px;
@@ -33782,7 +33805,30 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   backdrop-filter: blur(16px) saturate(108%);
   -webkit-backdrop-filter: blur(16px) saturate(108%);
 }
-.convolution-teaching-card { padding: 20px; }
+.lesson-page-frame[data-lesson-section="2.4-2"] :is(.convolution-overlap-preview, .convolution-contact-explorer) {
+  box-sizing: border-box;
+  border: 1px solid var(--convolution-line, #d9e1e5);
+  border-radius: 8px;
+  background: var(--convolution-tool-surface, #f5f7f8);
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.lesson-page-frame[data-lesson-section="2.4-2"] :is(
+  .convolution-teaching-card,
+  .convolution-exit-check,
+  .geogebra-demo-shell
+) {
+  box-sizing: border-box;
+  min-width: 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.convolution-teaching-card { padding: 0; }
 .convolution-teaching-card ul,
 .convolution-exit-check ul,
 .convolution-practice-handoff ul { padding-left: 1.25rem; }
@@ -33790,7 +33836,7 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 .convolution-exit-check li,
 .convolution-practice-handoff li { margin: 0.35rem 0; }
 .convolution-learning-goal,
-.convolution-can-now { padding: 10px 12px; border-left: 4px solid var(--convolution-action); background: rgba(22, 123, 100, 0.08); }
+.convolution-can-now { margin: 16px 0 0; padding: 12px 14px; border-left: 4px solid var(--convolution-action); background: rgba(22, 123, 100, 0.08); }
 .convolution-time-choices,
 .convolution-contact-choices,
 .convolution-analogy-choices,
@@ -33852,7 +33898,7 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 .convolution-practice-panel select { min-height: 40px; padding: 7px 9px; border: 1px solid #9aaaba; border-radius: 6px; background: var(--convolution-surface, #fbfcfc); color: var(--convolution-copy, #172033); font: inherit; }
 .convolution-practice-demo { min-width: 0; }
 .convolution-practice-handoff { margin-top: 16px; padding: 16px; border-left: 4px solid var(--convolution-output, #167b64); background: rgba(22, 123, 100, 0.08); }
-.convolution-exit-check { padding: 18px; }
+.convolution-exit-check { padding: 0; }
 .convolution-exit-progress { display: flex; gap: 8px; margin: 12px 0; }
 .convolution-exit-progress span { width: 10px; height: 10px; border-radius: 50%; background: #cbd5e1; }
 .convolution-exit-progress span[aria-current="step"] { background: var(--convolution-action, #167b64); box-shadow: 0 0 0 4px rgba(22, 123, 100, 0.14); }

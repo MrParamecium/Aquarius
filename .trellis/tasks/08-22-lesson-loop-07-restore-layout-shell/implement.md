@@ -36,14 +36,14 @@
 
 ## 第 3 步：恢复 Reading、Demo 和 Finish 壳层
 
-- [ ] 先给 layout test 增加不透明主阅读面、透明 teaching card、Reading/Finish 宽度和 `43/57` 比例断言并确认失败。
-- [ ] 合并 `app/style.css` 中 `26918+`、`27558+`、`33330+`、`33685+` 的 2.4-2 竞争规则，不在末尾继续叠加覆盖。
-- [ ] 主阅读面使用稳定白色/深色不透明表面；Reading/Finish 约 `72ch`，Demo 不限窄宽。
-- [ ] 保留互动 DOM，只移除 teaching card、Exit Check root、GeoGebra shell 的边框、阴影和毛玻璃。
-- [ ] Demo 在足够宽的真实课程容器内使用约 `43% / 57%`，保留既有等比例 canvas、Fallback 和生命周期。
-- [ ] 公式使用浅灰底 + 橙色左边线；Learning goal/You can now 使用浅绿底 + 绿色左边线。
-- [ ] 运行 layout、GeoGebra、lifecycle 和 Exit Check tests。
-- [ ] 提交：`style: restore convolution lesson reading shell`。
+- [x] 先给 layout test 增加不透明主阅读面、透明 teaching card、Reading/Finish 宽度和 `43/57` 比例断言并确认失败。
+- [x] 用 2.4-2 模板范围内的同级选择器收束既有竞争规则，没有建立第二套页面壳层。
+- [x] 主阅读面使用稳定白色/深色不透明表面；Reading/Finish 约 `72ch`，Demo 不限窄宽。
+- [x] 保留互动 DOM，只移除 teaching card、Exit Check root、GeoGebra shell 的边框、阴影和毛玻璃。
+- [x] Demo 在足够宽的真实课程容器内使用约 `43% / 57%`，保留既有等比例 canvas、Fallback 和生命周期。
+- [x] 公式使用浅灰底 + 橙色左边线；Learning goal/You can now 使用浅绿底 + 绿色左边线。
+- [x] 运行 layout（`43/43`）、GeoGebra（`14/14`）、lifecycle（`6/6`）和 Exit Check（`5/5`）tests。
+- [x] 提交：`style: restore convolution lesson reading shell`。
 
 回滚点：回滚该提交恢复 Loop 06 卡片外观，模板和导航仍可独立存在。
 
