@@ -49,13 +49,13 @@
 
 ## 第 4 步：统一 Practice、主题和响应式
 
-- [ ] layout test 锁定 Practice 一个主阅读面、五步导航在当前 panel 上方、一个活动 panel 和透明 Practice root。
-- [ ] 不修改 `app/convolution-practice.js` 的答案、状态或 DOM；当前结构足够由 CSS 完成统一壳层。
-- [ ] Practice 五步行置于阅读面顶部；桌面保留 builder/Demo 双栏，移动端纵向。
-- [ ] `390x844` 和 `430x932` 下 Stage 不横滚、Phase 换行、Demo 上下排列、分页器和移动菜单可达。
-- [ ] 深色正文使用 alpha=1 的高对比表面；无 `backdrop-filter` 时 Stage 使用不透明 fallback。
-- [ ] 运行 layout、Practice、Exit Check、mobile、GeoGebra 和 lifecycle tests。
-- [ ] 提交：`style: unify convolution practice and responsive shell`。
+- [x] layout test 锁定 Practice 一个主阅读面、五步导航在当前 panel 上方、一个活动 panel 和透明 Practice root。
+- [x] 不修改 `app/convolution-practice.js` 的答案、状态或 DOM；当前结构足够由 CSS 完成统一壳层。
+- [x] Practice 五步行置于阅读面顶部；桌面使用约 `43/57` 的 builder/Demo 双栏，移动端纵向。
+- [x] `390x844` 和 `430x932` 下 Stage 不横滚、Phase 换行、Demo 上下排列、分页器和移动菜单可达。
+- [x] 深色正文使用 alpha=1 的高对比表面；无 `backdrop-filter` 时 Stage 使用不透明 fallback。
+- [x] 运行 layout（`50/50`）、Practice（`3/3`）、Exit Check（`5/5`）、mobile（`8/8`）、GeoGebra（`14/14`）和 lifecycle（`6/6`）tests。
+- [x] 提交：`style: unify convolution practice and responsive shell`。
 
 回滚点：回滚该提交只恢复 Practice/主题/移动壳层，不改变答案模型。
 

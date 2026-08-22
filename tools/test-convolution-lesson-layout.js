@@ -138,9 +138,12 @@ async function inspectLessonPage(page, position) {
     const teachingStyle = teachingBlock ? getComputedStyle(teachingBlock) : null;
     const phase = frame?.querySelector('.convolution-phase-progress');
     const heading = frame?.querySelector('.lesson-page-heading');
+    const headingTitle = heading?.querySelector('h2');
     const frameRect = frame?.getBoundingClientRect();
     const frameStyle = frame ? getComputedStyle(frame) : null;
     const navRect = nav?.getBoundingClientRect();
+    const phaseRect = phase?.getBoundingClientRect();
+    const headingTitleRect = headingTitle?.getBoundingClientRect();
     const frameContentWidth = frameRect && frameStyle
       ? frameRect.width - parseFloat(frameStyle.paddingLeft || '0') - parseFloat(frameStyle.paddingRight || '0')
       : 0;
@@ -187,6 +190,7 @@ async function inspectLessonPage(page, position) {
       template: frame?.dataset.convolutionTemplate || '',
       readingSurfaceCount: frame?.querySelectorAll('.convolution-reading-surface').length || 0,
       phaseInsideHeading: Boolean(phase && heading?.contains(phase)),
+      phaseBelowTitle: Boolean(phaseRect && headingTitleRect && phaseRect.top >= headingTitleRect.bottom - 1),
       navWidthCoverage: frameContentWidth > 0 && navRect ? navRect.width / frameContentWidth : 0,
       stageTabWidthDelta: tabRects.length === 3
         ? Math.max(...tabRects.map(rect => rect.width)) - Math.min(...tabRects.map(rect => rect.width))
@@ -240,6 +244,49 @@ async function inspectOverviewSurface(page) {
           width: rect.width,
         };
       }),
+    };
+  });
+}
+
+async function inspectPracticeSurface(page) {
+  return page.evaluate(() => {
+    const frame = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+    const content = frame?.querySelector('.convolution-reading-surface');
+    const root = content?.querySelector('.convolution-practice-stage');
+    const stepRow = root?.querySelector('.convolution-practice-step-row');
+    const columns = root?.querySelector('.convolution-practice-columns');
+    const builder = root?.querySelector('.convolution-practice-builder');
+    const panel = root?.querySelector('[data-practice-panel]');
+    const demo = root?.querySelector('[data-practice-demo-host]');
+    const contentStyle = content ? getComputedStyle(content) : null;
+    const rootStyle = root ? getComputedStyle(root) : null;
+    const columnsStyle = columns ? getComputedStyle(columns) : null;
+    const builderStyle = builder ? getComputedStyle(builder) : null;
+    const stepRect = stepRow?.getBoundingClientRect();
+    const panelRect = panel?.getBoundingClientRect();
+    const builderRect = builder?.getBoundingClientRect();
+    const demoRect = demo?.getBoundingClientRect();
+    return {
+      contentBackground: contentStyle?.backgroundColor || '',
+      contentColor: contentStyle?.color || '',
+      contentBackgroundImage: contentStyle?.backgroundImage || '',
+      rootBackground: rootStyle?.backgroundColor || '',
+      rootBorderTopWidth: rootStyle?.borderTopWidth || '',
+      rootBoxShadow: rootStyle?.boxShadow || '',
+      rootBackdrop: rootStyle?.backdropFilter || rootStyle?.webkitBackdropFilter || '',
+      rootWidth: root?.getBoundingClientRect().width || 0,
+      stepCount: root?.querySelectorAll('[data-practice-step-chip]').length || 0,
+      activeStepCount: root?.querySelectorAll('[data-practice-step-chip][aria-current="step"]').length || 0,
+      panelCount: root?.querySelectorAll('[data-practice-panel]').length || 0,
+      stepAbovePanel: Boolean(stepRect && panelRect && stepRect.bottom <= panelRect.top + 1),
+      stepOverflow: stepRow ? Math.max(0, stepRow.scrollWidth - stepRow.clientWidth) : 999,
+      columnsTemplate: columnsStyle?.gridTemplateColumns || '',
+      builderTemplate: builderStyle?.gridTemplateColumns || '',
+      builderWidth: builderRect?.width || 0,
+      demoWidth: demoRect?.width || 0,
+      demoBesideBuilder: Boolean(builderRect && demoRect && demoRect.left >= builderRect.right - 1),
+      demoBelowBuilder: Boolean(builderRect && demoRect && demoRect.top >= builderRect.bottom - 1),
+      pageOverflow: Math.max(0, document.documentElement.scrollWidth - window.innerWidth),
     };
   });
 }
@@ -820,6 +867,47 @@ async function main() {
         && !practice.genericQuickCheck,
       JSON.stringify(practice));
 
+    const practiceDesktop = await inspectPracticeSurface(page);
+    record('practice uses one reading plane with a transparent root and ordered five-step workspace',
+      practiceDesktop.rootBackground === 'rgba(0, 0, 0, 0)'
+        && practiceDesktop.rootBorderTopWidth === '0px'
+        && practiceDesktop.rootBoxShadow === 'none'
+        && practiceDesktop.rootBackdrop === 'none'
+        && practiceDesktop.stepCount === 5
+        && practiceDesktop.activeStepCount === 1
+        && practiceDesktop.panelCount === 1
+        && practiceDesktop.stepAbovePanel
+        && practiceDesktop.pageOverflow <= 1,
+      JSON.stringify(practiceDesktop));
+    record('practice keeps a 43/57 builder-to-demo split without the legacy nested builder grid',
+      practiceDesktop.demoBesideBuilder
+        && practiceDesktop.demoWidth / practiceDesktop.builderWidth >= 1.25
+        && practiceDesktop.demoWidth / practiceDesktop.builderWidth <= 1.40
+        && practiceDesktop.builderTemplate.trim().split(/\s+/).length === 1,
+      JSON.stringify(practiceDesktop));
+
+    const practiceTheme = await page.evaluate(() => document.documentElement.dataset.theme || '');
+    await page.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
+    await waitForLayout(page);
+    const practiceDark = await inspectPracticeSurface(page);
+    record('dark Practice keeps an opaque high-contrast reading surface',
+      practiceDark.contentBackgroundImage === 'none'
+        && parseRgb(practiceDark.contentBackground)?.a === 1
+        && contrastRatio(practiceDark.contentColor, practiceDark.contentBackground) >= 4.5
+        && practiceDark.rootBackground === 'rgba(0, 0, 0, 0)'
+        && practiceDark.rootBackdrop === 'none',
+      JSON.stringify({
+        contentBackground: practiceDark.contentBackground,
+        contentContrast: contrastRatio(practiceDark.contentColor, practiceDark.contentBackground),
+        rootBackground: practiceDark.rootBackground,
+        rootBackdrop: practiceDark.rootBackdrop,
+      }));
+    await page.evaluate((theme) => {
+      if (theme) document.documentElement.dataset.theme = theme;
+      else document.documentElement.removeAttribute('data-theme');
+    }, practiceTheme);
+    await waitForLayout(page);
+
     await clickStage(page, 'lesson', 7);
     const remembered = await page.evaluate(() => window.getConvolutionLessonStageState?.());
     record('returning from practice restores Lesson 7 of 18', remembered?.stage === 'lesson' && remembered.position === 7, JSON.stringify(remembered));
@@ -933,6 +1021,26 @@ async function main() {
           && mobileFocus.horizontalOverflow <= 1,
         JSON.stringify(mobileFocus));
       await captureEvidence(page, `focus-${viewport[0]}x${viewport[1]}.png`);
+
+      const mobileLesson = await inspectLessonPage(page, 6);
+      record(`${viewport[0]}px moves the lesson phase below its title without horizontal overflow`,
+        mobileLesson.phaseBelowTitle
+          && mobileLesson.navOverflow <= 1
+          && mobileLesson.pageOverflow <= 1,
+        JSON.stringify({
+          phaseBelowTitle: mobileLesson.phaseBelowTitle,
+          navOverflow: mobileLesson.navOverflow,
+          pageOverflow: mobileLesson.pageOverflow,
+        }));
+
+      await clickStage(page, 'practice', 1);
+      const mobilePractice = await inspectPracticeSurface(page);
+      record(`${viewport[0]}px stacks Practice below the builder and keeps all five steps in view`,
+        mobilePractice.demoBelowBuilder
+          && !mobilePractice.demoBesideBuilder
+          && mobilePractice.stepOverflow <= 1
+          && mobilePractice.pageOverflow <= 1,
+        JSON.stringify(mobilePractice));
 
       await page.evaluate(() => document.getElementById('floatToggleBtn')?.click());
       await page.waitForTimeout(260);

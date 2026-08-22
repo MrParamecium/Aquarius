@@ -33716,6 +33716,9 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 #learnView .lesson-page-frame[data-lesson-section="2.4-2"][data-convolution-template="demo"] .convolution-reading-surface {
   max-width: 1160px !important;
 }
+#learnView .lesson-page-frame[data-lesson-section="2.4-2"][data-convolution-template="practice"] .convolution-reading-surface {
+  max-width: 1160px !important;
+}
 .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
   position: sticky;
   top: 8px;
@@ -33796,15 +33799,6 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   min-height: 0 !important;
   max-height: none !important;
 }
-.convolution-practice-stage {
-  box-sizing: border-box;
-  border: 1px solid rgba(109, 128, 145, 0.22);
-  border-radius: 10px;
-  background: var(--convolution-glass, rgba(251, 252, 252, 0.78));
-  box-shadow: 0 12px 28px rgba(23, 32, 51, 0.06);
-  backdrop-filter: blur(16px) saturate(108%);
-  -webkit-backdrop-filter: blur(16px) saturate(108%);
-}
 .lesson-page-frame[data-lesson-section="2.4-2"] :is(.convolution-overlap-preview, .convolution-contact-explorer) {
   box-sizing: border-box;
   border: 1px solid var(--convolution-line, #d9e1e5);
@@ -33817,7 +33811,8 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 .lesson-page-frame[data-lesson-section="2.4-2"] :is(
   .convolution-teaching-card,
   .convolution-exit-check,
-  .geogebra-demo-shell
+  .geogebra-demo-shell,
+  .convolution-practice-stage
 ) {
   box-sizing: border-box;
   min-width: 0;
@@ -33884,14 +33879,26 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 .geogebra-guided-prediction strong,
 .geogebra-guided-prediction button { grid-column: 1 / -1; }
 .geogebra-guided-checkpoints { display: flex; flex-wrap: wrap; gap: 8px; }
-.convolution-practice-stage { padding: 20px; }
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-stage {
+  display: block;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-heading { margin-bottom: 18px; }
 .convolution-practice-formulas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .convolution-practice-formulas code { padding: 8px 10px; border: 1px solid var(--convolution-line, #d9e1e5); border-radius: 6px; background: var(--convolution-tool-surface, #f5f7f8); }
-.convolution-practice-step-row { margin: 16px 0; }
-.convolution-practice-step-row span { padding: 8px 10px; border-radius: 7px; background: rgba(109, 128, 145, 0.1); color: var(--convolution-muted, #58687e); font-weight: 800; }
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-step-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: 100%;
+  margin: 18px 0;
+}
+.convolution-practice-step-row span { display: grid; min-height: 42px; padding: 8px 6px; place-items: center; border-radius: 7px; background: rgba(109, 128, 145, 0.1); color: var(--convolution-muted, #58687e); font-size: 0.76rem; font-weight: 800; text-align: center; }
 .convolution-practice-step-row span[aria-current="step"] { background: rgba(22, 123, 100, 0.14); color: #0f6a58; }
-.convolution-practice-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-.convolution-practice-builder { min-width: 0; }
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-columns { display: grid; grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); gap: 24px; align-items: start; width: 100%; }
+.lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-builder { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }
 .convolution-practice-panel { display: grid; gap: 10px; padding: 16px; border: 1px solid var(--convolution-line, #d9e1e5); border-radius: 8px; background: var(--convolution-tool-surface, #f5f7f8); }
 .convolution-practice-panel label { display: grid; gap: 5px; color: var(--convolution-muted, #58687e); font-weight: 700; }
 .convolution-practice-panel input,
@@ -33912,13 +33919,27 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
 .lesson-page-frame[data-lesson-section="2.4-2"] :is(button, input, select):focus-visible { outline: 3px solid rgba(37, 100, 235, 0.34); outline-offset: 2px; }
 
 @media (max-width: 760px) {
-  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress { top: 54px; }
+  #learnView#learnView #learnBody#learnBody:not(.chapter-overview-active):not(.chapter-overview-split-active) .lesson-page-frame[data-lesson-section="2.4-2"] .lesson-page-heading {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: start !important;
+  }
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-phase-progress {
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 0;
+  }
+  #learnView .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-reading-surface {
+    padding: 22px 16px;
+  }
   .geogebra-guided-prediction,
   .convolution-practice-columns { grid-template-columns: 1fr; }
-  .convolution-practice-columns { gap: 12px; }
-  .convolution-practice-stage,
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-columns { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-step-row { gap: 4px; }
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-practice-step-row span { min-height: 48px; padding-inline: 3px; font-size: 0.68rem; overflow-wrap: anywhere; }
   .convolution-exit-check,
-  .convolution-teaching-card { padding: 14px; }
+  .convolution-teaching-card { padding: 0; }
+  .convolution-practice-panel { padding: 14px; }
 }
 
 :root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(.convolution-teaching-card, .convolution-practice-stage, .convolution-exit-check, .geogebra-demo-shell, .geogebra-guided-sequence) {
@@ -33926,4 +33947,18 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
   --convolution-glass-strong: rgba(25, 38, 56, 0.94);
   border-color: rgba(148, 163, 184, 0.28);
   color: #e2e8f0;
+}
+
+:root[data-theme="dark"] .lesson-page-frame[data-lesson-section="2.4-2"] :is(
+  .convolution-stage-tab.is-active,
+  .convolution-phase-chip.is-active,
+  .convolution-practice-step-row span[aria-current="step"]
+) {
+  color: #8de1c7;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lesson-page-frame[data-lesson-section="2.4-2"] .convolution-stage-nav {
+    background: var(--convolution-nav-fallback, #f5f9fa);
+  }
 }
