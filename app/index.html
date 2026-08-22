@@ -67,7 +67,7 @@
     }
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,500;0,700;1,600&family=Fira+Code:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=1700">
+  <link rel="stylesheet" href="style.css?v=1704">
   <link rel="stylesheet" href="css/ui-friction-v123.css?v=1222">
   <link rel="icon" type="image/png" href="logo.png?v=1778674347">
 
@@ -702,6 +702,9 @@
             <div class="learn-resizer" id="learnResizer"></div>
 
             <div class="learn-chat-col" id="learnChatCol">
+              <button class="learn-tutor-minimize hidden" id="learnTutorMinimizeBtn" type="button" title="Minimize Tutor" aria-label="Minimize Tutor">
+                <i class="ph-bold ph-caret-right" aria-hidden="true"></i>
+              </button>
               <div class="ambient-background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden;">
                   <div class="orb orb-edu-blue" style="position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.45; width: 55vw; height: 55vh; background: #7DD3FC; top: -10%; left: -5%; animation: float 25s infinite alternate ease-in-out;"></div>
                   <div class="orb orb-edu-green" style="position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; width: 45vw; height: 45vh; background: #6EE7B7; bottom: -10%; right: -5%; animation-delay: -5s; animation: float 25s infinite alternate-reverse ease-in-out;"></div>
@@ -823,8 +826,12 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.45" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6l-6 6 6 6"/><path d="M11 6l-6 6 6 6"/></svg>
             </span>
           </button>
-          <button class="learn-chat-fab hidden" id="learnChatFab" type="button" title="Open Q&A assistant" aria-label="Open Q&A assistant">
-            <span class="learn-chat-fab-label">Q&A</span>
+          <button class="learn-chat-fab hidden" id="learnChatFab" type="button" title="Tutor Agent" aria-label="Ask Tutor Agent">
+            <span class="tutor-agent-mark" aria-hidden="true">
+              <i class="ph-fill ph-student tutor-agent-main-icon"></i>
+              <span class="tutor-agent-ai-badge">AI</span>
+            </span>
+            <span class="tutor-agent-tooltip" role="tooltip">Tutor Agent</span>
           </button>
           <div class="learn-chat-popover hidden" id="learnChatPopover">
             <div class="learn-chat-popover-head" id="learnChatPopoverHead">
@@ -1539,14 +1546,16 @@
   <script src="interactive-demos/sinusoid-phasor.js?v=1602"></script>
   <script src="interactive-demos/system-property.js?v=1500"></script>
   <script src="interactive-demos/transform-rule-lab.js?v=1500"></script>
-  <script src="interactive-demos/geogebra-runtime.js?v=1701"></script>
+  <script src="interactive-demos/geogebra-runtime.js?v=1702"></script>
   <script src="interactive-demos/geogebra-convolution-presets.js?v=1800"></script>
-  <script src="interactive-demos/geogebra-convolution-figure-2-7.js?v=1701"></script>
-  <script src="interactive-demos/geogebra-demo.js?v=1701"></script>
+  <script src="interactive-demos/geogebra-convolution-figure-2-7.js?v=1703"></script>
+  <script src="interactive-demos/geogebra-demo.js?v=1704"></script>
   <script src="interactive-demos/dispatcher.js?v=1701"></script>
+  <script src="convolution-lesson-interactions.js?v=1000"></script>
   <script src="convolution-practice.js?v=1800"></script>
-  <script src="lesson-render.js?v=1610"></script>
-  <script src="app.js?v=1701"></script>
+  <script src="convolution-exit-check.js?v=1900"></script>
+  <script src="lesson-render.js?v=1611"></script>
+  <script src="app.js?v=1703"></script>
   <script src="ui-friction-fixes.js?v=1607"></script>
 </body>
 </html>

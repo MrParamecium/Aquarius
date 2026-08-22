@@ -122,43 +122,28 @@ async function waitForLayout(page) {
   await page.waitForTimeout(80);
 }
 
-async function goToLessonPage(page, targetPage) {
-  const totalPages = await page.evaluate(() => Array.isArray(learnKnowledgePoints)
-    ? learnKnowledgePoints.length
-    : 0);
-  if (!Number.isFinite(totalPages) || totalPages < targetPage) {
-    throw new Error(`lesson state reported an invalid total: ${totalPages}`);
-  }
-  let current = await page.evaluate(() => Number(currentKnowledgePointIndex) + 1);
-  while (current < targetPage) {
-    await page.waitForFunction(() => typeof isLearnPageTurning === 'undefined' || !isLearnPageTurning, null, {
-      timeout: 5000,
-    });
-    const moved = await page.evaluate(() => moveLearnKnowledgePoint(1));
-    if (!moved) throw new Error(`lesson state refused to advance from page ${current}`);
-    try {
-      await page.waitForFunction(
-        ({ nextPage }) => {
-          const body = document.getElementById('learnBody');
-          return Number(currentKnowledgePointIndex) + 1 === nextPage
-            && !body?.classList.contains('learn-page-turn-active');
-        },
-        { nextPage: current + 1 },
-        { timeout: 8000 }
-      );
-    } catch (error) {
-      const state = await page.evaluate(() => ({
-        position: document.getElementById('learnPagerPosition')?.textContent.trim(),
-        bodyClasses: document.getElementById('learnBody')?.className,
-        index: typeof currentKnowledgePointIndex === 'number' ? currentKnowledgePointIndex : null,
-        pointCount: Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints.length : null,
-        isTurning: typeof isLearnPageTurning === 'boolean' ? isLearnPageTurning : null,
-        nextDisabled: document.getElementById('learnPagerNextBtn')?.disabled,
-      }));
-      throw new Error(`lesson did not settle on page ${current + 1} / ${totalPages}: ${JSON.stringify(state)} (${error.message})`);
-    }
-    current += 1;
-  }
+async function goToLessonPage(page, lessonPosition) {
+  const totalPages = await page.evaluate((position) => {
+    const state = window.getConvolutionLessonStageState?.();
+    const lessonIndices = state?.map?.lessonIndices || [];
+    const index = lessonIndices[position - 1];
+    if (!Number.isInteger(index)) throw new Error(`missing lesson position ${position}`);
+    currentKnowledgePointIndex = index;
+    renderCurrentKnowledgePoint();
+    return lessonIndices.length;
+  }, lessonPosition);
+  await page.waitForFunction(
+    (position) => {
+      const state = window.getConvolutionLessonStageState?.();
+      const body = document.getElementById('learnBody');
+      return state?.stage === 'lesson'
+        && state.position === position
+        && !body?.classList.contains('learn-page-turn-active');
+    },
+    lessonPosition,
+    { timeout: 8000 }
+  );
+  await waitForLayout(page);
   return totalPages;
 }
 
@@ -284,8 +269,8 @@ async function main() {
       JSON.stringify(directMobile));
     await captureEvidence(page, 'mobile-intro-390.png');
 
-    await goToLessonPage(page, 2);
-    await page.locator('.convolution-analogy-layout').first().scrollIntoViewIfNeeded();
+    await goToLessonPage(page, 4);
+    await page.locator('[data-convolution-analogy-panel="ink"]').scrollIntoViewIfNeeded();
     await waitForLayout(page);
     const stickyStage = await stickyStageSnapshot(page);
     record('mobile stage navigation stays pinned below the Q&A switch while lesson content scrolls',
@@ -298,7 +283,7 @@ async function main() {
     await captureEvidence(page, 'mobile-lesson-analogy-390.png');
 
     await goToLessonPage(page, 5);
-    await page.locator('.convolution-five-steps').first().scrollIntoViewIfNeeded();
+    await page.locator('.convolution-five-step-map').first().scrollIntoViewIfNeeded();
     await waitForLayout(page);
     await captureEvidence(page, 'mobile-five-steps-390.png');
 
@@ -329,11 +314,11 @@ async function main() {
       };
     });
     record('real 2.4-2 GeoGebra page mounts one controlled three-layer Applet',
-      totalPages === 14
-        && prepared.pager === 'Lesson 5 / 12'
+      totalPages === 18
+        && prepared.pager === 'Lesson 6 / 18'
         && prepared.stage?.stage === 'lesson'
-        && prepared.stage.position === 5
-        && prepared.task === 'change-variable'
+        && prepared.stage.position === 6
+        && prepared.task === 'guided-sequence'
         && prepared.layers === 3
         && prepared.internalSteps === 0
         && prepared.rangeDisabled
@@ -413,16 +398,18 @@ async function main() {
         && returned.removeCount === 0
         && returned.canvasCount === 1
         && returned.sameCanvasNodes
-        && returned.task === 'change-variable'
+        && returned.task === 'guided-sequence'
         && returned.t === -4,
       JSON.stringify(returned));
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
     const desktop = await panelSnapshot(page);
-    record('returning to desktop restores the existing two-column layout',
+    record('returning to desktop preserves the Tutor panel opened on mobile',
       desktop.explainWidth > 0
-        && desktop.chatWidth > 0
+        && desktop.chatWidth >= 320
+        && desktop.explainWidth / desktop.chatWidth >= 1.95
+        && desktop.explainWidth / desktop.chatWidth <= 2.05
         && !desktop.showQaVisible
         && !desktop.showLectureVisible
         && desktop.horizontalOverflow <= 1,

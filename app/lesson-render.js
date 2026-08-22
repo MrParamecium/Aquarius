@@ -1005,6 +1005,7 @@ function parseLessonKnowledgePoints(html) {
       && (
         node.classList.contains('lesson-test-banner')
         || node.classList.contains('kc-quiz-plan')
+        || node.matches('[data-convolution-practice]')
       );
   };
 
@@ -1451,6 +1452,7 @@ window.__ftutorSettleAfterTypeset = settleLessonAfterTypeset;
 // the two. Every `learnExplainContent.innerHTML =` in the lesson flow routes here.
 function replaceLearnContent(el, html) {
   if (!el) return;
+  window.__ftutorConvolutionLessonInteractions?.destroy(el);
   window.__ftutorTeardownInteractiveDemos?.(el);
   el.innerHTML = html;
 }
@@ -1496,6 +1498,7 @@ function renderCurrentKnowledgePoint() {
   decorateLectureContent(learnExplainContent);
   enhanceVisualMetadataUI(learnExplainContent);
   hydrateInteractiveDemos(learnExplainContent);
+  window.__ftutorConvolutionLessonInteractions?.mount(learnExplainContent);
   const currentPageFrame = learnExplainContent.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
   currentPageFrame?.classList.toggle(
     'convolution-demo-page',

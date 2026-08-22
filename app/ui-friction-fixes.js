@@ -343,6 +343,19 @@
       _lastAtEnd = false;
       return;
     }
+    if (stageState?.stage === 'lesson' && stageState.position === 17) {
+      const exitState = window.__ftutorConvolutionExitCheck?.getState?.();
+      const exitComplete = exitState?.completed === true
+        || document.querySelector('[data-convolution-exit-check][data-convolution-task-ready="true"]');
+      setClassIfChanged(pager, 'hidden', false);
+      setTextIfChanged(pagerPos, pagerText);
+      setDisabledIfChanged(pagerPrevBtn, cur <= 0);
+      setDisabledIfChanged(pagerNextBtn, !exitComplete);
+      setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
+      setTextIfChanged(pagerNextLabel, exitComplete ? 'Continue' : 'Complete Exit Check');
+      setAttrIfChanged(pagerNextBtn, 'title', exitComplete ? 'Continue to the completion page' : 'Complete all three Exit Check questions to continue');
+      return;
+    }
     if (stageState?.stage === 'lesson' && stageState.position === stageState.total) {
       setClassIfChanged(pager, 'hidden', true);
       _lastAtEnd = false;
@@ -355,9 +368,12 @@
     const practiceState = stageState?.stage === 'practice'
       ? window.__ftutorConvolutionPractice?.getState?.()
       : null;
+    const legacyPracticeComplete = practiceState?.drills
+      && Object.values(practiceState.drills).length > 0
+      && Object.values(practiceState.drills).every(drill => drill?.status === 'Mastered');
     const practiceComplete = !practiceState
       || practiceState.completed === true
-      || Object.values(practiceState.drills || {}).every(drill => drill?.status === 'Mastered');
+      || legacyPracticeComplete;
     const canFinishSection = stageState?.stage !== 'practice' || practiceComplete;
     const { id, title } = currentSectionRefs();
     if (atEnd && !canFinishSection) {

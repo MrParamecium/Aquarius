@@ -53,6 +53,9 @@ async function installFakeGeoGebra(page) {
       unregisterCount: 0,
       codebases: [],
       perspectives: [],
+      axesVisible: [],
+      coordSystems: [],
+      lineStyles: {},
       visibilities: {},
       commands: [],
     };
@@ -88,11 +91,11 @@ async function installFakeGeoGebra(page) {
         setColor() {},
         setLineThickness() {},
         setLabelVisible() {},
-        setLineStyle() {},
+        setLineStyle(name, style) { metrics.lineStyles[name] = style; },
         setFilling() {},
         setCaption() {},
-        setCoordSystem() {},
-        setAxesVisible() {},
+        setCoordSystem(...coordinates) { metrics.coordSystems.push(coordinates); },
+        setAxesVisible(view, horizontal, vertical) { metrics.axesVisible.push([view, horizontal, vertical]); },
         setGridVisible() {},
         setPointSize() {},
         setValue(name, value) {
@@ -184,7 +187,13 @@ async function main() {
       const read = (id, t) => api.getConvolutionPreset(id)?.evaluate(t);
       const describe = (id) => {
         const preset = api.getConvolutionPreset(id);
-        return { support: preset?.support, breakpoints: preset?.breakpoints };
+        return {
+          support: preset?.support,
+          breakpoints: preset?.breakpoints,
+          defaultOrder: preset?.defaultOrder,
+          supportedOrders: preset?.supportedOrders,
+          commands: preset?.commands,
+        };
       };
       return {
         ready: true,
@@ -201,18 +210,50 @@ async function main() {
           four: read('example-2-12', 4),
           shape: describe('example-2-12'),
         },
+        figure211: { one: read('figure-2-11', 1), shape: describe('figure-2-11') },
+        figure212: { minusOne: read('figure-2-12', -1), one: read('figure-2-12', 1), shape: describe('figure-2-12') },
+        figure213: { two: api.getConvolutionPreset('figure-2-13')?.evaluate(2, { T: 3 }), shape: describe('figure-2-13') },
+        practice: { onePointFive: read('practice-rectangle-triangle', 1.5), shape: describe('practice-rectangle-triangle') },
       };
     });
     const close = (actual, expected) => Math.abs(Number(actual) - expected) <= 1e-9;
-    record('preset registry exposes the four approved textbook cases',
+    const expectedPresetIds = [
+      'figure-2-7', 'example-2-10', 'example-2-11', 'example-2-12',
+      'figure-2-11', 'figure-2-12', 'figure-2-13', 'practice-rectangle-triangle',
+    ];
+    const hasRoles = (shape) => shape?.commands
+      && shape.supportedOrders?.every(order => ['fixed', 'flipped', 'moving', 'product'].every(key => typeof shape.commands.orders?.[order]?.[key] === 'string'));
+    record('preset registry exposes the eight approved textbook cases',
       presetChecks.ready
-        && JSON.stringify(presetChecks.ids) === JSON.stringify(['figure-2-7', 'example-2-10', 'example-2-11', 'example-2-12'])
-        && JSON.stringify(presetChecks.figure.shape) === JSON.stringify({ support: [-3, 'inf'], breakpoints: [-3] })
-        && JSON.stringify(presetChecks.example210.shape) === JSON.stringify({ support: [0, 'inf'], breakpoints: [0] })
-        && JSON.stringify(presetChecks.example211.shape) === JSON.stringify({ support: ['-inf', 'inf'], breakpoints: [0] })
-        && JSON.stringify(presetChecks.example212.shape) === JSON.stringify({ support: [-1, 4], breakpoints: [-1, 1, 2, 4] }),
+        && JSON.stringify(presetChecks.ids) === JSON.stringify(expectedPresetIds)
+        && JSON.stringify(presetChecks.figure.shape.support) === JSON.stringify([-3, 'inf'])
+        && JSON.stringify(presetChecks.figure.shape.breakpoints) === JSON.stringify([-3])
+        && JSON.stringify(presetChecks.example210.shape.support) === JSON.stringify([0, 'inf'])
+        && JSON.stringify(presetChecks.example210.shape.breakpoints) === JSON.stringify([0])
+        && JSON.stringify(presetChecks.example211.shape.support) === JSON.stringify(['-inf', 'inf'])
+        && JSON.stringify(presetChecks.example211.shape.breakpoints) === JSON.stringify([0])
+        && JSON.stringify(presetChecks.example212.shape.support) === JSON.stringify([-1, 4])
+        && JSON.stringify(presetChecks.example212.shape.breakpoints) === JSON.stringify([-1, 1, 2, 4]),
       JSON.stringify(presetChecks));
-    record('all four textbook output evaluators match representative values',
+    record('preset roles and trusted command groups cover every supported order',
+      hasRoles(presetChecks.figure.shape)
+        && hasRoles(presetChecks.example210.shape)
+        && hasRoles(presetChecks.example211.shape)
+        && hasRoles(presetChecks.example212.shape)
+        && hasRoles(presetChecks.figure211.shape)
+        && hasRoles(presetChecks.figure212.shape)
+        && hasRoles(presetChecks.figure213.shape)
+        && hasRoles(presetChecks.practice.shape)
+        && presetChecks.example212.shape.defaultOrder === 'g-fixed'
+        && JSON.stringify(presetChecks.example212.shape.supportedOrders) === JSON.stringify(['g-fixed'])
+        && presetChecks.practice.shape.defaultOrder === 'g-fixed'
+        && JSON.stringify(presetChecks.figure211.shape.supportedOrders) === JSON.stringify(['x-fixed', 'g-fixed']),
+      JSON.stringify({
+        example212: presetChecks.example212.shape,
+        practice: presetChecks.practice.shape,
+        figure211: presetChecks.figure211.shape,
+      }));
+    record('all eight textbook output evaluators match representative values',
       close(presetChecks.figure?.minus2, 2 * (1 - Math.exp(-1)))
         && close(presetChecks.figure?.zero, 2 * (1 - Math.exp(-3)))
         && close(presetChecks.example210?.minus1, 0)
@@ -224,7 +265,12 @@ async function main() {
         && close(presetChecks.example212?.one, 2 / 3)
         && close(presetChecks.example212?.two, 4 / 3)
         && close(presetChecks.example212?.three, 5 / 6)
-        && close(presetChecks.example212?.four, 0),
+        && close(presetChecks.example212?.four, 0)
+        && close(presetChecks.figure211?.one, 1 - Math.exp(-1))
+        && close(presetChecks.figure212?.minusOne, 1)
+        && close(presetChecks.figure212?.one, Math.exp(-1))
+        && close(presetChecks.figure213?.two, 2)
+        && close(presetChecks.practice?.onePointFive, 0.5),
       JSON.stringify(presetChecks));
 
     const sharedLoader = await page.evaluate(async () => {
@@ -233,6 +279,32 @@ async function main() {
       return a === b && document.querySelectorAll('#ftutor-geogebra-loader').length === 0;
     });
     record('existing runtime is reused without a loader tag', sharedLoader);
+
+    const geometryChecks = await page.evaluate(() => {
+      const geometry = window.__ftutorConvolutionGeometry;
+      if (!geometry?.calculateCoordSystem) return { ready: false };
+      const samples = [
+        { bounds: geometry.calculateCoordSystem(900, 500, -4, 3), minT: -4, maxT: 3 },
+        { bounds: geometry.calculateCoordSystem(500, 500, -2, 6), minT: -2, maxT: 6 },
+        { bounds: geometry.calculateCoordSystem(360, 420, -4, 4), minT: -4, maxT: 4 },
+      ];
+      return {
+        ready: true,
+        samples: samples.map(({ bounds, minT, maxT }) => ({
+          ...bounds,
+          minT,
+          maxT,
+          unitDelta: Math.abs(bounds.pixelsPerXUnit - bounds.pixelsPerYUnit),
+        })),
+      };
+    });
+    record('coordinate geometry keeps x and y unit pixels equal at compact and wide sizes',
+      geometryChecks.ready
+        && geometryChecks.samples.every(sample => sample.unitDelta <= 1e-9
+          && sample.xMin <= sample.minT
+          && sample.xMax >= sample.maxT
+          && sample.yMax - sample.yMin >= 9),
+      JSON.stringify(geometryChecks));
 
     await hydrateDemo(page);
     const initial = await page.evaluate(() => {
@@ -249,6 +321,17 @@ async function main() {
         perspective: window.__fakeGeoGebra.perspectives[0],
         productVisible: window.__fakeGeoGebra.visibilities.productBand,
         outputVisible: window.__fakeGeoGebra.visibilities.convolutionOutput,
+        diagnostic: node.__geoGebraDiagnostics?.getState?.(),
+        localYAxes: {
+          signal: window.__fakeGeoGebra.visibilities.signalYAxis,
+          product: window.__fakeGeoGebra.visibilities.productYAxis,
+          output: window.__fakeGeoGebra.visibilities.outputYAxis,
+        },
+        axisCommands: window.__fakeGeoGebra.commands.filter(command => /(?:signalsXAxis|productXAxis|outputXAxis)/.test(command)),
+        redMotionArrowCommands: window.__fakeGeoGebra.commands.filter(command => /arrow/i.test(command)),
+        axesVisible: window.__fakeGeoGebra.axesVisible.at(-1),
+        signalAxisStyle: window.__fakeGeoGebra.lineStyles.signalAxis,
+        productAxisStyle: window.__fakeGeoGebra.lineStyles.productAxis,
       };
     });
     record('controlled lesson demo mounts one applet with the three stacked layers and no duplicate pager',
@@ -261,7 +344,16 @@ async function main() {
         && initial.canvasCount === 1
         && initial.perspective === 'G'
         && initial.productVisible === true
-        && initial.outputVisible === true
+        && initial.outputVisible === false
+        && initial.diagnostic?.orderId === 'x-fixed'
+        && initial.diagnostic?.outputRevealMode === 'hidden'
+        && initial.diagnostic?.listenerCount === 1
+        && JSON.stringify(initial.localYAxes) === JSON.stringify({ signal: true, product: true, output: true })
+        && initial.axisCommands.length === 3
+        && initial.redMotionArrowCommands.length === 0
+        && JSON.stringify(initial.axesVisible) === JSON.stringify([1, true, false])
+        && initial.signalAxisStyle === 0
+        && initial.productAxisStyle === 0
         && initial.codebase === 'https://www.geogebra.org/apps/5.4.920.0/web3d',
       JSON.stringify(initial));
 
@@ -269,13 +361,14 @@ async function main() {
       const node = window.__geogebraTestNode;
       const stage = node.querySelector('[data-geogebra-stage]');
       const mount = node.querySelector('[data-geogebra-mount]');
-      stage.style.height = '420px';
-      mount.style.height = '420px';
+      stage.style.height = '204px';
+      mount.style.height = '620px';
       window.__fakeResizeObservers.at(-1)?.callback([]);
       const metrics = window.__fakeGeoGebra;
       return {
         initial: metrics.constructorSizes[0],
         resized: metrics.resizeSizes.at(-1),
+        coordSystems: metrics.coordSystems,
         constructorCount: metrics.constructorCount,
         injectCount: metrics.injectCount,
         canvasCount: node.querySelectorAll('canvas').length,
@@ -284,10 +377,17 @@ async function main() {
     record('applet sizing follows the real stage width and height without rebuilding the instance',
       responsiveSize.initial?.width >= 896
         && responsiveSize.initial.width <= 900
-        && responsiveSize.initial?.height === 620
+        && responsiveSize.initial?.height >= 618
+        && responsiveSize.initial.height <= 620
         && responsiveSize.resized?.width >= 896
         && responsiveSize.resized.width <= 900
-        && responsiveSize.resized?.height === 420
+        && responsiveSize.resized?.height >= 200
+        && responsiveSize.resized.height <= 204
+        && responsiveSize.coordSystems.length >= 2
+        && responsiveSize.coordSystems.at(-1)?.[0] < -4
+        && responsiveSize.coordSystems.at(-1)?.[1] > 3
+        && responsiveSize.coordSystems.at(-1)?.[2] < 0
+        && responsiveSize.coordSystems.at(-1)?.[3] > 8
         && responsiveSize.constructorCount === 1
         && responsiveSize.injectCount === 1
         && responsiveSize.canvasCount === 1,
@@ -313,6 +413,32 @@ async function main() {
         && close(firstContact.state?.area, 0)
         && close(firstContact.state?.output, 0),
       JSON.stringify(firstContact));
+
+    const stableScene = await page.evaluate(() => {
+      const diagnostics = window.__geogebraTestNode.__geoGebraDiagnostics;
+      const before = diagnostics.getState();
+      const changedOrder = diagnostics.setOrder('g-fixed');
+      diagnostics.setOutputReveal({ mode: 'points', revealedTimes: [-3, -2] });
+      const after = diagnostics.getState();
+      return {
+        changedOrder,
+        sameInstance: before.instanceId === after.instanceId,
+        orderId: after.orderId,
+        outputRevealMode: after.outputRevealMode,
+        revealedTimes: after.revealedTimes,
+        listenerCount: after.listenerCount,
+        outputVisible: window.__fakeGeoGebra.visibilities.convolutionOutput,
+      };
+    });
+    record('order and output reveal changes reuse one applet and one listener',
+      stableScene.changedOrder
+        && stableScene.sameInstance
+        && stableScene.orderId === 'g-fixed'
+        && stableScene.outputRevealMode === 'points'
+        && JSON.stringify(stableScene.revealedTimes) === JSON.stringify([-3, -2])
+        && stableScene.listenerCount === 1
+        && stableScene.outputVisible === false,
+      JSON.stringify(stableScene));
 
     const teardown = await page.evaluate(() => {
       const before = { ...window.__fakeGeoGebra };
