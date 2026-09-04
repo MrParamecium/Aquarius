@@ -28,7 +28,8 @@ The pair must explain the system without duplicating the same information. The p
 - `Original Textbook`: textbook pages and figures opened from the lesson.
 - `Tutor Agent`: guided questions and contextual answers.
 - `Interactive Demos`: GeoGebra and custom interactive labs.
-- `Sessions & Preferences`: saved context, recent sessions, and teaching preferences.
+- `Browser Learning State`: practice and chapter progress stored in browser `localStorage`.
+- `Q&A Sessions & Preferences`: recent Q&A sessions and user-authored teaching preferences.
 
 ### Relationships
 
@@ -36,7 +37,7 @@ The pair must explain the system without duplicating the same information. The p
 - Home and Syllabus opens the Lesson Workspace.
 - The Lesson Workspace opens original textbook evidence, asks the Tutor Agent, and mounts interactive demos.
 - The Lesson Workspace advances to practice and progress checks.
-- Practice updates progress, while sessions and preferences allow the student to resume learning.
+- Practice updates browser-local progress, while Q&A sessions and preferences allow the student to resume contextual tutoring.
 
 ### Views
 
@@ -48,14 +49,18 @@ The pair must explain the system without duplicating the same information. The p
 
 ### Primary request path
 
-`Browser UI` → `Node HTTP Bridge` → `Guidance & Q&A Services` → `Retrieval Layer` → `LLM Providers`
+`Browser UI` → `Node HTTP Bridge`, which branches into lesson loading, guidance-option generation, and the authenticated Q&A pipeline. The Q&A pipeline combines textbook retrieval and optional web search before calling an LLM provider.
 
 ### Supporting components
 
 - `Clerk Auth`: browser identity and server token verification.
+- `Guidance Options`: `guidance-service.js` generates teaching-path choices before Q&A and never answers the question directly.
+- `Q&A Pipeline`: `/api/ask` in `ws-bridge.js` orchestrates retrieval, answer generation, and session persistence.
 - `Lesson Cache`: validated pre-generated lesson content.
 - `Textbook Materials`: OCR, page images, figures, and illustrations under `workspace/materials/`.
-- `Session & Memory Store`: Neon PostgreSQL or local-file persistence through `db.js`.
+- `Web Search Providers`: DuckDuckGo, Wikipedia, and Wikimedia access through `search-helpers.js`.
+- `Optional RAGFlow`: an optional remote textbook-retrieval path through `ragflow-client.js`.
+- `Session & Memory Store`: local-file persistence in `user-memory.js`, or Neon PostgreSQL through `db.js` when `DATABASE_URL` is configured.
 - `Static Asset Routes`: lesson pages, figures, generated media, and application files through `static-routes.js`.
 
 ### Relationships
@@ -63,8 +68,9 @@ The pair must explain the system without duplicating the same information. The p
 - `Browser UI` uses `/api/section`, `/api/ask-guidance`, `/api/ask`, session APIs, and memory APIs through `api-client.js`.
 - `Node HTTP Bridge` authenticates protected requests through Clerk.
 - Lesson requests flow from the bridge to `lesson-cache.js`, which reads validated material under `workspace/materials/lesson-cache/`.
-- Guided questions flow through `guidance-service.js`, local OCR search, optional RAGFlow retrieval, and `llm-client.js`.
-- Sessions and user-authored preferences persist through `db.js`.
+- `/api/ask-guidance` uses `guidance-service.js` to retrieve textbook evidence and generate two or three teaching-path options before Q&A.
+- `/api/ask` orchestrates local section OCR, optional RAGFlow retrieval, enabled web search, and answer generation through `llm-client.js`.
+- The bridge persists Q&A sessions and user-authored preferences through `user-memory.js`, which selects the local-file or Neon-backed store.
 - Static routes serve the application, textbook pages, figures, illustrations, and generated media.
 
 ### Views
