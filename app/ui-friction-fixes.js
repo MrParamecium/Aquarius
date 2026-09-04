@@ -328,12 +328,60 @@
     }
     const total = points.length;
     const cur = Math.min(Math.max(idx, 0), total - 1);
+    const stageState = typeof window.getConvolutionLessonStageState === 'function'
+      ? window.getConvolutionLessonStageState(cur)
+      : null;
+    const pagerText = stageState?.stage === 'intro'
+      ? 'Section Overview'
+      : stageState?.stage === 'lesson'
+        ? `Lesson ${stageState.position} / ${stageState.total}`
+        : stageState?.stage === 'practice'
+          ? 'Practice'
+          : `${cur + 1} / ${total}`;
+    if (stageState?.stage === 'intro') {
+      setClassIfChanged(pager, 'hidden', true);
+      _lastAtEnd = false;
+      return;
+    }
+    if (stageState?.stage === 'lesson' && stageState.position === 17) {
+      const exitState = window.__ftutorConvolutionExitCheck?.getState?.();
+      const exitComplete = exitState?.completed === true
+        || document.querySelector('[data-convolution-exit-check][data-convolution-task-ready="true"]');
+      setClassIfChanged(pager, 'hidden', false);
+      setTextIfChanged(pagerPos, pagerText);
+      setDisabledIfChanged(pagerPrevBtn, cur <= 0);
+      setDisabledIfChanged(pagerNextBtn, !exitComplete);
+      setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
+      setTextIfChanged(pagerNextLabel, exitComplete ? 'Continue' : 'Complete Exit Check');
+      setAttrIfChanged(pagerNextBtn, 'title', exitComplete ? 'Continue to the completion page' : 'Complete all three Exit Check questions to continue');
+      return;
+    }
+    if (stageState?.stage === 'lesson' && stageState.position === stageState.total) {
+      setClassIfChanged(pager, 'hidden', true);
+      _lastAtEnd = false;
+      return;
+    }
     setClassIfChanged(pager, 'hidden', false);
-    setTextIfChanged(pagerPos, (cur + 1) + ' / ' + total);
+    setTextIfChanged(pagerPos, pagerText);
     setDisabledIfChanged(pagerPrevBtn, cur <= 0);
     const atEnd = cur >= total - 1;
+    const practiceState = stageState?.stage === 'practice'
+      ? window.__ftutorConvolutionPractice?.getState?.()
+      : null;
+    const legacyPracticeComplete = practiceState?.drills
+      && Object.values(practiceState.drills).length > 0
+      && Object.values(practiceState.drills).every(drill => drill?.status === 'Mastered');
+    const practiceComplete = !practiceState
+      || practiceState.completed === true
+      || legacyPracticeComplete;
+    const canFinishSection = stageState?.stage !== 'practice' || practiceComplete;
     const { id, title } = currentSectionRefs();
-    if (atEnd) {
+    if (atEnd && !canFinishSection) {
+      setDisabledIfChanged(pagerNextBtn, true);
+      setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
+      setTextIfChanged(pagerNextLabel, 'Complete practice');
+      setAttrIfChanged(pagerNextBtn, 'title', 'Complete all five practice steps to continue');
+    } else if (atEnd) {
       const next = peekNextSubsection(id, title);
       if (next) {
         setDisabledIfChanged(pagerNextBtn, false);
@@ -347,15 +395,17 @@
         setAttrIfChanged(pagerNextBtn, 'title', 'You finished the syllabus.');
       }
     } else {
-      setDisabledIfChanged(pagerNextBtn, false);
+      const controlledTask = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"] [data-convolution-task-ready]');
+      const taskReady = !controlledTask || controlledTask.getAttribute('data-convolution-task-ready') === 'true';
+      setDisabledIfChanged(pagerNextBtn, !taskReady);
       setClassIfChanged(pagerNextBtn, 'is-next-topic', false);
-      setTextIfChanged(pagerNextLabel, 'Next');
-      setAttrIfChanged(pagerNextBtn, 'title', 'Next page');
+      setTextIfChanged(pagerNextLabel, stageState?.stage === 'lesson' ? 'Continue' : 'Next');
+      setAttrIfChanged(pagerNextBtn, 'title', taskReady ? 'Next page' : 'Complete this step to continue');
     }
     // Mark completion only on the false→true transition into the final page,
     // not on every rAF tick that lands while the user is sitting at the end.
-    if (atEnd && !_lastAtEnd && (id || title)) markCompleted(id, title);
-    _lastAtEnd = atEnd;
+    if (atEnd && canFinishSection && !_lastAtEnd && (id || title)) markCompleted(id, title);
+    _lastAtEnd = atEnd && canFinishSection;
   }
   window.__ftutorRefreshPager = refreshPager;
 

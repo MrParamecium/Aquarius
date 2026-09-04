@@ -1,0 +1,291 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Fourier Tutor Runtime & Knowledge Architecture",
+    "locale": "en",
+    "output": "runtime-knowledge.architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1300, 740],
+    "views": [
+      {
+        "id": "lesson-load",
+        "label": "Lesson load",
+        "focus": ["browser", "bridge", "lesson-cache", "materials", "static-routes"],
+        "note": "Trace validated lesson content and its textbook assets into the browser."
+      },
+      {
+        "id": "guided-question",
+        "label": "Guided question",
+        "focus": ["browser", "bridge", "guidance", "qa-pipeline", "materials", "web-search", "ragflow", "llm"],
+        "note": "See guidance options, source retrieval, and answer generation for one question."
+      },
+      {
+        "id": "continuity",
+        "label": "Identity and continuity",
+        "focus": ["browser", "clerk", "bridge", "qa-pipeline", "session-store"],
+        "note": "See how verified identity, sessions, Q&A memory, and user preferences persist."
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "frontend",
+      "label": "Browser UI",
+      "sublabel": "app.js · lesson-render.js",
+      "pos": [40, 300],
+      "size": [165, 72]
+    },
+    {
+      "id": "clerk",
+      "type": "security",
+      "label": "Clerk Auth",
+      "sublabel": "JWT identity",
+      "pos": [40, 510],
+      "size": [165, 72]
+    },
+    {
+      "id": "bridge",
+      "type": "backend",
+      "label": "Node HTTP Bridge",
+      "sublabel": "ws-bridge.js",
+      "tag": "API",
+      "pos": [280, 300],
+      "size": [170, 72]
+    },
+    {
+      "id": "guidance",
+      "type": "backend",
+      "label": "Guidance Options",
+      "sublabel": "guidance-service.js · paths",
+      "pos": [520, 180],
+      "size": [180, 72]
+    },
+    {
+      "id": "qa-pipeline",
+      "type": "backend",
+      "label": "Q&A Pipeline",
+      "sublabel": "ws-bridge.js · section OCR",
+      "pos": [520, 300],
+      "size": [180, 72]
+    },
+    {
+      "id": "lesson-cache",
+      "type": "database",
+      "label": "Lesson Cache",
+      "sublabel": "lesson-cache.js",
+      "pos": [280, 80],
+      "size": [170, 72]
+    },
+    {
+      "id": "static-routes",
+      "type": "backend",
+      "label": "Static Asset Routes",
+      "sublabel": "static-routes.js",
+      "pos": [280, 510],
+      "size": [180, 72]
+    },
+    {
+      "id": "session-store",
+      "type": "database",
+      "label": "Session & Memory Store",
+      "sublabel": "user-memory.js · file / db.js (Neon)",
+      "pos": [520, 510],
+      "size": [205, 72]
+    },
+    {
+      "id": "materials",
+      "type": "database",
+      "label": "Textbook Materials",
+      "sublabel": "workspace/materials/",
+      "pos": [760, 70],
+      "size": [180, 72]
+    },
+    {
+      "id": "llm",
+      "type": "external",
+      "label": "LLM Providers",
+      "sublabel": "OpenAI / OpenRouter",
+      "pos": [1000, 250],
+      "size": [180, 72]
+    },
+    {
+      "id": "web-search",
+      "type": "external",
+      "label": "Web Search Providers",
+      "sublabel": "DDG · Wikipedia · Wikimedia",
+      "pos": [1000, 410],
+      "size": [180, 72]
+    },
+    {
+      "id": "ragflow",
+      "type": "external",
+      "label": "Optional RAGFlow",
+      "sublabel": "textbook retrieval",
+      "pos": [1000, 560],
+      "size": [180, 72]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Browser & Identity",
+      "wraps": ["browser", "clerk"],
+      "pad": 26
+    },
+    {
+      "kind": "region",
+      "label": "Node Tutor Runtime",
+      "wraps": ["bridge", "guidance", "qa-pipeline", "lesson-cache", "static-routes", "session-store"],
+      "pad": 30
+    },
+    {
+      "kind": "region",
+      "label": "Knowledge & External Providers",
+      "wraps": ["materials", "llm", "web-search", "ragflow"],
+      "pad": 26
+    }
+  ],
+  "connections": [
+    {
+      "id": "browser-api",
+      "from": "browser",
+      "to": "bridge",
+      "label": "/api/*",
+      "variant": "emphasis"
+    },
+    {
+      "id": "verify-token",
+      "from": "clerk",
+      "to": "bridge",
+      "label": "verify Bearer token",
+      "variant": "security"
+    },
+    {
+      "id": "offer-guidance",
+      "from": "bridge",
+      "to": "guidance",
+      "label": "request path options",
+      "fromSide": "top",
+      "toSide": "left",
+      "labelAt": [485, 270]
+    },
+    {
+      "id": "route-question",
+      "from": "bridge",
+      "to": "qa-pipeline",
+      "label": "/api/ask",
+      "variant": "emphasis"
+    },
+    {
+      "id": "generate-answer",
+      "from": "qa-pipeline",
+      "to": "llm",
+      "label": "generate answer",
+      "variant": "emphasis",
+      "labelAt": [930, 235]
+    },
+    {
+      "id": "local-ocr",
+      "from": "qa-pipeline",
+      "to": "materials",
+      "label": "local section OCR",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "labelAt": [735, 166]
+    },
+    {
+      "id": "search-web",
+      "from": "qa-pipeline",
+      "to": "web-search",
+      "label": "web & image search",
+      "labelAt": [850, 416]
+    },
+    {
+      "id": "optional-rag",
+      "from": "qa-pipeline",
+      "to": "ragflow",
+      "label": "optional textbook retrieval",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "labelAt": [850, 540]
+    },
+    {
+      "id": "load-lesson",
+      "from": "bridge",
+      "to": "lesson-cache",
+      "label": "/api/section",
+      "labelAt": [405, 220]
+    },
+    {
+      "id": "read-cache",
+      "from": "lesson-cache",
+      "to": "materials",
+      "label": "validated lesson content"
+    },
+    {
+      "id": "serve-assets",
+      "from": "bridge",
+      "to": "static-routes",
+      "label": "serve files",
+      "fromSide": "bottom",
+      "toSide": "top"
+    },
+    {
+      "id": "read-assets",
+      "from": "static-routes",
+      "to": "materials",
+      "label": "pages · figures · media",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "via": [[370, 660], [1240, 660], [1240, 106]],
+      "labelAt": [805, 650]
+    },
+    {
+      "id": "persist-memory",
+      "from": "qa-pipeline",
+      "to": "session-store",
+      "label": "sessions · Q&A memory · preferences",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "labelAt": [820, 505]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Browser experience",
+      "items": [
+        "app.js orchestrates page state and requests",
+        "lesson-render.js mounts lessons, figures, and demos"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Teaching runtime",
+      "items": [
+        "Guidance creates teaching-path options",
+        "The bridge owns authenticated Q&A orchestration"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "Grounded knowledge",
+      "items": [
+        "Section OCR is the local textbook retrieval path",
+        "RAGFlow is an optional textbook retrieval path"
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Tools and continuity",
+      "items": [
+        "search-helpers.js reaches web and image providers",
+        "Bridge routes persist sessions, memory, and preferences"
+      ]
+    }
+  ]
+}

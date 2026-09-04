@@ -195,8 +195,26 @@ async function openSubtopic(page, sub, waitMs = 25000) {
     if (chapterCount !== 1) {
         throw new Error(`ambiguous chapter selector ('${sub.chapter}' matched ${chapterCount} rows)`);
     }
-    await chapter.first().click();
-    await page.click(`#courseSyllabus .syllabus-section[data-section="${sub.section}"]`);
+    const chapterIndex = await chapter.first().getAttribute('data-idx');
+    const chapterPanel = chapterIndex === null
+      ? null
+      : page.locator(`#courseSyllabus #syllabus-${chapterIndex}`);
+    const chapterOpen = chapterPanel
+      ? await chapterPanel.evaluate(panel => panel.classList.contains('is-open'))
+      : false;
+    if (!chapterOpen) {
+        await chapter.first().click();
+        await chapterPanel?.waitFor({ state: 'visible', timeout: 5000 });
+        await page.waitForFunction(
+            selector => {
+                const panel = document.querySelector(selector);
+                return panel && panel.classList.contains('is-open') && !panel.classList.contains('is-animating');
+            },
+            `#courseSyllabus #syllabus-${chapterIndex}`,
+            { timeout: 5000 }
+        );
+    }
+    await page.locator(`#courseSyllabus .syllabus-section[data-section="${sub.section}"]`).click();
     const card = page.locator(`.chapter-overview-subcard[data-sublesson-title="${sub.title}"]`);
     await card.waitFor({ state: 'visible', timeout: 10000 });
 

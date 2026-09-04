@@ -1,0 +1,4 @@
+{"file":".trellis/spec/app/conventions.md","reason":"检查材料树、课程缓存和 npm run check 契约。"}
+{"file":".trellis/spec/css/verification.md","reason":"执行 CSS probe、视觉差异与真实浏览器检查。"}
+{"file":".trellis/tasks/08-01-lesson-loop-02-convolution-visuals/prd.md","reason":"逐项验证本轮内容、插图、响应式和无回归标准。"}
+{"file":".trellis/tasks/08-01-lesson-loop-02-convolution-visuals/design.md","reason":"核对静态路由安全、专属样式边界和回滚能力。"}

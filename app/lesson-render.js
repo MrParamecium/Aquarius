@@ -417,9 +417,259 @@ function resetLearnKnowledgePointState() {
   currentKnowledgePointIndex = 0;
   currentFullLessonHtml = '';
   currentLessonTrailingHtml = '';
+  convolutionLastLessonIndex = 1;
+  learnBody?.classList.remove('convolution-guided-flow-active');
+  window.resetConvolutionFocusWorkspace?.();
   if (learnKpTitle) learnKpTitle.textContent = 'Preparing lesson...';
   if (learnKpPrevBtn) learnKpPrevBtn.disabled = true;
   if (learnKpNextBtn) learnKpNextBtn.disabled = true;
+}
+
+const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
+const CONVOLUTION_LESSON_PAGE_COUNT = 18;
+const CONVOLUTION_STATE_STORAGE_KEY = 'ftutor:convolution-lesson:v6';
+const CONVOLUTION_PHASES = Object.freeze([
+  { id: 'what', label: 'WHAT', start: 1, end: 2 },
+  { id: 'why', label: 'WHY', start: 3, end: 4 },
+  { id: 'how', label: 'HOW', start: 5, end: 18 },
+]);
+const CONVOLUTION_STAGE_LABELS = Object.freeze({
+  intro: 'Section Overview',
+  lesson: 'Lesson',
+  practice: 'Practice'
+});
+let convolutionLastLessonIndex = 1;
+
+function readConvolutionLessonState() {
+  const fallback = {
+    version: 6,
+    lastLessonPosition: 1,
+    tasks: {},
+    figure27: { step: 1, t: -4, revealedTimes: [], completed: false },
+    exitCheck: { currentQuestion: 1, attempts: {}, answers: {}, completed: false },
+  };
+  try {
+    const saved = JSON.parse(localStorage.getItem(CONVOLUTION_STATE_STORAGE_KEY) || 'null');
+    if (!saved || saved.version !== 6) return fallback;
+    const figure27 = saved.figure27 && typeof saved.figure27 === 'object' ? saved.figure27 : {};
+    const exitCheck = saved.exitCheck && typeof saved.exitCheck === 'object' ? saved.exitCheck : {};
+    return {
+      version: 6,
+      lastLessonPosition: Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(saved.lastLessonPosition) || 1)),
+      tasks: saved.tasks && typeof saved.tasks === 'object' ? saved.tasks : {},
+      figure27: {
+        step: Math.max(1, Math.min(5, Number(figure27.step) || 1)),
+        t: Number.isFinite(Number(figure27.t)) ? Number(figure27.t) : -4,
+        revealedTimes: Array.isArray(figure27.revealedTimes)
+          ? figure27.revealedTimes.map(Number).filter(Number.isFinite).slice(0, 32)
+          : [],
+        completed: Boolean(figure27.completed),
+      },
+      exitCheck: {
+        currentQuestion: Math.max(1, Math.min(3, Number(exitCheck.currentQuestion) || 1)),
+        attempts: exitCheck.attempts && typeof exitCheck.attempts === 'object' ? exitCheck.attempts : {},
+        answers: exitCheck.answers && typeof exitCheck.answers === 'object' ? exitCheck.answers : {},
+        completed: Boolean(exitCheck.completed),
+      },
+    };
+  } catch (_) {
+    return fallback;
+  }
+}
+
+function cloneConvolutionState(value) {
+  return typeof structuredClone === 'function'
+    ? structuredClone(value)
+    : JSON.parse(JSON.stringify(value));
+}
+
+function updateConvolutionLessonSlice(key, next) {
+  if (!['figure27', 'exitCheck'].includes(key) || !next || typeof next !== 'object') return false;
+  const saved = readConvolutionLessonState();
+  saved[key] = cloneConvolutionState(next);
+  writeConvolutionLessonState(saved);
+  return true;
+}
+
+function getConvolutionLessonPhase(position) {
+  const value = Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(position) || 1));
+  return CONVOLUTION_PHASES.find(phase => value >= phase.start && value <= phase.end) || CONVOLUTION_PHASES[2];
+}
+
+window.getConvolutionLessonPhase = getConvolutionLessonPhase;
+window.getConvolutionFigure27State = () => cloneConvolutionState(readConvolutionLessonState().figure27);
+window.setConvolutionFigure27State = next => updateConvolutionLessonSlice('figure27', next);
+window.getConvolutionExitCheckState = () => cloneConvolutionState(readConvolutionLessonState().exitCheck);
+window.setConvolutionExitCheckState = next => updateConvolutionLessonSlice('exitCheck', next);
+
+function writeConvolutionLessonState(nextState) {
+  try { localStorage.setItem(CONVOLUTION_STATE_STORAGE_KEY, JSON.stringify(nextState)); } catch (_) {}
+}
+
+function getConvolutionLessonTaskState(task) {
+  const key = String(task || '').trim();
+  return Boolean(key && readConvolutionLessonState().tasks[key]);
+}
+
+function setConvolutionLessonTaskComplete(task, complete = true) {
+  const key = String(task || '').trim();
+  if (!key) return false;
+  const saved = readConvolutionLessonState();
+  saved.tasks[key] = Boolean(complete);
+  writeConvolutionLessonState(saved);
+  return saved.tasks[key];
+}
+window.getConvolutionLessonTaskState = getConvolutionLessonTaskState;
+window.setConvolutionLessonTaskComplete = setConvolutionLessonTaskComplete;
+
+function getCurrentLessonSectionCode() {
+  return compactWhitespace(learnSectionId || '')
+    .match(/^(?:[a-z](?:[._-]\d+)*|\d+(?:[._-]\d+)*)/i)?.[0] || '';
+}
+
+function getConvolutionLessonStageMap() {
+  if (getCurrentLessonSectionCode() !== CONVOLUTION_GUIDED_SECTION_ID) return null;
+  const points = Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints : [];
+  const introIndex = points.findIndex(point => point?.type === 'overview');
+  const lessonIndices = points
+    .map((point, index) => point?.type === 'knowledge' ? index : -1)
+    .filter(index => index >= 0);
+  const practiceIndex = points.findIndex(point => point?.type === 'quiz');
+  if (introIndex < 0 || lessonIndices.length !== CONVOLUTION_LESSON_PAGE_COUNT || practiceIndex < 0) return null;
+  return { introIndex, lessonIndices, practiceIndex };
+}
+
+function getConvolutionLessonStageState(index = currentKnowledgePointIndex) {
+  const map = getConvolutionLessonStageMap();
+  if (!map) return null;
+  if (index === map.introIndex) {
+    return { stage: 'intro', position: 1, total: 1, index, map };
+  }
+  const lessonPosition = map.lessonIndices.indexOf(index);
+  if (lessonPosition >= 0) {
+    return { stage: 'lesson', position: lessonPosition + 1, total: map.lessonIndices.length, index, map };
+  }
+  if (index === map.practiceIndex) {
+    return { stage: 'practice', position: 1, total: 1, index, map };
+  }
+  return null;
+}
+window.getConvolutionLessonStageState = getConvolutionLessonStageState;
+
+function getConvolutionPageTemplate(stageState) {
+  if (!stageState) return '';
+  if (stageState.stage === 'intro') return 'overview';
+  if (stageState.stage === 'practice') return 'practice';
+  if (stageState.stage !== 'lesson') return '';
+  if (stageState.position <= 5) return 'reading';
+  if (stageState.position <= 15) return 'demo';
+  return 'finish';
+}
+
+function getConvolutionLessonTurnTiming() {
+  return getConvolutionLessonStageMap()
+    ? { commitMs: 70, totalMs: 180 }
+    : { commitMs: 255, totalMs: 720 };
+}
+window.getConvolutionLessonTurnTiming = getConvolutionLessonTurnTiming;
+
+function buildConvolutionStageNavHtml(stageState) {
+  if (!stageState) return '';
+  const tabs = [
+    { stage: 'intro' },
+    { stage: 'lesson' },
+    { stage: 'practice' }
+  ];
+  return `
+    <nav class="convolution-stage-nav" aria-label="Learning stages">
+      ${tabs.map(({ stage }) => {
+        const active = stageState.stage === stage;
+        return `<button class="convolution-stage-tab${active ? ' is-active' : ''}" type="button" data-convolution-stage-target="${stage}"${active ? ' aria-current="step"' : ''}><span>${CONVOLUTION_STAGE_LABELS[stage]}</span></button>`;
+      }).join('')}
+    </nav>
+  `;
+}
+
+function buildConvolutionPhaseProgressHtml(stageState) {
+  if (stageState?.stage !== 'lesson') return '';
+  const activePhase = getConvolutionLessonPhase(stageState.position).id;
+  return `<div class="convolution-phase-progress" aria-label="Lesson phases">
+    ${CONVOLUTION_PHASES.map(phase => `<span class="convolution-phase-chip${phase.id === activePhase ? ' is-active' : ''}" data-convolution-phase-chip="${phase.id}"${phase.id === activePhase ? ' aria-current="step"' : ''}>${phase.label}</span>`).join('')}
+  </div>`;
+}
+
+function jumpToConvolutionLessonPosition(position) {
+  const map = getConvolutionLessonStageMap();
+  const targetPosition = Math.max(1, Math.min(CONVOLUTION_LESSON_PAGE_COUNT, Number(position) || 1));
+  if (!map || isLearnPageTurning) return false;
+  const targetIndex = map.lessonIndices[targetPosition - 1];
+  if (!Number.isInteger(targetIndex)) return false;
+  if (targetIndex === currentKnowledgePointIndex) return true;
+  const direction = targetIndex < currentKnowledgePointIndex ? -1 : 1;
+  return runLearnPageTurn(direction, () => {
+    currentKnowledgePointIndex = targetIndex;
+    const saved = readConvolutionLessonState();
+    saved.lastLessonPosition = targetPosition;
+    writeConvolutionLessonState(saved);
+    renderCurrentKnowledgePoint();
+  });
+}
+window.jumpToConvolutionLessonPosition = jumpToConvolutionLessonPosition;
+
+function jumpToConvolutionLessonStage(stage) {
+  const map = getConvolutionLessonStageMap();
+  if (!map || isLearnPageTurning) return false;
+  const normalizedStage = String(stage || '').trim();
+  let targetIndex = currentKnowledgePointIndex;
+  if (normalizedStage === 'intro') targetIndex = map.introIndex;
+  else if (normalizedStage === 'practice') targetIndex = map.practiceIndex;
+  else if (normalizedStage === 'lesson') {
+    targetIndex = map.lessonIndices.includes(convolutionLastLessonIndex)
+      ? convolutionLastLessonIndex
+      : map.lessonIndices[0];
+  } else {
+    return false;
+  }
+  if (targetIndex === currentKnowledgePointIndex) return true;
+  const direction = targetIndex < currentKnowledgePointIndex ? -1 : 1;
+  return runLearnPageTurn(direction, () => {
+    currentKnowledgePointIndex = targetIndex;
+    if (normalizedStage === 'lesson') {
+      const saved = readConvolutionLessonState();
+      saved.lastLessonPosition = map.lessonIndices.indexOf(targetIndex) + 1;
+      writeConvolutionLessonState(saved);
+    }
+    renderCurrentKnowledgePoint();
+  });
+}
+window.jumpToConvolutionLessonStage = jumpToConvolutionLessonStage;
+
+function bindConvolutionStageNavigation(root) {
+  if (!root) return;
+  root.querySelectorAll('[data-convolution-stage-target]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => {
+      jumpToConvolutionLessonStage(button.dataset.convolutionStageTarget || '');
+    });
+  });
+  root.querySelectorAll('[data-convolution-intro-start]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => {
+      jumpToConvolutionLessonStage('lesson');
+    });
+  });
+  root.querySelectorAll('[data-convolution-start-practice]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => jumpToConvolutionLessonStage('practice'));
+  });
+  root.querySelectorAll('[data-convolution-review-lesson]').forEach((button) => {
+    if (button.dataset.stageBound === '1') return;
+    button.dataset.stageBound = '1';
+    button.addEventListener('click', () => jumpToConvolutionLessonPosition(1));
+  });
 }
 
 // Lesson rendering rules enforced on the client so the first overview stays concise
@@ -603,6 +853,11 @@ function buildLessonOverviewHtml(nodes) {
   const sourceNodes = Array.isArray(nodes) ? nodes : [];
   if (!sourceNodes.length) return '';
 
+  const convolutionIntro = sourceNodes.find((node) => node?.nodeType === Node.ELEMENT_NODE
+    && (node.matches?.('[data-convolution-stage-intro="true"]')
+      || node.querySelector?.('[data-convolution-stage-intro="true"]')));
+  if (convolutionIntro) return convolutionIntro.outerHTML || '';
+
   const topLevel = sourceNodes
     .map((node) => {
       if (!node || node.nodeType !== Node.ELEMENT_NODE) return null;
@@ -761,6 +1016,7 @@ function parseLessonKnowledgePoints(html) {
       && (
         node.classList.contains('lesson-test-banner')
         || node.classList.contains('kc-quiz-plan')
+        || node.matches('[data-convolution-practice]')
       );
   };
 
@@ -924,6 +1180,12 @@ function parseLessonKnowledgePoints(html) {
       if (isSectionTitleHeading(node)) return;
       const text = compactWhitespace(node.textContent || '');
       const html = node.outerHTML || node.textContent || '';
+      const isConvolutionIntro = node.matches?.('[data-convolution-stage-intro="true"]')
+        || node.querySelector?.('[data-convolution-stage-intro="true"]');
+      if (isConvolutionIntro) {
+        objectiveNodes.push(node);
+        return;
+      }
       const isObjectiveNode = !foundObjective && /^>?\s*Section Objective[:：]?\s*(.+)$/i.test(text);
 
       if (isObjectiveNode) {
@@ -1094,7 +1356,10 @@ function isBadLessonPageTitle(title) {
 
 function getLessonPageDisplayTitle(block, index) {
   if (!block || block.type !== 'knowledge') return '';
-  const title = compactWhitespace(block.title || '');
+  const rawTitle = compactWhitespace(block.title || '');
+  const title = getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID
+    ? rawTitle.replace(/^\d+[.)]\s+/, '')
+    : rawTitle;
   if (!title || /^Knowledge Point$/i.test(title) || /^Core Lesson$/i.test(title) || isBadLessonPageTitle(title)) {
     const inferred = inferLessonChunkTitle(block.html || '', '', index);
     if (inferred && !/^Core Lesson\s+\d+$/i.test(inferred)) return inferred;
@@ -1114,7 +1379,9 @@ function stripDuplicatePageHeading(innerHtml, displayTitle) {
     if (child.classList && (child.classList.contains('kc-visual-plan') || child.classList.contains('kc-visual-meta'))) return false;
     return /^H[1-3]$/.test(child.tagName || '');
   });
-  if (firstHeading && compactWhitespace(firstHeading.textContent || '') === normalizedTitle) {
+  const normalizedHeading = compactWhitespace(firstHeading?.textContent || '');
+  if (firstHeading && (normalizedHeading === normalizedTitle
+    || normalizedHeading.replace(/^\d+[.)]\s+/, '') === normalizedTitle)) {
     firstHeading.remove();
   }
   return temp.innerHTML;
@@ -1122,16 +1389,28 @@ function stripDuplicatePageHeading(innerHtml, displayTitle) {
 
 function buildLessonPageFrameHtml(innerHtml, block, index, total) {
   const rawType = compactWhitespace(block?.type || 'lesson').toLowerCase().replace(/[^a-z0-9_-]+/g, '-');
+  const lessonSectionId = compactWhitespace(learnSectionId || '').match(/^(?:[a-z](?:[._-]\d+)*|\d+(?:[._-]\d+)*)/i)?.[0] || '';
+  const lessonSectionAttr = lessonSectionId ? ` data-lesson-section="${lessonSectionId}"` : '';
   const extraHtml = String(block?.extraHtml || '').trim();
+  const stageState = getConvolutionLessonStageState(index);
+  const stageAttrs = stageState
+    ? ` data-lesson-stage="${stageState.stage}" data-stage-position="${stageState.position}" data-stage-total="${stageState.total}"`
+    : '';
+  const pageTemplate = getConvolutionPageTemplate(stageState);
+  const templateAttr = pageTemplate ? ` data-convolution-template="${pageTemplate}"` : '';
+  const stageNavHtml = buildConvolutionStageNavHtml(stageState);
+  const phaseHtml = buildConvolutionPhaseProgressHtml(stageState);
   const displayTitle = getLessonPageDisplayTitle(block, index);
   const pageBodyHtml = displayTitle ? stripDuplicatePageHeading(innerHtml, displayTitle) : String(innerHtml || '');
   const titleHtml = displayTitle
-    ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2></header>`
+    ? `<header class="lesson-page-heading"><h2>${inlineFormat(displayTitle)}</h2>${phaseHtml}</header>`
     : '';
   return `
-    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}">
+    <article class="lesson-page-frame lesson-page-frame-${rawType}" data-lesson-page="${index + 1}"${lessonSectionAttr}${stageAttrs}${templateAttr}>
+      ${stageNavHtml}
       ${titleHtml}
-      <div class="lesson-page-content">
+      ${stageState?.stage === 'lesson' ? `<p class="convolution-lesson-progress">Lesson ${stageState.position} of ${stageState.total}</p>` : ''}
+      <div class="lesson-page-content convolution-reading-surface">
         ${pageBodyHtml || '<p class="ghost">No explanation available.</p>'}
       </div>
       ${extraHtml ? `<div class="lesson-page-extra">${extraHtml}</div>` : ''}
@@ -1188,6 +1467,7 @@ window.__ftutorSettleAfterTypeset = settleLessonAfterTypeset;
 // the two. Every `learnExplainContent.innerHTML =` in the lesson flow routes here.
 function replaceLearnContent(el, html) {
   if (!el) return;
+  window.__ftutorConvolutionLessonInteractions?.destroy(el);
   window.__ftutorTeardownInteractiveDemos?.(el);
   el.innerHTML = html;
 }
@@ -1217,6 +1497,15 @@ function renderCurrentKnowledgePoint() {
   }
   currentKnowledgePointIndex = Math.max(0, Math.min(currentKnowledgePointIndex, learnKnowledgePoints.length - 1));
   const block = learnKnowledgePoints[currentKnowledgePointIndex];
+  const stageState = getConvolutionLessonStageState(currentKnowledgePointIndex);
+  if (stageState?.stage === 'lesson') {
+    convolutionLastLessonIndex = currentKnowledgePointIndex;
+    const saved = readConvolutionLessonState();
+    saved.lastLessonPosition = stageState.position;
+    writeConvolutionLessonState(saved);
+  }
+  learnBody?.classList.toggle('convolution-guided-flow-active', Boolean(stageState));
+  window.syncConvolutionFocusWorkspace?.(stageState);
   const pageHtml = applyLessonRenderRulesToKnowledgePoint(block) || '<p class="ghost">No explanation available.</p>';
   replaceLearnContent(learnExplainContent, buildLessonPageFrameHtml(pageHtml, block, currentKnowledgePointIndex, learnKnowledgePoints.length));
   delete learnExplainContent.dataset.lectureDecorated;
@@ -1224,7 +1513,19 @@ function renderCurrentKnowledgePoint() {
   decorateLectureContent(learnExplainContent);
   enhanceVisualMetadataUI(learnExplainContent);
   hydrateInteractiveDemos(learnExplainContent);
+  window.__ftutorConvolutionLessonInteractions?.mount(learnExplainContent);
+  const currentPageFrame = learnExplainContent.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+  const isConvolutionDemoTemplate = currentPageFrame?.dataset.convolutionTemplate === 'demo';
+  currentPageFrame?.classList.toggle(
+    'convolution-demo-page',
+    Boolean(isConvolutionDemoTemplate && currentPageFrame.querySelector('.geogebra-demo-shell'))
+  );
+  const convolutionPractice = learnExplainContent.querySelector('[data-convolution-practice]');
+  if (convolutionPractice) window.__ftutorConvolutionPractice?.mount(convolutionPractice);
+  const convolutionExitCheck = learnExplainContent.querySelector('[data-convolution-exit-check-host]');
+  if (convolutionExitCheck) window.__ftutorConvolutionExitCheck?.mount(convolutionExitCheck);
   bindOverviewSubsectionCards();
+  bindConvolutionStageNavigation(learnExplainContent);
   
   const learnKpTitle = document.getElementById('learnKpTitle');
   if (learnKpTitle) learnKpTitle.textContent = block.title || '';
@@ -1265,7 +1566,7 @@ function renderCurrentKnowledgePoint() {
     requestAnimationFrame(() => {
       if (learnExplainScroll) learnExplainScroll.scrollTop = 0;
     });
-  }, 60);
+  }, getConvolutionLessonStageMap() ? 0 : 60);
 }
 
 function bindStartTestBtnIfPresent() {
@@ -1331,9 +1632,22 @@ function setLearnLessonContent(fullHtml, options = {}) {
   currentFullLessonHtml = String(fullHtml || '');
   try {
     const parsed = parseLessonKnowledgePoints(currentFullLessonHtml);
+    if (getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID
+      && parsed.points.filter(point => point?.type === 'knowledge').length === CONVOLUTION_LESSON_PAGE_COUNT
+      && !parsed.points.some(point => point?.type === 'quiz')) {
+      parsed.points.push({
+        type: 'quiz',
+        label: 'Practice',
+        title: 'Practice',
+        html: buildLessonTestBannerHtml(),
+      });
+    }
     learnKnowledgePoints = parsed.points;
     currentLessonTrailingHtml = parsed.trailingHtml;
     currentKnowledgePointIndex = Math.max(0, Math.min(options.index || 0, Math.max(learnKnowledgePoints.length - 1, 0)));
+    const map = getConvolutionLessonStageMap();
+    const savedLessonPosition = readConvolutionLessonState().lastLessonPosition;
+    convolutionLastLessonIndex = map?.lessonIndices?.[savedLessonPosition - 1] ?? 1;
     renderCurrentKnowledgePoint();
   } catch (err) {
     console.error('[LessonRender] setLearnLessonContent failed:', err);
@@ -1372,6 +1686,7 @@ function runLearnPageTurn(direction = 1, commit = () => {}) {
     return true;
   }
   if (isLearnPageTurning) return false;
+  const timing = getConvolutionLessonTurnTiming();
 
   if (learnPageTurnTimer) window.clearTimeout(learnPageTurnTimer);
   if (learnPageTurnMidTimer) window.clearTimeout(learnPageTurnMidTimer);
@@ -1391,13 +1706,13 @@ function runLearnPageTurn(direction = 1, commit = () => {}) {
         if (learnExplainContent) learnExplainContent.classList.add('learn-page-turn-reveal');
       });
     }
-  }, 255);
+  }, timing.commitMs);
 
   learnPageTurnTimer = window.setTimeout(() => {
     clearLearnPageTurnClasses();
     learnPageTurnTimer = null;
     learnPageTurnMidTimer = null;
-  }, 720);
+  }, timing.totalMs);
 
   return true;
 }
@@ -1497,6 +1812,9 @@ function moveLearnKnowledgePoint(delta) {
 }
 
 function buildLessonTestBannerHtml() {
+  if (getCurrentLessonSectionCode() === CONVOLUTION_GUIDED_SECTION_ID) {
+    return window.__ftutorConvolutionPractice?.buildHtml?.() || '<section data-convolution-practice><p>Practice is loading...</p></section>';
+  }
   return `
     <div class="lesson-test-banner" id="testBannerCard" style="margin-top: 40px; padding: 24px; background: linear-gradient(135deg, #F8FAFC 0%, #EFF6FF 100%); border-radius: 12px; border: 1px solid #E2E8F0; text-align: center; margin-bottom: 40px;">
       <h3 style="margin: 0 0 8px 0; color: #0F172A; font-size: 18px; display: flex; align-items: center; justify-content: center; gap: 8px;">

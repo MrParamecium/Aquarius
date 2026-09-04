@@ -1,0 +1,5 @@
+{"file":".trellis/spec/app/index.md","reason":"审查实现是否保持项目架构、课程缓存和全量检查边界"}
+{"file":".trellis/spec/app/conventions.md","reason":"审查课程材料、依赖、命名和范围是否合规"}
+{"file":".trellis/spec/css/index.md","reason":"审查 CSS 前置条件和质量门是否全部完成"}
+{"file":".trellis/spec/css/cascade-and-collapse.md","reason":"审查样式是否课程专属且未扰动复杂级联"}
+{"file":".trellis/spec/css/verification.md","reason":"复核 CSS probe、视觉回归和真实页面证据"}

@@ -129,8 +129,8 @@ async function createGeoGebraApplet(container, options = {}) {
       id: appletId,
       appName: 'classic',
       width: Math.max(320, Math.round(Number(options.width) || 760)),
-      height: Math.max(420, Math.round(Number(options.height) || 620)),
-      perspective: 'G/D',
+      height: Math.max(200, Math.round(Number(options.height) || 620)),
+      perspective: 'G',
       showToolBar: false,
       showMenuBar: false,
       showAlgebraInput: false,
@@ -174,7 +174,7 @@ async function createGeoGebraApplet(container, options = {}) {
     setSize(width, height) {
       if (removed) return;
       const nextWidth = Math.max(320, Math.round(Number(width) || 0));
-      const nextHeight = Math.max(420, Math.round(Number(height) || 0));
+      const nextHeight = Math.max(200, Math.round(Number(height) || 0));
       try { api.setSize(nextWidth, nextHeight); } catch (_) {}
     },
     remove() {

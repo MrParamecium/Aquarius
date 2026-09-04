@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 const {
@@ -14,6 +15,9 @@ const {
 const PORT = Number(process.env.TUTOR_MOBILE_LEARN_PANELS_PORT || 9152);
 const BASE = `http://127.0.0.1:${PORT}`;
 const repoRoot = path.resolve(__dirname, '..');
+const evidenceDir = process.env.TUTOR_LOOP04_EVIDENCE_DIR
+  ? path.resolve(process.env.TUTOR_LOOP04_EVIDENCE_DIR)
+  : '';
 const SUBTOPIC = {
   chapter: 'Chapter 2',
   section: '2.4 System Response to External Input: The Zero-State Response',
@@ -24,6 +28,12 @@ const results = [];
 function record(name, ok, detail = '') {
   results.push({ name, ok, detail });
   console.log(`  ${ok ? 'PASS' : 'FAIL'} ${name}${detail ? ` - ${detail}` : ''}`);
+}
+
+async function captureEvidence(page, filename) {
+  if (!evidenceDir) return;
+  fs.mkdirSync(evidenceDir, { recursive: true });
+  await page.screenshot({ path: path.join(evidenceDir, filename), fullPage: false });
 }
 
 async function installFakeGeoGebra(context) {
@@ -68,7 +78,7 @@ async function installFakeGeoGebra(context) {
           const t = values.t;
           if (name === 't') return t;
           if (name === 'overlapArea' || name === 'outputValue') {
-            return t < -3 ? 0 : 1 - Math.exp(-(t + 3));
+            return t <= -3 ? 0 : 2 * (1 - Math.exp(-(t + 3)));
           }
           return values[name] || 0;
         },
@@ -94,13 +104,11 @@ async function installFakeGeoGebra(context) {
       this.inject = (mountId) => {
         metrics.injectCount += 1;
         const mount = document.getElementById(mountId);
-        ['upper', 'lower'].forEach((view) => {
-          const canvas = document.createElement('canvas');
-          canvas.width = 760;
-          canvas.height = 310;
-          canvas.dataset.fakeGeoGebraView = view;
-          mount?.appendChild(canvas);
-        });
+        const canvas = document.createElement('canvas');
+        canvas.width = 760;
+        canvas.height = 620;
+        canvas.dataset.fakeGeoGebraView = 'stacked';
+        mount?.appendChild(canvas);
         queueMicrotask(() => params.appletOnLoad(makeApi(mount)));
       };
     };
@@ -114,41 +122,28 @@ async function waitForLayout(page) {
   await page.waitForTimeout(80);
 }
 
-async function goToLessonPage(page, targetPage) {
-  const initialPosition = await page.locator('#learnPagerPosition').textContent();
-  const totalPages = Number(String(initialPosition || '').match(/\/\s*(\d+)/)?.[1]);
-  if (!Number.isFinite(totalPages) || totalPages < targetPage) {
-    throw new Error(`lesson pager reported an invalid total: ${initialPosition}`);
-  }
-  for (let current = 1; current < targetPage; current += 1) {
-    await page.waitForFunction(() => typeof isLearnPageTurning === 'undefined' || !isLearnPageTurning, null, {
-      timeout: 5000,
-    });
-    const moved = await page.evaluate(() => moveLearnKnowledgePoint(1));
-    if (!moved) throw new Error(`lesson state refused to advance from page ${current}`);
-    try {
-      await page.waitForFunction(
-        ({ nextPage, total }) => {
-          const body = document.getElementById('learnBody');
-          const position = document.getElementById('learnPagerPosition');
-          return position?.textContent.trim() === `${nextPage} / ${total}`
-            && !body?.classList.contains('learn-page-turn-active');
-        },
-        { nextPage: current + 1, total: totalPages },
-        { timeout: 8000 }
-      );
-    } catch (error) {
-      const state = await page.evaluate(() => ({
-        position: document.getElementById('learnPagerPosition')?.textContent.trim(),
-        bodyClasses: document.getElementById('learnBody')?.className,
-        index: typeof currentKnowledgePointIndex === 'number' ? currentKnowledgePointIndex : null,
-        pointCount: Array.isArray(learnKnowledgePoints) ? learnKnowledgePoints.length : null,
-        isTurning: typeof isLearnPageTurning === 'boolean' ? isLearnPageTurning : null,
-        nextDisabled: document.getElementById('learnPagerNextBtn')?.disabled,
-      }));
-      throw new Error(`pager did not settle on ${current + 1} / ${totalPages}: ${JSON.stringify(state)} (${error.message})`);
-    }
-  }
+async function goToLessonPage(page, lessonPosition) {
+  const totalPages = await page.evaluate((position) => {
+    const state = window.getConvolutionLessonStageState?.();
+    const lessonIndices = state?.map?.lessonIndices || [];
+    const index = lessonIndices[position - 1];
+    if (!Number.isInteger(index)) throw new Error(`missing lesson position ${position}`);
+    currentKnowledgePointIndex = index;
+    renderCurrentKnowledgePoint();
+    return lessonIndices.length;
+  }, lessonPosition);
+  await page.waitForFunction(
+    (position) => {
+      const state = window.getConvolutionLessonStageState?.();
+      const body = document.getElementById('learnBody');
+      return state?.stage === 'lesson'
+        && state.position === position
+        && !body?.classList.contains('learn-page-turn-active');
+    },
+    lessonPosition,
+    { timeout: 8000 }
+  );
+  await waitForLayout(page);
   return totalPages;
 }
 
@@ -177,6 +172,11 @@ async function openPreparedSubtopic(page, card) {
 async function panelSnapshot(page) {
   return page.evaluate(() => {
     const rect = (selector) => document.querySelector(selector)?.getBoundingClientRect();
+    const overlaps = (first, second) => Boolean(first && second
+      && first.left < second.right
+      && first.right > second.left
+      && first.top < second.bottom
+      && first.bottom > second.top);
     const visible = (selector) => {
       const element = document.querySelector(selector);
       if (!element) return false;
@@ -189,6 +189,7 @@ async function panelSnapshot(page) {
     const chat = rect('#learnChatCol');
     const showQa = rect('#learnChatRestoreBtn');
     const showLecture = rect('#learnExplainRestoreBtn');
+    const stageNav = rect('.convolution-stage-nav');
     return {
       classes: body?.className || '',
       explainWidth: explain?.width || 0,
@@ -197,7 +198,36 @@ async function panelSnapshot(page) {
       showQaHeight: showQa?.height || 0,
       showLectureVisible: visible('#learnExplainRestoreBtn'),
       showLectureHeight: showLecture?.height || 0,
+      showQaOverlapsStageNav: overlaps(showQa, stageNav),
       horizontalOverflow: document.documentElement.scrollWidth - window.innerWidth,
+    };
+  });
+}
+
+async function stickyStageSnapshot(page) {
+  return page.evaluate(() => {
+    const nav = document.querySelector('.convolution-stage-nav');
+    const frame = document.querySelector('.lesson-page-frame[data-lesson-section="2.4-2"]');
+    const scroll = document.getElementById('learnExplainScroll');
+    const showQa = document.getElementById('learnChatRestoreBtn');
+    const navRect = nav?.getBoundingClientRect();
+    const scrollRect = scroll?.getBoundingClientRect();
+    const showQaRect = showQa?.getBoundingClientRect();
+    const navStyle = nav ? getComputedStyle(nav) : null;
+    const frameStyle = frame ? getComputedStyle(frame) : null;
+    const overlaps = Boolean(navRect && showQaRect
+      && navRect.left < showQaRect.right
+      && navRect.right > showQaRect.left
+      && navRect.top < showQaRect.bottom
+      && navRect.bottom > showQaRect.top);
+    return {
+      scrollTop: scroll?.scrollTop || 0,
+      scrollTopEdge: scrollRect?.top || 0,
+      navTop: navRect?.top || 0,
+      stickyOffset: parseFloat(navStyle?.top || '0'),
+      position: navStyle?.position || '',
+      frameOverflow: frameStyle?.overflow || '',
+      overlapsShowQa: overlaps,
     };
   });
 }
@@ -220,9 +250,9 @@ async function main() {
     await page.waitForFunction(() => Array.isArray(learnKnowledgePoints) && learnKnowledgePoints.length >= 4, null, {
       timeout: 5000,
     });
-    await page.waitForFunction(() => /\/\s*[4-9]\d*$/.test(
-      document.getElementById('learnPagerPosition')?.textContent.trim() || ''
-    ), null, { timeout: 5000 });
+    await page.waitForFunction(() => window.getConvolutionLessonStageState?.()?.stage === 'intro', null, {
+      timeout: 5000,
+    });
     await page.waitForFunction(() => document.getElementById('learnBody')?.classList.contains('chat-collapsed'), null, {
       timeout: 5000,
     });
@@ -233,13 +263,34 @@ async function main() {
         && directMobile.chatWidth === 0
         && directMobile.showQaVisible
         && directMobile.showQaHeight >= 44
+        && !directMobile.showQaOverlapsStageNav
         && !directMobile.showLectureVisible
         && directMobile.horizontalOverflow <= 1,
       JSON.stringify(directMobile));
+    await captureEvidence(page, 'mobile-intro-390.png');
+
+    await goToLessonPage(page, 4);
+    await page.locator('[data-convolution-analogy-panel="ink"]').scrollIntoViewIfNeeded();
+    await waitForLayout(page);
+    const stickyStage = await stickyStageSnapshot(page);
+    record('mobile stage navigation stays pinned below the Q&A switch while lesson content scrolls',
+      stickyStage.scrollTop > 0
+        && stickyStage.position === 'sticky'
+        && stickyStage.frameOverflow === 'visible'
+        && Math.abs(stickyStage.navTop - (stickyStage.scrollTopEdge + stickyStage.stickyOffset)) <= 1
+        && !stickyStage.overlapsShowQa,
+      JSON.stringify(stickyStage));
+    await captureEvidence(page, 'mobile-lesson-analogy-390.png');
+
+    await goToLessonPage(page, 5);
+    await page.locator('.convolution-five-step-map').first().scrollIntoViewIfNeeded();
+    await waitForLayout(page);
+    await captureEvidence(page, 'mobile-five-steps-390.png');
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
-    const totalPages = await goToLessonPage(page, 4);
+    const geoGebraPage = 6;
+    const totalPages = await goToLessonPage(page, geoGebraPage);
     await page.waitForFunction(() => {
       const stage = document.querySelector('.geogebra-demo-stage');
       return stage?.dataset.state === 'ready';
@@ -247,37 +298,46 @@ async function main() {
 
     const prepared = await page.evaluate(() => {
       const node = document.querySelector('.kc-interactive-demo .geogebra-demo-shell')?.closest('.kc-interactive-demo');
-      node?.querySelector('[data-geogebra-step="3"]')?.click();
-      const range = node?.querySelector('[data-geogebra-time]');
-      if (range) {
-        range.value = '-2';
-        range.dispatchEvent(new Event('input', { bubbles: true }));
-      }
       window.__mobilePanelCanvasRefs = node ? Array.from(node.querySelectorAll('canvas')) : [];
       return {
         pager: document.getElementById('learnPagerPosition')?.textContent.trim(),
-        step: node?.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
+        stage: typeof getConvolutionLessonStageState === 'function'
+          ? getConvolutionLessonStageState()
+          : null,
+        task: node?.dataset.convolutionTask,
+        layers: node?.querySelectorAll('[data-convolution-demo-layer]').length,
+        internalSteps: node?.querySelectorAll('[data-geogebra-step], [data-geogebra-nav]').length,
+        rangeDisabled: node?.querySelector('[data-geogebra-time]')?.disabled,
         t: node?.__geoGebraDiagnostics?.getState()?.t,
         canvasCount: window.__mobilePanelCanvasRefs.length,
         constructorCount: window.__fakeGeoGebra?.constructorCount,
       };
     });
-    record('real 2.4-2 page 4 mounts one continuous two-view Applet',
-      prepared.pager === `4 / ${totalPages}`
-        && prepared.step === '3'
-        && prepared.t === -2
-        && prepared.canvasCount === 2
+    record('real 2.4-2 GeoGebra page mounts one controlled three-layer Applet',
+      totalPages === 18
+        && prepared.pager === 'Lesson 6 / 18'
+        && prepared.stage?.stage === 'lesson'
+        && prepared.stage.position === 6
+        && prepared.task === 'guided-sequence'
+        && prepared.layers === 3
+        && prepared.internalSteps === 0
+        && prepared.rangeDisabled
+        && prepared.t === -4
+        && prepared.canvasCount === 1
         && prepared.constructorCount === 1,
       JSON.stringify(prepared));
 
     await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('.geogebra-demo-shell').scrollIntoViewIfNeeded();
     await waitForLayout(page);
+    await captureEvidence(page, 'mobile-geogebra-390.png');
     const mobileLecture = await panelSnapshot(page);
     record('mobile defaults to a full-width lecture with a usable Q&A switch',
       mobileLecture.explainWidth >= 350
         && mobileLecture.chatWidth === 0
         && mobileLecture.showQaVisible
         && mobileLecture.showQaHeight >= 44
+        && !mobileLecture.showQaOverlapsStageNav
         && mobileLecture.horizontalOverflow <= 1,
       JSON.stringify(mobileLecture));
 
@@ -325,29 +385,31 @@ async function main() {
         canvasCount: canvases.length,
         sameCanvasNodes: canvases.length === references.length
           && canvases.every((canvas, index) => canvas === references[index]),
-        step: node?.querySelector('[data-geogebra-step].is-active')?.dataset.geogebraStep,
+        task: node?.dataset.convolutionTask,
         t: node?.__geoGebraDiagnostics?.getState()?.t,
       };
     });
-    record('returning to lecture preserves the GeoGebra instance, step, and t',
+    record('returning to lecture preserves the controlled GeoGebra instance and state',
       resizedMobileQa.showLectureVisible
         && returned.panel.explainWidth >= 390
         && returned.panel.chatWidth === 0
         && returned.constructorCount === 1
         && returned.injectCount === 1
         && returned.removeCount === 0
-        && returned.canvasCount === 2
+        && returned.canvasCount === 1
         && returned.sameCanvasNodes
-        && returned.step === '3'
-        && returned.t === -2,
+        && returned.task === 'guided-sequence'
+        && returned.t === -4,
       JSON.stringify(returned));
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await waitForLayout(page);
     const desktop = await panelSnapshot(page);
-    record('returning to desktop restores the existing two-column layout',
+    record('returning to desktop preserves the Tutor panel opened on mobile',
       desktop.explainWidth > 0
-        && desktop.chatWidth > 0
+        && desktop.chatWidth >= 320
+        && desktop.explainWidth / desktop.chatWidth >= 1.95
+        && desktop.explainWidth / desktop.chatWidth <= 2.05
         && !desktop.showQaVisible
         && !desktop.showLectureVisible
         && desktop.horizontalOverflow <= 1,

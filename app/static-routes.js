@@ -7,8 +7,9 @@
  *     after a release)
  *   - handleStaticRoute(req, res, pathname) — the consolidated static-route
  *     dispatcher. Handles /generated/, /new-pages/, /pages/, /figures/,
- *     /api/crop (pre-cropped figure PNG with fuzzy fallback), and the
- *     catch-all `app/`-relative file lookup that ends the request handler.
+ *     /lesson-illustrations/, /api/crop (pre-cropped figure PNG with fuzzy
+ *     fallback), and the catch-all `app/`-relative file lookup that ends the
+ *     request handler.
  *
  * Returns true when the route was handled, false to let the API handler
  * keep going. The bridge's request handler used to inline all of this; now
@@ -114,6 +115,26 @@ module.exports = function createStaticRoutes(deps) {
             const filename = pathname.replace(/^\/figures\//, '');
             const figurePath = path.join(TUTOR_MATERIALS_DIR, 'new-book-figures', filename);
             serveStaticFile(res, figurePath);
+            return true;
+        }
+
+        if (pathname.startsWith('/lesson-illustrations/')) {
+            const illustrationDir = path.join(TUTOR_MATERIALS_DIR, 'lesson-illustrations');
+            let requestedPath;
+            try {
+                requestedPath = decodeURIComponent(pathname.replace(/^\/lesson-illustrations\//, ''));
+            } catch (_) {
+                res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
+                res.end('Bad request');
+                return true;
+            }
+            const illustrationPath = path.resolve(illustrationDir, requestedPath);
+            if (!isUnder(illustrationPath, illustrationDir)) {
+                res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+                res.end('Forbidden');
+                return true;
+            }
+            serveStaticFile(res, illustrationPath);
             return true;
         }
 

@@ -710,6 +710,7 @@ const learnExplainToolbarEl = document.getElementById('learnExplainToolbar');
 const learnBookColEl = document.getElementById('learnBookCol');
 const learnChatColPanel = document.getElementById('learnChatCol');
 const learnChatFab = document.getElementById('learnChatFab');
+const learnTutorMinimizeBtn = document.getElementById('learnTutorMinimizeBtn');
 const learnChatPopover = document.getElementById('learnChatPopover');
 const learnChatPopoverHead = document.getElementById('learnChatPopoverHead');
 const learnChatPopoverScroll = document.getElementById('learnChatPopoverScroll');
@@ -748,6 +749,8 @@ let isLearnChatCollapsed = false;
 let isLearnExplainCollapsed = false;
 let learnPanelFocus = 'normal';
 let isLearnChatPopoverOpen = false;
+let isConvolutionFocusWorkspaceActive = false;
+let convolutionFocusSidebarState = null;
 let _learnViewMode = 'lecture';
 let _learnLayoutMode = 'lesson';
 const learnMobilePanelQuery = typeof window.matchMedia === 'function'
@@ -808,6 +811,12 @@ function closeLightbox() {
 
 function bindExpandableLessonImages(root) {
   if (!root) return;
+  root.querySelectorAll('img[data-api-asset="1"]').forEach(img => {
+    const rawSrc = img.getAttribute('src') || '';
+    if (rawSrc.startsWith('/') && API_BASE && !rawSrc.startsWith(API_BASE)) {
+      img.src = `${API_BASE}${rawSrc}`;
+    }
+  });
   root.querySelectorAll('img.lesson-img').forEach(img => {
     if (img.dataset.zoomBound === '1') return;
     img.dataset.zoomBound = '1';
@@ -1136,6 +1145,23 @@ function advanceLearnPanelFocus(side) {
   applyLearnPanelFocusState();
 }
 
+function clearLearnSplitStylesForShell(shell) {
+  const learnBodyInner = shell?.querySelector?.('.learn-body-inner');
+  if (learnBodyInner) {
+    learnBodyInner.style.removeProperty('grid-template-columns');
+    learnBodyInner.dataset.customSplit = '';
+  }
+  shell?.style.removeProperty('--learn-explain-basis');
+  shell?.style.removeProperty('--learn-chat-basis');
+  [learnExplainColEl, learnChatColPanel].forEach((column) => {
+    column?.style.removeProperty('flex');
+    column?.style.removeProperty('flex-basis');
+    column?.style.removeProperty('width');
+    column?.style.removeProperty('min-width');
+    column?.style.removeProperty('max-width');
+  });
+}
+
 function applyLearnChatCollapsedState() {
   const shell = learnBody || document.getElementById('learnBody');
   if (isMobileLearnPanelLayout()) {
@@ -1170,9 +1196,8 @@ function applyLearnChatCollapsedState() {
   if (shell) shell.classList.toggle('chat-collapsed', isLearnChatCollapsed);
   const learnBodyInner = shell?.querySelector?.('.learn-body-inner');
   if (learnBodyInner) {
-    if (isLearnChatCollapsed) {
-      learnBodyInner.style.removeProperty('grid-template-columns');
-      learnBodyInner.dataset.customSplit = '';
+    if (isLearnChatCollapsed || shell?.classList.contains('convolution-focus-workspace-active')) {
+      clearLearnSplitStylesForShell(shell);
     } else {
       try {
         const savedRatio = parseFloat(localStorage.getItem('aquarius-learn-split') || '');
@@ -1180,6 +1205,10 @@ function applyLearnChatCollapsedState() {
           window.applyLearnSplit(savedRatio);
         }
       } catch (_) {}
+    }
+    if (isLearnChatCollapsed) {
+      learnBodyInner.style.removeProperty('grid-template-columns');
+      learnBodyInner.dataset.customSplit = '';
     }
   }
   if (learnChatColPanel) {
@@ -1203,13 +1232,20 @@ function applyLearnChatCollapsedState() {
   syncBtn(lectureFocusOverlayBtn);
 
   if (isLearnChatCollapsed) resetLearnChatFabPosition();
-  if (learnChatFab) learnChatFab.classList.add('hidden');
+  const showTutorOrb = shell?.classList.contains('convolution-focus-workspace-active') && isLearnChatCollapsed;
+  if (learnChatFab) learnChatFab.classList.toggle('hidden', !showTutorOrb);
   if (learnChatRestoreBtn) learnChatRestoreBtn.classList.add('hidden');
   if (!isLearnChatCollapsed && learnChatPopover) learnChatPopover.classList.add('hidden');
   if (!isLearnChatCollapsed) isLearnChatPopoverOpen = false;
   if (learnChatFab) {
-    learnChatFab.title = isLearnChatCollapsed ? 'Open Q&A panel' : 'Minimize Q&A to bubble';
-    learnChatFab.setAttribute('aria-label', learnChatFab.title);
+    learnChatFab.title = showTutorOrb ? 'Tutor Agent' : (isLearnChatCollapsed ? 'Open Q&A panel' : 'Minimize Q&A to bubble');
+    learnChatFab.setAttribute('aria-label', showTutorOrb ? 'Ask Tutor Agent' : learnChatFab.title);
+  }
+  if (learnTutorMinimizeBtn) {
+    learnTutorMinimizeBtn.classList.toggle(
+      'hidden',
+      !shell?.classList.contains('convolution-focus-workspace-active') || isLearnChatCollapsed
+    );
   }
 
   if (learnChatPopoverScroll && learnChatContent && isLearnChatCollapsed) {
@@ -1240,6 +1276,107 @@ function minimizeLearnQaToBubble() {
   isLearnChatPopoverOpen = false;
   applyLearnChatCollapsedState();
 }
+
+function notifyConvolutionFocusLayoutChange() {
+  requestAnimationFrame(() => window.dispatchEvent(new Event('resize')));
+  window.setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+}
+
+function readConvolutionFocusSidebarState() {
+  const appContainer = document.querySelector('.app');
+  const leftSidebar = document.getElementById('leftSidebar');
+  const tocSidebar = document.getElementById('tocSidebar');
+  return {
+    appCollapsed: Boolean(appContainer?.classList.contains('sidebar-collapsed')),
+    sidebarCollapsed: Boolean(leftSidebar?.classList.contains('collapsed')),
+    tocCollapsed: Boolean(tocSidebar?.classList.contains('collapsed')),
+  };
+}
+
+function syncConvolutionFocusSidebarControls(collapsed) {
+  const menuToggleBtn = document.getElementById('menuToggleBtn');
+  const sidebarLogoExpandBtn = document.getElementById('sidebarLogoExpandBtn');
+  if (menuToggleBtn) {
+    menuToggleBtn.setAttribute('aria-expanded', String(!collapsed));
+    menuToggleBtn.title = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
+  }
+  if (sidebarLogoExpandBtn) {
+    sidebarLogoExpandBtn.setAttribute('aria-expanded', String(!collapsed));
+    sidebarLogoExpandBtn.title = collapsed ? 'Expand sidebar' : 'Fourier';
+    sidebarLogoExpandBtn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Fourier');
+  }
+}
+
+function restoreConvolutionFocusSidebar() {
+  const appContainer = document.querySelector('.app');
+  const leftSidebar = document.getElementById('leftSidebar');
+  const tocSidebar = document.getElementById('tocSidebar');
+  const savedState = convolutionFocusSidebarState || {
+    appCollapsed: false,
+    sidebarCollapsed: false,
+    tocCollapsed: false,
+  };
+  const collapsed = Boolean(savedState.appCollapsed || savedState.sidebarCollapsed);
+
+  appContainer?.classList.remove('convolution-focus-nav-touch-open');
+  appContainer?.classList.toggle('sidebar-collapsed', Boolean(savedState.appCollapsed));
+  leftSidebar?.classList.toggle('collapsed', Boolean(savedState.sidebarCollapsed));
+  tocSidebar?.classList.toggle('collapsed', Boolean(savedState.tocCollapsed));
+  syncConvolutionFocusSidebarControls(collapsed);
+  convolutionFocusSidebarState = null;
+}
+
+function syncConvolutionFocusWorkspace(stageState) {
+  const shell = learnBody || document.getElementById('learnBody');
+  const appContainer = document.querySelector('.app');
+  const stage = String(stageState?.stage || '');
+  const shouldFocus = stage === 'lesson' || stage === 'practice';
+  const wasFocused = isConvolutionFocusWorkspaceActive;
+
+  if (!shouldFocus && !wasFocused) return;
+
+  if (shouldFocus && !wasFocused) {
+    convolutionFocusSidebarState = readConvolutionFocusSidebarState();
+  }
+  isConvolutionFocusWorkspaceActive = shouldFocus;
+  shell?.classList.toggle('convolution-focus-workspace-active', shouldFocus);
+  appContainer?.classList.toggle('convolution-focus-workspace-active', shouldFocus);
+  appContainer?.classList.remove('convolution-focus-nav-touch-open');
+  if (shell) {
+    if (shouldFocus) shell.dataset.convolutionFocus = 'true';
+    else delete shell.dataset.convolutionFocus;
+  }
+
+  if (shouldFocus && !wasFocused) {
+    clearLearnSplitStylesForShell(shell);
+    if (isMobileLearnPanelLayout()) setMobileLearnPanel('lecture');
+    else minimizeLearnQaToBubble();
+  } else if (!shouldFocus && wasFocused) {
+    restoreConvolutionFocusSidebar();
+    if (stage === 'intro') {
+      if (isMobileLearnPanelLayout()) setMobileLearnPanel('lecture');
+      else openLearnQaSidebar();
+    }
+    if (learnTutorMinimizeBtn) learnTutorMinimizeBtn.classList.add('hidden');
+  }
+
+  notifyConvolutionFocusLayoutChange();
+}
+
+function resetConvolutionFocusWorkspace() {
+  isConvolutionFocusWorkspaceActive = false;
+  const shell = learnBody || document.getElementById('learnBody');
+  shell?.classList.remove('convolution-focus-workspace-active');
+  if (shell) delete shell.dataset.convolutionFocus;
+  const appContainer = document.querySelector('.app');
+  appContainer?.classList.remove('convolution-focus-workspace-active', 'convolution-focus-nav-touch-open');
+  restoreConvolutionFocusSidebar();
+  learnTutorMinimizeBtn?.classList.add('hidden');
+  notifyConvolutionFocusLayoutChange();
+}
+
+window.syncConvolutionFocusWorkspace = syncConvolutionFocusWorkspace;
+window.resetConvolutionFocusWorkspace = resetConvolutionFocusWorkspace;
 
 
 function applyLearnExplainCollapsedState() {
@@ -2634,6 +2771,13 @@ if (learnChatFab) {
       return;
     }
     openLearnQaSidebar();
+  });
+}
+
+if (learnTutorMinimizeBtn) {
+  learnTutorMinimizeBtn.addEventListener('click', () => {
+    minimizeLearnQaToBubble();
+    requestAnimationFrame(() => learnChatFab?.focus({ preventScroll: true }));
   });
 }
 
@@ -4168,7 +4312,15 @@ document.addEventListener('keydown', e => {
 })();
 
 // ── View switcher ───────────────────────────────────────────────────────────
+function leaveConvolutionFocusBeforeWorkspaceNavigation() {
+  const appContainer = document.querySelector('.app');
+  if (isConvolutionFocusWorkspaceActive || appContainer?.classList.contains('convolution-focus-workspace-active')) {
+    resetConvolutionFocusWorkspace();
+  }
+}
+
 function showWelcome() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.remove('hidden');
   answerScreen.classList.add('hidden');
@@ -4189,6 +4341,7 @@ function showWelcome() {
 }
 
 function showAnswer(question) {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.remove('hidden');
@@ -4221,6 +4374,7 @@ function showLearnView() {
 }
 
 function showSettingsView() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4239,6 +4393,7 @@ function showSettingsView() {
 }
 
 function showPreferenceView() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4256,6 +4411,7 @@ function showPreferenceView() {
 }
 
 function showCourseTrackerView() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4274,6 +4430,7 @@ function showCourseTrackerView() {
 }
 
 function showMistakeNotebookView() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
   answerScreen.classList.add('hidden');
@@ -4304,6 +4461,7 @@ function toggleSyllabusPanel(forceOpen = null) {
 
 
 function showLoginView() {
+  leaveConvolutionFocusBeforeWorkspaceNavigation();
   if (appShell) appShell.classList.add('hidden');
   setWorkspaceAccountBarVisible(false);
   welcomeScreen.classList.add('hidden');
@@ -5383,6 +5541,13 @@ setTimeout(() => {
   if (menuToggleBtn && leftSidebar) {
     menuToggleBtn.setAttribute('aria-expanded', leftSidebar.classList.contains('collapsed') ? 'false' : 'true');
     menuToggleBtn.addEventListener('click', () => {
+      if (appContainer?.classList.contains('convolution-focus-workspace-active')) {
+        const open = appContainer.classList.toggle('convolution-focus-nav-touch-open');
+        menuToggleBtn.setAttribute('aria-expanded', String(open));
+        if (!open) requestAnimationFrame(() => floatToggleBtn?.focus({ preventScroll: true }));
+        notifySidebarLayoutChange();
+        return;
+      }
       setWorkspaceSidebarCollapsed(!leftSidebar.classList.contains('collapsed'));
     });
   }
@@ -5396,6 +5561,13 @@ setTimeout(() => {
   }
   if (floatToggleBtn && leftSidebar) {
     floatToggleBtn.addEventListener('click', () => {
+      if (appContainer?.classList.contains('convolution-focus-workspace-active')) {
+        appContainer.classList.add('convolution-focus-nav-touch-open');
+        menuToggleBtn?.setAttribute('aria-expanded', 'true');
+        requestAnimationFrame(() => menuToggleBtn?.focus({ preventScroll: true }));
+        notifySidebarLayoutChange();
+        return;
+      }
       setWorkspaceSidebarCollapsed(false);
     });
   }
@@ -5449,24 +5621,17 @@ if (learnResizer && learnExplainCol && learnChatCol) {
 
   const clearLearnSplitStyles = () => {
     const shell = learnBody || document.getElementById('learnBody');
-    learnBodyInner.style.removeProperty('grid-template-columns');
-    learnBodyInner.dataset.customSplit = '';
-    if (shell) {
-      shell.style.removeProperty('--learn-explain-basis');
-      shell.style.removeProperty('--learn-chat-basis');
-    }
-    [learnExplainCol, learnChatCol].forEach((col) => {
-      col.style.removeProperty('flex');
-      col.style.removeProperty('flex-basis');
-      col.style.removeProperty('width');
-      col.style.removeProperty('min-width');
-      col.style.removeProperty('max-width');
-    });
+    clearLearnSplitStylesForShell(shell);
   };
 
   const applyLearnSplit = (chatRatio) => {
     if (!learnBodyInner) return;
-    if (isLearnChatCollapsed || isLearnExplainCollapsed || learnPanelFocus !== 'normal' || window.matchMedia('(max-width: 900px)').matches) {
+    const shell = learnBody || document.getElementById('learnBody');
+    if (shell?.classList.contains('convolution-focus-workspace-active')
+      || isLearnChatCollapsed
+      || isLearnExplainCollapsed
+      || learnPanelFocus !== 'normal'
+      || window.matchMedia('(max-width: 900px)').matches) {
       clearLearnSplitStyles();
       return;
     }
@@ -5480,8 +5645,6 @@ if (learnResizer && learnExplainCol && learnChatCol) {
     let chatWidth = Math.round(availableWidth * boundedChatRatio);
     chatWidth = clampSplitValue(chatWidth, chatMin, Math.max(chatMin, availableWidth - explainMin));
     const explainWidth = Math.max(explainMin, availableWidth - chatWidth);
-    const shell = learnBody || document.getElementById('learnBody');
-
     learnBodyInner.style.setProperty(
       'grid-template-columns',
       `minmax(0, ${explainWidth}px) ${resizerWidth}px minmax(0, ${chatWidth}px)`,

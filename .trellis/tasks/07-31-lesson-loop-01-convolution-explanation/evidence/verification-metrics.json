@@ -1,0 +1,39 @@
+{
+  "branch": "codex/lesson-loop-01-convolution-explanation",
+  "baseline": "origin/main@d57ecaf",
+  "localUrl": "http://127.0.0.1:9139/",
+  "cache": {
+    "cached": true,
+    "lessonChars": 7941,
+    "h2Count": 6,
+    "demoCount": 1,
+    "markdownImageCount": 0,
+    "bookPages": 13
+  },
+  "math": {
+    "c(-3)": 0,
+    "c(-2)": 1.2642411176571153,
+    "c(0)": 1.900425863264272
+  },
+  "browser": {
+    "lessonPages": 8,
+    "overviewConcepts": 6,
+    "geoGebraSteps": 4,
+    "textbookPagesRendered": 13,
+    "desktopVisualCheck": "passed"
+  },
+  "mobile": {
+    "viewports": [390, 430],
+    "assertionsPassed": 7,
+    "assertionsTotal": 7,
+    "horizontalOverflow": 0,
+    "geoGebraInstancePreserved": true,
+    "stepAndTimePreserved": true
+  },
+  "knownNonBlockingIssue": {
+    "request": "optional section preview",
+    "status": 403,
+    "cause": "anthropic/claude-haiku-4.5 is unavailable in the current region",
+    "lessonImpact": "none; the formal lesson is served from the local cache"
+  }
+}
