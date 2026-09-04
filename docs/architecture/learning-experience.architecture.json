@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Fourier Tutor Learning Experience",
+    "locale": "en",
+    "output": "learning-experience.architecture.html",
+    "quality_profile": "showcase",
+    "viewBox": [1260, 680],
+    "views": [
+      {"id":"learning-path","label":"Primary learning path","focus":["student","home","lesson","practice"],"note":"Follow one learner from topic selection to an understanding check."},
+      {"id":"lesson-support","label":"Lesson support","focus":["lesson","textbook","tutor","demos"],"note":"See the three resources available without leaving the lesson workspace."},
+      {"id":"continuity","label":"Learning continuity","focus":["home","practice","local-progress","sessions"],"note":"Restore local learning progress and resume recent guided Q&A."}
+    ]
+  },
+  "components": [
+    {"id":"student","type":"external","label":"Student","sublabel":"Chooses a topic","pos":[40,270],"size":[130,68]},
+    {"id":"home","type":"frontend","label":"Home & Syllabus","sublabel":"Find the next lesson","pos":[230,270],"size":[160,68]},
+    {"id":"lesson","type":"frontend","label":"Lesson Workspace","sublabel":"Read, ask, and interact","tag":"CORE","pos":[470,270],"size":[170,68]},
+    {"id":"practice","type":"frontend","label":"Practice & Progress","sublabel":"Check understanding","pos":[750,270],"size":[170,68]},
+    {"id":"textbook","type":"external","label":"Original Textbook","sublabel":"Pages and figures","pos":[430,80],"size":[170,68]},
+    {"id":"tutor","type":"backend","label":"Tutor Agent","sublabel":"Guided contextual Q&A","pos":[700,80],"size":[170,68]},
+    {"id":"demos","type":"frontend","label":"Interactive Demos","sublabel":"GeoGebra and custom labs","pos":[450,470],"size":[180,68]},
+    {"id":"sessions","type":"database","label":"Q&A Sessions & Preferences","sublabel":"Recent chats and teaching choices","pos":[750,470],"size":[200,68]},
+    {"id":"local-progress","type":"database","label":"Browser Learning State","sublabel":"Local practice and chapter progress","pos":[990,270],"size":[190,68]}
+  ],
+  "boundaries": [
+    {"kind":"region","label":"Browser Learning Experience","wraps":["home","lesson","practice","demos","local-progress"],"pad":28},
+    {"kind":"region","label":"Lesson Support","wraps":["textbook","tutor"],"pad":24}
+  ],
+  "connections": [
+    {"id":"choose-topic","from":"student","to":"home","label":"choose topic","variant":"emphasis","labelAt":[200,352]},
+    {"id":"start-lesson","from":"home","to":"lesson","label":"start lesson","variant":"emphasis","labelAt":[430,352]},
+    {"id":"check-learning","from":"lesson","to":"practice","label":"check learning","variant":"emphasis","labelAt":[695,352]},
+    {"id":"open-source","from":"lesson","to":"textbook","label":"open source page","fromSide":"top","toSide":"bottom"},
+    {"id":"ask-tutor","from":"lesson","to":"tutor","label":"ask a question","fromSide":"top","toSide":"bottom"},
+    {"id":"explore-demo","from":"lesson","to":"demos","label":"explore concept","fromSide":"bottom","toSide":"top","labelAt":[680,430]},
+    {"id":"save-progress","from":"practice","to":"local-progress","label":"store locally"},
+    {"id":"restore-progress","from":"local-progress","to":"home","label":"restore progress","variant":"dashed","fromSide":"right","toSide":"left","via":[[1225,304],[1225,40],[185,40],[185,304]],"labelAt":[1080,52]},
+    {"id":"resume-learning","from":"sessions","to":"home","label":"resume Q&A","variant":"dashed","fromSide":"right","toSide":"bottom","via":[[980,504],[980,610],[310,610]],"labelAt":[650,600]}
+  ],
+  "cards": [
+    {"dot":"rose","title":"One focused journey","items":["Topic selection leads directly into the lesson","Practice closes the loop with visible progress"]},
+    {"dot":"cyan","title":"Evidence and interaction","items":["Original textbook pages stay available","Interactive demos make signal operations observable"]},
+    {"dot":"emerald","title":"Adaptive support","items":["Guided Q&A supports the current page","Browser state restores practice and chapter progress","Q&A sessions preserve teaching continuity"]}
+  ]
+}
