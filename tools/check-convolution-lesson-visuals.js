@@ -24,26 +24,40 @@ const PRACTICE_PATH = path.join(ROOT, 'app', 'convolution-practice.js');
 
 const APPROVED_IMAGES = [
   {
+    filename: 'convolution-why-lightbulb-v1.png',
+    url: '/lesson-illustrations/2_4-2/convolution-why-lightbulb-v1.png',
+    page: 1,
+    altToken: 'light bulb',
+    width: 1402,
+    height: 1122,
+  },
+  {
     filename: 'convolution-ink-memory-v2.png',
     url: '/lesson-illustrations/2_4-2/convolution-ink-memory-v2.png',
     page: 4,
     altToken: 'ink',
+    width: 1153,
+    height: 2048,
   },
   {
     filename: 'convolution-sprinkler-procedure-v2.png',
     url: '/lesson-illustrations/2_4-2/convolution-sprinkler-procedure-v2.png',
     page: 4,
     altToken: 'sprinkler',
+    width: 1153,
+    height: 2048,
   },
   {
     filename: 'convolution-past-effects-v1.png',
     url: '/lesson-illustrations/2_4-2/convolution-past-effects-v1.png',
     page: 4,
     altToken: 'past',
+    width: 1153,
+    height: 2048,
   },
 ];
 const EXPECTED_HEADINGS = [
-  'What Does Graphical Convolution Show?',
+  'Why Use Graphical Convolution?',
   'What Do t and τ Mean?',
   'Why Use a Graphical View?',
   'Why Does the Overlap Create the Output?',
@@ -259,16 +273,18 @@ if (cache) {
     if (markers.length !== 1 || markers[0] !== String(pageNumber)) {
       fail(`page ${pageNumber} section must contain only its own stable marker, found ${JSON.stringify(markers)}`);
     }
-    const expectedPhase = pageNumber <= 2 ? 'what' : pageNumber <= 4 ? 'why' : 'how';
+    const expectedPhase = pageNumber === 2 ? 'what' : pageNumber <= 4 ? 'why' : 'how';
     const phases = Array.from(pageSource.matchAll(/data-convolution-phase="([^"]+)"/g), match => match[1]);
     if (phases.length !== 1 || phases[0] !== expectedPhase) {
       fail(`page ${pageNumber} section must contain only phase ${expectedPhase}, found ${JSON.stringify(phases)}`);
     }
-    if ((pageSource.match(/class="[^"]*\bconvolution-learning-goal\b/g) || []).length !== 1) {
-      fail(`page ${pageNumber} must contain exactly one learning goal`);
+    const expectedLearningGoalCount = pageNumber === 1 ? 0 : 1;
+    if ((pageSource.match(/class="[^"]*\bconvolution-learning-goal\b/g) || []).length !== expectedLearningGoalCount) {
+      fail(`page ${pageNumber} must contain exactly ${expectedLearningGoalCount} learning goal blocks`);
     }
-    if ((pageSource.match(/class="[^"]*\bconvolution-can-now\b/g) || []).length !== 1) {
-      fail(`page ${pageNumber} must contain exactly one You can now outcome`);
+    const expectedOutcomeCount = pageNumber === 1 ? 0 : 1;
+    if ((pageSource.match(/class="[^"]*\bconvolution-can-now\b/g) || []).length !== expectedOutcomeCount) {
+      fail(`page ${pageNumber} must contain exactly ${expectedOutcomeCount} You can now outcome blocks`);
     }
     const highlights = (pageSource.match(/class="[^"]*\bconvolution-key\b/g) || []).length;
     if (highlights > 8) fail(`page ${pageNumber} may highlight at most 8 items, found ${highlights}`);
@@ -300,9 +316,9 @@ if (cache) {
     }
   }
   const lessonImageUrls = Array.from(cache.matchAll(/<img\b[^>]*\bsrc="([^"]+)"[^>]*>/g), match => match[1]);
-  const analogyUrls = lessonImageUrls.filter(url => url.startsWith('/lesson-illustrations/2_4-2/'));
-  if (JSON.stringify(analogyUrls) !== JSON.stringify(APPROVED_IMAGES.map(image => image.url))) {
-    fail(`lesson illustrations must be exactly the approved assets, found ${JSON.stringify(analogyUrls)}`);
+  const lessonIllustrationUrls = lessonImageUrls.filter(url => url.startsWith('/lesson-illustrations/2_4-2/'));
+  if (JSON.stringify(lessonIllustrationUrls) !== JSON.stringify(APPROVED_IMAGES.map(image => image.url))) {
+    fail(`lesson illustrations must be exactly the approved assets, found ${JSON.stringify(lessonIllustrationUrls)}`);
   }
 
   const page2 = pages.get(2) || '';
@@ -482,8 +498,8 @@ if (cache) {
 
 for (const image of APPROVED_IMAGES) {
   const size = readPngSize(path.join(ILLUSTRATION_DIR, image.filename));
-  if (size && (size.width !== 1153 || size.height !== 2048)) {
-    fail(`${image.filename} must remain 1153x2048, found ${size.width}x${size.height}`);
+  if (size && (size.width !== image.width || size.height !== image.height)) {
+    fail(`${image.filename} must remain ${image.width}x${image.height}, found ${size.width}x${size.height}`);
   }
 }
 

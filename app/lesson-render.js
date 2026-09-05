@@ -429,8 +429,8 @@ const CONVOLUTION_GUIDED_SECTION_ID = '2.4-2';
 const CONVOLUTION_LESSON_PAGE_COUNT = 18;
 const CONVOLUTION_STATE_STORAGE_KEY = 'ftutor:convolution-lesson:v6';
 const CONVOLUTION_PHASES = Object.freeze([
-  { id: 'what', label: 'WHAT', start: 1, end: 2 },
-  { id: 'why', label: 'WHY', start: 3, end: 4 },
+  { id: 'what', label: 'WHAT', start: 2, end: 2 },
+  { id: 'why', label: 'WHY', start: 1, end: 4 },
   { id: 'how', label: 'HOW', start: 5, end: 18 },
 ]);
 const CONVOLUTION_STAGE_LABELS = Object.freeze({
