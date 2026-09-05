@@ -125,7 +125,7 @@ if (cache) {
   if (forbidden.length) fail(`cache may not inject GeoGebra commands: ${forbidden.join(', ')}`);
 
   const requiredHeadings = [
-    '## 1. What Does Graphical Convolution Show?',
+    '## 1. Why Use Graphical Convolution?',
     '## 2. What Do t and τ Mean?',
     '## 3. Why Use a Graphical View?',
     '## 4. Why Does the Overlap Create the Output?',

@@ -22,7 +22,7 @@ const SUBTOPIC = {
   title: '2.4-2 Graphical Understanding of Convolution Operation',
 };
 const LESSON_TITLES = [
-  'What Does Graphical Convolution Show?',
+  'Why Use Graphical Convolution?',
   'What Do t and τ Mean?',
   'Why Use a Graphical View?',
   'Why Does the Overlap Create the Output?',
@@ -627,8 +627,8 @@ async function main() {
     }));
     record('lesson exposes one active WHAT/WHY/HOW phase chip',
       lessonPhaseStart.chips.map(chip => chip.id).join(',') === 'what,why,how'
-        && lessonPhaseStart.chips.filter(chip => chip.active).map(chip => chip.id).join(',') === 'what'
-        && lessonPhaseStart.phase === 'what'
+        && lessonPhaseStart.chips.filter(chip => chip.active).map(chip => chip.id).join(',') === 'why'
+        && lessonPhaseStart.phase === 'why'
         && lessonPhaseStart.phaseInsideHeading,
       JSON.stringify(lessonPhaseStart));
 

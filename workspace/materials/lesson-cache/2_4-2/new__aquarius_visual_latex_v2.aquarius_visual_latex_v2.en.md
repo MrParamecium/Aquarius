@@ -4,9 +4,9 @@
 
 %%KC_BLOCK%%<div class="kc-visual-meta" data-visual-kind="guided_convolution" data-teaching-role="concept_anchor" style="display:none;"></div>%%KC_END%%
 
-## 1. What Does Graphical Convolution Show?
+## 1. Why Use Graphical Convolution?
 
-%%KC_BLOCK%%<section class="convolution-teaching-card" data-convolution-page="1" data-convolution-phase="what"><p class="convolution-learning-goal"><strong>Learning goal</strong> Turn the convolution integral into a moving picture.</p><ul><li><span class="convolution-key convolution-key-input">\(x(\tau)\)</span> stays fixed.</li><li><span class="convolution-key convolution-key-response">\(g(t-\tau)\)</span> moves as \(t\) changes.</li><li>Their overlap creates the product.</li><li>The product area gives one output value.</li></ul><div class="convolution-static-preview" data-convolution-static-preview><span>Signals</span><span aria-hidden="true">→</span><span>Product</span><span aria-hidden="true">→</span><span>Output</span></div><p class="convolution-can-now"><strong>You can now</strong> identify what each graph represents.</p></section>%%KC_END%%
+%%KC_BLOCK%%<section class="convolution-teaching-card convolution-why-page" data-convolution-page="1" data-convolution-phase="why"><ul class="convolution-why-list"><li><strong>Handle complex signals</strong><span>Graphs make difficult convolution integrals easier to evaluate.</span></li><li><strong>See the result clearly</strong><span>Visualize the convolution result for sampling, filtering, and more.</span></li><li><strong>Work without exact formulas</strong><span>When signals have no exact formula, graphical convolution is the only option.</span></li></ul><figure class="convolution-why-figure"><img class="lesson-img convolution-why-image" src="/lesson-illustrations/2_4-2/convolution-why-lightbulb-v1.png" data-api-asset="1" alt="A hand-drawn glowing light bulb on warm cream paper" width="1402" height="1122" loading="eager" decoding="async"></figure></section>%%KC_END%%
 
 ## 2. What Do t and τ Mean?
 
