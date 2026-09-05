@@ -4,6 +4,8 @@ An interactive full-stack tutor that turns a real engineering syllabus into a te
 
 **Stack:** Node.js · Vanilla JavaScript · PostgreSQL / Neon · Playwright
 
+**Live demo:** [fourier-tutor.vercel.app](https://fourier-tutor.vercel.app)
+
 ![Fourier Tutor landing page introducing the textbook-grounded AI tutor](docs/assets/readme/screenshots/00-product-hero.png)
 
 ## See the Learning Experience
