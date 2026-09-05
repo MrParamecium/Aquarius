@@ -1,29 +1,32 @@
 # Fourier Tutor Agent
 
-An interactive full-stack tutor for learning signal processing
-through textbook-grounded lessons, guided Q&A, and visual demos.
+An interactive full-stack tutor that turns a real engineering syllabus into a textbook-grounded learning workspace—with guided Q&A, visual demos, and progress continuity.
 
 **Stack:** Node.js · Vanilla JavaScript · PostgreSQL / Neon · Playwright
 
-## See the Product
+![Fourier Tutor landing page introducing the textbook-grounded AI tutor](docs/assets/readme/screenshots/00-product-hero.png)
 
-### Home & Syllabus
+## See the Learning Experience
 
-Choose a topic and find the next lesson.
+### Ask in the Way You Are Already Thinking
 
-![Fourier Tutor home and syllabus screen](docs/assets/readme/screenshots/01-home-syllabus.png)
+Start with a formula, screenshot, exam trap, or open question, then choose the guidance depth and whether the Tutor may search the web.
 
-### Lesson Workspace
+![Fourier Tutor question workspace with guidance and web-search controls](docs/assets/readme/screenshots/01-ask-your-tutor.png)
 
-Read source material, ask the Tutor Agent, and stay in context.
+### Keep the Lesson and Tutor Together
 
-![Fourier Tutor lesson workspace](docs/assets/readme/screenshots/06-lesson-workspace.png)
+Resize the lesson and Tutor panels while keeping the explanation, textbook context, and follow-up questions in one workspace.
 
-### Interactive Demo
+![Fourier Tutor split workspace with a textbook-grounded lesson and Tutor Agent](docs/assets/readme/screenshots/02-lesson-with-tutor.png)
 
-Manipulate signals and make convolution visible.
+## More Than the Three Screens
 
-![Fourier Tutor convolution demo](docs/assets/readme/screenshots/17-convolution-demo.png)
+- **Structured course navigation** — Move through the engineering syllabus and open textbook-grounded lessons with source figures nearby.
+- **Interactive visual learning** — Manipulate signal-processing demos and connect formulas to visible behavior.
+- **Adaptive Tutor guidance** — Choose response depth, ask contextual follow-ups, and enable optional web search when needed.
+- **Learning continuity** — Track course progress, reopen recent sessions, and resume where you stopped.
+- **Personal review tools** — Revisit mistakes and keep learner preferences across the experience.
 
 ## Product Architecture
 
@@ -32,15 +35,6 @@ From topic selection to lesson interaction, practice, and progress continuity.
 ![Fourier Tutor learning experience architecture](docs/assets/readme/fourier-tutor-learning-experience-2.png)
 
 [Open the editable architecture source](docs/architecture/learning-experience.architecture.html)
-
-## What You Can Do
-
-- **Learn from the textbook** — Read structured lessons with original pages and figures close at hand.
-- **Ask the Tutor Agent** — Get contextual explanations grounded in the current lesson and source material.
-- **Explore with interactive demos** — Manipulate signals and see concepts such as convolution change visually.
-- **Keep your learning loop** — Practice, track chapter progress, and resume recent Q&A sessions.
-
-Choose a topic → Open a lesson → Read, ask, and interact → Practice → Resume
 
 ## Engineering Highlights
 
