@@ -153,7 +153,7 @@ if (cache) {
       fail(`lesson H2 ${index + 1} must be "${heading}", found "${actualHeadings[index] || '(missing)'}"`);
     }
   });
-  for (const pattern of [/moving picture/i, /first contact/i, /full overlap/i, /last contact/i, /past input/i]) {
+  for (const pattern of [/moving graphs/i, /first contact/i, /full overlap/i, /last contact/i, /past input/i]) {
     if (!pattern.test(cache)) fail(`lesson is missing approved teaching language: ${pattern}`);
   }
   if (/continuous_graphic_convolution/.test(cache)) fail('legacy generated convolution blocks must not return');
