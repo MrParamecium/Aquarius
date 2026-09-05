@@ -474,7 +474,8 @@
               </button>
               </div>
               <button id="guidanceToggleBtnMain" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="main" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
-                <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                <span class="guidance-toggle-label">Guided</span>
+                <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
               </button>
               <button id="webSearchToggleBtnMain" class="icon-toggle-btn active search-box-web-toggle home-ask-web-toggle" title="Enable Web Search">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -588,7 +589,8 @@
                     </button>
                   </div>
                   <button id="guidanceToggleBtnFollowup" class="guidance-toggle followup-web-toggle" type="button" data-guidance-toggle data-guidance-scope="main" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
-                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                    <span class="guidance-toggle-label">Guided</span>
+                    <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
                   </button>
                   <button id="webSearchToggleBtnFollowup" class="followup-web-toggle active" type="button" title="Web Search: ON" aria-label="Toggle web search" aria-pressed="true">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -702,7 +704,7 @@
             <div class="learn-resizer" id="learnResizer"></div>
 
             <div class="learn-chat-col" id="learnChatCol">
-              <button class="learn-tutor-minimize hidden" id="learnTutorMinimizeBtn" type="button" title="Minimize Tutor" aria-label="Minimize Tutor">
+              <button class="learn-tutor-minimize hidden" id="learnTutorMinimizeBtn" type="button" title="Collapse Tutor" aria-label="Collapse Tutor" aria-controls="learnChatCol">
                 <i class="ph-bold ph-caret-right" aria-hidden="true"></i>
               </button>
               <div class="ambient-background" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; overflow: hidden;">
@@ -803,7 +805,8 @@
                   </button>
 
                   <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
-                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                    <span class="guidance-toggle-label">Guided</span>
+                    <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
                   </button>
 
                   <button id="webSearchToggleBtnLearn" class="action-chip network-on" title="Web Search: ON">
@@ -826,7 +829,7 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.45" stroke-linecap="round" stroke-linejoin="round"><path d="M17 6l-6 6 6 6"/><path d="M11 6l-6 6 6 6"/></svg>
             </span>
           </button>
-          <button class="learn-chat-fab hidden" id="learnChatFab" type="button" title="Tutor Agent" aria-label="Ask Tutor Agent">
+          <button class="learn-chat-fab hidden" id="learnChatFab" type="button" title="Open Tutor" aria-label="Open Tutor" aria-controls="learnChatCol">
             <span class="tutor-agent-mark" aria-hidden="true">
               <i class="ph-fill ph-student tutor-agent-main-icon"></i>
               <span class="tutor-agent-ai-badge">AI</span>
@@ -855,7 +858,8 @@
                     <option value="detailed">Detailed</option>
                   </select>
                   <button id="guidanceToggleBtnLearnPopover" class="guidance-toggle icon-toggle-btn" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
-                    <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+                    <span class="guidance-toggle-label">Guided</span>
+                    <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
                   </button>
                   <button id="webSearchToggleBtnLearnPopover" class="icon-toggle-btn active" title="Enable Web Search">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1422,7 +1426,8 @@
               <option value="detailed">Detailed</option>
             </select>
             <button id="guidanceToggleBtnTextbookFocus" class="guidance-toggle icon-toggle-btn textbook-focus-qa-guidance" type="button" data-guidance-toggle data-guidance-scope="learn" title="Guidance mode: Off" aria-label="Toggle answer guidance mode" aria-pressed="false">
-              <i class="ph-bold ph-signpost" aria-hidden="true"></i>
+              <span class="guidance-toggle-label">Guided</span>
+              <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
             </button>
             <button id="webSearchToggleBtnTextbookFocus" class="icon-toggle-btn active textbook-focus-qa-web" title="Enable Web Search" type="button" aria-label="Toggle web search">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

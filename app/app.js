@@ -1238,10 +1238,14 @@ function applyLearnChatCollapsedState() {
   if (!isLearnChatCollapsed && learnChatPopover) learnChatPopover.classList.add('hidden');
   if (!isLearnChatCollapsed) isLearnChatPopoverOpen = false;
   if (learnChatFab) {
-    learnChatFab.title = showTutorOrb ? 'Tutor Agent' : (isLearnChatCollapsed ? 'Open Q&A panel' : 'Minimize Q&A to bubble');
-    learnChatFab.setAttribute('aria-label', showTutorOrb ? 'Ask Tutor Agent' : learnChatFab.title);
+    learnChatFab.title = showTutorOrb ? 'Open Tutor' : (isLearnChatCollapsed ? 'Open Q&A panel' : 'Minimize Q&A to bubble');
+    learnChatFab.setAttribute('aria-label', showTutorOrb ? 'Open Tutor' : learnChatFab.title);
+    learnChatFab.setAttribute('aria-expanded', String(!isLearnChatCollapsed));
   }
   if (learnTutorMinimizeBtn) {
+    learnTutorMinimizeBtn.title = 'Collapse Tutor';
+    learnTutorMinimizeBtn.setAttribute('aria-label', 'Collapse Tutor');
+    learnTutorMinimizeBtn.setAttribute('aria-expanded', String(!isLearnChatCollapsed));
     learnTutorMinimizeBtn.classList.toggle(
       'hidden',
       !shell?.classList.contains('convolution-focus-workspace-active') || isLearnChatCollapsed
@@ -5770,11 +5774,22 @@ function syncHomeModeToggle() {
 }
 
 function syncFollowupWebToggle() {
-  if (!webSearchToggleBtnFollowup || !webSearchToggleBtnMain) return;
+  if (!webSearchToggleBtnMain) return;
   const isActive = webSearchToggleBtnMain.classList.contains('active');
-  webSearchToggleBtnFollowup.classList.toggle('active', isActive);
-  webSearchToggleBtnFollowup.title = isActive ? 'Web Search: ON' : 'Web Search: OFF';
-  webSearchToggleBtnFollowup.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+  syncWebSearchButtonState(webSearchToggleBtnMain, isActive);
+  syncWebSearchButtonState(webSearchToggleBtnFollowup, isActive);
+}
+
+function syncWebSearchButtonState(button, isActive) {
+  if (!button) return;
+  const enabled = Boolean(isActive);
+  button.classList.toggle('active', enabled);
+  button.classList.toggle('web-search-on', enabled);
+  button.classList.toggle('web-search-off', !enabled);
+  button.dataset.webSearchState = enabled ? 'on' : 'off';
+  button.title = `Web Search: ${enabled ? 'ON' : 'OFF'}`;
+  button.setAttribute('aria-label', `Web Search: ${enabled ? 'On' : 'Off'}`);
+  button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
 }
 
 if (homeModeToggleBtn && homeModeMenu && answerLengthToggleMain) {
@@ -5807,11 +5822,9 @@ if (homeModeToggleBtn && homeModeMenu && answerLengthToggleMain) {
 if (webSearchToggleBtnMain) {
   webSearchToggleBtnMain.addEventListener('click', () => {
     webSearchToggleBtnMain.classList.toggle('active');
-    webSearchToggleBtnMain.style.color = webSearchToggleBtnMain.classList.contains('active') ? '#2563EB' : '#94A3B8';
     syncFollowupWebToggle();
   });
   webSearchToggleBtnMain.classList.add('active');
-  webSearchToggleBtnMain.style.color = '#2563EB';
   syncFollowupWebToggle();
 }
 
@@ -5852,11 +5865,11 @@ if (webSearchToggleBtnFollowup && webSearchToggleBtnMain) {
 function syncLearnNetworkToggle() {
   if (!webSearchBtnLearn) return;
   const isActive = webSearchBtnLearn.classList.contains('active');
+  syncWebSearchButtonState(webSearchBtnLearn, isActive);
   webSearchBtnLearn.classList.toggle('network-on', isActive);
   webSearchBtnLearn.classList.toggle('network-off', !isActive);
-  webSearchBtnLearn.title = isActive ? 'Web Search: ON' : 'Web Search: OFF';
-  webSearchBtnLearn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-  webSearchBtnLearn.style.color = '';
+  syncWebSearchButtonState(webSearchToggleBtnLearnPopover, isActive);
+  syncWebSearchButtonState(webSearchToggleBtnTextbookFocus, isActive);
 }
 
 if (webSearchBtnLearn) {
@@ -5873,17 +5886,23 @@ if (webSearchBtnLearn) {
 }
 
 if (webSearchToggleBtnLearnPopover) {
-  webSearchToggleBtnLearnPopover.classList.toggle('active', webSearchBtnLearn?.classList.contains('active'));
-  webSearchToggleBtnLearnPopover.style.color = webSearchBtnLearn?.classList.contains('active') ? '#2563EB' : '#94A3B8';
+  syncWebSearchButtonState(webSearchToggleBtnLearnPopover, webSearchBtnLearn?.classList.contains('active'));
   webSearchToggleBtnLearnPopover.addEventListener('click', () => {
     webSearchBtnLearn?.click();
   });
 }
 
 if (webSearchToggleBtnTextbookFocus) {
-  webSearchToggleBtnTextbookFocus.classList.toggle('active', webSearchBtnLearn?.classList.contains('active'));
+  syncWebSearchButtonState(webSearchToggleBtnTextbookFocus, webSearchBtnLearn?.classList.contains('active'));
   webSearchToggleBtnTextbookFocus.addEventListener('click', () => {
-    webSearchToggleBtnTextbookFocus.classList.toggle('active');
+    if (webSearchBtnLearn) {
+      webSearchBtnLearn.click();
+    } else {
+      syncWebSearchButtonState(
+        webSearchToggleBtnTextbookFocus,
+        !webSearchToggleBtnTextbookFocus.classList.contains('active')
+      );
+    }
   });
 }
 

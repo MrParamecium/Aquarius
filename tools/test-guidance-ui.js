@@ -30,12 +30,22 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
                     <button class="action-chip edu-mode-toggle" id="learnModeToggleBtn" type="button">
                       <span class="edu-mode-icon"></span><span id="learnModeCurrentText">Balanced</span>
                     </button>
-                    <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn"></button>
+                    <button id="guidanceToggleBtnLearn" class="action-chip guidance-toggle" type="button" data-guidance-toggle data-guidance-scope="learn">
+                      <span class="guidance-toggle-label">Guided</span>
+                      <span class="guidance-toggle-switch" aria-hidden="true"><span></span></span>
+                    </button>
                     <button id="webSearchToggleBtnLearn" class="action-chip network-on" type="button"></button>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div id="courseSyllabus">
+            <button class="syllabus-chapter">
+              <span>Chapter 1</span>
+              <span id="chapterProgressFixture" class="chapter-progress">1/35</span>
+              <span id="chapterProgressDoneFixture" class="chapter-progress is-done">✓ done</span>
+            </button>
           </div>
           <div id="mount"></div>
         </body></html>`;
@@ -46,6 +56,25 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
         }));
         await page.goto('http://guidance.test/');
         await page.addStyleTag({ path: stylePath });
+        const progressGlass = await page.evaluate(() => {
+            const read = id => {
+                const style = getComputedStyle(document.getElementById(id));
+                return {
+                    backgroundImage: style.backgroundImage,
+                    backdropFilter: style.backdropFilter || style.webkitBackdropFilter,
+                    borderColor: style.borderTopColor,
+                    color: style.color
+                };
+            };
+            return {
+                active: read('chapterProgressFixture'),
+                done: read('chapterProgressDoneFixture')
+            };
+        });
+        assert.ok(progressGlass.active.backgroundImage.includes('linear-gradient'), JSON.stringify(progressGlass));
+        assert.ok(progressGlass.active.backdropFilter.includes('blur(14px)'), JSON.stringify(progressGlass));
+        assert.ok(progressGlass.active.borderColor.includes('rgba'), JSON.stringify(progressGlass));
+        assert.notEqual(progressGlass.active.backgroundImage, progressGlass.done.backgroundImage, JSON.stringify(progressGlass));
         await page.evaluate(() => {
             window.guidanceCalls = 0;
             window.guidanceResponse = {
@@ -87,6 +116,21 @@ const stylePath = path.join(ROOT, 'app', 'style.css');
         await page.click('#mainA');
         assert.deepEqual(await page.$$eval('[data-guidance-toggle]', buttons => buttons.map(button => button.getAttribute('aria-pressed'))), ['true', 'true', 'true']);
         assert.equal(await page.evaluate(() => localStorage.getItem('aquarius-guidance-enabled-v1')), '1');
+        const guidedButtonBox = await page.locator('#guidanceToggleBtnLearn').evaluate(button => {
+            const buttonBox = button.getBoundingClientRect();
+            const labelBox = button.querySelector('.guidance-toggle-label').getBoundingClientRect();
+            const switchBox = button.querySelector('.guidance-toggle-switch').getBoundingClientRect();
+            return {
+                buttonWidth: buttonBox.width,
+                contentLeft: Math.min(labelBox.left, switchBox.left),
+                contentRight: Math.max(labelBox.right, switchBox.right),
+                buttonLeft: buttonBox.left,
+                buttonRight: buttonBox.right,
+            };
+        });
+        assert.ok(guidedButtonBox.buttonWidth >= 84, `guided control must reserve enough width: ${JSON.stringify(guidedButtonBox)}`);
+        assert.ok(guidedButtonBox.contentLeft >= guidedButtonBox.buttonLeft && guidedButtonBox.contentRight <= guidedButtonBox.buttonRight,
+            `guided label and switch must stay inside the button: ${JSON.stringify(guidedButtonBox)}`);
 
         await page.evaluate(() => {
             window.choiceResult = null;

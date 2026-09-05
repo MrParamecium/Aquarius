@@ -68,9 +68,13 @@
       const scope = button.dataset.guidanceScope === 'learn' ? 'learn' : 'main';
       const selected = scopeState(scope).selected;
       button.classList.toggle('active', enabled);
+      button.classList.toggle('guidance-on', enabled);
       button.classList.toggle('has-selection', Boolean(enabled && selected));
       button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
-      button.title = enabled ? 'Guidance mode: On' : 'Guidance mode: Off';
+      button.setAttribute('aria-label', enabled ? 'Guided: On' : 'Guided: Off');
+      button.title = enabled
+        ? 'Get hints and step-by-step prompts · Guidance: On'
+        : 'Get hints and step-by-step prompts · Guidance: Off';
     });
 
     doc.querySelectorAll('.guidance-path-chip').forEach(node => node.remove());

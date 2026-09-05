@@ -33962,3 +33962,185 @@ body.learn-resizing #learnView #learnBody #learnChatCol {
     background: var(--convolution-nav-fallback, #f5f9fa);
   }
 }
+
+/* Clear, compact control states for Guided and Web Search. */
+.guidance-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  width: auto !important;
+  min-width: 96px !important;
+  padding: 0 10px !important;
+  white-space: nowrap !important;
+}
+
+.guidance-toggle-label {
+  display: inline-block !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+.guidance-toggle-switch {
+  position: relative !important;
+  display: inline-block !important;
+  flex: 0 0 auto !important;
+  width: 32px !important;
+  height: 19px !important;
+  border-radius: 999px !important;
+  background: #cbd5e1 !important;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12) !important;
+  transition: background-color 160ms ease, box-shadow 160ms ease !important;
+}
+
+.guidance-toggle-switch > span {
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  width: 13px !important;
+  height: 13px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.22) !important;
+  transition: left 160ms ease !important;
+}
+
+.guidance-toggle.guidance-on,
+.guidance-toggle.guidance-on.active {
+  color: #075985 !important;
+  border-color: rgba(56, 189, 248, 0.62) !important;
+  background: rgba(224, 242, 254, 0.9) !important;
+}
+
+.guidance-toggle.guidance-on .guidance-toggle-switch {
+  background: #0ea5e9 !important;
+  box-shadow: inset 0 1px 2px rgba(3, 105, 161, 0.24), 0 0 0 3px rgba(14, 165, 233, 0.12) !important;
+}
+
+.guidance-toggle.guidance-on .guidance-toggle-switch > span {
+  left: 16px !important;
+}
+
+.welcome.home-ask-workspace #guidanceToggleBtnMain,
+.answer .followup-inline-tools .guidance-toggle,
+#guidanceToggleBtnFollowup,
+#guidanceToggleBtnLearn,
+#guidanceToggleBtnLearnPopover,
+#guidanceToggleBtnTextbookFocus {
+  width: auto !important;
+  min-width: 96px !important;
+  padding: 0 10px !important;
+}
+
+.learn-chat-popover-toolbar .guidance-toggle,
+.textbook-focus-qa-tools .guidance-toggle {
+  min-width: 88px !important;
+}
+
+:root[data-theme="dark"] .guidance-toggle {
+  color: #cbd5e1 !important;
+  border-color: rgba(148, 163, 184, 0.34) !important;
+  background: rgba(15, 23, 42, 0.76) !important;
+}
+
+:root[data-theme="dark"] .guidance-toggle.guidance-on,
+:root[data-theme="dark"] .guidance-toggle.guidance-on.active {
+  color: #bae6fd !important;
+  border-color: rgba(56, 189, 248, 0.54) !important;
+  background: rgba(7, 89, 133, 0.42) !important;
+}
+
+@media (max-width: 760px) {
+  .answer .followup-inline-tools .guidance-toggle,
+  #guidanceToggleBtnFollowup,
+  #guidanceToggleBtnLearn,
+  #guidanceToggleBtnTextbookFocus {
+    min-width: 84px !important;
+    padding: 0 8px !important;
+  }
+
+  .answer .followup-inline-tools .guidance-toggle .guidance-toggle-label,
+  #guidanceToggleBtnFollowup .guidance-toggle-label,
+  #guidanceToggleBtnLearn .guidance-toggle-label,
+  #guidanceToggleBtnTextbookFocus .guidance-toggle-label {
+    font-size: 11px !important;
+  }
+
+  #learnView #learnBody #learnChatCol #learnFollowupBar .bottom-actions {
+    grid-template-columns: minmax(0, 1fr) 84px 40px !important;
+  }
+
+  #learnView #learnBody #learnChatCol #learnFollowupBar .bottom-actions:has(.guidance-path-chip) {
+    grid-template-columns: minmax(0, 1fr) 84px minmax(0, 1fr) 40px !important;
+  }
+}
+
+/* Keep the lesson toolbar label and switch inside the control on narrow screens. */
+#learnView#learnView #learnBody#learnBody #learnChatCol#learnChatCol #learnFollowupBar#learnFollowupBar #guidanceToggleBtnLearn#guidanceToggleBtnLearn {
+  width: 96px !important;
+  min-width: 96px !important;
+  flex: 0 0 96px !important;
+  box-sizing: border-box !important;
+  padding: 0 8px !important;
+}
+
+/* Mirror Web Search state across every Q&A surface. */
+#webSearchToggleBtnMain[data-web-search-state="on"],
+#webSearchToggleBtnFollowup[data-web-search-state="on"],
+#webSearchToggleBtnLearn[data-web-search-state="on"],
+#webSearchToggleBtnLearnPopover[data-web-search-state="on"],
+#webSearchToggleBtnTextbookFocus[data-web-search-state="on"] {
+  color: #2563eb !important;
+}
+
+#webSearchToggleBtnMain[data-web-search-state="off"],
+#webSearchToggleBtnFollowup[data-web-search-state="off"],
+#webSearchToggleBtnLearn[data-web-search-state="off"],
+#webSearchToggleBtnLearnPopover[data-web-search-state="off"],
+#webSearchToggleBtnTextbookFocus[data-web-search-state="off"] {
+  color: #64748b !important;
+}
+
+:root[data-theme="dark"] #webSearchToggleBtnMain[data-web-search-state="on"],
+:root[data-theme="dark"] #webSearchToggleBtnFollowup[data-web-search-state="on"],
+:root[data-theme="dark"] #webSearchToggleBtnLearn[data-web-search-state="on"],
+:root[data-theme="dark"] #webSearchToggleBtnLearnPopover[data-web-search-state="on"],
+:root[data-theme="dark"] #webSearchToggleBtnTextbookFocus[data-web-search-state="on"] {
+  color: #bae6fd !important;
+}
+
+:root[data-theme="dark"] #webSearchToggleBtnMain[data-web-search-state="off"],
+:root[data-theme="dark"] #webSearchToggleBtnFollowup[data-web-search-state="off"],
+:root[data-theme="dark"] #webSearchToggleBtnLearn[data-web-search-state="off"],
+:root[data-theme="dark"] #webSearchToggleBtnLearnPopover[data-web-search-state="off"],
+:root[data-theme="dark"] #webSearchToggleBtnTextbookFocus[data-web-search-state="off"] {
+  color: #94a3b8 !important;
+}
+
+/* Transparent glass chapter-progress badges remain readable over the sidebar. */
+#courseSyllabus .syllabus-chapter .chapter-progress {
+  color: #047857;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.56), rgba(255, 255, 255, 0.16)),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.78), transparent 62%);
+  border-color: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    0 5px 12px rgba(128, 53, 83, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+}
+
+#courseSyllabus .syllabus-chapter .chapter-progress.is-done {
+  color: #047857;
+  background:
+    linear-gradient(145deg, rgba(209, 250, 229, 0.66), rgba(167, 243, 208, 0.24)),
+    radial-gradient(circle at 24% 0%, rgba(255, 255, 255, 0.82), transparent 62%);
+  border-color: rgba(255, 255, 255, 0.80);
+  box-shadow:
+    0 5px 12px rgba(5, 150, 105, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.94),
+    inset 0 -1px 0 rgba(110, 231, 183, 0.22);
+}
