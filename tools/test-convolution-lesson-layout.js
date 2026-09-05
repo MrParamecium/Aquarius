@@ -366,6 +366,8 @@ async function inspectFocusWorkspace(page) {
       explainContainerType: explainStyle?.containerType || '',
       chat: rect('#learnChatCol'),
       chatDisplay: chatStyle?.display || '',
+      chatVisibility: chatStyle?.visibility || '',
+      chatOpacity: chatStyle?.opacity || '',
       chatWidth: chatStyle?.width || '',
       chatMaxWidth: chatStyle?.maxWidth || '',
       chatFlexBasis: chatStyle?.flexBasis || '',
@@ -375,6 +377,8 @@ async function inspectFocusWorkspace(page) {
       resizerDisplay: resizer ? getComputedStyle(resizer).display : '',
       fabVisible: visible(document.getElementById('learnChatFab')),
       fabTitle: document.getElementById('learnChatFab')?.title || '',
+      fabAriaLabel: document.getElementById('learnChatFab')?.getAttribute('aria-label') || '',
+      fabExpanded: document.getElementById('learnChatFab')?.getAttribute('aria-expanded') || '',
       tutorMarkVisible: visible(document.querySelector('#learnChatFab .tutor-agent-mark')),
       tutorBadge: document.querySelector('#learnChatFab .tutor-agent-ai-badge')?.textContent.trim() || '',
       tutorTooltip: document.querySelector('#learnChatFab .tutor-agent-tooltip')?.textContent.trim() || '',
@@ -384,6 +388,8 @@ async function inspectFocusWorkspace(page) {
       menuToggleVisible: visible(document.getElementById('menuToggleBtn')),
       minimizeVisible: visible(document.getElementById('learnTutorMinimizeBtn')),
       minimizeTitle: document.getElementById('learnTutorMinimizeBtn')?.title || '',
+      minimizeAriaLabel: document.getElementById('learnTutorMinimizeBtn')?.getAttribute('aria-label') || '',
+      minimizeExpanded: document.getElementById('learnTutorMinimizeBtn')?.getAttribute('aria-expanded') || '',
       demoPage: Boolean(demoPage),
       demoColumns: demoStyle?.gridTemplateColumns || '',
       demoTeachingTop: teaching?.top || 0,
@@ -668,27 +674,32 @@ async function main() {
       JSON.stringify(stateIsolation));
 
     const lessonFocus = await inspectFocusWorkspace(page);
-    record('lesson enters the focus workspace with a persistent 76px icon rail and Tutor orb',
+    record('lesson enters the focus workspace with a persistent 68px icon rail and Tutor orb',
       lessonFocus.appFocus
         && lessonFocus.bodyFocus
         && lessonFocus.chatCollapsed
         && lessonFocus.sidebarPosition !== 'fixed'
         && lessonFocus.sidebar?.left >= -1
         && lessonFocus.sidebar.left <= 1
-        && lessonFocus.sidebar.width >= 74
-        && lessonFocus.sidebar.width <= 78
+        && lessonFocus.sidebar.width >= 67
+        && lessonFocus.sidebar.width <= 69
         && lessonFocus.sidebarControls.length >= 8
         && lessonFocus.sidebarControls.every(control => control.visible
           && control.left >= -1
           && control.right <= lessonFocus.sidebar.right + 1)
-        && lessonFocus.main?.left >= 74
-        && lessonFocus.main.left <= 78
+        && lessonFocus.main?.left >= 67
+        && lessonFocus.main.left <= 69
         && lessonFocus.fabVisible
-        && lessonFocus.fabTitle === 'Tutor Agent'
+        && lessonFocus.fabTitle === 'Open Tutor'
+        && lessonFocus.fabAriaLabel === 'Open Tutor'
+        && lessonFocus.fabExpanded === 'false'
         && lessonFocus.tutorMarkVisible
         && lessonFocus.tutorBadge === 'AI'
         && lessonFocus.tutorTooltip === 'Tutor Agent'
-        && lessonFocus.chatDisplay === 'none'
+        && lessonFocus.chatDisplay === 'flex'
+        && lessonFocus.chatVisibility === 'hidden'
+        && Number(lessonFocus.chatOpacity) === 0
+        && lessonFocus.chat?.width <= 1
         && lessonFocus.resizerDisplay === 'none'
         && lessonFocus.fullscreenControls === 0,
       JSON.stringify(lessonFocus));
@@ -701,10 +712,10 @@ async function main() {
     await page.waitForTimeout(300);
     const railAfterHover = await inspectFocusWorkspace(page);
     record('desktop icon rail stays compact and does not cover or shift the lesson on hover',
-      railHovered.sidebar?.width >= 74
-        && railHovered.sidebar.width <= 78
-        && railAfterHover.sidebar?.width >= 74
-        && railAfterHover.sidebar.width <= 78
+      railHovered.sidebar?.width >= 67
+        && railHovered.sidebar.width <= 69
+        && railAfterHover.sidebar?.width >= 67
+        && railAfterHover.sidebar.width <= 69
         && Math.abs((railHovered.main?.left || 0) - (workspaceBeforeRailInteraction.main?.left || 0)) <= 1
         && Math.abs((railAfterHover.main?.left || 0) - (workspaceBeforeRailInteraction.main?.left || 0)) <= 1,
       JSON.stringify({ workspaceBeforeRailInteraction, railHovered, railAfterHover }));
@@ -718,12 +729,12 @@ async function main() {
     record('keyboard focus remains visible without expanding the compact icon rail',
       railFocused.sidebar?.left >= -1
         && railFocused.sidebar.left <= 1
-        && railFocused.sidebar?.width >= 74
-        && railFocused.sidebar.width <= 78
+        && railFocused.sidebar?.width >= 67
+        && railFocused.sidebar.width <= 69
         && railBlurred.sidebar?.left >= -1
         && railBlurred.sidebar.left <= 1
-        && railBlurred.sidebar?.width >= 74
-        && railBlurred.sidebar.width <= 78,
+        && railBlurred.sidebar?.width >= 67
+        && railBlurred.sidebar.width <= 69,
       JSON.stringify({ railFocused, railBlurred }));
 
     await page.evaluate(() => document.getElementById('learnChatFab')?.click());
@@ -736,7 +747,9 @@ async function main() {
         && tutorOpen.explain.width / tutorOpen.chat.width <= 2.05
         && tutorOpen.chatDisplay !== 'none'
         && tutorOpen.minimizeVisible
-        && tutorOpen.minimizeTitle === 'Minimize Tutor'
+        && tutorOpen.minimizeTitle === 'Collapse Tutor'
+        && tutorOpen.minimizeAriaLabel === 'Collapse Tutor'
+        && tutorOpen.minimizeExpanded === 'true'
         && !tutorOpen.fabVisible
         && tutorOpen.resizerDisplay === 'none'
         && tutorOpen.horizontalOverflow <= 1,
